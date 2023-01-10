@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package io.leishi.genshin.proto;
+
+import "set.proto";
+
+message SetCombo {
+    Set set = 1;
+    int32 count = 2;
+}
+
+message Suit {
+    repeated SetCombo set_combos = 1;
+}

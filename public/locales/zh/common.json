@@ -1,0 +1,50 @@
+{
+    "Genshin Artifact Builds Platform": "原神圣遗物配装平台",
+    "Check": "查看",
+    "Language": "语言",
+    "Themes": "主题",
+    "EN": "EN",
+    "中文": "中文",
+
+    "Add": "添加",
+    "Edit": "编辑",
+    "Save": "保存",
+    "Clone": "克隆",
+    "Name": "名称",
+    "Enabled": "启用",
+    "Presets": "预设",
+    "or": "或者",
+    "equipped": "已装备",
+    "Builds": "配装",
+    "builds": "配装",
+    "Edit Builds": "编辑配装",
+    "Add New Build": "添加新配装",
+    "Unnamed Build": "未命名配装",
+    "Upload Your Artifacts": "上传你的圣遗物",
+    "Change Language": "更改语言",
+    "Best Score": "最佳分数",
+    "Difficulty": "毕业难度",
+
+    "Sets": "套装",
+    "Weapons": "武器",
+    "Character": "角色",
+    "Main Stats": "主属性",
+    "Sub Stats": "副属性",
+    "Pick one": "选择",
+
+    "Enable all presets": "启用所有预设",
+    "No enabled builds": "没有已启用的配装",
+    "No uploaded artifacts founds": "未找到上传的圣遗物",
+    "Did you upload it": "你上传了吗",
+    "Back to home": "回到主页",
+    "Fitness": "匹配度",
+    "Rarity": "稀有度",
+
+    "User": "用户",
+
+
+    "Settings": "设置",
+
+
+    "About": "关于"
+}

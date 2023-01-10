@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package io.leishi.genshin.proto;
+
+import "attribute.proto";
+import "character.proto";
+import "set.proto";
+
+message Artifact {
+    Set set = 1;
+    int32 star = 2;
+    int32 level = 3;
+    AttributePosition position = 4;
+    Attribute main_attribute = 5;
+    repeated Attribute sub_attributes = 6;
+    Character character = 7;
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package io.leishi.genshin.proto;
+
+import "suit.proto";
+import "weapon.proto";
+import "character.proto";
+import "attribute.proto";
+
+message Build {
+    string name = 1;
+    Character character = 2;
+    repeated Weapon weapons = 3;
+    repeated Suit suits = 4;
+    repeated AttributeType flower_attributes = 5;
+    repeated AttributeType plume_attributes = 6;
+    repeated AttributeType sands_attributes = 7;
+    repeated AttributeType goblet_attributes = 8;
+    repeated AttributeType circlet_attributes = 9;
+    repeated Attribute sub_attributes = 10;
+}

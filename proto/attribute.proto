@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package io.leishi.genshin.proto;
+
+enum AttributeType {
+    ATTRIBUTE_TYPE_UNSPECIFIED = 0;
+    HP = 1;
+    ATK = 2;
+    DEF = 3;
+    ELEMENTAL_MASTERY = 4;
+    ENERGY_RECHARGE = 5;
+    HP_PERCENT = 6;
+    ATK_PERCENT = 7;
+    DEF_PERCENT = 8;
+    CRIT_RATE = 9;
+    CRIT_DAMAGE = 10;
+    HEALING_BONUS = 11;
+    ANEMO_DAMAGE_BONUS = 12;
+    CRYO_DAMAGE_BONUS = 13;
+    DENDRO_DAMAGE_BONUS = 14;
+    ELECTRO_DAMAGE_BONUS = 15;
+    GEO_DAMAGE_BONUS = 16;
+    HYDRO_DAMAGE_BONUS = 17;
+    PHYSICAL_DAMAGE_BONUS = 18;
+    PYRO_DAMAGE_BONUS = 19;
+}
+
+enum AttributePosition {
+    ATTRIBUTE_POSITION_UNSPECIFIED = 0;
+    FLOWER = 1;
+    PLUME = 2;
+    SANDS = 3;
+    GOBLET = 4;
+    CIRCLET = 5;
+}
+
+message Attribute {
+    AttributeType type = 1;
+    float value = 2;
+}

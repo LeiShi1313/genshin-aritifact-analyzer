@@ -1,0 +1,78 @@
+import { t } from "i18next";
+import classNames from "classnames";
+import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { Artifact } from "../../genshin/artifact";
+import { AttributeType, AttributePosition } from "../../genshin/attribute";
+import { Set } from "../../genshin/set";
+import { formatAttributeValue } from "../../utils/attribute";
+import { getFitness, getRarity } from "../../utils/weights";
+import CharacterAvatar from "../characters/CharacterAvatar";
+import ArtifactCard from "./ArtifactCard";
+
+const rarityToColor = (r) => {
+  let rarity = Number(r);
+  if (rarity >= 9.0) return "text-red-800 font-bold";
+  else if (rarity >= 8.0) return "text-red-600";
+  else if (rarity >= 7.0) return "text-orange-600";
+  else if (rarity >= 6.0) return "text-yellow-600";
+  else if (rarity >= 5.0) return "text-yellow-600";
+  else if (rarity >= 4.0) return "text-yellow-600";
+  else if (rarity >= 3.0) return "text-yellow-600";
+  else if (rarity >= 2.0) return "text-yellow-600";
+  else if (rarity >= 1.0) return "text-yellow-600";
+};
+
+const ArtifactFitnessCard = ({
+  index,
+  artifact,
+  builds,
+  fits,
+  rarity,
+  minFitness,
+  minRarity,
+}) => {
+  const bestScore = useMemo(() => Math.max(...Object.values(fits)), [fits]);
+
+  return (
+    <div className="flex w-80 flex-col items-center space-y-2 rounded-2xl bg-base-200 px-2 py-2 shadow-2xl lg:w-auto lg:flex-row">
+      <div className="flex flex-col items-center sm:flex-row">
+        <ArtifactCard artifact={artifact} />
+        <div className="flex flex-col space-y-2 py-2 px-2">
+          <div className={classNames(rarityToColor(rarity))}>
+            {rarity && (
+              <span>
+                {t("Rarity")}: {rarity.toFixed(2)}
+              </span>
+            )}
+          </div>
+          <div className={classNames(rarityToColor(rarity))}>
+            {Object.values(fits).length > 0 && (
+              <span>
+                {t("Fitness")}: {(100 * bestScore).toFixed(0)}%
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-row">
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-1 gap-y-1">
+          {[...Object.keys(fits)]
+            .sort((a, b) => fits[b] - fits[a])
+            .filter((key) => fits[key] >= Number(minFitness))
+            .map((key, idx) => (
+              <div key={idx}>
+                <CharacterAvatar
+                  character={builds[key].character}
+                  withRing={fits[key] >= bestScore}
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ArtifactFitnessCard;

@@ -1,0 +1,155 @@
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { hashBuild } from "../../utils/hash";
+import { Build } from "../../genshin/build";
+import { Character } from "../../genshin/character";
+import { AttributeType } from "../../genshin/attribute";
+import NameEditor from "./NameEditor";
+import SuitsEditor from "./SuitsEditor";
+import WeaponEditor from "./WeaponEditor";
+import CharacterSelect from "../characters/CharacterSelect";
+import MainAttributesEditor from "./MainAttributesEditor";
+import SubAttributesEditor from "./SubAttributesEditor";
+import { addBuild, editBuild } from "../../store/reducers/build";
+import { toHex, fromHex } from "../../utils/hex";
+
+const BuildEditor = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  let build;
+  if (searchParams.get("build")) {
+    build = Build.decode(fromHex(searchParams.get("build")));
+  } else {
+    build = {
+      name: "",
+      character: Character.CHARACTER_UNSPECIFIED,
+      weapons: [],
+      suits: [],
+      flowerAttributes: [AttributeType.HP],
+      plumeAttributes: [AttributeType.ATK],
+      sandsAttributes: [],
+      gobletAttributes: [],
+      circletAttributes: [],
+      subAttributes: [],
+    };
+  }
+
+  const [name, setName] = useState(build.name);
+  const [char, setChar] = useState(build.character);
+  const [weapons, setWeapons] = useState(build.weapons);
+  const [suits, setSuits] = useState(build.suits);
+  const flower = build.flowerAttributes;
+  const plume = build.plumeAttributes;
+  const [sands, setSands] = useState(build.sandsAttributes);
+  const [goblet, setGoblet] = useState(build.gobletAttributes);
+  const [circlet, setCirclet] = useState(build.circletAttributes);
+  const [subAttributes, setSubAttributes] = useState(build.subAttributes);
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  );
+  const imgUrl = useMemo(
+    () =>
+      new URL(
+        `../../assets/characters/${Character[char].toLocaleLowerCase()}_${
+          matches ? "cover1" : "cover2"
+        }.png`,
+        import.meta.url
+      ).href,
+    [char, matches]
+  );
+
+  const handleAdd = () => {
+    if (id) {
+      dispatch(editBuild({ id, build }));
+    } else {
+      dispatch(addBuild(build));
+    }
+    navigate("/builds");
+  };
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 420px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
+  }, []);
+
+  useEffect(() => {
+    build = {
+      name: name,
+      character: char,
+      weapons: weapons,
+      suits: suits,
+      flowerAttributes: [AttributeType.HP],
+      plumeAttributes: [AttributeType.ATK],
+      sandsAttributes: sands,
+      gobletAttributes: goblet,
+      circletAttributes: circlet,
+      subAttributes: subAttributes,
+    };
+    const encoded = Build.encode(build).finish();
+    // const json = JSON.stringify(Array.from(encoded));
+    const hex = toHex(encoded);
+    let updatedSearchParams = new URLSearchParams(searchParams.toString());
+    updatedSearchParams.set("build", hex);
+    setSearchParams(updatedSearchParams.toString(), { replace: true });
+  }, [name, char, weapons, suits, sands, goblet, circlet, subAttributes]);
+
+  return (
+    <div
+      className={`flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
+      style={{ backgroundImage: `url(${imgUrl})` }}
+    >
+      <div className="items-enter flex w-full justify-center rounded-3xl bg-base-100 bg-opacity-70 py-2">
+        <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
+          <NameEditor name={name} setName={setName} />
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-start">
+              <CharacterSelect char={char} setChar={setChar} />
+            </div>
+            <button className="btn btn-primary btn-sm" onClick={handleAdd}>
+              {id ? t("Save") : t("Add")}
+            </button>
+          </div>
+          <div className="flex flex-row items-center justify-between space-x-2">
+            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+              <WeaponEditor weapons={weapons} setWeapons={setWeapons} />
+            </div>
+            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+              <SuitsEditor suits={suits} setSuits={setSuits} />
+            </div>
+          </div>
+          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+            <label className="label flex flex-row justify-between">
+              <span className="label-text">{t("Main Stats")}</span>
+            </label>
+            <MainAttributesEditor
+              flower={flower}
+              plume={plume}
+              sands={sands}
+              setSands={setSands}
+              goblet={goblet}
+              setGoblet={setGoblet}
+              circlet={circlet}
+              setCirclet={setCirclet}
+              subAttributes={subAttributes}
+            />
+          </div>
+          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+            <SubAttributesEditor
+              subAttributes={subAttributes}
+              setSubAttributes={setSubAttributes}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BuildEditor;
