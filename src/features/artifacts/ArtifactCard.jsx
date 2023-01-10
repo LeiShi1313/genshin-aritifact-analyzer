@@ -59,7 +59,7 @@ const ArtifactCard = ({ artifact }) => {
               </p>
             ))}
           </div>
-          {artifact.character && (
+          {artifact.character && artifact.character > 0 && (
             <div
               className="tooltip absolute right-0 bottom-0"
               data-tip={
