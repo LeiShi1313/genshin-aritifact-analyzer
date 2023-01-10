@@ -32,6 +32,7 @@
     "Sub Stats": "副属性",
     "Pick one": "选择",
 
+    "This build is already in the presets. Please edit it there": "这个配装已在预设中，请修改后保存",
     "Enable all presets": "启用所有预设",
     "No enabled builds": "没有已启用的配装",
     "No uploaded artifacts founds": "未找到上传的圣遗物",

@@ -23,6 +23,7 @@ const sortSuits = (suits: Suit[]): Suit[] =>
 export function hashBuild(build: Build): string {
   return md5(
     JSON.stringify({
+      name: build.name,
       character: build.character,
       weapons: [...build.weapons].sort(),
       suits: sortSuits([...build.suits]),

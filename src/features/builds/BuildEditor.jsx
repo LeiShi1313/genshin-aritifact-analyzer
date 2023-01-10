@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { hashBuild } from "../../utils/hash";
 import { Build } from "../../genshin/build";
 import { Character } from "../../genshin/character";
 import { AttributeType } from "../../genshin/attribute";
+import { encodeBuild } from "../../utils/build";
 import NameEditor from "./NameEditor";
 import SuitsEditor from "./SuitsEditor";
 import WeaponEditor from "./WeaponEditor";
@@ -21,6 +22,7 @@ const BuildEditor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  const presets = useSelector((state) => state.presets.builds);
   const id = searchParams.get("id");
   let build;
   if (searchParams.get("build")) {
@@ -65,6 +67,11 @@ const BuildEditor = () => {
   );
 
   const handleAdd = () => {
+    const hash = hashBuild(build)
+    if (presets[hash]) {
+      alert(t('This build is already in the presets. Please edit it there'))
+      return
+    }
     if (id) {
       dispatch(editBuild({ id, build }));
     } else {
@@ -92,11 +99,9 @@ const BuildEditor = () => {
       circletAttributes: circlet,
       subAttributes: subAttributes,
     };
-    const encoded = Build.encode(build).finish();
-    // const json = JSON.stringify(Array.from(encoded));
-    const hex = toHex(encoded);
+    const encoded = encodeBuild(build);
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
-    updatedSearchParams.set("build", hex);
+    updatedSearchParams.set("build", encoded);
     setSearchParams(updatedSearchParams.toString(), { replace: true });
   }, [name, char, weapons, suits, sands, goblet, circlet, subAttributes]);
 
@@ -112,7 +117,7 @@ const BuildEditor = () => {
             <div className="flex flex-row items-center justify-start">
               <CharacterSelect char={char} setChar={setChar} />
             </div>
-            <button className="btn btn-primary btn-sm" onClick={handleAdd}>
+            <button className="btn btn-primary btn-sm" onClick={handleAdd} >
               {id ? t("Save") : t("Add")}
             </button>
           </div>

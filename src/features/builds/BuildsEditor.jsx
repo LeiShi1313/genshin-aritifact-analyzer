@@ -13,8 +13,20 @@ const BuildsEditor = () => {
   const config = useSelector((state) => state.build.config);
   const presets = useSelector((state) => state.presets.builds);
 
-  const presetsAllEnabled = useMemo(() => Object.keys(presets).every((hash) => config[hash] && config[hash].enabled), [config, presets]);
-  const toggleAllPresets = () => dispatch(toggleAllBuilds({ hashes: Object.keys(presets), enabled: !presetsAllEnabled }));
+  const presetsAllEnabled = useMemo(
+    () =>
+      Object.keys(presets).every(
+        (hash) => config[hash] && config[hash].enabled
+      ),
+    [config, presets]
+  );
+  const toggleAllPresets = () =>
+    dispatch(
+      toggleAllBuilds({
+        hashes: Object.keys(presets),
+        enabled: !presetsAllEnabled,
+      })
+    );
 
   return (
     <div className="w-full overflow-x-auto">
@@ -45,7 +57,10 @@ const BuildsEditor = () => {
             <th colSpan={8} className="flex md:table-cell">
               <div className="divider">
                 {t("Presets")}
-                <div className="tooltip tooltip-right" data-tip={t("Enable all presets")}>
+                <div
+                  className="tooltip tooltip-right"
+                  data-tip={t("Enable all presets")}
+                >
                   <label className="label cursor-pointer">
                     <input
                       type="checkbox"

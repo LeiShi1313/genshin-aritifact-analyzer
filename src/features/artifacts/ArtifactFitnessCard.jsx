@@ -2,11 +2,8 @@ import { t } from "i18next";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { Artifact } from "../../genshin/artifact";
-import { AttributeType, AttributePosition } from "../../genshin/attribute";
-import { Set } from "../../genshin/set";
-import { formatAttributeValue } from "../../utils/attribute";
-import { getFitness, getRarity } from "../../utils/weights";
+import { useNavigate } from "react-router-dom";
+import { encodeBuild } from "../../utils/build";
 import CharacterAvatar from "../characters/CharacterAvatar";
 import ArtifactCard from "./ArtifactCard";
 
@@ -24,7 +21,6 @@ const rarityToColor = (r) => {
 };
 
 const ArtifactFitnessCard = ({
-  index,
   artifact,
   builds,
   fits,
@@ -32,7 +28,14 @@ const ArtifactFitnessCard = ({
   minFitness,
   minRarity,
 }) => {
+  const navigate = useNavigate();
+  const presets = useSelector((state) => state.presets.builds);
   const bestScore = useMemo(() => Math.max(...Object.values(fits)), [fits]);
+
+  const handleClick = (hash) =>
+    presets[hash]
+      ? navigate(`/build?build=${encodeBuild(presets[hash])}`)
+      : navigate(`/build?id=${hash}&build=${encodeBuild(builds[hash])}`);
 
   return (
     <div className="flex w-80 flex-col items-center space-y-2 rounded-2xl bg-base-200 px-2 py-2 shadow-2xl lg:w-auto lg:flex-row">
@@ -57,12 +60,19 @@ const ArtifactFitnessCard = ({
       </div>
 
       <div className="flex flex-row">
-        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-1 gap-y-1">
+        <div className="grid grid-cols-4 gap-x-1 gap-y-1 md:grid-cols-6 lg:grid-cols-8">
           {[...Object.keys(fits)]
             .sort((a, b) => fits[b] - fits[a])
             .filter((key) => fits[key] >= Number(minFitness))
             .map((key, idx) => (
-              <div key={idx}>
+              <div
+                key={idx}
+                className={classNames("cursor-pointer", {
+                  tooltip: builds[key].name.length > 0,
+                })}
+                data-tip={builds[key].name}
+                onClick={() => handleClick(key)}
+              >
                 <CharacterAvatar
                   character={builds[key].character}
                   withRing={fits[key] >= bestScore}
