@@ -141,7 +141,6 @@ const ArtifactsUpload = () => {
       }
 
       artifacts.forEach((artifact, index) => {
-        try {
         const rarity = getRarity(
           artifact.position,
           [artifact.mainAttribute.type],
@@ -159,13 +158,9 @@ const ArtifactsUpload = () => {
         );
         setAllFits((allFits) => ({ ...allFits, [index]: fits }));
         setAllRarity((allRarity) => ({ ...allRarity, [index]: rarity }));
-          } catch(e) {
-            console.log(e)
-            console.log(artifact)
-          }
       });
       setIsLoading(false);
-    }, 1);
+    }, 0);
   }, [enabledBuilds, artifacts]);
 
   if (artifacts === undefined) {
@@ -179,7 +174,6 @@ const ArtifactsUpload = () => {
   } else if (Object.keys(enabledBuilds).length === 0) {
     return <BackToHome t={t} title="No enabled builds" navigate={navigate} />;
   }
-  console.log("rendering");
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="flex w-full flex-col items-center justify-center space-y-2 md:flex-row md:space-y-0 md:space-x-12">
