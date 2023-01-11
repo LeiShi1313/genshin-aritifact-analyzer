@@ -77,7 +77,7 @@ const BuildEditor = () => {
     } else {
       dispatch(addBuild(build));
     }
-    navigate("/builds");
+    navigate(-1, { replace: true, });
   };
 
   useEffect(() => {
