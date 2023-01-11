@@ -12,7 +12,7 @@ const SetSelect = ({ set, setSet }) => {
         onChange={(e) => setSet(Number(e.target.value))}
       >
         <option disabled value={0}>
-          {t("Pick one")}{t("Sets")}
+          {t("Pick one")} {t("set")}
         </option>
         {enumToIdx(Set)
           .map((key) => (

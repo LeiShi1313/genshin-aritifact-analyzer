@@ -24,9 +24,9 @@ const ArtifactCard = ({ artifact }) => {
           `flex flex-row items-center rounded-xl bg-base-200 shadow-xl ` +
           classNames(
             artifact.star === 5
-              ? "bg-yellow-500"
+              ? "bg-[#D39F51]"
               : artifact.star === 4
-              ? "bg-indigo-400"
+              ? "bg-[#B187C3]"
               : "bg-base-200"
           )
         }

@@ -1,18 +1,16 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ArrowUp, ArrowDown, X } from "phosphor-react";
 import ReactLoading from "react-loading";
-import classNames from "classnames";
-import ThemedSuspense from "../ThemedSuspense";
+
 import { getBuildSets } from "../../utils/build";
 import ArtifactFitnessCard from "./ArtifactFitnessCard";
 import SetSelect from "../sets/SetSelect";
+import AttributePositionSelect from "./AttributePositionSelect";
 import { defaultFitness, defaultRarity } from "../../utils/config";
 import { getFitness, getRarity } from "../../utils/weights";
-import { updateBuildWeights } from "../../store/reducers/build";
-import { hashBuild } from "../../utils/hash";
 import { AttributePosition } from "../../genshin/attribute";
 import {
   getMainAttributeWeights,
@@ -75,6 +73,7 @@ const ArtifactsUpload = () => {
   const [allFits, setAllFits] = useState({});
   const [allRarity, setAllRarity] = useState({});
   const [set, setSet] = useState(0);
+  const [pos, setPos] = useState(0);
   const [sortKey, setSortKey] = useState("rarity-desc");
 
   const show = (idx) =>
@@ -83,7 +82,7 @@ const ArtifactsUpload = () => {
     (Math.max(...Object.values(allFits[idx])) >= Number(fitness) ||
       allRarity[idx] >= rarity);
 
-  const compareFn = (a, b) => {
+  const compareFn = useCallback((a, b) => {
     if (sortKey === "rarity-desc") {
       return allRarity[b] - allRarity[a];
     } else if (sortKey === "rarity-asc") {
@@ -99,14 +98,17 @@ const ArtifactsUpload = () => {
         Math.max(...Object.values(allFits[b]))
       );
     }
-  };
-  const filterFn = (idx) => {
+  }, [sortKey]);
+  const filterFn = useCallback((idx) => {
     let ret = true;
     if (set > 0) {
       ret = ret && artifacts[idx].set === set;
     }
+    if (pos > 0) {
+      ret = ret && artifacts[idx].position === pos;
+    }
     return ret;
-  };
+  }, [set, pos])
 
   useEffect(() => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
@@ -229,10 +231,14 @@ const ArtifactsUpload = () => {
             />
           </span>
         </div>
-        <div className="flex flex-row items-center space-x-2">
+        <div className="flex flex-col md:flex-row items-center space-x-2">
           <div className="flex flex-row items-center space-x-2">
             <SetSelect set={set} setSet={setSet} />
             <X className="cursor-pointer" onClick={() => setSet(0)} />
+          </div>
+          <div className="flex flex-row items-center space-x-2">
+            <AttributePositionSelect pos={pos} setPos={setPos} />
+            <X className="cursor-pointer" onClick={() => setPos(0)} />
           </div>
         </div>
       </div>
