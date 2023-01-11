@@ -11,7 +11,13 @@ export const defaultFitness = 0.65;
 export const defaultRarity = 8.5;
 
 export const nonFiveStarSubstractor = 1.5;
-export const nonSuitSubstractor = 1.2;
+export const nonSuitSubstractors = {
+  1: 1.2, // flower
+  2: 1.2, // plume
+  3: 0.8, // sands
+  4: 0.6, // goblet
+  5: 0.6, // circlet
+};
 
 
 // Main attribute weights

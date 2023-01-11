@@ -283,7 +283,7 @@ export const getFitness = (
       )
     );
     if (artifact.star < 5) fitness -= config.nonFiveStarSubstractor;
-    if (weight.sets.indexOf(artifact.set) === -1) fitness -= config.nonSuitSubstractor;
+    if (weight.sets.indexOf(artifact.set) === -1) fitness -= config.nonSuitSubstractors[artifact.position];
 
     const bestScore = getBestScore(mainWeight, subWeight)
     fits[weight.hash] = fitness / bestScore;
