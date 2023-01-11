@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const light_theme = 'autumn';
@@ -12,9 +13,11 @@ const setHtmlDataTheme = (theme) => {
 }
 
 export const ThemeProvider = ({ children }) => {
+    const location = useLocation()
     const [theme, setTheme] = useState('')
 
     useEffect(() => {
+        if (location.pathname === '/build') return;
         let theme = localStorage.getItem('genshin-aritifact-builds-theme')
         if (!!!theme) {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? dark_theme : light_theme
@@ -22,18 +25,17 @@ export const ThemeProvider = ({ children }) => {
         // TODO: check valid theme
         setHtmlDataTheme(theme)
         setTheme(theme)
-    }, [])
+    }, [location])
 
     const value = useMemo(
         () => ({
             theme,
             setTheme: (_theme) => {
-                console.log(_theme)
                 if (_theme === 'auto') {
                     _theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? dark_theme : light_theme
-                    localStorage.setItem('genshin-aritifact-builds-theme', '')
+                    if (location.pathname !== '/build') localStorage.setItem('genshin-aritifact-builds-theme', '')
                 } else {
-                    localStorage.setItem('genshin-aritifact-builds-theme', _theme)
+                    if (location.pathname !== '/build') localStorage.setItem('genshin-aritifact-builds-theme', _theme)
                 }
                 setHtmlDataTheme(_theme)
                 setTheme(_theme)

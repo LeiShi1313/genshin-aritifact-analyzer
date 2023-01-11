@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { hashBuild } from "../../utils/hash";
 import { Build } from "../../genshin/build";
 import { Character } from "../../genshin/character";
@@ -16,11 +17,13 @@ import MainAttributesEditor from "./MainAttributesEditor";
 import SubAttributesEditor from "./SubAttributesEditor";
 import { addBuild, editBuild } from "../../store/reducers/build";
 import { toHex, fromHex } from "../../utils/hex";
+import { characterToTheme } from "../../utils/character";
 
 const BuildEditor = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { setTheme } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const presets = useSelector((state) => state.presets.builds);
   const id = searchParams.get("id");
@@ -85,6 +88,11 @@ const BuildEditor = () => {
       .matchMedia("(min-width: 420px)")
       .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
+  
+  useEffect(() => {
+    const theme = characterToTheme(char)
+    if (theme) setTheme(theme);
+  }, [char])
 
   useEffect(() => {
     build = {

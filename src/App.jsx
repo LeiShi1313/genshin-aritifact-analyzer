@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { Build } from "./genshin/build";
 import { loadPresets } from "./store/reducers/presets";
+import { ThemeProvider } from './contexts/ThemeContext';
 
 
 const Layout = lazy(() => import("./Layout"));
@@ -31,6 +32,7 @@ const App = () => {
 
   return (
     <Router>
+      <ThemeProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
@@ -42,6 +44,8 @@ const App = () => {
         {/* <Route path="/app/*" element={<Layout />} /> */}
         {/* <Route index path="/" exact element={<Navigate to="/login" />} /> */}
       </Routes>
+
+      </ThemeProvider>
     </Router>
   );
 };

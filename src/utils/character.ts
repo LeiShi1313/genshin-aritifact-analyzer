@@ -16,3 +16,21 @@ export const characterFromMonaName = (name: string): Character => {
     if (name === '') return Character.CHARACTER_UNSPECIFIED;
     return characterFromJSON(zhToKey[name])
 }
+
+export const characterToTheme = (character: Character): string => {
+    switch(character) {
+        case Character.NAHIDA:
+            return 'lemonade'
+        case Character.SANGONOMIYA_KOKOMI:
+            return 'aqua'
+        case Character.RAIDEN_SHOGUN:
+            return 'synthware'
+        case Character.TIGHNARI:
+            return 'emerald'
+        case Character.WANDERER:
+            return 'forest'
+        case Character.ZHONGLI:
+            return 'bumblebee'
+        default: return 'auto'
+    }
+}
