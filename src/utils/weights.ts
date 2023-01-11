@@ -8,8 +8,9 @@ import {
   AttributePosition,
 } from "../genshin/attribute";
 import { Build } from "../genshin/build";
-import { BuildWeights } from "./build";
+import { BuildWeights, BuildEntry, getBuildSets } from "./build";
 import { Artifact } from "../genshin/artifact";
+import { enumToIdx } from "./enum";
 
 const attirbuteTypeLength = Object.keys(AttributeType).filter(
   (key) => !isNaN(Number(key)) && Number(key) > 0
@@ -283,10 +284,62 @@ export const getFitness = (
       )
     );
     if (artifact.star < 5) fitness -= config.nonFiveStarSubstractor;
-    if (weight.sets.indexOf(artifact.set) === -1) fitness -= config.nonSuitSubstractors[artifact.position];
+    if (weight.sets.indexOf(artifact.set) === -1)
+      fitness -= config.nonSuitSubstractors[artifact.position];
 
-    const bestScore = getBestScore(mainWeight, subWeight)
+    const bestScore = getBestScore(mainWeight, subWeight);
     fits[weight.hash] = fitness / bestScore;
   }
   return fits;
+};
+
+export interface FitsAndRarity {
+  allFits: Record<number, number>;
+  allRarity: Record<number, number>;
+}
+
+export const getAllFitsAndAllRarity = (
+  artifacts: Artifact[],
+  builds: BuildEntry
+): FitsAndRarity => {
+  const results = {
+    allFits: {},
+    allRarity: {},
+  };
+
+  const weights = {};
+  for (const hash of Object.keys(builds)) {
+    const weight = {};
+    for (const idx of enumToIdx(AttributePosition)) {
+      const build = builds[hash];
+      weight[idx] = getMainAttributeWeights(
+        idx,
+        build[`${AttributePosition[idx].toLowerCase()}Attributes`],
+        build.subAttributes
+      ).toArray();
+      weight["sub"] = getSubAttributeWeights(build.subAttributes).toArray();
+    }
+    weights[hash] = weight;
+  }
+
+  artifacts.forEach((artifact, index) => {
+    const rarity = getRarity(
+      artifact.position,
+      [artifact.mainAttribute!.type],
+      artifact.subAttributes.map((attr) => ({ type: attr.type, value: 1 }))
+    );
+    const fits = getFitness(
+      artifact,
+      Object.keys(builds)
+        .filter((key) => weights[key] !== undefined)
+        .map((key) => ({
+          hash: key,
+          sets: getBuildSets(builds[key]),
+          ...weights[key],
+        }))
+    );
+    results["allRarity"][index] = rarity;
+    results["allFits"][index] = fits;
+  });
+  return results;
 };

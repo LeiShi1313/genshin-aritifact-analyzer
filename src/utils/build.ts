@@ -19,6 +19,8 @@ export interface BuildWeights {
   sets: GenshinSet[];
 }
 
+export type BuildEntry = Record<string, Build>;
+
 export const getBuildSets = (build: Build) => [
   ...new Set(
     build.suits

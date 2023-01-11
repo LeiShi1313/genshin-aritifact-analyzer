@@ -38,3 +38,7 @@ export function hashBuild(build: Build): string {
     })
   ).toString();
 }
+
+export const getArtifactsResultHash = (
+  enabledBuilds: Record<string, string>
+) => md5([...Object.keys(enabledBuilds)].sort().join("")).toString();

@@ -10,6 +10,7 @@ import './index.css'
 import './i18n'
 import { store, persistor } from './store';
 
+if (!import.meta.env.DEV) {
 Sentry.init({
   dsn: "https://fb6ab464e545427480a8baac61205322@o176406.ingest.sentry.io/4504485933613056",
   integrations: [new BrowserTracing()],
@@ -19,6 +20,7 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
