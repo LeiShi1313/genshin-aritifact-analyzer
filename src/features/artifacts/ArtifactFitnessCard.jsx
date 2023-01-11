@@ -49,7 +49,7 @@ const ArtifactFitnessCard = ({
               </span>
             )}
           </div>
-          <div className={classNames(rarityToColor(rarity))}>
+          <div className={classNames(rarityToColor(bestScore*10))}>
             {Object.values(fits).length > 0 && (
               <span>
                 {t("Fitness")}: {(100 * bestScore).toFixed(0)}%
