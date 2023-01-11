@@ -121,7 +121,6 @@ const ArtifactsUpload = () => {
   useEffect(() => {
     if (Object.keys(allFits).length > 0 && Object.keys(allRarity).length > 0)
       return;
-    console.log("loading");
     setIsLoading(true);
     setTimeout(() => {
       if (Object.keys(enabledBuilds).length === 0 || artifacts.length === 0)
@@ -142,6 +141,7 @@ const ArtifactsUpload = () => {
       }
 
       artifacts.forEach((artifact, index) => {
+        try {
         const rarity = getRarity(
           artifact.position,
           [artifact.mainAttribute.type],
@@ -159,9 +159,12 @@ const ArtifactsUpload = () => {
         );
         setAllFits((allFits) => ({ ...allFits, [index]: fits }));
         setAllRarity((allRarity) => ({ ...allRarity, [index]: rarity }));
+          } catch(e) {
+            console.log(e)
+            console.log(artifact)
+          }
       });
       setIsLoading(false);
-      console.log("done");
     }, 1);
   }, [enabledBuilds, artifacts]);
 

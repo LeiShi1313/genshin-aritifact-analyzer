@@ -17,6 +17,7 @@ export const monaAttributeToAttributeType = {
   criticalDamage: AttributeType.CRIT_DAMAGE,
   cureEffect: AttributeType.HEALING_BONUS,
   fireBonus: AttributeType.PYRO_DAMAGE_BONUS,
+  dendroBonus: AttributeType.DENDRO_DAMAGE_BONUS,
   waterBonus: AttributeType.HYDRO_DAMAGE_BONUS,
   thunderBonus: AttributeType.ELECTRO_DAMAGE_BONUS,
   iceBonus: AttributeType.CRYO_DAMAGE_BONUS,

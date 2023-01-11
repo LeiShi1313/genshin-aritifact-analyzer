@@ -27,16 +27,16 @@ const Main = () => {
       const text = e.target.result;
       const key = md5(text).toString();
       const mona = JSON.parse(text);
+      const artifacts = [];
       for (const k of Object.keys(mona)) {
         if (k === "version") continue;
-        const artifacts = [];
         for (const art of mona[k]) {
           artifacts.push(deserializeFromMona(art));
         }
-        dispatch(uploadArtifacts({ key, artifacts }));
-        navigate(`/artifacts/${key}`);
       }
+      dispatch(uploadArtifacts({ key, artifacts }));
       setFileLoading(false);
+      navigate(`/artifacts/${key}`);
     };
     fileReader.readAsText(file, "UTF-8");
   };
