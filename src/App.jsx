@@ -8,43 +8,49 @@ import {
 } from "react-router-dom";
 import { Build } from "./genshin/build";
 import { loadPresets } from "./store/reducers/presets";
-import { ThemeProvider } from './contexts/ThemeContext';
-
+import { ThemeProvider } from "./contexts/ThemeContext";
+import ThemedSuspense from "./features/ThemedSuspense";
 
 const Layout = lazy(() => import("./Layout"));
 const Main = lazy(() => import("./features/Main"));
 const BuildEditor = lazy(() => import("./features/builds/BuildEditor"));
 const BuildsEditor = lazy(() => import("./features/builds/BuildsEditor"));
-const ArtifactsUpload = lazy(() => import("./features/artifacts/ArtifactsUpload"));
+const ArtifactsUpload = lazy(() =>
+  import("./features/artifacts/ArtifactsUpload")
+);
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    import('./data/presets.json').then((data) => {
-      const presets = []
+    import("./data/presets.json").then((data) => {
+      const presets = [];
       for (let build of data.default) {
-        presets.push(build)
+        presets.push(build);
       }
-      dispatch(loadPresets(presets))
-    })
+      dispatch(loadPresets(presets));
+    });
   }, []);
 
   return (
     <Router>
       <ThemeProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Main />} />
-          <Route path="build" element={<BuildEditor />} />
-          <Route path="builds" element={<BuildsEditor />} />
-          <Route path="artifacts/:artifactsId" element={<ArtifactsUpload />} />
-        </Route>
-        {/* Place new routes over this */}
-        {/* <Route path="/app/*" element={<Layout />} /> */}
-        {/* <Route index path="/" exact element={<Navigate to="/login" />} /> */}
-      </Routes>
-
+        <Suspense fallback={<ThemedSuspense />}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Main />} />
+              <Route path="build" element={<BuildEditor />} />
+              <Route path="builds" element={<BuildsEditor />} />
+              <Route
+                path="artifacts/:artifactsId"
+                element={<ArtifactsUpload />}
+              />
+            </Route>
+            {/* Place new routes over this */}
+            {/* <Route path="/app/*" element={<Layout />} /> */}
+            {/* <Route index path="/" exact element={<Navigate to="/login" />} /> */}
+          </Routes>
+        </Suspense>
       </ThemeProvider>
     </Router>
   );

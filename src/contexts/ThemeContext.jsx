@@ -8,6 +8,7 @@ const dark_theme = 'luxury';
 export const ThemeContext = React.createContext();
 
 const setHtmlDataTheme = (theme) => {
+    console.log(theme)
     const html = document.getElementsByTagName('html')[0]
     html.setAttribute('data-theme', theme)
 }
@@ -17,20 +18,23 @@ export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('')
 
     useEffect(() => {
+        console.log(theme);
         if (location.pathname === '/build') return;
-        let theme = localStorage.getItem('genshin-aritifact-builds-theme')
-        if (!!!theme) {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? dark_theme : light_theme
+        let _theme = localStorage.getItem('genshin-aritifact-builds-theme')
+        if (!!!_theme) {
+            _theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? dark_theme : light_theme
         }
+        console.log(_theme);
         // TODO: check valid theme
-        setHtmlDataTheme(theme)
-        setTheme(theme)
+        setHtmlDataTheme(_theme)
+        setTheme(_theme)
     }, [location])
 
     const value = useMemo(
         () => ({
             theme,
             setTheme: (_theme) => {
+        console.log(theme);
                 if (_theme === 'auto') {
                     _theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? dark_theme : light_theme
                     if (location.pathname !== '/build') localStorage.setItem('genshin-aritifact-builds-theme', '')
@@ -41,7 +45,7 @@ export const ThemeProvider = ({ children }) => {
                 setTheme(_theme)
             }
         }),
-        [theme]
+        [theme, location]
     )
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

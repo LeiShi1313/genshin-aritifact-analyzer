@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ArrowUp, ArrowDown, X } from "phosphor-react";
+import ReactLoading from "react-loading";
 import classNames from "classnames";
 import ThemedSuspense from "../ThemedSuspense";
 import { getBuildSets } from "../../utils/build";
@@ -118,42 +119,50 @@ const ArtifactsUpload = () => {
     setSearchParams(updatedSearchParams.toString(), { replace: true });
   }, [rarity]);
   useEffect(() => {
+    if (Object.keys(allFits).length > 0 && Object.keys(allRarity).length > 0)
+      return;
+    console.log("loading");
     setIsLoading(true);
-    const weights = {};
-    for (const hash of Object.keys(enabledBuilds)) {
-      const weight = {};
-      for (const idx of enumToIdx(AttributePosition)) {
-        const build = enabledBuilds[hash];
-        weight[idx] = getMainAttributeWeights(
-          idx,
-          build[`${AttributePosition[idx].toLowerCase()}Attributes`],
-          build.subAttributes
-        ).toArray();
-        weight["sub"] = getSubAttributeWeights(build.subAttributes).toArray();
+    setTimeout(() => {
+      if (Object.keys(enabledBuilds).length === 0 || artifacts.length === 0)
+        return;
+      const weights = {};
+      for (const hash of Object.keys(enabledBuilds)) {
+        const weight = {};
+        for (const idx of enumToIdx(AttributePosition)) {
+          const build = enabledBuilds[hash];
+          weight[idx] = getMainAttributeWeights(
+            idx,
+            build[`${AttributePosition[idx].toLowerCase()}Attributes`],
+            build.subAttributes
+          ).toArray();
+          weight["sub"] = getSubAttributeWeights(build.subAttributes).toArray();
+        }
+        weights[hash] = weight;
       }
-      weights[hash] = weight;
-    }
 
-    artifacts.forEach((artifact, index) => {
-      const rarity = getRarity(
-        artifact.position,
-        [artifact.mainAttribute.type],
-        artifact.subAttributes.map((attr) => ({ type: attr.type, value: 1 }))
-      );
-      const fits = getFitness(
-        artifact,
-        Object.keys(enabledBuilds)
-          .filter((key) => weights[key] !== undefined)
-          .map((key) => ({
-            hash: key,
-            sets: getBuildSets(enabledBuilds[key]),
-            ...weights[key],
-          }))
-      );
-      setAllFits((allFits) => ({ ...allFits, [index]: fits }));
-      setAllRarity((allRarity) => ({ ...allRarity, [index]: rarity }));
-    });
-    setIsLoading(false);
+      artifacts.forEach((artifact, index) => {
+        const rarity = getRarity(
+          artifact.position,
+          [artifact.mainAttribute.type],
+          artifact.subAttributes.map((attr) => ({ type: attr.type, value: 1 }))
+        );
+        const fits = getFitness(
+          artifact,
+          Object.keys(enabledBuilds)
+            .filter((key) => weights[key] !== undefined)
+            .map((key) => ({
+              hash: key,
+              sets: getBuildSets(enabledBuilds[key]),
+              ...weights[key],
+            }))
+        );
+        setAllFits((allFits) => ({ ...allFits, [index]: fits }));
+        setAllRarity((allRarity) => ({ ...allRarity, [index]: rarity }));
+      });
+      setIsLoading(false);
+      console.log("done");
+    }, 1);
   }, [enabledBuilds, artifacts]);
 
   if (artifacts === undefined) {
@@ -167,9 +176,8 @@ const ArtifactsUpload = () => {
   } else if (Object.keys(enabledBuilds).length === 0) {
     return <BackToHome t={t} title="No enabled builds" navigate={navigate} />;
   }
-  return isLoading ? (
-    <span>Calculating</span>
-  ) : (
+  console.log("rendering");
+  return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="flex w-full flex-col items-center justify-center space-y-2 md:flex-row md:space-y-0 md:space-x-12">
         <div className="flex w-4/5 flex-row items-center justify-center space-x-2 md:w-1/5">
@@ -203,13 +211,25 @@ const ArtifactsUpload = () => {
         <div className="flex flex-row items-center space-x-4">
           <span className="flex flex-row items-center">
             {t("Fitness")}
-            <ArrowUp weight={sortKey === "fitness-asc" ? 'bold': 'thin'} onClick={() => setSortKey("fitness-asc")} />
-            <ArrowDown weight={sortKey === 'fitness-desc' ? 'bold': 'thin'} onClick={() => setSortKey("fitness-desc")} />
+            <ArrowUp
+              weight={sortKey === "fitness-asc" ? "bold" : "thin"}
+              onClick={() => setSortKey("fitness-asc")}
+            />
+            <ArrowDown
+              weight={sortKey === "fitness-desc" ? "bold" : "thin"}
+              onClick={() => setSortKey("fitness-desc")}
+            />
           </span>
           <span className="flex flex-row items-center">
             {t("Rarity")}
-            <ArrowUp weight={sortKey === "rarity-asc" ? 'bold': 'thin'} onClick={() => setSortKey("rarity-asc")} />
-            <ArrowDown weight={sortKey === "rarity-desc" ? 'bold': 'thin'} onClick={() => setSortKey("rarity-desc")} />
+            <ArrowUp
+              weight={sortKey === "rarity-asc" ? "bold" : "thin"}
+              onClick={() => setSortKey("rarity-asc")}
+            />
+            <ArrowDown
+              weight={sortKey === "rarity-desc" ? "bold" : "thin"}
+              onClick={() => setSortKey("rarity-desc")}
+            />
           </span>
         </div>
         <div className="flex flex-row items-center space-x-2">
@@ -219,26 +239,36 @@ const ArtifactsUpload = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col space-y-2">
-        {[...artifacts.map((_, index) => index)]
-          .sort(compareFn)
-          .filter(filterFn)
-          .map(
-            (index) =>
-              show(index) && (
-                <ArtifactFitnessCard
-                  key={index}
-                  index={index}
-                  artifact={artifacts[index]}
-                  builds={enabledBuilds}
-                  fits={allFits[index]}
-                  rarity={allRarity[index]}
-                  minFitness={fitness}
-                  minRarity={rarity}
-                />
-              )
-          )}
-      </div>
+      {isLoading ||
+      Object.keys(allFits).length === 0 ||
+      Object.keys(allRarity).length === 0 ? (
+        <div className="flex flex-row items-center mt-10">
+          <ReactLoading type="bars" className="fill-primary" style={{ height: 32, width: 32 }} />
+          <span className="text-xl">{t('Calculating')}</span>
+          <ReactLoading type="bars" className="fill-primary" style={{ height: 32, width: 32 }} />
+        </div>
+      ) : (
+        <div className="flex flex-col space-y-2">
+          {[...artifacts.map((_, index) => index)]
+            .sort(compareFn)
+            .filter(filterFn)
+            .map(
+              (index) =>
+                show(index) && (
+                  <ArtifactFitnessCard
+                    key={index}
+                    index={index}
+                    artifact={artifacts[index]}
+                    builds={enabledBuilds}
+                    fits={allFits[index]}
+                    rarity={allRarity[index]}
+                    minFitness={fitness}
+                    minRarity={rarity}
+                  />
+                )
+            )}
+        </div>
+      )}
     </div>
   );
 };

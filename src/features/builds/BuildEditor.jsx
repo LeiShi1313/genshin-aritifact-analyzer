@@ -80,7 +80,7 @@ const BuildEditor = () => {
     } else {
       dispatch(addBuild(build));
     }
-    navigate(-1, { replace: true, });
+    navigate(-1);
   };
 
   useEffect(() => {

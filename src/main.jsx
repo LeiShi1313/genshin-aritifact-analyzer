@@ -14,9 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-          <Suspense fallback={<ThemedSuspense />}>
             <App />
-          </Suspense>
       </PersistGate>
     </Provider>
   </React.StrictMode>

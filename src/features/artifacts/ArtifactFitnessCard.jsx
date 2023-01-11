@@ -67,10 +67,11 @@ const ArtifactFitnessCard = ({
             .map((key, idx) => (
               <div
                 key={idx}
-                className={classNames("cursor-pointer", {
-                  tooltip: builds[key].name.length > 0,
-                })}
-                data-tip={builds[key].name}
+                className="cursor-pointer tooltip"
+                data-tip={
+                  (builds[key].name ? builds[key].name : "") +
+                  `${t("Fitness")}: ${(100 * fits[key]).toFixed(0)}%`
+                }
                 onClick={() => handleClick(key)}
               >
                 <CharacterAvatar
