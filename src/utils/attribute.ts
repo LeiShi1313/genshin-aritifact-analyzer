@@ -43,6 +43,7 @@ export const gobletMainAttributes = [
   AttributeType.CRYO_DAMAGE_BONUS,
   AttributeType.ANEMO_DAMAGE_BONUS,
   AttributeType.GEO_DAMAGE_BONUS,
+  AttributeType.DENDRO_DAMAGE_BONUS,
   AttributeType.PHYSICAL_DAMAGE_BONUS,
 ];
 export const circletMainAttributes = [
