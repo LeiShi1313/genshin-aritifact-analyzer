@@ -74,6 +74,9 @@ const names = [
 ];
 
 const portCharacters = () => {
+  let trans = {
+      en: {},
+    };
   let en_trans = {};
   let zh_trans = {};
   let idx = 0;
@@ -100,12 +103,17 @@ const portCharacters = () => {
       .toLowerCase();
     proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
 
-    const cn = e.startsWith("traveler")
-      ? genshindb.talents(e, { resultLanguage: "CHS" })
-      : genshindb.characters(e, { resultLanguage: "CHS" });
+    trans['en'][key] = eng.name;
+    for (let lng of Object.keys(utils.lngToRegion)) {
+      const data = e.startsWith("traveler")
+      ? genshindb.talents(e, { resultLanguage: lng })
+      : genshindb.characters(e, { resultLanguage: lng });
+      if (!!!trans[utils.lngToRegion[lng]]) {
+        trans[utils.lngToRegion[lng]] = {}
+      }
+      trans[utils.lngToRegion[lng]][key] = data.name;
+    }
 
-    en_trans[key] = eng.name;
-    zh_trans[key] = cn.name;
     for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {
       if (eng.images[imageType]) {
         const imagePath = `./src/assets/characters/${key}_${imageType}.${eng.images[
@@ -119,20 +127,16 @@ const portCharacters = () => {
   });
   proto_file.write("}\n");
 
-  fs.writeFileSync(
-    "./public/locales/en/characters.json",
-    JSON.stringify(en_trans),
-    "utf-8"
-  );
-
-  fs.writeFileSync(
-    "./public/locales/zh/characters.json",
-    JSON.stringify(zh_trans),
-    "utf-8"
-  );
+  for (let lng of Object.keys(trans)) {
+    fs.writeFileSync(
+      `./public/locales/${lng}/characters.json`,
+      JSON.stringify(trans[lng]),
+      "utf-8"
+    );
+  }
   fs.writeFileSync(
     "./src/data/characters.json",
-    JSON.stringify(zh_trans),
+    JSON.stringify(trans['zh']),
     "utf-8"
   );
 };

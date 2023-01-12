@@ -1,5 +1,6 @@
 const genshindb = require("genshin-db");
 const fs = require("fs");
+const utils = require("./utils.cjs");
 
 const names = [
   "Akuoumaru",
@@ -156,8 +157,9 @@ const names = [
 ];
 
 const portWeapons = () => {
-  let en_trans = {};
-  let zh_trans = {};
+  let trans = {
+    en: {}
+  }
 
   let idx = 0;
   let proto_file = fs.createWriteStream('./proto/weapon.proto', {flags: 'w'});
@@ -172,25 +174,27 @@ const portWeapons = () => {
       return
     }
 
-    let weapon = eng.name.replace(/['"]/gi, "").replace(/[^0-9a-z]/gi, "_").toLowerCase();
-    proto_file.write(`    ${weapon.toUpperCase()} = ${idx++};\n`);
+    let key = eng.name.replace(/['"]/gi, "").replace(/[^0-9a-z]/gi, "_").toLowerCase();
+    proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
 
-    const cn = genshindb.weapons(e, { resultLanguage: "CHS" });
-    en_trans[weapon] = eng.name;
-    zh_trans[weapon] = cn.name;
+    trans['en'][key] = eng.name;
+    for (let lng of Object.keys(utils.lngToRegion)) {
+      const data = genshindb.weapons(e, { resultLanguage: lng });
+      if (!!!trans[utils.lngToRegion[lng]]) {
+        trans[utils.lngToRegion[lng]] = {}
+      }
+      trans[utils.lngToRegion[lng]][key] = data.name;
+    }
   });
   proto_file.write('}\n');
 
-  fs.writeFileSync(
-    "./public/locales/en/weapons.json",
-    JSON.stringify(en_trans),
-    "utf-8"
-  );
-  fs.writeFileSync(
-    "./public/locales/zh/weapons.json",
-    JSON.stringify(zh_trans),
-    "utf-8"
-  );
+  for (let lng of Object.keys(trans)) {
+    fs.writeFileSync(
+      `./public/locales/${lng}/weapons.json`,
+      JSON.stringify(trans[lng]),
+      "utf-8"
+    );
+  }
 }
 
 exports.portWeapons = portWeapons;

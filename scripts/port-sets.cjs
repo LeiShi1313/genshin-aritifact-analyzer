@@ -47,14 +47,12 @@ const names = [
 const positions = ['flower', 'plume', 'sands', 'goblet', 'circlet'];
 
 const portSets = () => {
-  let en_trans = {};
-  let zh_trans = {};
-  // let jp_trans = {};
-  // let kr_trans = {};
-  // let es_trans = {};
+  let trans = {
+    en: {},
+  };
 
   let idx = 0;
-  let proto_file = fs.createWriteStream('./proto/set.proto', {flags: 'w'});
+  let proto_file = fs.createWriteStream('./proto/set.proto', { flags: 'w' });
   proto_file.write('syntax = "proto3";\n\n');
   proto_file.write('package io.leishi.genshin.proto;\n\n');
   proto_file.write('enum Set {\n');
@@ -66,18 +64,21 @@ const portSets = () => {
       return
     }
 
-    let art = eng.name.replace(/'/gi, "").replace(/[^0-9a-z]/gi, "_").toLowerCase();
-    proto_file.write(`    ${art.toUpperCase()} = ${idx++};\n`);
+    let key = eng.name.replace(/'/gi, "").replace(/[^0-9a-z]/gi, "_").toLowerCase();
+    proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
 
-    const cn = genshindb.artifacts(e, { resultLanguage: "CHS" });
-    // const jp = genshindb.artifacts(e, { resultLanguage: "Japanese" })
-    en_trans[art] = eng.name;
-    zh_trans[art] = cn.name;
-    // jp_trans[art] = jp.name;
+    trans['en'][key] = eng.name;
+    for (let lng of Object.keys(utils.lngToRegion)) {
+      const data = genshindb.artifacts(e, { resultLanguage: lng });
+      if (!!!trans[utils.lngToRegion[lng]]) {
+        trans[utils.lngToRegion[lng]] = {}
+      }
+      trans[utils.lngToRegion[lng]][key] = data.name;
+    }
 
     for (let pos of positions) {
       if (eng.images[pos]) {
-        const imagePath = `./src/assets/artifacts/${art}_${pos}.${eng.images[
+        const imagePath = `./src/assets/artifacts/${key}_${pos}.${eng.images[
           pos
         ].slice(-3)}`;
         if (!fs.existsSync(imagePath)) {
@@ -88,16 +89,13 @@ const portSets = () => {
   });
   proto_file.write('}\n');
 
-  fs.writeFileSync(
-    "./public/locales/en/sets.json",
-    JSON.stringify(en_trans),
-    "utf-8"
-  );
-  fs.writeFileSync(
-    "./public/locales/zh/sets.json",
-    JSON.stringify(zh_trans),
-    "utf-8"
-  );
+  for (let lng of Object.keys(trans)) {
+    fs.writeFileSync(
+      `./public/locales/${lng}/sets.json`,
+      JSON.stringify(trans[lng]),
+      "utf-8"
+    );
+  }
 }
 
 exports.portSets = portSets;
