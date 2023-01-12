@@ -72,8 +72,8 @@ const BuildEditor = () => {
 
   const handleAdd = () => {
     if (presets[hash]) {
-      alert(t('This build is already in the presets. Please edit it there'))
-      return
+      alert(t("This build is already in the presets. Please edit it there"));
+      return;
     }
     if (id) {
       dispatch(editBuild({ id, build }));
@@ -88,11 +88,11 @@ const BuildEditor = () => {
       .matchMedia("(min-width: 420px)")
       .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
-  
+
   useEffect(() => {
-    const theme = characterToTheme(char)
+    const theme = characterToTheme(char);
     if (theme) setTheme(theme);
-  }, [char])
+  }, [char]);
 
   useEffect(() => {
     build = {
@@ -114,57 +114,58 @@ const BuildEditor = () => {
   }, [name, char, weapons, suits, sands, goblet, circlet, subAttributes]);
 
   return (
-    <div className="flex w-full h-full items-center justify-center">
-    <div
-      className={`flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
-      style={{ backgroundImage: `url(${imgUrl})` }}
-    >
-      <div className="items-enter flex w-full justify-center rounded-3xl bg-base-200 bg-opacity-70 py-2">
-        <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
-          <NameEditor name={name} setName={setName} isPreset={presets[hash]} />
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center justify-start">
-              <CharacterSelect char={char} setChar={setChar} />
-            </div>
-            <button className="btn btn-primary btn-sm" onClick={handleAdd} >
-              {id ? t("Save") : t("Add")}
-            </button>
-          </div>
-          <div className="flex flex-row items-center justify-between space-x-2">
-            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
-              <WeaponEditor weapons={weapons} setWeapons={setWeapons} />
-            </div>
-            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
-              <SuitsEditor suits={suits} setSuits={setSuits} />
-            </div>
-          </div>
-          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
-            <label className="label flex flex-row justify-between">
-              <span className="label-text">{t("Main Stats")}</span>
-            </label>
-            <MainAttributesEditor
-              flower={flower}
-              plume={plume}
-              sands={sands}
-              setSands={setSands}
-              goblet={goblet}
-              setGoblet={setGoblet}
-              circlet={circlet}
-              setCirclet={setCirclet}
-              subAttributes={subAttributes}
+      <div
+        className={`my-auto flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
+        style={{ backgroundImage: `url(${imgUrl})` }}
+      >
+        <div className="items-enter flex w-full justify-center rounded-3xl bg-base-200 bg-opacity-70 py-10">
+          <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
+            <NameEditor
+              name={name}
+              setName={setName}
+              isPreset={presets[hash]}
             />
-          </div>
-          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
-            <SubAttributesEditor
-              subAttributes={subAttributes}
-              setSubAttributes={setSubAttributes}
-            />
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center justify-start">
+                <CharacterSelect char={char} setChar={setChar} />
+              </div>
+              <button className="btn btn-primary btn-sm" onClick={handleAdd}>
+                {id ? t("Save") : t("Add")}
+              </button>
+            </div>
+            <div className="flex flex-row items-center justify-between space-x-2">
+              <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+                <WeaponEditor weapons={weapons} setWeapons={setWeapons} />
+              </div>
+              <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+                <SuitsEditor suits={suits} setSuits={setSuits} />
+              </div>
+            </div>
+            <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+              <label className="label flex flex-row justify-between">
+                <span className="label-text">{t("Main Stats")}</span>
+              </label>
+              <MainAttributesEditor
+                flower={flower}
+                plume={plume}
+                sands={sands}
+                setSands={setSands}
+                goblet={goblet}
+                setGoblet={setGoblet}
+                circlet={circlet}
+                setCirclet={setCirclet}
+                subAttributes={subAttributes}
+              />
+            </div>
+            <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+              <SubAttributesEditor
+                subAttributes={subAttributes}
+                setSubAttributes={setSubAttributes}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-      
-    </div>
   );
 };
 
