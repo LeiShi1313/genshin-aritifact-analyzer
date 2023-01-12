@@ -31,6 +31,15 @@ const ArtifactFitnessCard = ({
   const navigate = useNavigate();
   const presets = useSelector((state) => state.presets.builds);
   const bestScore = useMemo(() => Math.max(...Object.values(fits)), [fits]);
+  const filteredFits = useMemo(
+    () =>
+      [...Object.keys(fits)]
+        .sort((a, b) => fits[b] - fits[a])
+        .filter((key) => fits[key] >= Number(minFitness)),
+    [fits, minFitness]
+  );
+  const [showAll, setShowAll] = useState(false);
+  // const 
 
   const handleClick = (hash) =>
     presets[hash]
@@ -49,7 +58,7 @@ const ArtifactFitnessCard = ({
               </span>
             )}
           </div>
-          <div className={classNames(rarityToColor(bestScore*10))}>
+          <div className={classNames(rarityToColor(bestScore * 10))}>
             {Object.values(fits).length > 0 && (
               <span>
                 {t("Fitness")}: {(100 * bestScore).toFixed(0)}%
@@ -61,25 +70,26 @@ const ArtifactFitnessCard = ({
 
       <div className="flex flex-row">
         <div className="grid grid-cols-4 gap-x-1 gap-y-1 md:grid-cols-6 lg:grid-cols-8">
-          {[...Object.keys(fits)]
-            .sort((a, b) => fits[b] - fits[a])
-            .filter((key) => fits[key] >= Number(minFitness))
-            .map((key, idx) => (
-              <div
-                key={idx}
-                className="cursor-pointer tooltip"
-                data-tip={
-                  (builds[key].name ? builds[key].name : "") +
-                  `${t("Fitness")}: ${(100 * fits[key]).toFixed(0)}%`
-                }
-                onClick={() => handleClick(key)}
-              >
-                <CharacterAvatar
-                  character={builds[key].character}
-                  withRing={fits[key] >= bestScore}
-                />
-              </div>
-            ))}
+          {filteredFits.slice(0, showAll ? filteredFits.length : 8).map((key, idx) => (
+            <div
+              key={idx}
+              className="tooltip cursor-pointer"
+              data-tip={
+                (builds[key].name ? builds[key].name : "") +
+                `${t("Fitness")}: ${(100 * fits[key]).toFixed(0)}%`
+              }
+              onClick={() => handleClick(key)}
+            >
+              <CharacterAvatar
+                character={builds[key].character}
+                withRing={fits[key] >= bestScore}
+              />
+            </div>
+          ))}
+          {filteredFits.length > 8 && !showAll && (
+            <div className="tooltip" data-tip={`${filteredFits.length-8} more`}>
+              <span className="text-2xl font-bold cursor-pointer" onClick={() => setShowAll(true)}>...</span>
+            </div>)}
         </div>
       </div>
     </div>

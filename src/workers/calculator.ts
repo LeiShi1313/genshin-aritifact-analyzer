@@ -9,7 +9,7 @@ interface CalculatorMessage {
 
 self.onmessage = (e: MessageEvent<CalculatorMessage>) => {
     const { artifacts, builds } = e.data;
-    const { allFits, allRarity } = getAllFitsAndAllRarity(artifacts, builds);
+    const { allFits, allRarity } = getAllFitsAndAllRarity(artifacts, builds, self);
     self.postMessage({ allFits, allRarity });
 };
 

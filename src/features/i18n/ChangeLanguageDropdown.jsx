@@ -35,7 +35,7 @@ const ChangeLanguageDropdown = () => {
                     width="20"
                     height="20"
                     alt="English"
-                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1fa-1f1f8.svg"
                   />{" "}
                   <span className="flex flex-1 justify-between">English </span>
                 </button>{" "}
@@ -46,10 +46,82 @@ const ChangeLanguageDropdown = () => {
                     loading="lazy"
                     width="20"
                     height="20"
-                    alt="中文"
+                    alt="简体中文"
                     src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1e8-1f1f3.svg"
                   />{" "}
-                  <span className="flex flex-1 justify-between">中文 </span>
+                  <span className="flex flex-1 justify-between">简体中文 </span>
+                </button>{" "}
+              </li>
+              <li>
+                <button className={classNames("flex", {"active": i18n.language === 'zh-Hant'})} onClick={() => i18n.changeLanguage("zh-Hant")}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    alt="繁体中文"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ed-1f1f0.svg"
+                  />{" "}
+                  <span className="flex flex-1 justify-between">繁体中文 </span>
+                </button>{" "}
+              </li>
+              <li>
+                <button className={classNames("flex", {"active": i18n.language === 'ja'})} onClick={() => i18n.changeLanguage("ja")}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    alt="日本語"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ef-1f1f5.svg"
+                  />{" "}
+                  <span className="flex flex-1 justify-between">日本語 </span>
+                </button>{" "}
+              </li>
+              <li>
+                <button className={classNames("flex", {"active": i18n.language === 'ko'})} onClick={() => i18n.changeLanguage("ko")}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    alt="한국어"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1f0-1f1f7.svg"
+                  />{" "}
+                  <span className="flex flex-1 justify-between">한국어 </span>
+                </button>{" "}
+              </li>
+              <li>
+                <button className={classNames("flex", {"active": i18n.language === 'fr'})} onClick={() => i18n.changeLanguage("fr")}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    alt="Français"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1eb-1f1f7.svg"
+                  />{" "}
+                  <span className="flex flex-1 justify-between">Français </span>
+                </button>{" "}
+              </li>
+              <li>
+                <button className={classNames("flex", {"active": i18n.language === 'es'})} onClick={() => i18n.changeLanguage("es")}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    alt="Español"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ea-1f1f8.svg"
+                  />{" "}
+                  <span className="flex flex-1 justify-between">Español </span>
+                </button>{" "}
+              </li>
+              <li>
+                <button className={classNames("flex", {"active": i18n.language === 'de'})} onClick={() => i18n.changeLanguage("de")}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    alt="Deutsch"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1e9-1f1ea.svg"
+                  />{" "}
+                  <span className="flex flex-1 justify-between">Deutsch </span>
                 </button>{" "}
               </li>
             </ul>

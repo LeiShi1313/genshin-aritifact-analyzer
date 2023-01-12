@@ -300,7 +300,8 @@ export interface FitsAndRarity {
 
 export const getAllFitsAndAllRarity = (
   artifacts: Artifact[],
-  builds: BuildEntry
+  builds: BuildEntry,
+  window?: Window
 ): FitsAndRarity => {
   const results = {
     allFits: {},
@@ -322,6 +323,7 @@ export const getAllFitsAndAllRarity = (
     weights[hash] = weight;
   }
 
+  const len = artifacts.length;
   artifacts.forEach((artifact, index) => {
     const rarity = getRarity(
       artifact.position,
@@ -340,6 +342,7 @@ export const getAllFitsAndAllRarity = (
     );
     results["allRarity"][index] = rarity;
     results["allFits"][index] = fits;
+    if (window) window.postMessage(index / len);
   });
   return results;
 };

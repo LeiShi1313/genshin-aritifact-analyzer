@@ -5,19 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { ArrowUp, ArrowDown, X } from "phosphor-react";
 import ReactLoading from "react-loading";
 
-import { getBuildSets } from "../../utils/build";
 import ArtifactFitnessCard from "./ArtifactFitnessCard";
 import SetSelect from "../sets/SetSelect";
 import AttributePositionSelect from "./AttributePositionSelect";
 import { defaultFitness, defaultRarity } from "../../utils/config";
-import { getFitness, getRarity } from "../../utils/weights";
-import { AttributePosition } from "../../genshin/attribute";
 import {
-  getMainAttributeWeights,
-  getSubAttributeWeights,
-} from "../../utils/weights";
-import { enumToIdx } from "../../utils/enum";
-import { calculateFitsAndRarity, updateFitsAndRarity } from "../../store/reducers/artifacts";
+  calculateFitsAndRarity,
+  updateFitsAndRarity,
+} from "../../store/reducers/artifacts";
 import { getArtifactsResultHash } from "../../utils/hash";
 
 const BackToHome = ({ t, title, navigate }) => {
@@ -64,39 +59,53 @@ const ArtifactsUpload = () => {
     return enabledBuilds;
   }, [builds, presetBuilds, config]);
 
-  const resultHash = useMemo(() =>
-    getArtifactsResultHash(enabledBuilds)
-  );
+  const resultHash = useMemo(() => getArtifactsResultHash(enabledBuilds));
   const { allFits, allRarity } = useSelector(
-    (state) => (state.artifacts.fitsAndRarity[artifactsId] || {})[resultHash] ?? { allFits: {}, allRarity: {} }
+    (state) =>
+      (state.artifacts.fitsAndRarity[artifactsId] || {})[resultHash] ?? {
+        allFits: {},
+        allRarity: {},
+      }
   );
   const isLoading = useMemo(
     () =>
       Object.keys(allFits).length === 0 || Object.keys(allRarity).length === 0,
     [allFits, allRarity]
   );
+  const [progress, setProgress] = useState(0);
   const calculator = useMemo(
-    () => new Worker(new URL("../../workers/calculator.ts", import.meta.url), { type: 'module' }),
+    () =>
+      new Worker(new URL("../../workers/calculator.ts", import.meta.url), {
+        type: "module",
+      }),
     []
   );
 
   const [fitness, setFitness] = useState(
-    searchParams.get("fitness") ? Number(searchParams.get("fitness")) : defaultFitness
+    searchParams.get("fitness")
+      ? Number(searchParams.get("fitness"))
+      : defaultFitness
   );
   const [rarity, setRarity] = useState(
-    searchParams.get("rarity") ? Number(searchParams.get("rarity")) : defaultRarity
+    searchParams.get("rarity")
+      ? Number(searchParams.get("rarity"))
+      : defaultRarity
   );
-  const [set, setSet] = useState(searchParams.get("set") ? Number(searchParams.get("set")) : 0);
-  const [pos, setPos] = useState(searchParams.get("pos") ? Number(searchParams.get("pos")) : 0);
+  const [set, setSet] = useState(
+    searchParams.get("set") ? Number(searchParams.get("set")) : 0
+  );
+  const [pos, setPos] = useState(
+    searchParams.get("pos") ? Number(searchParams.get("pos")) : 0
+  );
+  const [page, setPage] = useState(
+    searchParams.get("page") ? Number(searchParams.get("page")) : 0
+  );
+  const [offset, setOffset] = useState(
+    searchParams.get("offset") ? Number(searchParams.get("offset")) : 20
+  );
   const [sortKey, setSortKey] = useState(
     searchParams.get("pos") ?? "rarity-desc"
   );
-
-  const show = (idx) =>
-    allFits[idx] !== undefined &&
-    allRarity[idx] !== undefined &&
-    (Math.max(...Object.values(allFits[idx])) >= Number(fitness) ||
-      allRarity[idx] >= rarity);
 
   const compareFn = useCallback(
     (a, b) => {
@@ -116,11 +125,13 @@ const ArtifactsUpload = () => {
         );
       }
     },
-    [sortKey]
+    [sortKey, allFits, allRarity]
   );
   const filterFn = useCallback(
     (idx) => {
-      let ret = true;
+      let ret =
+        Math.max(...Object.values(allFits[idx])) >= Number(fitness) ||
+        allRarity[idx] >= rarity;
       if (set > 0) {
         ret = ret && artifacts[idx].set === set;
       }
@@ -129,8 +140,14 @@ const ArtifactsUpload = () => {
       }
       return ret;
     },
-    [set, pos]
+    [fitness, rarity, allFits, allRarity, set, pos]
   );
+  const filteredArtifacts = useMemo(
+    () =>
+      [...artifacts.map((_, index) => index)].sort(compareFn).filter(filterFn),
+    [artifacts, compareFn, filterFn, page, offset]
+  );
+
   const handleSortChange = useCallback(
     (newSortKey) => {
       if (newSortKey.split("-")[0] === sortKey.split("-")[0]) {
@@ -147,10 +164,10 @@ const ArtifactsUpload = () => {
   );
 
   const updateParam = useCallback(
-    (param, value) => {
+    (param, value, replace = true) => {
       let updatedSearchParams = new URLSearchParams(searchParams.toString());
       updatedSearchParams.set(param, value);
-      setSearchParams(updatedSearchParams.toString(), { replace: true });
+      setSearchParams(updatedSearchParams.toString(), { replace: replace });
     },
     [searchParams]
   );
@@ -170,18 +187,39 @@ const ArtifactsUpload = () => {
     updateParam("sort", sortKey);
   }, [sortKey]);
   useEffect(() => {
+    updateParam("page", page, false);
+  }, [page]);
+  useEffect(() => {
+    updateParam("offset", offset, false);
+  }, [offset]);
+  useEffect(() => {
     if (window.Worker) {
       calculator.postMessage({ artifacts, builds: enabledBuilds });
       calculator.onmessage = (e) => {
-        const { allFits, allRarity } = e.data;
-        dispatch(updateFitsAndRarity({ hash: artifactsId, enabledBuilds, allFits, allRarity }));
-      }
+        if (!isNaN(Number(e.data))) {
+          setProgress(e.data);
+        } else {
+          const { allFits, allRarity } = e.data;
+          dispatch(
+            updateFitsAndRarity({
+              hash: artifactsId,
+              enabledBuilds,
+              allFits,
+              allRarity,
+            })
+          );
+        }
+      };
     } else {
-    setTimeout(() => {
-      dispatch(
-        calculateFitsAndRarity({ hash: artifactsId, artifacts, enabledBuilds })
-      );
-    }, 0);
+      setTimeout(() => {
+        dispatch(
+          calculateFitsAndRarity({
+            hash: artifactsId,
+            artifacts,
+            enabledBuilds,
+          })
+        );
+      }, 0);
     }
   }, [enabledBuilds, artifacts]);
 
@@ -270,42 +308,72 @@ const ArtifactsUpload = () => {
           </div>
         </div>
       </div>
-      {isLoading ||
-      Object.keys(allFits).length === 0 ||
-      Object.keys(allRarity).length === 0 ? (
-        <div className="mt-10 flex flex-row items-center">
-          <ReactLoading
-            type="bars"
-            className="fill-primary"
-            style={{ height: 32, width: 32 }}
-          />
-          <span className="text-xl">{t("Calculating")}</span>
-          <ReactLoading
-            type="bars"
-            className="fill-primary"
-            style={{ height: 32, width: 32 }}
-          />
+      {isLoading ? (
+        <div className="mt-10 flex flex-col items-center space-y-5">
+          <div className="flex flex-row items-center">
+            <ReactLoading
+              type="bars"
+              className="fill-primary"
+              style={{ height: 32, width: 32 }}
+            />
+            <span className="text-xl">{t("Calculating")}</span>
+            <ReactLoading
+              type="bars"
+              className="fill-primary"
+              style={{ height: 32, width: 32 }}
+            />
+          </div>
+          <progress
+            className="progress progress-primary w-56"
+            value={progress}
+            max="1"
+          ></progress>
         </div>
       ) : (
-        <div className="flex flex-col space-y-2">
-          {[...artifacts.map((_, index) => index)]
-            .sort(compareFn)
-            .filter(filterFn)
-            .map(
-              (index) =>
-                show(index) && (
-                  <ArtifactFitnessCard
-                    key={index}
-                    index={index}
-                    artifact={artifacts[index]}
-                    builds={enabledBuilds}
-                    fits={allFits[index]}
-                    rarity={allRarity[index]}
-                    minFitness={fitness}
-                    minRarity={rarity}
-                  />
-                )
-            )}
+        <div className="flex flex-col space-y-4">
+          {filteredArtifacts.length > offset && (
+            <div className="btn-group self-end justify-self-end">
+              <button
+                onClick={() => page > 0 && setPage(page - 1)}
+                className={`btn btn-ghost ${page === 0 && "cursor-not-allowed"}`}
+              >
+                «
+              </button>
+              <select
+                className="btn select btn-ghost select-ghost max-w-xs "
+                value={page}
+                onChange={(e) => setPage(Number(e.target.value))}
+              >
+                {[
+                  ...Array(Math.ceil(filteredArtifacts.length / offset)).keys(),
+                ].map((i) => (
+                  <option key={i} value={i}>
+                    {i}
+                  </option>
+                ))}{" "}
+              </select>
+              <button
+                onClick={() => page < Math.floor(filteredArtifacts.length / offset) && setPage(page + 1)}
+                className={`btn btn-ghost ${page === Math.floor(filteredArtifacts.length / offset) && "cursor-not-allowed"}`}
+              >
+                »
+              </button>
+            </div>
+          )}
+          {filteredArtifacts
+            .slice(page * offset, (page + 1) * offset)
+            .map((index) => (
+              <ArtifactFitnessCard
+                key={index}
+                index={index}
+                artifact={artifacts[index]}
+                builds={enabledBuilds}
+                fits={allFits[index]}
+                rarity={allRarity[index]}
+                minFitness={fitness}
+                minRarity={rarity}
+              />
+            ))}
         </div>
       )}
     </div>
