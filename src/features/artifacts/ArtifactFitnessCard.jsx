@@ -39,7 +39,7 @@ const ArtifactFitnessCard = ({
     [fits, minFitness]
   );
   const [showAll, setShowAll] = useState(false);
-  const [hoveredBuild, setHoveredBuild] = useState(null)co;
+  const [hoveredBuild, setHoveredBuild] = useState(null);
   const emptyAttributes = [];
   const fitAttributes = useMemo(
     () =>

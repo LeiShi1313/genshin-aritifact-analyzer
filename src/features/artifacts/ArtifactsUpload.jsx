@@ -62,7 +62,7 @@ const ArtifactsUpload = () => {
   const resultHash = useMemo(() => getArtifactsResultHash(enabledBuilds));
   const { allFits, allRarity } = useSelector(
     (state) =>
-      (state.artifacts.fitsAndRarity[artifactsId] || {})[resultHash] ?? {
+      ((state.artifacts.fitsAndRarity || {})[artifactsId] || {})[resultHash] ?? {
         allFits: {},
         allRarity: {},
       }
@@ -406,7 +406,7 @@ const ArtifactsUpload = () => {
           {filteredArtifacts.length > offset && (
             <div className="btn-group self-end justify-self-end">
               <button
-                onClick={() => page > 0 && setPage(page - 1)}
+                onClick={() => page > 0 && (setPage(page - 1) || window.scrollTo(0,0))}
                 className={`btn btn-ghost ${
                   page === 0 && "cursor-not-allowed"
                 }`}
@@ -429,7 +429,7 @@ const ArtifactsUpload = () => {
               <button
                 onClick={() =>
                   page < Math.floor(filteredArtifacts.length / offset) &&
-                  setPage(page + 1)
+                  (setPage(page + 1) || window.scrollTo(0, 0))
                 }
                 className={`btn btn-ghost ${
                   page === Math.floor(filteredArtifacts.length / offset) &&
