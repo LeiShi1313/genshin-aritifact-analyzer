@@ -403,6 +403,44 @@ const ArtifactsUpload = () => {
                 minRarity={rarity}
               />
             ))}
+          {filteredArtifacts.length > offset && (
+            <div className="btn-group self-end justify-self-end">
+              <button
+                onClick={() => page > 0 && setPage(page - 1)}
+                className={`btn btn-ghost ${
+                  page === 0 && "cursor-not-allowed"
+                }`}
+              >
+                «
+              </button>
+              <select
+                className="btn select btn-ghost select-ghost max-w-xs "
+                value={page}
+                onChange={(e) => setPage(Number(e.target.value))}
+              >
+                {[
+                  ...Array(Math.ceil(filteredArtifacts.length / offset)).keys(),
+                ].map((i) => (
+                  <option key={i} value={i}>
+                    {i}
+                  </option>
+                ))}{" "}
+              </select>
+              <button
+                onClick={() =>
+                  page < Math.floor(filteredArtifacts.length / offset) &&
+                  setPage(page + 1)
+                }
+                className={`btn btn-ghost ${
+                  page === Math.floor(filteredArtifacts.length / offset) &&
+                  "cursor-not-allowed"
+                }`}
+              >
+                »
+              </button>
+            </div>
+          )}
+          <div className="h-2 w-full"></div>
         </div>
       )}
     </div>
