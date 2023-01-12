@@ -39,7 +39,14 @@ const ArtifactFitnessCard = ({
     [fits, minFitness]
   );
   const [showAll, setShowAll] = useState(false);
-  // const 
+  const [hoveredBuild, setHoveredBuild] = useState(null);
+  const fitAttributes = useMemo(
+    () =>
+      hoveredBuild && builds[hoveredBuild]
+        ? builds[hoveredBuild].subAttributes.map((attr) => attr.type)
+        : [],
+    [hoveredBuild]
+  );
 
   const handleClick = (hash) =>
     presets[hash]
@@ -49,7 +56,7 @@ const ArtifactFitnessCard = ({
   return (
     <div className="flex w-80 flex-col items-center space-y-2 rounded-2xl bg-base-200 px-2 py-2 shadow-2xl lg:w-auto lg:flex-row">
       <div className="flex flex-col items-center sm:flex-row">
-        <ArtifactCard artifact={artifact} />
+        <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} />
         <div className="flex flex-col space-y-2 py-2 px-2">
           <div className={classNames(rarityToColor(rarity))}>
             {rarity && (
@@ -70,26 +77,39 @@ const ArtifactFitnessCard = ({
 
       <div className="flex flex-row">
         <div className="grid grid-cols-4 gap-x-1 gap-y-1 md:grid-cols-6 lg:grid-cols-8">
-          {filteredFits.slice(0, showAll ? filteredFits.length : 8).map((key, idx) => (
-            <div
-              key={idx}
-              className="tooltip cursor-pointer"
-              data-tip={
-                (builds[key].name ? builds[key].name : "") +
-                `${t("Fitness")}: ${(100 * fits[key]).toFixed(0)}%`
-              }
-              onClick={() => handleClick(key)}
-            >
-              <CharacterAvatar
-                character={builds[key].character}
-                withRing={fits[key] >= bestScore}
-              />
-            </div>
-          ))}
+          {filteredFits
+            .slice(0, showAll ? filteredFits.length : 8)
+            .map((key, idx) => (
+              <div
+                key={idx}
+                className="tooltip cursor-pointer"
+                data-tip={
+                  (builds[key].name ? builds[key].name : "") +
+                  `${t("Fitness")}: ${(100 * fits[key]).toFixed(0)}%`
+                }
+                onClick={() => handleClick(key)}
+                onMouseEnter={() => setHoveredBuild(key)}
+                onMouseLeave={() => setHoveredBuild(null)}
+              >
+                <CharacterAvatar
+                  character={builds[key].character}
+                  withRing={fits[key] >= bestScore}
+                />
+              </div>
+            ))}
           {filteredFits.length > 8 && !showAll && (
-            <div className="tooltip" data-tip={`${filteredFits.length-8} more`}>
-              <span className="text-2xl font-bold cursor-pointer" onClick={() => setShowAll(true)}>...</span>
-            </div>)}
+            <div
+              className="tooltip"
+              data-tip={`${filteredFits.length - 8} more`}
+            >
+              <span
+                className="cursor-pointer text-2xl font-bold"
+                onClick={() => setShowAll(true)}
+              >
+                ...
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

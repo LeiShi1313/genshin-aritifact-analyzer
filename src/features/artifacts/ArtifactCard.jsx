@@ -7,7 +7,7 @@ import { Character } from "../../genshin/character";
 import { formatAttributeValue } from "../../utils/attribute";
 import CharacterAvatar from "../characters/CharacterAvatar";
 
-const ArtifactCard = ({ artifact }) => {
+const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
   const { t } = useTranslation();
   const artKey = useMemo(
     () =>
@@ -51,7 +51,15 @@ const ArtifactCard = ({ artifact }) => {
           </h2>
           <div className="flex flex-col space-y-1">
             {artifact.subAttributes.map((attr, idx) => (
-              <p className="text-xs text-secondary" key={idx}>
+              <p
+                className={classNames(
+                  "text-xs",
+                  fitAttributes.indexOf(attr.type) === -1
+                    ? "text-secondary"
+                    : "font-bold text-secondary-focus"
+                )}
+                key={idx}
+              >
                 {t(AttributeType[attr.type].toLowerCase(), {
                   ns: "artifacts",
                 })}
@@ -72,7 +80,9 @@ const ArtifactCard = ({ artifact }) => {
             >
               <CharacterAvatar character={artifact.character} />
             </div>
-          ): ''}
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
