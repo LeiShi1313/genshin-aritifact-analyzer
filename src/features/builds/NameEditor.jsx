@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pencil, Check } from "phosphor-react";
 
-const NameEditor = ({ name, setName }) => {
+const NameEditor = ({ name, setName, isPreset=false }) => {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
 
   return !isEditing ? (
     <h2 className="card-title">
+      {isPreset && <span className="badge badge-primary">{t("Presets")}</span>}
       {name ? name : t("Unnamed Build")}
       <Pencil className="cursor-pointer" onClick={() => setIsEditing(true)} />
     </h2>

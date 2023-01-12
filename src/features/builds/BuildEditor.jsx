@@ -68,9 +68,9 @@ const BuildEditor = () => {
       ).href,
     [char, matches]
   );
+  const hash = useMemo(() => hashBuild(build), [build]);
 
   const handleAdd = () => {
-    const hash = hashBuild(build)
     if (presets[hash]) {
       alert(t('This build is already in the presets. Please edit it there'))
       return
@@ -120,7 +120,7 @@ const BuildEditor = () => {
     >
       <div className="items-enter flex w-full justify-center rounded-3xl bg-base-100 bg-opacity-70 py-2">
         <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
-          <NameEditor name={name} setName={setName} />
+          <NameEditor name={name} setName={setName} isPreset={presets[hash]} />
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center justify-start">
               <CharacterSelect char={char} setChar={setChar} />
