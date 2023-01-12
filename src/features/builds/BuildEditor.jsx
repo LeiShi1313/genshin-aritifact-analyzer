@@ -114,11 +114,12 @@ const BuildEditor = () => {
   }, [name, char, weapons, suits, sands, goblet, circlet, subAttributes]);
 
   return (
+    <div className="flex w-full h-full items-center justify-center">
     <div
       className={`flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
       style={{ backgroundImage: `url(${imgUrl})` }}
     >
-      <div className="items-enter flex w-full justify-center rounded-3xl bg-base-100 bg-opacity-70 py-2">
+      <div className="items-enter flex w-full justify-center rounded-3xl bg-base-200 bg-opacity-70 py-2">
         <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
           <NameEditor name={name} setName={setName} isPreset={presets[hash]} />
           <div className="flex flex-row items-center justify-between">
@@ -161,6 +162,8 @@ const BuildEditor = () => {
           </div>
         </div>
       </div>
+    </div>
+      
     </div>
   );
 };
