@@ -109,6 +109,14 @@ const ArtifactsUpload = () => {
 
   const compareFn = useCallback(
     (a, b) => {
+      if (
+        !!!allFits[a] ||
+        !!!allFits[b] ||
+        !!!allRarity[a] ||
+        !!!allRarity[b]
+      ) {
+        return 0;
+      }
       if (sortKey === "rarity-desc") {
         return allRarity[b] - allRarity[a];
       } else if (sortKey === "rarity-asc") {
@@ -130,8 +138,10 @@ const ArtifactsUpload = () => {
   const filterFn = useCallback(
     (idx) => {
       let ret =
-        Math.max(...Object.values(allFits[idx])) >= Number(fitness) ||
-        allRarity[idx] >= rarity;
+        allFits[idx] &&
+        allRarity[idx] &&
+        (Math.max(...Object.values(allFits[idx])) >= Number(fitness) ||
+          allRarity[idx] >= rarity);
       if (set > 0) {
         ret = ret && artifacts[idx].set === set;
       }
@@ -144,7 +154,11 @@ const ArtifactsUpload = () => {
   );
   const filteredArtifacts = useMemo(
     () =>
-      [...artifacts.map((_, index) => index)].sort(compareFn).filter(filterFn),
+      artifacts && artifacts.length > 0
+        ? [...artifacts.map((_, index) => index)]
+            .sort(compareFn)
+            .filter(filterFn)
+        : [],
     [artifacts, compareFn, filterFn, page, offset]
   );
 
@@ -193,6 +207,13 @@ const ArtifactsUpload = () => {
     updateParam("offset", offset, false);
   }, [offset]);
   useEffect(() => {
+    if (
+      artifacts === undefined ||
+      artifacts.length === 0 ||
+      enabledBuilds.length === 0
+    ) {
+      return;
+    }
     if (window.Worker) {
       calculator.postMessage({ artifacts, builds: enabledBuilds });
       calculator.onmessage = (e) => {
@@ -335,7 +356,9 @@ const ArtifactsUpload = () => {
             <div className="btn-group self-end justify-self-end">
               <button
                 onClick={() => page > 0 && setPage(page - 1)}
-                className={`btn btn-ghost ${page === 0 && "cursor-not-allowed"}`}
+                className={`btn btn-ghost ${
+                  page === 0 && "cursor-not-allowed"
+                }`}
               >
                 «
               </button>
@@ -353,8 +376,14 @@ const ArtifactsUpload = () => {
                 ))}{" "}
               </select>
               <button
-                onClick={() => page < Math.floor(filteredArtifacts.length / offset) && setPage(page + 1)}
-                className={`btn btn-ghost ${page === Math.floor(filteredArtifacts.length / offset) && "cursor-not-allowed"}`}
+                onClick={() =>
+                  page < Math.floor(filteredArtifacts.length / offset) &&
+                  setPage(page + 1)
+                }
+                className={`btn btn-ghost ${
+                  page === Math.floor(filteredArtifacts.length / offset) &&
+                  "cursor-not-allowed"
+                }`}
               >
                 »
               </button>
