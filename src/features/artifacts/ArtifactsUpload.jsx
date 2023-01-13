@@ -106,7 +106,7 @@ const ArtifactsUpload = () => {
     searchParams.get("offset") ? Number(searchParams.get("offset")) : 20
   );
   const [sortKey, setSortKey] = useState(
-    searchParams.get("pos") ?? "rarity-desc"
+    searchParams.get("sort") ?? "rarity-desc"
   );
 
   const compareFn = useCallback(
