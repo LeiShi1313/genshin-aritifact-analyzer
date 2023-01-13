@@ -114,6 +114,7 @@ const BuildEditor = () => {
   }, [name, char, weapons, suits, sands, goblet, circlet, subAttributes]);
 
   return (
+    <div className="flex flex-col items-center justify-center">
       <div
         className={`my-auto flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
         style={{ backgroundImage: `url(${imgUrl})` }}
@@ -166,6 +167,7 @@ const BuildEditor = () => {
           </div>
         </div>
       </div>
+    </div>
   );
 };
 
