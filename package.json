@@ -9,9 +9,10 @@
     "proto": "rm -r ./src/genshin && mkdir -p ./src/genshin && protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/genshin ./proto/*.proto",
     "proto-js": "protoc --proto_path=./proto --js_out=./genshin ./proto/*.proto",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host"
   },
   "dependencies": {
+    "@piotr-cz/redux-persist-idb-storage": "^1.1.3",
     "@reduxjs/toolkit": "^1.8.5",
     "@sentry/react": "^7.30.0",
     "@sentry/tracing": "^7.30.0",
