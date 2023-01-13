@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ArrowUp, ArrowDown, X } from "phosphor-react";
 import ReactLoading from "react-loading";
@@ -14,6 +14,7 @@ import {
   updateFitsAndRarity,
 } from "../../store/reducers/artifacts";
 import { getArtifactsResultHash } from "../../utils/hash";
+import useQueryParams from "../../hooks/useQueryParams";
 
 const BackToHome = ({ t, title, navigate }) => {
   return (
@@ -86,31 +87,15 @@ const ArtifactsUpload = () => {
     []
   );
 
-  const [fitness, setFitness] = useState(
-    searchParams.get("fitness")
-      ? Number(searchParams.get("fitness"))
-      : defaultFitness
-  );
-  const [rarity, setRarity] = useState(
-    searchParams.get("rarity")
-      ? Number(searchParams.get("rarity"))
-      : defaultRarity
-  );
-  const [set, setSet] = useState(
-    searchParams.get("set") ? Number(searchParams.get("set")) : 0
-  );
-  const [pos, setPos] = useState(
-    searchParams.get("pos") ? Number(searchParams.get("pos")) : 0
-  );
-  const [page, setPage] = useState(
-    searchParams.get("page") ? Number(searchParams.get("page")) : 0
-  );
-  const [offset, setOffset] = useState(
-    searchParams.get("offset") ? Number(searchParams.get("offset")) : 20
-  );
-  const [sortKey, setSortKey] = useState(
-    searchParams.get("sort") ?? "rarity-desc"
-  );
+  // const [fitness, setFitness] = useState(defaultFitness)
+  // const [rarity, setRarity] = useState(defaultRarity)
+  const [fitness, setFitness] = useQueryParams('fitness', defaultFitness, { isNumeric: true, replace: false})
+  const [rarity, setRarity] = useQueryParams('rarity', defaultRarity, { isNumeric: true, replace: false})
+  const [set, setSet] = useQueryParams('set', 0, { isNumeric: true, replace: false})
+  const [pos, setPos] = useQueryParams('position', 0, { isNumeric: true, replace: false})
+  const [sortKey, setSortKey] = useQueryParams('sort', 'rarity-desc', { replace: false})
+  const [page, setPage] = useQueryParams('page', 0, { isNumeric: true, replace: false})
+  const [offset, setOffset] = useQueryParams('offset', 20, { isNumeric: true, replace: false})
 
   const compareFn = useCallback(
     (a, b) => {
@@ -190,35 +175,6 @@ const ArtifactsUpload = () => {
     [sortKey]
   );
 
-  const updateParam = useCallback(
-    (param, value, replace = true) => {
-      let updatedSearchParams = new URLSearchParams(searchParams.toString());
-      updatedSearchParams.set(param, value);
-      setSearchParams(updatedSearchParams.toString(), { replace: replace });
-    },
-    [searchParams]
-  );
-  useEffect(() => {
-    updateParam("fitness", fitness);
-  }, [fitness]);
-  useEffect(() => {
-    updateParam("rarity", rarity);
-  }, [rarity]);
-  useEffect(() => {
-    updateParam("set", set);
-  }, [set]);
-  useEffect(() => {
-    updateParam("position", pos);
-  }, [pos]);
-  useEffect(() => {
-    updateParam("sort", sortKey);
-  }, [sortKey]);
-  useEffect(() => {
-    updateParam("page", page, false);
-  }, [page]);
-  useEffect(() => {
-    updateParam("offset", offset, false);
-  }, [offset]);
   useEffect(() => {
     if (
       artifacts === undefined ||
