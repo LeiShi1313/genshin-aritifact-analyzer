@@ -37,6 +37,7 @@
     "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "^0.3.0",
     "@tailwindcss/typography": "^0.5.7",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
