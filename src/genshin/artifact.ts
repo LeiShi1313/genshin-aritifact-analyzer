@@ -14,10 +14,20 @@ export interface Artifact {
   mainAttribute: Attribute | undefined;
   subAttributes: Attribute[];
   character: Character;
+  locked: boolean;
 }
 
 function createBaseArtifact(): Artifact {
-  return { set: 0, star: 0, level: 0, position: 0, mainAttribute: undefined, subAttributes: [], character: 0 };
+  return {
+    set: 0,
+    star: 0,
+    level: 0,
+    position: 0,
+    mainAttribute: undefined,
+    subAttributes: [],
+    character: 0,
+    locked: false,
+  };
 }
 
 export const Artifact = {
@@ -42,6 +52,9 @@ export const Artifact = {
     }
     if (message.character !== 0) {
       writer.uint32(56).int32(message.character);
+    }
+    if (message.locked === true) {
+      writer.uint32(64).bool(message.locked);
     }
     return writer;
   },
@@ -74,6 +87,9 @@ export const Artifact = {
         case 7:
           message.character = reader.int32() as any;
           break;
+        case 8:
+          message.locked = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -93,6 +109,7 @@ export const Artifact = {
         ? object.subAttributes.map((e: any) => Attribute.fromJSON(e))
         : [],
       character: isSet(object.character) ? characterFromJSON(object.character) : 0,
+      locked: isSet(object.locked) ? Boolean(object.locked) : false,
     };
   },
 
@@ -110,6 +127,7 @@ export const Artifact = {
       obj.subAttributes = [];
     }
     message.character !== undefined && (obj.character = characterToJSON(message.character));
+    message.locked !== undefined && (obj.locked = message.locked);
     return obj;
   },
 
@@ -124,6 +142,7 @@ export const Artifact = {
       : undefined;
     message.subAttributes = object.subAttributes?.map((e) => Attribute.fromPartial(e)) || [];
     message.character = object.character ?? 0;
+    message.locked = object.locked ?? false;
     return message;
   },
 };

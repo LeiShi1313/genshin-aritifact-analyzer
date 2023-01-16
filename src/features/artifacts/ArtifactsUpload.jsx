@@ -40,7 +40,10 @@ const ArtifactsUpload = () => {
   const { artifactsId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const artifacts = useSelector(
-    (state) => state.uploads.artifacts[artifactsId]
+    (state) => state.uploads.artifacts[artifactsId].items
+  );
+  const format = useSelector(
+    (state) => state.uploads.artifacts[artifactsId].format
   );
   const { builds, config } = useSelector((state) => state.build);
   const presetBuilds = useSelector((state) => state.presets.builds);
@@ -163,6 +166,14 @@ const ArtifactsUpload = () => {
         : [],
     [artifacts, compareFn, filterFn, page, offset]
   );
+  const handleDownloadYasLock = useCallback(() => {
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify(filteredArtifacts.filter((idx) => !artifacts[idx].locked))], {type: 'text/json'});
+    element.href = URL.createObjectURL(file);
+    element.download = "lock.json";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }, [filteredArtifacts]);
 
   const handleSortChange = useCallback(
     (newSortKey) => {
@@ -212,7 +223,7 @@ const ArtifactsUpload = () => {
     if (
       artifacts === undefined ||
       artifacts.length === 0 ||
-      enabledBuilds.length === 0
+      Object.keys(enabledBuilds).length === 0
     ) {
       return;
     }
@@ -354,43 +365,57 @@ const ArtifactsUpload = () => {
         </div>
       ) : (
         <div className="flex flex-col space-y-4">
-          {filteredArtifacts.length > offset && (
-            <div className="btn-group self-end justify-self-end">
-              <button
-                onClick={() => page > 0 && setPage(page - 1)}
-                className={`btn btn-ghost ${
-                  page === 0 && "cursor-not-allowed"
-                }`}
-              >
-                «
-              </button>
-              <select
-                className="btn select btn-ghost select-ghost max-w-xs "
-                value={page}
-                onChange={(e) => setPage(Number(e.target.value))}
-              >
-                {[
-                  ...Array(Math.ceil(filteredArtifacts.length / offset)).keys(),
-                ].map((i) => (
-                  <option key={i} value={i}>
-                    {i}
-                  </option>
-                ))}{" "}
-              </select>
-              <button
-                onClick={() =>
-                  page < Math.floor(filteredArtifacts.length / offset) &&
-                  setPage(page + 1)
-                }
-                className={`btn btn-ghost ${
-                  page === Math.floor(filteredArtifacts.length / offset) &&
-                  "cursor-not-allowed"
-                }`}
-              >
-                »
-              </button>
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center px-2">
+              {format === "GOOD" && (
+                <button
+                  className="btn btn-primary"
+                  onClick={handleDownloadYasLock}
+                >
+                  {t("Generate")} lock.json
+                </button>
+              )}
             </div>
-          )}
+            {filteredArtifacts.length > offset && (
+              <div className="btn-group self-end justify-self-end">
+                <button
+                  onClick={() => page > 0 && setPage(page - 1)}
+                  className={`btn btn-ghost ${
+                    page === 0 && "cursor-not-allowed"
+                  }`}
+                >
+                  «
+                </button>
+                <select
+                  className="btn select btn-ghost select-ghost max-w-xs "
+                  value={page}
+                  onChange={(e) => setPage(Number(e.target.value))}
+                >
+                  {[
+                    ...Array(
+                      Math.ceil(filteredArtifacts.length / offset)
+                    ).keys(),
+                  ].map((i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}{" "}
+                </select>
+                <button
+                  onClick={() =>
+                    page < Math.floor(filteredArtifacts.length / offset) &&
+                    setPage(page + 1)
+                  }
+                  className={`btn btn-ghost ${
+                    page === Math.floor(filteredArtifacts.length / offset) &&
+                    "cursor-not-allowed"
+                  }`}
+                >
+                  »
+                </button>
+              </div>
+            )}
+          </div>
           {filteredArtifacts
             .slice(page * offset, (page + 1) * offset)
             .map((index) => (

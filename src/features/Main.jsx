@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import md5 from "crypto-js/md5";
 
-import { deserializeFromMona } from "../utils/artifact";
+import { deserializeFromMona, deserializeFromGood } from "../utils/artifact";
+import { monaPositionToAttributePosition } from "../utils/attribute";
 import { uploadArtifacts } from "../store/reducers/uploads";
 
 const Main = () => {
@@ -17,6 +18,10 @@ const Main = () => {
   const [fileLoading, setFileLoading] = useState(false);
 
   const handleFile = (e) => {
+    if (!window.FileReader) {
+      alert("No FileReader found, please use another browser and try again");
+      return;
+    }
     setFileLoading(true);
 
     const file = e.target.files[0];
@@ -26,15 +31,32 @@ const Main = () => {
     fileReader.onload = (e) => {
       const text = e.target.result;
       const key = md5(text).toString();
-      const mona = JSON.parse(text);
+      const content = JSON.parse(text);
       const artifacts = [];
-      for (const k of Object.keys(mona)) {
-        if (k === "version") continue;
-        for (const art of mona[k]) {
-          artifacts.push(deserializeFromMona(art));
+
+      let format = null;
+      if (content["format"] === "GOOD") {
+        format = "GOOD";
+        for (const art of content["artifacts"]) {
+          const a = deserializeFromGood(art);
+          artifacts.push(deserializeFromGood(art));
         }
+      } else if (
+        content["version"] === "1" &&
+        Object.keys(monaPositionToAttributePosition).every((k) => k in content)
+      ) {
+        format = "YAS";
+        for (const k of Object.keys(content)) {
+          if (k === "version") continue;
+          for (const art of content[k]) {
+            artifacts.push(deserializeFromMona(art));
+          }
+        }
+      } else {
+        alert("Unsupported file format, please use supported file format");
+        return;
       }
-      dispatch(uploadArtifacts({ key, artifacts }));
+      dispatch(uploadArtifacts({ key, artifacts, format }));
       setFileLoading(false);
       navigate(`/artifacts/${key}`);
     };

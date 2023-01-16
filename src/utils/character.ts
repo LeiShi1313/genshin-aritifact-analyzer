@@ -1,4 +1,5 @@
 import { Character, characterFromJSON } from "../genshin/character";
+import { enumToStringKey } from "./enum";
 import zh_trans from '../data/characters.json';
 
 const zhToKey = {};
@@ -15,6 +16,13 @@ export const characterFromName = (name: string): Character => {
 export const characterFromMonaName = (name: string): Character => {
     if (name === '') return Character.CHARACTER_UNSPECIFIED;
     return characterFromJSON(zhToKey[name])
+}
+
+export const characterFromGoodName = (name: string): Character => {
+    if (name === '') return Character.CHARACTER_UNSPECIFIED;
+    const characters = {};
+    enumToStringKey(Character).forEach((key) => characters[key.replace('_', '').toUpperCase()] = Character[key]);
+    return characters[name.toUpperCase()];
 }
 
 export const characterToTheme = (character: Character): string => {

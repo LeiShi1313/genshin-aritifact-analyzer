@@ -12,3 +12,11 @@ export const monaSetToSet = (setName: string): Set => {
   if (set !== undefined) return set;
   return Set.SET_UNSPECIFIED;
 }
+
+export const goodSetToSet = (setName: string): Set => {
+  const name = setName.charAt(0).toLowerCase() + setName.slice(1);
+  const key = name.replace(/[A-Z]/g, x => `_${x}`).toUpperCase();
+  let set = Set[key];
+  if (set !== undefined) return set;
+  return Set.SET_UNSPECIFIED;
+}
