@@ -32,13 +32,19 @@ export const characterToTheme = (character: Character): string => {
         case Character.SANGONOMIYA_KOKOMI:
             return 'aqua'
         case Character.RAIDEN_SHOGUN:
-            return 'synthware'
+            return 'RAIDEN_SHOGUN'
         case Character.TIGHNARI:
             return 'emerald'
         case Character.WANDERER:
             return 'forest'
         case Character.ZHONGLI:
-            return 'bumblebee'
+            return 'zhongli'
+        case Character.YUN_JIN:
+            return 'yun_jin'
+        case Character.YOIMIYA:
+            return 'yoimiya'
+        case Character.XINGQIU:
+            return 'xingqiu'
         default: return 'auto'
     }
 }
