@@ -77,8 +77,7 @@ const portCharacters = () => {
   let trans = {
       en: {},
     };
-  let en_trans = {};
-  let zh_trans = {};
+  let data = {};
   let idx = 0;
 
   let proto_file = fs.createWriteStream("./proto/character.proto", {
@@ -113,6 +112,12 @@ const portCharacters = () => {
       }
       trans[utils.lngToRegion[lng]][key] = data.name;
     }
+    data[key] = {
+      zh_name: trans['zh'][key],
+      element: key.startsWith('traveler') ? key.split('_')[1] : eng.element !== 'None' ? eng.element : '',
+      weapontype: key.startsWith('traveler') ? 'Sword' : eng.weapontype,
+      rarity: key.startsWith('traveler') ? 5: eng.rarity,
+    }
 
     for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {
       if (eng.images[imageType]) {
@@ -136,7 +141,7 @@ const portCharacters = () => {
   }
   fs.writeFileSync(
     "./src/data/characters.json",
-    JSON.stringify(trans['zh']),
+    JSON.stringify(data),
     "utf-8"
   );
 };

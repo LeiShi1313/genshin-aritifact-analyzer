@@ -2,6 +2,15 @@ syntax = "proto3";
 
 package io.leishi.genshin.proto;
 
+enum WeaponType {
+    WEAPON_TYPE_UNSPECIFIED = 0;
+    BOW = 1;
+    CLAYMORE = 2;
+    CATALYST = 3;
+    POLEARM = 4;
+    SWORD = 5;
+}
+
 enum Weapon {
     WEAPON_UNSPECIFIED = 0;
     AKUOUMARU = 1;

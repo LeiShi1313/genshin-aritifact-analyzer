@@ -1,9 +1,9 @@
 import { Character, characterFromJSON } from "../genshin/character";
 import { enumToStringKey } from "./enum";
-import zh_trans from '../data/characters.json';
+import data from '../data/characters.json';
 
 const zhToKey = {};
-Object.keys(zh_trans).map((key) => zhToKey[zh_trans[key]] = key.toUpperCase());
+Object.keys(data).map((key) => zhToKey[data[key]['zh_name']] = key.toUpperCase());
 
 export const characterFromName = (name: string): Character => {
     const c = Character[name.toUpperCase()];
