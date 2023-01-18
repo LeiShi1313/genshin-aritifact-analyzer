@@ -116,29 +116,33 @@ export const subAttributeOptions = [
   AttributeType.CRIT_DAMAGE,
 ];
 
-export const attributeValueFromStarAndLevel = (attr: AttributeType, star: number, level: number): number => {
+export const attributeValueFromStarAndLevel = (
+  attr: AttributeType,
+  star: number,
+  level: number
+): number => {
   // TODO: finish this
   switch (attr) {
     case AttributeType.HP:
-      return 203.15 * 0.9^(star - 5) * level + 717 * 0.9^(star - 5);
+      return 203.15 * 0.9 ** (star - 5) * level + 717 * 0.9 ** (star - 5);
     case AttributeType.ATK:
-      return 13.2 * 0.9^(star - 5) * level + 47.4 * 0.9^(star - 5);
+      return 13.2 * 0.9 ** (star - 5) * level + 47.4 * 0.9 ** (star - 5);
     case AttributeType.HP_PERCENT:
     case AttributeType.ATK_PERCENT:
-      return 1.98 * 0.9^(star - 5) * level + 6.9 * 0.9^(star - 5);
+      return 0.0198 * 0.9 ** (star - 5) * level + 0.069 * 0.9 ** (star - 5);
     case AttributeType.DEF_PERCENT:
     case AttributeType.PHYSICAL_DAMAGE_BONUS:
-      return 2.48 * 0.9^(star - 5) * level + 8.6 * 0.9^(star - 5);
+      return 0.0248 * 0.9 ** (star - 5) * level + 0.086 * 0.9 ** (star - 5);
     case AttributeType.ELEMENTAL_MASTERY:
-      return 7.95 * 0.9^(star - 5) * level + 27.2 * 0.9^(star - 5);
+      return 7.95 * 0.9 ** (star - 5) * level + 27.2 * 0.9 ** (star - 5);
     case AttributeType.ENERGY_RECHARGE:
-      return 2.2 * 0.9^(star - 5) * level + 7.8 * 0.9^(star - 5);
+      return 0.022 * 0.9 ** (star - 5) * level + 0.078 * 0.9 ** (star - 5);
     case AttributeType.CRIT_RATE:
-      return 1.32 * 0.9^(star - 5) * level + 4.6 * 0.9^(star - 5);
+      return 0.0132 * 0.9 ** (star - 5) * level + 0.046 * 0.9 ** (star - 5);
     case AttributeType.CRIT_DAMAGE:
-      return 2.645 * 0.9^(star - 5) * level + 9.2 * 0.9^(star - 5);
+      return 0.02645 * 0.9 ** (star - 5) * level + 0.092 * 0.9 ** (star - 5);
     case AttributeType.HEALING_BONUS:
-      return 1.525 * 0.9^(star - 5) * level + 5.3 * 0.9^(star - 5);
+      return 0.01525 * 0.9 ** (star - 5) * level + 0.053 * 0.9 ** (star - 5);
     case AttributeType.PYRO_DAMAGE_BONUS:
     case AttributeType.HYDRO_DAMAGE_BONUS:
     case AttributeType.ELECTRO_DAMAGE_BONUS:
@@ -146,11 +150,11 @@ export const attributeValueFromStarAndLevel = (attr: AttributeType, star: number
     case AttributeType.ANEMO_DAMAGE_BONUS:
     case AttributeType.GEO_DAMAGE_BONUS:
     case AttributeType.DENDRO_DAMAGE_BONUS:
-      return 1.98 * 0.9^(star - 5) * level + 6.9 * 0.9^(star - 5);
+      return 0.0198 * 0.9 ** (star - 5) * level + 0.069 * 0.9 ** (star - 5);
     default:
       return 0;
   }
-}
+};
 
 export const attributeFromMona = (input: string | Object): Attribute => {
   if (typeof input === "string" || input instanceof String)
@@ -161,12 +165,20 @@ export const attributeFromMona = (input: string | Object): Attribute => {
   };
 };
 
-export const attributeFromGood = (key: string, level: number, star: number): Attribute => {
+export const attributeFromGood = (
+  key: string,
+  level: number,
+  star: number
+): Attribute => {
   return {
     type: goodAttributeToAttributeType[key],
-    value: attributeValueFromStarAndLevel(goodAttributeToAttributeType[key], star, level),
-  }
-}
+    value: attributeValueFromStarAndLevel(
+      goodAttributeToAttributeType[key],
+      star,
+      level
+    ),
+  };
+};
 
 export const formatAttributeValue = (attr: Attribute): string => {
   if (

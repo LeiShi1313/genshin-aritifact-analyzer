@@ -40,6 +40,7 @@ const Main = () => {
         for (const art of content["artifacts"]) {
           const a = deserializeFromGood(art);
           artifacts.push(deserializeFromGood(art));
+          console.log(JSON.stringify(a))
         }
       } else if (
         content["version"] === "1" &&
