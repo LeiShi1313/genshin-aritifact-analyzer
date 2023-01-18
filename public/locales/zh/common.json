@@ -5,6 +5,7 @@
     "Themes": "主题",
     "EN": "EN",
     "中文": "中文",
+    "Home": "主页",
 
     "Add": "添加",
     "Edit": "编辑",
@@ -22,6 +23,9 @@
     "Add New Build": "添加新配装",
     "Unnamed Build": "未命名配装",
     "Upload Your Artifacts": "上传你的圣遗物",
+    "Uploaded Artifacts": "已上传的圣遗物",
+    "Total": "总计",
+    "File Name": "文件名",
     "Change Language": "更改语言",
     "Best Score": "最佳分数",
     "Difficulty": "毕业难度",

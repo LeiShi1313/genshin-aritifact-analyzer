@@ -18,6 +18,7 @@ const BuildsEditor = lazy(() => import("./features/builds/BuildsEditor"));
 const ArtifactsUpload = lazy(() =>
   import("./features/artifacts/ArtifactsUpload")
 );
+const UploadedArtifacts = lazy(() => import("./features/artifacts/UploadedArtifacts"));
 const Config = lazy(() => import("./features/configs/Config"));
 
 const App = () => {
@@ -42,6 +43,10 @@ const App = () => {
               <Route index element={<Main />} />
               <Route path="build" element={<BuildEditor />} />
               <Route path="builds" element={<BuildsEditor />} />
+              <Route
+                path="uploaded"
+                element={<UploadedArtifacts />}
+              />
               <Route
                 path="artifacts/:artifactsId"
                 element={<ArtifactsUpload />}

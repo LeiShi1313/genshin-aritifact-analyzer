@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { CaretDown } from "phosphor-react";
 import classNames from "classnames";
 import md5 from "crypto-js/md5";
 
@@ -16,6 +17,7 @@ const Main = () => {
 
   const [file, setFile] = useState(null);
   const [fileLoading, setFileLoading] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleFile = (e) => {
     if (!window.FileReader) {
@@ -40,7 +42,6 @@ const Main = () => {
         for (const art of content["artifacts"]) {
           const a = deserializeFromGood(art);
           artifacts.push(deserializeFromGood(art));
-          console.log(JSON.stringify(a))
         }
       } else if (
         content["version"] === "1" &&
@@ -57,7 +58,7 @@ const Main = () => {
         alert("Unsupported file format, please use supported file format");
         return;
       }
-      dispatch(uploadArtifacts({ key, artifacts, format }));
+      dispatch(uploadArtifacts({ key, artifacts, format, name: file.name }));
       setFileLoading(false);
       navigate(`/artifacts/${key}`);
     };
@@ -88,26 +89,44 @@ const Main = () => {
           <span>{t("or")}</span>
 
           <div>
-            <button
-              className={
-                `btn btn-secondary btn-md rounded-lg ` +
-                classNames({
-                  loading: fileLoading,
-                  "cursor-pointer": !fileLoading,
-                  "cursor-not-allowed": fileLoading,
-                })
-              }
-              onClick={() => document.getElementById("file_input").click()}
-            >
-              {t("Upload Your Artifacts")}
-            </button>
-
-            <input
-              className="hidden"
-              id="file_input"
-              type="file"
-              onChange={handleFile}
-            />
+            <div className="btn-group">
+              <button
+                className={
+                  `btn btn-secondary btn-md rounded-lg ` +
+                  classNames({
+                    loading: fileLoading,
+                    "cursor-pointer": !fileLoading,
+                    "cursor-not-allowed": fileLoading,
+                  })
+                }
+                onClick={() => document.getElementById("file_input").click()}
+              >
+                {t("Upload Your Artifacts")}
+              </button>
+              <input
+                className="hidden"
+                id="file_input"
+                type="file"
+                onChange={handleFile}
+              />
+              <div
+                className="btn relative bg-secondary w-1"
+                onClick={() => setShowDropdown((prev) => !prev)}
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => setShowDropdown(false)}
+              >
+                <button className="rounded-r-lg">
+                  <CaretDown size={16} />
+                </button>
+                {showDropdown && (
+                  <ul className="dropdown-content menu rounded-box absolute -right-1 top-12 w-52 bg-base-200 p-2 shadow">
+                    <li>
+                      <a onClick={() => navigate('/uploaded')}>{t('Uploaded Artifacts')}</a>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center"></div>

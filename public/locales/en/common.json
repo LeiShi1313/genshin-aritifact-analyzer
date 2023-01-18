@@ -5,6 +5,7 @@
     "Themes": "Themes",
     "EN": "EN",
     "中文": "中文",
+    "Home": "Home",
 
     "Add": "Add",
     "Edit": "Edit",
@@ -22,6 +23,9 @@
     "Add New Build": "Add New Build",
     "Unnamed Build": "Unnamed Build",
     "Upload Your Artifacts": "Upload Your Artifacts",
+    "Uploaded Artifacts": "Uploaded Artifacts",
+    "Total": "Total",
+    "File Name": "File Name",
     "Change Language": "Change Language",
     "Best Score": "Best Score",
     "Difficulty": "Difficulty",
