@@ -2,6 +2,15 @@ syntax = "proto3";
 
 package io.leishi.genshin.proto;
 
+enum WeaponType {
+    WEAPON_TYPE_UNSPECIFIED = 0;
+    BOW = 1;
+    CLAYMORE = 2;
+    CATALYST = 3;
+    POLEARM = 4;
+    SWORD = 5;
+}
+
 enum Weapon {
     WEAPON_UNSPECIFIED = 0;
     AKUOUMARU = 1;
@@ -155,4 +164,5 @@ enum Weapon {
     WINE_AND_SONG = 149;
     WOLFS_GRAVESTONE = 150;
     XIPHOS_MOONLIGHT = 151;
+    LIGHT_OF_FOLIAR_INCISION = 152;
 }

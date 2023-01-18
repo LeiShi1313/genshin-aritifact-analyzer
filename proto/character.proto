@@ -70,4 +70,6 @@ enum Character {
     LAYLA = 64;
     FARUZAN = 65;
     WANDERER = 66;
+    ALHAITHAM = 67;
+    YAOYAO = 68;
 }

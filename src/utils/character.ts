@@ -1,9 +1,9 @@
 import { Character, characterFromJSON } from "../genshin/character";
 import { enumToStringKey } from "./enum";
-import zh_trans from '../data/characters.json';
+import data from '../data/characters.json';
 
 const zhToKey = {};
-Object.keys(zh_trans).map((key) => zhToKey[zh_trans[key]] = key.toUpperCase());
+Object.keys(data).map((key) => zhToKey[data[key]['zh_name']] = key.toUpperCase());
 
 export const characterFromName = (name: string): Character => {
     const c = Character[name.toUpperCase()];
@@ -32,13 +32,19 @@ export const characterToTheme = (character: Character): string => {
         case Character.SANGONOMIYA_KOKOMI:
             return 'aqua'
         case Character.RAIDEN_SHOGUN:
-            return 'synthware'
+            return 'RAIDEN_SHOGUN'
         case Character.TIGHNARI:
             return 'emerald'
         case Character.WANDERER:
             return 'forest'
         case Character.ZHONGLI:
-            return 'bumblebee'
+            return 'zhongli'
+        case Character.YUN_JIN:
+            return 'yun_jin'
+        case Character.YOIMIYA:
+            return 'yoimiya'
+        case Character.XINGQIU:
+            return 'xingqiu'
         default: return 'auto'
     }
 }

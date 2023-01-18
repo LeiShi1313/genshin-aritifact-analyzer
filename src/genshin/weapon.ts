@@ -2,6 +2,63 @@
 
 export const protobufPackage = "io.leishi.genshin.proto";
 
+export enum WeaponType {
+  WEAPON_TYPE_UNSPECIFIED = 0,
+  BOW = 1,
+  CLAYMORE = 2,
+  CATALYST = 3,
+  POLEARM = 4,
+  SWORD = 5,
+  UNRECOGNIZED = -1,
+}
+
+export function weaponTypeFromJSON(object: any): WeaponType {
+  switch (object) {
+    case 0:
+    case "WEAPON_TYPE_UNSPECIFIED":
+      return WeaponType.WEAPON_TYPE_UNSPECIFIED;
+    case 1:
+    case "BOW":
+      return WeaponType.BOW;
+    case 2:
+    case "CLAYMORE":
+      return WeaponType.CLAYMORE;
+    case 3:
+    case "CATALYST":
+      return WeaponType.CATALYST;
+    case 4:
+    case "POLEARM":
+      return WeaponType.POLEARM;
+    case 5:
+    case "SWORD":
+      return WeaponType.SWORD;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return WeaponType.UNRECOGNIZED;
+  }
+}
+
+export function weaponTypeToJSON(object: WeaponType): string {
+  switch (object) {
+    case WeaponType.WEAPON_TYPE_UNSPECIFIED:
+      return "WEAPON_TYPE_UNSPECIFIED";
+    case WeaponType.BOW:
+      return "BOW";
+    case WeaponType.CLAYMORE:
+      return "CLAYMORE";
+    case WeaponType.CATALYST:
+      return "CATALYST";
+    case WeaponType.POLEARM:
+      return "POLEARM";
+    case WeaponType.SWORD:
+      return "SWORD";
+    case WeaponType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum Weapon {
   WEAPON_UNSPECIFIED = 0,
   AKUOUMARU = 1,
@@ -155,6 +212,7 @@ export enum Weapon {
   WINE_AND_SONG = 149,
   WOLFS_GRAVESTONE = 150,
   XIPHOS_MOONLIGHT = 151,
+  LIGHT_OF_FOLIAR_INCISION = 152,
   UNRECOGNIZED = -1,
 }
 
@@ -616,6 +674,9 @@ export function weaponFromJSON(object: any): Weapon {
     case 151:
     case "XIPHOS_MOONLIGHT":
       return Weapon.XIPHOS_MOONLIGHT;
+    case 152:
+    case "LIGHT_OF_FOLIAR_INCISION":
+      return Weapon.LIGHT_OF_FOLIAR_INCISION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -929,6 +990,8 @@ export function weaponToJSON(object: Weapon): string {
       return "WOLFS_GRAVESTONE";
     case Weapon.XIPHOS_MOONLIGHT:
       return "XIPHOS_MOONLIGHT";
+    case Weapon.LIGHT_OF_FOLIAR_INCISION:
+      return "LIGHT_OF_FOLIAR_INCISION";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
