@@ -1,11 +1,17 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams, useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import {
+  useParams,
+  useNavigate,
+  useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ArrowUp, ArrowDown, X } from "phosphor-react";
 import ReactLoading from "react-loading";
 
 import ArtifactFitnessCard from "./ArtifactFitnessCard";
+import Paginator from "../Paginator";
 import SetSelect from "../sets/SetSelect";
 import AttributePositionSelect from "./AttributePositionSelect";
 import { defaultFitness, defaultRarity } from "../../utils/config";
@@ -38,8 +44,8 @@ const ArtifactsUpload = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { artifactsId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
   const artifacts = useSelector(
     (state) => state.uploads.artifacts[artifactsId].items
   );
@@ -87,15 +93,40 @@ const ArtifactsUpload = () => {
     []
   );
 
-  // const [fitness, setFitness] = useState(defaultFitness)
-  // const [rarity, setRarity] = useState(defaultRarity)
-  const [fitness, setFitness] = useQueryParams('fitness', defaultFitness, { isNumeric: true, replace: false})
-  const [rarity, setRarity] = useQueryParams('rarity', defaultRarity, { isNumeric: true, replace: false})
-  const [set, setSet] = useQueryParams('set', 0, { isNumeric: true, replace: false})
-  const [pos, setPos] = useQueryParams('position', 0, { isNumeric: true, replace: false})
-  const [sortKey, setSortKey] = useQueryParams('sort', 'rarity-desc', { replace: false})
-  const [page, setPage] = useQueryParams('page', 0, { isNumeric: true, replace: false})
-  const [offset, setOffset] = useQueryParams('offset', 20, { isNumeric: true, replace: false})
+  const [
+    fitness,
+    rarity,
+    set,
+    pos,
+    sortKey,
+    page,
+    offset,
+    setFitness,
+    setRarity,
+    setSet,
+    setPos,
+    setSortKey,
+    setPage,
+    setOffset,
+  ] = useQueryParams([
+    {
+      name: "fitness",
+      defaultValue: defaultFitness,
+      isNumeric: true,
+      replace: false,
+    },
+    {
+      name: "rarity",
+      defaultValue: defaultRarity,
+      isNumeric: true,
+      replace: false,
+    },
+    { name: "set", defaultValue: 0, isNumeric: true, replace: false },
+    { name: "position", defaultValue: 0, isNumeric: true, replace: false },
+    { name: "sort", defaultValue: "rarity-desc", replace: false },
+    { name: "page", defaultValue: 0, isNumeric: true, replace: false },
+    { name: "offset", defaultValue: 20, isNumeric: true, replace: false },
+  ]);
 
   const compareFn = useCallback(
     (a, b) => {
@@ -153,7 +184,14 @@ const ArtifactsUpload = () => {
   );
   const handleDownloadYasLock = useCallback(() => {
     const element = document.createElement("a");
-    const file = new Blob([JSON.stringify(filteredArtifacts.filter((idx) => !artifacts[idx].locked))], {type: 'text/json'});
+    const file = new Blob(
+      [
+        JSON.stringify(
+          filteredArtifacts.filter((idx) => !artifacts[idx].locked)
+        ),
+      ],
+      { type: "text/json" }
+    );
     element.href = URL.createObjectURL(file);
     element.download = "lock.json";
     document.body.appendChild(element); // Required for this to work in FireFox
@@ -323,7 +361,7 @@ const ArtifactsUpload = () => {
         <div className="flex flex-col space-y-4">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center px-2">
-              {format === "GOOD" && (
+              {format === "GOOD" && filteredArtifacts.length > 0 && (
                 <button
                   className="btn btn-primary"
                   onClick={handleDownloadYasLock}
@@ -333,43 +371,13 @@ const ArtifactsUpload = () => {
               )}
             </div>
             {filteredArtifacts.length > offset && (
-              <div className="btn-group self-end justify-self-end">
-                <button
-                  onClick={() => page > 0 && setPage(page - 1)}
-                  className={`btn btn-ghost ${
-                    page === 0 && "cursor-not-allowed"
-                  }`}
-                >
-                  «
-                </button>
-                <select
-                  className="btn select btn-ghost select-ghost max-w-xs "
-                  value={page}
-                  onChange={(e) => setPage(Number(e.target.value))}
-                >
-                  {[
-                    ...Array(
-                      Math.ceil(filteredArtifacts.length / offset)
-                    ).keys(),
-                  ].map((i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}{" "}
-                </select>
-                <button
-                  onClick={() =>
-                    page < Math.floor(filteredArtifacts.length / offset) &&
-                    setPage(page + 1)
-                  }
-                  className={`btn btn-ghost ${
-                    page === Math.floor(filteredArtifacts.length / offset) &&
-                    "cursor-not-allowed"
-                  }`}
-                >
-                  »
-                </button>
-              </div>
+              <Paginator
+                page={page}
+                setPage={setPage}
+                offset={offset}
+                setOffset={setOffset}
+                totalPages={filteredArtifacts.length}
+              />
             )}
           </div>
           {filteredArtifacts
@@ -387,46 +395,14 @@ const ArtifactsUpload = () => {
               />
             ))}
           {filteredArtifacts.length > offset && (
-            <div className="btn-group self-end justify-self-end">
-              <button
-                onClick={() =>
-                  page > 0 &&
-                  (document.getElementById("main-content").scrollTo(0, 0) ||
-                    setPage(page - 1))
-                }
-                className={`btn btn-ghost ${
-                  page === 0 && "cursor-not-allowed"
-                }`}
-              >
-                «
-              </button>
-              <select
-                className="btn select btn-ghost select-ghost max-w-xs "
-                value={page}
-                onChange={(e) => setPage(Number(e.target.value))}
-              >
-                {[
-                  ...Array(Math.ceil(filteredArtifacts.length / offset)).keys(),
-                ].map((i) => (
-                  <option key={i} value={i}>
-                    {i}
-                  </option>
-                ))}{" "}
-              </select>
-              <button
-                onClick={() =>
-                  page < Math.floor(filteredArtifacts.length / offset) &&
-                  (document.getElementById("main-content").scrollTo(0, 0) ||
-                    setPage(page + 1))
-                }
-                className={`btn btn-ghost ${
-                  page === Math.floor(filteredArtifacts.length / offset) &&
-                  "cursor-not-allowed"
-                }`}
-              >
-                »
-              </button>
-            </div>
+            <Paginator
+              page={page}
+              setPage={setPage}
+              offset={offset}
+              setOffset={setOffset}
+              totalPages={filteredArtifacts.length}
+              scrollToId="main-content"
+            />
           )}
           <div className="h-2 w-full"></div>
         </div>
