@@ -1,5 +1,5 @@
 {
-    "Genshin Artifact Builds Platform": "原神圣遗物配装平台",
+    "Genshin Artifacts Analyzer": "原神圣遗物分析器",
     "Check": "查看",
     "Language": "语言",
     "Themes": "主题",
@@ -16,6 +16,7 @@
     "Enabled": "启用",
     "Presets": "预设",
     "or": "或者",
+    "Adjust Config": "调整配置",
     "equipped": "已装备",
     "Builds": "配装",
     "builds": "配装",

@@ -35,6 +35,16 @@ const MenuItems = ({ location, navigate }) => {
           </a>
         </li>
       )}
+      {location.pathname !== "/config" && (
+        <li>
+          <a
+            className="btn btn-ghost rounded-lg"
+            onClick={() => navigate("/config")}
+          >
+            {t("Adjust Config")}
+          </a>
+        </li>
+      )}
     </>
   );
 };

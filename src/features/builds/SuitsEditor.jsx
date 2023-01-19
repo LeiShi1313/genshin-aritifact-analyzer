@@ -6,7 +6,7 @@ import { Set } from "../../genshin/set";
 import { enumToIdx } from "../../utils/enum";
 
 const SuitsEditor = ({ suits, setSuits }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [setCombos, setSetCombos] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -24,7 +24,7 @@ const SuitsEditor = ({ suits, setSuits }) => {
   };
   const handleChecked = () => {
     setIsAdding(false);
-    setSuits((arr) => [...arr, {setCombos: setCombos}]);
+    setSuits((arr) => [...arr, { setCombos: setCombos }]);
     setSetCombos([]);
   };
   const handleCancel = () => {
@@ -47,7 +47,7 @@ const SuitsEditor = ({ suits, setSuits }) => {
         </label>
       </label>
       {(suits.length > 0 || (isAdding && setCombos.length > 0)) && (
-        <div className="flex min-h-12 flex-row flex-wrap items-center justify-start px-1 py-1">
+        <div className="min-h-12 flex flex-row flex-wrap items-center justify-start px-1 py-1">
           {suits.map((suit, idx) => (
             <span
               key={idx}
@@ -64,7 +64,9 @@ const SuitsEditor = ({ suits, setSuits }) => {
               )}
             >
               {suit.setCombos
-                .map((setCombo) => t(`${Set[setCombo.set].toLowerCase()}`, { ns: "sets" }))
+                .map((setCombo) =>
+                  t(`${Set[setCombo.set].toLowerCase()}`, { ns: "sets" })
+                )
                 .join(" + ")}
               <X
                 className="cursor-pointer"
@@ -78,14 +80,17 @@ const SuitsEditor = ({ suits, setSuits }) => {
               className={classNames("badge", "text-xs", "badge-info", "h-auto")}
             >
               {setCombos
-                .map((suit) => t(`${Set[suit.set].toLowerCase()}`, { ns: "sets" }))
-                .join("+")}+...
+                .map((suit) =>
+                  t(`${Set[suit.set].toLowerCase()}`, { ns: "sets" })
+                )
+                .join("+")}
+              +...
             </span>
           )}
         </div>
       )}
       {isAdding && (
-        <div className="flex flex-row items-center w-full">
+        <div className="flex w-full flex-row items-center">
           <select
             className="select select-ghost w-4/5"
             value={0}
@@ -94,22 +99,38 @@ const SuitsEditor = ({ suits, setSuits }) => {
             <option disabled key={0} value={0}>
               {t("Pick one")}
             </option>
-            {enumToIdx(Set)
+            {[...enumToIdx(Set)]
+              .sort((a, b) =>
+                t(`${Set[a].toLowerCase()}`, { ns: "sets" }).localeCompare(
+                  t(`${Set[b].toLowerCase()}`, { ns: "sets" }),
+                  i18n.language
+                )
+              )
               // TODO: find a better way to validate
               .filter(
                 (key) =>
-                setCombos.length < 2 ||
+                  setCombos.length < 2 ||
                   (setCombos.length >= 2 && Set[key].startsWith("PRAYER"))
               )
-              .filter((key) => !setCombos.map((combo) => combo.set).includes(key))
+              .filter(
+                (key) => !setCombos.map((combo) => combo.set).includes(key)
+              )
               .map((key) => (
                 <option key={key} value={key}>
                   {t(`${Set[key].toLowerCase()}`, { ns: "sets" })}
                 </option>
               ))}
           </select>
-          <Check className="cursor-pointer" onClick={() => handleChecked()} weight="bold" />
-          <X className="cursor-pointer" onClick={() => handleCancel()} weight="bold" />
+          <Check
+            className="cursor-pointer"
+            onClick={() => handleChecked()}
+            weight="bold"
+          />
+          <X
+            className="cursor-pointer"
+            onClick={() => handleCancel()}
+            weight="bold"
+          />
         </div>
       )}
     </>

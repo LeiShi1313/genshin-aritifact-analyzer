@@ -1,7 +1,5 @@
 const genshindb = require("genshin-db");
-const axios = require("axios");
 const fs = require("fs");
-const path = require("path");
 const utils = require("./utils.cjs");
 
 const names = [

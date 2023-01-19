@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CaretDown } from "phosphor-react";
+import { CaretDown, Activity } from "phosphor-react";
 import classNames from "classnames";
 import md5 from "crypto-js/md5";
 
@@ -69,7 +69,7 @@ const Main = () => {
     <div className="hero-content h-full text-center">
       <div className="max-w-md">
         <h1 className="mb-10 text-5xl font-bold">
-          {t("Genshin Artifact Builds Platform")}
+          {t("Genshin Artifacts Analyzer")}
         </h1>
         <div className="flex flex-row items-center justify-center space-x-2">
           <div className="relative">
@@ -86,46 +86,51 @@ const Main = () => {
               {t("Add New Build")}
             </a>
           </div>
-          <span>{t("or")}</span>
+          <div className="tooltip" data-tip={t('Adjust Config')}>
+          <button className="btn btn-sm btn-outline btn-circle" onClick={() => navigate('/config')}>
+            <Activity size={18} />
+          </button>
 
-          <div>
-            <div className="btn-group">
-              <button
-                className={
-                  `btn btn-secondary btn-md rounded-lg ` +
-                  classNames({
-                    loading: fileLoading,
-                    "cursor-pointer": !fileLoading,
-                    "cursor-not-allowed": fileLoading,
-                  })
-                }
-                onClick={() => document.getElementById("file_input").click()}
-              >
-                {t("Upload Your Artifacts")}
+          </div>
+
+          <div className="btn-group">
+            <button
+              className={
+                `btn btn-secondary btn-md rounded-lg ` +
+                classNames({
+                  loading: fileLoading,
+                  "cursor-pointer": !fileLoading,
+                  "cursor-not-allowed": fileLoading,
+                })
+              }
+              onClick={() => document.getElementById("file_input").click()}
+            >
+              {t("Upload Your Artifacts")}
+            </button>
+            <input
+              className="hidden"
+              id="file_input"
+              type="file"
+              onChange={handleFile}
+            />
+            <div
+              className="btn relative w-1 bg-secondary"
+              onClick={() => setShowDropdown((prev) => !prev)}
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
+              <button className="rounded-r-lg">
+                <CaretDown size={16} />
               </button>
-              <input
-                className="hidden"
-                id="file_input"
-                type="file"
-                onChange={handleFile}
-              />
-              <div
-                className="btn relative bg-secondary w-1"
-                onClick={() => setShowDropdown((prev) => !prev)}
-                onMouseEnter={() => setShowDropdown(true)}
-                onMouseLeave={() => setShowDropdown(false)}
-              >
-                <button className="rounded-r-lg">
-                  <CaretDown size={16} />
-                </button>
-                {showDropdown && (
-                  <ul className="dropdown-content menu rounded-box absolute -right-1 top-12 w-52 bg-base-200 p-2 shadow">
-                    <li>
-                      <a onClick={() => navigate('/uploaded')}>{t('Uploaded Artifacts')}</a>
-                    </li>
-                  </ul>
-                )}
-              </div>
+              {showDropdown && (
+                <ul className="dropdown-content menu rounded-box absolute -right-1 top-12 w-52 bg-base-200 p-2 shadow">
+                  <li>
+                    <a onClick={() => navigate("/uploaded")}>
+                      {t("Uploaded Artifacts")}
+                    </a>
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         </div>

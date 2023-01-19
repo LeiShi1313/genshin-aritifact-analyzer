@@ -1,5 +1,5 @@
 {
-    "Genshin Artifact Builds Platform": "Genshin Artifact Builds Platform",
+    "Genshin Artifacts Analyzer": "Genshin Artifacts Analyzer",
     "Check": "Check",
     "Language": "Language",
     "Themes": "Themes",
@@ -16,6 +16,7 @@
     "Enabled": "Enabled",
     "Presets": "Presets",
     "or": "or",
+    "Adjust Config": "Adjust Config",
     "equipped": "equipped",
     "Builds": "Builds",
     "builds": "builds",
