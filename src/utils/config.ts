@@ -1,5 +1,18 @@
 import * as math from "mathjs";
 
+export interface ConfigOptions {
+  standardRarity: number;
+  scoreOverhead: number;
+  nonFiveStarSubstractor: number;
+  nonSuitSubstractors: {
+    [key: number]: number;
+  };
+  attributeWeights: math.Matrix;
+  rarityWeights: math.Matrix;
+}
+
+export const subAttrIdx = 5;
+
 export const maximumSubAttribute = 4;
 
 // The rarity for em goblet with crit rate + crit damage + er + atk% is 10
@@ -21,18 +34,18 @@ export const nonSuitSubstractors = {
 
 
 // Main attribute weights
-export const mainAttributeWeights = math.matrix([
+export const attributeWeights = [
   //              f    p    s    g    c.  sub
   /* hp      */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   /* atk     */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   /* def     */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-  /* em      */ [0.0, 0.0, 3.3, 3.3, 3.3, 0.0],
-  /* er      */ [0.0, 0.0, 3.3, 0.0, 0.0, 0.0],
-  /* hp%     */ [0.0, 0.0, 3.3, 3.3, 3.3, 0.0],
-  /* atk%    */ [0.0, 0.0, 3.3, 3.3, 3.3, 0.0],
-  /* def%    */ [0.0, 0.0, 3.3, 3.3, 3.3, 0.0],
-  /* crit    */ [0.0, 0.0, 0.0, 0.0, 3.3, 0.0],
-  /* critD   */ [0.0, 0.0, 0.0, 0.0, 3.3, 0.0],
+  /* em      */ [0.0, 0.0, 3.3, 3.3, 3.3, 1.0],
+  /* er      */ [0.0, 0.0, 3.3, 0.0, 0.0, 1.0],
+  /* hp%     */ [0.0, 0.0, 3.3, 3.3, 3.3, 1.0],
+  /* atk%    */ [0.0, 0.0, 3.3, 3.3, 3.3, 1.0],
+  /* def%    */ [0.0, 0.0, 3.3, 3.3, 3.3, 1.0],
+  /* crit    */ [0.0, 0.0, 0.0, 0.0, 3.3, 1.333],
+  /* critD   */ [0.0, 0.0, 0.0, 0.0, 3.3, 1.333],
   /* healing */ [0.0, 0.0, 0.0, 0.0, 3.3, 0.0],
   /* anemo   */ [0.0, 0.0, 0.0, 3.3, 0.0, 0.0],
   /* cryo    */ [0.0, 0.0, 0.0, 3.3, 0.0, 0.0],
@@ -42,9 +55,9 @@ export const mainAttributeWeights = math.matrix([
   /* hydro   */ [0.0, 0.0, 0.0, 3.3, 0.0, 0.0],
   /* phy     */ [0.0, 0.0, 0.0, 3.3, 0.0, 0.0],
   /* pyro    */ [0.0, 0.0, 0.0, 3.3, 0.0, 0.0],
-]);
+];
 // Weights for sub-attributes appear as main attibute
-export const subAttributeWeights = math.matrix([
+export const subAttributeWeights = [
   //              f    p    s    g    c.  sub
   /* hp      */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   /* atk     */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -65,11 +78,11 @@ export const subAttributeWeights = math.matrix([
   /* hydro   */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   /* phy     */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   /* pyro    */ [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-]);
+];
 
 // Data from: https://nga.178.com/read.php?tid=33220261&rand=516
 // prettier-ignore
-export const rarityWeights = math.matrix([
+export const rarityWeights = [
   //              f    p    s     g    c    sub
   /* hp      */ [1.0, 0.0, 0.0,  0.0, 0.0,  150],
   /* atk     */ [0.0, 1.0, 0.0,  0.0, 0.0,  150],
@@ -90,4 +103,4 @@ export const rarityWeights = math.matrix([
   /* hydro   */ [0.0, 0.0, 0.0,  200, 0.0,  0.0],
   /* phy     */ [0.0, 0.0, 0.0,  200, 0.0,  0.0],
   /* pyro    */ [0.0, 0.0, 0.0,  200, 0.0,  0.0],
-]);
+];

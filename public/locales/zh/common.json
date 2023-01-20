@@ -7,6 +7,8 @@
     "中文": "中文",
     "Home": "主页",
 
+    "Others": "其他",
+    "Reset": "重置",
     "Add": "添加",
     "Edit": "编辑",
     "Save": "保存",
@@ -31,6 +33,15 @@
     "Best Score": "最佳分数",
     "Difficulty": "毕业难度",
     "Calculating": "正在计算",
+    "Detected config changes recalculating": "检测到配置更改，正在重新计算",
+    "Stats Weight": "词条权重",
+    "Rarity Weight": "稀有度权重",
+    "Standard Rarity": "标准稀有度",
+    "Standard Rarity is the rarity that you want to get at least": "标准稀有度是你想要达到的最低稀有度",
+    "Score Overhead": "分数下限",
+    "Score Overhead is the score that you want to get at least": "分数下限是你想要达到的最低分数",
+    "Non-5-star Substractor": "非5星匹配度惩罚",
+    "Non-suit Substractor": "非套装匹配度惩罚",
 
     "Sets": "套装",
     "set": "套装",
@@ -40,6 +51,8 @@
     "Sub Stats": "副属性",
     "Pick one": "选择",
 
+    "Lower weight means higher rarity": "权重越低，稀有度越高",
+    "This stat is not available for this position": "这个词条不适用于这个位置",
     "This build is already in the presets. Please edit it there": "这个配装已在预设中，请修改后保存",
     "Enable all presets": "启用所有预设",
     "No enabled builds": "没有已启用的配装",

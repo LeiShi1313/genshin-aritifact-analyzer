@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -123,7 +123,7 @@ const Main = () => {
                 <CaretDown size={16} />
               </button>
               {showDropdown && (
-                <ul className="dropdown-content menu rounded-box absolute -right-1 top-12 w-52 bg-base-200 p-2 shadow">
+                <ul className="dropdown-content menu rounded-box absolute -right-1 top-12 w-52 bg-secondary-focus p-2 shadow">
                   <li>
                     <a onClick={() => navigate("/uploaded")}>
                       {t("Uploaded Artifacts")}

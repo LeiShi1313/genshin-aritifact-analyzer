@@ -7,6 +7,8 @@
     "中文": "中文",
     "Home": "Home",
 
+    "Others": "Others",
+    "Reset": "Reset",
     "Add": "Add",
     "Edit": "Edit",
     "Save": "Save",
@@ -31,6 +33,15 @@
     "Best Score": "Best Score",
     "Difficulty": "Difficulty",
     "Calculating": "Calculating",
+    "Detected config changes recalculating": "Detected config changes, recalculating",
+    "Stats Weight": "Stats Weight",
+    "Rarity Weight": "Rarity Weight",
+    "Standard Rarity": "Standard Rarity",
+    "Standard Rarity is the rarity that you want to get at least": "Standard Rarity is the rarity that you want to get at least",
+    "Score Overhead": "Score Overhead",
+    "Score Overhead is the score that you want to get at least": "Score Overhead is the score that you want to get at least",
+    "Non-5-Star Substractor": "Non-5-Star Substractor",
+    "Non-suit Substractor": "Non-suit Substractor",
 
     "Sets": "Sets",
     "set": "set",
@@ -40,6 +51,8 @@
     "Sub Stats": "Sub Stats",
     "Pick one": "Pick one",
 
+    "Lower weight means higher rarity": "Lower weight means higher rarity",
+    "This stat is not available for this position": "This stat is not available for this position",
     "This build is already in the presets. Please edit it there": "This build is already in the presets. Please edit it there",
     "Enable all presets": "Enable all presets",
     "No enabled builds": "No enabled builds",

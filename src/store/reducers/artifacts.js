@@ -10,12 +10,12 @@ export const artifactsSlice = createSlice({
   },
   reducers: {
     updateFitsAndRarity: (state, action) => {
-      const { hash, enabledBuilds, allFits, allRarity } = action.payload;
+      const { hash, enabledBuilds, allFits, allRarity, configHash } = action.payload;
       const resultHash = getArtifactsResultHash(enabledBuilds)
       if (!!!state.fitsAndRarity[hash]) { 
         state.fitsAndRarity[hash] = {}
       }
-      state.fitsAndRarity[hash][resultHash] = { allFits, allRarity };
+      state.fitsAndRarity[hash][resultHash] = { allFits, allRarity, configHash };
     },
     calculateFitsAndRarity: (state, action) => {
       const { hash, artifacts, enabledBuilds } = action.payload;
@@ -24,8 +24,8 @@ export const artifactsSlice = createSlice({
         state.fitsAndRarity[hash] = {}
       }
       if (!!!state.fitsAndRarity[hash][resultHash]) {
-        const { allFits, allRarity } = getAllFitsAndAllRarity(artifacts, enabledBuilds)
-        state.fitsAndRarity[hash][resultHash] = { allFits, allRarity };
+        const { allFits, allRarity, configHash } = getAllFitsAndAllRarity(artifacts, enabledBuilds)
+        state.fitsAndRarity[hash][resultHash] = { allFits, allRarity, configHash };
       }
     },
   },

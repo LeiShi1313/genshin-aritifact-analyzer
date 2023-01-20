@@ -19,7 +19,7 @@ import {
   calculateFitsAndRarity,
   updateFitsAndRarity,
 } from "../../store/reducers/artifacts";
-import { getArtifactsResultHash } from "../../utils/hash";
+import { getArtifactsResultHash, getConfigHash } from "../../utils/hash";
 import useQueryParams from "../../hooks/useQueryParams";
 
 const BackToHome = ({ t, title, navigate }) => {
@@ -47,12 +47,13 @@ const ArtifactsUpload = () => {
   const location = useLocation();
   const { artifactsId } = useParams();
   const artifacts = useSelector(
-    (state) => state.uploads.artifacts[artifactsId].items
+    (state) => (state.uploads.artifacts[artifactsId] ?? {}).items ?? []
   );
   const format = useSelector(
-    (state) => state.uploads.artifacts[artifactsId].format
+    (state) => (state.uploads.artifacts[artifactsId] ?? {}).format
   );
   const { builds, config } = useSelector((state) => state.build);
+  const customConfigs = useSelector((state) => state.configs);
   const presetBuilds = useSelector((state) => state.presets.builds);
   const enabledBuilds = useMemo(() => {
     const enabledBuilds = {};
@@ -70,19 +71,26 @@ const ArtifactsUpload = () => {
   }, [builds, presetBuilds, config]);
 
   const resultHash = useMemo(() => getArtifactsResultHash(enabledBuilds));
-  const { allFits, allRarity } = useSelector(
+  const { allFits, allRarity, configHash } = useSelector(
     (state) =>
       ((state.artifacts.fitsAndRarity || {})[artifactsId] || {})[
         resultHash
       ] ?? {
         allFits: {},
         allRarity: {},
+        configHash: "",
       }
   );
   const isLoading = useMemo(
     () =>
-      Object.keys(allFits).length === 0 || Object.keys(allRarity).length === 0,
-    [allFits, allRarity]
+      Object.keys(allFits).length === 0 ||
+      Object.keys(allRarity).length === 0 ||
+      configHash !== getConfigHash(customConfigs),
+    [allFits, allRarity, configHash, customConfigs]
+  );
+  const hasConfigChange = useMemo(
+    () => configHash !== getConfigHash(customConfigs),
+    [configHash, customConfigs]
   );
   const [progress, setProgress] = useState(0);
   const calculator = useMemo(
@@ -222,18 +230,23 @@ const ArtifactsUpload = () => {
       return;
     }
     if (window.Worker) {
-      calculator.postMessage({ artifacts, builds: enabledBuilds });
+      calculator.postMessage({
+        artifacts,
+        builds: enabledBuilds,
+        config: customConfigs,
+      });
       calculator.onmessage = (e) => {
         if (!isNaN(Number(e.data))) {
           setProgress(e.data);
         } else {
-          const { allFits, allRarity } = e.data;
+          const { allFits, allRarity, configHash } = e.data;
           dispatch(
             updateFitsAndRarity({
               hash: artifactsId,
               enabledBuilds,
               allFits,
               allRarity,
+              configHash,
             })
           );
         }
@@ -344,7 +357,13 @@ const ArtifactsUpload = () => {
               className="fill-primary"
               style={{ height: 32, width: 32 }}
             />
-            <span className="text-xl">{t("Calculating")}</span>
+            {hasConfigChange ? (
+              <span className="text-xl">
+                {t("Detected config changes recalculating")}
+              </span>
+            ) : (
+              <span className="text-xl">{t("Calculating")}</span>
+            )}
             <ReactLoading
               type="bars"
               className="fill-primary"

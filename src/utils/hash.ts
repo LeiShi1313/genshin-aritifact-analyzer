@@ -1,6 +1,7 @@
 import md5 from "crypto-js/md5";
 import { Build } from "../genshin/build";
 import { Suit, SetCombo } from "../genshin/suit";
+import { ConfigOptions } from "./config";
 
 const setComboComparator = (a: SetCombo, b: SetCombo) =>
   a.set - b.set ? a.set - b.set : a.count - b.count;
@@ -39,6 +40,19 @@ export function hashBuild(build: Build): string {
   ).toString();
 }
 
-export const getArtifactsResultHash = (
-  enabledBuilds: Record<string, string>
-) => md5([...Object.keys(enabledBuilds)].sort().join("")).toString();
+export const getArtifactsResultHash = (enabledBuilds: Record<string, string>) =>
+  md5([...Object.keys(enabledBuilds)].sort().join("")).toString();
+
+export const getConfigHash = (config: ConfigOptions) =>
+  md5(
+    JSON.stringify({
+      attributeWeights: config.attributeWeights,
+      rarityWeights: config.rarityWeights,
+      standardRarity: config.standardRarity,
+      scoreOverhead: config.scoreOverhead,
+      nonFiveStarSubstractor: config.nonFiveStarSubstractor,
+      nonSuitSubstractors: [...Object.keys(config.nonSuitSubstractors)]
+        .sort()
+        .map((key) => config.nonSuitSubstractors[key]),
+    })
+  ).toString();
