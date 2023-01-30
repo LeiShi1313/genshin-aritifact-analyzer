@@ -55,7 +55,7 @@ const ArtifactFitnessCard = ({
       : navigate(`/build?id=${hash}&build=${encodeBuild(builds[hash])}`);
 
   return (
-    <div className="flex w-80 flex-col items-center space-y-2 rounded-2xl bg-base-200 px-2 py-2 shadow-2xl lg:w-auto lg:flex-row">
+    <div className="flex w-80 flex-col items-center space-y-2 rounded-2xl bg-base-200 px-2 py-2 mt-5 shadow-2xl lg:w-auto lg:flex-row">
       <div className="flex flex-col items-center sm:flex-row">
         <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} />
         <div className="flex flex-col space-y-2 py-2 px-2">

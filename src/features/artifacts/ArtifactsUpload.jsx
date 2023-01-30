@@ -7,20 +7,18 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { ArrowUp, ArrowDown, X } from "phosphor-react";
 import ReactLoading from "react-loading";
 
+import useQueryParams from "../../hooks/useQueryParams";
+import ArtifactsFilter from "./ArtifactsFilter";
 import ArtifactFitnessCard from "./ArtifactFitnessCard";
 import Paginator from "../Paginator";
-import SetSelect from "../sets/SetSelect";
-import AttributePositionSelect from "./AttributePositionSelect";
 import { defaultFitness, defaultRarity } from "../../utils/config";
 import {
   calculateFitsAndRarity,
   updateFitsAndRarity,
 } from "../../store/reducers/artifacts";
 import { getArtifactsResultHash, getConfigHash } from "../../utils/hash";
-import useQueryParams from "../../hooks/useQueryParams";
 
 const BackToHome = ({ t, title, navigate }) => {
   return (
@@ -36,6 +34,37 @@ const BackToHome = ({ t, title, navigate }) => {
           </button>
         </div>
       </div>
+    </div>
+  );
+};
+
+const Calculating = ({ t, progress, hasConfigChange }) => {
+  return (
+    <div className="mt-10 flex flex-col items-center space-y-5">
+      <div className="flex flex-row items-center">
+        <ReactLoading
+          type="bars"
+          className="fill-primary"
+          style={{ height: 32, width: 32 }}
+        />
+        {hasConfigChange ? (
+          <span className="text-xl">
+            {t("Detected config changes recalculating")}
+          </span>
+        ) : (
+          <span className="text-xl">{t("Calculating")}</span>
+        )}
+        <ReactLoading
+          type="bars"
+          className="fill-primary"
+          style={{ height: 32, width: 32 }}
+        />
+      </div>
+      <progress
+        className="progress progress-primary w-56"
+        value={progress}
+        max="1"
+      ></progress>
     </div>
   );
 };
@@ -89,7 +118,9 @@ const ArtifactsUpload = () => {
     [allFits, allRarity, configHash, customConfigs]
   );
   const hasConfigChange = useMemo(
-    () => configHash !== getConfigHash(customConfigs),
+    () =>
+      (Object.keys(allFits).length > 0 || Object.keys(allRarity).length > 0) &&
+      configHash !== getConfigHash(customConfigs),
     [configHash, customConfigs]
   );
   const [progress, setProgress] = useState(0);
@@ -190,6 +221,11 @@ const ArtifactsUpload = () => {
         : [],
     [artifacts, compareFn, filterFn, page, offset]
   );
+  const loadMore = () => {
+    console.log(page);
+    setPage(page + 1);
+  }
+
   const handleDownloadYasLock = useCallback(() => {
     const element = document.createElement("a");
     const file = new Blob(
@@ -205,21 +241,6 @@ const ArtifactsUpload = () => {
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   }, [filteredArtifacts]);
-
-  const handleSortChange = useCallback(
-    (newSortKey) => {
-      if (newSortKey.split("-")[0] === sortKey.split("-")[0]) {
-        setSortKey(
-          newSortKey.split("-")[0] +
-            "-" +
-            (sortKey.split("-")[1] === "asc" ? "desc" : "asc")
-        );
-      } else {
-        setSortKey(newSortKey);
-      }
-    },
-    [sortKey]
-  );
 
   useEffect(() => {
     if (
@@ -277,105 +298,24 @@ const ArtifactsUpload = () => {
   }
   return (
     <div className="flex w-full flex-col items-center justify-center">
-      <div className="flex w-full flex-col items-center justify-center space-y-2 md:flex-row md:space-y-0 md:space-x-12">
-        <div className="flex w-4/5 flex-row items-center justify-center space-x-2 md:w-1/5">
-          <span className="whitespace-nowrap font-bold">{t("Fitness")}</span>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={fitness}
-            className="range range-primary"
-            onChange={(e) => setFitness(e.target.value)}
-          />
-          <span>{(fitness * 100).toFixed(0)}%</span>
-        </div>
-        <div className="flex w-4/5 flex-row items-center justify-center space-x-2 md:w-1/5">
-          <span className="whitespace-nowrap font-bold">{t("Rarity")}</span>
-          <input
-            type="range"
-            min="0"
-            max="10"
-            step="0.1"
-            value={rarity}
-            className="range range-secondary"
-            onChange={(e) => setRarity(e.target.value)}
-          />
-          <span>{Number(rarity).toFixed(1)}</span>
-        </div>
-      </div>
-      <div className="my-4 flex w-full flex-col items-center justify-center text-lg text-primary-focus md:flex-row md:space-x-4">
-        <div className="flex flex-row items-center space-x-4">
-          <span className="flex flex-row items-center">
-            {t("Fitness")}
-            {sortKey === "fitness-asc" && (
-              <ArrowUp
-                weight={sortKey === "fitness-asc" ? "bold" : "thin"}
-                onClick={() => handleSortChange("fitness-asc")}
-              />
-            )}
-            {(sortKey === "fitness-desc" || sortKey.startsWith("rarity")) && (
-              <ArrowDown
-                weight={sortKey === "fitness-desc" ? "bold" : "thin"}
-                onClick={() => handleSortChange("fitness-desc")}
-              />
-            )}
-          </span>
-          <span className="flex flex-row items-center">
-            {t("Rarity")}
-            {sortKey === "rarity-asc" && (
-              <ArrowUp
-                weight={sortKey === "rarity-asc" ? "bold" : "thin"}
-                onClick={() => handleSortChange("rarity-asc")}
-              />
-            )}
-            {(sortKey === "rarity-desc" || sortKey.startsWith("fitness")) && (
-              <ArrowDown
-                weight={sortKey === "rarity-desc" ? "bold" : "thin"}
-                onClick={() => handleSortChange("rarity-desc")}
-              />
-            )}
-          </span>
-        </div>
-        <div className="flex flex-col items-center space-x-2 md:flex-row">
-          <div className="flex flex-row items-center space-x-2">
-            <SetSelect set={set} setSet={setSet} />
-            <X className="cursor-pointer" onClick={() => setSet(0)} />
-          </div>
-          <div className="flex flex-row items-center space-x-2">
-            <AttributePositionSelect pos={pos} setPos={setPos} />
-            <X className="cursor-pointer" onClick={() => setPos(0)} />
-          </div>
-        </div>
-      </div>
+      <ArtifactsFilter
+        fitness={fitness}
+        setFitness={setFitness}
+        rarity={rarity}
+        setRarity={setRarity}
+        sortKey={sortKey}
+        setSortKey={setSortKey}
+        set={set}
+        setSet={setSet}
+        pos={pos}
+        setPos={setPos}
+      />
       {isLoading ? (
-        <div className="mt-10 flex flex-col items-center space-y-5">
-          <div className="flex flex-row items-center">
-            <ReactLoading
-              type="bars"
-              className="fill-primary"
-              style={{ height: 32, width: 32 }}
-            />
-            {hasConfigChange ? (
-              <span className="text-xl">
-                {t("Detected config changes recalculating")}
-              </span>
-            ) : (
-              <span className="text-xl">{t("Calculating")}</span>
-            )}
-            <ReactLoading
-              type="bars"
-              className="fill-primary"
-              style={{ height: 32, width: 32 }}
-            />
-          </div>
-          <progress
-            className="progress progress-primary w-56"
-            value={progress}
-            max="1"
-          ></progress>
-        </div>
+        <Calculating
+          t={t}
+          progress={progress}
+          hasConfigChange={hasConfigChange}
+        />
       ) : (
         <div className="flex flex-col space-y-4">
           <div className="flex flex-row items-center justify-between">
@@ -402,17 +342,17 @@ const ArtifactsUpload = () => {
           {filteredArtifacts
             .slice(page * offset, (page + 1) * offset)
             .map((index) => (
-              <ArtifactFitnessCard
-                key={index}
-                index={index}
-                artifact={artifacts[index]}
-                builds={enabledBuilds}
-                fits={allFits[index]}
-                rarity={allRarity[index]}
-                minFitness={fitness}
-                minRarity={rarity}
-              />
-            ))}
+                <ArtifactFitnessCard
+                  key={index}
+                  index={index}
+                  artifact={artifacts[index]}
+                  builds={enabledBuilds}
+                  fits={allFits[index]}
+                  rarity={allRarity[index]}
+                  minFitness={fitness}
+                  minRarity={rarity}
+                />
+              ))}
           {filteredArtifacts.length > offset && (
             <Paginator
               page={page}
@@ -424,7 +364,7 @@ const ArtifactsUpload = () => {
             />
           )}
           <div className="h-2 w-full"></div>
-        </div>
+          </div>
       )}
     </div>
   );
