@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Weapon } from "../../genshin/weapon";
 import { enumToIdx } from "../../utils/enum";
 
-const WeaponEditor = ({ weapons, setWeapons, filterFn=null }) => {
-  const { t } = useTranslation();
+const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
+  const { t, i18n } = useTranslation();
   const weapon = 0;
   const [isAdding, setIsAdding] = useState(false);
 
@@ -29,7 +29,7 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn=null }) => {
   };
   return (
     <>
-      <label className="flex flex-row justify-between label">
+      <label className="label flex flex-row justify-between">
         <span className="label-text">{t("Weapons")}</span>
         <label className="cursor-pointer">
           <Plus
@@ -40,7 +40,7 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn=null }) => {
         </label>
       </label>
       {weapons.length > 0 && (
-        <div className="flex flex-row flex-wrap justify-start items-center px-1 py-1 h-12">
+        <div className="flex h-12 flex-row flex-wrap items-center justify-start px-1 py-1">
           {weapons.map((weapon, idx) => (
             <span
               key={weapon}
@@ -74,9 +74,15 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn=null }) => {
           <option disabled key={0} value={0}>
             {t("Pick one")}
           </option>
-          {enumToIdx(Weapon)
+          {[...enumToIdx(Weapon)]
+            .sort((a, b) =>
+              t(`${Weapon[a].toLowerCase()}`, { ns: "weapons" }).localeCompare(
+                t(`${Weapon[b].toLowerCase()}`, { ns: "weapons" }),
+                i18n.language
+              )
+            )
             .filter((key) => !weapons.includes(key))
-            .filter((key) => filterFn !== null ? filterFn(key) : true)
+            .filter((key) => (filterFn !== null ? filterFn(key) : true))
             .map((key) => (
               <option key={key} value={key}>
                 {t(`${Weapon[key].toLowerCase()}`, { ns: "weapons" })}
