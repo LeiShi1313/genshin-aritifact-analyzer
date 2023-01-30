@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Weapon } from "../../genshin/weapon";
 import { enumToIdx } from "../../utils/enum";
 
-const WeaponEditor = ({ weapons, setWeapons }) => {
+const WeaponEditor = ({ weapons, setWeapons, filterFn=null }) => {
   const { t } = useTranslation();
   const weapon = 0;
   const [isAdding, setIsAdding] = useState(false);
@@ -14,6 +14,11 @@ const WeaponEditor = ({ weapons, setWeapons }) => {
     if (weapons.length === 0) setIsAdding(true);
     else setIsAdding(false);
   }, [weapons]);
+  useEffect(() => {
+    if (filterFn) {
+      setWeapons((arr) => arr.filter(filterFn));
+    }
+  }, [filterFn]);
 
   const handleWeaponAdd = (e) => {
     setWeapons((arr) => [...arr, Number(e.target.value)]);
@@ -71,6 +76,7 @@ const WeaponEditor = ({ weapons, setWeapons }) => {
           </option>
           {enumToIdx(Weapon)
             .filter((key) => !weapons.includes(key))
+            .filter((key) => filterFn !== null ? filterFn(key) : true)
             .map((key) => (
               <option key={key} value={key}>
                 {t(`${Weapon[key].toLowerCase()}`, { ns: "weapons" })}

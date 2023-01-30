@@ -7,6 +7,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { hashBuild } from "../../utils/hash";
 import { Build } from "../../genshin/build";
 import { Character } from "../../genshin/character";
+import { Weapon } from "../../genshin/weapon";
 import { AttributeType } from "../../genshin/attribute";
 import { encodeBuild } from "../../utils/build";
 import NameEditor from "./NameEditor";
@@ -18,6 +19,8 @@ import SubAttributesEditor from "./SubAttributesEditor";
 import { addBuild, editBuild } from "../../store/reducers/build";
 import { toHex, fromHex } from "../../utils/hex";
 import { characterToTheme } from "../../utils/character";
+import characterData from "../../data/characters.json";
+import weaponData from "../../data/weapons.json";
 
 const BuildEditor = () => {
   const { t } = useTranslation();
@@ -48,6 +51,7 @@ const BuildEditor = () => {
   const [name, setName] = useState(build.name);
   const [char, setChar] = useState(build.character);
   const [weapons, setWeapons] = useState(build.weapons);
+  const [weaponFilterFn, setWeaponFilterFn] = useState(null);
   const [suits, setSuits] = useState(build.suits);
   const flower = build.flowerAttributes;
   const plume = build.plumeAttributes;
@@ -92,6 +96,18 @@ const BuildEditor = () => {
   useEffect(() => {
     const theme = characterToTheme(char);
     if (theme) setTheme(theme);
+    if (char > 0) {
+      const data = characterData[Character[char].toLowerCase()];
+      if (data) {
+        setWeaponFilterFn(() => (weapon) => {
+          return (
+            weaponData[Weapon[weapon].toLowerCase()].weapontype ===
+            data.weapontype
+          );
+        });
+        console.log(data);
+      }
+    }
   }, [char]);
 
   useEffect(() => {
@@ -114,56 +130,56 @@ const BuildEditor = () => {
   }, [name, char, weapons, suits, sands, goblet, circlet, subAttributes]);
 
   return (
-      <div
-        className={`my-auto flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
-        style={{ backgroundImage: `url(${imgUrl})` }}
-      >
-        <div className="items-enter flex w-full justify-center rounded-3xl bg-base-200 bg-opacity-70 py-10">
-          <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
-            <NameEditor
-              name={name}
-              setName={setName}
-              isPreset={presets[hash]}
-            />
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row items-center justify-start">
-                <CharacterSelect char={char} setChar={setChar} />
-              </div>
-              <button className="btn btn-primary btn-sm" onClick={handleAdd}>
-                {id ? t("Save") : t("Add")}
-              </button>
+    <div
+      className={`my-auto flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
+      style={{ backgroundImage: `url(${imgUrl})` }}
+    >
+      <div className="items-enter flex w-full justify-center rounded-3xl bg-base-200 bg-opacity-70 py-10">
+        <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
+          <NameEditor name={name} setName={setName} isPreset={presets[hash]} />
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-start">
+              <CharacterSelect char={char} setChar={setChar} />
             </div>
-            <div className="flex flex-row items-center justify-between space-x-2">
-              <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
-                <WeaponEditor weapons={weapons} setWeapons={setWeapons} />
-              </div>
-              <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
-                <SuitsEditor suits={suits} setSuits={setSuits} />
-              </div>
-            </div>
-            <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
-              <label className="label flex flex-row justify-between">
-                <span className="label-text">{t("Main Stats")}</span>
-              </label>
-              <MainAttributesEditor
-                flower={flower}
-                plume={plume}
-                sands={sands}
-                setSands={setSands}
-                goblet={goblet}
-                setGoblet={setGoblet}
-                circlet={circlet}
-                setCirclet={setCirclet}
-                subAttributes={subAttributes}
+            <button className="btn btn-primary btn-sm" onClick={handleAdd}>
+              {id ? t("Save") : t("Add")}
+            </button>
+          </div>
+          <div className="flex flex-row items-center justify-between space-x-2">
+            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+              <WeaponEditor
+                weapons={weapons}
+                setWeapons={setWeapons}
+                filterFn={weaponFilterFn}
               />
             </div>
-            <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
-              <SubAttributesEditor
-                subAttributes={subAttributes}
-                setSubAttributes={setSubAttributes}
-              />
+            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+              <SuitsEditor suits={suits} setSuits={setSuits} />
             </div>
           </div>
+          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+            <label className="label flex flex-row justify-between">
+              <span className="label-text">{t("Main Stats")}</span>
+            </label>
+            <MainAttributesEditor
+              flower={flower}
+              plume={plume}
+              sands={sands}
+              setSands={setSands}
+              goblet={goblet}
+              setGoblet={setGoblet}
+              circlet={circlet}
+              setCirclet={setCirclet}
+              subAttributes={subAttributes}
+            />
+          </div>
+          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+            <SubAttributesEditor
+              subAttributes={subAttributes}
+              setSubAttributes={setSubAttributes}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
