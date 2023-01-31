@@ -64,6 +64,10 @@ const BuildRow = ({ build, setPendingDelete, isPreset = false }) => {
   useEffect(() => {
     setHash(hashBuild(build));
     setEncodedBuild(encodeBuild(build));
+    // console.log(`// ${t(Character[build.character].toLowerCase(), {
+    //   ns: "characters",
+    // })} ${build.name ? build.name : t("Unnamed Build")}`)
+    // console.log(encodeBuild(build))
   }, [build]);
 
   return (
