@@ -138,15 +138,11 @@ const ArtifactsUpload = () => {
     set,
     pos,
     sortKey,
-    page,
-    offset,
     setFitness,
     setRarity,
     setSet,
     setPos,
     setSortKey,
-    setPage,
-    setOffset,
   ] = useQueryParams([
     {
       name: "fitness",
@@ -163,9 +159,9 @@ const ArtifactsUpload = () => {
     { name: "set", defaultValue: 0, isNumeric: true, replace: false },
     { name: "position", defaultValue: 0, isNumeric: true, replace: false },
     { name: "sort", defaultValue: "rarity-desc", replace: false },
-    { name: "page", defaultValue: 0, isNumeric: true, replace: false },
-    { name: "offset", defaultValue: 20, isNumeric: true, replace: false },
   ]);
+  const [page, setPage] = useState(0);
+  const [offset, setOffset] = useState(20);
 
   const compareFn = useCallback(
     (a, b) => {
@@ -224,7 +220,7 @@ const ArtifactsUpload = () => {
   const loadMore = () => {
     console.log(page);
     setPage(page + 1);
-  }
+  };
 
   const handleDownloadYasLock = useCallback(() => {
     const element = document.createElement("a");
@@ -300,15 +296,30 @@ const ArtifactsUpload = () => {
     <div className="flex w-full flex-col items-center justify-center">
       <ArtifactsFilter
         fitness={fitness}
-        setFitness={setFitness}
+        setFitness={(f) => {
+          setPage(0);
+          setFitness(f);
+        }}
         rarity={rarity}
-        setRarity={setRarity}
+        setRarity={(r) => {
+          setPage(0);
+          setRarity(r);
+        }}
         sortKey={sortKey}
-        setSortKey={setSortKey}
+        setSortKey={(s) => {
+          setPage(0);
+          setSortKey(s);
+        }}
         set={set}
-        setSet={setSet}
+        setSet={(s) => {
+          setPage(0);
+          setSet(s);
+        }}
         pos={pos}
-        setPos={setPos}
+        setPos={(p) => {
+          setPage(0);
+          setPos(p);
+        }}
       />
       {isLoading ? (
         <Calculating
@@ -342,17 +353,17 @@ const ArtifactsUpload = () => {
           {filteredArtifacts
             .slice(page * offset, (page + 1) * offset)
             .map((index) => (
-                <ArtifactFitnessCard
-                  key={index}
-                  index={index}
-                  artifact={artifacts[index]}
-                  builds={enabledBuilds}
-                  fits={allFits[index]}
-                  rarity={allRarity[index]}
-                  minFitness={fitness}
-                  minRarity={rarity}
-                />
-              ))}
+              <ArtifactFitnessCard
+                key={index}
+                index={index}
+                artifact={artifacts[index]}
+                builds={enabledBuilds}
+                fits={allFits[index]}
+                rarity={allRarity[index]}
+                minFitness={fitness}
+                minRarity={rarity}
+              />
+            ))}
           {filteredArtifacts.length > offset && (
             <Paginator
               page={page}
@@ -364,7 +375,7 @@ const ArtifactsUpload = () => {
             />
           )}
           <div className="h-2 w-full"></div>
-          </div>
+        </div>
       )}
     </div>
   );
