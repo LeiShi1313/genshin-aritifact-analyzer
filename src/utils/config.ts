@@ -15,6 +15,8 @@ export const subAttrIdx = 5;
 
 export const maximumSubAttribute = 4;
 
+export const maximumArtifactLevel = 20;
+
 // The rarity for em goblet with crit rate + crit damage + er + atk% is 10
 export const standardRarity = 2.639774092;
 

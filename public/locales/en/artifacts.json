@@ -6,6 +6,7 @@
   "circlet": "Circlet",
   "sub": "Substats",
   "position": "position",
+  "level": "level",
   "hp": "HP",
   "atk": "ATK",
   "def": "DEF",

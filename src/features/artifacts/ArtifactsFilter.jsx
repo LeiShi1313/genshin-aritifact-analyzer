@@ -4,6 +4,7 @@ import { ArrowUp, ArrowDown, X } from "phosphor-react";
 
 import SetSelect from "../sets/SetSelect";
 import AttributePositionSelect from "./AttributePositionSelect";
+import ArtifactLevelSelect from "./ArtifactLevelSelect";
 
 const ArtifactsFilter = ({
   fitness,
@@ -16,6 +17,8 @@ const ArtifactsFilter = ({
   setSet,
   pos,
   setPos,
+  level,
+  setLevel,
 }) => {
   const { t } = useTranslation();
 
@@ -105,6 +108,10 @@ const ArtifactsFilter = ({
           <div className="flex flex-row items-center space-x-2">
             <AttributePositionSelect pos={pos} setPos={setPos} />
             <X className="cursor-pointer" onClick={() => setPos(0)} />
+          </div>
+          <div className="flex flex-row items-center space-x-2">
+            <ArtifactLevelSelect level={level} setLevel={setLevel} />
+            <X className="cursor-pointer" onClick={() => setLevel(-1)} />
           </div>
         </div>
       </div>

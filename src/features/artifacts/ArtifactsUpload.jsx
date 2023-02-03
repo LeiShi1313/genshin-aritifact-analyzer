@@ -137,11 +137,13 @@ const ArtifactsUpload = () => {
     rarity,
     set,
     pos,
+    level,
     sortKey,
     setFitness,
     setRarity,
     setSet,
     setPos,
+    setLevel,
     setSortKey,
   ] = useQueryParams([
     {
@@ -158,6 +160,7 @@ const ArtifactsUpload = () => {
     },
     { name: "set", defaultValue: 0, isNumeric: true, replace: false },
     { name: "position", defaultValue: 0, isNumeric: true, replace: false },
+    { name: "level", defaultValue: -1, isNumeric: true, replace: false },
     { name: "sort", defaultValue: "rarity-desc", replace: false },
   ]);
   const [page, setPage] = useState(0);
@@ -204,9 +207,12 @@ const ArtifactsUpload = () => {
       if (pos > 0) {
         ret = ret && artifacts[idx].position === pos;
       }
+      if (level >= 0) {
+        ret = ret && artifacts[idx].level === level;
+      }
       return ret;
     },
-    [fitness, rarity, allFits, allRarity, set, pos]
+    [fitness, rarity, allFits, allRarity, set, pos, level]
   );
   const filteredArtifacts = useMemo(
     () =>
@@ -319,6 +325,11 @@ const ArtifactsUpload = () => {
         setPos={(p) => {
           setPage(0);
           setPos(p);
+        }}
+        level={level}
+        setLevel={(l) => {
+          setPage(0);
+          setLevel(l)
         }}
       />
       {isLoading ? (
