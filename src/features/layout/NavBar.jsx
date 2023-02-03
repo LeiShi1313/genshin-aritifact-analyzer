@@ -45,6 +45,16 @@ const MenuItems = ({ location, navigate }) => {
           </a>
         </li>
       )}
+      {location.pathname !== "/uploaded" && (
+        <li>
+          <a
+            className="btn btn-ghost rounded-lg"
+            onClick={() => navigate("/uploaded")}
+          >
+            {t("Uploaded Artifacts")}
+          </a>
+        </li>
+      )}
     </>
   );
 };
