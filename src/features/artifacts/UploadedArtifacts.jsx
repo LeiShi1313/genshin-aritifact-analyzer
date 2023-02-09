@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { AttributePosition } from "../../genshin/attribute";
-import { enumToIdx } from "../../utils/enum";
 
 const UploadedDetails = ({ uploaded }) => {
   const { t } = useTranslation();
@@ -28,7 +26,6 @@ const UploadedArtifacts = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const uploaded = useSelector((state) => state.uploads.artifacts);
-  console.log(uploaded);
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <div className="my-auto flex h-full w-full flex-col items-center justify-center  space-y-2">

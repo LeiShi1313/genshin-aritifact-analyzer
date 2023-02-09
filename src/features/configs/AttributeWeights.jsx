@@ -1,7 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { Question } from "phosphor-react";
-import { subAttrIdx } from "../../utils/config";
 import { AttributeType, AttributePosition } from "../../genshin/attribute";
 import { enumToIdx } from "../../utils/enum";
 import { updateAttributeWeights, resetAttributeWeights } from "../../store/reducers/configs";
@@ -34,7 +32,7 @@ const AttributeWeights = () => {
           AttributePosition.SANDS - 1,
           AttributePosition.GOBLET - 1,
           AttributePosition.CIRCLET - 1,
-          subAttrIdx,
+          AttributePosition.SUB - 1,
         ].map((pos) =>
           pos === 0 ? (
             <span

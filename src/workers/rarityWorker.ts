@@ -1,6 +1,6 @@
 import { AttributePosition, AttributeType, Attribute } from "../genshin/attribute";
-import { ConfigOptions } from "../utils/config";
-import { getRarity } from "../utils/weights";
+import { ConfigOptions } from "../config";
+import { getRarity } from "../utils/fitsAndRarity";
 
 interface RarityMessage {
     position: AttributePosition,

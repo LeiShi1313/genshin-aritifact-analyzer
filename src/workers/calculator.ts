@@ -1,7 +1,7 @@
 import { Artifact } from "../genshin/artifact";
 import { BuildEntry } from "../utils/build";
-import { ConfigOptions } from "../utils/config";
-import { getAllFitsAndAllRarity } from "../utils/weights";
+import { ConfigOptions } from "../config";
+import { getAllFitsAndAllRarity } from "../utils/fitsAndRarity";
 
 interface CalculatorMessage {
     artifacts: Artifact[];

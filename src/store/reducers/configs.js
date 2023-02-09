@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { attributeWeights, rarityWeights, standardRarity, scoreOverhead, nonFiveStarSubstractor, nonSuitSubstractors } from "../../utils/config"
+import { attributeWeights, rarityWeights, standardRarity, scoreOverhead, nonFiveStarSubstractor, nonSuitSubstractors } from "../../config"
 
 
 export const configsSlice = createSlice({

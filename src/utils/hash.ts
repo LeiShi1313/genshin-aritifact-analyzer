@@ -1,7 +1,7 @@
 import md5 from "crypto-js/md5";
 import { Build } from "../genshin/build";
 import { Suit, SetCombo } from "../genshin/suit";
-import { ConfigOptions } from "./config";
+import { ConfigOptions } from "../config";
 
 const setComboComparator = (a: SetCombo, b: SetCombo) =>
   a.set - b.set ? a.set - b.set : a.count - b.count;

@@ -1,24 +1,21 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  useParams,
-  useNavigate,
-  useSearchParams,
-  useLocation,
-} from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import ReactLoading from "react-loading";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useLocation, useNavigate, useParams, useSearchParams
+} from "react-router-dom";
 
+import { defaultFitness, defaultRarity } from "../../config";
 import useQueryParams from "../../hooks/useQueryParams";
-import ArtifactsFilter from "./ArtifactsFilter";
-import ArtifactFitnessCard from "./ArtifactFitnessCard";
-import Paginator from "../Paginator";
-import { defaultFitness, defaultRarity } from "../../utils/config";
 import {
   calculateFitsAndRarity,
-  updateFitsAndRarity,
+  updateFitsAndRarity
 } from "../../store/reducers/artifacts";
 import { getArtifactsResultHash, getConfigHash } from "../../utils/hash";
+import Paginator from "../Paginator";
+import ArtifactFitnessCard from "./ArtifactFitnessCard";
+import ArtifactsFilter from "./ArtifactsFilter";
 
 const BackToHome = ({ t, title, navigate }) => {
   return (

@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { AttributeType, AttributePosition } from "../../genshin/attribute";
 import { Set } from "../../genshin/set";
 import { Character } from "../../genshin/character";
-import { formatAttributeValue } from "../../utils/attribute";
+import { formatAttributeValue  } from "../../utils/attribute";
 import CharacterAvatar from "../characters/CharacterAvatar";
 
 const ArtifactCard = ({ artifact, fitAttributes = [] }) => {

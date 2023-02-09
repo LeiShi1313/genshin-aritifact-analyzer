@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getArtifactsResultHash } from "../../utils/hash"
-import { getAllFitsAndAllRarity } from "../../utils/weights";
+import { getAllFitsAndAllRarity } from "../../utils/fitsAndRarity";
 
 
 export const artifactsSlice = createSlice({

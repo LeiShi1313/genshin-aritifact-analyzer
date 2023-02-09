@@ -15,7 +15,7 @@ export interface BuildWeights {
   [AttributePosition.SANDS]: Array<number>;
   [AttributePosition.GOBLET]: Array<number>;
   [AttributePosition.CIRCLET]: Array<number>;
-  sub: Array<number>;
+  [AttributePosition.SUB]: Array<number>;
   sets: GenshinSet[];
 }
 

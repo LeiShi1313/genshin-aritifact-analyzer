@@ -111,7 +111,7 @@ const BuildRow = ({ build, isPreset = false }) => {
       </td>
       <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto md:items-start">
         <span className="w-24 md:hidden">{t("Weapons")}</span>
-        <div className="flex flex-row items-center md:space-y-1">
+        <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
           {mapWeapons(build.weapons)}
         </div>
       </td>

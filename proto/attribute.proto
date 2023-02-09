@@ -32,6 +32,7 @@ enum AttributePosition {
     SANDS = 3;
     GOBLET = 4;
     CIRCLET = 5;
+    SUB = 6;
 }
 
 message Attribute {

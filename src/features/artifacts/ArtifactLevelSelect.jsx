@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { maximumArtifactLevel } from "../../utils/config";
+import { maximumArtifactLevel } from "../../config";
 
 const ArtifactLevelSelect = ({ level, setLevel }) => {
   const { t } = useTranslation();

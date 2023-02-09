@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { Plus, X } from "phosphor-react";
 import classNames from "classnames";
 import { mainAttributeOptions } from "../../utils/attribute";
@@ -7,15 +8,16 @@ import { useEffect } from "react";
 import {
   getRarity,
   getBestScore,
-  getProbability,
-  getMainAttributeWeights,
-  getSubAttributeWeights,
-} from "../../utils/weights";
+} from "../../utils/fitsAndRarity";
+import {
+  getAttributeWeights,
+} from "../../utils/weights"
 import { AttributePosition, AttributeType } from "../../genshin/attribute";
 
 const MainAttributeEditor = ({ position, attrs, setFunc, subAttributes }) => {
   const { t } = useTranslation();
   const [isAdding, setIsAdding] = useState(false);
+  const configs = useSelector(state => state.configs)
   const rarity = useMemo(
     () => getRarity(position, attrs, subAttributes),
     [attrs, subAttributes]
@@ -23,15 +25,11 @@ const MainAttributeEditor = ({ position, attrs, setFunc, subAttributes }) => {
   const bestScore = useMemo(
     () =>
       getBestScore(
-        getMainAttributeWeights(position, attrs, subAttributes),
-        getSubAttributeWeights(subAttributes)
+        getAttributeWeights(position, attrs, configs),
+        getAttributeWeights(AttributePosition.SUB, subAttributes, configs)
       ),
     [attrs, subAttributes]
   );
-  const probability = useMemo(
-    () => getProbability(position, attrs, subAttributes),
-    [attrs, subAttributes]
-  )
 
   useEffect(() => {
     if (attrs.length === 0 && setFunc) setIsAdding(true);

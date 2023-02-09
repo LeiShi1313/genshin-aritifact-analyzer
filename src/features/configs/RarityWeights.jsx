@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Question } from "phosphor-react";
-import { subAttrIdx } from "../../utils/config";
+import { subAttrIdx } from "../../config";
 import { AttributeType, AttributePosition } from "../../genshin/attribute";
 import { enumToIdx } from "../../utils/enum";
 import {
@@ -13,7 +13,6 @@ import {
   subAttributeOptions,
 } from "../../utils/attribute";
 import DigitInput from "./DigitInput";
-import { getRarity } from "../../utils/weights";
 import { useEffect, useMemo, useState } from "react";
 
 const RarityWeights = () => {

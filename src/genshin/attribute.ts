@@ -151,6 +151,7 @@ export enum AttributePosition {
   SANDS = 3,
   GOBLET = 4,
   CIRCLET = 5,
+  SUB = 6,
   UNRECOGNIZED = -1,
 }
 
@@ -174,6 +175,9 @@ export function attributePositionFromJSON(object: any): AttributePosition {
     case 5:
     case "CIRCLET":
       return AttributePosition.CIRCLET;
+    case 6:
+    case "SUB":
+      return AttributePosition.SUB;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -195,6 +199,8 @@ export function attributePositionToJSON(object: AttributePosition): string {
       return "GOBLET";
     case AttributePosition.CIRCLET:
       return "CIRCLET";
+    case AttributePosition.SUB:
+      return "SUB";
     case AttributePosition.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
