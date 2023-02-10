@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { UserCircle } from "phosphor-react";
 
 import ChangeLanguageDropdown from "../i18n/ChangeLanguageDropdown";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const MenuItems = ({ location, navigate }) => {
@@ -101,6 +102,7 @@ const NavBar = () => {
         </div>
       )}
       <div className="navbar-end px-2">
+        <ThemeSwitcher />
         <ChangeLanguageDropdown />
       </div>
     </div>
