@@ -4,7 +4,7 @@ import { ArrowUp, ArrowDown, X } from "phosphor-react";
 
 import SetSelect from "../sets/SetSelect";
 import AttributePositionSelect from "./AttributePositionSelect";
-import ArtifactLevelSelect from "./ArtifactLevelSelect";
+import MultiRange from "../../components/MultiRange";
 
 const ArtifactsFilter = ({
   fitness,
@@ -17,8 +17,10 @@ const ArtifactsFilter = ({
   setSet,
   pos,
   setPos,
-  level,
-  setLevel,
+  minLevel,
+  setMinLevel,
+  maxLevel,
+  setMaxLevel,
 }) => {
   const { t } = useTranslation();
 
@@ -27,8 +29,8 @@ const ArtifactsFilter = ({
       if (newSortKey.split("-")[0] === sortKey.split("-")[0]) {
         setSortKey(
           newSortKey.split("-")[0] +
-            "-" +
-            (sortKey.split("-")[1] === "asc" ? "desc" : "asc")
+          "-" +
+          (sortKey.split("-")[1] === "asc" ? "desc" : "asc")
         );
       } else {
         setSortKey(newSortKey);
@@ -109,11 +111,20 @@ const ArtifactsFilter = ({
             <AttributePositionSelect pos={pos} setPos={setPos} />
             <X className="cursor-pointer" onClick={() => setPos(0)} />
           </div>
-          <div className="flex flex-row items-center space-x-2">
-            <ArtifactLevelSelect level={level} setLevel={setLevel} />
-            <X className="cursor-pointer" onClick={() => setLevel(-1)} />
-          </div>
         </div>
+      </div>
+      <div className="flex w-full flex-row items-center justify-center text-primary-focus space-x-2">
+        <span>{t("level", { ns: "artifacts"})}</span>
+        <span className="text-lg">{minLevel}</span>
+        <MultiRange
+          min={0}
+          max={20}
+          onChange={({ min, max }) => {
+            setMinLevel(min);
+            setMaxLevel(max);
+          }}
+        />
+        <span>{maxLevel}</span>
       </div>
     </>
   );

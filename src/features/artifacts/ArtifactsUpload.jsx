@@ -134,13 +134,15 @@ const ArtifactsUpload = () => {
     rarity,
     set,
     pos,
-    level,
+    minLevel,
+    maxLevel,
     sortKey,
     setFitness,
     setRarity,
     setSet,
     setPos,
-    setLevel,
+    setMinLevel,
+    setMaxLevel,
     setSortKey,
   ] = useQueryParams([
     {
@@ -157,7 +159,8 @@ const ArtifactsUpload = () => {
     },
     { name: "set", defaultValue: 0, isNumeric: true, replace: false },
     { name: "position", defaultValue: 0, isNumeric: true, replace: false },
-    { name: "level", defaultValue: -1, isNumeric: true, replace: false },
+    { name: "minLevel", defaultValue: 0, isNumeric: true, replace: false },
+    { name: "maxLevel", defaultValue: 20, isNumeric: true, replace: false },
     { name: "sort", defaultValue: "rarity-desc", replace: false },
   ]);
   const [page, setPage] = useState(0);
@@ -204,12 +207,10 @@ const ArtifactsUpload = () => {
       if (pos > 0) {
         ret = ret && artifacts[idx].position === pos;
       }
-      if (level >= 0) {
-        ret = ret && artifacts[idx].level === level;
-      }
+      ret = ret && artifacts[idx].level >= minLevel && artifacts[idx].level <= maxLevel;
       return ret;
     },
-    [fitness, rarity, allFits, allRarity, set, pos, level]
+    [fitness, rarity, allFits, allRarity, set, pos, minLevel, maxLevel]
   );
   const filteredArtifacts = useMemo(
     () =>
@@ -220,10 +221,6 @@ const ArtifactsUpload = () => {
         : [],
     [artifacts, compareFn, filterFn, page, offset]
   );
-  const loadMore = () => {
-    console.log(page);
-    setPage(page + 1);
-  };
 
   const handleDownloadYasLock = useCallback(() => {
     const element = document.createElement("a");
@@ -245,7 +242,8 @@ const ArtifactsUpload = () => {
     if (
       artifacts === undefined ||
       artifacts.length === 0 ||
-      Object.keys(enabledBuilds).length === 0
+      Object.keys(enabledBuilds).length === 0 || 
+      configHash === getConfigHash(customConfigs)
     ) {
       return;
     }
@@ -323,10 +321,15 @@ const ArtifactsUpload = () => {
           setPage(0);
           setPos(p);
         }}
-        level={level}
-        setLevel={(l) => {
+        minLevel={minLevel}
+        setMinLevel={(l) => {
           setPage(0);
-          setLevel(l)
+          setMinLevel(l)
+        }}
+        maxLevel={maxLevel}
+        setMaxLevel={(l) => {
+          setPage(0);
+          setMaxLevel(l)
         }}
       />
       {isLoading ? (
