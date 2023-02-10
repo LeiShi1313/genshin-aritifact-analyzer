@@ -1,8 +1,10 @@
-import { useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import classNames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleAllBuilds } from "../../store/reducers/build";
+import { toggleAllBuilds, removeBuild } from "../../store/reducers/build";
 import { Build } from "../../genshin/build";
+import { Character } from "../../genshin/character";
 import { AttributePosition } from "../../genshin/attribute";
 import BuildRow from "./BuildRow";
 
@@ -12,6 +14,7 @@ const BuildsEditor = () => {
   const builds = useSelector((state) => state.build.builds);
   const config = useSelector((state) => state.build.config);
   const presets = useSelector((state) => state.presets.builds);
+  const [pendingDelete, setPendingDelete] = useState(null);
 
   const presetsAllEnabled = useMemo(
     () =>
@@ -30,6 +33,19 @@ const BuildsEditor = () => {
 
   return (
     <div className="w-full overflow-x-auto">
+    {pendingDelete && (
+      <div className={classNames("modal", { "modal-open": pendingDelete !== null })}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">{t('Are you sure you want to delete')}</h3>
+          <p className="py-4">{t(Character[pendingDelete.character].toLowerCase(), {
+            ns: "characters",
+          })} {pendingDelete.name ? pendingDelete.name : t("Unnamed Build")}</p>
+          <div className="modal-action">
+            <button className="btn btn-ghost" onClick={() => setPendingDelete(null)}>{t('Cancel')}</button>
+            <button className="btn btn-error" onClick={() => {dispatch(removeBuild(pendingDelete));setPendingDelete(null);}}>{t('Confirm')}</button>
+          </div>
+        </div>
+      </div>)}
       <table className="xs:w-96 mx-auto flex w-64 flex-col md:table md:w-full">
         <thead className="hidden md:table-header-group">
           <tr className="flex items-center md:table-row">
@@ -51,7 +67,7 @@ const BuildsEditor = () => {
         </thead>
         <tbody className="flex flex-col items-center justify-center space-y-2 md:table-row-group">
           {Object.values(builds).map((build, idx) => (
-            <BuildRow key={idx} build={build} />
+            <BuildRow key={idx} build={build} setPendingDelete={setPendingDelete} />
           ))}
           <tr className="flex md:table-row">
             <th colSpan={8} className="flex md:table-cell">

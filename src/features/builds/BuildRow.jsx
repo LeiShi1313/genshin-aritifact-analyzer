@@ -9,17 +9,17 @@ import { Weapon } from "../../genshin/weapon";
 import { Set } from "../../genshin/set";
 import { AttributeType } from "../../genshin/attribute";
 import { hashBuild } from "../../utils/hash";
-import { toggleBuild } from "../../store/reducers/build";
+import { toggleBuild  } from "../../store/reducers/build";
 import { encodeBuild } from "../../utils/build";
 
 const badgeByIdx = (idx) =>
   idx === 0
     ? "badge-primary"
     : idx === 1
-    ? "badge-secondary"
-    : idx === 2
-    ? "badge-accent"
-    : "badge-error";
+      ? "badge-secondary"
+      : idx === 2
+        ? "badge-accent"
+        : "badge-error";
 const mapWeapons = (weapons) =>
   weapons.map((weapon, idx) => (
     <span
@@ -50,7 +50,7 @@ const mapAttrs = (attrs) =>
     </span>
   ));
 
-const BuildRow = ({ build, isPreset = false }) => {
+const BuildRow = ({ build, setPendingDelete, isPreset = false }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { config } = useSelector((state) => state.build);
@@ -67,102 +67,110 @@ const BuildRow = ({ build, isPreset = false }) => {
   }, [build]);
 
   return (
-    <tr className="flex w-full flex-col items-center md:table-row md:items-start">
-      <th className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
-        <span className="w-24 md:hidden">{t("Enabled")}</span>
-        <label>
-          <input
-            type="checkbox"
-            className="checkbox"
-            checked={config[hash]?.enabled ?? false}
-            onChange={handleCheck}
-          />
-        </label>
-      </th>
-      <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
-        <span className="w-24 md:hidden">{t("Name")}</span>
-        <div className="flex items-center space-x-3">
-          <div className="avatar">
-            <div className="mask mask-squircle h-12 w-12">
-              <img
-                src={
-                  new URL(
-                    `../../assets/characters/${Character[
-                      build.character
-                    ].toLocaleLowerCase()}_icon.png`,
-                    import.meta.url
-                  ).href
-                }
-                alt={Character[build.character]}
-              />
+      <tr className="flex w-full flex-col items-center md:table-row md:items-start">
+        <th className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
+          <span className="w-24 md:hidden">{t("Enabled")}</span>
+          <label>
+            <input
+              type="checkbox"
+              className="checkbox"
+              checked={config[hash]?.enabled ?? false}
+              onChange={handleCheck}
+            />
+          </label>
+        </th>
+        <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
+          <span className="w-24 md:hidden">{t("Name")}</span>
+          <div className="flex items-center space-x-3">
+            <div className="avatar">
+              <div className="mask mask-squircle h-12 w-12">
+                <img
+                  src={
+                    new URL(
+                      `../../assets/characters/${Character[
+                        build.character
+                      ].toLocaleLowerCase()}_icon.png`,
+                      import.meta.url
+                    ).href
+                  }
+                  alt={Character[build.character]}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="font-bold">
+                {build.name ? build.name : t("Unnamed Build")}
+              </div>
+              <div className="text-sm opacity-50">
+                {t(Character[build.character].toLowerCase(), {
+                  ns: "characters",
+                })}
+              </div>
             </div>
           </div>
-          <div>
-            <div className="font-bold">
-              {build.name ? build.name : t("Unnamed Build")}
-            </div>
-            <div className="text-sm opacity-50">
-              {t(Character[build.character].toLowerCase(), {
-                ns: "characters",
-              })}
-            </div>
+        </td>
+        <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto md:items-start">
+          <span className="w-24 md:hidden">{t("Weapons")}</span>
+          <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
+            {mapWeapons(build.weapons)}
           </div>
-        </div>
-      </td>
-      <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto md:items-start">
-        <span className="w-24 md:hidden">{t("Weapons")}</span>
-        <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
-          {mapWeapons(build.weapons)}
-        </div>
-      </td>
-      <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
-        <span className="w-24 md:hidden">{t("Sets")}</span>
-        <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
-          {mapSuits(build.suits)}
-        </div>
-      </td>
-      <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
-        <span className="w-24 md:hidden">
-          {t("sands", { ns: "artifacts" })}
-        </span>
-        <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
-          {mapAttrs(build.sandsAttributes)}
-        </div>
-      </td>
-      <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
-        <span className="w-24 md:hidden">
-          {t("goblet", { ns: "artifacts" })}
-        </span>
-        <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
-          {mapAttrs(build.gobletAttributes)}
-        </div>
-      </td>
-      <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
-        <span className="w-24 md:hidden">
-          {t("circlet", { ns: "artifacts" })}
-        </span>
-        <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
-          {mapAttrs(build.circletAttributes)}
-        </div>
-      </td>
-      <th className="flex w-full flex-row items-center justify-center md:table-cell md:w-auto">
-        {isPreset ? (
-          <button
-            className="btn btn-primary btn-sm md:btn-ghost md:btn-xs"
-            onClick={() => navigate(`/build?build=${encodedBuild}`)}
-          >
-            {t("Clone")}
-          </button>
-        ) : (
-          <button
-            className="btn btn-primary btn-sm md:btn-ghost md:btn-xs"
-            onClick={() => navigate(`/build?id=${hash}&build=${encodedBuild}`)}
-          >
-            {t("Edit")}
-          </button>
-        )}
-      </th>
-    </tr>
+        </td>
+        <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
+          <span className="w-24 md:hidden">{t("Sets")}</span>
+          <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
+            {mapSuits(build.suits)}
+          </div>
+        </td>
+        <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
+          <span className="w-24 md:hidden">
+            {t("sands", { ns: "artifacts" })}
+          </span>
+          <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
+            {mapAttrs(build.sandsAttributes)}
+          </div>
+        </td>
+        <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
+          <span className="w-24 md:hidden">
+            {t("goblet", { ns: "artifacts" })}
+          </span>
+          <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
+            {mapAttrs(build.gobletAttributes)}
+          </div>
+        </td>
+        <td className="flex w-full flex-row items-center justify-between md:table-cell md:w-auto">
+          <span className="w-24 md:hidden">
+            {t("circlet", { ns: "artifacts" })}
+          </span>
+          <div className="flex flex-row items-center md:flex-col md:items-start md:space-y-1">
+            {mapAttrs(build.circletAttributes)}
+          </div>
+        </td>
+        <th className="flex w-full flex-row items-center justify-center md:table-cell md:w-auto">
+          {isPreset ? (
+            <button
+              className="btn btn-primary btn-sm md:btn-ghost md:btn-xs"
+              onClick={() => navigate(`/build?build=${encodedBuild}`)}
+            >
+              {t("Clone")}
+            </button>
+          ) : (
+            <div className="flex flex-row md:flex-col md:items-start md:space-y-1">
+              <button
+                className="btn btn-primary btn-sm md:btn-ghost md:btn-xs"
+                onClick={() => navigate(`/build?id=${hash}&build=${encodedBuild}`)}
+              >
+                {t("Edit")}
+              </button>
+              <button
+                className="btn btn-error btn-sm md:btn-ghost md:btn-xs"
+                onClick={() => setPendingDelete(build)}
+              >
+                {t("Delete")}
+              </button>
+            </div>
+          )}
+        </th>
+      </tr>
   );
 };
 

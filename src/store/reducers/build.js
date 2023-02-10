@@ -27,7 +27,8 @@ export const buildSlice = createSlice({
       delete state.config[id];
     },
     removeBuild: (state, action) => {
-      const hash = hashBuild(action.payload);
+      const build = action.payload;
+      const hash = hashBuild(build);
       delete state.builds[hash];
       delete state.config[hash];
     },
