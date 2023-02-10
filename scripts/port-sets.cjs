@@ -44,34 +44,49 @@ const names = [
   "Viridescent Venerer",
   "Wanderer's Troupe",
 ];
-const positions = ['flower', 'plume', 'sands', 'goblet', 'circlet'];
+const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 
 const portSets = () => {
   let trans = {
     en: {},
   };
+  let setsData = {};
+  let setEff = {};
 
   let idx = 0;
-  let proto_file = fs.createWriteStream('./proto/set.proto', { flags: 'w' });
+  let proto_file = fs.createWriteStream("./proto/set.proto", { flags: "w" });
   proto_file.write('syntax = "proto3";\n\n');
-  proto_file.write('package io.leishi.genshin.proto;\n\n');
-  proto_file.write('enum Set {\n');
+  proto_file.write("package io.leishi.genshin.proto;\n\n");
+  proto_file.write("enum Set {\n");
   proto_file.write(`    SET_UNSPECIFIED = ${idx++};\n`);
   names.forEach((e) => {
     const eng = genshindb.artifacts(e);
     if (!eng) {
       console.warn(`No set found for ${e}!`);
-      return
+      return;
     }
 
-    let key = eng.name.replace(/'/gi, "").replace(/[^0-9a-z]/gi, "_").toLowerCase();
+    let key = eng.name
+      .replace(/'/gi, "")
+      .replace(/[^0-9a-z]/gi, "_")
+      .toLowerCase();
     proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
 
-    trans['en'][key] = eng.name;
+    trans["en"][key] = eng.name;
+    setsData[key] = {
+      "2pc": eng["2pc"],
+      "4pc": eng["4pc"],
+    };
+    if (eng["2pc"]) {
+      if (setEff[eng["2pc"]] === undefined) {
+        setEff[eng["2pc"]] = [];
+      }
+      setEff[eng["2pc"]].push(key);
+    }
     for (let lng of Object.keys(utils.lngToRegion)) {
       const data = genshindb.artifacts(e, { resultLanguage: lng });
       if (!!!trans[utils.lngToRegion[lng]]) {
-        trans[utils.lngToRegion[lng]] = {}
+        trans[utils.lngToRegion[lng]] = {};
       }
       trans[utils.lngToRegion[lng]][key] = data.name;
     }
@@ -87,7 +102,7 @@ const portSets = () => {
       }
     }
   });
-  proto_file.write('}\n');
+  proto_file.write("}\n");
 
   for (let lng of Object.keys(trans)) {
     fs.writeFileSync(
@@ -96,6 +111,12 @@ const portSets = () => {
       "utf-8"
     );
   }
-}
+  fs.writeFileSync("./src/data/sets.json", JSON.stringify(setsData), "utf-8");
+  fs.writeFileSync(
+    "./src/data/set2pcEffect.json",
+    JSON.stringify(setEff),
+    "utf-8"
+  );
+};
 
 exports.portSets = portSets;

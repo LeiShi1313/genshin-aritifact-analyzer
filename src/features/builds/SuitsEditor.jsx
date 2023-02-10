@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import classNames from "classnames";
-import { Plus, X, Check } from "phosphor-react";
+import { Plus, X, Check, Question } from "phosphor-react";
 import { useTranslation } from "react-i18next";
 import { Set } from "../../genshin/set";
+import { get2pcSets } from "../../utils/build";
 import { enumToIdx } from "../../utils/enum";
 
 const SuitsEditor = ({ suits, setSuits }) => {
@@ -68,6 +69,24 @@ const SuitsEditor = ({ suits, setSuits }) => {
                   t(`${Set[setCombo.set].toLowerCase()}`, { ns: "sets" })
                 )
                 .join(" + ")}
+              {suit.setCombos.length > 1 && (
+                <div className="dropdown-hover dropdown">
+                  <label tabIndex={0}>
+                    <Question />
+                  </label>
+                  <div
+                    tabIndex={0}
+                    className="dropdown-content menu rounded-box flex w-48 flex-col space-y-1 bg-base-100 p-2 shadow"
+                  >
+                    <span className="text-sm text-primary">{t('this set includes')}</span>
+                    {get2pcSets(suit.setCombos).map((s) => (
+                      <span className="badge badge-accent">
+                        {t(`${Set[s].toLowerCase()}`, { ns: "sets" })}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
               <X
                 className="cursor-pointer"
                 onClick={() => handleSuitRemove(idx)}
