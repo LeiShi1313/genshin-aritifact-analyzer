@@ -6,6 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { Build } from "./genshin/build"
 import { loadPresets } from "./store/reducers/presets";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemedSuspense from "./features/ThemedSuspense";
@@ -29,6 +30,7 @@ const App = () => {
       const presets = [];
       for (let build of data.default) {
         presets.push(build);
+        console.log(JSON.stringify(Build.encode(build).finish()))
       }
       dispatch(loadPresets(presets));
     });
