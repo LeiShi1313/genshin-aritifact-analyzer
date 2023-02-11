@@ -4,7 +4,7 @@ import { ArrowUp, ArrowDown, X } from "phosphor-react";
 
 import SetSelect from "../sets/SetSelect";
 import AttributePositionSelect from "./AttributePositionSelect";
-import MultiRange from "../../components/MultiRange";
+import MultiRange from "../inputs/MultiRange";
 
 const ArtifactsFilter = ({
   fitness,

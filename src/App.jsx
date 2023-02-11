@@ -6,7 +6,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Build } from "./genshin/build";
 import { loadPresets } from "./store/reducers/presets";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemedSuspense from "./features/ThemedSuspense";

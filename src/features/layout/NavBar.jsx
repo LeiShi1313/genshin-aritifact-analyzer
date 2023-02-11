@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
-import { UserCircle } from "phosphor-react";
 
 import ChangeLanguageDropdown from "../i18n/ChangeLanguageDropdown";
-import ThemeSwitcher from "../../components/ThemeSwitcher";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import ThemeSwitcher from "../ThemeSwitcher";
 
 const MenuItems = ({ location, navigate }) => {
   const { t } = useTranslation();
