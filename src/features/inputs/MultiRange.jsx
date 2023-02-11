@@ -41,7 +41,7 @@ const MultiRange = ({ min, max, onChange, step=1 }) => {
     }, [minVal, maxVal, onChange]);
 
     return (
-        <div className="h-4 flex items-center justify-center">
+        <div className="relative h-4 flex items-center justify-center">
             <input
                 type="range"
                 min={min}

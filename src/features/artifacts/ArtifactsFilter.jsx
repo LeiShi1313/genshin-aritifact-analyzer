@@ -1,10 +1,13 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowUp, ArrowDown, X } from "phosphor-react";
 
 import SetSelect from "../sets/SetSelect";
 import AttributePositionSelect from "./AttributePositionSelect";
 import MultiRange from "../inputs/MultiRange";
+import MultiSelect from "../inputs/MultiSelect";
+import { enumToIdx } from "../../utils/enum";
+import { Character } from "../../genshin/character";
 
 const ArtifactsFilter = ({
   fitness,
@@ -23,6 +26,7 @@ const ArtifactsFilter = ({
   setMaxLevel,
 }) => {
   const { t } = useTranslation();
+  const [values, setValues] = useState([]);
 
   const handleSortChange = useCallback(
     (newSortKey) => {
