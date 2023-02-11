@@ -50,6 +50,7 @@ const MultiRange = ({ min, max, onChange, step=1 }) => {
                 value={minVal}
                 ref={minValRef}
                 onChange={(event) => {
+                    event.preventDefault();
                     const value = Math.min(+event.target.value, maxVal - 1);
                     setMinVal(value);
                     event.target.value = value.toString();
@@ -66,6 +67,7 @@ const MultiRange = ({ min, max, onChange, step=1 }) => {
                 value={maxVal}
                 ref={maxValRef}
                 onChange={(event) => {
+                    event.preventDefault();
                     const value = Math.max(+event.target.value, minVal + 1);
                     setMaxVal(value);
                     event.target.value = value.toString();

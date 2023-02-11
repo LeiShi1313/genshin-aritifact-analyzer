@@ -38,6 +38,10 @@ const ArtifactsFilter = ({
     },
     [sortKey]
   );
+  const levelOnChange = useCallback(({min, max}) => {
+    setMinLevel(min);
+    setMaxLevel(max);
+  }, []);
 
   return (
     <>
@@ -119,10 +123,7 @@ const ArtifactsFilter = ({
         <MultiRange
           min={0}
           max={20}
-          onChange={({ min, max }) => {
-            setMinLevel(min);
-            setMaxLevel(max);
-          }}
+          onChange={levelOnChange}
         />
         <span>{maxLevel}</span>
       </div>

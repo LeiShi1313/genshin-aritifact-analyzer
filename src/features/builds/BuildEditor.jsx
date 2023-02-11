@@ -105,7 +105,6 @@ const BuildEditor = () => {
             data.weapontype
           );
         });
-        console.log(data);
       }
     }
   }, [char]);
