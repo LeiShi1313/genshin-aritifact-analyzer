@@ -64,13 +64,15 @@ const SuitsEditor = ({ suits, setSuits }) => {
                   : "badge-error"
               )}
             >
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap w-24">
               {suit.setCombos
                 .map((setCombo) =>
                   t(`${Set[setCombo.set].toLowerCase()}`, { ns: "sets" })
                 )
                 .join(" + ")}
+                </span>
               {suit.setCombos.length > 1 && (
-                <div className="dropdown-hover dropdown">
+                <div className="dropdown-hover dropdown dropdown-left">
                   <label tabIndex={0}>
                     <Question />
                   </label>
