@@ -14,12 +14,10 @@ import { encodeBuild } from "../../utils/build";
 
 const badgeByIdx = (idx) =>
   idx === 0
-    ? "badge-primary"
+    ? "badge-secondary"
     : idx === 1
-      ? "badge-secondary"
-      : idx === 2
-        ? "badge-accent"
-        : "badge-error";
+      ? "badge-accent"
+      : "badge-ghost";
 const mapWeapons = (weapons) =>
   weapons.map((weapon, idx) => (
     <span

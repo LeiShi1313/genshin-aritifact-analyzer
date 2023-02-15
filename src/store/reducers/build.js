@@ -26,6 +26,14 @@ export const buildSlice = createSlice({
       delete state.builds[id];
       delete state.config[id];
     },
+    importBuilds: (state, action) => {
+      const { builds, replace } = action.payload;
+      if (replace) {
+        state.builds = {};
+        state.config = {};
+      }
+      state.builds = { ...state.builds, ...builds };
+    },
     removeBuild: (state, action) => {
       const build = action.payload;
       const hash = hashBuild(build);
@@ -55,5 +63,5 @@ export const buildSlice = createSlice({
   },
 })
 
-export const { addBuild, editBuild, removeBuild, toggleBuild, updateBuildWeights, toggleAllBuilds } = buildSlice.actions
+export const { addBuild, editBuild, importBuilds, removeBuild, toggleBuild, updateBuildWeights, toggleAllBuilds } = buildSlice.actions
 export default buildSlice.reducer

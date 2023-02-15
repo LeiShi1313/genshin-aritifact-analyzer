@@ -1,10 +1,15 @@
 import { SetCombo } from "./../genshin/suit";
 import { Build } from "../genshin/build";
+import { Character } from "../genshin/character";
+import { Weapon } from "../genshin/weapon";
+import { weaponToJSON } from "../genshin/weapon";
+import { characterToJSON } from "../genshin/character";
 import { Set as GenshinSet, setFromJSON, setToJSON } from "../genshin/set";
 import { AttributePosition } from "../genshin/attribute";
 import { toHex, fromHex } from "./hex";
 import data from "../data/sets.json";
 import data2pc from "../data/set2pcEffect.json";
+import { TFunction } from "react-i18next";
 
 const setTo2pcSets = {};
 Object.keys(data).map((key) => {
@@ -17,6 +22,22 @@ export const encodeBuild = (build: Build): string =>
   toHex(Build.encode(build).finish());
 export const decodeBuild = (encoded: string): Build =>
   Build.decode(fromHex(encoded));
+
+export const getBuildShortName = (build: Build, t: TFunction): string => {
+  let shortName = t(Character[build.character].toLowerCase(), { ns: "characters" });
+  if (build.name) {
+    shortName += ` - ${build.name}`;
+  } else {
+    if (build.weapons.length > 0) {
+      shortName += ` - ${build.weapons.map((w) => t(`${Weapon[w].toLowerCase()}`, { ns: "weapons" })).join("-")}`
+    }
+    const sets = getBuildSets(build);
+    if (sets.length > 0) {
+      shortName += ` - ${sets.map((set) => t(`${GenshinSet[set].toLowerCase()}`, { ns: "sets" })).join("-")}`;
+    }
+  }
+  return shortName;
+}
 
 export interface BuildWeights {
   hash: string;
