@@ -16,8 +16,12 @@ export const uploadsSlice = createSlice({
         date: new Date(),
       }
     },
+    removeUploadedArtifacts: (state, action) => {
+      const key = action.payload;
+      delete state.artifacts[key];
+    }
   },
 })
 
-export const { uploadArtifacts } = uploadsSlice.actions
+export const { uploadArtifacts, removeUploadedArtifacts } = uploadsSlice.actions
 export default uploadsSlice.reducer
