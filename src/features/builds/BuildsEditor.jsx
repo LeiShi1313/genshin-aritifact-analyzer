@@ -94,7 +94,7 @@ const BuildsEditor = () => {
           </div>
         </div>
       )}
-      <table className="xs:w-96 mx-auto flex w-64 flex-col overflow-y-hidden md:table md:w-full">
+      <table className="xs:w-96 mx-auto flex w-64 flex-col md:table md:w-full">
         <thead className="hidden md:table-header-group">
           <tr className="flex items-center md:table-row">
             <th className="flex md:table-cell">{t("Enabled")}</th>
