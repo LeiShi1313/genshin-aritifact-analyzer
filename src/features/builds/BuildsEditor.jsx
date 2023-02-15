@@ -119,6 +119,7 @@ const BuildsEditor = () => {
               <div className="divider">
                 <button
                   className="btn btn-primary btn-sm"
+                  disabled={Object.keys(builds).length === 0}
                   onClick={() => handleBackup()}
                 >
                   {t("Backup")}
