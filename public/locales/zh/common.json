@@ -59,6 +59,7 @@
     "Sub Stats": "副属性",
     "Pick one": "选择",
 
+    "Unsupported file format, please use supported file format": "不支持的文件格式，请使用支持的文件格式",
     "Found X builds in file Y": "在文件{{ fileName }}中找到{{ num, number }}个配装",
     "X in your custom builds": "有{{num, number}}已经存在于你的自定义配装中",
     "X in preset builds": "有{{num, number}}存在于预设配装中",

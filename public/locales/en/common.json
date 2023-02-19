@@ -59,6 +59,7 @@
     "Sub Stats": "Sub Stats",
     "Pick one": "Pick one",
 
+    "Unsupported file format, please use supported file format": "Unsupported file format, please use supported file format",
     "Found X builds in file Y": "Found {{num, number}} builds in file {{fileName}}",
     "X in your custom builds": "{{num, number}} in your custom builds",
     "X in preset builds": "{{num, number}} in preset builds",

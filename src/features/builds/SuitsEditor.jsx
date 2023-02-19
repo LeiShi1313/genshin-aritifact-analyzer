@@ -55,6 +55,7 @@ const SuitsEditor = ({ suits, setSuits }) => {
               className={classNames(
                 "badge",
                 "text-xs",
+                "w-24",
                 idx === 0
                   ? "badge-primary"
                   : idx === 1
@@ -64,7 +65,7 @@ const SuitsEditor = ({ suits, setSuits }) => {
                   : "badge-error"
               )}
             >
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap w-24">
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
               {suit.setCombos
                 .map((setCombo) =>
                   t(`${Set[setCombo.set].toLowerCase()}`, { ns: "sets" })

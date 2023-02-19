@@ -13,12 +13,17 @@ import { store, persistor } from './store';
 if (!import.meta.env.DEV) {
 Sentry.init({
   dsn: "https://fb6ab464e545427480a8baac61205322@o176406.ingest.sentry.io/4504485933613056",
-  integrations: [new BrowserTracing()],
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
+
+  replaysSessionSampleRate: 0.1,
+
+  replaysOnErrorSampleRate: 1.0,
+
+  integrations: [new BrowserTracing(), new Sentry.Replay()],
 });
 }
 

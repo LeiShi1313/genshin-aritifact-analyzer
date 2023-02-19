@@ -33,7 +33,13 @@ const Main = () => {
     fileReader.onload = (e) => {
       const text = e.target.result;
       const key = md5(text).toString();
-      const content = JSON.parse(text);
+      let content;
+      try {
+        content = JSON.parse(text);
+      } catch (_) {
+        alert(t("Unsupported file format, please use supported file format"));
+        return;
+      }
       const artifacts = [];
 
       let format = null;
@@ -55,7 +61,7 @@ const Main = () => {
           }
         }
       } else {
-        alert("Unsupported file format, please use supported file format");
+        alert(t("Unsupported file format, please use supported file format"));
         return;
       }
       dispatch(uploadArtifacts({ key, artifacts, format, name: file.name }));

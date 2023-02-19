@@ -30,11 +30,13 @@ const mapWeapons = (weapons) =>
 
 const mapSuits = (suits) =>
   suits.map((suit, idx) => (
-    <span key={idx} className={classNames("badge", "text-xs", "whitespace-nowrap", badgeByIdx(idx))}>
+    <span key={idx} className={classNames("badge", "text-xs", badgeByIdx(idx))}>
+    <span className="overflow-hidden text-ellipsis whitespace-nowrap">
       {suit.setCombos
         .map((setCombo, idx) => setCombo.set)
         .map((set) => t(`${Set[set].toLowerCase()}`, { ns: "sets" }))
         .join(" + ")}
+    </span>
     </span>
   ));
 
