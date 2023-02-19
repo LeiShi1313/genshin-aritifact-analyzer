@@ -26,11 +26,25 @@ const BuildsEditor = () => {
       ),
     [config, presets]
   );
+  const customAllEnabled = useMemo(
+    () =>
+      Object.keys(builds).every(
+        (hash) => config[hash] && config[hash].enabled
+      ),
+    [builds, config]
+  );
   const toggleAllPresets = () =>
     dispatch(
       toggleAllBuilds({
         hashes: Object.keys(presets),
         enabled: !presetsAllEnabled,
+      })
+    );
+  const toggleAllCustom = () =>
+    dispatch(
+      toggleAllBuilds({
+        hashes: Object.keys(builds),
+        enabled: !customAllEnabled,
       })
     );
 
@@ -130,6 +144,20 @@ const BuildsEditor = () => {
                 >
                   {t("Import")}
                 </button>
+                <div
+                  className="tooltip tooltip-right"
+                  data-tip={t("Enable all custom builds")}
+                >
+                  <label className="label cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-primary"
+                      disabled={Object.keys(builds).length === 0}
+                      checked={customAllEnabled}
+                      onChange={toggleAllCustom}
+                    />
+                  </label>
+                </div>
               </div>
             </th>
           </tr>
