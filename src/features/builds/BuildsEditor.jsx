@@ -7,8 +7,10 @@ import { Build } from "../../genshin/build";
 import { Character } from "../../genshin/character";
 import { AttributePosition } from "../../genshin/attribute";
 import { encodeBuild, getBuildShortName } from "../../utils/build";
+import { enumToIdx } from "../../utils/enum";
 import BuildRow from "./BuildRow";
 import RestoreBuildsModal from "./RestoreBuildsModal";
+import MultiSelect from "../inputs/MultiSelect";
 
 const BuildsEditor = () => {
   const { t } = useTranslation();
@@ -16,34 +18,66 @@ const BuildsEditor = () => {
   const builds = useSelector((state) => state.build.builds);
   const config = useSelector((state) => state.build.config);
   const presets = useSelector((state) => state.presets.builds);
+  const [characters, setCharacters] = useState([]);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [restoreModalOpen, setRestoreModalOpen] = useState(false);
 
+  const existingCharacters = useMemo(
+    () =>
+      Object.values(builds)
+        .map((build) => build.character)
+        .concat(Object.values(presets).map((build) => build.character))
+        .filter((c, idx, arr) => arr.indexOf(c) === idx),
+
+    [builds, presets]
+  );
+  const selectedBuilds = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(builds).filter(
+          ([_, build]) =>
+            characters.length === 0 || characters.includes(build.character)
+        )
+      ),
+    [builds, characters]
+  );
+  const selectedPresets = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(presets).filter(
+          ([_, build]) =>
+            characters.length === 0 || characters.includes(build.character)
+        )
+      ),
+    [presets, characters]
+  );
+
   const presetsAllEnabled = useMemo(
     () =>
-      Object.keys(presets).every(
+      Object.keys(selectedPresets).every(
         (hash) => config[hash] && config[hash].enabled
       ),
-    [config, presets]
+    [config, selectedPresets]
   );
   const customAllEnabled = useMemo(
     () =>
-      Object.keys(builds).every(
+      Object.keys(selectedBuilds).every(
         (hash) => config[hash] && config[hash].enabled
       ),
-    [builds, config]
+    [selectedBuilds, config]
   );
+
   const toggleAllPresets = () =>
     dispatch(
       toggleAllBuilds({
-        hashes: Object.keys(presets),
+        hashes: Object.keys(selectedPresets),
         enabled: !presetsAllEnabled,
       })
     );
   const toggleAllCustom = () =>
     dispatch(
       toggleAllBuilds({
-        hashes: Object.keys(builds),
+        hashes: Object.keys(selectedBuilds),
         enabled: !customAllEnabled,
       })
     );
@@ -54,7 +88,7 @@ const BuildsEditor = () => {
       [
         JSON.stringify(
           Object.fromEntries(
-            Object.values(builds).map((build) => [
+            Object.values(selectedBuilds).map((build) => [
               getBuildShortName(build, t),
               encodeBuild(build),
             ])
@@ -67,11 +101,14 @@ const BuildsEditor = () => {
     element.download = "builds.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
-  }, [builds, t]);
+  }, [selectedBuilds, t]);
 
   return (
     <div className="flex w-full flex-col space-y-2 overflow-x-auto">
-      <RestoreBuildsModal open={restoreModalOpen} setOpen={setRestoreModalOpen} />
+      <RestoreBuildsModal
+        open={restoreModalOpen}
+        setOpen={setRestoreModalOpen}
+      />
       {pendingDelete && (
         <div
           className={classNames("modal", {
@@ -108,7 +145,20 @@ const BuildsEditor = () => {
           </div>
         </div>
       )}
-      <table className="xs:w-96 mx-auto flex w-64 flex-col md:table md:w-full">
+      <div className="flex flex-col items-center justify-end space-y-2 py-5 md:flex-row md:space-y-0 md:space-x-2">
+        <MultiSelect
+          values={characters}
+          setValues={setCharacters}
+          options={enumToIdx(Character).filter((c) =>
+            existingCharacters.includes(c)
+          )}
+          renderFunc={(character) =>
+            t(Character[character].toLowerCase(), { ns: "characters" })
+          }
+          zeroValue={t("Pick") + t("Character")}
+        />
+      </div>
+      <table className="xs:w-96 mx-auto flex min-h-[50vh] w-64 flex-col md:table md:w-full">
         <thead className="hidden md:table-header-group">
           <tr className="flex items-center md:table-row">
             <th className="flex md:table-cell">{t("Enabled")}</th>
@@ -133,7 +183,7 @@ const BuildsEditor = () => {
               <div className="divider">
                 <button
                   className="btn btn-primary btn-sm"
-                  disabled={Object.keys(builds).length === 0}
+                  disabled={Object.keys(selectedBuilds).length === 0}
                   onClick={() => handleBackup()}
                 >
                   {t("Backup")}
@@ -146,13 +196,13 @@ const BuildsEditor = () => {
                 </button>
                 <div
                   className="tooltip tooltip-right"
-                  data-tip={t("Enable all custom builds")}
+                  data-tip={characters.length === 0 ? t("Enable all custom builds") : t("Enable selected custom builds")}
                 >
                   <label className="label cursor-pointer">
                     <input
                       type="checkbox"
                       className="toggle toggle-primary"
-                      disabled={Object.keys(builds).length === 0}
+                      disabled={Object.keys(selectedBuilds).length === 0}
                       checked={customAllEnabled}
                       onChange={toggleAllCustom}
                     />
@@ -161,7 +211,7 @@ const BuildsEditor = () => {
               </div>
             </th>
           </tr>
-          {Object.values(builds).map((build, idx) => (
+          {Object.values(selectedBuilds).map((build, idx) => (
             <BuildRow
               key={idx}
               build={build}
@@ -174,7 +224,7 @@ const BuildsEditor = () => {
                 {t("Presets")}
                 <div
                   className="tooltip tooltip-right"
-                  data-tip={t("Enable all presets")}
+                  data-tip={characters.length === 0 ? t("Enable all presets"): t("Enable selected presets")}
                 >
                   <label className="label cursor-pointer">
                     <input
@@ -188,9 +238,13 @@ const BuildsEditor = () => {
               </div>
             </th>
           </tr>
-          {Object.values(presets).map((build, idx) => (
-            <BuildRow key={idx} build={build} isPreset={true} />
-          ))}
+          {Object.values(selectedPresets)
+            .filter(
+              (c) => characters.length === 0 || characters.includes(c.character)
+            )
+            .map((build, idx) => (
+              <BuildRow key={idx} build={build} isPreset={true} />
+            ))}
         </tbody>
       </table>
     </div>
