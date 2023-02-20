@@ -4,11 +4,14 @@ import { useMemo } from "react";
 import { AttributeType, AttributePosition } from "../../genshin/attribute";
 import { Set } from "../../genshin/set";
 import { Character } from "../../genshin/character";
-import { formatAttributeValue  } from "../../utils/attribute";
+import { formatAttributeValue } from "../../utils/attribute";
 import CharacterAvatar from "../characters/CharacterAvatar";
+import { useNavigate } from "react-router-dom";
+import { encodeArtifact } from "../../utils/artifact";
 
 const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const artKey = useMemo(
     () =>
       `${Set[artifact.set].toLocaleLowerCase()}_${AttributePosition[
@@ -33,12 +36,15 @@ const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
       >
         <figure className="flex flex-col items-center justify-center">
           <img
-            className="aspect-square w-16"
+            className="aspect-square w-16 cursor-pointer"
             src={
               new URL(`../../assets/artifacts/${artKey}.png`, import.meta.url)
                 .href
             }
             alt={artKey}
+            onClick={() =>
+              navigate(`/artifact?artifact=${encodeArtifact(artifact)}`)
+            }
           />
           <span className="font-bold text-primary">+{artifact.level}</span>
         </figure>

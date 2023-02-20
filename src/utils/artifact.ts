@@ -8,6 +8,12 @@ import {
 } from "./attribute";
 import { Artifact } from "../genshin/artifact";
 import { attributePositionFromJSON } from "../genshin/attribute";
+import { toHex, fromHex } from "./hex"
+
+export const encodeArtifact = (art: Artifact): string =>
+  toHex(Artifact.encode(art).finish());
+export const decodeArtifact = (encoded: string): Artifact =>
+  Artifact.decode(fromHex(encoded));
 
 export const deserializeFromMona = (input: string | Object): Artifact => {
   if (typeof input === "string" || input instanceof String)

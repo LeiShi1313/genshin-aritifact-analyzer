@@ -16,24 +16,8 @@ import { getArtifactsResultHash, getConfigHash } from "../../utils/hash";
 import Paginator from "../Paginator";
 import ArtifactFitnessCard from "./ArtifactFitnessCard";
 import ArtifactsFilter from "./ArtifactsFilter";
+import BackToHome from "../navigation/BackToHome";
 
-const BackToHome = ({ t, title, navigate }) => {
-  return (
-    <div className="card w-96 bg-base-100 shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title">{t(title)}!</h2>
-        <div className="card-actions justify-end">
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate("/", { replace: true })}
-          >
-            {t("Back to home")}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Calculating = ({ t, progress, hasConfigChange }) => {
   return (
@@ -284,14 +268,10 @@ const ArtifactsUpload = () => {
 
   if (artifacts === undefined) {
     return (
-      <BackToHome
-        t={t}
-        title="No uploaded artifacts founds"
-        navigate={navigate}
-      />
+      <BackToHome title={t("No uploaded artifacts founds")} />
     );
   } else if (Object.keys(enabledBuilds).length === 0) {
-    return <BackToHome t={t} title="No enabled builds" navigate={navigate} />;
+    return <BackToHome title={t("No enabled builds")} />;
   }
   return (
     <div className="flex w-full flex-col items-center justify-center">
