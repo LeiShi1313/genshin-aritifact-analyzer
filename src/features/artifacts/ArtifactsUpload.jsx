@@ -253,7 +253,7 @@ const ArtifactsUpload = () => {
           );
         }
       };
-    } else {
+    } else if (window.setInterval) {
       setTimeout(() => {
         dispatch(
           calculateFitsAndRarity({
@@ -263,6 +263,14 @@ const ArtifactsUpload = () => {
           })
         );
       }, 0);
+    } else {
+      dispatch(
+        calculateFitsAndRarity({
+          hash: artifactsId,
+          artifacts,
+          enabledBuilds,
+        })
+      );
     }
   }, [enabledBuilds, artifacts]);
 
