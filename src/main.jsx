@@ -24,6 +24,18 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
 
   integrations: [new BrowserTracing(), new Sentry.Replay()],
+  
+  beforeSend(event, hint) {
+    const error = hint.originalException;
+    if (
+      error &&
+      error.message &&
+      error.message.match(/Falied to fetch dynamically imported module/i)
+    ) {
+      return;
+    }
+    return event;
+  },
 });
 }
 

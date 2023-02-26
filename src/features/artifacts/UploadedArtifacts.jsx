@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { X } from "phosphor-react";
+import { X, LockOpen } from "phosphor-react";
 
 import { removeUploadedArtifacts } from "../../store/reducers/uploads";
 
@@ -28,6 +28,24 @@ const UploadedArtifacts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const uploaded = useSelector((state) => state.uploads.artifacts);
+
+  const handleDownloadYasLock = (artifacts) => {
+    console.log(artifacts)
+    const element = document.createElement("a");
+    const file = new Blob(
+      [
+        JSON.stringify(
+          artifacts.map((_, idx) => idx).filter((idx) => artifacts[idx].locked)
+        ),
+      ],
+      { type: "text/json" }
+    );
+    element.href = URL.createObjectURL(file);
+    element.download = "lock.json";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  };
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <div className="my-auto flex h-full w-full flex-col items-center justify-center  space-y-2">
@@ -51,6 +69,16 @@ const UploadedArtifacts = () => {
                   className="cursor-pointer text-error"
                   onClick={() => dispatch(removeUploadedArtifacts(key))}
                 />
+              </div>
+              <div className="tooltip" data-tip={t("Unlock All")}>
+                {uploaded[key].format === "GOOD" && (
+                  <LockOpen
+                    size={24}
+                    weight="bold"
+                    className="cursor-pointer text-info"
+                    onClick={() => handleDownloadYasLock(uploaded[key].items)}
+                  />
+                )}
               </div>
             </div>
           ))}
