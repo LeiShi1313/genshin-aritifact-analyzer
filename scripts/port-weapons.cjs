@@ -155,6 +155,8 @@ const names = [
   "Wolf's Gravestone",
   "Xiphos' Moonlight",
   "Light of Foliar Incision",
+  "Beacon of the Reed Sea",
+  "Mailed Flower",
 ];
 
 const portWeapons = () => {

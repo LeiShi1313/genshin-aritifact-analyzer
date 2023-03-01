@@ -72,4 +72,5 @@ enum Character {
     WANDERER = 66;
     ALHAITHAM = 67;
     YAOYAO = 68;
+    DEHYA = 69;
 }

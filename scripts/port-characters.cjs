@@ -71,6 +71,8 @@ const names = [
   "wanderer",
   "alhaitham",
   "yaoyao",
+  "dehya",
+  // "mika",
 ];
 
 const portCharacters = () => {

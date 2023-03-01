@@ -17,7 +17,6 @@ const download_image = (url, image_path) =>
         )
         .catch((e) => {
             console.log(`error downloading ${url}: ${e}`);
-            // console.log("url is: " + url);
         });
 
 const lngToRegion = {
