@@ -20,11 +20,13 @@ export const buildSlice = createSlice({
     },
     editBuild: (state, action) => {
       const { id, build } = action.payload;
+
       const newHash = hashBuild(build);
-      state.builds[newHash] = build;
-      state.config[newHash] = state.config[id];
+      if (newHash === id) return;
       delete state.builds[id];
       delete state.config[id];
+      state.builds[newHash] = build;
+      state.config[newHash] = state.config[id];
     },
     importBuilds: (state, action) => {
       const { builds, replace } = action.payload;
