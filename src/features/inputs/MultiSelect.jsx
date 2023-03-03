@@ -97,10 +97,7 @@ const MultiSelect = ({
                     checked={values.includes(option)}
                     className="checkbox"
                   />
-                  <button
-                    className="w-full grow"
-                    onClick={() => setOpen(false)}
-                  >
+                  <button className="w-full grow">
                     {renderFunc ? renderFunc(option) : option}
                   </button>
                 </div>
