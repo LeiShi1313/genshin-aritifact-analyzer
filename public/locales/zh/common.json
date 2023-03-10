@@ -23,6 +23,9 @@
     "Replace": "替换",
     "Import": "导入",
     "Generate": "生成",
+    "All": "全部",
+    "Lock only": "仅加锁",
+    "Unlock only": "仅解锁",
     "Name": "名称",
     "Enabled": "启用",
     "Presets": "预设",
@@ -81,6 +84,8 @@
     "Did you upload it": "你上传了吗",
     "Back to home": "回到主页",
     "No artifact found": "未找到圣遗物",
+    "Selected": "选中",
+    "Unselected": "未选中",
     "Fitness": "匹配度",
     "Rarity": "稀有度",
 

@@ -14,6 +14,8 @@ const ArtifactsFilter = ({
   setFitness,
   rarity,
   setRarity,
+  isInverted,
+  setIsInverted,
   sortKey,
   setSortKey,
   set,
@@ -79,6 +81,16 @@ const ArtifactsFilter = ({
       </div>
       <div className="my-4 flex w-full flex-col items-center justify-center text-lg text-primary-focus md:flex-row md:space-x-4">
         <div className="flex flex-row items-center space-x-4">
+          <span className="flex flex-row items-center gap-2">
+            {t("Selected")}
+            <input
+              type="checkbox"
+              checked={isInverted}
+              className="toggle toggle-primary"
+              onChange={(e) => setIsInverted(e.target.checked)}
+            />
+            {t("Unselected")}
+          </span>
           <span className="flex flex-row items-center">
             {t("Fitness")}
             {sortKey === "fitness-asc" && (
@@ -121,7 +133,7 @@ const ArtifactsFilter = ({
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-row items-center justify-center text-primary-focus space-x-2">
+      <div className="flex w-full flex-row items-center justify-center text-primary-focus space-x-2 pb-4">
         <span>{t("level", { ns: "artifacts"})}</span>
         <span className="text-lg">{minLevel}</span>
         <MultiRange
