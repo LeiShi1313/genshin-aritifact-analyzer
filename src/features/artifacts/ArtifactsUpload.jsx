@@ -121,6 +121,7 @@ const ArtifactsUpload = () => {
     minLevel,
     maxLevel,
     sortKey,
+    isInverted,
     setFitness,
     setRarity,
     setSet,
@@ -128,6 +129,7 @@ const ArtifactsUpload = () => {
     setMinLevel,
     setMaxLevel,
     setSortKey,
+    setIsInverted,
   ] = useQueryParams([
     {
       name: "fitness",
@@ -146,6 +148,7 @@ const ArtifactsUpload = () => {
     { name: "minLevel", defaultValue: 0, isNumeric: true, replace: false },
     { name: "maxLevel", defaultValue: 20, isNumeric: true, replace: false },
     { name: "sort", defaultValue: "rarity-desc", replace: false },
+    { name: "isInverted", defaultValue: false, replace: false },
   ]);
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(20);
@@ -191,28 +194,38 @@ const ArtifactsUpload = () => {
       if (pos > 0) {
         ret = ret && artifacts[idx].position === pos;
       }
-      ret = ret && artifacts[idx].level >= minLevel && artifacts[idx].level <= maxLevel;
       return ret;
     },
-    [fitness, rarity, allFits, allRarity, set, pos, minLevel, maxLevel]
+    [artifacts, fitness, rarity, allFits, allRarity, set, pos, minLevel, maxLevel]
   );
-  const filteredArtifacts = useMemo(
-    () =>
-      artifacts && artifacts.length > 0
-        ? [...artifacts.map((_, index) => index)]
-            .sort(compareFn)
-            .filter(filterFn)
-        : [],
-    [artifacts, compareFn, filterFn, page, offset]
+  const levelFilterFn = useCallback(
+    (idx) => minLevel <= artifacts[idx].level && artifacts[idx].level <= maxLevel,
+    [artifacts, minLevel, maxLevel]
   );
+  const sortedArtifacts = useMemo(
+    () => artifacts?.map((_, i) => i).sort(compareFn) ?? [],
+    [artifacts, compareFn]
+  );
+  const selectedArtifacts = useMemo(
+    () => sortedArtifacts.filter(levelFilterFn).filter(filterFn),
+    [sortedArtifacts, filterFn]
+  );
+  const unselectedArtifacts = useMemo(
+    () => sortedArtifacts.filter(levelFilterFn).filter((i) => !filterFn(i)),
+    [sortedArtifacts, filterFn]
+  );
+  const displayedArtifacts = isInverted ? unselectedArtifacts : selectedArtifacts;
 
-  const handleDownloadYasLock = useCallback(() => {
+  const handleDownloadYasLock = useCallback(({ toLock = [], toUnlock = [] }) => {
     const element = document.createElement("a");
     const file = new Blob(
       [
         JSON.stringify(
-          filteredArtifacts.filter((idx) => !artifacts[idx].locked)
-        ),
+          [
+            ...toLock.filter((idx) => !artifacts[idx].locked),
+            ...toUnlock.filter((idx) => artifacts[idx].locked)
+          ]
+        )
       ],
       { type: "text/json" }
     );
@@ -220,7 +233,7 @@ const ArtifactsUpload = () => {
     element.download = "lock.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
-  }, [filteredArtifacts]);
+  }, [selectedArtifacts]);
 
   useEffect(() => {
     if (
@@ -290,6 +303,11 @@ const ArtifactsUpload = () => {
           setFitness(f);
         }}
         rarity={rarity}
+        isInverted={isInverted}
+        setIsInverted={(i) => {
+          setPage(0);
+          setIsInverted(i);
+        }}
         setRarity={(r) => {
           setPage(0);
           setRarity(r);
@@ -329,27 +347,45 @@ const ArtifactsUpload = () => {
       ) : (
         <div className="flex flex-col space-y-4">
           <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center px-2">
-              {format === "GOOD" && filteredArtifacts.length > 0 && (
-                <button
-                  className="btn btn-primary"
-                  onClick={handleDownloadYasLock}
-                >
-                  {t("Generate")} lock.json
-                </button>
-              )}
-            </div>
-            {filteredArtifacts.length > offset && (
+            {format === "GOOD" && selectedArtifacts.length > 0 && (
+              <div className="dropdown">
+                <label tabIndex={0} className="btn btn-primary">{t("Generate")} lock.json</label>
+                <ul tabIndex={0} className="dropdown-content bg-secondary text-secondary-content menu p-2 shadow rounded-box w-52">
+                  <li>
+                    <button
+                      onClick={() => handleDownloadYasLock({ toLock: selectedArtifacts, toUnlock: unselectedArtifacts })}
+                    >
+                      {t("All")}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleDownloadYasLock({ toLock: selectedArtifacts })}
+                    >
+                      {t("Lock only")}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleDownloadYasLock({ toUnlock: unselectedArtifacts })}
+                    >
+                      {t("Unlock only")}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {displayedArtifacts.length > offset && (
               <Paginator
                 page={page}
                 setPage={setPage}
                 offset={offset}
                 setOffset={setOffset}
-                totalPages={filteredArtifacts.length}
+                totalPages={displayedArtifacts.length}
               />
             )}
           </div>
-          {filteredArtifacts
+          {displayedArtifacts
             .slice(page * offset, (page + 1) * offset)
             .map((index) => (
               <ArtifactFitnessCard
@@ -363,13 +399,13 @@ const ArtifactsUpload = () => {
                 minRarity={rarity}
               />
             ))}
-          {filteredArtifacts.length > offset && (
+          {displayedArtifacts.length > offset && (
             <Paginator
               page={page}
               setPage={setPage}
               offset={offset}
               setOffset={setOffset}
-              totalPages={filteredArtifacts.length}
+              totalPages={displayedArtifacts.length}
               scrollToId="main-content"
             />
           )}

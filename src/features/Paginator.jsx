@@ -25,7 +25,7 @@ const Paginator = ({ page, setPage, offset, setOffset, totalPages, scrollToId=nu
         «
       </button>
       <select
-        className="btn select btn-ghost select-ghost max-w-xs "
+        className="btn select btn-ghost max-w-xs "
         value={page}
         onChange={(e) => setPage(Number(e.target.value))}
       >
