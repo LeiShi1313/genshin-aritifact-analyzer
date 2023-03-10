@@ -196,7 +196,7 @@ const ArtifactsUpload = () => {
       }
       return ret;
     },
-    [artifacts, fitness, rarity, allFits, allRarity, set, pos, minLevel, maxLevel]
+    [artifacts, fitness, rarity, allFits, allRarity, set, pos]
   );
   const levelFilterFn = useCallback(
     (idx) => minLevel <= artifacts[idx].level && artifacts[idx].level <= maxLevel,
@@ -233,7 +233,7 @@ const ArtifactsUpload = () => {
     element.download = "lock.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
-  }, [selectedArtifacts]);
+  }, [artifacts]);
 
   useEffect(() => {
     if (
