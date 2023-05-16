@@ -43,6 +43,8 @@ const names = [
   "Vermillion Hereafter",
   "Viridescent Venerer",
   "Wanderer's Troupe",
+  "Nymph's Dream",
+  "Vourukasha's Glow",
 ];
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 

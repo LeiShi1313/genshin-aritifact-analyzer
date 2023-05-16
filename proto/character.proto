@@ -73,4 +73,7 @@ enum Character {
     ALHAITHAM = 67;
     YAOYAO = 68;
     DEHYA = 69;
+    MIKA = 70;
+    BAIZHU = 71;
+    KAVEH = 72;
 }

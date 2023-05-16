@@ -157,6 +157,7 @@ const names = [
   "Light of Foliar Incision",
   "Beacon of the Reed Sea",
   "Mailed Flower",
+  "Jadefall's Splendor",
 ];
 
 const portWeapons = () => {
