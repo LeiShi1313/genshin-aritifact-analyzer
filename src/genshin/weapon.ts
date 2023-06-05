@@ -213,6 +213,9 @@ export enum Weapon {
   WOLFS_GRAVESTONE = 150,
   XIPHOS_MOONLIGHT = 151,
   LIGHT_OF_FOLIAR_INCISION = 152,
+  BEACON_OF_THE_REED_SEA = 153,
+  MAILED_FLOWER = 154,
+  JADEFALLS_SPLENDOR = 155,
   UNRECOGNIZED = -1,
 }
 
@@ -677,6 +680,15 @@ export function weaponFromJSON(object: any): Weapon {
     case 152:
     case "LIGHT_OF_FOLIAR_INCISION":
       return Weapon.LIGHT_OF_FOLIAR_INCISION;
+    case 153:
+    case "BEACON_OF_THE_REED_SEA":
+      return Weapon.BEACON_OF_THE_REED_SEA;
+    case 154:
+    case "MAILED_FLOWER":
+      return Weapon.MAILED_FLOWER;
+    case 155:
+    case "JADEFALLS_SPLENDOR":
+      return Weapon.JADEFALLS_SPLENDOR;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -992,6 +1004,12 @@ export function weaponToJSON(object: Weapon): string {
       return "XIPHOS_MOONLIGHT";
     case Weapon.LIGHT_OF_FOLIAR_INCISION:
       return "LIGHT_OF_FOLIAR_INCISION";
+    case Weapon.BEACON_OF_THE_REED_SEA:
+      return "BEACON_OF_THE_REED_SEA";
+    case Weapon.MAILED_FLOWER:
+      return "MAILED_FLOWER";
+    case Weapon.JADEFALLS_SPLENDOR:
+      return "JADEFALLS_SPLENDOR";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
