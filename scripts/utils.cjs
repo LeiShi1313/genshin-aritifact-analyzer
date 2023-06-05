@@ -1,23 +1,34 @@
 const axios = require("axios");
 const fs = require("fs");
+const util = require('util');
+const stream = require('stream');
 
-const download_image = (url, image_path) =>
-    axios({
+const finished = util.promisify(stream.finished);
+
+const download_image = async (url, image_path) => {
+    const writer = fs.createWriteStream(image_path);
+    const response = axios({
         url,
         responseType: "stream",
     })
-        .then(
-            (response) =>
-                new Promise((resolve, reject) => {
-                    response.data
-                        .pipe(fs.createWriteStream(image_path))
-                        .on("finish", () => resolve())
-                        .on("error", (e) => reject(e));
-                })
-        )
-        .catch((e) => {
-            console.log(`error downloading ${url}: ${e}`);
+    if (response.status !== 200) {
+        throw new Error(`Failed to download ${url}`);
+    }
+    response.data.pipe(writer)
+    return new Promise((resolve, reject) => {
+        let error = null;
+        writer.on("error", (err) => {
+            error = err;
+            writer.close();
+            reject(err);
         });
+        writer.on("close", () => {
+            if (!error) {
+                resolve(true);
+            }
+        });
+    });
+}
 
 const lngToRegion = {
     'CHS': 'zh',
@@ -26,8 +37,8 @@ const lngToRegion = {
     'Korean': 'ko',
     'Spanish': 'es',
     'French': 'fr',
-    'German': 'de',    
+    'German': 'de',
 }
-        
+
 exports.download_image = download_image;
 exports.lngToRegion = lngToRegion;

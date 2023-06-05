@@ -76,4 +76,5 @@ enum Character {
     MIKA = 70;
     BAIZHU = 71;
     KAVEH = 72;
+    KIRARA = 73;
 }

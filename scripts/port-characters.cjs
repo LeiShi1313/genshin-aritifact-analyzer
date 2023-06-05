@@ -75,12 +75,13 @@ const names = [
   "mika",
   "baizhu",
   "kaveh",
+  "kirara",
 ];
 
 const portCharacters = () => {
   let trans = {
-      en: {},
-    };
+    en: {},
+  };
   let data = {};
   let idx = 0;
 
@@ -92,7 +93,7 @@ const portCharacters = () => {
   proto_file.write("enum Character {\n");
   proto_file.write(`    CHARACTER_UNSPECIFIED = ${idx++};\n`);
 
-  names.forEach((e) => {
+  names.forEach(async (e) => {
     const eng = e.startsWith("traveler")
       ? genshindb.talents(e)
       : genshindb.characters(e);
@@ -109,8 +110,8 @@ const portCharacters = () => {
     trans['en'][key] = eng.name;
     for (let lng of Object.keys(utils.lngToRegion)) {
       const data = e.startsWith("traveler")
-      ? genshindb.talents(e, { resultLanguage: lng })
-      : genshindb.characters(e, { resultLanguage: lng });
+        ? genshindb.talents(e, { resultLanguage: lng })
+        : genshindb.characters(e, { resultLanguage: lng });
       if (!!!trans[utils.lngToRegion[lng]]) {
         trans[utils.lngToRegion[lng]] = {}
       }
@@ -120,7 +121,7 @@ const portCharacters = () => {
       zh_name: trans['zh'][key],
       element: key.startsWith('traveler') ? key.split('_')[1] : eng.element !== 'None' ? eng.element : '',
       weapontype: key.startsWith('traveler') ? 'Sword' : eng.weapontype,
-      rarity: key.startsWith('traveler') ? 5: eng.rarity,
+      rarity: key.startsWith('traveler') ? 5 : eng.rarity,
     }
 
     for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {
@@ -129,7 +130,11 @@ const portCharacters = () => {
           imageType
         ].slice(-3)}`;
         if (!fs.existsSync(imagePath)) {
-          utils.download_image(eng.images[imageType], imagePath);
+          try {
+            await utils.download_image(eng.images[imageType], imagePath)
+          } catch (e) {
+            console.error(`Failed to download ${eng.images[imageType]}`)
+          }
         }
       }
     }
