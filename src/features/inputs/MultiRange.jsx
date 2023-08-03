@@ -56,7 +56,7 @@ const MultiRange = ({ min, max, onChange, step=1 }) => {
                     event.target.value = value.toString();
                 }}
                 className={classnames("thumb thumb--zindex-3", {
-                    "thumb--zindex-5": minVal > max - 100
+                    "thumb--zindex-4": minVal > max - 100
                 })}
             />
             <input

@@ -5,6 +5,15 @@ import data from '../data/characters.json';
 const zhToKey = {};
 Object.keys(data).map((key) => zhToKey[data[key]['zh_name']] = key.toUpperCase());
 
+export const characterMetadata = {};
+Object.keys(data).map((key) => {
+  const formatKey = key.toUpperCase();
+  characterMetadata[formatKey] = {};
+  characterMetadata[formatKey].element = data[key]["element"];
+  characterMetadata[formatKey].weaponType = data[key]["weapontype"];
+  characterMetadata[formatKey].rarity = data[key]["rarity"];
+});
+
 export const characterFromName = (name: string): Character => {
     const c = Character[name.toUpperCase()];
     if (c === undefined) {

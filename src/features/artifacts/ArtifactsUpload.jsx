@@ -282,7 +282,7 @@ const ArtifactsUpload = () => {
     return <BackToHome title={t("No enabled builds")} />;
   }
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="flex w-full max-w-screen-lg flex-col items-center justify-center">
       <ArtifactsFilter
         fitness={fitness}
         setFitness={(f) => {
@@ -327,7 +327,7 @@ const ArtifactsUpload = () => {
           hasConfigChange={hasConfigChange}
         />
       ) : (
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col items-stretch space-y-4 w-full px-4 lg:px-0">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center px-2">
               {format === "GOOD" && filteredArtifacts.length > 0 && (

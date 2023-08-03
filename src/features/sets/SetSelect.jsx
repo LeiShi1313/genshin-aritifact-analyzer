@@ -28,7 +28,7 @@ const SetSelect = ({ set, setSet }) => {
   };
 
   return (
-    <div className="dropdown z-[100]">
+    <div className="dropdown z-[41]">
       <label tabIndex="0" className="btn btn-ghost m-1">
         <span>
           {set !== 0 ? (
@@ -60,7 +60,7 @@ const SetSelect = ({ set, setSet }) => {
           .map((key) => (
             <li key={key}>
               <a
-                className="p-0"
+                className="p-0 px-2"
                 onClick={() => {
                   handleClick(key);
                 }}
