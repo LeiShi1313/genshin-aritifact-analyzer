@@ -35,10 +35,8 @@ const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
       {/* Genshin-style Artifact Card */}
       <figure className={"flex flex-col items-center justify-start"}>
         <div
-          className={
-            "relative flex select-none flex-col items-center rounded-tl-md rounded-br-2xl bg-gradient-to-br from-black/25 px-1 py-1 " +
-            starRarityToBgColor(artifact.star)
-          }
+          className="relative flex select-none flex-col items-center rounded-tl-md rounded-br-2xl bg-gradient-to-br from-black/25 px-1 py-1"
+          style={{ backgroundColor: starRarityToBgColor(artifact.star) }}
         >
           <div className="absolute left-2 top-2 h-5 w-5 text-black opacity-25">
             {ArtifactPositionIcon[artifact.position]}

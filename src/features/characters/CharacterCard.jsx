@@ -24,10 +24,8 @@ const CharacterCard = ({ character, text = "name", width = 24, textColor }) => {
       }
     >
       <div
-        className={
-          `relative flex select-none flex-col items-center overflow-hidden rounded-br-2xl bg-gradient-to-br from-black/25 ` +
-          starRarityToBgColor(charStar)
-        }
+        className="relative flex select-none flex-col items-center overflow-hidden rounded-br-2xl bg-gradient-to-br from-black/25"
+        style={{ backgroundColor: starRarityToBgColor(charStar) }}
       >
         <img src={imgUrl} style={{ width: width / 4 + "rem" }} />
       </div>
