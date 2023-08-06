@@ -30,7 +30,7 @@ const UploadedArtifacts = () => {
   const uploaded = useSelector((state) => state.uploads.artifacts);
 
   const handleDownloadYasLock = (artifacts) => {
-    console.log(artifacts)
+    // console.log(artifacts)
     const element = document.createElement("a");
     const file = new Blob(
       [

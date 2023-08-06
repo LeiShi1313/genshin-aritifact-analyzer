@@ -83,10 +83,13 @@ export const getFitness = (
   const fits = {};
   const mainArr = getAttributeArray([artifact.mainAttribute!]);
   const subArr = getWeightedAttributeArray(artifact.subAttributes);
+  // console.log(`mainArr: ${mainArr}`);
+  // console.log(`subArr: ${subArr}`);
 
   for (const weight of weights) {
     let fitness = 0;
 
+    // console.log(`weight: ${JSON.stringify(weight)}`);
     const mainWeight = math.matrix([...weight[artifact.position]]);
     const subWeight = math.matrix([...weight[AttributePosition.SUB]]);
     fitness += math.sum(

@@ -14,8 +14,7 @@ import { themes } from "../../utils/theme";
 import ArtifactPositionIcon from "../../assets/svgs/ArtifactPositionIcon";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
 
-const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
-  const { theme, _ } = useContext(ThemeContext);
+const ArtifactCard = ({ artifact, fitAttributes = [], suitIsFit = false }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const artKey = useMemo(

@@ -2,7 +2,12 @@ import { t } from "i18next";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { encodeBuild } from "../../utils/build";
+=======
+import { encodeBuild, getBuildSets } from "../../utils/build";
+import CharacterAvatar from "../characters/CharacterAvatar";
+>>>>>>> 1e1e11e (hover effect for fit suits)
 import ArtifactCard from "./ArtifactCard";
 import CharacterCard from "../characters/CharacterCard";
 
@@ -45,6 +50,15 @@ const ArtifactFitnessCard = ({
       hoveredBuild && builds[hoveredBuild]
         ? builds[hoveredBuild].subAttributes.map((attr) => attr.type)
         : emptyAttributes,
+    [hoveredBuild]
+  );
+  const suitIsFit = useMemo(
+    () =>
+      hoveredBuild && builds[hoveredBuild]
+        ? getBuildSets(builds[hoveredBuild]).some(
+            (set) => set === artifact.set
+          )
+        : false,
     [hoveredBuild]
   );
 

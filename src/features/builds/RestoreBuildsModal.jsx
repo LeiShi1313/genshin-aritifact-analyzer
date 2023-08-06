@@ -49,7 +49,7 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
         const hash = hashBuild(build);
         _pendingBuilds[hash] = build;
       }
-      console.log(_pendingBuilds);
+      // console.log(_pendingBuilds);
       setPendingBuilds(_pendingBuilds);
     };
     fileReader.readAsText(file, "UTF-8");
