@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Character } from "../../genshin/character";
 
-const CharacterAvatar = ({ character, withRing = false }) => {
+const CharacterAvatar = ({ character, withRing = false, width = 12 }) => {
   const imgUrl = useMemo(
     () =>
       new URL(
@@ -15,7 +15,7 @@ const CharacterAvatar = ({ character, withRing = false }) => {
     
   return (
     <div className="avatar">
-      <div className={`w-12 rounded-full `+ (withRing ? 'ring ring-primary ring-offset-base-100 ring-offset-[-1px]' : '')}>
+      <div className={`w-${width} rounded-full `+ (withRing ? 'ring ring-primary ring-offset-base-100 ring-offset-[-1px]' : '')}>
         <img src={imgUrl} />
       </div>
     </div>

@@ -10,8 +10,13 @@
     margin: 0;
   }
 
-  body::-webkit-scrollbar{
+  body::-webkit-scrollbar {
     display: none;
   }
 
+}
+
+@font-face {
+  font-family: 'GS';
+  src: url("assets/fonts/shii-webfont.woff2") format("woff2");
 }

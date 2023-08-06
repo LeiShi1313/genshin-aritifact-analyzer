@@ -17,15 +17,15 @@ const Paginator = ({ page, setPage, offset, setOffset, totalPages, scrollToId=nu
     }
 
   return (
-    <div className="btn-group self-end justify-self-end">
+    <div className="btn-group self-end justify-self-end space-x-0.5">
       <button
         onClick={handlePrePage}
-        className={`btn btn-ghost ${page === 0 && "cursor-not-allowed"}`}
+        className={`btn btn-secondary ${page === 0 && "btn-disabled cursor-not-allowed"}`}
       >
         «
       </button>
       <select
-        className="btn select btn-ghost select-ghost max-w-xs "
+        className="select select-secondary bg-secondary max-w-xs hover:bg-secondary-focus text-secondary-content rounded-none"
         value={page}
         onChange={(e) => setPage(Number(e.target.value))}
       >
@@ -37,8 +37,8 @@ const Paginator = ({ page, setPage, offset, setOffset, totalPages, scrollToId=nu
       </select>
       <button
         onClick={handleNextPage}
-        className={`btn btn-ghost ${
-          page === Math.floor(totalPages / offset) && "cursor-not-allowed"
+        className={`btn btn-secondary ${
+          page === Math.floor(totalPages / offset) && "btn-disabled cursor-not-allowed"
         }`}
       >
         »

@@ -3,6 +3,8 @@
     "Check": "查看",
     "Language": "语言",
     "Themes": "主题",
+    "Switch to dark theme": "切换至深色主题",
+    "Switch to light theme": "切换至浅色主题",
     "EN": "EN",
     "中文": "中文",
     "Home": "主页",
@@ -83,6 +85,9 @@
     "No artifact found": "未找到圣遗物",
     "Fitness": "匹配度",
     "Rarity": "稀有度",
+    "Found fit builds": "找到{{num}}个匹配配装",
+    "Show all": "显示全部",
+    "Show less": "显示更少",
 
     "User": "用户",
 

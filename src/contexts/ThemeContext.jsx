@@ -2,8 +2,8 @@ import React, { useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-const light_theme = 'autumn';
-const dark_theme = 'luxury';
+const light_theme = 'genshin';
+const dark_theme = 'genshin_dark';
 
 export const ThemeContext = React.createContext();
 

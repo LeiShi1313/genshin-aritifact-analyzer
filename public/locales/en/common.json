@@ -3,6 +3,8 @@
     "Check": "Check",
     "Language": "Language",
     "Themes": "Themes",
+    "Switch to dark theme": "Switch to dark theme",
+    "Switch to light theme": "Switch to light theme",
     "EN": "EN",
     "中文": "中文",
     "Home": "Home",
@@ -83,7 +85,9 @@
     "No artifact found": "No artifact found",
     "Fitness": "Fitness",
     "Rarity": "Rarity",
-
+    "Found fit builds": "Found {{num, number}} fit builds",
+    "Show all": "Show all",
+    "Show less": "Show less",
 
     "User": "User",
 
