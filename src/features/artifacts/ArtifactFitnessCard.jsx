@@ -136,10 +136,7 @@ const ArtifactFitnessCard = ({
                   <div
                     key={idx}
                     className="tooltip cursor-pointer"
-                    data-tip={
-                      (builds[key].name ? builds[key].name : "") +
-                      `${t("Fitness")}: ${(100 * fits[key]).toFixed(0)}%`
-                    }
+                    data-tip={builds[key].name}
                     onClick={() => handleClick(key)}
                     onMouseEnter={() => setHoveredBuild(key)}
                     onMouseLeave={() => setHoveredBuild(null)}
