@@ -2,12 +2,7 @@ import { t } from "i18next";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { encodeBuild } from "../../utils/build";
-=======
 import { encodeBuild, getBuildSets } from "../../utils/build";
-import CharacterAvatar from "../characters/CharacterAvatar";
->>>>>>> 1e1e11e (hover effect for fit suits)
 import ArtifactCard from "./ArtifactCard";
 import CharacterCard from "../characters/CharacterCard";
 
@@ -72,7 +67,7 @@ const ArtifactFitnessCard = ({
   return (
     <div className="mt-5 flex w-auto flex-col items-stretch gap-2 rounded-xl bg-base-200 p-3 lg:w-auto lg:flex-row lg:items-start">
       {/* Artifact info card */}
-      <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} />
+      <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} suitIsFit={suitIsFit} />
 
       {/* Artifact value section */}
       <div className="flex w-full flex-col items-stretch gap-2 self-stretch lg:flex-row">
