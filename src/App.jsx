@@ -6,9 +6,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { Build } from "./genshin/build"
 import { loadPresets } from "./store/reducers/presets";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemedSuspense from "./features/ThemedSuspense";
+import { decodeBuild } from "./utils/build";
 
 const Layout = lazy(() => import("./Layout"));
 const Main = lazy(() => import("./features/Main"));
@@ -25,13 +27,27 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    import("./data/presets.json").then((data) => {
+    import("./data/presets.js").then((data) => {
       const presets = [];
-      for (let build of data.default) {
-        presets.push(build);
+      // console.log(data.default)
+      for (let rawBuild of data.default) {
+        try {
+          presets.push(decodeBuild(rawBuild));
+        } catch (e) {
+          console.error(e)
+        }
       }
       dispatch(loadPresets(presets));
     });
+    
+    // import("./data/presets.json").then((data) => {
+    //   const presets = [];
+    //   for (let build of data.default) {
+    //     presets.push(build);
+    //     console.log(JSON.stringify(Build.encode(build).finish()))
+    //   }
+    //   dispatch(loadPresets(presets));
+    // });
   }, []);
 
   return (

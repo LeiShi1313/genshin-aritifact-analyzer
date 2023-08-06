@@ -36,6 +36,7 @@ export const getAttributeWeights = (
       t.set([idx, idx], 1);
     }
   }
+  // console.log(`position: ${position}, attibutes: ${attibutes}, config: ${config}, t: ${t}, column: ${column}`)
 
   return math.multiply(t, column);
 }

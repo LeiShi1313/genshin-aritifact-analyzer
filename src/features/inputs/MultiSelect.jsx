@@ -26,7 +26,7 @@ const MultiSelect = ({
   );
   const handleToggle = useCallback(
     (option) => {
-      console.log(option);
+      // console.log(option);
       if (values.includes(option)) handleRemove(option);
       else handleAdd(option);
     },
@@ -73,7 +73,7 @@ const MultiSelect = ({
           weight="fill"
           className="w-12 cursor-pointer text-primary"
           onClick={() => {
-            console.log("CaretDown");
+            // console.log("CaretDown");
             setOpen((prev) => !!!prev);
           }}
         />

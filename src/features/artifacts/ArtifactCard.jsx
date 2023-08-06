@@ -14,7 +14,7 @@ import { themes } from "../../utils/theme";
 import ArtifactPositionIcon from "../../assets/svgs/ArtifactPositionIcon";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
 
-const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
+const ArtifactCard = ({ artifact, fitAttributes = [], suitIsFit = false }) => {
   const { theme, _ } = useContext(ThemeContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -35,14 +35,14 @@ const ArtifactCard = ({ artifact, fitAttributes = [] }) => {
       {/* Genshin-style Artifact Card */}
       <figure className={"flex flex-col items-center justify-start"}>
         <div
-          className="relative flex select-none flex-col items-center rounded-tl-md rounded-br-2xl bg-gradient-to-br from-black/25 px-1 py-1"
+          className={classNames("relative flex select-none flex-col items-center rounded-tl-md rounded-br-2xl bg-gradient-to-br from-black/25 px-1 py-1")}
           style={{ backgroundColor: starRarityToBgColor(artifact.star) }}
         >
           <div className="absolute left-2 top-2 h-5 w-5 text-black opacity-25">
             {ArtifactPositionIcon[artifact.position]}
           </div>
           <img
-            className="aspect-square w-24 cursor-pointer"
+            className={classNames("aspect-square w-24 cursor-pointer", {"scale-105 shadow-2xl": suitIsFit})}
             src={
               new URL(`../../assets/artifacts/${artKey}.png`, import.meta.url)
                 .href

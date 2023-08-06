@@ -2,7 +2,7 @@ import { t } from "i18next";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { encodeBuild } from "../../utils/build";
+import { encodeBuild, getBuildSets } from "../../utils/build";
 import ArtifactCard from "./ArtifactCard";
 import CharacterCard from "../characters/CharacterCard";
 
@@ -47,6 +47,15 @@ const ArtifactFitnessCard = ({
         : emptyAttributes,
     [hoveredBuild]
   );
+  const suitIsFit = useMemo(
+    () =>
+      hoveredBuild && builds[hoveredBuild]
+        ? getBuildSets(builds[hoveredBuild]).some(
+            (set) => set === artifact.set
+          )
+        : false,
+    [hoveredBuild]
+  );
 
   const characterCardWidth = 16;
 
@@ -58,7 +67,7 @@ const ArtifactFitnessCard = ({
   return (
     <div className="mt-5 flex w-auto flex-col items-stretch gap-2 rounded-xl bg-base-200 p-3 lg:w-auto lg:flex-row lg:items-start">
       {/* Artifact info card */}
-      <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} />
+      <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} suitIsFit={suitIsFit} />
 
       {/* Artifact value section */}
       <div className="flex w-full flex-col items-stretch gap-2 self-stretch lg:flex-row">

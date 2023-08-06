@@ -55,7 +55,7 @@ const SubAttributesEditor = ({ subAttributes, setSubAttributes }) => {
                   onClick={() => handleAttrRemove(idx)}
                 />
               </span>
-              <span className="label-text-alt">{attr.value}</span>
+              <span className="label-text-alt">{attr.value.toString() === '1' ? '1' : attr.value.toFixed(1)}</span>
             </label>
             <input
               type="range"
