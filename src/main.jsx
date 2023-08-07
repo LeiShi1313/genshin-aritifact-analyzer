@@ -30,9 +30,9 @@ Sentry.init({
     if (
       error &&
       error.message &&
-      error.message.match(/Falied to fetch dynamically imported module/i)
+      error.message.match(/TypeError: Failed to fetch dynamically imported module/i)
     ) {
-      return;
+      return null;
     }
     return event;
   },
