@@ -3,7 +3,7 @@ const ArtifactPositionIcon = [
   <svg
     className="FLOWER"
     focusable="false"
-    ariaHidden="true"
+    aria-hidden="true"
     viewBox="0 0 24 24"
     fill="currentColor"
   >
@@ -12,7 +12,7 @@ const ArtifactPositionIcon = [
   <svg
     className="Plume"
     focusable="false"
-    ariaHidden="true"
+    aria-hidden="true"
     viewBox="0 0 24 24"
     fill="currentColor"
   >
@@ -21,7 +21,7 @@ const ArtifactPositionIcon = [
   <svg
     className="Sands"
     focusable="false"
-    ariaHidden="true"
+    aria-hidden="true"
     viewBox="0 0 24 24"
     fill="currentColor"
   >
@@ -30,7 +30,7 @@ const ArtifactPositionIcon = [
   <svg
     className="Goblet"
     focusable="false"
-    ariaHidden="true"
+    aria-hidden="true"
     viewBox="0 0 24 24"
     fill="currentColor"
   >
@@ -39,7 +39,7 @@ const ArtifactPositionIcon = [
   <svg
     className="Circlet"
     focusable="false"
-    ariaHidden="true"
+    aria-hidden="true"
     viewBox="0 0 24 24"
     fill="currentColor"
   >

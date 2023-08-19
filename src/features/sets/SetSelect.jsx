@@ -28,27 +28,37 @@ const SetSelect = ({ set, setSet }) => {
   };
 
   return (
-    <div className="dropdown z-[41]">
-      <label tabIndex="0" className="btn btn-ghost m-1">
-        <span>
-          {set !== 0 ? (
-            <>
-              <img
-                className="mr-1 inline-block aspect-square w-8"
-                src={getSetIconUrl(set)}
-              />
-              {t(Set[set].toLowerCase(), { ns: "sets" })}
-            </>
-          ) : (
-            <>
-              {t("Pick one")} {t("set")}
-            </>
-          )}
-        </span>
+    <div className="dropdown z-[42] w-full">
+      <label
+        tabIndex="0"
+        className="btn-primary btn w-full flex-nowrap justify-start overflow-hidden text-ellipsis rounded-full text-left normal-case"
+      >
+        {set !== 0 ? (
+          <>
+            <img
+              className="mr-1 inline-block aspect-square w-8"
+              src={getSetIconUrl(set)}
+            />
+            {t(Set[set].toLowerCase(), { ns: "sets" })}
+          </>
+        ) : (
+          <>
+            {t("Pick one")} {t("set")}
+          </>
+        )}
+        <span className="grow" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="24"
+        >
+          <path d="M7,10L12,15L17,10H7Z" />
+        </svg>
       </label>
       <ul
         tabIndex="0"
-        className="dropdown-content menu rounded-box max-h-96 w-max flex-nowrap overflow-auto bg-base-100 p-2 text-sm shadow"
+        className="dropdown-content menu rounded-box mt-1 max-h-96 w-full flex-nowrap overflow-auto bg-primary p-2 text-sm text-primary-content shadow"
       >
         {[...enumToIdx(Set)]
           .sort((a, b) =>
@@ -60,7 +70,7 @@ const SetSelect = ({ set, setSet }) => {
           .map((key) => (
             <li key={key}>
               <a
-                className="p-0 px-2"
+                className="overflow-hidden text-ellipsis !rounded-full p-0 px-2 hover:bg-primary-content/10"
                 onClick={() => {
                   handleClick(key);
                 }}
