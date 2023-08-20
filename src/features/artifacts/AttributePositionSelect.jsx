@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { AttributePosition } from "../../genshin/attribute";
 import { enumToIdx } from "../../utils/enum";
 import ArtifactPositionIcon from "../../assets/svgs/ArtifactPositionIcon";
-import IconReset from "../../assets/svgs/IconReset";
 import classNames from "classnames";
+import IconSet from "../../assets/svgs/IconSet";
 
 const AttributePositionSelect = ({ pos, setPos }) => {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ const AttributePositionSelect = ({ pos, setPos }) => {
           handleClick(0);
         }}
       >
-        <IconReset />
+        <IconSet className="w-4 md:w-6" />
         {t("All")}
       </button>
     </div>

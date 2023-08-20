@@ -128,9 +128,7 @@ const ArtifactsFilter = ({
       <span className="whitespace-nowrap font-bold capitalize">
         {t("position", { ns: "artifacts" })}
       </span>
-      <div className="flex flex-row items-center gap-2">
-        <AttributePositionSelect pos={pos} setPos={setPos} />
-      </div>
+      <AttributePositionSelect pos={pos} setPos={setPos} />
 
       {/* Level Range */}
       <span className="whitespace-nowrap font-bold capitalize">
