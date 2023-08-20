@@ -2,12 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { defaultFitness, defaultRarity } from "../../config";
 import useQueryParams from "../../hooks/useQueryParams";
@@ -348,33 +343,33 @@ const ArtifactsUpload = () => {
             </div>
             {/* Showing value range & Paginator */}
             {filteredArtifacts.length > offset && (
-            <div className="flex flex-col items-end gap-1">
-              <div className="mr-1 text-xs opacity-70">
-                {sortKey.startsWith("rarity")
-                  ? t("Showing rarity range") +
-                    ": " +
-                    allRarity[filteredArtifacts[page * offset]].toFixed(2) +
-                    " ~ " +
-                    allRarity[
-                      filteredArtifacts[(page + 1) * offset - 1]
-                    ].toFixed(2)
-                  : t("Showing fitness range") +
-                    ": " +
-                    Math.max(
-                      ...Object.values(
-                        allFits[filteredArtifacts[page * offset]]
-                      )
-                    ).toFixed(2) *
-                      100 +
-                    "% ~ " +
-                    Math.max(
-                      ...Object.values(
-                        allFits[filteredArtifacts[(page + 1) * offset - 1]]
-                      )
-                    ).toFixed(2) *
-                      100 +
-                    "%"}
-              </div>
+              <div className="flex flex-col items-end gap-1">
+                <div className="mr-1 text-xs opacity-70">
+                  {sortKey.startsWith("rarity")
+                    ? t("Showing rarity range") +
+                      ": " +
+                      allRarity[filteredArtifacts[page * offset]].toFixed(2) +
+                      " ~ " +
+                      allRarity[
+                        filteredArtifacts[(page + 1) * offset - 1]
+                      ].toFixed(2)
+                    : t("Showing fitness range") +
+                      ": " +
+                      Math.max(
+                        ...Object.values(
+                          allFits[filteredArtifacts[page * offset]]
+                        )
+                      ).toFixed(2) *
+                        100 +
+                      "% ~ " +
+                      Math.max(
+                        ...Object.values(
+                          allFits[filteredArtifacts[(page + 1) * offset - 1]]
+                        )
+                      ).toFixed(2) *
+                        100 +
+                      "%"}
+                </div>
                 <Paginator
                   page={page}
                   setPage={setPage}
