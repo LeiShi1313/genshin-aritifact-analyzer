@@ -347,6 +347,7 @@ const ArtifactsUpload = () => {
               />
             </div>
             {/* Showing value range & Paginator */}
+            {filteredArtifacts.length > offset && (
             <div className="flex flex-col items-end gap-1">
               <div className="mr-1 text-xs opacity-70">
                 {sortKey.startsWith("rarity")
@@ -374,7 +375,6 @@ const ArtifactsUpload = () => {
                       100 +
                     "%"}
               </div>
-              {filteredArtifacts.length > offset && (
                 <Paginator
                   page={page}
                   setPage={setPage}
@@ -382,8 +382,8 @@ const ArtifactsUpload = () => {
                   setOffset={setOffset}
                   totalPages={filteredArtifacts.length}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {filteredArtifacts

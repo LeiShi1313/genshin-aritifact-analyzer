@@ -9,6 +9,7 @@ import MultiSelect from "../inputs/MultiSelect";
 import { enumToIdx } from "../../utils/enum";
 import { Character } from "../../genshin/character";
 import IconReset from "../../assets/svgs/IconReset";
+import classNames from "classnames";
 
 const ArtifactsFilter = ({
   fitness,
@@ -36,10 +37,17 @@ const ArtifactsFilter = ({
   }, []);
 
   return (
-    <div className="grid w-full grid-cols-1 gap-4 gap-x-8 rounded-xl bg-secondary/[.15] p-4 md:grid-cols-2">
+    <div
+      className={classNames(
+        "grid grid-cols-[auto_1fr] gap-4 md:grid-cols-[auto_1fr_0_auto_1fr]",
+        "w-full items-center rounded-xl bg-secondary/[.15] p-4"
+      )}
+    >
       {/* Fitness */}
+      <span className="whitespace-nowrap font-bold capitalize">
+        {t("Fitness")}
+      </span>
       <div className="flex w-full flex-row items-center justify-center space-x-2 font-bold">
-        <span className="whitespace-nowrap">{t("Fitness")}</span>
         <input
           type="range"
           min="0"
@@ -70,9 +78,12 @@ const ArtifactsFilter = ({
           +
         </button>
       </div>
+      <div className="hidden md:block" />
       {/* Rarity */}
+      <span className="whitespace-nowrap font-bold capitalize">
+        {t("Rarity")}
+      </span>
       <div className="flex w-full flex-row items-center justify-center space-x-2 font-bold">
-        <span className="whitespace-nowrap">{t("Rarity")}</span>
         <input
           type="range"
           min="0"
@@ -103,11 +114,10 @@ const ArtifactsFilter = ({
           +
         </button>
       </div>
+
       {/* Set */}
+      <span className="whitespace-nowrap font-bold capitalize">{t("set")}</span>
       <div className="flex flex-row items-center gap-2">
-        <span className="whitespace-nowrap font-bold capitalize">
-          {t("set")}
-        </span>
         <SetSelect set={set} setSet={setSet} />
         <button
           className="btn btn-primary btn-circle"
@@ -117,25 +127,28 @@ const ArtifactsFilter = ({
           <IconReset />
         </button>
       </div>
+      <div className="hidden md:block" />
       {/* Position */}
+      <span className="whitespace-nowrap font-bold capitalize">
+        {t("position", { ns: "artifacts" })}
+      </span>
       <div className="flex flex-row items-center gap-2">
-        <span className="whitespace-nowrap font-bold capitalize">
-          {t("position", { ns: "artifacts" })}
-        </span>
         <AttributePositionSelect pos={pos} setPos={setPos} />
       </div>
+
       {/* Level Range */}
+      <span className="whitespace-nowrap font-bold capitalize">
+        {t("level", { ns: "artifacts" })}
+      </span>
       <div className="flex w-full flex-row items-center justify-center space-x-2">
-        <span className="whitespace-nowrap font-bold capitalize">
-          {t("level", { ns: "artifacts" })}
-        </span>
         <span className="w-[2ch]">{minLevel}</span>
         <MultiRange min={0} max={20} onChange={levelOnChange} />
         <span className="w-[2ch]">{maxLevel}</span>
       </div>
+      <div className="hidden md:block" />
       {/* Download Button */}
       <button
-        className="btn btn-accent rounded-full text-accent-content shadow-md"
+        className="btn btn-accent col-span-2 rounded-full text-accent-content shadow-md"
         onClick={handleDownloadYasLock}
         disabled={!isDownloadBtnActive}
       >

@@ -26,7 +26,7 @@ const AttributePositionSelect = ({ pos, setPos }) => {
           idx < 5 && (
             <button
               className={classNames(
-                "btn btn-circle",
+                "btn btn-sm w-8 rounded-full !p-0 md:btn-md md:w-12",
                 pos === key ? "btn-primary" : "btn-ghost"
               )}
               key={key}
@@ -34,7 +34,7 @@ const AttributePositionSelect = ({ pos, setPos }) => {
                 handleClick(key);
               }}
             >
-              <div className="aspect-square w-6">
+              <div className="aspect-square w-4 md:w-6">
                 {ArtifactPositionIcon[key]}
               </div>
             </button>
@@ -42,7 +42,7 @@ const AttributePositionSelect = ({ pos, setPos }) => {
       )}
       <button
         className={classNames(
-          "btn gap-2 rounded-full",
+          "btn btn-sm gap-2 rounded-full md:btn-md",
           pos === 0 ? "btn-primary" : "btn-ghost"
         )}
         onClick={() => {
