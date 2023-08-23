@@ -351,23 +351,37 @@ const ArtifactsUpload = () => {
                       allRarity[filteredArtifacts[page * offset]].toFixed(2) +
                       " ~ " +
                       allRarity[
-                        filteredArtifacts[(page + 1) * offset - 1]
+                        filteredArtifacts[
+                          Math.min(
+                            (page + 1) * offset - 1,
+                            filteredArtifacts.length - 1
+                          )
+                        ]
                       ].toFixed(2)
                     : t("Showing fitness range") +
                       ": " +
-                      Math.max(
-                        ...Object.values(
-                          allFits[filteredArtifacts[page * offset]]
-                        )
-                      ).toFixed(2) *
-                        100 +
+                      (
+                        Math.max(
+                          ...Object.values(
+                            allFits[filteredArtifacts[page * offset]]
+                          )
+                        ) * 100
+                      ).toFixed(0) +
                       "% ~ " +
-                      Math.max(
-                        ...Object.values(
-                          allFits[filteredArtifacts[(page + 1) * offset - 1]]
-                        )
-                      ).toFixed(2) *
-                        100 +
+                      (
+                        Math.max(
+                          ...Object.values(
+                            allFits[
+                              filteredArtifacts[
+                                Math.min(
+                                  (page + 1) * offset - 1,
+                                  filteredArtifacts.length - 1
+                                )
+                              ]
+                            ]
+                          )
+                        ) * 100
+                      ).toFixed(0) +
                       "%"}
                 </div>
                 <Paginator

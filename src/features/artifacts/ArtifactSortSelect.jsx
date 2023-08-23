@@ -21,7 +21,10 @@ const ArtifactSortSelect = ({ sortKey, setSortKey }) => {
   return (
     <div className="flex gap-2">
       <div className="dropdown">
-        <label tabIndex="0" className="btn btn-sm rounded-full normal-case">
+        <label
+          tabIndex="0"
+          className="btn btn-sm flex-nowrap rounded-full normal-case"
+        >
           {sortKey.split("-")[0] === "fitness" ? t("Fitness") : t("Rarity")}
           <svg
             xmlns="http://www.w3.org/2000/svg"

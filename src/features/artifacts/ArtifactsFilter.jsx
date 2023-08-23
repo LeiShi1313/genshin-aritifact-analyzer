@@ -113,16 +113,7 @@ const ArtifactsFilter = ({
 
       {/* Set */}
       <span className="whitespace-nowrap font-bold capitalize">{t("set")}</span>
-      <div className="flex flex-row items-center gap-2">
-        <SetSelect set={set} setSet={setSet} />
-        <button
-          className="btn btn-primary btn-circle"
-          onClick={() => setSet(0)}
-          disabled={set === 0}
-        >
-          <IconReset />
-        </button>
-      </div>
+      <SetSelect set={set} setSet={setSet} />
       <div className="hidden md:block" />
       {/* Position */}
       <span className="whitespace-nowrap font-bold capitalize">

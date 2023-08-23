@@ -280,3 +280,46 @@ export function setToJSON(object: Set): string {
       return "UNRECOGNIZED";
   }
 }
+
+export const filterBy2PieceBonus = {
+  elemental_damage: [
+    Set.CRIMSON_WITCH_OF_FLAMES,
+    Set.HEART_OF_DEPTH,
+    Set.NYMPHS_DREAM,
+    Set.DESERT_PAVILION_CHRONICLE,
+    Set.VIRIDESCENT_VENERER,
+    Set.THUNDERING_FURY,
+    Set.DEEPWOOD_MEMORIES,
+    Set.BLIZZARD_STRAYER,
+    Set.ARCHAIC_PETRA,
+  ],
+  physical_damage: [Set.BLOODSTAINED_CHIVALRY, Set.PALE_FLAME],
+  hp: [Set.TENACITY_OF_THE_MILLELITH, Set.VOURUKASHAS_GLOW],
+  atk: [
+    Set.VERMILLION_HEREAFTER,
+    Set.GLADIATORS_FINALE,
+    Set.BRAVE_HEART,
+    Set.ECHOES_OF_AN_OFFERING,
+    Set.RESOLUTION_OF_SOJOURNER,
+    Set.SHIMENAWAS_REMINISCENCE,
+  ],
+  def: [Set.HUSK_OF_OPULENT_DREAMS, Set.DEFENDERS_WILL],
+  em: [
+    Set.WANDERERS_TROUPE,
+    Set.FLOWER_OF_PARADISE_LOST,
+    Set.INSTRUCTOR,
+    Set.GILDED_DREAMS,
+  ],
+  crit: [Set.BERSERKER],
+  healing: [Set.MAIDEN_BELOVED, Set.OCEAN_HUED_CLAM],
+  er: [Set.SCHOLAR, Set.EMBLEM_OF_SEVERED_FATE, Set.THE_EXILE],
+  shield_strength: [Set.RETRACING_BOLIDE],
+  elemental_res: [Set.LAVAWALKER, Set.THUNDERSOOTHER, Set.TINY_MIRACLE],
+  talents_damage: [Set.GAMBLER, Set.MARTIAL_ARTIST, Set.NOBLESSE_OBLIGE],
+  less_affected_time: [
+    Set.PRAYERS_FOR_ILLUMINATION,
+    Set.PRAYERS_FOR_DESTINY,
+    Set.PRAYERS_FOR_WISDOM,
+    Set.PRAYERS_TO_SPRINGTIME,
+  ],
+};
