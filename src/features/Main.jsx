@@ -9,6 +9,10 @@ import md5 from "crypto-js/md5";
 import { deserializeFromMona, deserializeFromGood } from "../utils/artifact";
 import { monaPositionToAttributePosition } from "../utils/attribute";
 import { uploadArtifacts } from "../store/reducers/uploads";
+import IconConfig from "../assets/svgs/IconConfig";
+import IconUpload from "../assets/svgs/IconUpload";
+import IconArtifactsFile from "../assets/svgs/IconArtifactsFile";
+import IconBuilds from "../assets/svgs/IconBuilds";
 
 const Main = () => {
   const { t, i18n } = useTranslation();
@@ -74,70 +78,60 @@ const Main = () => {
   return (
     <div className="hero-content h-full text-center">
       <div className="max-w-md">
-        <h1 className="mb-10 text-5xl font-bold">
+        <h1 className="mb-10 text-4xl md:text-5xl font-bold">
           {t("Genshin Artifacts Analyzer")}
         </h1>
-        <div className="flex flex-row items-center justify-center space-x-2">
-          <div className="relative">
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/builds")}
-            >
-              {t("Edit Builds")}
-            </button>
-            <a
-              className="absolute left-1 top-12 cursor-pointer text-xs text-primary-focus underline"
-              onClick={() => navigate("/build")}
-            >
-              {t("Add New Build")}
-            </a>
-          </div>
-          <div className="tooltip" data-tip={t('Adjust Config')}>
-          <button className="btn btn-sm btn-outline btn-circle" onClick={() => navigate('/config')}>
-            <Activity size={18} />
+        <div className="flex flex-col items-stretch justify-center gap-2">
+          <button
+            className={classNames(
+              "btn btn-accent justify-between rounded-full",
+              {
+                loading: fileLoading,
+                "cursor-pointer": !fileLoading,
+                "cursor-not-allowed": fileLoading,
+              }
+            )}
+            onClick={() => document.getElementById("file_input").click()}
+          >
+            <IconUpload />
+            {t("Upload Your Artifacts")}
+            <div className="w-8" />
+          </button>
+          <input
+            className="hidden"
+            id="file_input"
+            type="file"
+            onChange={handleFile}
+          />
+
+          <button
+            className="btn btn-primary justify-between rounded-full"
+            onClick={() => navigate("/uploaded")}
+          >
+            <IconArtifactsFile />
+            {t("Uploaded Artifacts")}
+            <div className="w-8" />
           </button>
 
-          </div>
+          <button
+            className="btn btn-primary justify-between rounded-full"
+            onClick={() => navigate("/builds")}
+          >
+            <IconBuilds />
+            {t("Edit Builds")}
+            <div className="w-8" />
+          </button>
 
-          <div className="btn-group">
+          <div
+            className="tooltip tooltip-left tooltip-primary self-end"
+            data-tip={t("Adjust Config")}
+          >
             <button
-              className={
-                `btn btn-secondary btn-md rounded-lg ` +
-                classNames({
-                  loading: fileLoading,
-                  "cursor-pointer": !fileLoading,
-                  "cursor-not-allowed": fileLoading,
-                })
-              }
-              onClick={() => document.getElementById("file_input").click()}
+              className="btn btn-ghost btn-circle"
+              onClick={() => navigate("/config")}
             >
-              {t("Upload Your Artifacts")}
+              <IconConfig />
             </button>
-            <input
-              className="hidden"
-              id="file_input"
-              type="file"
-              onChange={handleFile}
-            />
-            <div
-              className="btn relative w-1 bg-secondary"
-              onClick={() => setShowDropdown((prev) => !prev)}
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
-            >
-              <button className="rounded-r-lg">
-                <CaretDown size={16} />
-              </button>
-              {showDropdown && (
-                <ul className="dropdown-content menu rounded-box absolute -right-1 top-12 w-52 bg-secondary-focus p-2 shadow">
-                  <li>
-                    <a onClick={() => navigate("/uploaded")}>
-                      {t("Uploaded Artifacts")}
-                    </a>
-                  </li>
-                </ul>
-              )}
-            </div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center"></div>
