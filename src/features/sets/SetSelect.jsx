@@ -60,7 +60,7 @@ const SetSelect = ({ set, setSet }) => {
   const [setFilter, setSetFilter] = useState(0);
 
   return (
-    <div className="dropdown z-[42] w-full">
+    <div className="z-[42] w-full">
       <button
         className="btn w-full flex-nowrap justify-start gap-2 overflow-hidden text-ellipsis rounded-full text-left normal-case"
         onClick={() => setShowModal(true)}
@@ -75,7 +75,7 @@ const SetSelect = ({ set, setSet }) => {
           </>
         ) : (
           <>
-            <IconSet />
+            <img className="aspect-square w-8" src={Icon_Inventory_Artifacts} />
             {t("All")}
           </>
         )}
@@ -157,7 +157,6 @@ const SetSelect = ({ set, setSet }) => {
                 )}
                 onClick={() => setSet(0)}
               >
-                {/* <IconSet className="aspect-square w-8 p-1" /> */}
                 <img
                   className="aspect-square w-8"
                   src={Icon_Inventory_Artifacts}
