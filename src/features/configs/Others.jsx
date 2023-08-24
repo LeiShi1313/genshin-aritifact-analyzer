@@ -10,6 +10,7 @@ import {
   updateNonSuitSubstractors,
   resetNonSuitSubstractors,
 } from "../../store/reducers/configs";
+import ArtifactPositionIcon from "../../assets/svgs/ArtifactPositionIcon";
 
 const Others = () => {
   const { t } = useTranslation();
@@ -54,10 +55,11 @@ const Others = () => {
         <div className="flex flex-row items-center justify-start w-40">
         <span>{t("Non-suit Substractor")}</span>
         </div>
-        <div className="flex flex-col items-center justify-center space-y-0">
+        <div className="flex flex-col items-stretch justify-center">
           {Object.keys(nonSuitSubstractors).map((pos) => (
-            <div className="flex flex-row items-center justify-center space-x-2" key={pos} >
-              <span>
+            <div className="flex flex-row items-center justify-between gap-2" key={pos} >
+              <span className="flex flex-row gap-2">
+                <div className="w-5 md:w-6">{ArtifactPositionIcon[pos]}</div>
                 {t(AttributePosition[pos].toLowerCase(), { ns: "artifacts" })}
               </span>
               <DigitInput
