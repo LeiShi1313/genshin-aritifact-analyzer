@@ -216,6 +216,18 @@ export enum Weapon {
   BEACON_OF_THE_REED_SEA = 153,
   MAILED_FLOWER = 154,
   JADEFALLS_SPLENDOR = 155,
+  BALLAD_OF_THE_FJORDS = 156,
+  FINALE_OF_THE_DEEP = 157,
+  FLEUVE_CENDRE_FERRYMAN = 158,
+  FLOWING_PURITY = 159,
+  RIGHTFUL_REWARD = 160,
+  SACRIFICIAL_JADE = 161,
+  SCION_OF_THE_BLAZING_SUN = 162,
+  SONG_OF_STILLNESS = 163,
+  TALKING_STICK = 164,
+  THE_FIRST_GREAT_MAGIC = 165,
+  TIDAL_SHADOW = 166,
+  WOLF_FANG = 167,
   UNRECOGNIZED = -1,
 }
 
@@ -689,6 +701,42 @@ export function weaponFromJSON(object: any): Weapon {
     case 155:
     case "JADEFALLS_SPLENDOR":
       return Weapon.JADEFALLS_SPLENDOR;
+    case 156:
+    case "BALLAD_OF_THE_FJORDS":
+      return Weapon.BALLAD_OF_THE_FJORDS;
+    case 157:
+    case "FINALE_OF_THE_DEEP":
+      return Weapon.FINALE_OF_THE_DEEP;
+    case 158:
+    case "FLEUVE_CENDRE_FERRYMAN":
+      return Weapon.FLEUVE_CENDRE_FERRYMAN;
+    case 159:
+    case "FLOWING_PURITY":
+      return Weapon.FLOWING_PURITY;
+    case 160:
+    case "RIGHTFUL_REWARD":
+      return Weapon.RIGHTFUL_REWARD;
+    case 161:
+    case "SACRIFICIAL_JADE":
+      return Weapon.SACRIFICIAL_JADE;
+    case 162:
+    case "SCION_OF_THE_BLAZING_SUN":
+      return Weapon.SCION_OF_THE_BLAZING_SUN;
+    case 163:
+    case "SONG_OF_STILLNESS":
+      return Weapon.SONG_OF_STILLNESS;
+    case 164:
+    case "TALKING_STICK":
+      return Weapon.TALKING_STICK;
+    case 165:
+    case "THE_FIRST_GREAT_MAGIC":
+      return Weapon.THE_FIRST_GREAT_MAGIC;
+    case 166:
+    case "TIDAL_SHADOW":
+      return Weapon.TIDAL_SHADOW;
+    case 167:
+    case "WOLF_FANG":
+      return Weapon.WOLF_FANG;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1010,6 +1058,30 @@ export function weaponToJSON(object: Weapon): string {
       return "MAILED_FLOWER";
     case Weapon.JADEFALLS_SPLENDOR:
       return "JADEFALLS_SPLENDOR";
+    case Weapon.BALLAD_OF_THE_FJORDS:
+      return "BALLAD_OF_THE_FJORDS";
+    case Weapon.FINALE_OF_THE_DEEP:
+      return "FINALE_OF_THE_DEEP";
+    case Weapon.FLEUVE_CENDRE_FERRYMAN:
+      return "FLEUVE_CENDRE_FERRYMAN";
+    case Weapon.FLOWING_PURITY:
+      return "FLOWING_PURITY";
+    case Weapon.RIGHTFUL_REWARD:
+      return "RIGHTFUL_REWARD";
+    case Weapon.SACRIFICIAL_JADE:
+      return "SACRIFICIAL_JADE";
+    case Weapon.SCION_OF_THE_BLAZING_SUN:
+      return "SCION_OF_THE_BLAZING_SUN";
+    case Weapon.SONG_OF_STILLNESS:
+      return "SONG_OF_STILLNESS";
+    case Weapon.TALKING_STICK:
+      return "TALKING_STICK";
+    case Weapon.THE_FIRST_GREAT_MAGIC:
+      return "THE_FIRST_GREAT_MAGIC";
+    case Weapon.TIDAL_SHADOW:
+      return "TIDAL_SHADOW";
+    case Weapon.WOLF_FANG:
+      return "WOLF_FANG";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

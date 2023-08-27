@@ -77,4 +77,7 @@ enum Character {
     BAIZHU = 71;
     KAVEH = 72;
     KIRARA = 73;
+    TRAVELER_HYDRO = 74;
+    LYNEY = 75;
+    LYNETTE = 76;
 }

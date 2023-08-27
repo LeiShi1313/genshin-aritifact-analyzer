@@ -45,6 +45,8 @@ const names = [
   "Wanderer's Troupe",
   "Nymph's Dream",
   "Vourukasha's Glow",
+  "Golden Troupe",
+  "Marechaussee Hunter",
 ];
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 

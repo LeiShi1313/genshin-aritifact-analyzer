@@ -158,6 +158,18 @@ const names = [
   "Beacon of the Reed Sea",
   "Mailed Flower",
   "Jadefall's Splendor",
+  "Ballad of the Fjords",
+  "Finale of the Deep",
+  "Fleuve Cendre Ferryman",
+  "Flowing Purity",
+  "Rightful Reward",
+  "Sacrificial Jade",
+  "Scion of the Blazing Sun",
+  "Song of Stillness",
+  "Talking Stick",
+  "The First Great Magic",
+  "Tidal Shadow",
+  "Wolf-Fang",
 ];
 
 const portWeapons = () => {

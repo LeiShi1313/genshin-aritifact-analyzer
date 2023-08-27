@@ -46,6 +46,8 @@ export enum Set {
   WANDERERS_TROUPE = 40,
   NYMPHS_DREAM = 41,
   VOURUKASHAS_GLOW = 42,
+  GOLDEN_TROUPE = 43,
+  MARECHAUSSEE_HUNTER = 44,
   UNRECOGNIZED = -1,
 }
 
@@ -180,6 +182,12 @@ export function setFromJSON(object: any): Set {
     case 42:
     case "VOURUKASHAS_GLOW":
       return Set.VOURUKASHAS_GLOW;
+    case 43:
+    case "GOLDEN_TROUPE":
+      return Set.GOLDEN_TROUPE;
+    case 44:
+    case "MARECHAUSSEE_HUNTER":
+      return Set.MARECHAUSSEE_HUNTER;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -275,6 +283,10 @@ export function setToJSON(object: Set): string {
       return "NYMPHS_DREAM";
     case Set.VOURUKASHAS_GLOW:
       return "VOURUKASHAS_GLOW";
+    case Set.GOLDEN_TROUPE:
+      return "GOLDEN_TROUPE";
+    case Set.MARECHAUSSEE_HUNTER:
+      return "MARECHAUSSEE_HUNTER";
     case Set.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

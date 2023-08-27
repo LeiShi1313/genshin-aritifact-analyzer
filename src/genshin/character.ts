@@ -77,6 +77,9 @@ export enum Character {
   BAIZHU = 71,
   KAVEH = 72,
   KIRARA = 73,
+  TRAVELER_HYDRO = 74,
+  LYNEY = 75,
+  LYNETTE = 76,
   UNRECOGNIZED = -1,
 }
 
@@ -304,6 +307,15 @@ export function characterFromJSON(object: any): Character {
     case 73:
     case "KIRARA":
       return Character.KIRARA;
+    case 74:
+    case "TRAVELER_HYDRO":
+      return Character.TRAVELER_HYDRO;
+    case 75:
+    case "LYNEY":
+      return Character.LYNEY;
+    case 76:
+    case "LYNETTE":
+      return Character.LYNETTE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -461,6 +473,12 @@ export function characterToJSON(object: Character): string {
       return "KAVEH";
     case Character.KIRARA:
       return "KIRARA";
+    case Character.TRAVELER_HYDRO:
+      return "TRAVELER_HYDRO";
+    case Character.LYNEY:
+      return "LYNEY";
+    case Character.LYNETTE:
+      return "LYNETTE";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
