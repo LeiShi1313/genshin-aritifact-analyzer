@@ -7,7 +7,7 @@ const finished = util.promisify(stream.finished);
 
 const download_image = async (url, image_path) => {
     const writer = fs.createWriteStream(image_path);
-    const response = axios({
+    const response = await axios({
         url,
         responseType: "stream",
     })
