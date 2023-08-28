@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { AttributePosition } from "../../genshin/attribute";
 import { enumToIdx } from "../../utils/enum";
 import ArtifactPositionIcon from "../../assets/svgs/ArtifactPositionIcon";
+import classNames from "classnames";
+import IconSet from "../../assets/svgs/IconSet";
 
 const AttributePositionSelect = ({ pos, setPos }) => {
   const { t } = useTranslation();
@@ -18,46 +20,38 @@ const AttributePositionSelect = ({ pos, setPos }) => {
   };
 
   return (
-    <div className="dropdown z-[41]">
-      <label tabIndex="0" className="btn btn-ghost m-1">
-        <span className="flex items-center">
-          {pos > 0 && pos < 6 ? (
-            <>
-              <div className="mr-1 inline-block aspect-square w-8 p-1.5">
-                {ArtifactPositionIcon[pos]}
+    <div className="flex w-full justify-between">
+      {enumToIdx(AttributePosition).map(
+        (key, idx) =>
+          idx < 5 && (
+            <button
+              className={classNames(
+                "btn btn-sm w-8 rounded-full !p-0 md:btn-md md:w-12",
+                pos === key ? "btn-primary" : "btn-ghost"
+              )}
+              key={key}
+              onClick={() => {
+                handleClick(key);
+              }}
+            >
+              <div className="aspect-square w-4 md:w-6">
+                {ArtifactPositionIcon[key]}
               </div>
-              {t(AttributePosition[pos].toLowerCase(), { ns: "artifacts" })}
-            </>
-          ) : (
-            <>
-              {t("Pick one")} {t("position", { ns: "artifacts" })}
-            </>
-          )}
-        </span>
-      </label>
-      <ul
-        tabIndex="0"
-        className="dropdown-content menu rounded-box max-h-96 w-max flex-nowrap overflow-auto bg-base-100 p-2 text-sm shadow"
-      >
-        {enumToIdx(AttributePosition).map(
-          (key, idx) =>
-            idx < 5 && (
-              <li key={key}>
-                <a
-                  className="p-0 px-2"
-                  onClick={() => {
-                    handleClick(key);
-                  }}
-                >
-                  <div className="aspect-square w-8 p-1.5">
-                    {ArtifactPositionIcon[key]}
-                  </div>
-                  {t(AttributePosition[key].toLowerCase(), { ns: "artifacts" })}
-                </a>
-              </li>
-            )
+            </button>
+          )
+      )}
+      <button
+        className={classNames(
+          "btn btn-sm gap-2 rounded-full md:btn-md",
+          pos === 0 ? "btn-primary" : "btn-ghost"
         )}
-      </ul>
+        onClick={() => {
+          handleClick(0);
+        }}
+      >
+        <IconSet className="w-4 md:w-6" />
+        {t("All")}
+      </button>
     </div>
   );
 };

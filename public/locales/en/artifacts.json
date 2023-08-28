@@ -27,5 +27,13 @@
   "cryo_damage_bonus": "Cryo DMG Bonus",
   "anemo_damage_bonus": "Anemo DMG Bonus",
   "physical_damage_bonus": "Physical DMG Bonus",
-  "geo_damage_bonus": "Geo DMG Bonus"
+  "geo_damage_bonus": "Geo DMG Bonus",
+  "elemental_damage": "Elemental DMG",
+  "physical_damage": "Physical DMG",
+  "crit": "CRIT",
+  "healing": "Healing",
+  "shield_strength": "Shield Strength",
+  "elemental_res": "Elemental RES",
+  "talents_damage": "Talents DMG",
+  "less_affected_time": "Less Affected Time"
 }

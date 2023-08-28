@@ -41,7 +41,7 @@ const MultiRange = ({ min, max, onChange, step=1 }) => {
     }, [minVal, maxVal, onChange]);
 
     return (
-        <div className="relative h-4 flex items-center justify-center">
+        <div className="relative h-4 flex items-center justify-center grow">
             <input
                 type="range"
                 min={min}
@@ -75,8 +75,8 @@ const MultiRange = ({ min, max, onChange, step=1 }) => {
                 className="thumb thumb--zindex-4"
             />
 
-            <div className="relative w-[200px]">
-                <div className="absolute bg-base-200 rounded-xl h-4 w-full z-10 -top-2"></div>
+            <div className="relative w-full">
+                <div className="absolute bg-primary/10 rounded-xl h-4 w-full z-10 -top-2"></div>
                 <div ref={range} className="absolute bg-primary rounded-xl h-4 z-20 -top-2"></div>
             </div>
         </div>

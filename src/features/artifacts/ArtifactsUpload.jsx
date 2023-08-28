@@ -2,22 +2,20 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useLocation, useNavigate, useParams, useSearchParams
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { defaultFitness, defaultRarity } from "../../config";
 import useQueryParams from "../../hooks/useQueryParams";
 import {
   calculateFitsAndRarity,
-  updateFitsAndRarity
+  updateFitsAndRarity,
 } from "../../store/reducers/artifacts";
 import { getArtifactsResultHash, getConfigHash } from "../../utils/hash";
 import Paginator from "../Paginator";
 import ArtifactFitnessCard from "./ArtifactFitnessCard";
 import ArtifactsFilter from "./ArtifactsFilter";
 import BackToHome from "../navigation/BackToHome";
-
+import ArtifactSortSelect from "./ArtifactSortSelect";
 
 const Calculating = ({ t, progress, hasConfigChange }) => {
   return (
@@ -191,7 +189,10 @@ const ArtifactsUpload = () => {
       if (pos > 0) {
         ret = ret && artifacts[idx].position === pos;
       }
-      ret = ret && artifacts[idx].level >= minLevel && artifacts[idx].level <= maxLevel;
+      ret =
+        ret &&
+        artifacts[idx].level >= minLevel &&
+        artifacts[idx].level <= maxLevel;
       return ret;
     },
     [fitness, rarity, allFits, allRarity, set, pos, minLevel, maxLevel]
@@ -226,7 +227,7 @@ const ArtifactsUpload = () => {
     if (
       artifacts === undefined ||
       artifacts.length === 0 ||
-      Object.keys(enabledBuilds).length === 0 || 
+      Object.keys(enabledBuilds).length === 0 ||
       configHash === getConfigHash(customConfigs)
     ) {
       return;
@@ -275,14 +276,12 @@ const ArtifactsUpload = () => {
   }, [enabledBuilds, artifacts]);
 
   if (artifacts === undefined) {
-    return (
-      <BackToHome title={t("No uploaded artifacts founds")} />
-    );
+    return <BackToHome title={t("No uploaded artifacts founds")} />;
   } else if (Object.keys(enabledBuilds).length === 0) {
     return <BackToHome title={t("No enabled builds")} />;
   }
   return (
-    <div className="flex w-full max-w-screen-lg flex-col items-center justify-center">
+    <div className="flex w-full max-w-screen-lg flex-col items-center justify-center gap-4 px-4 lg:px-0">
       <ArtifactsFilter
         fitness={fitness}
         setFitness={(f) => {
@@ -312,13 +311,15 @@ const ArtifactsUpload = () => {
         minLevel={minLevel}
         setMinLevel={(l) => {
           setPage(0);
-          setMinLevel(l)
+          setMinLevel(l);
         }}
         maxLevel={maxLevel}
         setMaxLevel={(l) => {
           setPage(0);
-          setMaxLevel(l)
+          setMaxLevel(l);
         }}
+        isDownloadBtnActive={format === "GOOD" && filteredArtifacts.length > 0}
+        handleDownloadYasLock={handleDownloadYasLock}
       />
       {isLoading ? (
         <Calculating
@@ -327,28 +328,73 @@ const ArtifactsUpload = () => {
           hasConfigChange={hasConfigChange}
         />
       ) : (
-        <div className="flex flex-col items-stretch space-y-4 w-full px-4 lg:px-0">
+        <div className="flex w-full flex-col items-stretch space-y-4">
           <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center px-2">
-              {format === "GOOD" && filteredArtifacts.length > 0 && (
-                <button
-                  className="btn btn-primary"
-                  onClick={handleDownloadYasLock}
-                >
-                  {t("Generate")} lock.json
-                </button>
-              )}
-            </div>
-            {filteredArtifacts.length > offset && (
-              <Paginator
-                page={page}
-                setPage={setPage}
-                offset={offset}
-                setOffset={setOffset}
-                totalPages={filteredArtifacts.length}
+            {/* Sort by */}
+            <div className="flex flex-col items-start gap-1">
+              <div className="ml-1 text-xs opacity-70">{t("Sort by")}</div>
+              <ArtifactSortSelect
+                sortKey={sortKey}
+                setSortKey={(s) => {
+                  setPage(0);
+                  setSortKey(s);
+                }}
               />
+            </div>
+            {/* Showing value range & Paginator */}
+            {filteredArtifacts.length > offset && (
+              <div className="flex flex-col items-end gap-1">
+                <div className="mr-1 text-xs opacity-70">
+                  {sortKey.startsWith("rarity")
+                    ? t("Showing rarity range") +
+                      ": " +
+                      allRarity[filteredArtifacts[page * offset]].toFixed(2) +
+                      " ~ " +
+                      allRarity[
+                        filteredArtifacts[
+                          Math.min(
+                            (page + 1) * offset - 1,
+                            filteredArtifacts.length - 1
+                          )
+                        ]
+                      ].toFixed(2)
+                    : t("Showing fitness range") +
+                      ": " +
+                      (
+                        Math.max(
+                          ...Object.values(
+                            allFits[filteredArtifacts[page * offset]]
+                          )
+                        ) * 100
+                      ).toFixed(0) +
+                      "% ~ " +
+                      (
+                        Math.max(
+                          ...Object.values(
+                            allFits[
+                              filteredArtifacts[
+                                Math.min(
+                                  (page + 1) * offset - 1,
+                                  filteredArtifacts.length - 1
+                                )
+                              ]
+                            ]
+                          )
+                        ) * 100
+                      ).toFixed(0) +
+                      "%"}
+                </div>
+                <Paginator
+                  page={page}
+                  setPage={setPage}
+                  offset={offset}
+                  setOffset={setOffset}
+                  totalPages={filteredArtifacts.length}
+                />
+              </div>
             )}
           </div>
+
           {filteredArtifacts
             .slice(page * offset, (page + 1) * offset)
             .map((index) => (
@@ -363,16 +409,20 @@ const ArtifactsUpload = () => {
                 minRarity={rarity}
               />
             ))}
-          {filteredArtifacts.length > offset && (
-            <Paginator
-              page={page}
-              setPage={setPage}
-              offset={offset}
-              setOffset={setOffset}
-              totalPages={filteredArtifacts.length}
-              scrollToId="main-content"
-            />
-          )}
+
+          <div className="flex flex-row items-center justify-between">
+            <div className="grow" />
+            {filteredArtifacts.length > offset && (
+              <Paginator
+                page={page}
+                setPage={setPage}
+                offset={offset}
+                setOffset={setOffset}
+                totalPages={filteredArtifacts.length}
+                scrollToId="main-content"
+              />
+            )}
+          </div>
           <div className="h-2 w-full"></div>
         </div>
       )}

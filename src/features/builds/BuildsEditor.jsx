@@ -11,6 +11,7 @@ import { enumToIdx } from "../../utils/enum";
 import BuildRow from "./BuildRow";
 import RestoreBuildsModal from "./RestoreBuildsModal";
 import MultiSelect from "../inputs/MultiSelect";
+import { useNavigate } from "react-router-dom";
 
 const BuildsEditor = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ const BuildsEditor = () => {
   const [characters, setCharacters] = useState([]);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [restoreModalOpen, setRestoreModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const existingCharacters = useMemo(
     () =>
@@ -196,7 +198,11 @@ const BuildsEditor = () => {
                 </button>
                 <div
                   className="tooltip tooltip-right"
-                  data-tip={characters.length === 0 ? t("Enable all custom builds") : t("Enable selected custom builds")}
+                  data-tip={
+                    characters.length === 0
+                      ? t("Enable all custom builds")
+                      : t("Enable selected custom builds")
+                  }
                 >
                   <label className="label cursor-pointer">
                     <input
@@ -224,7 +230,11 @@ const BuildsEditor = () => {
                 {t("Presets")}
                 <div
                   className="tooltip tooltip-right"
-                  data-tip={characters.length === 0 ? t("Enable all presets"): t("Enable selected presets")}
+                  data-tip={
+                    characters.length === 0
+                      ? t("Enable all presets")
+                      : t("Enable selected presets")
+                  }
                 >
                   <label className="label cursor-pointer">
                     <input
@@ -247,6 +257,20 @@ const BuildsEditor = () => {
             ))}
         </tbody>
       </table>
+      <button
+        className="btn btn-primary fixed right-8 bottom-8 rounded-full gap-2 shadow-xl"
+        onClick={() => navigate("/build")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="24"
+        >
+          <path d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" />
+        </svg>
+        {t("Add New Build")}
+      </button>
     </div>
   );
 };

@@ -27,5 +27,13 @@
   "cryo_damage_bonus": "冰元素伤害加成",
   "anemo_damage_bonus": "风元素伤害加成",
   "physical_damage_bonus": "物理伤害加成",
-  "geo_damage_bonus": "岩元素伤害加成"
+  "geo_damage_bonus": "岩元素伤害加成",
+  "elemental_damage": "元素伤害",
+  "physical_damage": "物理伤害",
+  "crit": "暴击",
+  "healing": "治疗",
+  "shield_strength": "护盾强效",
+  "elemental_res": "元素抗性",
+  "talents_damage": "天赋伤害",
+  "less_affected_time": "附着持续时间减少"
 }

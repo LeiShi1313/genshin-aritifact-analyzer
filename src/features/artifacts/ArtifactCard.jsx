@@ -42,7 +42,7 @@ const ArtifactCard = ({ artifact, fitAttributes = [], suitIsFit = false }) => {
             {ArtifactPositionIcon[artifact.position]}
           </div>
           <img
-            className={classNames("aspect-square w-24 cursor-pointer", {"scale-105 shadow-2xl": suitIsFit})}
+            className={classNames("aspect-square w-24 cursor-pointer transition-all z-10", {"scale-110 drop-shadow-xl": suitIsFit})}
             src={
               new URL(`../../assets/artifacts/${artKey}.png`, import.meta.url)
                 .href
