@@ -1,12 +1,11 @@
 import { useTranslation } from "react-i18next";
 
-import { Set, filterBy2PieceBonus } from "../../genshin/set";
+import { Set } from "../../genshin/set";
 import { enumToIdx } from "../../utils/enum";
 import { AttributePosition, AttributeType } from "../../genshin/attribute";
 import { useState } from "react";
 import classNames from "classnames";
 import IconClose from "../../assets/svgs/IconClose";
-import IconSet from "../../assets/svgs/IconSet";
 import IconReset from "../../assets/svgs/IconReset";
 import AttributeIcon from "../../assets/svgs/AttributeIcon";
 import IconElementalRes from "../../assets/svgs/IconElementalRes";
@@ -16,6 +15,7 @@ import Icon_Inventory_Artifacts from "../../assets/pngs/Icon_Inventory_Artifacts
 import IconShieldStrength from "../../assets/svgs/IconShieldStrength";
 import IconTimeReduced from "../../assets/svgs/IconTimeReduced";
 import IconAllElementsColored from "../../assets/svgs/IconAllElementsColored";
+import { TwoPcBonusCateToSets } from "../../utils/set";
 
 const iconFilterBy2PieceBonus = {
   elemental_damage: <IconAllElementsColored className="All_Elements" />,
@@ -129,7 +129,7 @@ const SetSelect = ({ set, setSet }) => {
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              {Object.keys(filterBy2PieceBonus).map((key) => (
+              {Object.keys(TwoPcBonusCateToSets).map((key) => (
                 <button
                   className={classNames(
                     "btn btn-secondary btn-sm flex-nowrap justify-start gap-2 rounded-lg text-left text-xs normal-case",
@@ -164,7 +164,7 @@ const SetSelect = ({ set, setSet }) => {
                 {t("All")}
               </a>
             </li>
-            {(setFilter ? filterBy2PieceBonus[setFilter] : [...enumToIdx(Set)])
+            {(setFilter ? TwoPcBonusCateToSets[setFilter] : [...enumToIdx(Set)])
               .sort((a, b) =>
                 t(Set[a].toLowerCase(), { ns: "sets" }).localeCompare(
                   t(Set[b].toLowerCase(), { ns: "sets" }),
