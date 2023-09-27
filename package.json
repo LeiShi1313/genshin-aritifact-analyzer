@@ -47,7 +47,7 @@
     "axios": "^1.2.2",
     "cssnano": "^5.1.13",
     "csv-parse": "^5.3.3",
-    "genshin-db": "^4.3.14",
+    "genshin-db": "^4.3.15",
     "i18next-resources-to-backend": "^1.1.1",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",

@@ -170,6 +170,13 @@ const names = [
   "The First Great Magic",
   "Tidal Shadow",
   "Wolf-Fang",
+  "Ballad of the Boundless Blue",
+  "Cashflow Supervision",
+  "Portable Power Saw",
+  "Prospector's Drill",
+  "Range Gauge",
+  "The Dockhand's Assistant",
+  "Tome of the Eternal Flow",
 ];
 
 const portWeapons = () => {

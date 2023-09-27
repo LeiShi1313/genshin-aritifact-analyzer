@@ -79,6 +79,8 @@ const names = [
   "travelerhydro",
   "lyney",
   "lynette",
+  "neuvillette",
+  "wriothesley",
 ];
 
 const portCharacters = () => {

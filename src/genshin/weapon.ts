@@ -228,6 +228,13 @@ export enum Weapon {
   THE_FIRST_GREAT_MAGIC = 165,
   TIDAL_SHADOW = 166,
   WOLF_FANG = 167,
+  BALLAD_OF_THE_BOUNDLESS_BLUE = 168,
+  CASHFLOW_SUPERVISION = 169,
+  PORTABLE_POWER_SAW = 170,
+  PROSPECTORS_DRILL = 171,
+  RANGE_GAUGE = 172,
+  THE_DOCKHANDS_ASSISTANT = 173,
+  TOME_OF_THE_ETERNAL_FLOW = 174,
   UNRECOGNIZED = -1,
 }
 
@@ -737,6 +744,27 @@ export function weaponFromJSON(object: any): Weapon {
     case 167:
     case "WOLF_FANG":
       return Weapon.WOLF_FANG;
+    case 168:
+    case "BALLAD_OF_THE_BOUNDLESS_BLUE":
+      return Weapon.BALLAD_OF_THE_BOUNDLESS_BLUE;
+    case 169:
+    case "CASHFLOW_SUPERVISION":
+      return Weapon.CASHFLOW_SUPERVISION;
+    case 170:
+    case "PORTABLE_POWER_SAW":
+      return Weapon.PORTABLE_POWER_SAW;
+    case 171:
+    case "PROSPECTORS_DRILL":
+      return Weapon.PROSPECTORS_DRILL;
+    case 172:
+    case "RANGE_GAUGE":
+      return Weapon.RANGE_GAUGE;
+    case 173:
+    case "THE_DOCKHANDS_ASSISTANT":
+      return Weapon.THE_DOCKHANDS_ASSISTANT;
+    case 174:
+    case "TOME_OF_THE_ETERNAL_FLOW":
+      return Weapon.TOME_OF_THE_ETERNAL_FLOW;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1082,6 +1110,20 @@ export function weaponToJSON(object: Weapon): string {
       return "TIDAL_SHADOW";
     case Weapon.WOLF_FANG:
       return "WOLF_FANG";
+    case Weapon.BALLAD_OF_THE_BOUNDLESS_BLUE:
+      return "BALLAD_OF_THE_BOUNDLESS_BLUE";
+    case Weapon.CASHFLOW_SUPERVISION:
+      return "CASHFLOW_SUPERVISION";
+    case Weapon.PORTABLE_POWER_SAW:
+      return "PORTABLE_POWER_SAW";
+    case Weapon.PROSPECTORS_DRILL:
+      return "PROSPECTORS_DRILL";
+    case Weapon.RANGE_GAUGE:
+      return "RANGE_GAUGE";
+    case Weapon.THE_DOCKHANDS_ASSISTANT:
+      return "THE_DOCKHANDS_ASSISTANT";
+    case Weapon.TOME_OF_THE_ETERNAL_FLOW:
+      return "TOME_OF_THE_ETERNAL_FLOW";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
