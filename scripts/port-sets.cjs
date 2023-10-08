@@ -1,6 +1,10 @@
 const genshindb = require("genshin-db");
 const fs = require("fs");
+const stream = require("stream");
+const util = require('util');
 const utils = require("./utils.cjs");
+
+const finished = util.promisify(stream.finished);
 
 const names = [
   "Archaic Petra",
@@ -50,7 +54,7 @@ const names = [
 ];
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 
-const portSets = () => {
+const portSets = async () => {
   let trans = {
     en: {},
   };
@@ -63,7 +67,11 @@ const portSets = () => {
   proto_file.write("package io.leishi.genshin.proto;\n\n");
   proto_file.write("enum Set {\n");
   proto_file.write(`    SET_UNSPECIFIED = ${idx++};\n`);
-  names.forEach((e) => {
+
+  // Debugging console.log
+  console.log("Start processing names...");
+
+  await Promise.all(names.map(async (e) => {
     const eng = genshindb.artifacts(e);
     if (!eng) {
       console.warn(`No set found for ${e}!`);
@@ -95,18 +103,37 @@ const portSets = () => {
       trans[utils.lngToRegion[lng]][key] = data.name;
     }
 
-    for (let pos of positions) {
+    await Promise.all(positions.map(async (pos) => {
       if (eng.images[pos]) {
         const imagePath = `./src/assets/artifacts/${key}_${pos}.${eng.images[
           pos
         ].slice(-3)}`;
-        if (!fs.existsSync(imagePath)) {
-          utils.download_image(eng.images[pos], imagePath);
+        if (!fs.existsSync(imagePath) || fs.statSync(imagePath).size === 0) {
+          try {
+            console.log(`Downloading image for ${e} ${pos}`);
+            await utils.download_image(eng.images[pos], imagePath);
+          } catch (e) {
+            try {
+              await utils.download_from_amber(
+                eng.images[pos].substring(eng.images[pos].lastIndexOf("/") + 1),
+                "artifact",
+                imagePath
+              );
+            } catch (e) {
+              console.error(e)
+            }
+          }
         }
       }
-    }
-  });
+
+    }));
+  }));
   proto_file.write("}\n");
+  proto_file.end();
+  await finished(proto_file);
+
+  // Debugging console.log
+  console.log("Writing locales files...");
 
   for (let lng of Object.keys(trans)) {
     fs.writeFileSync(
@@ -115,7 +142,15 @@ const portSets = () => {
       "utf-8"
     );
   }
+
+  // Debugging console.log
+  console.log("Writing sets data file...");
+
   fs.writeFileSync("./src/data/sets.json", JSON.stringify(setsData), "utf-8");
+
+  // Debugging console.log
+  console.log("Writing set2pcEffect file...");
+
   fs.writeFileSync(
     "./src/data/set2pcEffect.json",
     JSON.stringify(setEff),

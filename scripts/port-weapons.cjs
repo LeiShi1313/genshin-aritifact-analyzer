@@ -179,7 +179,7 @@ const names = [
   "Tome of the Eternal Flow",
 ];
 
-const portWeapons = () => {
+const portWeapons = async () => {
   let trans = {
     en: {},
   };

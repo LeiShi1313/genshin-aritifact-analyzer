@@ -1,33 +1,34 @@
-const axios = require("axios");
 const fs = require("fs");
 const util = require('util');
 const stream = require('stream');
+const axios = require('axios').default;
 
 const finished = util.promisify(stream.finished);
 
 const download_image = async (url, image_path) => {
-    const writer = fs.createWriteStream(image_path);
-    const response = await axios({
-        url,
-        responseType: "stream",
-    })
-    if (response.status !== 200) {
-        throw new Error(`Failed to download ${url}`);
+    try {
+        const response = await axios.get(url, { responseType: 'stream',});
+        const writer = fs.createWriteStream(image_path, { flags: 'w' });
+        response.data.pipe(writer);
+        await new Promise((resolve, reject) => {
+            writer.on('finish', resolve);
+            writer.on('error', reject);
+        });
+    } catch (err) {
+        console.error(`Failed to download ${url}`);
+        throw err;
     }
-    response.data.pipe(writer)
-    return new Promise((resolve, reject) => {
-        let error = null;
-        writer.on("error", (err) => {
-            error = err;
-            writer.close();
-            reject(err);
-        });
-        writer.on("close", () => {
-            if (!error) {
-                resolve(true);
-            }
-        });
-    });
+}
+
+const download_from_amber = async (resource_name, type, image_path) => {
+    console.log(`Downloading ${resource_name} from amber`);
+    let url;
+    if (type === 'artifact') {
+        url = `https://api.ambr.top/assets/UI/reliquary/${resource_name}`;
+    } else {
+        url = `https://api.ambr.top/assets/UI/${resource_name}`;
+    }
+    return download_image(url, image_path);
 }
 
 const lngToRegion = {
@@ -41,4 +42,5 @@ const lngToRegion = {
 }
 
 exports.download_image = download_image;
+exports.download_from_amber = download_from_amber;
 exports.lngToRegion = lngToRegion;

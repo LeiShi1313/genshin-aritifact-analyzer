@@ -83,7 +83,7 @@ const names = [
   "wriothesley",
 ];
 
-const portCharacters = () => {
+const portCharacters = async () => {
   let trans = {
     en: {},
   };
@@ -134,11 +134,20 @@ const portCharacters = () => {
         const imagePath = `./src/assets/characters/${key}_${imageType}.${eng.images[
           imageType
         ].slice(-3)}`;
-        if (!fs.existsSync(imagePath)) {
+        if (!fs.existsSync(imagePath) || fs.statSync(imagePath).size === 0) {
           try {
+            console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
             await utils.download_image(eng.images[imageType], imagePath)
-          } catch (e) {
-            console.error(`Failed to download ${eng.images[imageType]}`)
+          } catch (e) { 
+            try {
+              await utils.download_from_amber(
+                eng.images[imageType].substring(eng.images[imageType].lastIndexOf("/") + 1),
+                "character",
+                imagePath
+              );
+            } catch (e) {
+              console.error(e)
+            }
           }
         }
       }
