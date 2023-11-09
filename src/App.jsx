@@ -14,14 +14,14 @@ import { decodeBuild } from "./utils/build";
 import { checkAppVersionAndRefresh } from "./version";
 import { lazyLoadPage } from "./lazy";
 
-const Layout = lazyLoadPage("./Layout");
-const Main = lazyLoadPage("./features/Main");
-const BuildEditor = lazyLoadPage("./features/builds/BuildEditor");
-const BuildsEditor = lazyLoadPage("./features/builds/BuildsEditor");
-const ArtifactsUpload = lazyLoadPage("./features/artifacts/ArtifactsUpload");
-const Artifact = lazyLoadPage("./features/artifacts/Artifact");
-const UploadedArtifacts = lazyLoadPage("./features/artifacts/UploadedArtifacts");
-const Config = lazyLoadPage("./features/configs/Config");
+const Layout = lazyLoadPage("Layout");
+const Main = lazyLoadPage("Main");
+const BuildEditor = lazyLoadPage("builds/BuildEditor");
+const BuildsEditor = lazyLoadPage("builds/BuildsEditor");
+const ArtifactsUpload = lazyLoadPage("artifacts/ArtifactsUpload");
+const Artifact = lazyLoadPage("artifacts/Artifact");
+const UploadedArtifacts = lazyLoadPage("artifacts/UploadedArtifacts");
+const Config = lazyLoadPage("configs/Config");
 
 const App = () => {
   const dispatch = useDispatch();

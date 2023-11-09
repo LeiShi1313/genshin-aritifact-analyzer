@@ -8,7 +8,7 @@ export function lazyLoadPage(page) {
       try {
         checkAppVersionAndRefresh();
   
-        const Page = await import(/* @vite-ignore */ page);
+        const Page = await import(`./features/${page}.jsx`);
   
         Storage.setItem(PAGE_REFRESH_KEY, 'false');
   
