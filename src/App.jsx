@@ -12,16 +12,17 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemedSuspense from "./features/ThemedSuspense";
 import { decodeBuild } from "./utils/build";
 import { checkAppVersionAndRefresh } from "./version";
-import { lazyLoadPage } from "./lazy";
 
-const Layout = lazyLoadPage("Layout");
-const Main = lazyLoadPage("Main");
-const BuildEditor = lazyLoadPage("builds/BuildEditor");
-const BuildsEditor = lazyLoadPage("builds/BuildsEditor");
-const ArtifactsUpload = lazyLoadPage("artifacts/ArtifactsUpload");
-const Artifact = lazyLoadPage("artifacts/Artifact");
-const UploadedArtifacts = lazyLoadPage("artifacts/UploadedArtifacts");
-const Config = lazyLoadPage("configs/Config");
+const Layout = lazy(() => import("./features/Layout"));
+const Main = lazy(() => import("./features/Main"));
+const BuildEditor = lazy(() => import("./features/builds/BuildEditor"));
+const BuildsEditor = lazy(() => import("./features/builds/BuildsEditor"));
+const ArtifactsUpload = lazy(() =>
+  import("./features/artifacts/ArtifactsUpload")
+);
+const Artifact = lazy(() => import("./features/artifacts/Artifact"));
+const UploadedArtifacts = lazy(() => import("./features/artifacts/UploadedArtifacts"));
+const Config = lazy(() => import("./features/configs/Config"));
 
 const App = () => {
   const dispatch = useDispatch();
