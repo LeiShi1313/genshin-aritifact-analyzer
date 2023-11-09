@@ -235,6 +235,8 @@ export enum Weapon {
   RANGE_GAUGE = 172,
   THE_DOCKHANDS_ASSISTANT = 173,
   TOME_OF_THE_ETERNAL_FLOW = 174,
+  SPLENDOR_OF_TRANQUIL_WATERS = 175,
+  SWORD_OF_NARZISSENKREUZ = 176,
   UNRECOGNIZED = -1,
 }
 
@@ -765,6 +767,12 @@ export function weaponFromJSON(object: any): Weapon {
     case 174:
     case "TOME_OF_THE_ETERNAL_FLOW":
       return Weapon.TOME_OF_THE_ETERNAL_FLOW;
+    case 175:
+    case "SPLENDOR_OF_TRANQUIL_WATERS":
+      return Weapon.SPLENDOR_OF_TRANQUIL_WATERS;
+    case 176:
+    case "SWORD_OF_NARZISSENKREUZ":
+      return Weapon.SWORD_OF_NARZISSENKREUZ;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1124,6 +1132,10 @@ export function weaponToJSON(object: Weapon): string {
       return "THE_DOCKHANDS_ASSISTANT";
     case Weapon.TOME_OF_THE_ETERNAL_FLOW:
       return "TOME_OF_THE_ETERNAL_FLOW";
+    case Weapon.SPLENDOR_OF_TRANQUIL_WATERS:
+      return "SPLENDOR_OF_TRANQUIL_WATERS";
+    case Weapon.SWORD_OF_NARZISSENKREUZ:
+      return "SWORD_OF_NARZISSENKREUZ";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

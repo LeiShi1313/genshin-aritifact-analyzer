@@ -79,8 +79,11 @@ const names = [
   "travelerhydro",
   "lyney",
   "lynette",
+  "freminet",
   "neuvillette",
   "wriothesley",
+  "furina",
+  "charlotte"
 ];
 
 const portCharacters = async () => {

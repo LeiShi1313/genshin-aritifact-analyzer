@@ -80,6 +80,9 @@ enum Character {
     TRAVELER_HYDRO = 74;
     LYNEY = 75;
     LYNETTE = 76;
-    NEUVILLETTE = 77;
-    WRIOTHESLEY = 78;
+    FREMINET = 77;
+    NEUVILLETTE = 78;
+    WRIOTHESLEY = 79;
+    FURINA = 80;
+    CHARLOTTE = 81;
 }

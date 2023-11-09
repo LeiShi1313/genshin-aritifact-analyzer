@@ -177,6 +177,8 @@ const names = [
   "Range Gauge",
   "The Dockhand's Assistant",
   "Tome of the Eternal Flow",
+  "Splendor of Tranquil Waters",
+  "Sword of Narzissenkreuz",
 ];
 
 const portWeapons = async () => {
