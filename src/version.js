@@ -4,7 +4,7 @@ export const APP_VERSION = import.meta.env.VITE_APP_VERSION;
 
 export function checkAppVersionAndRefresh() {
     const storedAppVersion = Storage.getItem(APP_VERSION_KEY);
-    if (storedAppVersion !== APP_VERSION) {
+    if (APP_VERSION !== undefined && storedAppVersion !== APP_VERSION) {
       Storage.setItem(APP_VERSION_KEY, APP_VERSION);
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then(registration => {
