@@ -1,0 +1,847 @@
+[
+  {
+    "FURINA": {
+      "primary": "#8ecae6",
+      "primary-focus": "#219ebc",
+      "primary-content": "#023047",
+
+      "secondary": "#ffb703",
+      "secondary-focus": "#fb8500",
+      "secondary-content": "#023047",
+
+      "accent": "#fb8500",
+      "accent-focus": "#f77f00",
+      "accent-content": "#ffffff",
+
+      "neutral": "#023047",
+      "neutral-focus": "#011627",
+      "neutral-content": "#ffb703",
+
+      "base-100": "#edf2f4",
+      "base-200": "#dbe2ef",
+      "base-300": "#bcccde",
+      "base-content": "#023047",
+
+      "info": "#8ecae6",
+      "info-content": "#023047",
+
+      "success": "#34a0a4",
+      "success-content": "#edf2f4",
+
+      "warning": "#e9c46a",
+      "warning-content": "#023047",
+
+      "error": "#dc2f02",
+      "error-content": "#edf2f4",
+
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.4rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.4rem"
+    }
+  },
+  {
+    "WRIOTHESLEY": {
+      "primary": "#3b82f6",
+      "primary-focus": "#2563eb",
+      "primary-content": "#e0f2fe",
+
+      "secondary": "#e11d48",
+      "secondary-focus": "#be123c",
+      "secondary-content": "#fee2e2",
+
+      "accent": "#64748b",
+      "accent-focus": "#475569",
+      "accent-content": "#f1f5f9",
+
+      "neutral": "#1e293b",
+      "neutral-focus": "#0f172a",
+      "neutral-content": "#e0f2fe",
+
+      "base-100": "#e0f2fe",
+      "base-200": "#bae6fd",
+      "base-300": "#7dd3fc",
+      "base-content": "#1e293b",
+
+      "info": "#bfdbfe",
+      "info-content": "#1e293b",
+
+      "success": "#22c55e",
+      "success-content": "#e0f2fe",
+
+      "warning": "#f97316",
+      "warning-content": "#fef3c7",
+
+      "error": "#ef4444",
+      "error-content": "#fef2f2",
+
+      "--rounded-box": "0.25rem",
+      "--rounded-btn": "0.125rem",
+      "--rounded-badge": "1rem",
+      "--animation-btn": "0.2s",
+      "--animation-input": "0.15s",
+      "--btn-focus-scale": "0.99",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.125rem"
+    }
+  },
+  {
+    "NEUVILLETTE": {
+      "primary": "#7dd3fc",
+      "primary-focus": "#0ea5e9",
+      "primary-content": "#034078",
+
+      "secondary": "#64748b",
+      "secondary-focus": "#475569",
+      "secondary-content": "#f1f5f9",
+
+      "accent": "#bfdbfe",
+      "accent-focus": "#93c5fd",
+      "accent-content": "#1e3a8a",
+
+      "neutral": "#1e3a8a",
+      "neutral-focus": "#102a43",
+      "neutral-content": "#bfdbfe",
+
+      "base-100": "#dbeafe",
+      "base-200": "#bfdbfe",
+      "base-300": "#93c5fd",
+      "base-content": "#1e3a8a",
+
+      "info": "#7dd3fc",
+      "info-content": "#034078",
+
+      "success": "#34d399",
+      "success-content": "#f0fdfa",
+
+      "warning": "#facc15",
+      "warning-content": "#1e3a8a",
+
+      "error": "#f87171",
+      "error-content": "#fef2f2",
+
+      "--rounded-box": "0.3rem",
+      "--rounded-btn": "0.2rem",
+      "--rounded-badge": "1.25rem",
+      "--animation-btn": "0.25s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.2rem"
+    }
+  },
+  {
+    "MONA": {
+      "primary": "#5468ff",
+      "primary-focus": "#4055db",
+      "primary-content": "#f0f6ff",
+
+      "secondary": "#f72585",
+      "secondary-focus": "#d61c69",
+      "secondary-content": "#ffeff1",
+
+      "accent": "#7209b7",
+      "accent-focus": "#560bad",
+      "accent-content": "#eeddff",
+
+      "neutral": "#560bad",
+      "neutral-focus": "#3a0878",
+      "neutral-content": "#eeddff",
+
+      "base-100": "#f0f6ff",
+      "base-200": "#dce4ff",
+      "base-300": "#c8d2ff",
+      "base-content": "#5468ff",
+
+      "info": "#4cc9f0",
+      "info-content": "#f0f6ff",
+
+      "success": "#80ed99",
+      "success-content": "#f0f6ff",
+
+      "warning": "#ffba08",
+      "warning-content": "#f0f6ff",
+
+      "error": "#dc2f02",
+      "error-content": "#ffeff1",
+
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.25rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+  },
+  {
+    "NAHIDA": {
+      "primary": "#9ae66e",
+      "primary-focus": "#68b238",
+      "primary-content": "#235a10",
+    
+      "secondary": "#fffd77",
+      "secondary-focus": "#e9e029",
+      "secondary-content": "#5a5500",
+    
+      "accent": "#ff928b",
+      "accent-focus": "#ff6f69",
+      "accent-content": "#801f1d",
+    
+      "neutral": "#5a5500",
+      "neutral-focus": "#423d00",
+      "neutral-content": "#fffd77",
+    
+      "base-100": "#fffceb",
+      "base-200": "#fff9d7",
+      "base-300": "#fff4c3",
+      "base-content": "#5a5500",
+    
+      "info": "#3d5a80",
+      "info-content": "#fffceb",
+    
+      "success": "#80ed99",
+      "success-content": "#235a10",
+    
+      "warning": "#fddb3a",
+      "warning-content": "#5a5500",
+    
+      "error": "#d1495b",
+      "error-content": "#fffceb",
+    
+      "--rounded-box": "1rem",
+      "--rounded-btn": "0.5rem",
+      "--rounded-badge": "2rem",
+      "--animation-btn": "0.4s",
+      "--animation-input": "0.3s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "2px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.5rem"
+    }
+    
+  },
+  {
+    "KAMISATO_AYAKA": {
+      "primary": "#88c0d0",
+      "primary-focus": "#5e81ac",
+      "primary-content": "#2e3440",
+    
+      "secondary": "#eb6f92",
+      "secondary-focus": "#bf616a",
+      "secondary-content": "#2e3440",
+    
+      "accent": "#d08770",
+      "accent-focus": "#ab5245",
+      "accent-content": "#2e3440",
+    
+      "neutral": "#2e3440",
+      "neutral-focus": "#1b1f27",
+      "neutral-content": "#d8dee9",
+    
+      "base-100": "#e5e9f0",
+      "base-200": "#cfd8de",
+      "base-300": "#b2b9bf",
+      "base-content": "#2e3440",
+    
+      "info": "#81a1c1",
+      "info-content": "#2e3440",
+    
+      "success": "#a3be8c",
+      "success-content": "#2e3440",
+    
+      "warning": "#ebcb8b",
+      "warning-content": "#2e3440",
+    
+      "error": "#bf616a",
+      "error-content": "#e5e9f0",
+    
+      "--rounded-box": "1rem",
+      "--rounded-btn": "0.5rem",
+      "--rounded-badge": "2rem",
+      "--animation-btn": "0.4s",
+      "--animation-input": "0.3s",
+      "--btn-focus-scale": "0.95",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.5rem"
+    }
+    
+  },
+  {
+    "TARTAGLIA": {
+      "primary": "#81a1c1",
+      "primary-focus": "#5e81ac",
+      "primary-content": "#2e3440",
+    
+      "secondary": "#bf616a",
+      "secondary-focus": "#99324d",
+      "secondary-content": "#eceff4",
+    
+      "accent": "#a3be8c",
+      "accent-focus": "#8c9b7c",
+      "accent-content": "#2e3440",
+    
+      "neutral": "#2e3440",
+      "neutral-focus": "#1b1f27",
+      "neutral-content": "#d8dee9",
+    
+      "base-100": "#eceff4",
+      "base-200": "#d8dee9",
+      "base-300": "#c0c8d0",
+      "base-content": "#2e3440",
+    
+      "info": "#88c0d0",
+      "info-content": "#2e3440",
+    
+      "success": "#8fbcbb",
+      "success-content": "#2e3440",
+    
+      "warning": "#ebcb8b",
+      "warning-content": "#2e3440",
+    
+      "error": "#d08770",
+      "error-content": "#eceff4",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.25rem",
+      "--rounded-badge": "1.25rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+    
+  },
+  {
+    "DILUC": {
+      "primary": "#eb6f92",
+      "primary-focus": "#bf616a",
+      "primary-content": "#2e3440",
+    
+      "secondary": "#d08770",
+      "secondary-focus": "#ab5245",
+      "secondary-content": "#eceff4",
+    
+      "accent": "#a3be8c",
+      "accent-focus": "#8c9b7c",
+      "accent-content": "#2e3440",
+    
+      "neutral": "#2e3440",
+      "neutral-focus": "#1b1f27",
+      "neutral-content": "#eceff4",
+    
+      "base-100": "#eceff4",
+      "base-200": "#d8dee9",
+      "base-300": "#c0c8d0",
+      "base-content": "#2e3440",
+    
+      "info": "#88c0d0",
+      "info-content": "#2e3440",
+    
+      "success": "#a3be8c",
+      "success-content": "#2e3440",
+    
+      "warning": "#ebcb8b",
+      "warning-content": "#2e3440",
+    
+      "error": "#bf616a",
+      "error-content": "#eceff4",
+    
+      "--rounded-box": "0.25rem",
+      "--rounded-btn": "0.125rem",
+      "--rounded-badge": "1rem",
+      "--animation-btn": "0.2s",
+      "--animation-input": "0.15s",
+      "--btn-focus-scale": "0.99",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.125rem"
+    }
+    
+  },
+  {
+    "XINYAN": {
+      "primary": "#ff6f69",
+      "primary-focus": "#e63946",
+      "primary-content": "#1d3557",
+    
+      "secondary": "#ffd166",
+      "secondary-focus": "#fca311",
+      "secondary-content": "#1d3557",
+    
+      "accent": "#06d6a0",
+      "accent-focus": "#049a8b",
+      "accent-content": "#1d3557",
+    
+      "neutral": "#1d3557",
+      "neutral-focus": "#102a43",
+      "neutral-content": "#ffd166",
+    
+      "base-100": "#f1faee",
+      "base-200": "#a8dadc",
+      "base-300": "#457b9d",
+      "base-content": "#1d3557",
+    
+      "info": "#457b9d",
+      "info-content": "#f1faee",
+    
+      "success": "#2a9d8f",
+      "success-content": "#f1faee",
+    
+      "warning": "#e9c46a",
+      "warning-content": "#1d3557",
+    
+      "error": "#d62828",
+      "error-content": "#f1faee",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.3rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.3rem"
+    }
+    
+  },
+  {
+    "ALBEDO": {
+      "primary": "#f2c14e",
+      "primary-focus": "#e1b441",
+      "primary-content": "#45331e",
+    
+      "secondary": "#f64c72",
+      "secondary-focus": "#c7324f",
+      "secondary-content": "#270101",
+    
+      "accent": "#ff7d00",
+      "accent-focus": "#cc5e00",
+      "accent-content": "#45331e",
+    
+      "neutral": "#45331e",
+      "neutral-focus": "#321911",
+      "neutral-content": "#f2c14e",
+    
+      "base-100": "#faf3e0",
+      "base-200": "#f5e7cb",
+      "base-300": "#f0dbb5",
+      "base-content": "#45331e",
+    
+      "info": "#3a86ff",
+      "info-content": "#faf3e0",
+    
+      "success": "#4caf50",
+      "success-content": "#faf3e0",
+    
+      "warning": "#ff9800",
+      "warning-content": "#45331e",
+    
+      "error": "#f44336",
+      "error-content": "#faf3e0",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.25rem",
+      "--rounded-badge": "1.25rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+    
+  },
+  {
+    "DEHYA": {
+      "primary": "#ff7e67",
+      "primary-focus": "#e85d04",
+      "primary-content": "#331c0d",
+    
+      "secondary": "#f97316",
+      "secondary-focus": "#ea580c",
+      "secondary-content": "#331c0d",
+    
+      "accent": "#ef4444",
+      "accent-focus": "#dc2626",
+      "accent-content": "#ffe4e1",
+    
+      "neutral": "#331c0d",
+      "neutral-focus": "#1c0f07",
+      "neutral-content": "#ffedd5",
+    
+      "base-100": "#ffedd5",
+      "base-200": "#fed7aa",
+      "base-300": "#fdba74",
+      "base-content": "#331c0d",
+    
+      "info": "#60a5fa",
+      "info-content": "#eff6ff",
+    
+      "success": "#22c55e",
+      "success-content": "#ecfdf5",
+    
+      "warning": "#eab308",
+      "warning-content": "#331c0d",
+    
+      "error": "#dc2626",
+      "error-content": "#ffedd5",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.3rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.4s",
+      "--animation-input": "0.3s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.3rem"
+    }
+    
+  },
+  {
+    "NILOU": {
+      "primary": "#7ad7f0",
+      "primary-focus": "#539dc2",
+      "primary-content": "#102d3c",
+    
+      "secondary": "#f283b6",
+      "secondary-focus": "#e06b9f",
+      "secondary-content": "#3c1321",
+    
+      "accent": "#e2b007",
+      "accent-focus": "#c19205",
+      "accent-content": "#3c2f1e",
+    
+      "neutral": "#3c1321",
+      "neutral-focus": "#290d16",
+      "neutral-content": "#f283b6",
+    
+      "base-100": "#f7faff",
+      "base-200": "#dbeff7",
+      "base-300": "#bfe1f1",
+      "base-content": "#102d3c",
+    
+      "info": "#71c7ec",
+      "info-content": "#102d3c",
+    
+      "success": "#7ddc98",
+      "success-content": "#1f4037",
+    
+      "warning": "#ffaf38",
+      "warning-content": "#3c2f1e",
+    
+      "error": "#fa5252",
+      "error-content": "#f8f9fa",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.3rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.3rem"
+    }
+    
+  },
+  {
+    "NAVIA": {
+      "primary": "#f2cc8f",
+      "primary-focus": "#eab676",
+      "primary-content": "#3d405b",
+    
+      "secondary": "#e07a5f",
+      "secondary-focus": "#c05640",
+      "secondary-content": "#f4f1de",
+    
+      "accent": "#81b29a",
+      "accent-focus": "#679688",
+      "accent-content": "#3d405b",
+    
+      "neutral": "#3d405b",
+      "neutral-focus": "#2c2e43",
+      "neutral-content": "#f2cc8f",
+    
+      "base-100": "#f4f1de",
+      "base-200": "#e8e4cb",
+      "base-300": "#dbd8b3",
+      "base-content": "#3d405b",
+    
+      "info": "#3a86ff",
+      "info-content": "#f4f1de",
+    
+      "success": "#f6bd60",
+      "success-content": "#3d405b",
+    
+      "warning": "#f28482",
+      "warning-content": "#3d405b",
+    
+      "error": "#e63946",
+      "error-content": "#f4f1de",
+    
+      "--rounded-box": "0.25rem",
+      "--rounded-btn": "0.15rem",
+      "--rounded-badge": "1rem",
+      "--animation-btn": "0.4s",
+      "--animation-input": "0.25s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+    
+  },
+  {
+    "YELAN": {
+      "primary": "#81a4f8",
+      "primary-focus": "#5e7ce2",
+      "primary-content": "#12264a",
+    
+      "secondary": "#4fd1c5",
+      "secondary-focus": "#3ab0a2",
+      "secondary-content": "#1a3734",
+    
+      "accent": "#e0f2fe",
+      "accent-focus": "#b6e0fe",
+      "accent-content": "#12264a",
+    
+      "neutral": "#12264a",
+      "neutral-focus": "#0b1c33",
+      "neutral-content": "#e0f2fe",
+    
+      "base-100": "#e7ebf0",
+      "base-200": "#d1dce5",
+      "base-300": "#bbc8da",
+      "base-content": "#12264a",
+    
+      "info": "#3b82f6",
+      "info-content": "#e7ebf0",
+    
+      "success": "#22d3ee",
+      "success-content": "#e7ebf0",
+    
+      "warning": "#facc15",
+      "warning-content": "#12264a",
+    
+      "error": "#f87171",
+      "error-content": "#e7ebf0",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.25rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+    
+  },
+  {
+    "ZHONGLI": {
+      "primary": "#e0a96d",
+      "primary-focus": "#c78f4e",
+      "primary-content": "#42210b",
+    
+      "secondary": "#ae2012",
+      "secondary-focus": "#7a120d",
+      "secondary-content": "#fbeee0",
+    
+      "accent": "#f2df80",
+      "accent-focus": "#d4be6a",
+      "accent-content": "#42210b",
+    
+      "neutral": "#42210b",
+      "neutral-focus": "#2c1607",
+      "neutral-content": "#e0a96d",
+    
+      "base-100": "#fbeee0",
+      "base-200": "#f8e2c9",
+      "base-300": "#f5d6b2",
+      "base-content": "#42210b",
+    
+      "info": "#3b82f6",
+      "info-content": "#fbeee0",
+    
+      "success": "#4caf50",
+      "success-content": "#fbeee0",
+    
+      "warning": "#facc15",
+      "warning-content": "#42210b",
+    
+      "error": "#f44336",
+      "error-content": "#fbeee0",
+    
+      "--rounded-box": "0.25rem",
+      "--rounded-btn": "0.125rem",
+      "--rounded-badge": "1rem",
+      "--animation-btn": "0.2s",
+      "--animation-input": "0.15s",
+      "--btn-focus-scale": "0.98",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.125rem"
+    }
+    
+  },
+  {
+    "FREMINET": {
+      "primary": "#89cff0",
+      "primary-focus": "#5390d9",
+      "primary-content": "#1d3557",
+    
+      "secondary": "#f4d35e",
+      "secondary-focus": "#eec643",
+      "secondary-content": "#423d0f",
+    
+      "accent": "#f28f3b",
+      "accent-focus": "#c76d0e",
+      "accent-content": "#5f370e",
+    
+      "neutral": "#1d3557",
+      "neutral-focus": "#14233c",
+      "neutral-content": "#89cff0",
+    
+      "base-100": "#e3f6f5",
+      "base-200": "#c7e9e9",
+      "base-300": "#a6dcdc",
+      "base-content": "#1d3557",
+    
+      "info": "#3c8dad",
+      "info-content": "#e3f6f5",
+    
+      "success": "#81c784",
+      "success-content": "#1d3557",
+    
+      "warning": "#ffcc5a",
+      "warning-content": "#5f370e",
+    
+      "error": "#e63946",
+      "error-content": "#e3f6f5",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.25rem",
+      "--rounded-badge": "1.5rem",
+      "--animation-btn": "0.3s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+    
+  },
+  {
+    "SHENHE": {
+      "primary": "#88c0d0",
+      "primary-focus": "#5e81ac",
+      "primary-content": "#2e3440",
+    
+      "secondary": "#81a1c1",
+      "secondary-focus": "#5e81ac",
+      "secondary-content": "#eceff4",
+    
+      "accent": "#d08770",
+      "accent-focus": "#bf616a",
+      "accent-content": "#2e3440",
+    
+      "neutral": "#2e3440",
+      "neutral-focus": "#3b4252",
+      "neutral-content": "#d8dee9",
+    
+      "base-100": "#eceff4",
+      "base-200": "#e5e9f0",
+      "base-300": "#d8dee9",
+      "base-content": "#2e3440",
+    
+      "info": "#88c0d0",
+      "info-content": "#2e3440",
+    
+      "success": "#a3be8c",
+      "success-content": "#2e3440",
+    
+      "warning": "#ebcb8b",
+      "warning-content": "#2e3440",
+    
+      "error": "#bf616a",
+      "error-content": "#eceff4",
+    
+      "--rounded-box": "0.5rem",
+      "--rounded-btn": "0.25rem",
+      "--rounded-badge": "1.25rem",
+      "--animation-btn": "0.25s",
+      "--animation-input": "0.2s",
+      "--btn-focus-scale": "0.97",
+      "--border-btn": "1px",
+      "--tab-border": "1px",
+      "--tab-radius": "0.25rem"
+    }
+    
+  },
+  {
+    "WANDERER": {}
+  },
+  {
+    "QIQI": {}
+  },
+  {
+    "KAMISATO_AYATO": {}
+  },
+  {
+    "ARATAKI_ITTO": {}
+  },
+  {
+    "EULA": {}
+  },
+  {
+    "XIAO": {}
+  },
+  {
+    "YUN_JIN": {
+      "primary": "#6F5076",
+      "secondary": "#451B1D",
+      "accent": "#7F171A",
+      "base-100": "#DBCFD6"
+    }
+  },
+  {
+    "KAGOME": {
+      "primary": "#D80000",
+      "secondary": "#A5412E",
+      "accent": "#DCAA7E",
+      "base-100": "#ed7b7b"
+    }
+  },
+  {
+    "RAIDEN_SHOGUN": {
+      "primary": "#8D56C0",
+      "secondary": "#B498D4",
+      "accent": "#EADAEC",
+      "base-100": "#221256"
+    }
+  },
+  {
+    "xingqiu": {
+      "primary": "#CEBBAA",
+      "secondary": "#305167",
+      "accent": "#EDE7E6",
+      "base-100": "#2254a3"
+    }
+  }
+]

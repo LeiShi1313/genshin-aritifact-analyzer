@@ -1,6 +1,7 @@
-import { Character, characterFromJSON } from "../genshin/character";
+import { Character, characterFromJSON, characterToJSON } from "../genshin/character";
 import { enumToStringKey } from "./enum";
 import data from '../data/characters.json';
+import characterThemes from '../data/genshin_character_themes.json';
 
 const zhToKey = {};
 Object.keys(data).map((key) => zhToKey[data[key]['zh_name']] = key.toUpperCase());
@@ -13,6 +14,8 @@ Object.keys(data).map((key) => {
   characterMetadata[formatKey].weaponType = data[key]["weapontype"];
   characterMetadata[formatKey].rarity = data[key]["rarity"];
 });
+
+const characterWithTheme = new Set(characterThemes.map((theme) => Object.keys(theme)[0]));
 
 export const characterFromName = (name: string): Character => {
     const c = Character[name.toUpperCase()];
@@ -35,25 +38,8 @@ export const characterFromGoodName = (name: string): Character => {
 }
 
 export const characterToTheme = (character: Character): string => {
-    switch(character) {
-        case Character.NAHIDA:
-            return 'lemonade'
-        case Character.SANGONOMIYA_KOKOMI:
-            return 'aqua'
-        case Character.RAIDEN_SHOGUN:
-            return 'RAIDEN_SHOGUN'
-        case Character.TIGHNARI:
-            return 'emerald'
-        case Character.WANDERER:
-            return 'forest'
-        case Character.ZHONGLI:
-            return 'zhongli'
-        case Character.YUN_JIN:
-            return 'yun_jin'
-        case Character.YOIMIYA:
-            return 'yoimiya'
-        case Character.XINGQIU:
-            return 'xingqiu'
-        default: return 'auto'
+    if (characterWithTheme.has(characterToJSON(character))) {
+        return characterToJSON(character);
     }
+    return 'auto';
 }

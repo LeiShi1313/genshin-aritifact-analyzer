@@ -9,7 +9,7 @@ const NameEditor = ({ name, setName, isPreset=false }) => {
   return !isEditing ? (
     <h2 className="card-title">
       {isPreset && <span className="badge badge-primary">{t("Presets")}</span>}
-      {name ? name : t("Unnamed Build")}
+      {name ? t(name) : t("Unnamed Build")}
       <Pencil className="cursor-pointer" onClick={() => setIsEditing(true)} />
     </h2>
   ) : (

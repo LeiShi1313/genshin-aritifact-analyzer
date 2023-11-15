@@ -103,7 +103,7 @@ const BuildRow = ({ build, setPendingDelete, isPreset = false }) => {
             </div>
             <div>
               <div className="font-bold">
-                {build.name ? build.name : t("Unnamed Build")}
+                {build.name ? t(build.name) : t("Unnamed Build")}
               </div>
               <div className="text-sm opacity-50">
                 {t(Character[build.character].toLowerCase(), {

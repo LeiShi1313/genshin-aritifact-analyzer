@@ -130,10 +130,10 @@ const BuildEditor = () => {
 
   return (
     <div
-      className={`my-auto flex w-full rounded-3xl bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
+      className={`my-auto flex w-full rounded-box bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
       style={{ backgroundImage: `url(${imgUrl})` }}
     >
-      <div className="items-enter flex w-full justify-center rounded-3xl bg-base-200 bg-opacity-70 py-10">
+      <div className="items-enter flex w-full justify-center rounded-box bg-base-200 bg-opacity-70 py-10">
         <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
           <NameEditor name={name} setName={setName} isPreset={presets[hash]} />
           <div className="flex flex-row items-center justify-between">
@@ -145,18 +145,18 @@ const BuildEditor = () => {
             </button>
           </div>
           <div className="flex flex-row items-center justify-between space-x-2">
-            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+            <div className="h-full w-1/2 justify-between rounded-box border-2 border-solid border-primary-focus">
               <WeaponEditor
                 weapons={weapons}
                 setWeapons={setWeapons}
                 filterFn={weaponFilterFn}
               />
             </div>
-            <div className="h-full w-1/2 justify-between rounded-xl border-2 border-solid border-primary-focus">
+            <div className="h-full w-1/2 justify-between rounded-box border-2 border-solid border-primary-focus">
               <SuitsEditor suits={suits} setSuits={setSuits} />
             </div>
           </div>
-          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+          <div className="w-full rounded-box border-2 border-solid border-primary-focus pb-2">
             <label className="label flex flex-row justify-between">
               <span className="label-text">{t("Main Stats")}</span>
             </label>
@@ -172,7 +172,7 @@ const BuildEditor = () => {
               subAttributes={subAttributes}
             />
           </div>
-          <div className="w-full rounded-xl border-2 border-solid border-primary-focus pb-2">
+          <div className="w-full rounded-box border-2 border-solid border-primary-focus pb-2">
             <SubAttributesEditor
               subAttributes={subAttributes}
               setSubAttributes={setSubAttributes}
