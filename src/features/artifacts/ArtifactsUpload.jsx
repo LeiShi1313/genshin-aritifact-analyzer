@@ -145,7 +145,7 @@ const ArtifactsUpload = () => {
     { name: "position", defaultValue: 0, isNumeric: true, replace: false },
     { name: "minLevel", defaultValue: 0, isNumeric: true, replace: false },
     { name: "maxLevel", defaultValue: 20, isNumeric: true, replace: false },
-    { name: "showSelected", defaultValue: true, replace: false },
+    { name: "showSelected", defaultValue: true, isBoolean: true, replace: false },
     { name: "sort", defaultValue: "rarity-desc", replace: false },
   ]);
   const [page, setPage] = useState(0);

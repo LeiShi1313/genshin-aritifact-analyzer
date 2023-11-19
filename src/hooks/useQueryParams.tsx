@@ -5,6 +5,7 @@ interface UseQueryParamsOptions {
   name: string;
   defaultValue: any;
   isNumeric?: boolean;
+  isBoolean?: boolean;
   replace?: boolean;
 }
 
@@ -29,7 +30,7 @@ const useQueryParams = (params: UseQueryParamsOptions[]) => {
     for (const param of params) {
       const urlParam = searchParams.get(param.name) ?? param.defaultValue;
       if (String(urlParam) !== String(paramValues.current[param.name])) {
-        const value = param.isNumeric ? Number(urlParam) : urlParam;
+        const value = param.isNumeric ? Number(urlParam) : param.isBoolean ? Boolean(urlParam) : urlParam;
         paramValues.current[param.name] = value;
         setStates[param.name](value);
       }

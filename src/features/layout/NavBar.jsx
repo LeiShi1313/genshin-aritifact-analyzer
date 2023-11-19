@@ -46,7 +46,7 @@ const MenuItems = ({ location, navigate }) => {
       {navList.map((item, idx) => (
         <li key={idx}>
           <a
-            className={classNames("btn btn-ghost gap-2 !rounded-full", {
+            className={classNames("btn btn-ghost gap-2 !rounded-full flex content-center", {
               "bg-secondary/[.15]":
                 firstPath === item.path ||
                 (typeof item.alsoHighlightAtPath === "object" &&
@@ -62,7 +62,7 @@ const MenuItems = ({ location, navigate }) => {
             >
               {item.iconPathEle}
             </svg>
-            {t(item.title)}
+            <span className="flex items-center justify-center">{t(item.title)}</span>
           </a>
         </li>
       ))}
