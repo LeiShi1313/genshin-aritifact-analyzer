@@ -62,7 +62,7 @@ const SetSelect = ({ set, setSet }) => {
   return (
     <div className="z-[42] w-full">
       <button
-        className="btn w-full flex-nowrap justify-start gap-2 overflow-hidden text-ellipsis rounded-full text-left normal-case"
+        className="btn btn-primary w-full flex-nowrap justify-start gap-2 overflow-hidden text-ellipsis rounded-full text-left normal-case"
         onClick={() => setShowModal(true)}
       >
         {set !== 0 ? (

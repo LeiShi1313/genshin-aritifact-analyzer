@@ -2,6 +2,7 @@ import { t } from "i18next";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
 import { encodeBuild, getBuildSets } from "../../utils/build";
 import ArtifactCard from "./ArtifactCard";
 import CharacterCard from "../characters/CharacterCard";
@@ -26,16 +27,18 @@ const ArtifactFitnessCard = ({
   rarity,
   minFitness,
   minRarity,
+  showUnfit,
 }) => {
   const navigate = useNavigate();
   const presets = useSelector((state) => state.presets.builds);
   const bestScore = useMemo(() => Math.max(...Object.values(fits)), [fits]);
+  const sortedFits = useMemo(
+    () => [...Object.keys(fits)].sort((a, b) => fits[b] - fits[a]),
+    [fits]
+  );
   const filteredFits = useMemo(
-    () =>
-      [...Object.keys(fits)]
-        .sort((a, b) => fits[b] - fits[a])
-        .filter((key) => fits[key] >= Number(minFitness)),
-    [fits, minFitness]
+    () => [...sortedFits].filter((key) => fits[key] >= Number(minFitness)),
+    [sortedFits, minFitness]
   );
   const [showAll, setShowAll] = useState(false);
   const [hoveredBuild, setHoveredBuild] = useState(null);
@@ -50,9 +53,7 @@ const ArtifactFitnessCard = ({
   const suitIsFit = useMemo(
     () =>
       hoveredBuild && builds[hoveredBuild]
-        ? getBuildSets(builds[hoveredBuild]).some(
-            (set) => set === artifact.set
-          )
+        ? getBuildSets(builds[hoveredBuild]).some((set) => set === artifact.set)
         : false,
     [hoveredBuild]
   );
@@ -67,7 +68,11 @@ const ArtifactFitnessCard = ({
   return (
     <div className="mt-5 flex w-auto flex-col items-stretch gap-2 rounded-xl bg-base-200 p-3 lg:w-auto lg:flex-row lg:items-start">
       {/* Artifact info card */}
-      <ArtifactCard artifact={artifact} fitAttributes={fitAttributes} suitIsFit={suitIsFit} />
+      <ArtifactCard
+        artifact={artifact}
+        fitAttributes={fitAttributes}
+        suitIsFit={suitIsFit}
+      />
 
       {/* Artifact value section */}
       <div className="flex w-full flex-col items-stretch gap-2 self-stretch lg:flex-row">
@@ -128,33 +133,34 @@ const ArtifactFitnessCard = ({
             )}
           </div>
           {/* Fit build cards list */}
-          {filteredFits.length > 0 && (
-            <div className="flex w-full flex-row flex-wrap items-stretch gap-2">
-              {filteredFits
-                .slice(0, showAll ? filteredFits.length : 8)
-                .map((key, idx) => (
-                  <div
-                    key={idx}
-                    className="tooltip cursor-pointer"
-                    data-tip={builds[key].name}
-                    onClick={() => handleClick(key)}
-                    onMouseEnter={() => setHoveredBuild(key)}
-                    onMouseLeave={() => setHoveredBuild(null)}
-                  >
-                    {/* <CharacterAvatar
+          <div className={classNames("flex w-full flex-row flex-wrap items-stretch gap-2", {})}>
+            {(filteredFits.length > 0
+              ? filteredFits.slice(0, showAll ? filteredFits.length : 8)
+              : showUnfit ? sortedFits.slice(0, 8) : []
+            ).map((key, idx) => (
+              <div
+                key={idx}
+                className="tooltip cursor-pointer"
+                data-tip={builds[key].name}
+                onClick={() => handleClick(key)}
+                onMouseEnter={() => setHoveredBuild(key)}
+                onMouseLeave={() => setHoveredBuild(null)}
+              >
+                {/* <CharacterAvatar
                     character={builds[key].character}
                     withRing={fits[key] >= bestScore}
                   /> */}
-                    <CharacterCard
-                      character={builds[key].character}
-                      text={(100 * fits[key]).toFixed(0) + "%"}
-                      textColor={valueToColor(fits[key] * 10)}
-                      width={characterCardWidth}
-                      isBestFit={fits[key] >= bestScore}
-                    />
-                  </div>
-                ))}
-              {/* {filteredFits.length > 8 && !showAll && (
+                <CharacterCard
+                  character={builds[key].character}
+                  text={(100 * fits[key]).toFixed(0) + "%"}
+                  textColor={valueToColor(fits[key] * 10)}
+                  width={characterCardWidth}
+                  isBestFit={fits[key] >= bestScore}
+                  isFit={fits[key] >= Number(minFitness)}
+                />
+              </div>
+            ))}
+            {/* {filteredFits.length > 8 && !showAll && (
               <div
                 className="tooltip flex h-24 grow cursor-pointer items-center justify-center rounded bg-base-100"
                 data-tip={`${filteredFits.length - 8} more`}
@@ -164,8 +170,7 @@ const ArtifactFitnessCard = ({
                 <span className="text-2xl font-bold">...</span>
               </div>
             )} */}
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

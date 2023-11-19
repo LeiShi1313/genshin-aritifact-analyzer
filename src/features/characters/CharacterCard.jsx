@@ -2,8 +2,9 @@ import { useMemo } from "react";
 import { Character } from "../../genshin/character";
 import { characterMetadata } from "../../utils/character";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
+import classNames from "classnames";
 
-const CharacterCard = ({ character, text = "name", width = 24, textColor }) => {
+const CharacterCard = ({ character, text = "name", width = 24, textColor, isFit }) => {
   const imgUrl = useMemo(
     () =>
       new URL(
@@ -20,7 +21,7 @@ const CharacterCard = ({ character, text = "name", width = 24, textColor }) => {
   return (
     <figure
       className={
-        "flex flex-col items-center justify-start overflow-hidden rounded bg-base-100 shadow-md"
+        classNames("flex flex-col items-center justify-start overflow-hidden rounded bg-base-100 shadow-md", {"saturate-[0.4]": !isFit})
       }
     >
       <div

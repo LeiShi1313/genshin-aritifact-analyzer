@@ -35,5 +35,7 @@
   "shield_strength": "Shield Strength",
   "elemental_res": "Elemental RES",
   "talents_damage": "Talents DMG",
-  "less_affected_time": "Less Affected Time"
+  "less_affected_time": "Less Affected Time",
+  "show_selected": "Show Selected",
+  "show_unselected": "Show Unselected"
 }

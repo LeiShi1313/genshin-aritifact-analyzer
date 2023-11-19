@@ -6,6 +6,7 @@ import AttributePositionSelect from "./AttributePositionSelect";
 import MultiRange from "../inputs/MultiRange";
 import IconReset from "../../assets/svgs/IconReset";
 import classNames from "classnames";
+import { CaretDown, WarningCircle } from "phosphor-react";
 
 const ArtifactsFilter = ({
   fitness,
@@ -24,6 +25,7 @@ const ArtifactsFilter = ({
   setMaxLevel,
   isDownloadBtnActive,
   handleDownloadYasLock,
+  handleDownloadV2YasLock,
 }) => {
   const { t } = useTranslation();
 
@@ -131,23 +133,44 @@ const ArtifactsFilter = ({
         <span className="w-[2ch]">{maxLevel}</span>
       </div>
       <div className="hidden md:block" />
+      {/* <div className="hidden md:block" /> */}
       {/* Download Button */}
-      <button
-        className="btn btn-accent col-span-2 rounded-full text-accent-content shadow-md"
-        onClick={handleDownloadYasLock}
-        disabled={!isDownloadBtnActive}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="24px"
-          fill="currentColor"
-          className="mr-2"
+      <div className="join col-span-2 w-full">
+        <button
+          className="join-item btn btn-accent flex-grow rounded-full text-accent-content shadow-md"
+          onClick={handleDownloadYasLock}
+          disabled={!isDownloadBtnActive}
         >
-          <path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 15L17.55 9.54L16.13 8.13L13 11.25V2H11V11.25L7.88 8.13L6.46 9.55L12 15Z" />
-        </svg>
-        {t("Generate")} lock.json
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24px"
+            fill="currentColor"
+            className="mr-2"
+          >
+            <path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 15L17.55 9.54L16.13 8.13L13 11.25V2H11V11.25L7.88 8.13L6.46 9.55L12 15Z" />
+          </svg>
+          {t("Generate")} lock.json
+        </button>
+        <button className="join-item dropdown-hover btn dropdown dropdown-end btn-accent rounded-full shadow-md"
+        disabled={!isDownloadBtnActive}>
+          <label tabIndex={0} className="m-1">
+            <CaretDown size={20} />
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow z-40"
+          >
+            <li>
+              <a onClick={handleDownloadV2YasLock}>{t("Generate")} V2 lock.json
+              <div className="tooltip tooltip-primary" data-tip={t("V2_lock_file_tooltip")}>
+                <WarningCircle size={20} />
+              </div>
+              </a>
+            </li>
+          </ul>
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTailwindTheme = require("tailwindcss/defaultTheme");
-const defaultDaisyuiTheme = require("daisyui/src/colors/themes");
+const defaultDaisyuiTheme = require("daisyui/src/theming/themes");
 const characterThemes = require('./src/data/genshin_character_themes.json');
 
 module.exports = {
@@ -30,6 +30,7 @@ module.exports = {
           neutral: "#424f65",
           "neutral-content": "#ece5d8",
           "base-100": "#ece5d8",
+          "base-200": "rgba(242, 242, 242, 0)",
         },
       },
       {

@@ -1,6 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { SelectionAll, SelectionSlash } from "phosphor-react";
 
-const ArtifactSortSelect = ({ sortKey, setSortKey }) => {
+const ArtifactSortSelect = ({
+  sortKey,
+  setSortKey,
+  showSelected,
+  setShowSelected,
+}) => {
   const { t } = useTranslation();
   const handleDropdownClick = (sortCondition) => {
     let keyPair = sortKey.split("-");
@@ -23,7 +29,7 @@ const ArtifactSortSelect = ({ sortKey, setSortKey }) => {
       <div className="dropdown">
         <label
           tabIndex="0"
-          className="btn btn-sm flex-nowrap rounded-full normal-case"
+          className="btn btn-sm btn-primary flex-nowrap rounded-full normal-case"
         >
           {sortKey.split("-")[0] === "fitness" ? t("Fitness") : t("Rarity")}
           <svg
@@ -37,7 +43,7 @@ const ArtifactSortSelect = ({ sortKey, setSortKey }) => {
         </label>
         <ul
           tabIndex="0"
-          className="dropdown-content menu rounded-box mt-1 w-full flex-nowrap overflow-auto bg-neutral p-1 text-sm text-neutral-content shadow"
+          className="dropdown-content menu rounded-box z-[40] mt-1 w-full flex-nowrap overflow-auto bg-neutral p-1 text-sm text-neutral-content shadow"
         >
           <li>
             <a
@@ -59,7 +65,7 @@ const ArtifactSortSelect = ({ sortKey, setSortKey }) => {
       </div>
 
       <button
-        className="btn btn-circle btn-sm aspect-square"
+        className="btn btn-circle btn-primary btn-sm aspect-square"
         onClick={changeSortDirection}
       >
         <svg
@@ -85,6 +91,25 @@ const ArtifactSortSelect = ({ sortKey, setSortKey }) => {
           )}
         </svg>
       </button>
+      <div
+        className="tooltip flex items-center"
+        data-tip={
+          showSelected
+            ? t("show_selected", { ns: "artifacts" })
+            : t("show_unselected", { ns: "artifacts" })
+        }
+      >
+        <label className="swap swap-rotate">
+        <input
+          type="checkbox"
+          checked={showSelected}
+          onChange={() => setShowSelected(!showSelected)}
+        />
+        <SelectionAll className="swap-on" size={32} />
+        <SelectionSlash className="swap-off" size={32} />
+
+        </label>
+      </div>
     </div>
   );
 };

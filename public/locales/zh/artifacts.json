@@ -35,5 +35,7 @@
   "shield_strength": "护盾强效",
   "elemental_res": "元素抗性",
   "talents_damage": "天赋伤害",
-  "less_affected_time": "附着持续时间减少"
+  "less_affected_time": "附着持续时间减少",
+  "show_selected": "显示选中",
+  "show_unselected": "显示未选中"
 }

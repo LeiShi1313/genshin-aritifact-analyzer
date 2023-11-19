@@ -118,6 +118,7 @@ const ArtifactsUpload = () => {
     pos,
     minLevel,
     maxLevel,
+    showSelected,
     sortKey,
     setFitness,
     setRarity,
@@ -125,6 +126,7 @@ const ArtifactsUpload = () => {
     setPos,
     setMinLevel,
     setMaxLevel,
+    setShowSelected,
     setSortKey,
   ] = useQueryParams([
     {
@@ -143,6 +145,7 @@ const ArtifactsUpload = () => {
     { name: "position", defaultValue: 0, isNumeric: true, replace: false },
     { name: "minLevel", defaultValue: 0, isNumeric: true, replace: false },
     { name: "maxLevel", defaultValue: 20, isNumeric: true, replace: false },
+    { name: "showSelected", defaultValue: true, replace: false },
     { name: "sort", defaultValue: "rarity-desc", replace: false },
   ]);
   const [page, setPage] = useState(0);
@@ -178,33 +181,42 @@ const ArtifactsUpload = () => {
   );
   const filterFn = useCallback(
     (idx) => {
-      let ret =
+      let filter = true;
+      if (set > 0) {
+        filter = filter && artifacts[idx].set === set;
+      }
+      if (pos > 0) {
+        filter = filter && artifacts[idx].position === pos;
+      }
+      return (
+        filter &&
+        artifacts[idx].level >= minLevel &&
+        artifacts[idx].level <= maxLevel
+      );
+    },
+    [artifacts, set, pos, minLevel, maxLevel]
+  );
+  const selectFn = useCallback(
+    (idx) => {
+      let selected =
         allFits[idx] &&
         allRarity[idx] &&
         (Math.max(...Object.values(allFits[idx])) >= Number(fitness) ||
           allRarity[idx] >= rarity);
-      if (set > 0) {
-        ret = ret && artifacts[idx].set === set;
-      }
-      if (pos > 0) {
-        ret = ret && artifacts[idx].position === pos;
-      }
-      ret =
-        ret &&
-        artifacts[idx].level >= minLevel &&
-        artifacts[idx].level <= maxLevel;
-      return ret;
+      return showSelected ? selected : !selected;
     },
-    [fitness, rarity, allFits, allRarity, set, pos, minLevel, maxLevel]
+    [allFits, allRarity, fitness, rarity, showSelected]
   );
-  const filteredArtifacts = useMemo(
+
+  const displayingArtifacts = useMemo(
     () =>
       artifacts && artifacts.length > 0
         ? [...artifacts.map((_, index) => index)]
             .sort(compareFn)
             .filter(filterFn)
+            .filter(selectFn)
         : [],
-    [artifacts, compareFn, filterFn, page, offset]
+    [artifacts, compareFn, filterFn, selectFn, page, offset]
   );
 
   const handleDownloadYasLock = useCallback(() => {
@@ -212,7 +224,10 @@ const ArtifactsUpload = () => {
     const file = new Blob(
       [
         JSON.stringify(
-          filteredArtifacts.filter((idx) => !artifacts[idx].locked)
+          [...artifacts.map((_, index) => index)]
+            .filter(filterFn)
+            .filter((i) => (showSelected ? selectFn(i) : !selectFn(i)))
+            .filter((idx) => !artifacts[idx].locked)
         ),
       ],
       { type: "text/json" }
@@ -221,7 +236,36 @@ const ArtifactsUpload = () => {
     element.download = "lock.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
-  }, [filteredArtifacts]);
+  }, [artifacts, compareFn, filterFn, selectFn, showSelected]);
+  const handleDownloadV2YasLock = useCallback(() => {
+    const element = document.createElement("a");
+    const filteredArtifacts = [...artifacts.map((_, index) => index)].filter(
+      filterFn
+    );
+    const file = new Blob(
+      [
+        JSON.stringify({
+          version: 2,
+          flip_indices: [],
+          lock_indices: [...filteredArtifacts].filter((a) =>
+            showSelected ? selectFn(a) : !selectFn(a)
+          ),
+          unlock_indices: [...filteredArtifacts].filter((a) =>
+            showSelected ? !selectFn(a) : selectFn(a)
+          ),
+          validation: [...filteredArtifacts].map((idx) => ({
+            index: idx,
+            locked: artifacts[idx].locked,
+          })),
+        }),
+      ],
+      { type: "text/json" }
+    );
+    element.href = URL.createObjectURL(file);
+    element.download = "lock.json";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }, [artifacts, compareFn, filterFn, selectFn, showSelected]);
 
   useEffect(() => {
     if (
@@ -318,8 +362,9 @@ const ArtifactsUpload = () => {
           setPage(0);
           setMaxLevel(l);
         }}
-        isDownloadBtnActive={format === "GOOD" && filteredArtifacts.length > 0}
+        isDownloadBtnActive={format === "GOOD"}
         handleDownloadYasLock={handleDownloadYasLock}
+        handleDownloadV2YasLock={handleDownloadV2YasLock}
       />
       {isLoading ? (
         <Calculating
@@ -339,22 +384,27 @@ const ArtifactsUpload = () => {
                   setPage(0);
                   setSortKey(s);
                 }}
+                showSelected={showSelected}
+                setShowSelected={(s) => {
+                  setPage(0);
+                  setShowSelected(s);
+                }}
               />
             </div>
             {/* Showing value range & Paginator */}
-            {filteredArtifacts.length > offset && (
+            {displayingArtifacts.length > offset && (
               <div className="flex flex-col items-end gap-1">
                 <div className="mr-1 text-xs opacity-70">
                   {sortKey.startsWith("rarity")
                     ? t("Showing rarity range") +
                       ": " +
-                      allRarity[filteredArtifacts[page * offset]].toFixed(2) +
+                      allRarity[displayingArtifacts[page * offset]].toFixed(2) +
                       " ~ " +
                       allRarity[
-                        filteredArtifacts[
+                        displayingArtifacts[
                           Math.min(
                             (page + 1) * offset - 1,
-                            filteredArtifacts.length - 1
+                            displayingArtifacts.length - 1
                           )
                         ]
                       ].toFixed(2)
@@ -363,7 +413,7 @@ const ArtifactsUpload = () => {
                       (
                         Math.max(
                           ...Object.values(
-                            allFits[filteredArtifacts[page * offset]]
+                            allFits[displayingArtifacts[page * offset]]
                           )
                         ) * 100
                       ).toFixed(0) +
@@ -372,10 +422,10 @@ const ArtifactsUpload = () => {
                         Math.max(
                           ...Object.values(
                             allFits[
-                              filteredArtifacts[
+                              displayingArtifacts[
                                 Math.min(
                                   (page + 1) * offset - 1,
-                                  filteredArtifacts.length - 1
+                                  displayingArtifacts.length - 1
                                 )
                               ]
                             ]
@@ -389,13 +439,13 @@ const ArtifactsUpload = () => {
                   setPage={setPage}
                   offset={offset}
                   setOffset={setOffset}
-                  totalPages={filteredArtifacts.length}
+                  totalPages={displayingArtifacts.length}
                 />
               </div>
             )}
           </div>
 
-          {filteredArtifacts
+          {displayingArtifacts
             .slice(page * offset, (page + 1) * offset)
             .map((index) => (
               <ArtifactFitnessCard
@@ -407,18 +457,19 @@ const ArtifactsUpload = () => {
                 rarity={allRarity[index]}
                 minFitness={fitness}
                 minRarity={rarity}
+                showUnfit={!showSelected}
               />
             ))}
 
           <div className="flex flex-row items-center justify-between">
             <div className="grow" />
-            {filteredArtifacts.length > offset && (
+            {displayingArtifacts.length > offset && (
               <Paginator
                 page={page}
                 setPage={setPage}
                 offset={offset}
                 setOffset={setOffset}
-                totalPages={filteredArtifacts.length}
+                totalPages={displayingArtifacts.length}
                 scrollToId="main-content"
               />
             )}

@@ -75,7 +75,7 @@ const NavBar = () => {
   const location = useLocation();
 
   return (
-    <div className="navbar flex items-center justify-end bg-base-100">
+    <div className="navbar flex items-center justify-end bg-base-100 h-16">
       <div className="navbar-start">
         {location.pathname !== "/" && (
           <div className="dropdown">

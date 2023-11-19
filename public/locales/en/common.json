@@ -66,6 +66,7 @@
     "Sub Stats": "Sub Stats",
     "Pick one": "Pick one",
     "Pick": "Pick",
+    "V2_lock_file_tooltip": "V2 lock file will lock AND unlock artifacts.",
 
     "Unsupported file format, please use supported file format": "Unsupported file format, please use supported file format",
     "Found X builds in file Y": "Found {{num, number}} builds in file {{fileName}}",
