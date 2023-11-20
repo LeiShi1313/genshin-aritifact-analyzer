@@ -159,7 +159,7 @@ const ArtifactsFilter = ({
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow z-40"
+            className="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow z-40 text-base-content"
           >
             <li>
               <a onClick={handleDownloadV2YasLock}>{t("Generate")} V2 lock.json
