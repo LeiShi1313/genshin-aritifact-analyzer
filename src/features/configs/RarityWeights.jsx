@@ -60,7 +60,7 @@ const RarityWeights = () => {
       <span>
       {t("Rarity")}: {rarity.toFixed(2)}
       </span>
-      <div className="grid-rows-9 grid grid-cols-[auto_1fr_1fr_1fr_1fr] gap-1 w-full">
+      <div className="grid-rows-9 grid grid-cols-[auto_1fr_1fr_1fr_1fr] gap-2 w-full">
         <button
           className="btn btn-secondary btn-sm btn-outline gap-1 rounded-full text-sm md:text-base px-2 md:px-3"
           onClick={() => dispatch(resetRarityWeights())}

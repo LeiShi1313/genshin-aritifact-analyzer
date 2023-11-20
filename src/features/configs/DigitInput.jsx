@@ -14,13 +14,11 @@ const DigitInput = ({ value, setValue, step = 1, canEdit = true }) => {
       data-tip={t("This stat is not available for this position")}
     >
       {canEdit && (
-        <button className="btn btn-xs btn-ghost px-0"
+        <button
+          className="btn btn-ghost btn-xs px-0"
           onClick={() => setValue(Math.round((value - step) * x) / x)}
         >
-        <Minus
-          size={12}
-        />
-
+          <Minus size={12} />
         </button>
       )}
       <input
@@ -29,16 +27,14 @@ const DigitInput = ({ value, setValue, step = 1, canEdit = true }) => {
         disabled={!canEdit}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="input input-ghost input-xs w-8 max-w-xs px-0 text-center text-sm md:input-sm md:w-12 md:px-0"
+        className="input input-ghost h-4 w-8 max-w-xs px-0 text-center text-xs leading-4 md:h-8 md:w-12 md:text-sm md:leading-8"
       />
       {canEdit && (
-        <button className="btn btn-xs btn-ghost px-0"
+        <button
+          className="btn btn-ghost btn-xs px-0"
           onClick={() => setValue(Math.round((value + step) * x) / x)}
         >
-        <Plus
-          size={12}
-          className="cursor-pointer"
-        />
+          <Plus size={12} className="cursor-pointer" />
         </button>
       )}
     </div>
