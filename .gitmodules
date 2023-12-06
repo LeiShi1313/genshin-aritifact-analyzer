@@ -1,0 +1,3 @@
+[submodule "gcsim"]
+	path = gcsim
+	url = https://github.com/genshinsim/gcsim.git
