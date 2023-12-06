@@ -1,0 +1,48 @@
+options swap_delay=12 debug=true iteration=1000 workers=50 mode=sl;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="kitaincrossspear" refine=5 lvl=90/90;
+thoma add set="gildeddreams" count=5;
+thoma add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #main
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.3306 em=39.64 cr=0.331 cd=0.1324;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+chongyun add set="instructor" count=5;
+chongyun add stats hp=3571 atk=232 atk%=0.3495 cryo%=0.3495 cr=0.311 ; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.1324;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favoniuslance" refine=3 lvl=90/90;
+yaoyao add set="deepwoodmemories" count=5;
+yaoyao add stats hp=4780 atk=311 er=0.518 dendro%=0.466 cr=0.311 ; #main
+yaoyao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.3306 em=39.64 cr=0.331 cd=0.1324;
+
+
+target lvl=100 pos= -1, 1 resist=.1 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+
+active chongyun;
+chongyun burst, skill;
+yaoyao skill;
+for let i = 0; i < 5; i = i + 1 {
+	xingqiu attack, skill[orbital=1], attack, burst[orbital=1], attack;
+	thoma burst, attack, skill, attack:2;
+	yaoyao burst, 
+		attack:2, dash,
+		attack:2, dash,
+		attack:2, dash,
+		attack:2, dash,
+		attack;
+	chongyun attack, burst, attack, skill, attack;
+	yaoyao skill, attack;
+    print("done");
+}
+

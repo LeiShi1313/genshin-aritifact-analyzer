@@ -1,0 +1,53 @@
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="thewidsith" refine=3 lvl=90/90;
+yae add set="glad" count=2;
+yae add set="tf" count=2;
+yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+#yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+#nahida add weapon="thewidsith" refine=3 lvl=90/90;
+nahida add weapon="solarpearl" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+
+energy every interval=480,720 amount=1 ;
+target lvl=100 resist=0.1 hp=1000000000 pos=0,2.4 radius=2;
+
+active nahida;
+
+let t = 0;
+let yaeburst = 0;
+for let totems = 10; totems > 0 || t > f() {
+  switch {
+  case .nahida.skill.ready:
+    nahida skill;
+  case .yae.tags.totems < 3 && .yae.skill.ready:
+    if .debuff.res.t0.nahida-e { yae attack, skill, attack, skill, attack, skill; }
+    else { yae skill:3; }
+
+    yaeburst = f() + 3*60;
+    totems = totems - 1;
+    if !totems { t = f() + 15*60; }
+  case .nahida.burst.ready:
+    nahida attack, burst;
+  case .yae.burst.ready && f() >= yaeburst && .yae.tags.totems == 3:
+    yae burst;
+  case .nahida.normal == 4:
+    switch {
+    case .nahida.charge.ready:
+      nahida charge, jump;
+    case .nahida.dash.ready:
+      nahida dash;
+    default:
+      nahida jump;
+    }
+  default:
+    nahida attack;
+  }
+}

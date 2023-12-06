@@ -1,0 +1,45 @@
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+noelle add weapon="serpentspine" refine=1 lvl=90/90;
+noelle add set="huskofopulentdreams" count=5;
+noelle add stats def%=0.707 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=1.284 geo%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="noblesseoblige" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favoniuswarbow" refine=3 lvl=90/90;
+gorou add set="theexile" count=4;
+gorou add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.0992 er=0.7176 em=39.64 cr=0.642 cd=0.1324 geo%=0.348;
+
+options swap_delay=12 iteration=1000;
+
+##Default Enemy
+
+active xingqiu;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+	xingqiu skill, burst, attack;
+	yelan burst, skill, attack;
+	gorou skill,burst, attack;
+	noelle skill,burst[extend=0];
+	
+	noelle attack:4, dash,
+	       attack:4;
+	       
+	yelan skill, attack;       
+	gorou skill, attack;
+	
+	noelle attack:4, dash,
+	       attack:2;
+	
+}

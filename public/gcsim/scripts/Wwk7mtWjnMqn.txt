@@ -1,0 +1,54 @@
+# Options
+options debug=true iteration=1000 duration=110 workers=60 mode=sl swap_delay=12;
+
+# Character setup
+# Ayaka
+ayaka char lvl=90/90 cons=0 talent=9,9,9; 
+ayaka add weapon="amenomakageuchi" refine=5 lvl=90/90;
+ayaka add set="blizzardstrayer" count=5; 
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
+ayaka add stats hp%=0.0992 hp=507.88 atk%=0.2976 atk=33.08 def%=0.124 def=39.36 em=39.64 cr=0.2648 cd=0.7944 er=0.1102 ; #subs
+
+
+# Mona
+mona char lvl=90/90 cons=0 talent=9,9,9; 
+mona add weapon="prototypeamber" refine=5 lvl=90/90;
+mona add set="tenacityofthemillelith" count=5;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+ 
+# Rosaria
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="deathmatch" refine=1 lvl=90/90;
+rosaria add set="noblesseoblige" count=5;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
+rosaria add stats hp%=0.0992 hp=507.88 atk%=0.1984 atk=33.08 def%=0.124 def=39.36 em=39.64 cr=0.3972 cd=0.662 er=0.1102 ; #subs
+
+
+# Venti
+venti char lvl=90/90 cons=0 talent=9,9,9; 
+venti add weapon="favoniuswarbow" refine=3 lvl=90/90;
+venti add set="viridescentvenerer" count=5;
+venti add stats hp=4780 atk=311 em=187 em=187 cr=0.311 ; #main
+venti add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 cr=0.331 cd=0.662 er=0.1102 ; #subs
+
+# Execution
+# Target
+target lvl=100 resist=.1 hp=99999999 radius=2 pos=0,2.4;
+
+# Energy 
+energy every interval=480,720 amount=1;
+
+# Rotation: Rosaria E Q -> Venti E Q -> Mona Q E -> Ayaka D N1 E Q -> Venti E -> Rosaria E -> Ayaka D 3N2C E
+active ayaka;
+for let x = 0; x < 5; x = x + 1{
+  ayaka skill, dash, attack:2,charge;
+  rosaria skill, burst;
+  venti skill, burst;
+  mona burst, skill;
+  ayaka dash, skill, attack, burst;
+  venti skill, attack;
+  rosaria skill;
+  ayaka dash, attack:2,charge, attack:2,charge;
+
+}

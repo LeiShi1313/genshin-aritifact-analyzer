@@ -1,0 +1,53 @@
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="harbingerofdawn" refine=5 lvl=90/90;
+ayato add set="sr" count=4;
+ayato add stats def%=0.1240 def=39.36 hp=5288 hp%=0.09920 atk=344.1 atk%=0.6644 er=0.1102 em=39.64 cr=0.6420 cd=0.7944 hydro%=0.4660;
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="favoniuslance" refine=3 lvl=90/90;
+yunjin add set="archaicpetra" count=4;
+yunjin add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583 ; #main
+yunjin add stats def=39.36 def%=0.372 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.1324 ;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats def%=0.1240 def=39.36 hp=5288 hp%=0.09920 atk=344.1 atk%=0.09920 er=1.069 em=39.64 cr=0.5096 cd=0.6620 pyro%=0.4660;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.1240 def=39.36 hp=5288 hp%=0.09920 atk=344.1 atk%=0.3968 er=0.1102 em=679.9 cr=0.3972 cd=0.1324;
+
+
+options swap_delay=12 iteration=1000;
+
+#______________________________________________________________________
+active ayato;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+print("done");
+  if .ayato.burst.ready {
+    ayato burst;
+  }
+  kazuha attack, skill[hold=1], high_plunge;
+  yunjin skill, burst;
+  bennett skill, burst;                    
+  ayato skill, attack:17;
+  kazuha skill[hold=1], high_plunge, burst;
+  yunjin skill, attack:3;
+  ayato skill, attack:15;
+  
+}
+
+
+
+
+
+
+
+
+
+

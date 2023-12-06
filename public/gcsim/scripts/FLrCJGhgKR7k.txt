@@ -1,0 +1,52 @@
+options swap_delay=12 iteration=100;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="hakushinring" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="ts" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="thewidsith" refine=3 lvl=90/90;
+yae add set="gildeddreams" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;	
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="deepwood" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+# ----  Default Enemy
+
+
+active yae;
+# ----  Actions List
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+  
+for let i=0; i<5; i=i+1 {
+  if !i {
+    yae skill:3;
+  } else {
+    yae skill, attack, skill, attack, skill;
+  }
+  sucrose burst, attack:2;
+  fischl attack, burst;
+  tighnari skill, aim, burst, aim:2;
+  yae attack, burst, skill, attack, skill, attack, skill;
+  sucrose attack, skill, dash, attack:3, charge;
+  fischl attack, skill;
+  tighnari skill, aim:3;
+  yae attack:2, dash, attack;
+  sucrose attack, skill, jump, attack:2, charge, attack:2;
+  }

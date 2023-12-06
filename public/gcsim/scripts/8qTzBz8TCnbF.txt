@@ -1,0 +1,53 @@
+hutao char lvl=90/90 cons=1 talent=9,9,9 start_hp=1;
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="sr" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;										
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9; 
+yelan add weapon="favoniuswarbow" refine=4 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; 						
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="evenstar" refine=1 lvl=90/90;
+lisa add set="no" count=4;
+lisa add stats hp=4780 atk=311 er=0.518 em=187 em=187 ; #main											
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3306 em=158.56 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 debug=true iteration=500 ;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active lisa;
+for let i = 0; i < 4; i = i + 1 {
+  
+  lisa skill[hold=1], burst;
+  xingqiu attack, burst, attack;
+  yelan burst, attack, skill, attack;
+  hutao skill,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash,
+      attack:2, charge, dash;
+  if .yelan.tags.yelan_breakthrough {
+    yelan aim, skill, attack;
+  } else {
+    yelan attack, skill; 
+  } 
+  xingqiu attack, skill, dash, attack;
+}

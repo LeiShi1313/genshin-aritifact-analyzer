@@ -1,0 +1,36 @@
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="amenomakageuchi" refine=5 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+layla char lvl=90/90 cons=6 talent=9,9,9;
+layla add weapon="favoniussword" refine=3 lvl=90/90;
+layla add set="totm" count=4;
+layla add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 cryo%=0.466;
+
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="rust" refine=3 lvl=90/90;
+yoimiya add set="shime" count=4;
+yoimiya add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1984 er=0.1102 em=226.64 cr=0.642 cd=0.7944 pyro%=0.466;
+																				
+																		
+options swap_delay=12 iteration=1000 ;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active xingqiu;
+
+for let i = 0; i < 4; i = i + 1 {
+  xingqiu skill, dash, burst, attack;
+  layla burst, attack, skill, attack;
+  yelan burst, attack, skill, attack;
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  yelan skill, attack:2;
+  if .yoimiya.burst.ready {
+  yoimiya attack, burst;
+  }
+}

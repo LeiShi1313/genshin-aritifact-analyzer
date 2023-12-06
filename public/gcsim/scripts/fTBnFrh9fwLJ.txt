@@ -1,0 +1,52 @@
+# All KQMC & Kurtc
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2753 em=118.92 cr=0.332 cd=0.4634;
+
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="blacksword" refine=1 lvl=90/90;
+keqing add set="thunderingfury" count=5;
+keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; # main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=5;
+nahida add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.331 cd=0.3972;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="fadingtwilight" refine=5 lvl=90/90;
+sara add set="no" count=5;
+sara add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64  cr=0.331 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+
+energy every interval=480,720 amount=1; 
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4; 
+active keqing;
+
+keqing skill;
+
+for let i=0; i<4; i=i+1 {
+  kazuha skill, high_plunge, burst;
+  nahida attack, skill, burst;
+  sara skill, aim;
+  wait(11);
+  kazuha skill, high_plunge;
+  sara burst;
+  keqing skill, burst, skill, dash,
+    attack, charge,
+    attack, skill, dash,
+    attack, charge, 
+    attack, charge, 
+    attack, charge;
+  sara skill, aim;
+  keqing skill:2, dash, attack;
+}
+  
+# Keq e > Kazuha ep q > Nahida n1e q > Sara e aim (wait) > Kazuha ep > Sara q > Keqing eq ed n1c n1ed n1c n1c n1c > Sara e aim > Keqing eed n1

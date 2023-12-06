@@ -1,0 +1,82 @@
+options swap_delay=12 iteration=1000;
+
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="crimsonwitchofflames" count=4;
+#bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+#xingqiu add weapon="harbingerofdawn" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+#xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+
+candace char lvl=90/90 cons=6 talent=9,9,9; 
+candace add weapon="favoniuslance" refine=3 lvl=90/90;
+#xingqiu add weapon="harbingerofdawn" refine=5 lvl=90/90;
+candace add set="noblesseoblige" count=4;
+#xingqiu add set="emblemofseveredfate" count=4;
+candace add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.1324;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active xingqiu;
+for let i=0; i<4; i=i+1 {
+  candace skill[counter=1],burst;
+  xingqiu burst, attack;
+  bennett skill, attack, burst;
+  xiangling attack, burst, attack, skill, dash;
+  xingqiu attack:3;
+  bennett attack, skill;
+  xingqiu skill, dash, attack:2;
+  bennett attack:3, skill;
+  xingqiu attack:2;
+  #candace skill[counter=1];
+  # Bennett burst expires here
+  bennett attack:2, skill, attack:3, skill, attack;
+  xiangling attack:3;
+  print("Rotation Done");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

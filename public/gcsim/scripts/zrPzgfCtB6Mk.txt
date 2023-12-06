@@ -1,0 +1,41 @@
+options swap_delay=12 iteration=1000;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="thestringless" refine=3 lvl=90/90;
+venti add set="noblesse" count=4;
+venti add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5 ; #main
+venti add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 er=0.2204 cr=0.2979 cd=0.5958;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="eosf" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats hp%=0.0992 hp=507.88 atk%=0.1984 atk=33.08 def%=0.124 def=39.36 em=39.64 er=0.1102 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5 ; #main
+kazuha add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 er=0.2755 cr=0.2648 cd=0.5958;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="lionsroar" refine=3 lvl=90/90;
+bennett add set="lavawalker" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+bennett add stats hp%=0.0992 hp=507.88 atk%=0.1984 atk=33.08 def%=0.124 def=39.36 em=39.64 er=0.1102 cr=0.331 cd=0.7944;
+
+active bennett;
+target lvl=100 resist=0.1 radius=1 pos=-1.2,2 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=1.2,2 hp=999999999;
+energy every interval=480,720 amount=1;
+
+bennett skill;
+
+for let i=0; i<4; i=i+1 { 
+  venti skill, burst;
+  kazuha skill, high_plunge, burst;
+  bennett skill, burst;
+  xiangling burst, skill;
+  kazuha skill, high_plunge;
+  bennett attack:2, skill, attack:3, skill, attack:3, skill, attack:3, skill;
+}

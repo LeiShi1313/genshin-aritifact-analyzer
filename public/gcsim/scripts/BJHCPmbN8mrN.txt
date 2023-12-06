@@ -1,0 +1,35 @@
+nahida char lvl=90/90 cons=0 talent=1,10,6;
+nahida add weapon="sacrificialfragments" refine=2 lvl=80/80;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.28500000000000003 def=51 hp=6155 hp%=0.057999999999999996 atk=413 er=0.22 em=601.5 cr=0.171 cd=0.638;
+
+fischl char lvl=80/80 cons=6 talent=1,8,6;
+fischl add weapon="aquasimulacra" refine=1 lvl=90/90;
+fischl add set="thunderingfury" count=2;
+fischl add set="gladiatorsfinale" count=2;
+fischl add stats def%=0.131 def=74 hp=5348 hp%=0.198 atk=329 atk%=0.09300000000000001 em=223.5 cr=0.637 cd=0.871 electro%=0.466;
+
+baizhu char lvl=90/90 cons=0 talent=10,10,10;
+baizhu add weapon="favoniuscodex" refine=5 lvl=90/90;
+baizhu add set="tenacityofthemillelith" count=2;
+baizhu add set="vourukashasglow" count=2;
+baizhu add stats hp=6333 hp%=1.293 atk=420 atk%=0.13499999999999998 er=0.862 em=23 cr=0.24900000000000003 cd=0.43500000000000005;
+
+kaveh char lvl=90/90 cons=6 talent=10,10,10;
+kaveh add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+kaveh add set="gladiatorsfinale" count=4;
+kaveh add stats def%=0.066 def=83 hp=5318 atk=329 atk%=0.134 er=0.305 em=186.5 cr=0.326 cd=1.5950000000000002 dendro%=0.466;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 radius=2 pos=0,1 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active kaveh;
+
+for let i=0; i<3; i=i+1 {
+  fischl skill;
+  nahida skill, burst;
+  baizhu skill, burst;
+  kaveh skill, burst, attack:4, attack:4, skill, attack:4, attack:4, skill;
+}

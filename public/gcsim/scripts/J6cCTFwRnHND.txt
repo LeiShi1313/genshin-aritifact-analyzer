@@ -1,0 +1,45 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2648 cd=0.662 ;
+													
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296 ;
+									
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944 ;
+														
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="favlance" refine=3 lvl=90/90;
+xiao add set="vermillion" count=5;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #mainstats
+xiao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+	
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active bennett;
+for let i=0; i<4; i=i+1 {
+  bennett skill;
+  kazuha skill, high_plunge, burst;
+  bennett burst, skill;
+  xiangling burst, skill;
+  kazuha skill, high_plunge;
+  xiao skill:2, burst;
+  for let x = 1; x <= 7; x = x + 1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump, high_plunge[collision=1];
+    } else {
+      xiao jump, high_plunge;
+    }
+  }
+}
+

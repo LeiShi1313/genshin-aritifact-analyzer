@@ -1,0 +1,50 @@
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="deathmatch" refine=1 lvl=90/90;
+xiao add set="vermillionhereafter" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main
+xiao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
+
+jean char lvl=90/90 cons=0 talent=9,9,9;
+jean add weapon="favoniussword" refine=3 lvl=90/90;
+jean add set="clam" count=4;
+jean add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+venti add set="emblem" count=4;
+venti add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+venti add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+lumineanemo char lvl=80/90 cons=6 talent=9,9,9;
+lumineanemo add weapon="favoniussword" refine=3 lvl=90/90;
+lumineanemo add set="noblesseoblige" count=4;
+lumineanemo add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+lumineanemo add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972 ;
+
+options swap_delay=12 iteration=1000;
+
+active jean;
+set_particle_delay("lumineanemo", 100);
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  jean skill, burst;
+  venti skill, burst;
+  lumineanemo burst,skill;
+  xiao skill, burst;
+  for let h=0; h < 11; h=h+1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump, high_plunge[collision=1];
+    } else {
+      xiao jump, high_plunge;
+    }
+  }
+  jean skill, attack;
+  venti skill, attack;
+  lumineanemo skill, attack;
+  xiao skill, attack, charge;
+}

@@ -1,0 +1,57 @@
+options debug=true iteration=1000 workers=50 swap_delay=12;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="crescentpike" refine=5 lvl=90/90;
+zhongli add set="paleflame" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311; # main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="favlance" refine=3 lvl=90/90;
+yunjin add set="huskofopulentdreams" count=4 +params=[stacks=4];
+yunjin add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583 ; # main
+yunjin add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.1986 cd=0.2648;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="fadingtwilight" refine=5 lvl=90/90;
+# fischl add set="thunderingfury" count=2;
+# fischl add set="gladiators" count=2;
+fischl add set="tenacity" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+mika char lvl=90/90 cons=6 talent=9,9,9; 
+mika add weapon="favoniuslance" refine=3 lvl=90/90;
+mika add set="ohc" count=4;
+mika add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359 ; #main
+mika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=79.28 cr=0.3972 cd=0.1324;
+
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active zhongli;
+
+zhongli skill[hold=1], dash;
+
+for let x=0; x<4; x=x+1 {
+  fischl attack;
+  if .fischl.burst.ready {
+    fischl attack, burst;
+  } else {
+    fischl skill;
+  }
+  yunjin skill; 
+  while !.yunjin.burst.ready {
+    yunjin attack;
+  }
+  yunjin burst;
+  mika skill[hold=1], attack, burst;
+  zhongli attack:5, dash, 
+          attack:5, dash, 
+          attack:5, dash, 
+          attack:5, dash, 
+          attack:5, dash,
+          attack:5,
+      skill[hold=1], dash;
+    }
+

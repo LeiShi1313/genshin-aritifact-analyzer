@@ -1,0 +1,33 @@
+options swap_delay=12 iteration=1000;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
+ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
+ganyu add set="blizzardstrayer" count=4;
+ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
+ganyu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.6612 em=39.64 cr=0.2648 cd=0.1324;
+
+active ganyu;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 ; 
+energy every interval=480,720 amount=1;
+
+ganyu aim[weakspot=1];
+while 1 {
+	if .shenhe.skill.ready {
+		shenhe skill[hold=1];
+	} else if .shenhe.burst.ready {
+		shenhe burst;
+	} else if .ganyu.skill.ready {
+		ganyu skill;
+	} else if .ganyu.burst.ready {
+		ganyu burst;
+	} else {
+		ganyu aim[weakspot=1];
+	}
+}
+

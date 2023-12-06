@@ -1,0 +1,60 @@
+options swap_delay=12 iteration=1000;
+
+hutao char lvl=90/90 cons=0 talent=9,9,9 start_hp=1;
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="crimsonwitchofflames" count=4;
+hutao add stats hp=4780 atk=311 em=187 cr=0.311 pyro%=0.466 ; #main
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="noblesseoblige" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9; 
+beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="emblemofseveredfate" count=4;
+beidou add stats hp=4780 atk=311 er = 0.518 cd=0.622 electro%=0.466 ; #main
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.2317 cd=0.4634;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="tenacityofthemillelith" count=4;
+fischl add stats hp=4780 atk=311 er = 0.518 cr=0.311 electro%=0.466 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2979 cd=0.7282;
+
+
+set_particle_delay("beidou", 30);
+
+#Script:
+active xingqiu;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    xingqiu burst, skill, dash, attack:2;
+    fischl attack:2, burst;
+    beidou burst, attack, skill, attack;
+    hutao skill,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump;
+        if (.hutao.burst.ready) {
+            hutao attack, burst;
+        } else {
+            hutao attack:2, charge;
+        }
+    if (.fischl.skill.cd == 0) {
+        fischl attack:2, skill;
+    }
+    beidou skill, attack;
+    xingqiu attack;
+}
+
+

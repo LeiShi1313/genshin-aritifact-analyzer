@@ -1,0 +1,65 @@
+# --- Team
+hutao char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp=1];
+hutao add weapon="balladofthefjords" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.642 cd=0.794 pyro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.7944 ;																																																																																			
+													
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=5 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.6612 em=679.92 cr=0.2648 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats def%=0.10416 def=33.0624 hp=3997.6192 hp%=0.083328 atk=259.7872 atk%=0.0834272 er=0.9808399999999999 em=33.2976 cr=0.45568200000000003 cd=0.444864 pyro%=0.3495;
+
+
+
+													
+
+# 0.84x scalar (8 er, 6 cr, 6 cd) to account for one 5* artifact
+
+# --- Options
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+
+# --- Targets
+target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999; 
+
+# --- Rotation
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+while !.yelan.mods.favonius-cd && !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan skill, burst, attack;
+  kazuha burst, attack;
+  sleep(3); # So Bennett E is after first Kazuha tick
+  bennett skill, burst;
+  kazuha skill, high_plunge;
+  hutao skill,
+    attack:1, charge,jump,
+    attack:2, charge,jump,
+    attack:1, charge,jump,
+    attack:1, charge,jump,
+    attack:1, charge,jump,
+    attack:2, charge,jump,
+    attack:1, charge,jump,
+    attack:1, charge,dash,
+    attack:1, charge,jump; 
+  kazuha skill, high_plunge;
+  while !.kazuha.mods.favonius-cd {  
+    kazuha attack;
+  }
+  #while !.yelan.mods.favonius-cd && !.yelan.burst.ready {
+    #yelan attack;
+  #}
+}

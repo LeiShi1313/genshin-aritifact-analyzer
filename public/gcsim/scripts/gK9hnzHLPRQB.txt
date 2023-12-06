@@ -1,0 +1,39 @@
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=5;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311 ;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.331 cd=0.2648;
+
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="favlance" refine=3 lvl=90/90;
+xiao add set="vermillionhereafter" count=5;
+xiao add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311;
+xiao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options debug=true swap_delay=12;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=9999999999999 radius=2 pos=0,2.4;												
+active zhongli;
+for let x = 0; x < 6; x = x + 1  {
+
+  zhongli skill[hold=1], dash, attack;
+  xiao skill:2, burst;
+  for let h=0; h < 11; h=h+1 {
+    let col=rand();
+    if col > 0.5 {
+      xiao jump, high_plunge[collision=1];
+    } else {
+      xiao jump, high_plunge;
+    }
+  }
+  for let h=0; h < 2; h=h+1 {
+    let col=rand();
+    if col > 0.5 {
+      xiao jump, low_plunge[collision=1];
+    } else {
+      xiao jump, low_plunge;
+    }
+  }
+
+}
+

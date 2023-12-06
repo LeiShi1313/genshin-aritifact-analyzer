@@ -1,0 +1,25 @@
+options swap_delay=12 debug=true iteration=1000 duration=300.58 workers=50 mode=sl;
+
+ayato char lvl=90/90 cons=6 talent=9,9,9;
+ayato add weapon="pjc" refine=5 lvl=90/90;
+ayato add set="heartofdepth" count=5;
+ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622 ; #main
+ayato add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;	
+
+active ayato;
+target lvl=100 pos=0,2.4 radius=2 resist=.1;
+energy every interval=480,720 amount=1;
+
+let rotations = 1;
+
+while rotations {
+  
+  if .ayato.burst.ready {
+    ayato burst;
+  } else if .ayato.skill.ready {
+    ayato skill;
+  } else {
+    ayato attack;
+  }
+}
+

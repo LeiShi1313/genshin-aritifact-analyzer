@@ -1,0 +1,41 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats hp=3824 atk=248.8 er=0.518 pyro%=0.3728 cr=0.2488 ; #main
+bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.30856 em=31.712 cr=0.15226 cd=0.43692;	
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6061 em=39.64 cr=0.331 cd=0.331 ;		
+																					
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=5;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;			
+																												
+ayaka char lvl=90/90 cons=0 talent=9,9,9; 
+ayaka add weapon="harbingerofdawn" refine=5 lvl=90/90;
+ayaka add set="emblemofseveredfate" count=5;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
+
+options swap_delay=12 debug=true iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active ayaka;
+ayaka dash;
+for let i = 0; i < 5; i = i + 1 {
+  bennett burst, skill;
+  shenhe skill, burst;
+  bennett attack, skill;
+  xiangling burst, skill, dash;
+  ayaka skill, dash, burst, attack:2;
+  shenhe attack, skill, attack;
+  ayaka dash, attack:2, dash, attack:2;
+  bennett skill, attack;
+  ayaka attack:3, skill, dash, attack:2, charge;
+}

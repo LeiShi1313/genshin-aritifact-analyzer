@@ -13,6 +13,14 @@
       "type": "node"
     },
     {
+      "name": "Launch gcsim",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/scripts/gcsim.cjs",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+    {
       "name": "Launch read presets",
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/read_builds.cjs",

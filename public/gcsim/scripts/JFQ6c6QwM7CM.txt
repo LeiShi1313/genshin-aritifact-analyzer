@@ -1,0 +1,48 @@
+options swap_delay=12 iteration=1000;
+
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="favlance" refine=3 lvl=90/90;
+cyno add set="thunderingfury" count=4;
+cyno add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+cyno add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="noblesseoblige" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favlance" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972 ;										
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats hp=3571 atk=232.0 er=0.518 pyro%=0.3480 cr=0.2320;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.0993 cd=0.1986;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active xingqiu;
+
+for let i=0; i<4; i=i+1 {
+  xingqiu skill, dash, burst, attack;
+  bennett burst, attack, skill, attack;
+  xiangling burst, attack, skill, attack;
+  cyno burst;
+  # 480 is 8s burst CD on in-game timer
+  while .cyno.burst.cd > 480 {
+    if .cyno.skill.ready {
+      cyno skill;
+    } else if .cyno.normal == 3 {
+      cyno dash;
+    } else {
+      cyno attack;
+    }
+  }
+  bennett skill;
+  xiangling attack:2;
+}

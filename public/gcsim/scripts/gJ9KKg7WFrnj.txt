@@ -1,0 +1,46 @@
+options swap_delay=12 iteration=1000;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favoniuslance" refine=3 lvl=90/90;
+candace add set="emblemofseveredfate" count=4;
+candace add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+candace add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+xq char lvl=90/90, cons=6, talent=9,9,9;
+xq add weapon="blacksword" refine=1 lvl=90/90;
+xq add set="emblemofseveredfate" count=4;
+xq add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622; #main
+xq add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favsword" refine=3 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311  em=187  em=187  em=187  ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=3 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=79.28 cr=0.331 cd=0.2648;
+
+active xingqiu;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 { 
+    candace attack,skill[counter=2];
+    xingqiu burst,attack;
+	kazuha attack,skill,high_plunge,burst;
+	bennett attack,skill,burst;
+	candace attack,skill[counter=1],burst;
+	xingqiu attack, skill, dash, attack:2;
+	xingqiu attack:2,dash,attack:2;
+	candace attack,skill[counter=1];
+	kazuha attack,skill,high_plunge,attack:2;
+	xingqiu attack:2,dash,attack:2;
+	xingqiu attack:2,jump;
+	
+}
+

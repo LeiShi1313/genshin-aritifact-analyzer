@@ -1,0 +1,81 @@
+hutao char lvl=90/90 cons=1 talent=9,9,9; #start_hp=10000;
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="crimsonwitchofflames" count=4;
+hutao add stats hp=4780 atk=311 hp%=0.466 cr=0.311 pyro%=0.466 ;
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466 ;											
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="blacktassel" lvl=90/90 refine=5;
+zhongli add set="instructor" count=4;
+zhongli add stats hp=3571 atk=248.8 hp%=0.3728 hp%=0.3728 hp%=0.466 ; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.4634;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" lvl=90/90 refine=3;	
+yelan add set="emblemofseveredfate" count=4;										
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+											
+											
+options swap_delay=12 iteration=1000;
+let hutaomaxhp = .hutao.stats.hp;
+let hutaoheal = 0.1295*hutaomaxhp;
+
+let hutaocurrenthp=hutaomaxhp; ##starthp
+let halfmaxhp =0.5* hutaomaxhp;
+
+active xingqiu;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  xingqiu skill,burst,attack;
+  if .yelan.cons >1 {
+  yelan skill;
+  }
+  yelan skill,burst,attack;
+  zhongli skill[hold=1], dash,attack;
+  hutao skill;
+  let cacombo = 8;
+  if .hutao.cons >= 1 {
+      cacombo = 10;
+  }
+  if .hutao.mods.paramita {
+      hutaocurrenthp = hutaocurrenthp *0.7;
+      print("hutao hp drain", hutaocurrenthp);
+  }
+  while .hutao.mods.paramita && cacombo > 0  {
+      if .hutao.mods.paramita {
+          hutao attack;
+      }
+      if .hutao.mods.paramita {
+          hutao attack;
+      }
+      if .hutao.mods.paramita {
+          hutao charge;
+          cacombo = cacombo - 1;
+      }
+      if cacombo == 1 && .hutao.energy ==60 && hutaocurrenthp + hutaoheal < halfmaxhp {
+          hutao burst;
+          hutaocurrenthp = hutaocurrenthp + hutaoheal;
+          print("hutao heal", hutaocurrenthp);
+      }
+      if .hutao.burst.cd != 900 {  
+          if .hutao.cons >= 1 { 
+          hutao dash;
+      }  else {          
+          hutao jump;
+      }
+  }
+  }
+  while .xingqiu.skill.cd >72{
+    hutao attack;
+  }
+}
+

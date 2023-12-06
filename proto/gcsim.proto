@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package io.leishi.genshin.proto;
+
+import "attribute.proto";
+import "character.proto";
+import "element.proto";
+import "weapon.proto";
+import "set.proto";
+
+message GCSimScriptParam {
+    string key = 1;
+    string value = 2;
+}
+
+message GCSimScriptWeaponInfo {
+    Weapon weapon = 1;
+    int32 level = 2;
+    int32 max_level = 3;
+    int32 refinement = 4;
+    repeated GCSimScriptParam params = 5;
+}
+
+message GCSimScriptSetInfo {
+    Set set = 1;
+    int32 count = 2;
+    repeated GCSimScriptParam params = 3;
+}
+
+message GCSimScriptCharacterStat {
+    AttributeType type = 1;
+    float value = 2;
+}
+
+message GCSimScriptCharacterInfo {
+    Character character = 1;
+    int32 level = 2;
+    int32 max_level = 3;
+    int32 constellation = 4;
+    repeated int32 talents = 5;
+    GCSimScriptWeaponInfo weapon_info = 6;
+    repeated GCSimScriptSetInfo set_infos = 7;
+    repeated GCSimScriptCharacterStat stats = 8;
+    repeated GCSimScriptParam params = 9;
+    int32 start_hp = 10;
+}
+
+message GCSimScriptOptions {
+    bool defhalt = 1;
+    bool hitlag = 2;
+    int32 iteration = 3;
+    int32 duration = 4;
+    int32 workers = 5;
+    int32 swap_delay = 6;
+    int32 attack_delay = 7;
+    int32 charge_delay = 8;
+    int32 skill_delay = 9;
+    int32 burst_delay = 10;
+    int32 jump_delay = 11;
+    int32 dash_delay = 12;
+    int32 aim_delay = 13;
+}
+
+message GCSimScriptEnergySettings {
+    enum EnergyType {
+        ONCE = 0;
+        EVERY = 1;
+    }
+    EnergyType type = 1;
+    repeated int32 intervals = 2;
+    int32 amount = 3;
+}
+
+message GCSimScriptHurtSettings {
+    enum HurtType {
+        ONCE = 0;
+        EVERY = 1;
+    }
+    message HurtAmount {
+        float min = 1;
+        float max = 2;
+    }
+    HurtType type = 1;
+    repeated int32 intervals = 2;
+    HurtAmount amount = 3;
+    Element element = 4;
+}
+
+message GCSimScriptTarget {
+    repeated float position = 1;
+    float radius = 2;
+    int32 level = 3;
+    float resist = 4;
+    repeated int32 intervals = 5;
+    int32 hp = 6;
+    int32 amount = 7;
+    int32 particle_threshold = 8;
+    int32 particle_drop_count = 9;
+    float freeze_resist = 10;
+    float electro_resist = 11;
+    float hydro_resist = 12;
+    float pyro_resist = 13;
+    float cryo_resist = 14;
+    float dendro_resist = 15;
+    float physical_resist = 16;
+    float anemo_resist = 17;
+    float geo_resist = 18;
+}
+
+message GCSimScript {
+    GCSimScriptOptions options = 1;
+    repeated GCSimScriptCharacterInfo character_infos = 2;
+    repeated GCSimScriptTarget targets = 3;
+    GCSimScriptEnergySettings energy_settings = 4;
+    GCSimScriptHurtSettings hurt_settings = 5;
+    repeated string scripts = 6;
+}

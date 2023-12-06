@@ -1,0 +1,42 @@
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 hp%=0 atk%=0 atk=311 def%=0 em=0 heal=0 phys%=0 er=0.518 cr=0.311 pyro%=0.466 cd=0;
+xiangling add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.0992 er=0.3306 cr=0.331 cd=0.662 ;
+
+wanderer char lvl=90/90 cons=0 talent=9,9,9;
+wanderer add weapon="favoniuscodex" refine=3 lvl=90/90;
+wanderer add set="desertpavilion" count=5;
+wanderer add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 anemo%=0.466;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+faruzan add set="viridescent" count=4;
+faruzan add stats hp=4780 hp%=0 atk%=0 atk=311 def%=0 em=0 heal=0 phys%=0 er=0.518 cr=0.311 anemo%=0.466 cd=0;
+faruzan add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1984 er=0.1102 cr=0.331 cd=0.7944 ;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 hp%=0 atk%=0 atk=311 def%=0 em=0 heal=0 phys%=0 er=0.518 cr=0.311 pyro%=0.466 cd=0;
+bennett add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.0992 er=0.3306 cr=0.331 cd=0.662 ;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active bennett;
+for let i=0; i<2; i=i+1 {
+
+bennett skill, burst;
+faruzan burst, skill;
+xiangling attack, skill, burst;
+scara skill, attack:3, charge, attack:3, charge, attack:3, charge, attack:3, charge, skill, burst, attack:2;  
+
+
+bennett skill, burst;
+faruzan burst, skill;
+xiangling attack, skill, burst;
+scara skill, attack:3, charge, attack:3, charge, attack:3, charge, attack:3, charge, skill, burst, attack:2; 
+}
+

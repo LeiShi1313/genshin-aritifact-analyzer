@@ -1,0 +1,60 @@
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="viridescenthunt" refine=1 lvl=90/90;
+tartaglia add set="heartofdepth" count=4;
+tartaglia add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+tartaglia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="gildeddreams" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187;
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.2648 cd=0.3972;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="gildeddreams" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.2317 cd=0.5958;
+
+options swap_delay=12 iteration=1000 duration=120;
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 ; 
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+let cnt = 0;
+
+for {
+  if .tartaglia.mods.tartagliamelee && cnt < 3 {
+    tartaglia attack:2, charge, dash;
+    cnt = cnt + 1;
+    continue;
+  }
+  switch {
+  case !.debuff.res.t0.nahida-e && .nahida.swap.ready:
+    nahida skill, attack;
+  case .nahida.burst.ready && .nahida.swap.ready:
+    nahida burst;
+  case .kuki.burst.ready && .kuki.swap.ready:
+    kuki burst;
+  case .kuki.skill.ready && .kuki.swap.ready:
+    kuki skill, dash;
+  case !.fischl.oz && .fischl.burst.ready && .fischl.swap.ready:
+    fischl attack:2, burst;
+  case !.fischl.oz && .fischl.skill.ready && .fischl.swap.ready:
+    fischl skill, dash, attack;
+  case .tartaglia.burst.ready && .tartaglia.swap.ready:
+    tartaglia burst;
+  case .tartaglia.skill.ready && .tartaglia.swap.ready:
+    tartaglia walk, skill;
+    cnt = 0;
+  default:
+    tartaglia aim;
+  }
+}

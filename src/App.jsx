@@ -23,6 +23,7 @@ const ArtifactsUpload = lazy(() =>
 const Artifact = lazy(() => import("./features/artifacts/Artifact"));
 const UploadedArtifacts = lazy(() => import("./features/artifacts/UploadedArtifacts"));
 const Config = lazy(() => import("./features/configs/Config"));
+const Teams = lazy(() => import("./features/gcsim/Teams"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,15 +42,6 @@ const App = () => {
       }
       dispatch(loadPresets(presets));
     });
-    
-    // import("./data/presets.json").then((data) => {
-    //   const presets = [];
-    //   for (let build of data.default) {
-    //     presets.push(build);
-    //     console.log(JSON.stringify(Build.encode(build).finish()))
-    //   }
-    //   dispatch(loadPresets(presets));
-    // });
   }, []);
 
   return (
@@ -70,6 +62,7 @@ const App = () => {
                 element={<ArtifactsUpload />}
               />
               <Route path="artifact" element={<Artifact />} />
+              <Route path="gcsim" element={<Teams />} />
               <Route path="config" element={<Config />} />
             </Route>
             {/* Place new routes over this */}

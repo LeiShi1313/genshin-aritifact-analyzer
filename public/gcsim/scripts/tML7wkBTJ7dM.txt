@@ -1,0 +1,56 @@
+albedo char lvl=90/90 cons=0 talent=9,9,9; 
+albedo add weapon="favoniussword" refine=3 lvl=90/90;
+#albedo add set="huskofopulentdreams" count=4 +params=[stacks=4];
+albedo add set="archaicpetra" count=4 ;
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
+albedo add stats def=39.36 def%=0.186 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7944 ;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+																								
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;
+												
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="deathmatch" refine=1 lvl=90/90;
+rosaria add set="emblemofseveredfate" count=5;
+rosaria add stats hp=4780 atk=311 em=187 cryo%=0.466 cd=0.622 ; #main
+rosaria add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662 ;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active albedo;
+for let x=0; x< 4; x=x+1 {
+  albedo skill, attack;
+  rosaria skill;
+  bennett burst, skill;
+  rosaria burst;
+  xiangling burst, attack, skill;
+  rosaria skill;
+  bennett attack, skill;
+  xiangling attack:3;
+  bennett skill;
+  xiangling attack:2;
+  rosaria skill;
+  albedo burst;
+  bennett skill;
+  xiangling attack:2;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+
+options debug=true iteration=1000 mode=sl swap_delay=12;
+
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="shigure" refine=5 lvl=90/90;
+keqing add set="gildeddreams" count=4;
+keqing add stats hp=4780 hp%=0 atk%=0 atk=311 def%=0 em=561 heal=0 phys%=0 er=0 cr=0 electro%=0 cd=0;
+keqing add stats def=39.36 def%=0.124 em=118.92 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1488 er=0.1102 cr=0.3972 cd=0.4634 ;
+
+		
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favoniuslance" refine=3 lvl=90/90;
+yaoyao add set="deepwoodmemories" count=4;
+yaoyao add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+yaoyao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+						
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="gildeddreams" count=4;
+nahida add stats hp=4780 hp%=0 atk%=0 atk=311 def%=0 em=187 heal=0 phys%=0 er=0 cr=0.311 dendro%=0.466 cd=0;
+nahida add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.0992 er=0.4408 cr=0.331 cd=0.5296 ;
+
+																												
+target lvl=100 resist=.1 hp=99999999900;
+
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+for let i = 0; i < 4; i = i + 1 {
+  nahida skill,burst;
+  xingqiu skill, dash, burst, attack;
+  yaoyao attack:2, skill;
+  keqing attack, skill, skill, attack, charge, attack, charge, attack, charge, attack, charge, attack, charge;
+  nahida attack, skill, attack;
+  keqing skill, skill, attack, charge, attack, charge, attack, charge, attack, charge, attack, charge, burst;
+}

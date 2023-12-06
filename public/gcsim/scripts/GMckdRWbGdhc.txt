@@ -1,0 +1,41 @@
+options swap_delay=12 iteration=1000;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9; 
+chongyun add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+chongyun add set="tenacityofthemillelith" count=5;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9; 
+shenhe add weapon="lithicspear" refine=1 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.551 em=39.64 cr=0.1986 cd=0.3972;
+
+venti char lvl=90/90 cons=0 talent=9,9,9; 
+venti add weapon="favoniuswarbow" refine=3 lvl=90/90;
+venti add set="viridescentvenerer" count=5;
+venti add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9; 
+ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
+ganyu add set="blizzardstrayer" count=5;
+ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
+ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+target lvl=100 resist=.1 pos=0,2.4 radius=2 hp=9999999999;
+energy every interval=480,720 amount=1;
+active chongyun;
+#-------------------------------------------
+for let x=0; x<6; x=x+1 {
+	chongyun burst, skill;
+	shenhe skill, burst;
+	ganyu skill, burst;
+	venti skill, burst;
+	ganyu aim[weakspot=1];
+	shenhe skill, attack;
+	ganyu aim[weakspot=1];
+	venti skill, attack;
+	ganyu aim[travel=0];
+}

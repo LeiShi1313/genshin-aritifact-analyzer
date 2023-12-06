@@ -1,0 +1,66 @@
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+#faruzan add weapon="theviridescenthunt" refine=1 lvl=90/90;
+faruzan add weapon="prototypecrescent" refine=5 lvl=90/90;
+faruzan add set="vv" count=2;
+faruzan add set="dpc" count=2;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+faruzan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+#faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622; #main
+#faruzan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3974 cd=0.662;
+
+bennett char lvl=90/90 cons=5 talent=9,9,9;
+#bennett add weapon="fleuvecendreferryman" refine=5 lvl=90/90;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.5510 em=39.64 cr=0.2317 cd=0.5958;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="fadingtwilight" refine=5 lvl=90/90;
+#fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="goldentroupe" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="favsword" refine=3 lvl=90/90;
+lynette add set="vv" count=4;
+lynette add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000 duration=150;
+target lvl=100 resist=.1 radius=3 pos=0,3.4;
+energy every interval=480,720 amount=1;
+
+active fischl;
+fischl skill;
+
+while 1 {
+  if .bennett.burst.ready {
+    bennett skill, burst;
+  } else if .faruzan.burst.ready {
+    faruzan burst;
+  } else if .faruzan.skill.ready {
+    faruzan skill;
+  } else if !.fischl.oz && .fischl.skill.ready {
+    fischl skill, attack;
+  } else if !.fischl.oz && .fischl.burst.ready {
+    fischl attack:2, burst;
+  } else if .faruzan.hurricane-count > 0 {
+      faruzan aim[weakspot=1];
+  } else if .faruzan.skill.cd < 40 {
+    faruzan attack, skill;
+  } else if .lynette.burst.ready {
+    lynette burst;
+  } else if .lynette.skill.ready {
+    lynette skill, attack;
+  } else if .lynette.mods.lynette-c6-buff {
+    lynette attack;
+  } else if !.faruzan.onfield {
+    faruzan attack:3;
+  } else {
+    faruzan attack;
+  }
+}
+
+

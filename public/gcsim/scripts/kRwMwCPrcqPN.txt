@@ -1,0 +1,54 @@
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="gildeddreams" count=5;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622 ; #main
+tighnari add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favoniuswarbow" refine=3 lvl=90/90;
+collei add set="deepwoodmemories" count=5;
+collei add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+collei add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=5 lvl=90/90;
+fischl add set="gildeddreams" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+#kokomi add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=5;
+#kokomi add set="tom" count=5;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359 ; #main
+#kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.5952 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.496 er=0.3306 em=39.64 cr=0.0662 cd=0.1324 ;
+
+options swap_delay=12 iteration=1000;
+
+active kokomi;
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  if !.status.kokomiskill && .kokomi.skill.ready { kokomi skill; }
+
+  if .fischl.skill.ready { fischl skill; }
+  else { fischl burst; }
+
+  collei attack;
+  if .collei.burst.ready { collei burst; }
+  collei skill;
+  # if .collei.burst.ready { collei burst; }
+
+  tighnari skill, aim:3; wait(10);
+  if .tighnari.burst.ready { tighnari burst; }
+  
+  while .fischl.oz {
+    if .status.kokomiskill && .kokomi.burst.ready { kokomi burst; }
+  
+    if .kokomi.normal == 3 { kokomi dash, walk[f=2]; }
+    kokomi attack;
+  }
+}

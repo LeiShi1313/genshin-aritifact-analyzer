@@ -1,0 +1,55 @@
+#team config
+
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="deathmatch" refine=1 lvl=90/90;
+cyno add set="tf" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #mainstats
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="goldentroupe" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #mainstats
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="hakushinring" refine=5 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #mainstats
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favoniuslance" refine=3 lvl=90/90;
+yaoyao add set="tenacityofthemillelith" count=4;
+yaoyao add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311; #mainstats
+yaoyao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+#enemy config
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active fischl;
+
+#action list 
+
+  for let i=0; i<4; i=i+1 {
+  
+  fischl attack, skill;
+	nahida skill, burst, attack:2;
+	yaoyao attack, skill;
+	fischl attack:2, burst;
+	
+	cyno skill, burst,
+	     attack:2, skill, attack:3, dash,
+	     attack:2, skill, attack:3, dash,
+	     attack:2, skill, attack:3, dash, #endseer
+	     attack:2, skill, attack:3, dash,
+	     attack:2, skill, attack:3, dash,
+	     attack:2, skill, attack:3, dash, #endseer
+	     attack:2, skill;
+	
+  }
+
+
+

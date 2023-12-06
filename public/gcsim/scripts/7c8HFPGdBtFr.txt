@@ -1,0 +1,67 @@
+# 12 frame swap delay
+options swap_delay=12 iteration=1000;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=5;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; # main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # sub
+
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+#keqing add weapon="blacksword" refine=1 lvl=90/90;
+keqing add weapon="harbingerofdawn" refine=5 lvl=90/90;
+keqing add set="thunderingfury" count=5;
+#keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; # main
+keqing add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; # main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # sub
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # sub
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="thundersoother" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # sub
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="fadingtwilight" refine=5 lvl=90/90;
+collei add set="instructor" count=5;
+collei add stats hp=3571 atk=232 er=0.387 dendro%=0.466 cr=0.23325; # main
+collei add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=26.5 atk%=0.0794 er=0.0882 em=31.71 cr=0.2648 cd=0.6355; # sub
+
+active fischl;
+
+# End simulation after 4 rotations
+
+
+# First rotation use Fischl CS to proc Petra before Oz
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # Clear particle every 8-12 seconds
+energy every interval=480,720 amount=1; # Impossibly high HP so target doesn't die but duration is ignored
+  fischl aim;
+for let i=0; i<4; i=i+1 {
+  zhongli skill[hold=1], dash;
+  fischl attack:2, burst;
+  collei burst;
+  keqing skill, burst, skill,
+    attack, charge, 
+    attack, charge, 
+    attack, skill;
+    wait(22);
+    keqing attack, charge;
+    wait(16);
+    keqing attack, charge;
+  zhongli skill[hold=1], dash;
+  fischl attack, skill;
+  collei skill;
+  keqing skill, burst, skill, dash,
+    attack, charge, 
+    attack, charge, 
+    attack, skill;
+    wait(22);
+    keqing attack, charge;
+    wait(16);
+    keqing attack, charge;
+}
+
+# Fischl CS > Zhongli Hold E > Fischl Q > Collei Q > Keqing EQE 2N1C N1E 2N1C > Zhonlgi Hold E > Fischl E N1 > Collei E > Keqing EQE 2N1C N1E N1C N1 > Loop at ZL
+

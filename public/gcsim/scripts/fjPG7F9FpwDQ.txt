@@ -1,0 +1,62 @@
+# --- Team
+hutao char lvl=90/90 cons=1 talent=10,9,10 +params=[start_hp=1];
+hutao add weapon="staffofhoma" refine=1 lvl=90/90;
+hutao add set="crimsonwitchofflames" count=4;
+hutao add stats hp=5378 hp%=0.361 atk=342 atk%=0.053 em=228 cr=0.653 cd=0.785 pyro%=0.466;
+
+yelan char lvl=90/90 cons=2 talent=6,9,10;
+yelan add weapon="aquasimulacra" refine=1 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5318 hp%=0.757 atk=329 atk%=0.16899999999999998 er=0.305 em=16 cr=0.622 cd=0.7929999999999999 hydro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=6,9,10;
+xingqiu add weapon="sacrificialsword" refine=5 lvl=90/90;
+xingqiu add set="noblesseoblige" count=2;
+xingqiu add set="heartofdepth" count=2;
+xingqiu add stats def%=0.124 def=39.36 hp=5049 hp%=0.057999999999999996 atk=344.08 atk%=0.292 er=0.214 em=39.64 cr=0.5870000000000001 cd=1.034 hydro%=0.466;
+
+zhongli char lvl=90/90 cons=1 talent=8,9,9;
+zhongli add weapon="blacktassel" refine=5 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats def%=0.124 def=39.36 hp=7977 hp%=1.6780000000000002 atk=354 atk%=0.0992 er=0.1102 em=149 cr=0.039 cd=0.14;
+
+# --- Options
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+
+# --- Targets
+target lvl=90 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+# --- Rotation
+active zhongli;
+
+zhongli skill[hold=1];
+
+yelan burst, attack;
+
+xingqiu burst, attack, skill, dash;
+if .xingqiu.skill.ready {
+  xingqiu skill, dash;
+}
+
+yelan attack, skill;
+if .yelan.skill.ready {
+  yelan attack, skill;
+}
+
+# wait(2);
+hutao skill,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash,
+  attack:2, charge, dash;
+
+if .hutao.burst.ready {
+  hutao burst;
+}

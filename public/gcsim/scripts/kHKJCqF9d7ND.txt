@@ -1,0 +1,67 @@
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="deathmatch" refine=1 lvl=90/90;
+xiao add set="vermillionhereafter" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main
+xiao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+sucrose add set="theexile" count=4;
+sucrose add stats hp=3571 atk=232 er=0.518 anemo%=0.3495 cr=0.23325 ; #main
+sucrose add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.17856 er=0.52896 em=31.712 cr=0.05296 cd=0.10592;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311 ; #main
+zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2648 cd=0.5296;
+
+options swap_delay=12 iteration=1000;
+
+active zhongli;
+set_particle_delay("sucrose", 115);
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+
+  zhongli attack, skill[hold=1], dash;
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
+  }
+  bennett skill, burst;
+  sucrose skill, dash;
+  xiao skill:2, burst;
+  for let h = 0; h < 11; h = h + 1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump, high_plunge[collision=1];
+    } else {
+      xiao jump, high_plunge;
+    }
+
+  }
+  for let h = 0; h < 2; h = h + 1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump, low_plunge[collision=1];
+    } else {
+      xiao jump, low_plunge;
+    }
+
+  }    
+  sucrose skill, dash;
+  if .sucrose.burst.ready {
+    sucrose burst;
+  }
+  xiao attack, charge;
+
+}

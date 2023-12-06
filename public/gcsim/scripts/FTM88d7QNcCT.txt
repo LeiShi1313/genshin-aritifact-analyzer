@@ -1,0 +1,47 @@
+amber char lvl=90/90 cons=4 talent=9,9,9;
+amber add weapon="thestringless" refine=3 lvl=90/90;
+amber add set="crimsonwitchofflames" count=4;
+amber add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.714 er=0.2204 em=39.64 cr=0.6089 cd=0.662 pyro%=0.466;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="serpentspine" refine=1 lvl=90/90;
+chongyun add set="emblemofseveredfate" count=4;
+chongyun add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.3306 em=59.46 cr=0.331 cd=1.2178 cryo%=0.466;
+
+diona char lvl=90/90 cons=6 talent=9,9,9;
+diona add weapon="favoniuswarbow" refine=3 lvl=90/90;
+diona add set="noblesseoblige" count=4;
+diona add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311 ; #main
+diona add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2648 cd=0.3972;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="favcodex" refine=3 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=79.28 cr=0.3972 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+
+active diona;
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+  diona skill, burst, attack;
+  sucrose attack, attack;
+  if .sucrose.burst.ready {
+    sucrose burst;
+  }
+  sucrose attack;
+  amber burst;
+  sucrose skill;
+  chongyun burst, skill;
+  amber skill, aim[bunny=1], dash;
+  diona skill, dash;
+  amber skill, aim[bunny=1], dash;
+  chongyun attack:4;
+  amber aim[weakspot=1];
+  
+}

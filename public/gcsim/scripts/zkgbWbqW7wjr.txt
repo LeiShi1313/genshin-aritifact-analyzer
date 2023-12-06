@@ -1,0 +1,46 @@
+options swap_delay=12 iteration=1000;
+
+diona char lvl=90/90 cons=6 talent=9,9,9;
+diona add weapon="favoniuswarbow" refine=3 lvl=90/90;
+diona add set="noblesseoblige" count=4;
+diona add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+diona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+ayato char lvl=90/90 cons=0 talent=9,9,9; 
+ayato add weapon="favoniussword" refine=3 lvl=90/90;
+ayato add set="emblemofseveredfate" count=5;
+ayato add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+ayato add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.331 cd=0.2648;
+
+venti char lvl=90/90 cons=0 talent=9,9,9; 
+venti add weapon="thestringless" refine=3 lvl=90/90;
+venti add set="viridescentvenerer" count=5;
+venti add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+venti add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9; 
+ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
+ganyu add set="blizzardstrayer" count=5;
+ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
+ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+set_particle_delay("diona", 100);
+energy every interval=480,720 amount=1;
+active diona;
+target lvl=100 resist=.1 pos=0,3 hp=99999999999999;
+target lvl=100 resist=.1 pos=3,3 hp=99999999999999;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  diona burst, skill[hold=1], dash;
+  ganyu skill, burst;
+  venti skill, burst;
+  ayato burst;
+  ganyu aim[weakspot=1]:2, skill, aim[weakspot=1];
+  venti skill, attack;
+  ayato skill;
+  while !.diona.burst.ready {
+    ayato attack;
+  }
+}
+

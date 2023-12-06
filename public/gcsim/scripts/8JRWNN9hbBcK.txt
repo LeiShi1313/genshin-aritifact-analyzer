@@ -1,0 +1,60 @@
+options swap_delay=12 iteration=1000 duration=100;
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="gd" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+tighnari add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="gd" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=1;
+kuki add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=60];
+kuki add set="totm" count=4;
+kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+kuki add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944 ;	
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 em=187; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+# ----  Default Enemy
+target lvl=100 resist=0.1;
+energy every interval=48000,72000 amount=1;
+
+active kuki;
+# ----  Actions List
+
+
+while 1 {
+  switch {
+  case.kuki.skill.ready:
+  kuki skill;
+  case .nahida.skill.ready && !.tighnari.status.vijnanasuffusion:
+  nahida skill, attack;
+  case .nahida.burst.ready:
+  nahida attack, burst;
+  case .yae.skill.charge==3:
+  yae attack, skill, skill, skill;
+  case .tighnari.skill.ready:
+    tighnari skill, aim;
+    if .tighnari.burst.ready {
+      tighnari burst;
+    }
+  case .kuki.burst.ready  && !.tighnari.status.vijnanasuffusion:
+  kuki burst;
+  case .yae.burst.ready && .yae.tags.totems:
+  yae attack, burst;
+  case .tighnari.status.vijnanasuffusion:
+    tighnari aim;
+  default:
+    tighnari aim;
+
+  }
+}	

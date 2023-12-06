@@ -1,0 +1,55 @@
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="kitaincrossspear" refine=5 lvl=90/90;
+thoma add set="flowerofparadiselost"  count=4;
+thoma add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+thoma add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.1655 cd=0.331;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=5 lvl=90/90;
+nahida add set="deepwoodmemories"  count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=5 lvl=90/90 +params=[pickup_delay=128];
+xingqiu add set="emblemofseveredfate"  count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+heizou char lvl=90/90 cons=6 talent=9,9,9;
+heizou add weapon="favoniuscodex" refine=5 lvl=90/90;
+heizou add set="viridescentvenerer"  count=4;
+heizou add stats hp=4780 atk=311 em=187 em=187 cr=0.311 ; #main
+heizou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.331 cd=0.5296;
+
+
+target lvl=100 resist=0.1 pos=0,0 hp=9999999;
+target lvl=100 resist=0.1 pos=0,2.1 hp=99999999999;
+
+# options iteration=1000 duration=42.3 swap_delay=12; # 2 loops
+options iteration=1000 duration=84.7 swap_delay=12; # 4 loops
+# options iteration=1000 duration=211.90 swap_delay=12; # 10 loops
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+for let x=0; x<5; x=x+1 {
+
+    nahida attack:2, skill;
+
+    xingqiu skill, burst;
+    
+    thoma skill, attack:2;
+    wait(2);
+    thoma burst;
+    
+    heizou attack, charge;
+    heizou attack:4, skill;
+    
+    heizou attack:4, charge;    
+    heizou attack:4, charge;   
+     
+    heizou attack, burst;
+    heizou attack:4, skill;
+
+}

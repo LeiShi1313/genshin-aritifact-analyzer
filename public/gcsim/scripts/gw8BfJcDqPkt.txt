@@ -1,0 +1,40 @@
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="hakushinring" refine=5 lvl=90/90;
+lisa add set="gd" count=4;
+lisa add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="gd" count=4;
+fischl add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 geo%=0.466;
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="prototypecrescent" refine=5 lvl=90/90;
+tighnari add set="deepwoodmemories" count=4;
+tighnari add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.6420 cd=0.7944 dendro%=0.466;
+
+options swap_delay=12 iteration=1000;
+
+active lisa;
+
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+    lisa attack;
+for let i=0; i<4; i=i+1 {
+    zhongli skill[hold=1], dash;
+    fischl attack, skill;
+    tighnari skill, aim[weakspot=1], aim:2;
+    lisa attack, burst, attack:3, skill[hold=1], attack, dash, attack:3;
+  
+    zhongli skill[hold=1], dash;
+    fischl attack:2, burst;
+    tighnari skill, aim[weakspot=1], aim:2, burst;
+    lisa attack, dash, attack:3, charge, attack, dash, attack:3;
+}

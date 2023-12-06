@@ -1,0 +1,41 @@
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tom" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;				
+																															
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282 ;		
+																	
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="gd" count=4;
+yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+																						
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbinger" refine=5 lvl=90/90;
+alhaitham add set="gd" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+							
+# ----  Default Enemy
+options swap_delay=12 debug=true iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=3.1,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active yae;
+
+for let i = 0; i < 5; i = i + 1 {
+  yae skill:3;
+  zhongli skill[hold=1], dash, attack;
+  nahida skill, burst;
+  alhaitham skill, attack:3, charge, attack:4;
+  yae skill:3;
+  alhaitham burst;
+  nahida attack, skill, charge;
+  alhaitham attack:3, dash, attack:3, dash, attack:3, charge, attack:3, dash, attack:3;
+}

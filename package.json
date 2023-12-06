@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "gen": "node scripts/index.cjs",
+    "gcsim": "ts-node-esm scripts/gcsim.ts",
+    "gen": "npm run proto && npm run proto-esm && npm run scripts && npm run gcsim",
+    "scripts": "node scripts/index.mjs",
     "proto2": "pbjs -t static-module -w commonjs -o ./scripts/proto.cjs ./proto/*.proto",
     "proto": "rm -r ./src/genshin && mkdir -p ./src/genshin && protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/genshin ./proto/*.proto",
-    "proto-js": "protoc --proto_path=./proto --js_out=./genshin ./proto/*.proto",
+    "proto-esm": "rm -r ./genshin && mkdir -p ./genshin && protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=importSuffix=.js --ts_proto_out=./genshin ./proto/*.proto",
     "build": "vite build",
     "preview": "vite preview --host"
   },

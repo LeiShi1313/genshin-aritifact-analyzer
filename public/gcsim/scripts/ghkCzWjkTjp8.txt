@@ -1,0 +1,41 @@
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="tom" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;		
+								
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favbow" refine=3 lvl=90/90;
+collei add set="deepwood" count=4;
+collei add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311;
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;	
+								
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=60];
+kuki add set="instructor" count=4;
+kuki add stats hp=3571 atk=232 em=140.25 electro%=0.466 cr=0.23325 ; #main
+kuki add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=31.712 cr=0.28466 cd=0.43692;
+																							
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="ironsting" refine=5 lvl=90/90;
+alhaitham add set="gildeddreams" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+
+active fischl;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  fischl skill;
+  collei attack, skill;
+  kuki burst;
+  alhaitham skill[hold=1], low_plunge, attack:3, dash, attack:3, dash, attack:3;
+  fischl attack:2, burst;
+  collei burst, attack;
+  alhaitham burst;
+  kuki attack, skill;
+  alhaitham attack:3, dash, attack:3, charge, attack:3, dash, attack:3, dash, attack:3;
+}

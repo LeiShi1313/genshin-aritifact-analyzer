@@ -1,0 +1,44 @@
+options swap_delay=12 iteration=1000;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=5;
+nahida add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+kamisatoayato char lvl=90/90 cons=0 talent=9,9,9;
+kamisatoayato add weapon="blacksword" refine=1 lvl=90/90;
+kamisatoayato add set="heartofdepth" count=5;
+kamisatoayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+kamisatoayato add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kukishinobu char lvl=90/90 cons=6 talent=9,9,9;
+kukishinobu add weapon="xiphos" refine=1 lvl=90/90;
+kukishinobu add set="fopl" count=5;
+kukishinobu add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5 ; #main
+kukishinobu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.3641 cd=0.4634;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favoniuswarbow" refine=4 lvl=90/90;
+collei add set="no" count=5;
+collei add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+collei add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.2648 cd=0.3972;																												
+
+
+active nahida;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    nahida attack, skill, burst;
+	kuki skill, attack;
+    collei burst, skill;
+    kamisatoayato skill, attack:15, burst;
+    nahida attack:2, skill, attack, charge;
+	kuki burst, skill, attack;
+	collei burst, skill;
+    kamisatoayato skill, attack:15;
+    collei attack, aim;
+    print("done");
+}
+

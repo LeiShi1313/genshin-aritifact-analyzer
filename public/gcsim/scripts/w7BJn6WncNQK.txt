@@ -1,0 +1,44 @@
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="mistsplitter" refine=1 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main;
+ayaka add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 er=0.3306 em=39.64 cr=0.3972 cd=0.5296; #sub
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324; #sub
+
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+mona add set="tenacityofthemillelith" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+mona add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 er=0.551 em=39.64 cr=0.1324 cd=0.7944; #sub
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favoniuslance" refine=5 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; #main
+shenhe add stats hp%=0.0992 hp=507.88 atk%=0.1984 atk=33.08 def%=0.124 def=39.36 er=0.6612 em=39.64 cr=0.331 cd=0.1324; #sub
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active ayaka;
+ayaka dash;
+for let x = 0; x < 5; x = x + 1 {
+  kazuha skill, high_plunge, burst;
+  shenhe burst, skill;
+  mona skill, burst;
+  ayaka skill, dash, attack:2, burst, attack:2, charge;
+  kazuha skill, high_plunge;
+  shenhe skill, attack;
+  ayaka dash, attack:2, charge, skill, attack:2, charge;
+  print("Rotation Done");
+}
+
+
+
+

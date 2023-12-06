@@ -1,0 +1,41 @@
+options debug=true iteration=100 duration=128.5 workers=30 mode=sl swap_delay=12;
+
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="slingshot" refine=5 lvl=90/90;
+yoimiya add set="shim" count=4;
+yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
+yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesse" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=237.84 cr=0.0662 cd=0.3972;
+
+layla char lvl=90/90 cons=6 talent=9,9,9;
+layla add weapon="favsword" refine=3 lvl=90/90;
+layla add set="totm" count=4;
+layla add stats hp=4780 atk=311 hp%=0.466 cryo%=0.466 cr=0.311;
+layla add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=3 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+active layla;
+target lvl=100 resist=.1 hp=099999999900 radius=2 pos=0,2.35;
+energy every interval=480,720 amount=1;
+
+
+for let x =0 ; x<5; x=x+1 {
+	yelan attack, skill, burst, attack;
+    layla burst, attack, skill;
+	bennett attack, burst, attack, skill, attack;
+	yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+	bennett skill, attack;
+}
+
+

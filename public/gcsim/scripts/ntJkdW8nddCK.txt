@@ -1,0 +1,78 @@
+#team config
+
+itto char lvl=90/90 cons=0 talent=9,9,9;
+itto add weapon="redhorn" refine=1 lvl=90/90;
+itto add set="husk" count=4 +params=[stacks=4];
+itto add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #mainstats
+itto add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="goldentroupe" count=4;
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #mainstats
+albedo add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+albedo add stats geo%=0.125; #albedo A1
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favoniuswarbow" refine=4 lvl=90/90;
+gorou add set="noblesse" count=4;
+gorou add stats hp=4780 atk=311 er=0.518 geo%=0.466 cr=0.311; #mainstats
+gorou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacity" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #mainstats
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+#enemy config
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+#sim config
+options swap_delay=12 iteration=1000;
+active zhongli;
+
+#rand delay
+
+let n = 2;
+let m = 6;
+
+#random delay (uniform) between n and m frames, inclusive
+fn rand_delay() {
+  let del = rand() * (m - n + 1) + n;
+  delay(del);
+  print(del);
+}
+
+#action list 
+
+  rand_delay(); zhongli skill[hold=1]; rand_delay(); zhongli dash;
+  rand_delay(); gorou burst;
+  rand_delay(); albedo attack; rand_delay(); albedo skill;
+
+  rand_delay(); itto attack, burst[prestack=1];
+                     rand_delay(); itto attack, skill, attack:2, charge:5;
+                     rand_delay(); itto attack:4, charge:5; 
+                     rand_delay(); itto skill[travel=0], charge;
+                     #"C0 1PS" combo
+                     sleep(21); #catch ushi particles
+       
+for let i = 0; i < 4; i = i + 1 {
+
+  rand_delay(); zhongli skill; #refreshing pillar
+  rand_delay(); gorou skill; rand_delay(); gorou burst;
+  rand_delay(); albedo attack; rand_delay(); albedo skill;
+  rand_delay(); zhongli skill[hold=1]; rand_delay(); zhongli dash;
+  
+  rand_delay(); itto attack; rand_delay(); itto burst[prestack=1];
+                     rand_delay(); itto attack, skill, charge:4;
+                     rand_delay(); itto attack:3, charge:4;
+                     rand_delay(); itto attack:3, skill, charge:4; 
+                     #"C0 2PS" combo
+
+}
+
+#the following is considered bufferable for itto and is not given a rand_delay:
+#NA -> CA, NA -> E, E -> NA, E -> CA, CA -> CA (hold LMB)
+#CA into NA could be bufferable but unsure so i left it

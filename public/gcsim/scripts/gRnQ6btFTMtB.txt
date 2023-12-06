@@ -1,0 +1,52 @@
+options swap_delay=12 iteration=1000;
+
+hutao char lvl=90/90 cons=0 talent=9,9,9 start_hp=1;
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats hp=4780 atk=311 em=187 cr=0.311 pyro%=0.466 ; #main
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="lionsroar" refine=3 lvl=90/90;
+xingqiu add set="noblesseoblige" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden add weapon="thecatch" refine=5 lvl=90/90;
+raiden add set="emblemofseveredfate" count=4;
+raiden add stats hp=4780 atk=311 electro%=0.466 cr=0.311 atk%=0.466 ; #main
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="tenacityofthemillelith" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 cr=0.311 electro%=0.466 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active raiden;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+  raiden skill;
+for let i=0; i<4; i=i+1 {
+  fischl attack, burst;
+  xingqiu burst, attack, skill, dash, attack:2;
+  hutao attack, skill, attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump;
+  fischl attack, skill;
+  raiden attack, burst, attack:4, dash, attack:4, skill, attack:4, dash, attack:4;
+  print ("done");
+}
+
+
+
+
+

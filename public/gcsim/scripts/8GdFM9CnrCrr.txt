@@ -1,0 +1,61 @@
+sucrose char lvl=90/90 cons=6 talent=3,9,9;
+sucrose add weapon="thrillingtalesofdragonslayers" refine=5 lvl=1/20;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.0993 cd=0.4634;
+
+xiangling char lvl=90/90 cons=6 talent=5,9,9;
+xiangling add weapon="dragonsbane" refine=3 lvl=90/90;
+xiangling add set="tenacity" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=2 talent=1,9,9;
+yelan add weapon="elegyfortheend" refine=1 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.1986 cd=0.7944;
+
+hutao char lvl=90/90 cons=1 talent=9,9,9 start_hp=2;
+hutao add weapon="staffofhoma" refine=1 lvl=90/90;
+hutao add set="crimsonwitchofflames" count=4;
+hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cr=0.311 ; #main
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+# ----
+active xiangling;
+for let r = 0; r < 4; r = r + 1{
+  xiangling skill;
+  yelan skill:2,burst,attack;
+  if r == 0 { sucrose attack; }
+  set_player_pos(0,-3);//move back for guoba to pyroswirl
+   if r == 0 { wait (13);}
+  sucrose attack;
+  sucrose skill,dash;#dash forward?
+  set_player_pos(0,0);
+  sucrose attack:2; 
+  hutao attack,skill;
+  for let ca = 9; .hutao.mods.paramita; ca = ca - 1 {
+    hutao attack;
+    hutao attack;
+    hutao charge;
+    if ca == 1 { #&& r != 0 { #burst when not first rot, not needed if you set hutao start_hp + maxhp*0.5
+      if .hutao.burst.ready {
+        hutao burst;
+      }
+    }
+      else if .stam >= 18  {
+      hutao dash;
+    }
+    else {
+    hutao jump;
+    }
+  }
+wait (100);
+}
+

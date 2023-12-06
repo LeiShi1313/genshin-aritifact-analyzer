@@ -1,0 +1,54 @@
+wanderer char lvl=90/90 cons=0 talent=9,9,9;
+wanderer add weapon="thewidsith" refine=3 lvl=90/90;
+wanderer add set="desertpavilionchronicle" count=5;
+wanderer add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+wanderer add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favoniuswarbow" refine=5 lvl=90/90;
+faruzan add set="tenacityofthemillelith" count=4;
+faruzan add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311;
+faruzan add stats def=39.36 def%=0.124 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+yelan add stats def=39.36 def%=0.124 atk=33.08 hp=507.88 hp%= 0.1984 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favoniuslance" refine=5 lvl=90/90;
+candace add set="noblesseoblige" count=4;
+candace add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp=0.466;
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+
+options debug=true iteration=100 workers=50 swap_delay=12;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=9999999999999;
+
+active faruzan;
+for let x = 0; x < 5; x = x + 1  {
+  while !.faruzan.mods.favonius-cd && !.faruzan.burst.ready {
+    faruzan attack;
+  }
+  faruzan burst;
+  yelan skill, burst, attack;
+  candace skill, attack, burst, attack;
+  wanderer attack, skill;
+  while .wanderer.skydweller-points > 3 {
+    if .wanderer.normal < 3 {
+      wanderer attack;
+    } else if .wanderer.mods.wanderer-a4 {
+      wanderer dash;
+    } else if .wanderer.skydweller-points > 9 {
+      wanderer charge;
+    } else {
+      break;
+    }
+  }
+  if .wanderer.burst.ready {
+  wanderer skill, burst, attack;
+  } else {
+  wanderer skill;
+  }
+}

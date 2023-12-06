@@ -1,0 +1,57 @@
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=265.78 cr=0.3972 cd=1.284 pyro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 cr=0.311 hydro%=0.466 ;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.496 er=0.1102 em=678.42 cr=0.331 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.0992 er=0.9588000000000001 em=39.64 cr=0.3644 cd=0.3972 pyro%=0.348;
+
+options swap_delay=12 debug=true iteration=1000 duration=105.73 workers=50 mode=sl;
+
+
+										
+
+target lvl=100 resist=0.1;
+energy every interval=480,720 amount=1;
+
+active yelan;
+while 1{
+bennett attack, skill, attack:2;
+
+yelan burst,attack;
+
+bennett burst, skill;
+
+sucrose attack:3,skill,jump,attack;
+
+
+hutao skill,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump,
+             attack:1, charge, jump;
+             
+             yelan skill,attack:4;
+
+
+
+print ("done");
+}

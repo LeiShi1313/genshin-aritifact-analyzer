@@ -1,0 +1,49 @@
+options swap_delay=12 iteration=1000;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; # main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="thunderingfury" count=2;
+fischl add set="wandererstroupe" count=2;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2979 cd=0.7282;
+
+collei char lvl=90/90 cons=6 talent=9,9,9; 
+collei add weapon="favoniuswarbow" refine=3 lvl=90/90;
+collei add set="deepwood" count=5;
+collei add stats hp=4780 atk=311 em=186.5 cr=0.311 dendro%=0.466 ; #main
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9; 
+sucrose add weapon="sacrificialfragments" refine=3 lvl=90/90;
+sucrose add set="viridescentvenerer" count=5;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
+
+active collei;
+
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    collei skill;
+    fischl skill;
+    kokomi skill;
+
+    sucrose attack:3, dash,
+            attack:2, skill, dash,
+            attack:3, dash,
+            attack:2, burst;
+    fischl burst;
+    collei burst, skill;
+
+    kokomi burst;
+    for let c = 10; c; c = c - 1 { kokomi attack:2, dash, walk[f=2]; }
+    #for let c = 6; c; c = c - 1 { kokomi attack:3, dash; }
+    sucrose attack, skill, attack:3, dash;
+}

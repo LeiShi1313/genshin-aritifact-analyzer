@@ -1,0 +1,51 @@
+options swap_delay=12 iteration=1000;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359;# main
+kokomi add stats def=39.36 def%=0.124 hp=1015.76 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favwarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=118.92 cr=0.3972 cd=0.1324;
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="favoniuslance" refine=3 lvl=90/90;
+yunjin add set="archaicpetra" count=4;
+yunjin add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583; #main
+yunjin add stats def=39.36 def%=0.372 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active yelan;
+
+for let x = 5; x; x = x - 1 {
+  yelan skill;
+  kazuha skill, high_plunge;
+  kokomi skill;
+  yelan burst, attack;
+  if .kazuha.burst.ready {
+    kazuha burst, attack;
+  } else {
+    kazuha attack:3;
+  }
+  kazuha skill, high_plunge;
+  yunjin attack, skill, burst;
+  yelan attack, skill;
+  
+  kokomi attack, burst;
+  for let x = 10; x; x = x - 1 {
+    kokomi attack:2, dash, walk[f=2];
+  }
+  yunjin skill;
+}

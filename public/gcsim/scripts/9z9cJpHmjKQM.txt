@@ -1,0 +1,47 @@
+options swap_delay=12 debug=true workers=30;
+
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="favbow" refine=3 lvl=90/90;
+tartaglia add set="tenacityofthemillelith" count=4;
+tartaglia add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+tartaglia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="amenomakageuchi" refine=5 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
+ganyu add weapon="mouunsmoon" refine=1 lvl=90/90;
+ganyu add set="blizzardstrayer" count=4;
+ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;
+
+energy every interval=480,720 amount=1 ;
+target lvl=100 resist=.1 hp=100000000 radius=2 pos=0, 2.4;
+
+active ayaka;
+
+ayaka dash;
+for let i = 0; i < 6; i = i + 1 {
+  tartaglia skill, attack:2; # yes, this is a stationary skill cast
+  kazuha burst;
+  ganyu burst, skill;
+  kazuha skill, high_plunge;
+  ayaka dash, skill, burst, attack;
+  tartaglia burst, walk, skill,
+    attack, charge, dash;
+  ganyu aim, skill;
+  kazuha skill, high_plunge;
+  ayaka dash, attack, skill, attack:3, charge;
+  print("end");
+}
+
+

@@ -1,0 +1,51 @@
+hutao char lvl=90/90 cons=1 talent=9,9,9;
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.1984 atk=344.08 atk%=0.0992 er=0.1102 em=226.64 cr=0.3972 cd=1.284 pyro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=4 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1104 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.8486 em=39.64 cr=0.642 cd=0.662 pyro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="harbingerofdawn" refine=5 lvl=90/90;
+xingqiu add set="noblesseoblige" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=.1 hp=1000000000; # Impossibly high HP so target doesn't die but sim duration cannot be set
+energy every interval=480,720 amount=1; # Clear particle every 8-12 seconds
+
+active xingqiu;
+
+let x = 5;
+while x {
+  xingqiu attack,skill,dash, burst[orbital=1], attack:2;
+  yelan attack:2, burst, attack:2;
+  xiangling attack:2, burst, attack, skill;
+  wait(5);
+  yelan attack:2, skill, attack:2;
+  hutao skill,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash;
+  yelan skill, attack;
+
+x = x - 1;
+
+}

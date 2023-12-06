@@ -1,0 +1,52 @@
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="huskofopulentdreams" count=4;
+albedo add stats def%=0.831 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 geo%=0.466;
+
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="theviridescenthunt" refine=1 lvl=90/90;
+tartaglia add set="heartofdepth" count=4;
+tartaglia add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.3972 cd=1.284 hydro%=0.466;
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="favoniuslance" refine=3 lvl=90/90;
+yunjin add set="archaicpetra" count=4;
+yunjin add stats def%=2.121 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.707 def=39.36 hp=5287.88 hp%=0.1984 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+#yunjin add set="huskofopulentdreams" count=4;
+
+#albedo add set="archaicpetra" count=4 ;
+																
+					
+							
+					
+options swap_delay=12 debug=true iteration=1000 workers=50 mode=sl;
+target lvl=100 resist=0.1 hp=100000000 pos=0,0;
+#target lvl=100 resist=0.1 hp=100000000 pos=2.1,0;
+energy every interval=480,720 amount=1;
+let rotations = 5;
+
+active albedo;
+while rotations {	
+  albedo skill, attack;
+  yelan skill, burst;
+  yunjin skill, burst;
+  tartaglia burst, walk, skill,
+            attack:2, charge, dash,
+            attack:2, charge, dash,        
+            attack:3, charge, dash,
+            attack:2, charge, dash,
+            attack:3, charge, dash,
+            attack:2, charge, dash;
+  albedo attack, skill, attack:1;
+  yelan skill, attack;
+  yunjin attack, skill, attack:1;
+  print("end");
+  rotations = rotations - 1;
+}
+

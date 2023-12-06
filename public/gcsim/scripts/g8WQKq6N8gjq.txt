@@ -1,0 +1,29 @@
+kokomi char lvl=90/90 cons=6 talent=9,9,9;
+kokomi add weapon="donut" refine=5 lvl=90/90;
+kokomi add set="ohc" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; # main
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.1984 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;	
+
+options swap_delay=12 iteration=1000 duration=210;
+
+target lvl=100 pos=0,2.4 resist=0.1;
+energy every interval=480,720 amount=1;
+
+active kokomi;
+
+for {
+  switch {
+  case .kokomi.skill.ready:
+    kokomi skill, dash;
+  case .kokomi.burst.ready && .status.kokomiskill && .kokomi.skill.cd <= 14*60:
+    kokomi burst;
+  
+  case .status.kokomiburst && .kokomi.normal == 3:
+    kokomi attack;
+    if .kokomi.dash.ready { kokomi dash; }
+  case .kokomi.normal == 3:
+    kokomi walk;
+  default:
+    kokomi attack;
+  }
+}

@@ -1,0 +1,69 @@
+yae char lvl=90/90 cons=6 talent=9,9,9;
+yae add weapon="kagurasverity" refine=5 lvl=90/90;
+yae add set="gildeddreams" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;		
+																														
+nahida char lvl=90/90 cons=6 talent=9,9,9;
+nahida add weapon="tfd" refine=5 lvl=90/90;
+nahida add set="totm" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main 
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662 ;	
+																			
+amy char lvl=90/90 cons=6 talent=9,9,9;
+amy add weapon="elegy" refine=5 lvl=90/90;
+amy add set="tf" count=4;
+amy add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+amy add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;		
+					
+tighnari char lvl=90/90 cons=6 talent=9,9,9;
+tighnari add weapon="hunterspath" refine=5 lvl=90/90;
+tighnari add set="deepwood" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+tighnari add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;			
+							
+# ----  Default Enemy
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+
+active yae;
+
+# ----  First rotation
+    yae skill, skill, skill;
+    nahida skill, burst, attack, charge;
+    amy attack:2, skill;
+    tighnari skill, aim:3;
+    	
+    yae attack, burst, attack, skill, attack, skill, attack, skill, attack:3;
+    nahida skill, attack:2, charge;
+    amy attack:2, burst;
+    tighnari skill, aim:3;
+    if .tighnari.burst.ready {
+      tighnari burst;
+    } else {
+      tighnari aim[level=1];
+    }
+# ----  Next rotations
+for let i = 0; i < 2; i = i + 1 {
+	yae skill, attack:2, skill, attack:2, skill, attack:3;
+	nahida skill, burst, attack, charge;
+	amy attack:2, skill;
+	tighnari skill, aim:3;
+    if .tighnari.burst.ready {
+      tighnari burst;
+    } else {
+      tighnari aim[level=1];
+    }
+    	
+    yae attack, burst, attack, skill, attack, skill, attack, skill, attack:3;
+    nahida skill, attack:2, charge;
+    amy attack:2, burst;
+    tighnari skill, aim:3;
+    if .tighnari.burst.ready {
+      tighnari burst;
+    } else {
+      tighnari aim[level=1];
+    }
+}

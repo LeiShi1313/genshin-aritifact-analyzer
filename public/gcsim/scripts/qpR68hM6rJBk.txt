@@ -1,0 +1,48 @@
+shenhe char lvl=90/90 cons=2 talent=10,10,10;
+shenhe add weapon="engulfinglightning" refine=1 lvl=90/90;
+shenhe add set="shimenawasreminiscence" count=1;
+shenhe add set="eosf" count=4;
+shenhe add stats def%=0.057999999999999996 hp=5557 atk=350 atk%=1.619 er=0.823 cr=0.342 cd=0.47300000000000003;
+
+kazuha char lvl=90/90 cons=2 talent=10,10,10;
+kazuha add weapon="favoniussword" refine=5 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add set="gladiatorsfinale" count=1;
+kazuha add stats def=92 hp=5079 atk=416 atk%=0.040999999999999995 er=0.201 em=687.5 cr=0.326 cd=0.6539999999999999;
+
+layla char lvl=90/90 cons=6 talent=10,10,10;
+layla add weapon="favoniussword" refine=5 lvl=90/90;
+layla add set="tenacityofthemillelith" count=4;
+layla add set="gildeddreams" count=1;
+layla add stats def%=0.109 def=60 hp=5228 hp%=1.707 atk=338 atk%=0.344 er=0.195 em=65 cr=0.35800000000000004 cd=0.194;
+
+chongyun char lvl=90/90 cons=6 talent=10,10,10;
+chongyun add weapon="wgs" refine=1 lvl=90/90;
+chongyun add set="shimenawasreminiscence" count=1;
+chongyun add set="noblesseoblige" count=4;
+chongyun add stats def%=0.102 def=39 hp=4989 hp%=0.053 atk=344 atk%=0.33299999999999996 er=0.518 cr=0.587 cd=1.282 cryo%=0.466;
+
+options swap_delay=12 debug=true iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=1000000000 pos=-1.1,1.1 radius=1;
+target lvl=100 resist=0.1 hp=1000000000 pos=1.1,1.1 radius=1;
+target lvl=100 resist=0.1 hp=1000000000 pos=0,-1.1 radius=1;
+#target lvl=100 resist=0.1 hp=1000000000 pos=1,0 radius=1;
+#target lvl=100 resist=0.1 hp=1000000000 pos=5,0 radius=1;
+
+#Rotation____
+active chongyun;
+
+let rotations = 4;
+while rotations {
+
+  chongyun burst, skill;
+  shenhe skill, burst, attack:3;
+  kazuha skill[hold=1], high_plunge, burst, skill;
+  layla burst, skill;
+  shenhe skill, attack:3;
+
+  rotations = rotations - 1;
+}
+wait(33);
+

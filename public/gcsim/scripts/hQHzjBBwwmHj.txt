@@ -1,0 +1,68 @@
+options swap_delay=12 iteration=1000;
+
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="deathmatch" refine=1 lvl=90/90;
+xiao add set="vermillionhereafter" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622;
+xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3641 cd=0.662;
+
+jean char lvl=90/90, cons=0, talent=9,9,9;
+jean add weapon="favoniussword" refine=3 lvl=90/90;
+jean add set="oceanhuedclam" count=4;
+jean add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+jean add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="huskofopulentdreams" count=4 +params=[stacks=4];
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+albedo add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+
+active albedo;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+  albedo skill, attack;  
+  zhongli attack, skill[hold=1], dash;
+  while( !.zhongli.mods.favonius-cd && !.xiao.burst.ready) {
+    zhongli attack;
+  } #proc fav
+  jean burst, skill;
+  xiao skill, burst;
+  for let h = 0; h < 11 ; h=h+1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump, high_plunge[collision=1];
+    } else {
+      xiao jump, high_plunge;
+    }
+  }
+  for let h = 0; h < 2 ; h=h+1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump,low_plunge[collision=1];
+    } else {
+      xiao jump, low_plunge;
+    }
+  }
+
+  jean attack, skill;
+  while( .jean.mods.favonius-cd==0){
+    jean attack;
+  } #proc fav
+  
+  xiao skill, attack, charge;
+  
+
+}

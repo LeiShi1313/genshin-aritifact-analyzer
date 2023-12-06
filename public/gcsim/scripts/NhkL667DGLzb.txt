@@ -1,0 +1,37 @@
+klee char lvl=90/90 cons=6 talent=9,9,9;
+klee add weapon="lostprayertothesacredwinds" refine=1 lvl=90/90;
+klee add set="glad" count=2;
+klee add set="shim" count=2;
+
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=.311;
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active klee;
+klee skill [bounce=3, mines=8];
+
+for let r = 5; r > 0; r = r - 1 {
+  if .klee.burst.ready {
+ 	klee attack, burst, walk;
+   }
+   	klee attack, skill[bounce=3,mines=8], jump;
+ for let r=11; r > 0; r = r - 1 {
+   klee attack, walk, attack;
+   if .stam >=50 || .status.kleespark
+ 	{
+ 	klee charge, jump;
+ 	}
+   else
+     {
+     klee walk;
+     }
+   }  	 
+   
+  
+}
+
+wait(25); # So sim doesn't end with final CA mid animation

@@ -1,0 +1,68 @@
+options swap_delay=12 iteration=1000;
+
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="balladofthefjords" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats hp=4780 atk=311 em=187 cr=0.311 pyro%=0.466 ;
+hutao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944 ;	
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="wolffang" refine=1 lvl=90/90;
+xingqiu add set="no" count=4;
+xq add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main 
+xq add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2317 cd=0.7944;	
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" lvl=90/90 refine=3;	
+yelan add set="emblemofseveredfate" count=4;										
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;	
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;				
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+#--------------------------------------------
+
+active xingqiu;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  xingqiu burst, attack:1;
+  yelan attack,burst,attack;
+  fischl attack:2;
+  if .fischl.skill.ready {
+    fischl skill;
+  } else {
+    fischl attack:2,burst;
+  }
+  
+  xingqiu attack:1, skill, dash, attack:2;
+
+
+  yelan attack:2,skill,attack;
+     
+  hutao skill,
+      attack:2, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge, jump,
+      attack:1, charge,jump;
+    
+  yelan skill,attack:2;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,71 @@
+options swap_delay=12 iteration=1000;
+
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="widsith" refine=3 lvl=90/90;
+klee add set="crimson" count=4;
+klee add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="tenacityofthemillelith" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; 
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+
+energy every interval=480,720 amount=1;
+
+active xingqiu;
+
+let normal_animation = 1;
+let charge_animation = 2;
+
+# End simulation after 5 rotations
+for let r = 5; r > 0; r = r - 1 {
+  let src = f();
+  let funnel = 0;
+  xingqiu skill, dash, burst, attack;
+  bennett skill, attack, burst;
+  if .fischl.burst.ready {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  klee attack;
+  if .klee.burst.ready {
+    klee burst, walk;
+  }
+  while f() - src <= 20.5 * 60 {
+    if .klee.skill.ready {
+      klee attack, skill[bounce=3, mine=8], jump;
+    } else if .klee.onfield && .state == normal_animation && ( .stam >= 50 || .status.kleespark ) {
+      klee charge;
+    } else if .klee.onfield && .klee.normal > 1 && .state == normal_animation {
+      klee walk;
+    } else if !.status.kleeq && .bennett.skill.ready && !.status.bennettburst && !funnel && ( .bennett.energy < 50 || .klee.energy < 50 ) {
+      bennett skill, attack:2;
+      funnel = 1;
+    } else {
+      klee attack;
+    }
+  }
+  # Don't end rotation with uncanceled CA
+  if .klee.onfield && .state == charge_animation {
+    klee attack;
+  }
+}
+
+# Xingqiu ED Q N1 > Bennett E N1Q > Fischl N2Q/N1E > Klee N1Q if ready > (Klee N1EJ N1C/N1W spam until ~20s, Bennett funnel himself if needed)

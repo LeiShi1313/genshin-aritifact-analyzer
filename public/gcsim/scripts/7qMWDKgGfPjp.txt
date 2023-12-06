@@ -1,0 +1,56 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=5 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3641 cd=0.5958;																						
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=5;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="favoniuscodex" refine=5 lvl=90/90;
+lisa add set="gilded" count=5;
+lisa add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.3312 cd=0.1324;
+																
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=100000000;
+energy every interval=480,720 amount=1;
+
+active bennett;
+
+  bennett skill;
+  kazuha burst, skill, high_plunge;
+  bennett burst, attack, skill;
+  xiangling burst, attack, skill, dash;
+  kazuha skill, high_plunge;
+  bennett attack, skill;
+  lisa attack, skill[hold=1], burst;
+  bennett attack, skill;
+  kazuha attack, skill, high_plunge;
+  lisa walk, attack:3;
+
+for let i = 0; i < 6; i = i + 1 {
+
+  bennett walk, skill;
+  wait (10);
+  kazuha burst, skill, high_plunge;
+  bennett burst, attack, skill;
+  xiangling burst, attack, skill, dash;
+  kazuha skill, high_plunge;
+  bennett attack, skill;
+  lisa attack, skill[hold=1], burst;
+  bennett attack, skill;
+  kazuha attack, skill, high_plunge;
+  lisa walk, attack:3;
+}
+

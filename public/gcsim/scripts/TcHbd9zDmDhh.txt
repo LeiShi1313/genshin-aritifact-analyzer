@@ -1,0 +1,41 @@
+options swap_delay=12 iteration=1000;
+
+eula char lvl=90/90 cons=3 talent=9,9,9; 
+eula add weapon="songofbrokenpines" refine=1 lvl=90/90 +params=[stacks=5];
+eula add set="paleflame" count=4;
+eula add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311 ; #main
+eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+raiden char lvl=90/90 cons=3 talent=9,9,9; 
+raiden add weapon="engulfinglightning" refine=1 lvl=90/90;
+raiden add set="eosf" count=4;
+raiden add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311 ; #main
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=3 talent=9,9,9; 
+nahida add weapon="ttds" refine=5 lvl=90/90;
+nahida add set="tenacityofthemillelith" count=4;
+nahida add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.0662 cd=0.7944;
+
+shenhe char lvl=90/90 cons=3 talent=9,9,9; 
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.4408 em=39.64 cr=0.331 cd=0.1324;
+
+
+active raiden;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+    raiden skill, attack;
+for let i=0; i<4; i=i+1 {
+	shenhe burst, skill;
+	eula skill, attack;
+	nahida attack, skill, attack;
+	eula burst, walk, attack:4, skill[hold=1], walk[f=11], attack:4;
+	shenhe skill, attack;
+	raiden burst, attack:4, dash, attack:4, skill, attack:4;
+}
+

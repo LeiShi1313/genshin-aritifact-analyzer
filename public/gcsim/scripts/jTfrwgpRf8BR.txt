@@ -1,0 +1,55 @@
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="fopl" count=5;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #mainstats 
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; #substats
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="wolffang" refine=1 lvl=90/90;
+xingqiu add set="deepwood" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634;
+
+baizhu char lvl=90/90 cons=0 talent=9,9,9;
+baizhu add weapon="favoniuscodex" refine=3 lvl=90/90;
+baizhu add set="ohc" count=4;
+baizhu add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+baizhu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+
+options swap_delay=12 iteration=1000 ;
+target lvl=100 resist=0.1 hp=999999999 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active baizhu;
+
+for let x = 0; x< 5; x=x+1 {
+    baizhu  attack, skill, burst, attack;
+    xingqiu burst, attack:2;
+    kuki  attack, skill;
+    while !.yelan.skill.ready {
+        yelan attack;
+    }
+    yelan  skill, attack, burst, attack;
+    baizhu attack:2, dash, attack:2;
+    if !.baizhu.skill.ready {
+        baizhu walk, attack;
+    }
+    baizhu  skill, attack:2, dash;
+    xingqiu attack, skill, dash, attack:2;
+    baizhu  attack:2, dash;
+    if .yelan.tags.yelan_breakthrough {
+        yelan aim:1, attack:2, skill, attack;
+    } else {
+        yelan attack:2, skill, attack; 
+    } 
+    baizhu attack:2, walk[f=3], attack:4, dash;
+    print("Done");
+  
+}

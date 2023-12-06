@@ -1,0 +1,58 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.7935000000000001 em=39.64 cr=0.6089 cd=0.7944 pyro%=0.466;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.7935000000000001 em=39.64 cr=0.6089 cd=0.7944 pyro%=0.466;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="thunderingfury" count=2;
+fischl add set="wandererstroupe" count=2;
+fischl add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.2755 em=226.64 cr=0.6089 cd=0.7944 electro%=0.466;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.6612 em=600.64 cr=0.3972 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active bennett;
+
+for let i=0; i<4; i=i+1 {
+
+  bennett burst,skill;
+  kazuha attack, skill, high_plunge, burst;
+  if .fischl.burst.ready {fischl attack:2, burst;}
+  else {fischl attack:3, skill;}
+  xiangling burst, skill;
+  kazuha attack, skill, high_plunge;
+  bennett attack:3, skill, attack:4, skill;
+
+  
+  bennett burst;
+  kazuha attack, skill, high_plunge;
+  bennett attack:2, skill;
+  if .fischl.burst.ready {fischl attack:2, burst;}
+  else {fischl attack:3, skill;}
+  xiangling attack:2, skill;
+  kazuha attack, skill, high_plunge, burst;
+  bennett attack:3, skill;
+  xiangling burst, attack;
+  kazuha attack, skill, high_plunge;
+
+  bennett burst,skill;
+  xiangling attack:2, skill;
+
+  if .fischl.burst.ready {fischl attack:2, burst;}
+  else {fischl attack:3, skill;}
+  kazuha attack, skill, high_plunge;
+  bennett attack:3, skill, attack:4, skill,attack:4, skill,attack:4;
+
+}

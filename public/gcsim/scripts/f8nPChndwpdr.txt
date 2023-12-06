@@ -1,0 +1,46 @@
+xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;			
+												
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;			
+									
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favlance" refine=3 lvl=90/90;
+xiangling add set="eosf" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.331 cd=0.7944;			
+																
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="thewidsith" refine=3 lvl=90/90;
+klee add set="cwof" count=4;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+klee add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;		
+																																
+options swap_delay=12 debug=true iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active xingqiu ;
+
+for let x = 0; x < 5; x = x + 1 {
+  xingqiu skill, dash, burst, attack;
+  bennett burst, attack, skill, attack;
+  xiangling attack, burst, attack, skill, dash;
+  klee attack, burst, walk, attack, skill[bounce=3, mine=8];
+  if .klee.skill.ready {
+    klee jump, attack, skill[bounce=3, mine=8], jump;
+  } else {
+    klee attack[travel=6], charge; # travel=6 is used to force N1 hitmark to be before CA has begun execution
+  }
+  for let ca = 0; ca < 5; ca = ca + 1 {
+    klee attack[travel=6], charge;
+  }
+  klee attack, walk, attack, walk, attack, walk, attack, walk, attack;
+  bennett skill;
+}

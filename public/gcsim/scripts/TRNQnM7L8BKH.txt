@@ -1,0 +1,30 @@
+options swap_delay=12 iteration=1000 duration=300;
+
+yae char lvl=90/90 cons=6 talent=9,9,9 start_hp=2;
+yae add weapon="kagura" refine=5 lvl=90/90;
+yae add set="thundersoother" count=5;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.2979 cd=0.4634 ;	
+
+active yae ;
+target lvl=100 pos=0,2.4 radius=2 resist=.1;
+energy every interval=480,720 amount=1;
+
+
+let k = 90;
+    yaemiko skill:3;
+while 1 {
+  	if .status.yae_oldest_totem_expiry && .status.yae_oldest_totem_expiry < k && .yae.burst.ready {
+		yae burst;
+	} else if .status.yae_oldest_totem_expiry < k {
+		yae skill:3;
+	} else if .yae.normal==3 && .stam >50 {
+		yae charge, jump;
+	} else if .yae.normal==3 {
+		yae attack, jump;
+	} else {
+	  yae attack;
+	}
+}
+
+

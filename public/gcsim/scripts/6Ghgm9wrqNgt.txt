@@ -1,0 +1,56 @@
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="wt" count=4;
+tighnari add stats def=39.36 def%=0.124 hp=5288 hp%=0.0992 atk=344 atk%=0.0992 em=266 er=0.1102 cr=0.3972 cd=1.284 dendro%=0.466;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="fadingtwilight" refine=5 lvl=90/90;
+sara add set="no" count=4;
+sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+sara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;	
+
+yaemiko char lvl=90/90 cons=0 talent=9,9,9;
+yaemiko add weapon="hakushinring" refine=5 lvl=90/90;
+yaemiko add set="eosf" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats def=39.36 def%=0.124 hp=5288 hp%=0.0992 atk=344 atk%=0.0992 er=0.1102 em=680 cr=0.331 cd=0.662;
+
+    # TARGET AND SPECS
+options swap_delay=12 iteration=1000;
+
+    #ROTATION START
+active yaemiko;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  if !i {
+    yae skill, attack, skill, attack:2, skill, attack:3;
+    nahida attack, skill, burst, attack, charge;
+    sara skill, aim, attack;
+    tighnari skill, aim:3;
+    sara burst;
+  } else {
+    yae skill:3;
+    nahida skill, burst, attack, charge;
+    tighnari skill, aim:3;
+    sara skill, burst;
+  }
+  yae burst, attack, skill, attack, skill, attack, skill, attack;
+  nahida attack, charge;
+  yae attack, dash, attack:2;
+  sara skill, aim;
+  if .tighnari.burst.ready {
+    tighnari skill, aim, burst, aim:2;    
+  } else {
+    tighnari skill, aim:3;
+  }
+
+}
+

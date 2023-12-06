@@ -1,0 +1,41 @@
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="huskofopulentdreams" count=5 +params=[stacks=4];
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+albedo add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="ap" count=5;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944 ;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=5;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;	
+
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+noelle add weapon="favgs" refine=3 lvl=90/90;
+noelle add set="huskofopulentdreams" count=5  +params=[stacks=4];
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+noelle add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=500;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active albedo;
+
+for let x = 0; x < 4; x = x + 1 {
+  albedo skill, attack;
+  bennett burst, skill;
+  xiangling burst, skill;
+  noelle burst, skill;
+  noelle attack:4;
+  bennett attack, skill;
+  noelle attack:4;
+  bennett attack, skill;
+  noelle attack:4;
+}

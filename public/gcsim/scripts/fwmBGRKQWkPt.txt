@@ -1,0 +1,58 @@
+options swap_delay=12 iteration=1000;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="favoniuslance" refine=3 lvl=90/90;
+thoma add set="eosf" count=4;
+thoma add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;	
+
+wanderer char lvl=90/90 cons=0 talent=9,9,9; 
+wanderer add weapon="widsith" refine=3 lvl=90/90;
+wanderer add set="dpc" count=4;
+wanderer add stats hp=4780 atk=311 atk%=0.466 cr=0.311 anemo%=0.466 ; #main
+wanderer add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesse" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1655 cd=0.7282;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="favwarbow" refine=3 +params=[stacks=10] lvl=90/90;
+venti add set="emblemofseveredfate" count=4;
+venti add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+active thoma;
+target lvl=100 resist=0.1 radius=0.3 pos=0.4,1 hp=999999999; 
+target lvl=100 resist=0.1 radius=0.3 pos=-0.4,1 hp=999999999;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<5; i=i+1 {
+  if i {
+    bennett skill;
+}
+  thoma skill, burst;
+  venti skill, burst;
+  bennett skill, burst;
+  if .wanderer.burst.ready {
+    wanderer attack, burst;
+  }  
+  wanderer attack:2, skill, attack, charge;
+  while .wanderer.skydweller-points > 3 {
+    if .wanderer.normal < 3 {
+      wanderer attack;
+    } else if .wanderer.mods.wanderer-a4 {
+      wanderer dash;
+    } else if .wanderer.skydweller-points > 4 {
+      wanderer charge;
+    } else {
+      break;
+    }
+ 
+ } 
+  wanderer skill, low_plunge;	
+}
+

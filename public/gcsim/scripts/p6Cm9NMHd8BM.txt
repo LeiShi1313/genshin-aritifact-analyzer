@@ -1,0 +1,56 @@
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+mona add set="noblesseoblige" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.551 em=39.64 cr=0.0993 cd=0.1986;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.3972 cd=0.1324;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
+ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
+ganyu add set="blizzardstrayer" count=4;
+ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="amenomakageuchi" refine=5 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+options swap_delay=12 debug=true iteration=1000 workers=30 mode=sl;
+
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.35;
+
+active ayaka;
+
+
+
+
+for let x=0; x<5; x=x+1 {
+  ayaka dash, skill;
+  kazuha skill, high_plunge, burst;
+  ganyu skill, burst;
+  mona burst, skill;
+  ayaka dash, skill, burst;
+
+  kazuha skill, high_plunge;
+  ganyu skill, aim[weakspot=1]:3;
+  ayaka swap;
+  print("done");
+}
+
+
+
+
+
+
+
+
+
+

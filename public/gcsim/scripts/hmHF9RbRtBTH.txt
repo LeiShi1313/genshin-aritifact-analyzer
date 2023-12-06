@@ -1,0 +1,41 @@
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="widsith" refine=3 lvl=90/90;
+lisa add set="ts" count=4;
+lisa add stats hp=4780 atk=311 atk%=0.466 cr=0.311 electro%=0.466;
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="ts" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 cr=0.311 electro%=0.466;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+	
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 geo%=0.466;	
+
+luminedendro char lvl=90/90 cons=6 talent=9,9,9;
+luminedendro add weapon="favsword" refine=3 lvl=90/90;
+luminedendro add set="instructor" count=5;
+luminedendro add stats hp=3824 atk=248.8 em=148 dendro%=0.466 cr=0.2488 ; #main
+luminedendro add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=71.352 cr=0.31776 cd=0.76792 ; # sub				
+	
+
+options swap_delay=12 iteration=100;
+active lisa;
+target lvl=100 resist=.10 hp=9999999 radius=2 pos=0,2.4; 
+energy every interval=480,720 amount=1;
+    lisa attack;
+for let i=0; i< 6; i=i+1 {
+    zhongli skill[hold=1], dash, attack;
+    luminedendro attack, skill, attack, burst;
+    fischl skill, attack:2;
+    lisa attack, burst, attack, charge, attack:2, charge, attack:3;
+    zhongli skill[hold=1], dash, attack;
+    luminedendro attack, skill;
+    fischl attack:2, burst;
+    lisa skill, attack:3, skill, attack:3, charge, attack:3, skill[hold=1];
+    wait (20);
+    print("rotation done");
+}

@@ -1,0 +1,38 @@
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="gildeddreams" count=4;
+kuki add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1984 er=0.3306 em=679.92 cr=0.3972 cd=0.1324;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=5;
+kokomi add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.962 atk=344.08 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324 heal=0.359 hydro%=0.466;
+
+nahida char lvl=90/90 cons=6 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.6282 em=532.56 cr=0.3972 cd=0.3972;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.5652 atk=344.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.642 cd=0.662 hydro%=0.466;
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active kokomi;
+# ----  Actions List
+for let x=0; x<4; x=x+1 {
+  nahida skill, attack:2;
+  if .nahida.burst.ready {
+    nahida burst,attack;
+  }
+  kokomi attack, skill, dash;
+  yelan skill,burst,attack:2;
+  kuki attack,skill;
+  kokomi attack, burst;
+  while .kokomi.skill.cd > 165 {
+    kokomi attack:2, dash, walk[f=2];
+  }
+}

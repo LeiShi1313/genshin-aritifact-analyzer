@@ -1,0 +1,43 @@
+
+raidenshogun char lvl=90/90 cons=0 talent=9,9,9; 
+raidenshogun add weapon="thecatch" refine=5 lvl=90/90;
+raidenshogun add set="emblemofseveredfate" count=5;
+raidenshogun add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+raidenshogun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=5;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;	
+																								
+bennett char lvl=90/90 cons=5 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;	
+																							
+yaemiko char lvl=90/90 cons=0 talent=9,9,9; 
+yaemiko add weapon="thewidsith" refine=3 lvl=90/90;
+yaemiko add set="emblemofseveredfate" count=5;
+yaemiko add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+yaemiko add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;	
+										
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active raiden;
+
+  raiden skill;
+for let x=0; x<4; x=x+1 {
+  yaemiko skill, skill, skill;
+  bennett burst, skill;
+  xiangling burst, skill;
+  yaemiko burst, skill, skill, skill;
+  raiden burst, attack:4, dash, attack:4, dash, attack:4, skill, attack:4;
+  bennett skill;
+  xiangling attack:2;
+
+}
+

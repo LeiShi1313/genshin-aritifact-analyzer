@@ -1,0 +1,33 @@
+options swap_delay=12 iteration=1000 duration=172 ;
+
+yelan char lvl=90/90 cons=6 talent=9,9,9;
+yelan add weapon="aquasimulacra" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662 ;		
+
+active yelan;
+target lvl=100 radius=2 pos=0,2.4 resist=.1 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+let rotations = 6;
+while rotations {
+  
+  if .yelan.burst.ready {
+    rotations = rotations - 1;
+    yelan burst;
+  } else if .status.yelanburst < 150 && .yelan.skill.ready {
+    yelan skill;
+    if .yelan.tags.yelan_breakthrough {
+      yelan aim;
+    }
+  } else if .yelan.energy < 70 && !.status.yelanburst && .yelan.skill.ready {
+    yelan skill;
+    if .yelan.tags.yelan_breakthrough {
+      yelan aim;
+    }
+  } else {
+    yelan attack;
+  }
+}
+

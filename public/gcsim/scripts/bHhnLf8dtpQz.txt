@@ -1,0 +1,60 @@
+options swap_delay=12 iteration=1000;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9; 
+sucrose add weapon="ttds" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=5;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=158.56 cr=0.1324 cd=0.2648;										
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblem" count=5;
+xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; # main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.2317 cd=0.662;																																							
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="tenacityofthemillelith" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.2979 cd=0.5296;																																																
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi add weapon="pamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=5;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; # main
+kokomi add stats def=39.36 def%=0.124 hp=1015.76 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;																																																																																																																						
+
+
+active fischl;
+
+target lvl=100 resist=0.1 radius=1 pos=0, 1.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    fischl skill;
+    xiangling skill;
+    kokomi jump, attack;
+    sucrose attack:2, skill;
+    xiangling burst;
+    kokomi attack:2, walk,
+      attack:2, walk,
+      attack:2, skill,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2;
+    fischl attack, burst;
+    xiangling attack, skill, attack;
+    wait (10);
+    sucrose skill;
+    kokomi attack:2, burst,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2, walk,
+      attack:2;
+}
+

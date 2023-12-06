@@ -1,0 +1,44 @@
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
+alhaitham add set="deepwood" count=4;
+alhaitham add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.11019999999999999 em=266 cr=0.642 cd=0.7944 dendro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="instructor" count=4;
+kuki add stats def%=0.0992 def=31.488 hp=3977.304 hp%=0.07936 atk=258.464 atk%=0.07936 er=0.08816 em=578.492 cr=0.38396 cd=0.50312;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="goldentroupe" count=5;
+fischl add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.642 cd=0.7944 electro%=0.466;
+
+options swap_delay=8 #Haitham Q swap Kuki N1Q doesn't work if not.
+iteration=1000;
+active fischl;
+
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+for let i=0; i<3; i=i+1 {
+  fischl attack,skill;
+  yelan skill,burst,attack;
+  kuki skill,attack;
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:3, dash,
+            attack:3, charge, 
+            attack:4;
+  fischl attack,burst;
+  yelan skill,attack;   
+  alhaitham burst;
+  kuki attack,burst;
+  alhaitham attack:3, dash,
+            attack:3, charge, dash, 
+            attack:2, dash,
+            attack:2, charge,dash,
+            attack:3;  
+}

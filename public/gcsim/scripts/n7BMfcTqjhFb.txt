@@ -1,0 +1,37 @@
+lisa char lvl=90/90 cons=4 talent=9,9,9;
+lisa add weapon="evenstar" refine=1 lvl=90/90;
+lisa add set="flowerofparadiselost" count=4;
+lisa add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.4464 er=0.6061 em=679.92 cr=0.0662 cd=0.1324;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=532.56 cr=0.2979 cd=0.5958 dendro%=0.466;
+
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="favsword" refine=3 lvl=90/90;
+ayato add set="hod" count=4;
+ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+ayato add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;									
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="emblem" count=4;
+beidou add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622;
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;	
+				
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=10000000 pos=0,3.1 radius=2;
+target lvl=100 resist=0.1 hp=10000000 pos=4,1.5 radius=2;
+energy every interval=480,720 amount=1;
+
+active beidou;
+for let i = 0; i < 5; i = i + 1 {
+  beidou skill[counter=2];
+  ayato burst[radius=2];
+  nahida burst, attack:2, skill; 
+  lisa skill[hold=1], attack:3, burst;
+  beidou burst, attack, skill[counter=2];
+  nahida attack:3, skill, attack:3, charge;
+  ayato skill, attack:17;
+}

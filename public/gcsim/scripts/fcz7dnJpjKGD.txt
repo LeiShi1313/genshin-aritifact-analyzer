@@ -1,0 +1,54 @@
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="favoniussword" refine=3 lvl=90/90;
+ayato add set="gladiatorsfinale" count=4;
+ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+ayato add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="thunderingfury" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 em=186.5 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4406 em=39.64 cr=0.2979 cd=0.5958;
+
+options swap_delay=12 debug=true;
+target lvl=100 resist=0.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active ayato;
+
+ayato burst;
+fischl skill, attack;
+kazuha skill, high_plunge;
+ayato skill, attack:15;
+kazuha skill, high_plunge;
+bennett skill, burst;
+fischl attack, burst;
+kazuha burst;
+ayato skill, attack:15;
+
+for let x=0; x< 5; x=x+1{
+
+  ayato burst ;
+  fischl attack:3, skill, attack;
+  kazuha skill, high_plunge;
+  ayato skill, attack:15;
+  kazuha skill, high_plunge;
+  bennett skill, burst;
+  fischl attack, burst;
+  kazuha burst;
+  ayato skill, attack:15;
+  
+
+}

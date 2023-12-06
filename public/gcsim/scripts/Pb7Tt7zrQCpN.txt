@@ -1,0 +1,57 @@
+#team config
+
+#KurtC, KQMC: 10cr, 8cd, 2em
+diluc char lvl=90/90 cons=0 talent=9,9,9; 
+diluc add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+diluc add set="crimsonwitchofflames" count=5;
+diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #mainstats
+diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; #substats
+
+#KurtC, KQMC: 10cr, 8cd, 2em
+kaeya char lvl=90/90 cons=6 talent=9,9,9; 
+kaeya add weapon="favoniussword" refine=3 lvl=90/90;
+kaeya add set="noblesse" count=5;
+kaeya add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #mainstats
+kaeya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; #substats
+
+#KurtC, KQMC: 10cr, 6er, 4em
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #mainstats
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324; #substats
+
+#KurtC, KQMC: exile with 5* CR circlet
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="favoniussword" refine=3 lvl=90/90;
+bennett add set="exile" count=4;
+bennett add set="noblesse" count=1;
+bennett add stats hp=3571 atk=232 er=0.387 pyro%=0.348 cr=0.311; #mainstats
+bennett add stats def%=0.0992 def=31.488 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.30856 em=31.712 cr=0.2648 cd=0.1324; #substats
+
+#enemy config
+
+#sim config
+options swap_delay=12 iteration=1000;
+active kaeya;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+  kaeya attack,skill;
+  kazuha attack,burst;
+  bennett burst,skill,attack;
+  kazuha skill,high_plunge;
+  kaeya burst,skill;
+  diluc attack,skill,
+        attack,skill,
+        attack,skill,
+        burst;
+  kazuha skill,high_plunge,attack; wait(1); #catch particles
+
+}
+
+
+

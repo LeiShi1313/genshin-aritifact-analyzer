@@ -1,0 +1,45 @@
+amber char lvl=90/90 cons=3 talent=9,9,9;
+amber add weapon="hamayumi" refine=5 lvl=90/90;
+amber add set="wandererstroupe" count=4;
+amber add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
+amber add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1984 er=0.6282 em=39.64 cr=0.3972 cd=1.284 pyro%=0.466;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favoniuslance" refine=3 lvl=90/90;
+rosaria add set="emblemofseveredfate" count=4;
+rosaria add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1984 er=0.6282 em=39.64 cr=0.3972 cd=1.284 cryo%=0.466;
+
+aetheranemo char lvl=90/90 cons=6 talent=9,9,9;
+aetheranemo add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+aetheranemo add set="viridescentvenerer" count=4;
+aetheranemo add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.4408 em=679.92 cr=0.2317 cd=0.4634;
+
+																																					
+																				
+##Default Enemy
+options swap_delay=12 debug=true iteration=1000 workers=50 mode=sl;
+target lvl=100 resist=0.1 hp=100000000 pos=0,0;
+energy every interval=480,720 amount=1;
+
+active bennett;
+let rotations = 5;
+while rotations {
+  bennett skill, burst;
+  aetheranemo skill;
+  rosaria skill,burst;
+  
+  amber skill,
+  aim [weakspot=1], dash,
+  aim [weakspot=1], dash,
+  aim [weakspot=1], dash,
+  dash, aim[weakspot=1];
+  
+  bennett skill;
+  rosaria skill;
+  rotations = rotations - 1;
+}

@@ -1,0 +1,45 @@
+herexcellencythealmightynarukamiogoshogodofthunder char lvl=90/90 cons=6 talent=9,9,9; 
+herexcellencythealmightynarukamiogoshogodofthunder add weapon="engulfinglightning" refine=5 lvl=90/90;
+herexcellencythealmightynarukamiogoshogodofthunder add set="emblemofseveredfate" count=5;
+herexcellencythealmightynarukamiogoshogodofthunder add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+herexcellencythealmightynarukamiogoshogodofthunder add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yaemiko char lvl=90/90 cons=6 talent=9,9,9; 
+yaemiko add weapon="kagura" refine=5 lvl=90/90;
+yaemiko add set="gildeddreams" count=5;
+yaemiko add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+yaemiko add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=6 talent=9,9,9; 
+kazuha add weapon="freedomsworn" refine=5 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+nahida char lvl=90/90 cons=6 talent=9,9,9; 
+nahida add weapon="tfd" refine=5 lvl=90/90;
+nahida add set="totm" count=5;
+nahida add stats hp=4780 atk=311 em=187 em=187 cd=0.622 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+
+active yae;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<6; i=i+1 {
+  yaemiko skill:3;
+  if !i {
+    herexcellencythealmightynarukamiogoshogodofthunder attack, skill;
+  }
+  kazuha skill, high_plunge; 
+  nahida burst, skill, attack;
+  yaemiko attack, burst, skill:3;
+  kazuha skill, high_plunge, burst;
+  herexcellencythealmightynarukamiogoshogodofthunder burst, 
+                                                     attack:4, dash, attack:4, skill, attack:4, dash;
+                                                  
+  print("rotation done");
+}
+

@@ -1,0 +1,66 @@
+#team config
+
+itto char lvl=90/90 cons=0 talent=9,9,9;
+itto add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+itto add set="husk" count=4; #no husk prestack on serpent
+itto add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; #mainstats
+itto add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+aethergeo char lvl=90/90 cons=6 talent=9,9,9;
+aethergeo add weapon="favoniussword" refine=3 lvl=90/90;
+aethergeo add set="noblesse" count=4;
+aethergeo add stats hp=4780 atk=311 er=0.518 geo%=0.466 cr=0.311; #mainstats
+aethergeo add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favoniuswarbow" refine=4 lvl=90/90;
+gorou add set="exile" count=4;
+gorou add stats hp=3571 atk=232 er=0.387 geo%=0.348 cr=0.311; #mainstats
+gorou add stats def%=0.0992 def=31.488 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.30856 em=31.712 cr=0.2648 cd=0.1324;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="deathmatch" refine=1 lvl=90/90;
+zhongli add set="goldentroupe" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cd=0.622; #mainstats
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+#enemy config
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active gorou;
+
+#action list 
+
+  gorou skill;
+  zhongli skill[hold=1],dash;
+  aethergeo burst;
+  gorou attack, burst;
+  
+  itto attack, burst[prestack=1],
+       attack, skill,
+       attack:2, charge:5,
+       attack:4, charge:5, skill[travel=0], charge;
+       sleep(21); #catch ushi particles
+       
+       #"C0 1PS" combo
+  
+     
+   for let i=0; i<4; i=i+1 {
+   
+   gorou attack, skill;
+   zhongli skill, dash; #refreshing pillar
+   aethergeo skill, burst;
+   gorou attack, burst;
+   zhongli skill[hold=1], dash;
+   
+   itto attack, burst[prestack=1],
+        attack, skill, charge:4,
+        attack:3, charge:4,
+        attack:3, skill, charge:4; 
+       
+        #"C0 2PS" combo
+   
+    
+   }

@@ -1,0 +1,52 @@
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="flowerofparadiselost" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kuki add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;		
+																								
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.1986 cd=0.2648;		
+																								
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;	
+																							
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="dragonsbane" refine=3 lvl=90/90;
+cyno add set="tf" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 em=187; #main
+cyno add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=118.92 cr=0.3972 cd=0.331;	
+
+options swap_delay=12 iteration=1000;
+
+active kuki ;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  kuki skill;
+  nahida skill, burst;
+  xingqiu skill, dash, burst, attack;
+  wait(5); # Ensure that Cyno doesn't waste Xingqiu's potential favonius proc on the time before his burst energy drain
+  cyno attack, burst, attack, skill;
+  let wait_a1 = 0;
+  while .cyno.burst.cd>300{    
+    if .cyno.skill.ready && wait_a1 == 0 {
+      cyno skill;
+      wait_a1 = 1;
+    } else if .cyno.mods.cyno-a1 && .cyno.skill.ready && wait_a1 == 1 {
+        cyno skill;
+        wait_a1 = 0;
+    } else if .cyno.normal == 3 {
+      cyno dash;
+    } else {
+      cyno attack;
+    }
+  }
+
+}

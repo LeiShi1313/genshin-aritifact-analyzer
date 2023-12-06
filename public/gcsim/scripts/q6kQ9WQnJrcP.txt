@@ -1,0 +1,56 @@
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="viridescenthunt" refine=1 lvl=90/90;
+tartaglia add set="heartofdepth" count=4;
+tartaglia add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+tartaglia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favbow" refine=3 lvl=90/90;
+collei add set="noblesseoblige" count=4;
+collei add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311;
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="favgs" refine=3 lvl=90/90;
+dori add set="gildeddreams" count=4;
+dori add stats hp=4780 atk=311 em=187 em=187 em=187;
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.331 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+
+active tartaglia;
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+  tartaglia walk, skill, attack;
+for let i=0; i<4; i=i+1 {
+  nahida skill;
+  if .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida attack, charge;
+  }
+  dori skill, attack;
+  collei burst, skill;
+  tartaglia burst;
+  dori burst;
+  tartaglia walk, skill,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:4, charge, dash;
+  collei skill;
+  dori skill, attack;
+  tartaglia aim;
+  dori attack;
+  tartaglia aim;
+}

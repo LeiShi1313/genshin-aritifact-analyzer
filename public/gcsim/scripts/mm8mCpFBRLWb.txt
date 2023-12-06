@@ -1,0 +1,44 @@
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="flowerofparadiselost" count=4;
+kuki add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.3306 em=679.92 cr=0.331 cd=0.3972;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="thecatch" refine=5 lvl=90/90;
+yaoyao add set="oceanhuedclam" count=4;
+yaoyao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 dendro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+luminedendro char lvl=80/90 cons=6 talent=9,9,9;
+luminedendro add weapon="favoniussword" refine=3 lvl=90/90;
+luminedendro add set="deepwoodmemories" count=4;
+luminedendro add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.642 cd=0.7944 dendro%=0.466;
+
+																			
+
+##Default Enemy
+options swap_delay=12 debug=true iteration=1000 workers=50 mode=sl;
+target lvl=100 resist=0.1 hp=100000000 pos=0,0;
+energy every interval=480,720 amount=1;
+active luminedendro;
+let rotations = 5;
+
+while rotations {
+  luminedendro skill,burst,attack;
+  xingqiu skill,burst,attack:2;
+  kuki skill;
+  if .kuki.burst.ready {kuki burst,attack;}
+  travelerdendro skill,attack;
+  yaoyao skill;
+  travelerdendro attack:3;
+  yaoyao burst,
+  attack,dash,
+  attack,dash,
+  attack,dash,
+  attack:5;
+  rotations = rotations - 1;
+}

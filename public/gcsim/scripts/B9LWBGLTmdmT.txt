@@ -1,0 +1,49 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="ttds" refine=5 lvl=90/90;
+kokomi add set="instructor" count=5;
+kokomi add stats hp=3571 atk=232 er=0.518 hydro%=0.3495 heal=0.26925 ; #main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.2204 em=39.64 cr=0.0662 cd=0.1324;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="kitain" refine=5 lvl=90/90;
+xiangling add set="fopl" count=4;
+xiangling add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+nahida skill;
+
+for let x = 0; x < 5; x = x + 1 {
+	kokomi attack, skill;
+	xingqiu burst, attack;
+    xiangling burst, attack, skill, attack;
+	nahida attack:3, skill, 
+		attack:3, charge;
+	kokomi attack, burst;
+	nahida attack:3, skill, 
+		attack, charge;
+	xingqiu skill, dash, attack:2;
+    xiangling attack:3, skill;
+	nahida attack:3, dash, 
+		attack:3, skill, 
+		attack:3, charge;
+	print("done");
+}
+

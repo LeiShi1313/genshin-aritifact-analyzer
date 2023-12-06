@@ -1,0 +1,110 @@
+fn rand_delay(mean, stddev) {
+  let del = randnorm() * stddev + mean;
+  if del > (mean + mean) {
+    del = mean + mean;
+  }
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    rand_delay(12, 3);
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    rand_delay(3, 1);
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    rand_delay(3, 1);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=80/80;
+kokomi add set="flowerofparadiselost" count=4;
+kokomi add stats def=125.00000999999999 hp=5526.88007 hp%=1.55540001 atk=396.60001 atk%=0.15160001 er=0.22020004 em=137.540007 cr=0.20220001199999996 cd=0.18650002000000002;
+
+nahida char lvl=90/90 cons=0 talent=9,10,10;
+nahida add weapon="athousandfloatingdreams" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.10930001 def=74.07001 hp=5497.0100999999995 atk=416.040009 atk%=0.040800004 er=0.27850002500000004 em=228.460003 cr=0.559900009 cd=0.65270003 dendro%=0.466;
+
+nilou char lvl=90/90 cons=0 talent=1,9,9;
+nilou add weapon="ironsting" refine=1 lvl=90/90;
+nilou add set="vourukashasglow" count=2;
+nilou add set="tenacityofthemillelith" count=2;
+nilou add stats def%=0.24050001 def=62.500004 hp=6602.40021 hp%=1.71870003 atk=361.580006 atk%=0.09330000999999999 er=0.16190002 em=184.16000300000002 cr=0.066100003 cd=0.147600002;
+
+aetherdendro char lvl=90/90 cons=6 talent=1,8,8;
+aetherdendro add weapon="favoniussword" refine=3 lvl=80/80;
+aetherdendro add set="deepwoodmemories" count=2;
+aetherdendro add set="gildeddreams" count=2;
+aetherdendro add stats def=53.230007 hp=5586.6301 hp%=0.15150002 atk=408.270009 atk%=0.21580001999999998 er=0.42110000999999997 em=636.43001 cr=0.264400025 cd=0.310800022;
+
+		
+options swap_delay=12 iteration=300 duration=90 workers=20;
+target lvl=100 resist=.1 pos=0,1.5;
+target lvl=100 resist=.1 pos=2.5, 0.5;
+energy every interval=480,720 amount=1;
+
+active kokomi;
+
+while 1 {
+    switch 1 {
+		case .kokomi.skill.ready && .kokomi.swap.ready:
+			kokomi skill;
+        case .nahida.burst.ready && .nahida.swap.ready:
+            nahida skill[hold=30];
+            nahida burst;
+		case .nilou.skill.ready && .nilou.swap.ready:
+			nilou skill:4;
+		case .aetherdendro.skill.ready && .aetherdendro.swap.ready:
+			aetherdendro skill;
+			if .aetherdendro.burst.ready {
+				aetherdendro burst;
+			}
+			kokomi swap;
+		# use autos if otherwise afk
+		case .status.kokomiburst > 0:
+			kokomi attack;
+        case .kokomi.onfield:
+			kokomi attack;
+			if .kokomi.burst.ready {
+				kokomi burst;
+			}
+		case .kokomi.swap.ready && !.kokomi.onfield:
+			kokomi swap;
+        case .aetherdendro.onfield:
+            aetherdendro attack;
+        case .nilou.onfield:
+            nilou attack;
+        case .nahida.onfield:
+            nahida attack;
+        default:
+			#we want to be on kokomi attacking as much as possible to proc
+			#dendro cores
+			wait(1);
+    }
+
+}
