@@ -1,8 +1,8 @@
-const genshindb = require("genshin-db");
-const fs = require("fs");
-const stream = require("stream");
-const util = require('util');
-const utils = require("./utils.cjs");
+import genshindb from "genshin-db";
+import fs from "fs";
+import stream from "stream";
+import util from 'util';
+import * as utils from "./utils.mjs";
 
 const finished = util.promisify(stream.finished);
 
@@ -157,5 +157,5 @@ const portSets = async () => {
     "utf-8"
   );
 };
-
-exports.portSets = portSets;
+portSets();
+export {portSets};

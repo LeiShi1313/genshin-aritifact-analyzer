@@ -1,6 +1,6 @@
-const genshindb = require("genshin-db");
-const fs = require("fs");
-const utils = require("./utils.cjs");
+import genshindb from "genshin-db";
+import fs from "fs";
+import * as utils from "./utils.mjs";
 
 const names = [
   "traveleranemo",
@@ -172,4 +172,4 @@ const portCharacters = async () => {
   );
 };
 
-exports.portCharacters = portCharacters;
+export {portCharacters};

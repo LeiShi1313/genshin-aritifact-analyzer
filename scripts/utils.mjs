@@ -1,9 +1,5 @@
-const fs = require("fs");
-const util = require('util');
-const stream = require('stream');
-const axios = require('axios').default;
-
-const finished = util.promisify(stream.finished);
+import fs from "fs";
+import axios from 'axios';
 
 const download_image = async (url, image_path) => {
     try {
@@ -41,6 +37,4 @@ const lngToRegion = {
     'German': 'de',
 }
 
-exports.download_image = download_image;
-exports.download_from_amber = download_from_amber;
-exports.lngToRegion = lngToRegion;
+export { download_image, download_from_amber, lngToRegion };

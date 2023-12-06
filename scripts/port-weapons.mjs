@@ -1,6 +1,6 @@
-const genshindb = require("genshin-db");
-const fs = require("fs");
-const utils = require("./utils.cjs");
+import genshindb from "genshin-db";
+import fs from "fs";
+import * as utils from "./utils.mjs";
 
 const names = [
   "Akuoumaru",
@@ -240,4 +240,4 @@ const portWeapons = async () => {
   fs.writeFileSync("./src/data/weapons.json", JSON.stringify(data), "utf-8");
 };
 
-exports.portWeapons = portWeapons;
+export{portWeapons};
