@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CaretDown, Activity } from "phosphor-react";
 import classNames from "classnames";
+import { ChartLine } from "phosphor-react";
 import md5 from "crypto-js/md5";
 
 import { deserializeFromMona, deserializeFromGood } from "../utils/artifact";
@@ -119,6 +119,15 @@ const Main = () => {
           >
             <IconBuilds />
             {t("Edit Builds")}
+            <div className="w-8" />
+          </button>
+
+          <button
+            className="btn btn-primary justify-between rounded-full"
+            onClick={() => navigate("/gcsim")}
+          >
+            <ChartLine size={20} weight="bold"/>
+            {t("DPS Simulator")}&nbsp;(gcsim)
             <div className="w-8" />
           </button>
 

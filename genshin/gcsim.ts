@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal.js";
+import _m0 from "protobufjs/minimal.js";
 import { AttributeType, attributeTypeFromJSON, attributeTypeToJSON } from "./attribute.js";
 import { Character, characterFromJSON, characterToJSON } from "./character.js";
 import { Element, elementFromJSON, elementToJSON } from "./element.js";
@@ -173,6 +173,10 @@ export interface GCSimScript {
   energySettings: GCSimScriptEnergySettings | undefined;
   hurtSettings: GCSimScriptHurtSettings | undefined;
   scripts: string[];
+}
+
+export interface GCSim {
+  scripts: GCSimScript[];
 }
 
 function createBaseGCSimScriptParam(): GCSimScriptParam {
@@ -1062,7 +1066,7 @@ export const GCSimScriptTarget = {
     }
     writer.ldelim();
     if (message.hp !== 0) {
-      writer.uint32(48).int32(message.hp);
+      writer.uint32(53).float(message.hp);
     }
     if (message.amount !== 0) {
       writer.uint32(56).int32(message.amount);
@@ -1140,7 +1144,7 @@ export const GCSimScriptTarget = {
           }
           break;
         case 6:
-          message.hp = reader.int32();
+          message.hp = reader.float();
           break;
         case 7:
           message.amount = reader.int32();
@@ -1224,7 +1228,7 @@ export const GCSimScriptTarget = {
     } else {
       obj.intervals = [];
     }
-    message.hp !== undefined && (obj.hp = Math.round(message.hp));
+    message.hp !== undefined && (obj.hp = message.hp);
     message.amount !== undefined && (obj.amount = Math.round(message.amount));
     message.particleThreshold !== undefined && (obj.particleThreshold = Math.round(message.particleThreshold));
     message.particleDropCount !== undefined && (obj.particleDropCount = Math.round(message.particleDropCount));
@@ -1387,6 +1391,57 @@ export const GCSimScript = {
       ? GCSimScriptHurtSettings.fromPartial(object.hurtSettings)
       : undefined;
     message.scripts = object.scripts?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseGCSim(): GCSim {
+  return { scripts: [] };
+}
+
+export const GCSim = {
+  encode(message: GCSim, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.scripts) {
+      GCSimScript.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GCSim {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGCSim();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.scripts.push(GCSimScript.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GCSim {
+    return { scripts: Array.isArray(object?.scripts) ? object.scripts.map((e: any) => GCSimScript.fromJSON(e)) : [] };
+  },
+
+  toJSON(message: GCSim): unknown {
+    const obj: any = {};
+    if (message.scripts) {
+      obj.scripts = message.scripts.map((e) => e ? GCSimScript.toJSON(e) : undefined);
+    } else {
+      obj.scripts = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GCSim>, I>>(object: I): GCSim {
+    const message = createBaseGCSim();
+    message.scripts = object.scripts?.map((e) => GCSimScript.fromPartial(e)) || [];
     return message;
   },
 };

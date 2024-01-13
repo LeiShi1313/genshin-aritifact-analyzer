@@ -4,7 +4,7 @@ import { characterMetadata } from "../../utils/character";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
 import classNames from "classnames";
 
-const CharacterCard = ({ character, text = "name", width = 24, textColor, isFit }) => {
+const CharacterCard = ({ character, text = "name", width = 24, textColor, saturate=false }) => {
   const imgUrl = useMemo(
     () =>
       new URL(
@@ -21,7 +21,7 @@ const CharacterCard = ({ character, text = "name", width = 24, textColor, isFit 
   return (
     <figure
       className={
-        classNames("flex flex-col items-center justify-start overflow-hidden rounded bg-base-100 shadow-md", {"saturate-[0.4]": !isFit})
+        classNames("flex flex-col items-center justify-start overflow-hidden rounded bg-base-100 shadow-md", {"saturate-[0.4]": saturate})
       }
     >
       <div

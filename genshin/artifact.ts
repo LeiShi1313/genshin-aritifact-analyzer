@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal.js";
+import _m0 from "protobufjs/minimal.js";
 import { Attribute, AttributePosition, attributePositionFromJSON, attributePositionToJSON } from "./attribute.js";
 import { Character, characterFromJSON, characterToJSON } from "./character.js";
 import { Set, setFromJSON, setToJSON } from "./set.js";

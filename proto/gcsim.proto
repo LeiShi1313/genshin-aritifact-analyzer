@@ -92,7 +92,7 @@ message GCSimScriptTarget {
     int32 level = 3;
     float resist = 4;
     repeated int32 intervals = 5;
-    int32 hp = 6;
+    float hp = 6;
     int32 amount = 7;
     int32 particle_threshold = 8;
     int32 particle_drop_count = 9;
@@ -114,4 +114,8 @@ message GCSimScript {
     GCSimScriptEnergySettings energy_settings = 4;
     GCSimScriptHurtSettings hurt_settings = 5;
     repeated string scripts = 6;
+}
+
+message GCSim {
+    repeated GCSimScript scripts = 1;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal.js";
+import _m0 from "protobufjs/minimal.js";
 import { Attribute, AttributeType, attributeTypeFromJSON, attributeTypeToJSON } from "./attribute.js";
 import { Character, characterFromJSON, characterToJSON } from "./character.js";
 import { Suit } from "./suit.js";

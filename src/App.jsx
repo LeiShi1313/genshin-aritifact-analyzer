@@ -23,7 +23,9 @@ const ArtifactsUpload = lazy(() =>
 const Artifact = lazy(() => import("./features/artifacts/Artifact"));
 const UploadedArtifacts = lazy(() => import("./features/artifacts/UploadedArtifacts"));
 const Config = lazy(() => import("./features/configs/Config"));
-const Teams = lazy(() => import("./features/gcsim/Teams"));
+const GCSim = lazy(() => import("./features/gcsim/GCSim"));
+const GCSimSelect = lazy(() => import("./features/gcsim/Select"));
+const GCSimTeams = lazy(() => import("./features/gcsim/Teams"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,7 +64,11 @@ const App = () => {
                 element={<ArtifactsUpload />}
               />
               <Route path="artifact" element={<Artifact />} />
-              <Route path="gcsim" element={<Teams />} />
+              <Route path="gcsim" element={<GCSim />} >
+                <Route index element={<GCSimSelect />} />
+                <Route path="teams" element={<GCSimTeams />} />
+                </Route>
+
               <Route path="config" element={<Config />} />
             </Route>
             {/* Place new routes over this */}
