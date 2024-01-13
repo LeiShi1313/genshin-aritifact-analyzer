@@ -18,6 +18,12 @@ const iterFind = async (dir, pattern, fn) => {
 }
 
 const generate_gcsim = async () => {
+    console.log('Fetching main.gcsim...');
+    fetch('https://gcsim.app/api/wasm/main/f93cdd06eb1065278365279c45079994e14c1595/main.wasm').then(async (response) => {
+        const buffer = await response.arrayBuffer();
+        await fs.promises.writeFile(path.join(__dirname, "../public/gcsim/main.wasm"), new Uint8Array(buffer));
+    });
+
     console.log('Generating gcsim character...');
     const characterKeys = new Set();
     const characterAliases = {};

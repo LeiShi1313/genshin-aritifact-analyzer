@@ -48,7 +48,8 @@ const UploadedArtifacts = () => {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="my-auto flex h-full w-full flex-col items-center justify-center  space-y-2">
+      <div className="my-auto flex h-[60vh] w-full flex-col items-center justify-start  space-y-2 overflow-auto">
+          
         {Object.keys(uploaded)
           .filter((key) => uploaded[key].items)
           .map((key) => (
@@ -81,7 +82,7 @@ const UploadedArtifacts = () => {
                 )}
               </div>
             </div>
-          ))}
+        ))}
       </div>
     </div>
   );

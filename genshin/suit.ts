@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal.js";
+import _m0 from "protobufjs/minimal.js";
 import { Set, setFromJSON, setToJSON } from "./set.js";
 
 export const protobufPackage = "io.leishi.genshin.proto";

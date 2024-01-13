@@ -3,11 +3,12 @@
     "target": "es2021",
     "module": "esnext",
     "strict": true,
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2021"],
+    "lib": ["ES2021", "DOM"],
     "moduleResolution": "node"
   },
   "include": ["**/*"],
