@@ -85,4 +85,6 @@ enum Character {
     WRIOTHESLEY = 79;
     FURINA = 80;
     CHARLOTTE = 81;
+    NAVIA = 82;
+    CHEVREUSE = 83;
 }

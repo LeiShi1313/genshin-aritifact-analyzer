@@ -48,6 +48,8 @@ export enum Set {
   VOURUKASHAS_GLOW = 42,
   GOLDEN_TROUPE = 43,
   MARECHAUSSEE_HUNTER = 44,
+  SONG_OF_DAYS_PAST = 45,
+  NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS = 46,
   UNRECOGNIZED = -1,
 }
 
@@ -188,6 +190,12 @@ export function setFromJSON(object: any): Set {
     case 44:
     case "MARECHAUSSEE_HUNTER":
       return Set.MARECHAUSSEE_HUNTER;
+    case 45:
+    case "SONG_OF_DAYS_PAST":
+      return Set.SONG_OF_DAYS_PAST;
+    case 46:
+    case "NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS":
+      return Set.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -287,6 +295,10 @@ export function setToJSON(object: Set): string {
       return "GOLDEN_TROUPE";
     case Set.MARECHAUSSEE_HUNTER:
       return "MARECHAUSSEE_HUNTER";
+    case Set.SONG_OF_DAYS_PAST:
+      return "SONG_OF_DAYS_PAST";
+    case Set.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS:
+      return "NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS";
     case Set.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

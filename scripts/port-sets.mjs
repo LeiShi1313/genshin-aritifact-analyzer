@@ -51,6 +51,8 @@ const names = [
   "Vourukasha's Glow",
   "Golden Troupe",
   "Marechaussee Hunter",
+  "Song of Days Past",
+  "Nighttime Whispers in the Echoing Woods",
 ];
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 

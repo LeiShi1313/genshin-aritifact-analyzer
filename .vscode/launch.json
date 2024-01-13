@@ -7,7 +7,7 @@
     {
       "name": "Launch scripts",
       "cwd": "${workspaceFolder}",
-      "program": "${workspaceFolder}/scripts/index.cjs",
+      "program": "${workspaceFolder}/scripts/index.mjs",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node"
