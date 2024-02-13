@@ -181,6 +181,7 @@ const names = [
   "Sword of Narzissenkreuz",
   "Ultimate Overlord's Mega Magic Sword",
   "Verdict",
+  "Crane's Echoing Call",
 ];
 
 const portWeapons = async () => {

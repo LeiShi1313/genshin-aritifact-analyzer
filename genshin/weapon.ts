@@ -239,6 +239,7 @@ export enum Weapon {
   SWORD_OF_NARZISSENKREUZ = 176,
   ULTIMATE_OVERLORDS_MEGA_MAGIC_SWORD = 177,
   VERDICT = 178,
+  CRANES_ECHOING_CALL = 179,
   UNRECOGNIZED = -1,
 }
 
@@ -781,6 +782,9 @@ export function weaponFromJSON(object: any): Weapon {
     case 178:
     case "VERDICT":
       return Weapon.VERDICT;
+    case 179:
+    case "CRANES_ECHOING_CALL":
+      return Weapon.CRANES_ECHOING_CALL;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1148,6 +1152,8 @@ export function weaponToJSON(object: Weapon): string {
       return "ULTIMATE_OVERLORDS_MEGA_MAGIC_SWORD";
     case Weapon.VERDICT:
       return "VERDICT";
+    case Weapon.CRANES_ECHOING_CALL:
+      return "CRANES_ECHOING_CALL";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

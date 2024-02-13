@@ -87,4 +87,6 @@ enum Character {
     CHARLOTTE = 81;
     NAVIA = 82;
     CHEVREUSE = 83;
+    XIANYUN = 84;
+    GAMING = 85;
 }

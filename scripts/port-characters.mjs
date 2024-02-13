@@ -85,7 +85,9 @@ const names = [
   "furina",
   "charlotte",
   "navia",
-  "chevreuse"
+  "chevreuse",
+  "xianyun",
+  "gaming"
 ];
 
 const portCharacters = async () => {
