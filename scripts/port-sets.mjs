@@ -88,14 +88,14 @@ const portSets = async () => {
 
     trans["en"][key] = eng.name;
     setsData[key] = {
-      "2pc": eng["2pc"],
-      "4pc": eng["4pc"],
+      "2pc": eng.effect2Pc,
+      "4pc": eng.effect4Pc,
     };
-    if (eng["2pc"]) {
-      if (setEff[eng["2pc"]] === undefined) {
-        setEff[eng["2pc"]] = [];
+    if (eng.effect2Pc) {
+      if (setEff[eng.effect2Pc] === undefined) {
+        setEff[eng.effect2Pc] = [];
       }
-      setEff[eng["2pc"]].push(key);
+      setEff[eng.effect2Pc].push(key);
     }
     for (let lng of Object.keys(utils.lngToRegion)) {
       const data = genshindb.artifacts(e, { resultLanguage: lng });

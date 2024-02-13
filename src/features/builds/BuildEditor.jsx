@@ -98,6 +98,7 @@ const BuildEditor = () => {
     if (theme) setTheme(theme);
     if (char > 0) {
       const data = characterData[Character[char].toLowerCase()];
+      console.log(data);
       if (data) {
         setWeaponFilterFn(() => (weapon) => {
           return (

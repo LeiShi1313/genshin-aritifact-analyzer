@@ -181,7 +181,7 @@ const names = [
   "Sword of Narzissenkreuz",
   "Ultimate Overlord's Mega Magic Sword",
   "Verdict",
-  "Crane's Echoing Call",
+  "Crane's Echoing Call"
 ];
 
 const portWeapons = async () => {
@@ -218,7 +218,7 @@ const portWeapons = async () => {
     proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
 
     data[key] = {
-      weapontype: eng.weapontype,
+      weapontype: eng.weaponText,
       rarity: eng.rarity,
     };
     trans["en"][key] = eng.name;

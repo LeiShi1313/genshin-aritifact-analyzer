@@ -131,8 +131,8 @@ const portCharacters = async () => {
     }
     data[key] = {
       zh_name: trans['zh'][key],
-      element: key.startsWith('traveler') ? key.split('_')[1] : eng.element !== 'None' ? eng.element : '',
-      weapontype: key.startsWith('traveler') ? 'Sword' : eng.weapontype,
+      element: key.startsWith('traveler') ? key.split('_')[1] : eng.elementText !== 'None' ? eng.elementText : '',
+      weapontype: key.startsWith('traveler') ? 'Sword' : eng.weaponText,
       rarity: key.startsWith('traveler') ? 5 : eng.rarity,
     }
         if (e === 'chevreuse') {
