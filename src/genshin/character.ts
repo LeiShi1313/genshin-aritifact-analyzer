@@ -89,6 +89,7 @@ export enum Character {
   CHEVREUSE = 83,
   XIANYUN = 84,
   GAMING = 85,
+  CHIORI = 86,
   UNRECOGNIZED = -1,
 }
 
@@ -352,6 +353,9 @@ export function characterFromJSON(object: any): Character {
     case 85:
     case "GAMING":
       return Character.GAMING;
+    case 86:
+    case "CHIORI":
+      return Character.CHIORI;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -533,6 +537,8 @@ export function characterToJSON(object: Character): string {
       return "XIANYUN";
     case Character.GAMING:
       return "GAMING";
+    case Character.CHIORI:
+      return "CHIORI";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

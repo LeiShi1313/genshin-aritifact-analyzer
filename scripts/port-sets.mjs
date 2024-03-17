@@ -71,7 +71,7 @@ const portSets = async () => {
   proto_file.write(`    SET_UNSPECIFIED = ${idx++};\n`);
 
   // Debugging console.log
-  console.log("Start processing names...");
+  console.log("Start processing set...");
 
   await Promise.all(names.map(async (e) => {
     const eng = genshindb.artifacts(e);

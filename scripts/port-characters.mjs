@@ -87,7 +87,8 @@ const names = [
   "navia",
   "chevreuse",
   "xianyun",
-  "gaming"
+  "gaming",
+  "chiori"
 ];
 
 const portCharacters = async () => {
@@ -135,9 +136,6 @@ const portCharacters = async () => {
       weapontype: key.startsWith('traveler') ? 'Sword' : eng.weaponText,
       rarity: key.startsWith('traveler') ? 5 : eng.rarity,
     }
-        if (e === 'chevreuse') {
-          console.log('k');
-        }
 
     for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {
       if (eng.images[imageType]) {

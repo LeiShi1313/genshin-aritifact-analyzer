@@ -240,6 +240,8 @@ export enum Weapon {
   ULTIMATE_OVERLORDS_MEGA_MAGIC_SWORD = 177,
   VERDICT = 178,
   CRANES_ECHOING_CALL = 179,
+  URAKU_MISUGIRI = 180,
+  DIALOGUES_OF_THE_DESERT_SAGES = 181,
   UNRECOGNIZED = -1,
 }
 
@@ -785,6 +787,12 @@ export function weaponFromJSON(object: any): Weapon {
     case 179:
     case "CRANES_ECHOING_CALL":
       return Weapon.CRANES_ECHOING_CALL;
+    case 180:
+    case "URAKU_MISUGIRI":
+      return Weapon.URAKU_MISUGIRI;
+    case 181:
+    case "DIALOGUES_OF_THE_DESERT_SAGES":
+      return Weapon.DIALOGUES_OF_THE_DESERT_SAGES;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1154,6 +1162,10 @@ export function weaponToJSON(object: Weapon): string {
       return "VERDICT";
     case Weapon.CRANES_ECHOING_CALL:
       return "CRANES_ECHOING_CALL";
+    case Weapon.URAKU_MISUGIRI:
+      return "URAKU_MISUGIRI";
+    case Weapon.DIALOGUES_OF_THE_DESERT_SAGES:
+      return "DIALOGUES_OF_THE_DESERT_SAGES";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

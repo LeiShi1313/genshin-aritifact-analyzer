@@ -89,4 +89,5 @@ enum Character {
     CHEVREUSE = 83;
     XIANYUN = 84;
     GAMING = 85;
+    CHIORI = 86;
 }
