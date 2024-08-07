@@ -32,7 +32,6 @@ const App = () => {
     checkAppVersionAndRefresh();
     import("./data/presets.js").then((data) => {
       const presets = [];
-      // console.log(data.default)
       for (let rawBuild of data.default) {
         try {
           presets.push(decodeBuild(rawBuild));

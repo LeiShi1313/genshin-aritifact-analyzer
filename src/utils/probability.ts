@@ -14,7 +14,7 @@ import { getConfig } from "./config";
 const getRarityWeights = (config?: defaultConfig.ConfigOptions) =>
   math.matrix(math.clone(getConfig(config).rarityWeights));
 
-const subAttributesPermutations = percom.per(
+const subAttributesPermutations: AttributeType[][] = percom.per(
   subAttributeOptions,
   defaultConfig.maximumSubAttribute
 );

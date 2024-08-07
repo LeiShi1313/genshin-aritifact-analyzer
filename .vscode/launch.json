@@ -16,7 +16,7 @@
     {
       "name": "Launch gcsim",
       "cwd": "${workspaceFolder}",
-      "program": "${workspaceFolder}/scripts/gcsim.cjs",
+      "program": "${workspaceFolder}/scripts/gcsim.ts",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
