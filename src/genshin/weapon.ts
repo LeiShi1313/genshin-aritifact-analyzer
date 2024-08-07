@@ -242,6 +242,12 @@ export enum Weapon {
   CRANES_ECHOING_CALL = 179,
   URAKU_MISUGIRI = 180,
   DIALOGUES_OF_THE_DESERT_SAGES = 181,
+  ABSOLUTION = 182,
+  CRIMSON_MOONS_SEMBLANCE = 183,
+  LUMIDOUCE_ELEGY = 184,
+  IBIS_PIERCER = 185,
+  CLOUDFORGED = 186,
+  SILVERSHOWER_HEARTSTRINGS = 187,
   UNRECOGNIZED = -1,
 }
 
@@ -793,6 +799,24 @@ export function weaponFromJSON(object: any): Weapon {
     case 181:
     case "DIALOGUES_OF_THE_DESERT_SAGES":
       return Weapon.DIALOGUES_OF_THE_DESERT_SAGES;
+    case 182:
+    case "ABSOLUTION":
+      return Weapon.ABSOLUTION;
+    case 183:
+    case "CRIMSON_MOONS_SEMBLANCE":
+      return Weapon.CRIMSON_MOONS_SEMBLANCE;
+    case 184:
+    case "LUMIDOUCE_ELEGY":
+      return Weapon.LUMIDOUCE_ELEGY;
+    case 185:
+    case "IBIS_PIERCER":
+      return Weapon.IBIS_PIERCER;
+    case 186:
+    case "CLOUDFORGED":
+      return Weapon.CLOUDFORGED;
+    case 187:
+    case "SILVERSHOWER_HEARTSTRINGS":
+      return Weapon.SILVERSHOWER_HEARTSTRINGS;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1166,6 +1190,18 @@ export function weaponToJSON(object: Weapon): string {
       return "URAKU_MISUGIRI";
     case Weapon.DIALOGUES_OF_THE_DESERT_SAGES:
       return "DIALOGUES_OF_THE_DESERT_SAGES";
+    case Weapon.ABSOLUTION:
+      return "ABSOLUTION";
+    case Weapon.CRIMSON_MOONS_SEMBLANCE:
+      return "CRIMSON_MOONS_SEMBLANCE";
+    case Weapon.LUMIDOUCE_ELEGY:
+      return "LUMIDOUCE_ELEGY";
+    case Weapon.IBIS_PIERCER:
+      return "IBIS_PIERCER";
+    case Weapon.CLOUDFORGED:
+      return "CLOUDFORGED";
+    case Weapon.SILVERSHOWER_HEARTSTRINGS:
+      return "SILVERSHOWER_HEARTSTRINGS";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
