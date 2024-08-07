@@ -2,94 +2,8 @@ import genshindb from "genshin-db";
 import fs from "fs";
 import * as utils from "./utils.mjs";
 
-const names = [
-  "traveleranemo",
-  "travelergeo",
-  "travelerelectro",
-  "travelerdendro",
-  "aether",
-  "lumine",
-  "albedo",
-  "aloy",
-  "amber",
-  "barbara",
-  "beidou",
-  "bennett",
-  "chongyun",
-  "diluc",
-  "diona",
-  "eula",
-  "fischl",
-  "ganyu",
-  "hutao",
-  "jean",
-  "kazuha",
-  "kaeya",
-  "ayaka",
-  "keqing",
-  "klee",
-  "sara",
-  "lisa",
-  "mona",
-  "ningguang",
-  "noelle",
-  "qiqi",
-  "raiden",
-  "razor",
-  "rosaria",
-  "kokomi",
-  "sayu",
-  "sucrose",
-  "tartaglia",
-  "thoma",
-  "venti",
-  "xiangling",
-  "xiao",
-  "xingqiu",
-  "xinyan",
-  "yanfei",
-  "yoimiya",
-  "zhongli",
-  "gorou",
-  "itto",
-  "shenhe",
-  "yunjin",
-  "yaemiko",
-  "ayato",
-  "yelan",
-  "kuki",
-  "heizou",
-  "collei",
-  "dori",
-  "tighnari",
-  "candace",
-  "cyno",
-  "nilou",
-  "nahida",
-  "layla",
-  "faruzan",
-  "wanderer",
-  "alhaitham",
-  "yaoyao",
-  "dehya",
-  "mika",
-  "baizhu",
-  "kaveh",
-  "kirara",
-  "travelerhydro",
-  "lyney",
-  "lynette",
-  "freminet",
-  "neuvillette",
-  "wriothesley",
-  "furina",
-  "charlotte",
-  "navia",
-  "chevreuse",
-  "xianyun",
-  "gaming",
-  "chiori"
-];
+await utils.update_character_data('scripts/characters');
+const names = utils.readNamesFromFile('scripts/characters');
 
 const portCharacters = async () => {
   let trans = {
@@ -107,7 +21,7 @@ const portCharacters = async () => {
   proto_file.write(`    CHARACTER_UNSPECIFIED = ${idx++};\n`);
 
   names.forEach(async (e) => {
-    const eng = e.startsWith("traveler")
+    const eng = e.startsWith("Traveler")
       ? genshindb.talents(e)
       : genshindb.characters(e);
     if (!eng) {
@@ -122,7 +36,7 @@ const portCharacters = async () => {
 
     trans['en'][key] = eng.name;
     for (let lng of Object.keys(utils.lngToRegion)) {
-      const data = e.startsWith("traveler")
+      const data = e.startsWith("Traveler")
         ? genshindb.talents(e, { resultLanguage: lng })
         : genshindb.characters(e, { resultLanguage: lng });
       if (!!!trans[utils.lngToRegion[lng]]) {
@@ -132,9 +46,9 @@ const portCharacters = async () => {
     }
     data[key] = {
       zh_name: trans['zh'][key],
-      element: key.startsWith('traveler') ? key.split('_')[1] : eng.elementText !== 'None' ? eng.elementText : '',
-      weapontype: key.startsWith('traveler') ? 'Sword' : eng.weaponText,
-      rarity: key.startsWith('traveler') ? 5 : eng.rarity,
+      element: key.startsWith('Traveler') ? key.split(' ')[1] : eng.elementText !== 'None' ? eng.elementText : '',
+      weapontype: key.startsWith('Traveler') ? 'Sword' : eng.weaponText,
+      rarity: key.startsWith('Traveler') ? 5 : eng.rarity,
     }
 
     for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {

@@ -90,4 +90,10 @@ enum Character {
     XIANYUN = 84;
     GAMING = 85;
     CHIORI = 86;
+    KAMISATO_AYATO = 87;
+    SIGEWINNE = 88;
+    ARLECCHINO = 89;
+    SETHOS = 90;
+    CLORINDE = 91;
+    EMILIE = 92;
 }
