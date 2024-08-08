@@ -28,7 +28,7 @@ const portCharacters = async () => {
   proto_file.write(`    CHARACTER_UNSPECIFIED = 0;\n`);
 
   names.forEach(async (e) => {
-    const eng = e.startsWith("traveler")
+    const eng = e.startsWith("Traveler")
       ? genshindb.talents(e)
       : genshindb.characters(e);
     if (!eng) {
@@ -43,7 +43,7 @@ const portCharacters = async () => {
 
     trans['en'][key] = eng.name;
     for (let lng of Object.keys(utils.lngToRegion)) {
-      const data = e.startsWith("traveler")
+      const data = e.startsWith("Traveler")
         ? genshindb.talents(e, { resultLanguage: lng })
         : genshindb.characters(e, { resultLanguage: lng });
       if (!!!trans[utils.lngToRegion[lng]]) {
@@ -53,9 +53,9 @@ const portCharacters = async () => {
     }
     data[key] = {
       zh_name: trans['zh'][key],
-      element: key.startsWith('traveler') ? key.split('_')[1] : eng.elementText !== 'None' ? eng.elementText : '',
-      weapontype: key.startsWith('traveler') ? 'Sword' : eng.weaponText,
-      rarity: key.startsWith('traveler') ? 5 : eng.rarity,
+      element: key.startsWith('Traveler') ? key.split(' ')[1] : eng.elementText !== 'None' ? eng.elementText : '',
+      weapontype: key.startsWith('Traveler') ? 'Sword' : eng.weaponText,
+      rarity: key.startsWith('Traveler') ? 5 : eng.rarity,
     }
 
     console.log(eng.images)

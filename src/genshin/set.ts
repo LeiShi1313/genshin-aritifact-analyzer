@@ -50,6 +50,11 @@ export enum Set {
   MARECHAUSSEE_HUNTER = 44,
   SONG_OF_DAYS_PAST = 45,
   NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS = 46,
+  ADVENTURER = 47,
+  LUCKY_DOG = 48,
+  TRAVELING_DOCTOR = 49,
+  FRAGMENT_OF_HARMONIC_WHIMSY = 50,
+  UNFINISHED_REVERIE = 51,
   UNRECOGNIZED = -1,
 }
 
@@ -196,6 +201,21 @@ export function setFromJSON(object: any): Set {
     case 46:
     case "NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS":
       return Set.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS;
+    case 47:
+    case "ADVENTURER":
+      return Set.ADVENTURER;
+    case 48:
+    case "LUCKY_DOG":
+      return Set.LUCKY_DOG;
+    case 49:
+    case "TRAVELING_DOCTOR":
+      return Set.TRAVELING_DOCTOR;
+    case 50:
+    case "FRAGMENT_OF_HARMONIC_WHIMSY":
+      return Set.FRAGMENT_OF_HARMONIC_WHIMSY;
+    case 51:
+    case "UNFINISHED_REVERIE":
+      return Set.UNFINISHED_REVERIE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -299,6 +319,16 @@ export function setToJSON(object: Set): string {
       return "SONG_OF_DAYS_PAST";
     case Set.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS:
       return "NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS";
+    case Set.ADVENTURER:
+      return "ADVENTURER";
+    case Set.LUCKY_DOG:
+      return "LUCKY_DOG";
+    case Set.TRAVELING_DOCTOR:
+      return "TRAVELING_DOCTOR";
+    case Set.FRAGMENT_OF_HARMONIC_WHIMSY:
+      return "FRAGMENT_OF_HARMONIC_WHIMSY";
+    case Set.UNFINISHED_REVERIE:
+      return "UNFINISHED_REVERIE";
     case Set.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

@@ -10,7 +10,8 @@
       "program": "${workspaceFolder}/scripts/index.mjs",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "type": "node",
+      "runtimeExecutable": "/home/lei/.local/share/nvm/v20.16.0/bin/node"
     },
     {
       "name": "Launch gcsim",
@@ -18,7 +19,8 @@
       "program": "${workspaceFolder}/scripts/gcsim.cjs",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "type": "node",
+      "runtimeExecutable": "/home/lei/.local/share/nvm/v20.16.0/bin/node"
     },
     {
       "name": "Launch read presets",
@@ -26,7 +28,8 @@
       "program": "${workspaceFolder}/read_builds.cjs",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "type": "node",
+      "runtimeExecutable": "/home/lei/.local/share/nvm/v20.16.0/bin/node"
     }
   ]
 }
