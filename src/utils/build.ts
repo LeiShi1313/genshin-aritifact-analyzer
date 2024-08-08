@@ -10,6 +10,7 @@ import { toHex, fromHex } from "./hex";
 import data from "../data/sets.json";
 import data2pc from "../data/set2pcEffect.json";
 import { TFunction } from "react-i18next";
+import migrateIdIfNeeded from "./migrate_id";
 
 const setTo2pcSets = {};
 Object.keys(data).map((key) => {
@@ -21,7 +22,7 @@ Object.keys(data).map((key) => {
 export const encodeBuild = (build: Build): string =>
   toHex(Build.encode(build).finish());
 export const decodeBuild = (encoded: string): Build =>
-  Build.decode(fromHex(encoded));
+  migrateIdIfNeeded(Build.decode(fromHex(encoded)));
 
 export const getBuildShortName = (build: Build, t: TFunction): string => {
   let shortName = t(Character[build.character].toLowerCase(), { ns: "characters" });

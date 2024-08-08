@@ -6,54 +6,9 @@ import * as utils from "./utils.mjs";
 
 const finished = util.promisify(stream.finished);
 
-const names = [
-  "Archaic Petra",
-  "Berserker",
-  "Blizzard Strayer",
-  "Bloodstained Chivalry",
-  "Brave Heart",
-  "Crimson Witch of Flames",
-  "Deepwood Memories",
-  "Defender's Will",
-  "Desert Pavilion Chronicle",
-  "Echoes of an Offering",
-  "Emblem of Severed Fate",
-  "Flower of Paradise Lost",
-  "Gambler",
-  "Gilded Dreams",
-  "Gladiator's Finale",
-  "Heart of Depth",
-  "Husk of Opulent Dreams",
-  "Instructor",
-  "Lavawalker",
-  "Maiden Beloved",
-  "Martial Artist",
-  "Noblesse Oblige",
-  "Ocean-Hued Clam",
-  "Pale Flame",
-  "Prayers for Destiny",
-  "Prayers for Illumination",
-  "Prayers for Wisdom",
-  "Prayers to Springtime",
-  "Resolution of Sojourner",
-  "Retracing Bolide",
-  "Scholar",
-  "Shimenawa's Reminiscence",
-  "Tenacity of the Millelith",
-  "The Exile",
-  "Thundering Fury",
-  "Thundersoother",
-  "Tiny Miracle",
-  "Vermillion Hereafter",
-  "Viridescent Venerer",
-  "Wanderer's Troupe",
-  "Nymph's Dream",
-  "Vourukasha's Glow",
-  "Golden Troupe",
-  "Marechaussee Hunter",
-  "Song of Days Past",
-  "Nighttime Whispers in the Echoing Woods",
-];
+
+const names = genshindb.artifacts("names", { matchCategories: true });
+
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 
 const portSets = async () => {
@@ -63,12 +18,11 @@ const portSets = async () => {
   let setsData = {};
   let setEff = {};
 
-  let idx = 0;
   let proto_file = fs.createWriteStream("./proto/set.proto", { flags: "w" });
   proto_file.write('syntax = "proto3";\n\n');
   proto_file.write("package io.leishi.genshin.proto;\n\n");
   proto_file.write("enum Set {\n");
-  proto_file.write(`    SET_UNSPECIFIED = ${idx++};\n`);
+  proto_file.write(`    SET_UNSPECIFIED = 0;\n`);
 
   // Debugging console.log
   console.log("Start processing set...");
@@ -84,7 +38,7 @@ const portSets = async () => {
       .replace(/'/gi, "")
       .replace(/[^0-9a-z]/gi, "_")
       .toLowerCase();
-    proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
+    proto_file.write(`    ${key.toUpperCase()} = ${eng.id};\n`);
 
     trans["en"][key] = eng.name;
     setsData[key] = {

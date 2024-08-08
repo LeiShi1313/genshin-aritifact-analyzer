@@ -2,93 +2,14 @@ import genshindb from "genshin-db";
 import fs from "fs";
 import * as utils from "./utils.mjs";
 
+
 const names = [
   "traveleranemo",
   "travelergeo",
   "travelerelectro",
   "travelerdendro",
-  "aether",
-  "lumine",
-  "albedo",
-  "aloy",
-  "amber",
-  "barbara",
-  "beidou",
-  "bennett",
-  "chongyun",
-  "diluc",
-  "diona",
-  "eula",
-  "fischl",
-  "ganyu",
-  "hutao",
-  "jean",
-  "kazuha",
-  "kaeya",
-  "ayaka",
-  "keqing",
-  "klee",
-  "sara",
-  "lisa",
-  "mona",
-  "ningguang",
-  "noelle",
-  "qiqi",
-  "raiden",
-  "razor",
-  "rosaria",
-  "kokomi",
-  "sayu",
-  "sucrose",
-  "tartaglia",
-  "thoma",
-  "venti",
-  "xiangling",
-  "xiao",
-  "xingqiu",
-  "xinyan",
-  "yanfei",
-  "yoimiya",
-  "zhongli",
-  "gorou",
-  "itto",
-  "shenhe",
-  "yunjin",
-  "yaemiko",
-  "ayato",
-  "yelan",
-  "kuki",
-  "heizou",
-  "collei",
-  "dori",
-  "tighnari",
-  "candace",
-  "cyno",
-  "nilou",
-  "nahida",
-  "layla",
-  "faruzan",
-  "wanderer",
-  "alhaitham",
-  "yaoyao",
-  "dehya",
-  "mika",
-  "baizhu",
-  "kaveh",
-  "kirara",
   "travelerhydro",
-  "lyney",
-  "lynette",
-  "freminet",
-  "neuvillette",
-  "wriothesley",
-  "furina",
-  "charlotte",
-  "navia",
-  "chevreuse",
-  "xianyun",
-  "gaming",
-  "chiori"
+  ...genshindb.characters("name", { matchCategories: true })
 ];
 
 const portCharacters = async () => {
@@ -96,7 +17,7 @@ const portCharacters = async () => {
     en: {},
   };
   let data = {};
-  let idx = 0;
+
 
   let proto_file = fs.createWriteStream("./proto/character.proto", {
     flags: "w",
@@ -104,7 +25,7 @@ const portCharacters = async () => {
   proto_file.write('syntax = "proto3";\n\n');
   proto_file.write("package io.leishi.genshin.proto;\n\n");
   proto_file.write("enum Character {\n");
-  proto_file.write(`    CHARACTER_UNSPECIFIED = ${idx++};\n`);
+  proto_file.write(`    CHARACTER_UNSPECIFIED = 0;\n`);
 
   names.forEach(async (e) => {
     const eng = e.startsWith("traveler")
@@ -118,7 +39,7 @@ const portCharacters = async () => {
       .replace(/[\(\)]/gi, "")
       .replace(/[^0-9a-z]/gi, "_")
       .toLowerCase();
-    proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
+    proto_file.write(`    ${key.toUpperCase()} = ${eng.id};\n`);
 
     trans['en'][key] = eng.name;
     for (let lng of Object.keys(utils.lngToRegion)) {
@@ -137,6 +58,10 @@ const portCharacters = async () => {
       rarity: key.startsWith('traveler') ? 5 : eng.rarity,
     }
 
+    console.log(eng.images)
+    if(eng.images["mihoyo_icon"]){
+      eng.images["icon"] = eng.images["mihoyo_icon"]
+    }
     for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {
       if (eng.images[imageType]) {
         const imagePath = `./src/assets/characters/${key}_${imageType}.${eng.images[

@@ -21,6 +21,7 @@ import { toHex, fromHex } from "../../utils/hex";
 import { characterToTheme } from "../../utils/character";
 import characterData from "../../data/characters.json";
 import weaponData from "../../data/weapons.json";
+import migrateIdIfNeeded from "../../utils/migrate_id"
 
 const BuildEditor = () => {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ const BuildEditor = () => {
   const id = searchParams.get("id");
   let build;
   if (searchParams.get("build")) {
-    build = Build.decode(fromHex(searchParams.get("build")));
+    build = migrateIdIfNeeded(Build.decode(fromHex(searchParams.get("build"))));
   } else {
     build = {
       name: "",
