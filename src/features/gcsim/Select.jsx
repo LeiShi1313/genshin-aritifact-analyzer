@@ -10,7 +10,7 @@ const Select = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { scripts } = useSelector((state) => state.gcsim);
-  const handleClick = () => {
+  const handleRefresh = () => {
     dispatch(fetchGCSim());
   };
 
@@ -19,7 +19,7 @@ const Select = () => {
     <div className="flex w-full max-w-screen-lg flex-col items-center justify-center gap-4 px-4 lg:px-0">
       <div className="my-8 flex w-full flex-row items-center justify-end space-x-2">
         <div>{t("Loaded X gcsim scripts", { num: scripts.length })}</div>
-        <button className="btn btn-primary btn-sm" onClick={handleClick}>
+        <button className="btn btn-primary btn-sm" onClick={handleRefresh}>
           {t("Refresh")}
         </button>
       </div>

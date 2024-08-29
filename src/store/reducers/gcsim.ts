@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { GCSim } from "../../genshin/gcsim"
+import { GCSim, GCSimScript } from "../../genshin/gcsim"
 
 const fetchGCSim = createAsyncThunk(
   'gcsim/fetchGCSim',
@@ -18,7 +18,7 @@ const fetchGCSim = createAsyncThunk(
 export const gcsimSlice = createSlice({
   name: 'gcsim',
   initialState: {
-    scripts: [],
+    scripts: [] as GCSimScript[],
     isScriptsLoading: true
   },
   reducers: {
