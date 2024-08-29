@@ -55,6 +55,8 @@ export enum Set {
   TRAVELING_DOCTOR = 49,
   FRAGMENT_OF_HARMONIC_WHIMSY = 50,
   UNFINISHED_REVERIE = 51,
+  SCROLL_OF_THE_HERO_OF_CINDER_CITY = 52,
+  OBSIDIAN_CODEX = 53,
   UNRECOGNIZED = -1,
 }
 
@@ -216,6 +218,12 @@ export function setFromJSON(object: any): Set {
     case 51:
     case "UNFINISHED_REVERIE":
       return Set.UNFINISHED_REVERIE;
+    case 52:
+    case "SCROLL_OF_THE_HERO_OF_CINDER_CITY":
+      return Set.SCROLL_OF_THE_HERO_OF_CINDER_CITY;
+    case 53:
+    case "OBSIDIAN_CODEX":
+      return Set.OBSIDIAN_CODEX;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -329,6 +337,10 @@ export function setToJSON(object: Set): string {
       return "FRAGMENT_OF_HARMONIC_WHIMSY";
     case Set.UNFINISHED_REVERIE:
       return "UNFINISHED_REVERIE";
+    case Set.SCROLL_OF_THE_HERO_OF_CINDER_CITY:
+      return "SCROLL_OF_THE_HERO_OF_CINDER_CITY";
+    case Set.OBSIDIAN_CODEX:
+      return "OBSIDIAN_CODEX";
     case Set.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

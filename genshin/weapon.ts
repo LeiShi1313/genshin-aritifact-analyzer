@@ -248,6 +248,14 @@ export enum Weapon {
   IBIS_PIERCER = 185,
   CLOUDFORGED = 186,
   SILVERSHOWER_HEARTSTRINGS = 187,
+  FLUTE_OF_EZPITZAL = 188,
+  EARTH_SHAKER = 189,
+  FANG_OF_THE_MOUNTAIN_KING = 190,
+  FOOTPRINT_OF_THE_RAINBOW = 191,
+  ASH_GRAVEN_DRINKING_HORN = 192,
+  RING_OF_YAXCHE = 193,
+  SURFS_UP = 194,
+  CHAIN_BREAKER = 195,
   UNRECOGNIZED = -1,
 }
 
@@ -817,6 +825,30 @@ export function weaponFromJSON(object: any): Weapon {
     case 187:
     case "SILVERSHOWER_HEARTSTRINGS":
       return Weapon.SILVERSHOWER_HEARTSTRINGS;
+    case 188:
+    case "FLUTE_OF_EZPITZAL":
+      return Weapon.FLUTE_OF_EZPITZAL;
+    case 189:
+    case "EARTH_SHAKER":
+      return Weapon.EARTH_SHAKER;
+    case 190:
+    case "FANG_OF_THE_MOUNTAIN_KING":
+      return Weapon.FANG_OF_THE_MOUNTAIN_KING;
+    case 191:
+    case "FOOTPRINT_OF_THE_RAINBOW":
+      return Weapon.FOOTPRINT_OF_THE_RAINBOW;
+    case 192:
+    case "ASH_GRAVEN_DRINKING_HORN":
+      return Weapon.ASH_GRAVEN_DRINKING_HORN;
+    case 193:
+    case "RING_OF_YAXCHE":
+      return Weapon.RING_OF_YAXCHE;
+    case 194:
+    case "SURFS_UP":
+      return Weapon.SURFS_UP;
+    case 195:
+    case "CHAIN_BREAKER":
+      return Weapon.CHAIN_BREAKER;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1202,6 +1234,22 @@ export function weaponToJSON(object: Weapon): string {
       return "CLOUDFORGED";
     case Weapon.SILVERSHOWER_HEARTSTRINGS:
       return "SILVERSHOWER_HEARTSTRINGS";
+    case Weapon.FLUTE_OF_EZPITZAL:
+      return "FLUTE_OF_EZPITZAL";
+    case Weapon.EARTH_SHAKER:
+      return "EARTH_SHAKER";
+    case Weapon.FANG_OF_THE_MOUNTAIN_KING:
+      return "FANG_OF_THE_MOUNTAIN_KING";
+    case Weapon.FOOTPRINT_OF_THE_RAINBOW:
+      return "FOOTPRINT_OF_THE_RAINBOW";
+    case Weapon.ASH_GRAVEN_DRINKING_HORN:
+      return "ASH_GRAVEN_DRINKING_HORN";
+    case Weapon.RING_OF_YAXCHE:
+      return "RING_OF_YAXCHE";
+    case Weapon.SURFS_UP:
+      return "SURFS_UP";
+    case Weapon.CHAIN_BREAKER:
+      return "CHAIN_BREAKER";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

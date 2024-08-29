@@ -5,6 +5,10 @@ import * as utils from "./utils.mjs";
 await utils.update_character_data('scripts/characters');
 const names = utils.readNamesFromFile('scripts/characters');
 
+const isTraveler = (name) => {
+    return name.startsWith('Traveler') || name === 'Lumine' || name === 'Aether';
+};
+
 const portCharacters = async () => {
   let trans = {
     en: {},
@@ -60,18 +64,20 @@ const portCharacters = async () => {
           try {
             console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
             await utils.download_image(eng.images[imageType], imagePath)
-          } catch (e) { 
+          } catch (err) { 
             try {
               await utils.download_from_amber(
                 eng.images[imageType].substring(eng.images[imageType].lastIndexOf("/") + 1),
                 "character",
                 imagePath
               );
-            } catch (e) {
-              console.error(e)
+            } catch (err) {
+              console.error(err)
             }
           }
         }
+      } else if (!isTraveler(e)) {
+        console.warn(`No ${imageType} image found for character ${e}`);
       }
     }
   });

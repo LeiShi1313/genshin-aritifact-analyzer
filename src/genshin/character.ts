@@ -95,6 +95,9 @@ export enum Character {
   SETHOS = 89,
   CLORINDE = 90,
   EMILIE = 91,
+  KACHINA = 92,
+  KINICH = 93,
+  MUALANI = 94,
   UNRECOGNIZED = -1,
 }
 
@@ -376,6 +379,15 @@ export function characterFromJSON(object: any): Character {
     case 91:
     case "EMILIE":
       return Character.EMILIE;
+    case 92:
+    case "KACHINA":
+      return Character.KACHINA;
+    case 93:
+    case "KINICH":
+      return Character.KINICH;
+    case 94:
+    case "MUALANI":
+      return Character.MUALANI;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -569,6 +581,12 @@ export function characterToJSON(object: Character): string {
       return "CLORINDE";
     case Character.EMILIE:
       return "EMILIE";
+    case Character.KACHINA:
+      return "KACHINA";
+    case Character.KINICH:
+      return "KINICH";
+    case Character.MUALANI:
+      return "MUALANI";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

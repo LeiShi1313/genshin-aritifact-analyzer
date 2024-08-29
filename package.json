@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host",
     "gcsim": "npx tsx scripts/gcsim.ts",
-    "gen": "npm run proto && npm run proto-esm && npm run scripts",
+    "genshin-db": "npm install --save-dev genshin-db@latest",
+    "gen": "npm run genshin-db && npm run scripts && npm run proto && npm run proto-esm",
     "scripts": "node scripts/index.mjs",
     "proto2": "pbjs -t static-module -w commonjs -o ./scripts/proto.cjs ./proto/*.proto",
     "proto": "rm -r ./src/genshin && mkdir -p ./src/genshin && protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/genshin ./proto/*.proto",
@@ -49,7 +50,7 @@
     "axios": "^1.2.2",
     "cssnano": "^5.1.13",
     "csv-parse": "^5.3.3",
-    "genshin-db": "^5.1.7",
+    "genshin-db": "^5.1.8",
     "i18next-resources-to-backend": "^1.1.1",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
