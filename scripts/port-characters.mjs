@@ -6,7 +6,7 @@ await utils.update_character_data('scripts/characters');
 const names = utils.readNamesFromFile('scripts/characters');
 
 const isTraveler = (name) => {
-    return name.startsWith('Traveler') || name === 'Lumine' || name === 'Aether';
+  return name.startsWith('Traveler') || name === 'Lumine' || name === 'Aether';
 };
 
 const portCharacters = async () => {
@@ -55,19 +55,34 @@ const portCharacters = async () => {
       rarity: key.startsWith('Traveler') ? 5 : eng.rarity,
     }
 
-    for (let imageType of ["cover1", "cover2", "icon", "portrait"]) {
+    for (let imageType of ["cover1", "cover2", "icon"]) {
+      const imagePath = `./src/assets/characters/${key}_${imageType}.png`;
+      if (fs.existsSync(imagePath) && fs.statSync(imagePath).size > 0) continue;
       if (eng.images[imageType]) {
-        const imagePath = `./src/assets/characters/${key}_${imageType}.${eng.images[
-          imageType
-        ].slice(-3)}`;
-        if (!fs.existsSync(imagePath) || fs.statSync(imagePath).size === 0) {
+
+        try {
+          console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
+          await utils.download_image(eng.images[imageType], imagePath)
+        } catch (err) {
           try {
-            console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
-            await utils.download_image(eng.images[imageType], imagePath)
-          } catch (err) { 
+            await utils.download_from_amber(
+              eng.images[imageType].substring(eng.images[imageType].lastIndexOf("/") + 1),
+              "character",
+              imagePath
+            );
+          } catch (err) {
+            console.error(err)
+          }
+        }
+      } else if (imageType === 'icon' && eng.images['mihoyo_icon']) {
+        try {
+          console.log(`Downloading image for ${e}: ${eng.images['mihoyo_icon']}`);
+          await utils.download_image(eng.images['mihoyo_icon'], imagePath)
+        } catch (err) {
+          if (eng.images['filename_icon']) {
             try {
               await utils.download_from_amber(
-                eng.images[imageType].substring(eng.images[imageType].lastIndexOf("/") + 1),
+                eng.images['filename_icon'],
                 "character",
                 imagePath
               );
@@ -97,4 +112,4 @@ const portCharacters = async () => {
   );
 };
 
-export {portCharacters};
+export { portCharacters };

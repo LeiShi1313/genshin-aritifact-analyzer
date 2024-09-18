@@ -10,7 +10,7 @@ Object.defineProperty(String.prototype, 'capitalize', {
 
 export const download_image = async (url, image_path) => {
     try {
-        const response = await axios.get(url, { responseType: 'stream', });
+        const response = await axios.get(url, { responseType: 'stream', timeout: 5000 });
         const writer = fs.createWriteStream(image_path, { flags: 'w' });
         response.data.pipe(writer);
         await new Promise((resolve, reject) => {
@@ -27,9 +27,9 @@ export const download_from_amber = async (resource_name, type, image_path) => {
     console.log(`Downloading ${resource_name} from amber`);
     let url;
     if (type === 'artifact') {
-        url = `https://api.ambr.top/assets/UI/reliquary/${resource_name}`;
+        url = `https://gi.yatta.top/assets/UI/reliquary/${resource_name}`;
     } else {
-        url = `https://api.ambr.top/assets/UI/${resource_name}`;
+        url = `https://gi.yatta.top/assets/UI/${resource_name}`;
     }
     return download_image(url, image_path);
 }
@@ -51,17 +51,17 @@ const get_from_amber = async (url) => {
 
 export const get_artifact_from_amber = async () => {
     console.log("Fetching artifact from amber");
-    return get_from_amber("https://api.ambr.top/v2/en/reliquary");
+    return get_from_amber("https://gi.yatta.top/api/v2/en/reliquary");
 }
 
 export const get_weapon_from_amber = async () => {
     console.log("Fetching weapon from amber");
-    return get_from_amber("https://api.ambr.top/v2/en/weapon");
+    return get_from_amber("https://gi.yatta.top/api/v2/en/weapon");
 }
 
 export const get_character_from_amber = async () => {
     console.log("Fetching character from amber");
-    return get_from_amber("https://api.ambr.top/v2/en/avatar");
+    return get_from_amber("https://gi.yatta.top/api/v2/en/avatar");
 }
 
 const update_local_data = async (filePath, remoteData, remoteDataReader) => {
