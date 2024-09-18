@@ -13,6 +13,7 @@ import IconConfig from "../assets/svgs/IconConfig";
 import IconUpload from "../assets/svgs/IconUpload";
 import IconArtifactsFile from "../assets/svgs/IconArtifactsFile";
 import IconBuilds from "../assets/svgs/IconBuilds";
+import GenshinDBPackageInfo from "../../node_modules/genshin-db/package.json"
 
 const Main = () => {
   const { t, i18n } = useTranslation();
@@ -78,8 +79,9 @@ const Main = () => {
   return (
     <div className="hero-content h-full text-center">
       <div className="max-w-md">
-        <h1 className="mb-10 text-4xl md:text-5xl font-bold">
+        <h1 className="flex flex-row mb-10 text-4xl md:text-5xl font-bold items-center">
           {t("Genshin Artifacts Analyzer")}
+          <div className="badge badge-primary self-start">{GenshinDBPackageInfo.version.slice(0,3)}</div>
         </h1>
         <div className="flex flex-col items-stretch justify-center gap-2">
           <button
