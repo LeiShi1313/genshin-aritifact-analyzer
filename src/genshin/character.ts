@@ -98,6 +98,18 @@ export enum Character {
   KACHINA = 92,
   KINICH = 93,
   MUALANI = 94,
+  ORORON = 95,
+  XILONEN = 96,
+  CHASCA = 97,
+  MAVUIKA = 98,
+  TRAVELER_PYRO = 99,
+  CITLALI = 100,
+  LAN_YAN = 101,
+  YUMEMIZUKI_MIZUKI = 102,
+  IANSAN = 103,
+  VARESA = 104,
+  IFA = 105,
+  ESCOFFIER = 106,
   UNRECOGNIZED = -1,
 }
 
@@ -388,6 +400,42 @@ export function characterFromJSON(object: any): Character {
     case 94:
     case "MUALANI":
       return Character.MUALANI;
+    case 95:
+    case "ORORON":
+      return Character.ORORON;
+    case 96:
+    case "XILONEN":
+      return Character.XILONEN;
+    case 97:
+    case "CHASCA":
+      return Character.CHASCA;
+    case 98:
+    case "MAVUIKA":
+      return Character.MAVUIKA;
+    case 99:
+    case "TRAVELER_PYRO":
+      return Character.TRAVELER_PYRO;
+    case 100:
+    case "CITLALI":
+      return Character.CITLALI;
+    case 101:
+    case "LAN_YAN":
+      return Character.LAN_YAN;
+    case 102:
+    case "YUMEMIZUKI_MIZUKI":
+      return Character.YUMEMIZUKI_MIZUKI;
+    case 103:
+    case "IANSAN":
+      return Character.IANSAN;
+    case 104:
+    case "VARESA":
+      return Character.VARESA;
+    case 105:
+    case "IFA":
+      return Character.IFA;
+    case 106:
+    case "ESCOFFIER":
+      return Character.ESCOFFIER;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -587,6 +635,30 @@ export function characterToJSON(object: Character): string {
       return "KINICH";
     case Character.MUALANI:
       return "MUALANI";
+    case Character.ORORON:
+      return "ORORON";
+    case Character.XILONEN:
+      return "XILONEN";
+    case Character.CHASCA:
+      return "CHASCA";
+    case Character.MAVUIKA:
+      return "MAVUIKA";
+    case Character.TRAVELER_PYRO:
+      return "TRAVELER_PYRO";
+    case Character.CITLALI:
+      return "CITLALI";
+    case Character.LAN_YAN:
+      return "LAN_YAN";
+    case Character.YUMEMIZUKI_MIZUKI:
+      return "YUMEMIZUKI_MIZUKI";
+    case Character.IANSAN:
+      return "IANSAN";
+    case Character.VARESA:
+      return "VARESA";
+    case Character.IFA:
+      return "IFA";
+    case Character.ESCOFFIER:
+      return "ESCOFFIER";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

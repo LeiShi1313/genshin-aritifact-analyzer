@@ -66,7 +66,7 @@ const BuildEditor = () => {
     () =>
       new URL(
         `../../assets/characters/${Character[char].toLocaleLowerCase()}_${
-          matches ? "cover1" : "cover2"
+          matches ? "gacha" : "cover2"
         }.png`,
         import.meta.url
       ).href,

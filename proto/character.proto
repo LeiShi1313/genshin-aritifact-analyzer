@@ -98,4 +98,16 @@ enum Character {
     KACHINA = 92;
     KINICH = 93;
     MUALANI = 94;
+    ORORON = 95;
+    XILONEN = 96;
+    CHASCA = 97;
+    MAVUIKA = 98;
+    TRAVELER_PYRO = 99;
+    CITLALI = 100;
+    LAN_YAN = 101;
+    YUMEMIZUKI_MIZUKI = 102;
+    IANSAN = 103;
+    VARESA = 104;
+    IFA = 105;
+    ESCOFFIER = 106;
 }

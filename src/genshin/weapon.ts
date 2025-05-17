@@ -256,6 +256,21 @@ export enum Weapon {
   RING_OF_YAXCHE = 193,
   SURFS_UP = 194,
   CHAIN_BREAKER = 195,
+  STURDY_BONE = 196,
+  CALAMITY_OF_ESHU = 197,
+  PEAK_PATROL_SONG = 198,
+  FRUITFUL_HOOK = 199,
+  A_THOUSAND_BLAZING_SUNS = 200,
+  MOUNTAIN_BRACING_BOLT = 201,
+  TAMAYURATEI_NO_OHANASHI = 202,
+  SYMPHONIST_OF_SCENTS = 203,
+  WAVERIDING_WHIRL = 204,
+  STARCALLERS_WATCH = 205,
+  SUNNY_MORNING_SLEEP_IN = 206,
+  VIVID_NOTIONS = 207,
+  FLOWER_WREATHED_FEATHERS = 208,
+  SEQUENCE_OF_SOLITUDE = 209,
+  ASTRAL_VULTURES_CRIMSON_PLUMAGE = 210,
   UNRECOGNIZED = -1,
 }
 
@@ -849,6 +864,51 @@ export function weaponFromJSON(object: any): Weapon {
     case 195:
     case "CHAIN_BREAKER":
       return Weapon.CHAIN_BREAKER;
+    case 196:
+    case "STURDY_BONE":
+      return Weapon.STURDY_BONE;
+    case 197:
+    case "CALAMITY_OF_ESHU":
+      return Weapon.CALAMITY_OF_ESHU;
+    case 198:
+    case "PEAK_PATROL_SONG":
+      return Weapon.PEAK_PATROL_SONG;
+    case 199:
+    case "FRUITFUL_HOOK":
+      return Weapon.FRUITFUL_HOOK;
+    case 200:
+    case "A_THOUSAND_BLAZING_SUNS":
+      return Weapon.A_THOUSAND_BLAZING_SUNS;
+    case 201:
+    case "MOUNTAIN_BRACING_BOLT":
+      return Weapon.MOUNTAIN_BRACING_BOLT;
+    case 202:
+    case "TAMAYURATEI_NO_OHANASHI":
+      return Weapon.TAMAYURATEI_NO_OHANASHI;
+    case 203:
+    case "SYMPHONIST_OF_SCENTS":
+      return Weapon.SYMPHONIST_OF_SCENTS;
+    case 204:
+    case "WAVERIDING_WHIRL":
+      return Weapon.WAVERIDING_WHIRL;
+    case 205:
+    case "STARCALLERS_WATCH":
+      return Weapon.STARCALLERS_WATCH;
+    case 206:
+    case "SUNNY_MORNING_SLEEP_IN":
+      return Weapon.SUNNY_MORNING_SLEEP_IN;
+    case 207:
+    case "VIVID_NOTIONS":
+      return Weapon.VIVID_NOTIONS;
+    case 208:
+    case "FLOWER_WREATHED_FEATHERS":
+      return Weapon.FLOWER_WREATHED_FEATHERS;
+    case 209:
+    case "SEQUENCE_OF_SOLITUDE":
+      return Weapon.SEQUENCE_OF_SOLITUDE;
+    case 210:
+    case "ASTRAL_VULTURES_CRIMSON_PLUMAGE":
+      return Weapon.ASTRAL_VULTURES_CRIMSON_PLUMAGE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1250,6 +1310,36 @@ export function weaponToJSON(object: Weapon): string {
       return "SURFS_UP";
     case Weapon.CHAIN_BREAKER:
       return "CHAIN_BREAKER";
+    case Weapon.STURDY_BONE:
+      return "STURDY_BONE";
+    case Weapon.CALAMITY_OF_ESHU:
+      return "CALAMITY_OF_ESHU";
+    case Weapon.PEAK_PATROL_SONG:
+      return "PEAK_PATROL_SONG";
+    case Weapon.FRUITFUL_HOOK:
+      return "FRUITFUL_HOOK";
+    case Weapon.A_THOUSAND_BLAZING_SUNS:
+      return "A_THOUSAND_BLAZING_SUNS";
+    case Weapon.MOUNTAIN_BRACING_BOLT:
+      return "MOUNTAIN_BRACING_BOLT";
+    case Weapon.TAMAYURATEI_NO_OHANASHI:
+      return "TAMAYURATEI_NO_OHANASHI";
+    case Weapon.SYMPHONIST_OF_SCENTS:
+      return "SYMPHONIST_OF_SCENTS";
+    case Weapon.WAVERIDING_WHIRL:
+      return "WAVERIDING_WHIRL";
+    case Weapon.STARCALLERS_WATCH:
+      return "STARCALLERS_WATCH";
+    case Weapon.SUNNY_MORNING_SLEEP_IN:
+      return "SUNNY_MORNING_SLEEP_IN";
+    case Weapon.VIVID_NOTIONS:
+      return "VIVID_NOTIONS";
+    case Weapon.FLOWER_WREATHED_FEATHERS:
+      return "FLOWER_WREATHED_FEATHERS";
+    case Weapon.SEQUENCE_OF_SOLITUDE:
+      return "SEQUENCE_OF_SOLITUDE";
+    case Weapon.ASTRAL_VULTURES_CRIMSON_PLUMAGE:
+      return "ASTRAL_VULTURES_CRIMSON_PLUMAGE";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

@@ -71,7 +71,7 @@ const portSets = async () => {
             await utils.download_image(eng.images[pos], imagePath);
           } catch (e) {
             try {
-              await utils.download_from_amber(
+              await utils.download_from_yuheng(
                 eng.images[pos].substring(eng.images[pos].lastIndexOf("/") + 1),
                 "artifact",
                 imagePath

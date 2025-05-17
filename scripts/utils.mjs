@@ -2,11 +2,11 @@ import fs from "fs";
 import axios from 'axios';
 
 Object.defineProperty(String.prototype, 'capitalize', {
-    value: function() {
-      return this.charAt(0).toUpperCase() + this.slice(1);
+    value: function () {
+        return this.charAt(0).toUpperCase() + this.slice(1);
     },
     enumerable: false
-  });
+});
 
 export const download_image = async (url, image_path) => {
     try {
@@ -17,9 +17,10 @@ export const download_image = async (url, image_path) => {
             writer.on('finish', resolve);
             writer.on('error', reject);
         });
+        return true;
     } catch (err) {
-        console.error(`Failed to download ${url}`);
-        throw err;
+        console.error(`Failed to download ${url}: ${err.message}`);
+        return false;
     }
 }
 
@@ -31,6 +32,21 @@ export const download_from_amber = async (resource_name, type, image_path) => {
     } else {
         url = `https://gi.yatta.top/assets/UI/${resource_name}`;
     }
+    return download_image(url, image_path);
+}
+
+
+export const download_from_yuheng = async (resource_name, type, image_path) => {
+    console.log(`Downloading ${resource_name} from yuheng`);
+    let url;
+    if (type === 'artifact') {
+        url = `https://homdgcat.wiki/homdgcat-res/Relic/${resource_name}.png`;
+    } else if (type ==='gacha') {
+        url = `https://homdgcat.wiki/homdgcat-res/Gacha/${resource_name}.png`;
+    } else {
+        url = `https://homdgcat.wiki/homdgcat-res/Avatar/${resource_name}.png`;
+    }
+
     return download_image(url, image_path);
 }
 

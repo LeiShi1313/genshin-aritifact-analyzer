@@ -55,42 +55,51 @@ const portCharacters = async () => {
       rarity: key.startsWith('Traveler') ? 5 : eng.rarity,
     }
 
-    for (let imageType of ["cover1", "cover2", "icon"]) {
+    for (let imageType of ["icon", "gacha"]) {
       const imagePath = `./src/assets/characters/${key}_${imageType}.png`;
       if (fs.existsSync(imagePath) && fs.statSync(imagePath).size > 0) continue;
       if (eng.images[imageType]) {
+        console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
+        let result = await utils.download_image(eng.images[imageType], imagePath);
+        if (result) continue;
+        result = await utils.download_from_yuheng(
+          eng.images[imageType].substring(eng.images[imageType].lastIndexOf("/") + 1),
+          "character",
+          imagePath
+        );
 
-        try {
-          console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
-          await utils.download_image(eng.images[imageType], imagePath)
-        } catch (err) {
-          try {
-            await utils.download_from_amber(
-              eng.images[imageType].substring(eng.images[imageType].lastIndexOf("/") + 1),
+        if (result) continue;
+        console.error(`Failed to download image for ${e}: ${eng.images[imageType]}`);
+      } else if (imageType === 'icon' && eng.images['mihoyo_icon']) {
+        console.log(`Downloading image for ${e}: ${eng.images['mihoyo_icon']}`);
+        let result = await utils.download_image(eng.images['mihoyo_icon'], imagePath);
+        if (result) continue;
+        if (eng.images['filename_icon']) {
+          result =
+            await utils.download_from_yuheng(
+              eng.images['filename_icon'],
               "character",
               imagePath
             );
-          } catch (err) {
-            console.error(err)
-          }
         }
-      } else if (imageType === 'icon' && eng.images['mihoyo_icon']) {
-        try {
-          console.log(`Downloading image for ${e}: ${eng.images['mihoyo_icon']}`);
-          await utils.download_image(eng.images['mihoyo_icon'], imagePath)
-        } catch (err) {
-          if (eng.images['filename_icon']) {
-            try {
-              await utils.download_from_amber(
-                eng.images['filename_icon'],
-                "character",
-                imagePath
-              );
-            } catch (err) {
-              console.error(err)
-            }
-          }
-        }
+        if (result) continue;
+        console.error(`Failed to download image for ${e}: ${eng.images['mihoyo_icon']}`);
+      } else if (imageType === 'gacha' && eng.images['filename_gachaSplash']) {
+        console.log(`Downloading image for ${e}: ${eng.images['filename_gachaSplash']}`);
+        let result = await utils.download_from_yuheng(
+          eng.images['filename_gachaSplash'],
+          "gacha",
+          imagePath
+        );
+        if (result) continue;
+        result = await utils.download_from_yuheng(
+          eng.images['filename_gachaSplash'],
+          "character",
+          imagePath
+        );
+        if (result) continue;
+        console.error(`Failed to download image for ${e}: ${eng.images['mihoyo_gacha']}`);
+
       } else if (!isTraveler(e)) {
         console.warn(`No ${imageType} image found for character ${e}`);
       }
