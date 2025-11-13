@@ -13,6 +13,7 @@
     "proto": "rm -r ./src/genshin && mkdir -p ./src/genshin && protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/genshin ./proto/*.proto",
     "proto-esm": "rm -r ./genshin && mkdir -p ./genshin && protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true,importSuffix=.js --ts_proto_out=./genshin ./proto/*.proto",
     "build": "vite build",
+    "build:wasm": "cd gcsim/cmd/wasm && ./build.sh -o ../../../public/gcsim/main.wasm",
     "preview": "vite preview --host"
   },
   "dependencies": {
