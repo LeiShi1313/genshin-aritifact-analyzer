@@ -110,6 +110,15 @@ export enum Character {
   VARESA = 104,
   IFA = 105,
   ESCOFFIER = 106,
+  SKIRK = 107,
+  DAHLIA = 108,
+  INEFFA = 109,
+  MANEKIN = 110,
+  MANEKINA = 111,
+  LAUMA = 112,
+  FLINS = 113,
+  AINO = 114,
+  NEFER = 115,
   UNRECOGNIZED = -1,
 }
 
@@ -436,6 +445,33 @@ export function characterFromJSON(object: any): Character {
     case 106:
     case "ESCOFFIER":
       return Character.ESCOFFIER;
+    case 107:
+    case "SKIRK":
+      return Character.SKIRK;
+    case 108:
+    case "DAHLIA":
+      return Character.DAHLIA;
+    case 109:
+    case "INEFFA":
+      return Character.INEFFA;
+    case 110:
+    case "MANEKIN":
+      return Character.MANEKIN;
+    case 111:
+    case "MANEKINA":
+      return Character.MANEKINA;
+    case 112:
+    case "LAUMA":
+      return Character.LAUMA;
+    case 113:
+    case "FLINS":
+      return Character.FLINS;
+    case 114:
+    case "AINO":
+      return Character.AINO;
+    case 115:
+    case "NEFER":
+      return Character.NEFER;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -659,6 +695,24 @@ export function characterToJSON(object: Character): string {
       return "IFA";
     case Character.ESCOFFIER:
       return "ESCOFFIER";
+    case Character.SKIRK:
+      return "SKIRK";
+    case Character.DAHLIA:
+      return "DAHLIA";
+    case Character.INEFFA:
+      return "INEFFA";
+    case Character.MANEKIN:
+      return "MANEKIN";
+    case Character.MANEKINA:
+      return "MANEKINA";
+    case Character.LAUMA:
+      return "LAUMA";
+    case Character.FLINS:
+      return "FLINS";
+    case Character.AINO:
+      return "AINO";
+    case Character.NEFER:
+      return "NEFER";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

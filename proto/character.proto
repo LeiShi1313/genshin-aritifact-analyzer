@@ -110,4 +110,13 @@ enum Character {
     VARESA = 104;
     IFA = 105;
     ESCOFFIER = 106;
+    SKIRK = 107;
+    DAHLIA = 108;
+    INEFFA = 109;
+    MANEKIN = 110;
+    MANEKINA = 111;
+    LAUMA = 112;
+    FLINS = 113;
+    AINO = 114;
+    NEFER = 115;
 }

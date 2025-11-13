@@ -271,6 +271,21 @@ export enum Weapon {
   FLOWER_WREATHED_FEATHERS = 208,
   SEQUENCE_OF_SOLITUDE = 209,
   ASTRAL_VULTURES_CRIMSON_PLUMAGE = 210,
+  SERENITYS_CALL = 211,
+  MOONWEAVERS_DAWN = 212,
+  AZURELIGHT = 213,
+  FLAME_FORGED_INSIGHT = 214,
+  MASTER_KEY = 215,
+  PROSPECTORS_SHOVEL = 216,
+  SACRIFICERS_STAFF = 217,
+  FRACTURED_HALO = 218,
+  BLOODSOAKED_RUINS = 219,
+  ETHERLIGHT_SPINDLELUTE = 220,
+  BLACKMARROW_LANTERN = 221,
+  DAWNING_FROST = 222,
+  NIGHTWEAVERS_LOOKING_GLASS = 223,
+  RELIQUARY_OF_TRUTH = 224,
+  SNARE_HOOK = 225,
   UNRECOGNIZED = -1,
 }
 
@@ -909,6 +924,51 @@ export function weaponFromJSON(object: any): Weapon {
     case 210:
     case "ASTRAL_VULTURES_CRIMSON_PLUMAGE":
       return Weapon.ASTRAL_VULTURES_CRIMSON_PLUMAGE;
+    case 211:
+    case "SERENITYS_CALL":
+      return Weapon.SERENITYS_CALL;
+    case 212:
+    case "MOONWEAVERS_DAWN":
+      return Weapon.MOONWEAVERS_DAWN;
+    case 213:
+    case "AZURELIGHT":
+      return Weapon.AZURELIGHT;
+    case 214:
+    case "FLAME_FORGED_INSIGHT":
+      return Weapon.FLAME_FORGED_INSIGHT;
+    case 215:
+    case "MASTER_KEY":
+      return Weapon.MASTER_KEY;
+    case 216:
+    case "PROSPECTORS_SHOVEL":
+      return Weapon.PROSPECTORS_SHOVEL;
+    case 217:
+    case "SACRIFICERS_STAFF":
+      return Weapon.SACRIFICERS_STAFF;
+    case 218:
+    case "FRACTURED_HALO":
+      return Weapon.FRACTURED_HALO;
+    case 219:
+    case "BLOODSOAKED_RUINS":
+      return Weapon.BLOODSOAKED_RUINS;
+    case 220:
+    case "ETHERLIGHT_SPINDLELUTE":
+      return Weapon.ETHERLIGHT_SPINDLELUTE;
+    case 221:
+    case "BLACKMARROW_LANTERN":
+      return Weapon.BLACKMARROW_LANTERN;
+    case 222:
+    case "DAWNING_FROST":
+      return Weapon.DAWNING_FROST;
+    case 223:
+    case "NIGHTWEAVERS_LOOKING_GLASS":
+      return Weapon.NIGHTWEAVERS_LOOKING_GLASS;
+    case 224:
+    case "RELIQUARY_OF_TRUTH":
+      return Weapon.RELIQUARY_OF_TRUTH;
+    case 225:
+    case "SNARE_HOOK":
+      return Weapon.SNARE_HOOK;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1340,6 +1400,36 @@ export function weaponToJSON(object: Weapon): string {
       return "SEQUENCE_OF_SOLITUDE";
     case Weapon.ASTRAL_VULTURES_CRIMSON_PLUMAGE:
       return "ASTRAL_VULTURES_CRIMSON_PLUMAGE";
+    case Weapon.SERENITYS_CALL:
+      return "SERENITYS_CALL";
+    case Weapon.MOONWEAVERS_DAWN:
+      return "MOONWEAVERS_DAWN";
+    case Weapon.AZURELIGHT:
+      return "AZURELIGHT";
+    case Weapon.FLAME_FORGED_INSIGHT:
+      return "FLAME_FORGED_INSIGHT";
+    case Weapon.MASTER_KEY:
+      return "MASTER_KEY";
+    case Weapon.PROSPECTORS_SHOVEL:
+      return "PROSPECTORS_SHOVEL";
+    case Weapon.SACRIFICERS_STAFF:
+      return "SACRIFICERS_STAFF";
+    case Weapon.FRACTURED_HALO:
+      return "FRACTURED_HALO";
+    case Weapon.BLOODSOAKED_RUINS:
+      return "BLOODSOAKED_RUINS";
+    case Weapon.ETHERLIGHT_SPINDLELUTE:
+      return "ETHERLIGHT_SPINDLELUTE";
+    case Weapon.BLACKMARROW_LANTERN:
+      return "BLACKMARROW_LANTERN";
+    case Weapon.DAWNING_FROST:
+      return "DAWNING_FROST";
+    case Weapon.NIGHTWEAVERS_LOOKING_GLASS:
+      return "NIGHTWEAVERS_LOOKING_GLASS";
+    case Weapon.RELIQUARY_OF_TRUTH:
+      return "RELIQUARY_OF_TRUTH";
+    case Weapon.SNARE_HOOK:
+      return "SNARE_HOOK";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
