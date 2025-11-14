@@ -33,7 +33,7 @@ const iconFilterBy2PieceBonus = {
   less_affected_time: <IconTimeReduced className="Less_Affected_Time" />,
 };
 
-const SetSelect = ({ set, setSet }) => {
+const SetSelect = ({ set, setSet, filterFn = null }) => {
   const { t, i18n } = useTranslation();
 
   const handleClick = (value) => {
@@ -171,6 +171,7 @@ const SetSelect = ({ set, setSet }) => {
                   i18n.language
                 )
               )
+              .filter((key) => (filterFn ? filterFn(key) : true))
               .map((key) => (
                 <li key={key}>
                   <a
