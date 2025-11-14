@@ -19,8 +19,6 @@
   "dependencies": {
     "@piotr-cz/redux-persist-idb-storage": "^1.1.3",
     "@reduxjs/toolkit": "^1.8.5",
-    "@sentry/react": "^7.30.0",
-    "@sentry/tracing": "^7.30.0",
     "classnames": "^2.3.2",
     "crypto-js": "^4.1.1",
     "daisyui": "^4.4.2",
@@ -42,7 +40,6 @@
     "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
-    "@sentry/vite-plugin": "^0.3.0",
     "@tailwindcss/typography": "^0.5.7",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
