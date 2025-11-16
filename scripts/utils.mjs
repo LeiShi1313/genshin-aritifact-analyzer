@@ -43,6 +43,8 @@ export const download_from_yuheng = async (resource_name, type, image_path) => {
         url = `https://homdgcat.wiki/homdgcat-res/Relic/${resource_name}.png`;
     } else if (type ==='gacha') {
         url = `https://homdgcat.wiki/homdgcat-res/Gacha/${resource_name}.png`;
+    } else if (type === 'weapon') {
+        url = `https://homdgcat.wiki/homdgcat-res/Weapon/${resource_name}.png`;
     } else {
         url = `https://homdgcat.wiki/homdgcat-res/Avatar/${resource_name}.png`;
     }
