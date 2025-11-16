@@ -1,0 +1,57 @@
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="finaleofthedeep" refine=5 lvl=90/90;
+keqing add set="mh" count=4;
+keqing add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.3972;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+mika char lvl=90/90 cons=6 talent=9,9,9;
+mika add weapon="rightfulreward" refine=5 lvl=90/90;
+mika add set="clam" count=4;
+mika add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 heal=0.359 ; #main
+mika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5296 ;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 hp=2500000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active furina;
+
+furina skill, attack, burst;
+for let i=0; i<4; i=i+1 {
+    if i {
+        furina burst, skill;
+    }
+    mika burst, skill;
+    fischl attack, skill;
+    keq skill, burst;
+    while .fischl.skill.cd > 940 {
+        if .stam > 25 {
+            keq attack, charge;
+        } else {
+            keq attack:4, charge;
+        }
+    }
+    fischl attack:2, burst;
+    while !.furina.burst.ready {
+        if .stam > 25 {
+            keq attack, charge;
+        } else if .keq.skill.ready {
+            keq skill, burst;
+        } else {
+            keq attack:4, charge;
+        }
+    }
+}
+

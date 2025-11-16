@@ -1,0 +1,79 @@
+# Freminet Rosaria Bennett Xianyun. ~22s Rot. Freminet Melt Plunge. 2 fast plunges, then Freminet using skill/burst if lacking Cyro aura before plunging; no dash cancels. High ER needs on Bennett and Xianyun. 50% Collisions. 
+
+# Team - Options listed by DPS
+freminet char lvl=90/90 cons=6 talent=9,9,9;
+freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#freminet add weapon="fruitfulhook" refine=1 lvl=90/90;
+freminet add set="longnightsoath" count=4;
+#freminet add set="cw" count=4;
+#freminet add set="sr" count=4;
+#freminet add set="gd" count=4;
+#freminet add set="cw" count=2;freminet add set="sr" count=2;
+freminet add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.3641 cd=0.662;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="scroll" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # 2 E
+#rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+#rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # 1 E
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90; # 2 Rosa E
+#bennett add weapon="sapwood" refine=5 lvl=90/90; # 1 Rosa E
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4;
+#xianyun add set="sodp" count=4;
+#xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Freminet Plunge Combo
+fn FreminetPlunge() {
+  freminet jump;
+  if .airborne {
+    freminet high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active freminet;
+
+for let x = 0; x < 4; x = x + 1 {
+  xianyun skill, low_plunge, burst;
+  
+  bennett skill, burst;
+  
+  rosaria skill, burst;
+  
+  FreminetPlunge(); freminet dash;
+  FreminetPlunge();
+  # Wait for Rosaria burst ticks
+  while .freminet.status.xianyun-airborne-buff || .freminet.infusion.bennett-fire-weapon {
+    FreminetPlunge();
+    if .freminet.status.xianyun-airborne-buff && !.element.t0.cryo && .freminet.skill.ready {
+      freminet skill;
+    } else if .freminet.status.xianyun-airborne-buff && !.element.t0.cryo && .freminet.burst.ready {
+      freminet burst;
+    } 
+  }
+  
+  rosaria skill; # If ommitted, Higher ER Reqs for Rosa and Bennett
+  
+  bennett skill;
+}

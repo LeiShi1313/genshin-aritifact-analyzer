@@ -1,0 +1,50 @@
+options swap_delay=12 debug=true iteration=1000;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="kitaincrossspear" refine=5 lvl=90/90;
+thoma add set="gildeddreams" count=5;
+thoma add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5 ; #main
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.1655 cd=0.331;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2979 cd=0.7282;
+
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="favoniussword" refine=5 lvl=90/90;
+ayaka add set="emblemofseveredfate" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.4408 em=39.64 cr=0.331 cd=0.1324;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359 ; #main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+
+active kokomi;
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 { 
+    kokomi skill, attack;
+	nahida skill;
+    thoma burst, skill, attack:2;
+    ayaka dash, burst, attack, skill;
+    kokomi burst, attack:2, walk,
+        attack:2, walk,
+        attack:2, walk,
+        attack:2, walk,
+        attack:2, walk,
+        attack:2, walk,
+        attack:2, walk,
+        attack:2, walk,
+        attack:2, walk;
+    ayaka skill, dash, attack, charge;
+    print("done");
+}
+

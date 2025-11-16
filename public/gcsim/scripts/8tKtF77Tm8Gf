@@ -1,0 +1,51 @@
+yoimiya char lvl=90/90 cons=0 talent=10,10,10;
+yoimiya add weapon="thunderingpulse" refine=1 lvl=90/90;
+yoimiya add set="shimenawasreminiscence" count=5;
+yoimiya add stats def%=0.131 def=63 hp=4989 hp%=0.040999999999999995 atk=325 atk%=0.837 em=0 cr=0.696 cd=1.096 pyro%=0.466;
+
+fischl char lvl=90/90 cons=6 talent=1,10,9;
+fischl add weapon="thunderingpulse" refine=1 lvl=90/90;
+fischl add set="goldentroupe" count=5;
+fischl add stats hp=4780 hp%=0.047 atk=311 atk%=0.74 er=1 em=19 cr=0.770 cd=0.824 electro%=0.466;
+
+chevreuse char lvl=90/90 cons=6 talent=1,10,9;
+chevreuse add weapon="favoniuslance" refine=1 lvl=90/90;
+chevreuse add set="scroll" count=5;
+chevreuse add stats hp=6812 hp%=1.544 atk=311 er=0.285 em=72 cr=0.435 cd=0.07;
+
+bennett char lvl=90/90 cons=6 talent=1,9,10;
+bennett add weapon="aquilafavonia" refine=3 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats def%=0.241 hp=5497 hp%=0.548 atk=367 atk%=0.140 er=1.672 em=93 cr=0.132 cd=0.0;
+
+options swap_delay=12 iteration=1000;                                                                        
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active fischl;
+fischl skill;
+
+for let i = 0; i < 2; i = i + 1 {
+  if .chevreuse.burst.ready { 
+    chevreuse burst, skill[hold=1]:3;
+  } else { 
+    chevreuse attack:2, skill[hold=1];
+  }
+  if .yoimiya.burst.ready {
+    yoimiya burst; 
+  }
+  bennett skill, burst;
+  fischl attack:2;
+  if .fischl.skill.ready {
+    fischl skill;
+  } else {
+    fischl burst;
+  }
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack:1, dash;
+  if .yoimiya.burst.ready { # filling time for yoi E 18s cd, either Q+phys NA or just phys NA
+    yoimiya attack, burst;
+  } else {
+    yoimiya attack:5;
+  }
+}
+

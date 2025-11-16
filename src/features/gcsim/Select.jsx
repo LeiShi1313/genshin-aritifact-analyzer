@@ -13,6 +13,7 @@ const Select = () => {
   const handleRefresh = () => {
     dispatch(fetchGCSim());
   };
+  console.log(scripts);
 
   useEffect(() => {}, [scripts]);
   return (

@@ -1,0 +1,60 @@
+# - Characters
+
+lyney char lvl=90/90 cons=0 talent=9,9,9 ;
+lyney add weapon="rust" refine=3 lvl=90/90;
+#lyney add weapon="compound" refine=5 lvl=90/90;
+lyney add set="echoes" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311 ; #main
+lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="tom" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+mika char lvl=90/90 cons=6 talent=9,9,9; 
+mika add weapon="dialogues" refine=5 lvl=90/90;
+#mika add weapon="rightfulreward" refine=5 lvl=90/90;
+#mika add weapon="favlance" refine=3 lvl=90/90;
+mika add set="clam" count=4;
+mika add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359 ; #main
+mika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5296;
+
+# - Options
+
+options swap_delay=12 debug=true iteration=1000;
+energy every interval=480,720 amount=1;
+
+# - Targets
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+
+
+# - Actions
+
+active zhongli;
+
+for let i=0; i<5; i=i+1 {
+  
+  zhongli skill[hold=1], dash;
+  if .fischl.skill.ready {
+    fischl skill, attack;
+  } else {
+    fischl attack:2, burst;
+  }
+  mika skill, attack, burst;
+  lyney attack:24, skill;
+  #wait(200); # to let his entire skill animation play out (reduces dps by ~4k)
+}
+
+# Phys Lyney without any aim or dash cancels: Lyney, Fischl, Zhongli, Mika. Simple rotation and interrupt resistance to let the player focus on Lyney's animations.
+# Waiting ~3.3 seconds to let Lyney's full skill animation play reduces dps by ~4k
+# Zhongli hE D, Fischl E N1 / N2 Q, Mika E N1 Q, Lyney 6N4 E
+

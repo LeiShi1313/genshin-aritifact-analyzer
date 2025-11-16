@@ -1,0 +1,64 @@
+options swap_delay=12 iteration=1000;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9; 
+ganyu add weapon="hamayumi" refine=5 lvl=90/90;
+ganyu add set="wt" count=5;
+ganyu add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311 ; #main
+ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9; 
+shenhe add weapon="favoniuslance" refine=5 lvl=90/90;
+shenhe add set="eosf" count=2;
+shenhe add set="vermillion" count=2;
+shenhe add stats hp=4780 atk=311 atk%=0.466 er=0.518 cr=0.311 ; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.4408 em=39.64 cr=0.331 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2648 cd=0.5296;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="catch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main 
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+active shenhe;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    let xl-er-conversion = 80 - 3*2*0.6*.xiangling.stats.er;
+
+	shenhe skill[hold=1];
+	if .shenhe.burst.ready {
+		shenhe burst;
+	}
+	while (.xiangling.energy<80&&.shenhe.mods.favonius-cd==0) {
+		print("Forcing Fav");
+		shenhe attack;
+	}
+	if .shenhe.mods.favonius-cd==1 {
+		print("Fav proc'd");
+	}
+	print("go");
+	bennett burst,skill;
+	xiangling burst,skill;
+	ganyu skill, aim:5, skill, aim;
+	bennett skill;
+	print("end");
+}
+
+#increment := 73 - 16
+#		c.Core.Status.Add("xianglingburst", max)
+#		for delay := 0; delay <= max; delay += increment { //first hit on same frame as 3rd initial hit
+#			c.Core.QueueAttack(burstHit, combat.NewCircleHit(c.Core.Combat.Player(), 2.5), 0, delay)
+#			if increment == 73 - 16 {
+#				increment = 32
+#			} else {
+#				increment = 73 - 16
+#			}
+#		}
+

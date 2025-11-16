@@ -105,6 +105,7 @@ message GCSimScriptTarget {
     float physical_resist = 16;
     float anemo_resist = 17;
     float geo_resist = 18;
+    float hp_mult = 19;
 }
 
 message GCSimScript {

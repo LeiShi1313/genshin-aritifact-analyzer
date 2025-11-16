@@ -1,0 +1,176 @@
+#Alhaitham N2JP. Settings for Low/High plunge (default Low) and collision rate (25%). 2pc Deepwood still slightly lower than Gilded. Customized random frame delays; Icewind Suite energy.
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
+alhaitham add set="gilded" count=4;
+#alhaitham add set="deepwood" count=2; #-300ish dps
+#alhaitham add set="gilded" count=2;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #69.15 [97.15, 101.15 plunge] / 176.12 | 111.01 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 4[2]  er 2[0]   cr 10[8]  cd 12[10]
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+#fischl add set="totm" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
+fischl add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+                #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 4[2]   def% 2[0]   em 2[0]  er 2[0]   cr 10[8]  cd 12[10]
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add set="clam" count=4;
+#xianyun add set="sodp" count=4;
+#xianyun add set="noblesse" count=4;
+#xianyun add set="vv" count=4; #doesn't consistently swirl electro more than twice with this rotation
+xianyun add weapon="oathsworneye" refine=5 lvl=90/90;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #11.61 / 63.21 | 166.06 [214.06] er
+xianyun add stats hp=507.88 atk=132.28 def=39.35 hp%=0.0991 atk%=0.2973 def%=0.1239 em=39.63 er=0.6606 cr=0.0661 cd=0.1321;
+                 #hp 2[0]   atk 8[6]   def 2[0]  hp% 2[0]   atk% 6[4]   def% 2[0]   em 2[0]  er 12[10] cr 2[0]   cd 2[0]
+
+#xianyun add weapon="favcodex" refine=3 lvl=90/90;
+#xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #44.66 / 63.21 | 189.98 er
+#xianyun add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.2973 def%=0.1239 em=39.63 er=0.4404 cr=0.3966 cd=0.1321;
+                 #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 6[4]   def% 2[0]   em 2[0]  er 8[6]   cr 12[10] cd 2[0]
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="sacfrags" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 em=186.5 cd=0.622; #44.66 [68.66] / 125.41 | 133.03 er
+nahida add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=158.52 er=0.3303 cr=0.3966 cd=0.1321;
+                #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 8[6]   er 6[4]   cr 12[10] cd 2[0]
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 8, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+fn try_alhaitham_jump_plunge(high, coll) {
+  if .alhaitham.mods.xianyun-airborne-buff > 15 {
+    alhaitham jump;
+    alhaitham_plunge(high, coll);
+  } else {
+    alhaitham attack, dash;
+  }
+}
+
+fn alhaitham_plunge(high, coll) {
+  if high {
+    if rand() < coll {
+      alhaitham high_plunge[collision=1];
+    } else {
+      alhaitham high_plunge;
+    }
+  } else {
+    if rand() < coll {
+      alhaitham low_plunge[collision=1];
+    } else {
+      alhaitham low_plunge;
+    }
+  }
+}
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 resist=0.1 hp=999999999999 radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+
+
+let highPlunge = false; #false for low plunges, true for high plunges
+let collisionRate = 0.25; #25% collision rate
+
+active fischl;
+
+#[Fischl E] > Nahida hE Q > Fischl [N2 Q / N1 E] > Xianyun [N1] E LP Q [N1] > Alhaitham Q (wait for mirrors) 3x[N2JP] E 4x[N2JP]
+fischl skill;
+for let r=0; r<4; r=r+1 {
+  nahida skill[hold=1];
+  while !.nahida.burst.ready {
+    if .nahida.skill.ready {
+      nahida skill;
+    } else {
+      nahida attack;
+    }
+  }
+  nahida burst;
+  
+  fischl swap;
+  if .fischl.burst.ready {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  
+  if (.xianyun.weapon == .keys.weapon.favcodex) {
+    xianyun attack;
+  }
+  xianyun skill, low_plunge;
+  while !.xianyun.burst.ready {
+    xianyun attack;
+  }
+  xianyun burst;
+  if !.xianyun.mods.favonius-cd && (.xianyun.weapon == .keys.weapon.favcodex) {
+    xianyun attack;
+  }
+  
+  alhaitham swap;
+  while !.alhaitham.burst.ready {
+    alhaitham attack;
+  }
+  alhaitham burst;
+  while !.alhaitham.mirrors {
+    wait(1);
+  }
+  alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+  alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+  alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+  alhaitham skill, 
+            attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+  alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+  alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+  alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
+}

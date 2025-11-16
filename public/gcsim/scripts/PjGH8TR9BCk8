@@ -1,0 +1,48 @@
+options swap_delay=12 iteration=1000;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="ts" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kaedeharakazuha char lvl=90/90 cons=0 talent=9,9,9;
+kaedeharakazuha add weapon="xiphos" refine=1 lvl=90/90;
+kaedeharakazuha add set="tf" count=4;
+kaedeharakazuha add stats hp=4780 atk=311 em=561 ; #main
+kaedeharakazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="thestringless" refine=3 lvl=90/90;
+venti add set="viridescentvenerer" count=5;
+venti add stats hp=4780 atk=311 em=561 ; #main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="moonpiercer" refine=5 lvl=90/90;
+yaoyao add set="instructor" count=4;
+yaoyao add stats hp=3571 atk=232 atk%=0.3495 dendro%=0.466 cr=0.233;
+yaoyao add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.17856 er=0.08816 em=31.712 cr=0.21846 cd=0.43692;										
+
+
+active fischl;
+
+target lvl=100 resist=0.1 radius=1 pos=0, 1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0, 3.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<6; i=i+1 {
+    if (.fischl.burst.ready){
+      fischl attack, burst;
+    } else {
+      fischl skill, attack;
+    }
+    venti skill, burst;
+    yaoyao skill, attack:2;
+    kazuha skill,  high_plunge, burst, jump, skill, high_plunge;
+    venti skill, attack;
+    kazuha skill, high_plunge;
+
+    print("done");
+}
+

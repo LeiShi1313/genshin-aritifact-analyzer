@@ -1,0 +1,85 @@
+# Hu tao Xilonen Furina Yelan. ~23s Rot. c1 Hu Tao double Hydro w/ Xilonen 10 cost. 10/10/10 talents. Personal Stats and investement.
+
+hutao char lvl=90/90 cons=1 talent=10,10,10;
+hutao add weapon="staffofhoma" refine=1 lvl=90/90;
+hutao add set="marechausseehunter" count=4;
+hutao add set="wandererstroupe" count=1;
+hutao add stats def%=0.124 def=39 hp=5378 hp%=0.425 atk=311 atk%=0.192 er=0.11699999999999999 em=226.5 cr=0.544 cd=0.8380000000000001 pyro%=0.466;
+
+xilonen char lvl=90/90 cons=0 talent=9,10,9;
+xilonen add weapon="favoniussword" refine=5 lvl=90/90;
+xilonen add set="scrolloftheheroofcindercity" count=4;
+xilonen add set="wandererstroupe" count=1;
+xilonen add stats def%=1.3479999999999999 def=32 hp=5736 hp%=0.146 atk=362 er=0.6920000000000001 em=21 cr=0.17900000000000002 cd=0.637;
+
+furina char lvl=90/90 cons=1 talent=10,10,10;
+furina add weapon="lightoffoliarincision" refine=1 lvl=90/90;
+furina add set="goldentroupe" count=4;
+furina add set="vermillionhereafter" count=1;
+furina add stats def%=0.124 hp=6214 hp%=0.728 atk=340 atk%=0.135 er=0.583 cr=0.6799999999999999 cd=0.862;
+
+yelan char lvl=90/90 cons=0 talent=10,10,10;
+yelan add weapon="elegyfortheend" refine=2 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add set="blizzardstrayer" count=1;
+yelan add stats def%=0.051 def=37 hp=5258 hp%=0.7640000000000001 atk=391 er=0.22 em=16 cr=0.443 cd=1.0419999999999998 hydro%=0.466;
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+options swap_delay=12 iteration=1000;
+
+active furina;
+
+furina skill, dash, burst;
+
+xilonen burst, skill, attack:2;
+
+yelan burst, attack, skill, attack;
+
+hutao skill,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash;
+        
+yelan skill, attack:2;
+
+xilonen skill, attack:2;
+
+for let i = 0; i < 4; i = i + 1 {
+  xilonen burst;
+  
+  furina burst, skill, attack;
+  
+  yelan burst;
+
+  xilonen attack, skill, attack:2;
+
+  yelan skill, attack;
+
+  hutao skill,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash;
+
+  yelan skill, attack:2;
+  
+  xilonen skill, attack:2;
+ 
+}

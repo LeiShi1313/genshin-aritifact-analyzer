@@ -1,0 +1,71 @@
+# Ningguang Xilonen(C2) Chiori Bennett. ~18s Rot. Ningguang Triple Geo, C2 Xilonen required for offfield Geo RES Shred. Chiori bursts every rotation with particles funneled from Xilonen. Just one Mavuika CA.
+
+# Team
+ningguang char lvl=90/90 cons=6 talent=9,9,9;
+ningguang add weapon="widsith" refine=3 lvl=90/90;
+ningguang add set="nighttime" count=4;
+ningguang add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+ningguang add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=2 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbinger" refine=5 lvl=90/90;
+chiori add set="husk" count=4 +params=[stacks=4];
+#chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Pick up Crystallize actions
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash || ( char_id == .keys.char.xilonen && action_id == .action.skill ) || ( char_id == .keys.char.chiori && action_id == .action.skill ) || ( char_id == .keys.char.xilonen && action_id == .action.skill ) || ( char_id == .keys.char.ningguang && action_id == .action.walk ) {
+    pick_up_crystallize("any"); # Pick up crystallize before every dash, and mavuika CA, and chiori skill
+  }
+
+  return _execute_action(char_id, action_id, p);
+}
+
+
+#Rotation
+active bennett; # SS Stacks
+bennett skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  xilonen burst, skill, attack:2;
+  
+  chiori burst, skill:2;
+  
+  bennett skill, burst;
+  
+  ningguang attack, skill, dash, attack, charge;
+  
+  xilonen skill, attack:2;
+  
+  ningguang burst, skill, dash, 
+            charge,
+            attack, walk, 
+            attack, walk, 
+            attack, 
+            charge, 
+            attack;
+}
+

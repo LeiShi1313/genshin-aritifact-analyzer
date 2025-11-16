@@ -1,0 +1,63 @@
+# Razor Nahida Yelan Bennett. ~24s Rotation. Razor Hyperburgeon with C6 Bennet and 2xE Yelan. Self overloads not implemented.
+
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="mailedflower" refine=5 lvl=90/90;
+razor add set="gd" count=4;
+#razor add stats hp=4780 atk=311 em=187 em=187 em=187;
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # Em/Em/Em
+razor add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/Em/Cr
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/El/Cd
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # 3EM
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.3972 cd=0.2648; # EDC
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="ins" count=4;
+bennett add stats hp=3571 atk=232 er=0.3885 pyro%=0.3495 cr=0.311; #main
+bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=63.424 cr=0.2648 cd=0.63552;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+#Rotation
+active razor;
+
+for let i=0; i<4; i=i+1 {
+  razor skill, dash;
+  
+  nahida skill, attack, burst;
+  bennett skill, burst;
+  
+  yelan burst, attack:2, skill;
+  
+  razor skill, dash, attack, burst,
+    attack:3, skill, dash,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, skill, dash,
+    attack:3;
+  yelan attack, skill;
+  bennett skill, attack;
+  
+  print("done");
+}

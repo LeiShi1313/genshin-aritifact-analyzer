@@ -1,0 +1,47 @@
+options swap_delay=12 iteration=1000;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="hakushinring" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 er=0.518 hydro%=0.466 heal=0.359; # main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.5952 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.0662 cd=0.1324;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="thunderingfury" count=2;
+fischl add set="wandererstroupe" count=2;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+luminedendro char lvl=90/90 cons=6 talent=9,9,9; 
+luminedendro add weapon="favoniussword" refine=3 lvl=90/90;
+luminedendro add set="deepwood" count=5;
+luminedendro add stats hp=4780 atk=311 em=186.5 cr=0.311 dendro%=0.466 ; #main
+luminedendro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yaemiko char lvl=90/90 cons=0 talent=9,9,9;
+yaemiko add weapon="thewidsith" refine=3 lvl=90/90;
+yaemiko add set="gildeddreams" count=4;
+yaemiko add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+yaemiko add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+active yaemiko;
+
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    yaemiko skill:3, attack;
+	kokomi skill;
+	luminedendro skill, burst, attack:2;
+	fischl skill, attack;
+	yaemiko attack, burst, attack, skill:3;
+	kokomi burst;
+	yaemiko attack, charge, dash,
+		attack:2, charge, dash, attack;
+	fischl burst, attack;
+	luminedendro skill, attack;
+	yaemiko attack, charge, dash,
+		attack:2, charge, dash, attack;
+}
+

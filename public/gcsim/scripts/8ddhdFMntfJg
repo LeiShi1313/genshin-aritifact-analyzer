@@ -1,0 +1,81 @@
+skirk char lvl=90/90 cons=0 talent=9,9,9;
+//skirk char lvl=90/90 cons=0 talent=9,9,9 +params=[start_serpents_subtlety=0]; # 0 starting Serpent's Subtlety, ~1k(~0.6%) DPS loss (Compared to MH variant).
+skirk add weapon="eshu" refine=5 lvl=90/90;
+skirk add set="bs" count=4; 
+//skirk add set="mh" count=4; # MH is worse by ~2k(~1.3%) DPS here, but is better when assuming either 0 starting Serpent's Subtlety or an unfreezable enemy.
+skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+skirk add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10;
+//skirk add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*10; # MH subs
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*5 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*12 cd=0.0662*4;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 em=187 em=187 cr=0.311;
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
+escoffier add weapon="favlance" refine=3 lvl=90/90;
+escoffier add set="no" count=4; # GT is very similar, though slightly worse.
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999 freeze_resist=0;   # Freezable enemy
+//target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999 freeze_resist=1; # Unfreezable enemy, ~4.5k(~3%) DPS loss (compared to MH variant).
+energy every interval=480,720 amount=1;
+
+active furina;
+
+furina skill;
+escoffier skill, attack;
+citlali skill, attack; # Skill triggers Scroll (first rot)
+
+if .skirk.serpents_subtlety > 99 {  # First rotation combo, assuming 100 starting Serpent's Subtlety
+  skirk burst, 
+        skill,
+        attack:2, dash, attack:2, charge, dash, attack:3, walk,
+        attack:2, dash, attack:2, dash, attack:3, walk,
+        attack:2, dash, attack:2, charge, dash, attack:3, walk, 
+        attack:2, dash, attack:2, dash, attack:2;
+} else {
+  skirk skill,                      # Alternative first rotation combo, assuming 0 starting Serpent's Subtlety
+        attack:2, dash, attack:2, dash, attack:2, burst,
+        attack:2, dash, attack:2, dash, attack:3, walk,
+        attack:2, dash, attack:2, dash, attack:3, walk,
+        attack:2, charge, dash, attack:2, dash, attack:3, walk,
+        attack:2, charge; # CA to fill time for TTDS CD and guarantees N2D N2 in the next rotation, plus extra dmg.
+}
+
+for let r=0; r<3; r=r+1 {
+  furina attack, burst;
+  escoffier skill, attack, burst;
+  furina skill, dash, attack;
+  citlali skill, attack; # N1 triggers Scroll
+  
+  skirk skill,                        # Normal combo for the second rotation and onward
+        attack:2, dash, attack:2, dash, attack:2, burst,
+        attack:2, dash, attack:2, dash, attack:3, walk,
+        attack:2, dash, attack:2, dash, attack:3, walk,
+        attack:2, charge, dash, attack:2, dash, attack:3, walk,
+        attack:2, dash;
+  if .skirk.serpents_subtlety > 7 {
+    skirk attack:2, dash, attack:2; # 3 Void Rifts absorbed from CA
+  } else {
+    skirk attack:3;                 # 2 Void Rifts absorbed from CA
+  }
+}
+
+# Combo: 2[N2D] N3W with some variations
+# Skipping Furina's and Escoffier's bursts in the first rotation is a DPS gain.
+
+# 4 Rotations
+# Furina E >> Escoffier E N1 >> Citlali E N1 >> Skirk Q tE N2D N2CD N3W 2N2D N3W N2D N2CD N3W 2N2D N2 (~16s first rot)
+# Furina N1 Q >> Escoffier E N1 Q >> Furina ED N1 >> Citlali E N1 >> Skirk tE 2N2D N2Q 2(2N2D N3W) N2CD N2D N3W N2D (N3 / N2D N2) (~21s rot)
+
+# Worst-Case DPS (MH + unfreezable) is ~145k (~7k(~5%) DPS loss)

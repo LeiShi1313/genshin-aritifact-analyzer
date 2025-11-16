@@ -1,0 +1,59 @@
+nilou char lvl=90/90 cons=0 talent=9,9,9;
+nilou add weapon="xiphos" refine=1 lvl=90/90;
+nilou add set="tenacityofthemillelith" count=2;
+nilou add set="gilded" count=2;
+nilou add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466;
+nilou add stats hp%=0.2976 hp=2539.4 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=198.2 cr=0.0662 cd=0.1324 er=0.1102 ; #subs
+
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="dragonsbane" refine=3 lvl=90/90;
+candace add set="fopl" count=4;
+candace add stats hp=4780 atk=311 em=187 em=187 em=187;
+candace add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 cr=0.2648 cd=0.1324 er=0.6612 ; #subs
+
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 cr=0.3972 cd=0.5296 er=0.1102 ; #subs
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="kitain" refine=5 lvl=90/90;
+yaoyao add set="fopl" count=4;
+yaoyao add stats hp=4780 atk=311 em=187 em=187 em=187;
+yaoyao add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 cr=0.331 cd=0.1324 er=0.551 ; #subs
+
+
+
+#enemy config
+target lvl=100 resist=0.1 hp=10000000;
+target lvl=100 resist=0.1 hp=10000000 pos=2,2;
+energy every interval=480,720 amount=1;
+
+options swap_delay=12 debug=true iteration=1000 mode=sl;
+active nilou;
+
+for let i = 0; i < 5; i = i + 1 {
+  nilou skill, attack:2, skill;
+  nahida skill, attack, burst, attack, charge;
+  candace skill, burst, attack:2;
+  yaoyao burst, dash,
+   attack, dash,
+   attack, jump,
+   attack, jump,
+   attack, dash,
+   attack, dash,
+   attack, jump,
+   skill;
+  nahida skill, attack, charge;
+  candace skill, attack:3;
+  nilou attack;
+  if .nilou.burst.ready {
+    nilou burst;
+  } else {
+    nilou attack:2;
+  }
+
+}

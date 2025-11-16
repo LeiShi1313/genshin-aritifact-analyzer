@@ -1,0 +1,57 @@
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+    pick_up_crystallize("any"); # Pick up crystallize before every dash
+  }
+  return _execute_action(char_id, action_id, p);
+}
+
+options swap_delay=12 iteration=1000;
+
+navia char lvl=90/90 cons=0 talent=9,9,9;
+navia add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+navia add set="nighttime" count=4;
+navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cd=0.622;
+navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.3306 em=39.64 cr=0.3972 cd=0.1324;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active navia;
+for let i=0; i<4; i=i+1 {
+  if is_even(i) {
+    escoffier skill, burst;
+  } else {
+    xilonen burst;
+    escoffier skill, attack;
+  }
+  xilonen skill, attack:2;
+  navia burst;
+  shenhe attack:2, skill[hold=1], burst;
+  navia skill[hold=1], attack:2, dash, attack:2, dash, attack:2;
+  xilonen skill, attack:2;
+  if is_even(i) {
+    navia skill[hold=1], attack:3, dash, attack:2;
+    navia skill[hold=1], attack;
+  } else {
+    navia skill[hold=1], attack:2, dash, attack:2, dash, attack:2;
+  }
+}

@@ -1,0 +1,78 @@
+# Kinich Nahida Raiden Xingqiu. ~21s Rot. Kinich Hyperbloom from range accounting for distance (ommiting Xingqiu's rainswords during his combo). Kinich bursts every other rotation. No short hold E on Kinich is -6K DPS. Nahida fills time after Kinich's field time. 
+
+# Team
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="oc" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="widsith" refine=3 lvl=90/90;
+#nahida add weapon="sacjade" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=158.56 cr=0.0662 cd=0.662; # Evenstar
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296; # Widsith
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=99.1 cr=0.2648 cd=0.4634; # Jade
+
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="dbane" refine=3 lvl=90/90;
+raiden add set="fopl" count=4;
+raiden add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3306 em=118.92 cr=0.0662 cd=0.2648;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="emblem" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+fn kinich_combo(i) {
+  kinich skill;
+  set_player_pos(0, -3); # away from oppoenent
+  kinich attack;
+  while .kinich.nightsoul.state {
+    if .kinich.nightsoul.points == 20 {
+      kinich skill[hold=1];
+      continue;
+    }
+    kinich attack;
+  }
+}
+
+# Rotation
+active kinich; # SS stacks
+
+for let i=0; i<4; i=i+1 {
+  raiden skill, attack;
+  
+  nahida skill, attack, burst, charge;
+  
+  xingqiu skill, dash, attack, burst, attack;
+  
+  kinich_combo(i);
+  if is_even(i) {
+    kinich burst;
+    
+    nahida attack:2, charge;
+    nahida dash; set_player_pos(0, 0); # toward opponent
+  } else {
+    nahida attack:2, charge;
+    nahida dash; set_player_pos(0, 0); # toward opponent
+    nahida attack:3, charge; 
+  }
+  
+}
+

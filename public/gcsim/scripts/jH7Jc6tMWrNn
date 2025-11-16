@@ -1,0 +1,64 @@
+mualani char lvl=90/90 cons=0 talent=9,9,9;
+mualani add weapon="sacrificialjade" refine=1 lvl=90/90;
+mualani add set="obsidiancodex" count=5;
+mualani add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+mualani add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.0662 cd=0.662;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=5;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="ins" count=4;
+xilonen add stats hp=3571 atk=232 def%=0.43725 def%=0.43725 cr=0.311;
+xilonen add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648;
+
+options swap_delay=12 iteration=1000;
+
+active mavuika;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+fn mualani_combo() {
+  #doing 3[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<3; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+mualani attack:2;
+for let i=0; i<4; i=i+1 {
+  if is_even(i) {
+    mavuika burst, charge, dash, skill;
+    emilie skill, attack;
+  } else {
+    mavuika skill, attack;
+    emilie burst;
+  }
+  xilonen skill, attack:2;
+  mualani skill;
+  mualani_combo();
+  if is_even(i) {
+    mualani burst;
+    xilonen burst;
+  }
+}
+
+# Mavuika Q CD E > Emilie E > Xilonen E N2 > Mualani E 3[3-stacked bite] Q > Xilonen Q >
+# Mavuika      E > Emilie Q > Xilonen E N2 > Mualani E 3[3-stacked bite]   >

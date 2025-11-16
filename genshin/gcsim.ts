@@ -164,6 +164,7 @@ export interface GCSimScriptTarget {
   physicalResist: number;
   anemoResist: number;
   geoResist: number;
+  hpMult: number;
 }
 
 export interface GCSimScript {
@@ -1041,6 +1042,7 @@ function createBaseGCSimScriptTarget(): GCSimScriptTarget {
     physicalResist: 0,
     anemoResist: 0,
     geoResist: 0,
+    hpMult: 0,
   };
 }
 
@@ -1103,6 +1105,9 @@ export const GCSimScriptTarget = {
     }
     if (message.geoResist !== 0) {
       writer.uint32(149).float(message.geoResist);
+    }
+    if (message.hpMult !== 0) {
+      writer.uint32(157).float(message.hpMult);
     }
     return writer;
   },
@@ -1182,6 +1187,9 @@ export const GCSimScriptTarget = {
         case 18:
           message.geoResist = reader.float();
           break;
+        case 19:
+          message.hpMult = reader.float();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1210,6 +1218,7 @@ export const GCSimScriptTarget = {
       physicalResist: isSet(object.physicalResist) ? Number(object.physicalResist) : 0,
       anemoResist: isSet(object.anemoResist) ? Number(object.anemoResist) : 0,
       geoResist: isSet(object.geoResist) ? Number(object.geoResist) : 0,
+      hpMult: isSet(object.hpMult) ? Number(object.hpMult) : 0,
     };
   },
 
@@ -1241,6 +1250,7 @@ export const GCSimScriptTarget = {
     message.physicalResist !== undefined && (obj.physicalResist = message.physicalResist);
     message.anemoResist !== undefined && (obj.anemoResist = message.anemoResist);
     message.geoResist !== undefined && (obj.geoResist = message.geoResist);
+    message.hpMult !== undefined && (obj.hpMult = message.hpMult);
     return obj;
   },
 
@@ -1264,6 +1274,7 @@ export const GCSimScriptTarget = {
     message.physicalResist = object.physicalResist ?? 0;
     message.anemoResist = object.anemoResist ?? 0;
     message.geoResist = object.geoResist ?? 0;
+    message.hpMult = object.hpMult ?? 0;
     return message;
   },
 };

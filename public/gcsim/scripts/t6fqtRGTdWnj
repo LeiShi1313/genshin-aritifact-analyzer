@@ -1,0 +1,92 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="eosf" count=5;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="harbinger" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="gildeddreams" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+options swap_delay=12 debug=true iteration=1000 duration=300 workers=30 mode=sl;
+
+active nahida;
+
+#god forgive me what im about to write
+
+target lvl=100 resist=0.1;
+energy every interval=480,720 amount=1;
+while 1 {
+    switch 1 {
+        case .nahida.skill.ready && .nahida.swap.ready && .debuff.res.t0.nahida-e == 0:
+            nahida skill;
+        case .nahida.burst.ready && .nahida.swap.ready && .status.nahida-q < 180 &&
+            .xingqiu.status.xingqiuburst == 0 && .yelan.status.yelanburst == 0:
+            nahida burst;
+        case .xingqiu.burst.ready && .xingqiu.swap.ready && .status.nahida-q > 300:
+            xingqiu burst, attack;
+            if .kuki.burst.ready {
+              kuki swap;
+            } else {
+              yelan swap;
+            }
+        case .kuki.burst.ready && .kuki.swap.ready:
+            kuki burst;
+            if .xingqiu.status.xingqiuburst > 0 || .yelan.status.yelanburst > 0{
+              kuki attack;
+            }
+        case .xingqiu.status.xingqiuburst > 0 && .xingqiu.status.xingqiuburst < 600 
+            && .xingqiu.skill.ready && .xingqiu.swap.ready:
+            if .nahida.onfield {
+              nahida charge;
+            }
+            xingqiu attack, skill, dash, attack:2;
+        case .yelan.burst.ready && .yelan.swap.ready && 
+            .xingqiu.status.xingqiuburst > 0 && .status.nahida-q > 300:
+            yelan burst, attack;
+        case .yelan.skill.ready && .yelan.swap.ready:
+            yelan skill, attack:4;
+        case .kuki.skill.ready && .kuki.swap.ready:
+            if .nahida.onfield {
+              nahida charge;
+            }
+            kuki skill, dash;
+            if .xingqiu.status.xingqiuburst > 0 || .yelan.status.yelanburst > 0{
+              kuki attack;
+            }
+        
+        case .kuki.onfield && !.kuki.swap.ready:
+            kuki attack;
+        case .xingqiu.onfield && !.xingqiu.swap.ready:
+            xingqiu attack;
+        case .yelan.onfield && !.yelan.swap.ready:
+            yelan attack;
+        case .nahida.onfield:
+            if .nahida.normal > 3 {
+              nahida dash;
+            } else if .nahida.skill.ready && .nahida.normal > 2 {
+              nahida skill;
+            } else {
+              nahida attack;
+            }
+        default:
+            nahida attack;
+    }
+
+}
+

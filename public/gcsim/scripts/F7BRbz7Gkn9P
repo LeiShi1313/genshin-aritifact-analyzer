@@ -1,0 +1,65 @@
+nahida char lvl=90/90 cons=2 talent=9,10,9;
+nahida add weapon="athousandfloatingdreams" lvl=90/90 refine=1;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622;
+nahida add stats hp=448.13 hp%=0.23900001 atk%=0.087400004 def=18.52 def%=0.051 cr=0.3305 cd=0.75369996 em=188.82 er=0.1036;
+
+noelle char lvl=90/90 cons=6 talent=10,9,10;
+noelle add weapon="redhornstonethresher" lvl=90/90 refine=1;
+noelle add set="huskofopulentdreams" count=4 +params=[stacks=4];
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+noelle add stats hp%=0.239 atk=66.14 def=16.2 def%=0.3207 cr=0.3189 cd=0.6759 er=0.37560004;
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="favoniuslance" lvl=90/90 refine=5;
+yunjin add set="huskofopulentdreams" count=4 +params=[stacks=4];
+yunjin add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+yunjin add stats hp=657.26 atk=48.63 atk%=0.1574 def=60.18 def%=0.5102 cr=0.34219998 cd=0.1321 em=118.89 er=0.2978;
+
+yaemiko char lvl=90/90 cons=0 talent=9,10,10;
+yaemiko add weapon="kagurasverity" lvl=90/90 refine=1;
+yaemiko add set="emblemofseveredfate" count=4;
+yaemiko add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+yaemiko add stats hp=298.75 atk=19.45 atk%=0.47799996 def=39.35 cr=0.4122 cd=0.77709997 em=37.3 er=0.2202;
+
+options iteration=1000 swap_delay=12;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=9999999;
+
+active nahida;
+for {
+	switch {
+		case !.debuff.res.t0.nahida-e && .nahida.skill.ready && .nahida.swap.ready:
+			nahida skill, attack, charge;
+
+		case .yaemiko.skill.ready && .yaemiko.swap.ready && .yaemiko.tags.totems < 3:
+			yaemiko skill;
+		case .yaemiko.burst.ready && .yaemiko.swap.ready && .yaemiko.tags.totems == 3:
+			yaemiko burst;
+
+		case .yunjin.burst.ready && .yunjin.swap.ready:
+			yunjin burst;
+		case .yunjin.skill.ready && .yunjin.swap.ready:
+			yunjin skill;
+
+		case .noelle.burst.ready && .noelle.swap.ready && !.noelle.status.noelle-burst:
+			noelle burst;
+		case .noelle.skill.ready && .noelle.swap.ready:
+			noelle skill;
+
+		case .noelle.normal == 4:
+			noelle dash;
+		case .noelle.status.noelle-burst:
+			noelle attack;
+
+		// defaults
+		case .nahida.onfield:
+			nahida attack;
+		case .noelle.onfield:
+			noelle attack;
+		case .yunjin.onfield:
+			yunjin attack;
+		case .yaemiko.onfield:
+			yaemiko attack;
+	}
+}

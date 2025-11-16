@@ -1,0 +1,62 @@
+# Freminet Yelan Chiori Zhongli. ~19s Rot. Physical Freminet Double Geo with Shatter. Burstless Chiori. Freminet bursts every rotation.
+
+# Team - Options ordered by DPS
+freminet char lvl=90/90 cons=6 talent=9,9,9;
+freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+freminet add set="pf" count=4; 
+freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbinger" refine=5 lvl=90/90;
+#chiori add weapon="cinnabar" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+#chiori add set="husk" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622 ; #main
+chiori add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
+#chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
+#chiori add stats def=39.36 def%=0.248 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="tom" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5296; # Shieldbot
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active freminet; # SS stacks
+
+for let i=0; i<4; i=i+1 {
+  zhongli skill[hold=1], dash;
+  # Guarantee Fav
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
+  }
+  
+  chiori skill:2;
+  
+  yelan skill, burst, attack;
+  
+  freminet skill, attack, burst,
+         attack:2, skill, skill,
+         attack:2, skill, attack, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time
+         attack:2, skill, attack, skill,
+         attack:2, skill;
+         
+  print("done");
+}

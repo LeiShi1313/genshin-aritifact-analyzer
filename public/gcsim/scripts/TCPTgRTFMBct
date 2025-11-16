@@ -1,0 +1,52 @@
+diluc char lvl=90/90 cons=0 talent=9,9,9;
+diluc add weapon="serpentspine" refine=1 lvl=90/90 +params=[stack=5];
+diluc add set="cw" count=4;
+diluc add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
+diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972  cd=0.662;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse add weapon="favoniuslance" refine=3 lvl=90/90;
+chevreuse add set="eosf" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.6605;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.4623;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,3;
+energy every interval=480,720 amount=1;
+
+active bennett;
+
+let rotations = 4;
+
+for let r = rotations; r > 0; r = r - 1 {
+
+  bennett skill, burst;
+
+  fischl attack:1;
+    if .fischl.skill.ready {
+        fischl skill;
+    } else {
+        fischl attack, burst;
+    }
+
+  chevreuse burst, skill[hold=1]:3;
+  while !.chev.mods.favonius-cd {
+  chev attack;}
+  diluc attack, skill,
+    attack:3, skill,
+    attack:3, skill, attack, burst;
+    
+
+}

@@ -1,0 +1,51 @@
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon= "deathmatch" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu add weapon="harbingerofdawn" refine=5 lvl=90/90;
+xingqiu add set="esf" count=4;
+xingqiu add stats hp=4780 hp%=0 atk%=0.466 atk=311 cr=0.311 hydro%=0.466;
+xingqiu add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1488 er=0.1653 cr=0.331 cd=0.7944 ;
+
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.4408 em=679.92 cr=0.2317 cd=0.4634;
+
+
+options swap_delay=12 debug=true iteration=1000 duration=108.87 workers=50 mode=sl;
+
+target lvl=100 resist=0.1;
+energy every interval=480,720 amount=1;
+
+# End simulation after 3 rotations 
+active xingqiu;
+while 1{
+xingqiu burst,attack, skill, dash, attack:2; 
+yelan attack:2, burst;
+kazuha attack, skill, high_plunge, attack, burst;
+yelan attack, skill;
+hutao  skill,
+    attack:2, charge, dash,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:2, charge,jump;
+yelan attack:1, skill;
+kazuha skill, high_plunge;
+print ("done");
+}
+

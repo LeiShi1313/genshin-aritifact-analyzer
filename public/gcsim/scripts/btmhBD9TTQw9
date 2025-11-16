@@ -1,0 +1,45 @@
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.1986 cd=0.662;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=198.2 cr=0.0662 cd=0.662;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9 ;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="eosf" count=2;
+bennett add set="scroll" count=2;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; 
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active mavuika;
+
+for let i=0; i<4; i=i+1 {
+  mavuika skill;
+  rosaria skill, burst;
+  bennett skill, burst, attack;
+  citlali skill, burst, attack;
+  mavuika burst;
+  wait(4);
+  mavuika charge:3, charge[hold=6], charge[final=1], dash;
+  mavuika charge:3, charge[hold=6], charge[final=1], dash;
+  mavuika charge:2;
+  delay(1);
+}
+
+# Mavuika E > Rosaria EQ > Bennett EQ N1 > Citlali EQ N1 > Mavuika Q 2[C3FD] C2

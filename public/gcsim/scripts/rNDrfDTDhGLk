@@ -1,0 +1,68 @@
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="calamityofeshu" refine=5 lvl=90/90;
+clorinde add set="fragmentofharmonicwhimsy" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+clorinde add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; # main
+fischl add stats hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 def=39.36 def%=0.124 em=79.28 er=0.1102 cr=0.331 cd=0.7944;
+
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="hakushinring" refine=5 lvl=90/90;
+lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Combo
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+# Rotation
+active clorinde; 
+
+for let i=0; i<2; i=i+1 {
+
+  furina skill, dash, burst;
+  fischl attack, burst;
+  lanyan skill:2;
+  clorinde_combo();
+  clorinde burst;
+  lanyan attack;
+  
+  fischl attack, skill;
+  lanyan skill:2;
+  lanyan attack;
+  lanyan burst;
+  clorinde_combo();
+  clorinde burst;
+  
+}
+
+#FoHW on Chlorinde for 16s rotation for this team, Furina, Fischl and Lanyan bursts every 2 rotations
+#KQMS or Something Pretentious
+#Can probably be optimized for less idletime
+#Adding an another Lanyan attack removes idletime for less dps

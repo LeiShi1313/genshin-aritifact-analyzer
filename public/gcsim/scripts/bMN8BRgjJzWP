@@ -1,0 +1,46 @@
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="songofstillness" refine=5 lvl=90/90;
+lyney add set="mh" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="ap" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbingerofdawn" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,3;
+energy every interval=480,720 amount=1;
+
+active lyney;
+for let r=0; r<4; r=r+1 {
+  lyney aim;
+  xilonen skill, attack:2;
+  bennett skill, burst, dash; pick_up_crystallize("pyro");
+  chiori skill:2;
+  lyney aim:3;
+  if .lyney.burst.ready {
+    lyney burst;
+    delay(11);
+    lyney skill;
+  }
+  else {
+    lyney aim;
+  }
+  lyney aim, skill;
+}
+

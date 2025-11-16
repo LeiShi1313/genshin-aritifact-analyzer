@@ -1,0 +1,57 @@
+# Sayu Nahida Kazuha Bennett. ~23s Rot. Burning AoE demo with Kazuha's grouping. In-game, Quadratic scaling Burning self-damage may make survival diifcult, even with I-frames.
+
+# Team
+sayu char lvl=90/90 cons=6 talent=9,9,9; 
+sayu add weapon="favgs" refine=3 lvl=90/90;
+sayu add set="gd" count=4;
+sayu add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sayu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="gt" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.2979 cd=0.5958;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;  #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.2979 cd=0.5958;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140];
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=0.8 pos=1.2,0 hp=100000000;
+target lvl=100 resist=0.1 radius=0.8 pos=0,1.2 hp=100000000;
+target lvl=100 resist=0.1 radius=0.8 pos=-1.2,0 hp=100000000;
+target lvl=100 resist=0.1 radius=0.8 pos=0,-1.2 hp=100000000;
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {  
+    nahida skill, attack;
+    if .nahida.burst.ready {
+      nahida burst;
+    }
+    bennett skill, burst;
+    kazuha skill[hold=1], high_plunge;
+    if .kazuha.burst.ready {
+      kazuha burst;
+    }
+    if .sayu.burst.ready {
+      sayu burst;
+    }
+    sayu skill[hold=600];
+    kazuha skill, high_plunge, attack;
+}

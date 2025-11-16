@@ -1,0 +1,61 @@
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311 ;
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.551 em=39.64 cr=0.331 cd=0.1324 ;											
+
+wriothesley char lvl=90/90 cons=0 talent=9,9,9;
+wriothesley add weapon="thewidsith" refine=3 lvl=90/90;
+wriothesley add set="marechausseehunter" count=4;
+wriothesley add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311;
+wriothesley add stats def%=0.1240 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=79.28 cr=0.2648 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats def%=0.10416 def=33.0624 hp=3997.6192 hp%=0.083328 atk=259.7872 atk%=0.0834272 er=0.9808399999999999 em=33.2976 cr=0.45568200000000003 cd=0.444864 pyro%=0.3495;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="esf" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ;
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972 ;																																									
+											
+
+options swap_delay=12;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active shenhe;
+  
+
+for let i=0; i<4; i=i+1 {
+  shenhe skill[hold=1];
+  if !.shenhe.burst.ready{
+    shenhe attack;
+  }
+  shenhe burst;
+  while !.shenhe.mods.favonius-cd {
+    shenhe attack;
+  }
+  bennett burst, skill;
+  if !.xl.burst.ready{
+    xl attack;
+  }
+  xiangling burst, skill, attack;
+  if !.xl.mods.favonius-cd {
+    xl attack;
+  }
+  wriothesley skill,
+              attack:3, charge, jump,
+              attack:3, charge, dash,
+              attack:3, charge, jump,
+              attack:3, charge, jump,
+              attack:3, charge;
+  if .wriothesley.burst.ready{
+    wriothesley burst;
+  } else {
+    wrio jump, attack:3;
+  }
+  bennett skill;
+  shenhe attack;
+}

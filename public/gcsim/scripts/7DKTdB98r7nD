@@ -1,0 +1,51 @@
+options swap_delay=12 iteration=100;
+
+qiqi char lvl=90/90 cons=0 talent=9,9,9; 
+qiqi add weapon="sacsword" refine=5 lvl=90/90;
+qiqi add set="ohc" count=4;
+qiqi add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 heal=0.359; #main
+qiqi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="eosf" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="tom" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+active xingqiu;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  fischl attack, skill, attack;
+  xingqiu burst, attack, skill, dash, attack:2;
+  qiqi attack:2;
+  if .qiqi.skill.ready {
+    qiqi skill, dash;
+  }
+  qiqi attack:4;
+  beidou skill[counter=1], attack, burst;
+  
+  if .qiqi.burst.ready {
+  qiqi burst;
+  }
+  fischl attack, burst;
+  qiqi attack:15;
+  beidou skill[counter=1], attack:2;
+  print("Rotation done");
+}
+
+# Fischl N1 E N1 Xingqiu Q N1 ED N2 > Qiqi N2 ED N4 > Beidou E N1 Q > Qiqi Q > Fischl N2Q > Qiqi N15 > Beidou E N2;
+ 

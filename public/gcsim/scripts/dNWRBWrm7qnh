@@ -1,0 +1,75 @@
+# Freminet Yae Escoffier Xianyun. ~19s Rot. Freminet Phys plunge with Superconduct, no Shatter. Executes 1 lvl 4 Shattering Pressure combo during plunges. OHC > SoDP Xianyun, especially given Superconduct, but bubbles may miss. 50% Collisions. EM support Yae > DMG Yae.
+
+# Team - Options ordered by DPS
+freminet char lvl=90/90 cons=6 talent=9,9,9;
+freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+freminet add set="lno" count=4;
+#freminet add set="pf" count=4;
+freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="evenstar" refine=1 lvl=90/90;
+#yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="tom" count=4;
+#yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=118.92 cr=0.1986 cd=0.5958; # 3EM; Evenstar
+#yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.1655 cd=0.5958; # ADC; Widsith
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="favlance" refine=3 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1;
+
+# Freminet Plunge Combo
+fn FreminetPlunge() {
+  freminet jump;
+  if .airborne {
+    freminet high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active freminet; # SS Stacks
+
+for let x = 0; x < 4; x = x + 1 {
+  yae skill:3;
+  
+  escoffier skill;
+  if !.esco.mods.favonius-cd {
+    esco attack;
+  }
+  
+  xianyun skill, high_plunge, burst;
+  
+  freminet skill, attack; 
+    FreminetPlunge(); freminet attack;
+    FreminetPlunge(); freminet attack;
+    FreminetPlunge(); freminet attack;
+    FreminetPlunge(); freminet skill;
+    FreminetPlunge(); freminet dash;
+    FreminetPlunge(); freminet dash;
+    FreminetPlunge(); freminet dash;
+    FreminetPlunge(); #freminet attack;
+  
+  print("done");
+}

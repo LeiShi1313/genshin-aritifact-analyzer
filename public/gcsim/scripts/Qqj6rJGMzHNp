@@ -1,0 +1,59 @@
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="thewidsith" refine=3 lvl=90/90;
+klee add set="lavawalker" count=4;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 er=.518 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 er=0.518 em=187 em=187; # main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.5510 em=158.56 cr=0.1986 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active klee;
+
+klee attack;
+
+for let r = 5; r > 0; r = r - 1 {
+  kazuha skill, high_plunge, burst;
+  bennett burst, skill;
+  xiangling burst, skill;
+  kazuha skill, high_plunge;
+  klee attack, burst, walk, attack, skill[bounce=3, mine=8];
+  if .klee.skill.ready {
+    klee jump, attack, skill[bounce=3, mine=8], jump;
+  } else {
+    klee attack[travel=6], charge;
+  }
+  for let r = 5; r > 0; r = r - 1 {
+    klee attack[travel=6], charge; # 5N1C
+  }  
+  klee attack;
+  
+  if (r > 1) {
+    bennett skill; # Begins next rotation
+  }
+}
+
+wait(25); # So sim doesn't end with final CA mid animation
+
+# Classic Klee Mono -- 5N1C first rotation, 6N1C 2nd-5th
+
+# Klee N1 > Kazuha E hP Q > Bennett QE > Xiangling QE > Kazuha E hP > Klee N1Q N1EJ N1EJ/N1C 5N1C N1
+# Repeat with Bennett E

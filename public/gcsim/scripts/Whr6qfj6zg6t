@@ -1,0 +1,208 @@
+// KokomiClan's Notes:
+// This Nilou Bloom rotation is taken from my own and others' speedruns and should reflect the "quickswap" nature we see in practice. Bloom dmg
+// is usually neglible since you are constantly swapping and using bursts as well for i-framing self-bloom damage. Builds are only indicative. 
+// We also assume dashes can be done without losing positioning (in practice you can forward dash but HOLD W, HOLD D to keep your position if done right...). 
+// NB: Higher dendro uptime does not necessarily lead to superior results (compare the hydro/dendro uptime with the no aura uptime as well).
+// The warnings about delay in swapping and delay in skill are small enough that I wouldn't worry about them too much.
+// Enjoy :)
+
+
+// Character Data
+nahida char lvl=90/90 cons=0 talent=6,10,8;
+nahida add weapon="athousandfloatingdreams" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add set="goldentroupe" count=1;
+nahida add stats def%=0.54 hp=5288 atk=364 er=0.363 em=202.5 cr=0.6260000000000001 cd=0.769 dendro%=0.466;
+
+kokomi char lvl=90/90 cons=1 talent=10,10,10;
+kokomi add weapon="sacrificialfragments" refine=5 lvl=90/90;
+kokomi add set="desertpavilionchronicle" count=1;
+kokomi add set="flowerofparadiselost" count=4;
+kokomi add stats def=169 hp=5826 hp%=0.443 atk=405 atk%=0.21 er=0.13 em=406 cr=0.12 cd=0.124;
+
+nilou char lvl=90/90 cons=0 talent=2,7,8;
+nilou add weapon="thedockhandsassistant" refine=3 lvl=90/90;
+nilou add set="flowerofparadiselost" count=2;
+nilou add set="gildeddreams" count=1;
+nilou add set="tenacityofthemillelith" count=2;
+nilou add stats def%=0.066 def=37 hp=6215 hp%=1.585 atk=391 atk%=0.040999999999999995 er=0.408 em=213 cr=0.124 cd=0.14800000000000002;
+
+collei char lvl=90/90 cons=6 talent=2,6,8;
+collei add weapon="sacrificialbow" refine=5 lvl=90/90;
+collei add set="deepwoodmemories" count=4;
+collei add set="shimenawasreminiscence" count=1;
+collei add stats def=153 hp=5706 hp%=0.111 atk=311 atk%=0.402 er=0.265 em=578.5 cr=0.272 cd=0.295;
+
+// Sim Options
+options swap_delay=12 debug=true iteration=1000 workers=30 mode=sl;
+energy every interval=480,720 amount=1;
+
+// Enemy Options
+target lvl=100 resist=0.1 pos=-1.1, 0.2 radius=1 hp=1000000000 particle_drop_count=1; // Moved closer to enemies for Kokomi Q to apply Hydro.
+target lvl=100 resist=0.1 pos=1.1, 0.2 radius=1 hp=100000000 particle_drop_count=1;
+
+// TEAM ROTATION STRATEGY -> Constant swapping and maintaining high dendro aura uptime!
+active nahida;
+let koko_q = 0; // Whether Kokomi used her burst
+let collei_q = 0; // Whether Collei used her burst
+let nahida_q = 0; //Whether Nahida used her burst
+
+
+// Start with Nahida & go through 10 rotations
+for let i=0; i<10; i=i+1 {
+  // Reset All Variables
+  koko_q = 0;
+  collei_q = 0;
+  nahida_q = 0;
+ 
+  while !.nahida.skill.ready
+  {
+    nahida attack:1, charge;
+  }
+  
+  // Nahida starts the rotation with E skill, assuming it hits. In practice, if enemies are spread you would use hold skill.
+  if .nahida.energy < 50
+  {
+    // Sometimes we don't have energy xD; though this is totally dependent on the enemies & particle drops.
+    nahida attack:1, skill;
+ 
+  }
+  else
+  {
+    nahida skill, burst;
+    nahida_q = 1;
+  }
+  
+  
+  // Use Kokomi's skill and set up jellyfish.
+  if .kokomi.skill.ready
+  {
+    kokomi skill, attack:1;
+  }
+  else
+  {
+     kokomi charge, dash; // Hit enemies with AOE charge attack and apply hydro. DO NOT USE NORMALS HERE: "attack:1" as this will lead to a dps loss!
+  }
+  
+   
+  // Set up Nilou's skill. If done right, you should have minimal downtime on skill cd when looping back here. DO NOT SWAP KOKOMI & NILOU ORDER!!! DPS LOSS!!!
+  nilou skill:4;  
+
+  // Always use Collei's skill before burst to ensure CD comes down earlier & have higher dendro app. For some single target cases you would swap this order.
+  if .collei.energy < 60
+  {
+    // If Collei can't use her skill due to previous rotation, we revert to Nahida's skill
+    if .collei.skill.ready
+    {
+      collei skill;
+      wait(24); // Catch particles
+      
+      // Sometimes it takes a bit of time for the particles to funnel
+      if .collei.burst.ready
+        {
+          collei burst;
+        }
+      else
+      {
+         // If Nahida's burst didn't trigger earlier, we use it here.
+        if nahida_q == 0 && .nahida.burst.ready
+        {
+          nahida burst;
+          nahida_q = 1;
+        }
+      }
+      
+    }
+    else
+    {
+      // Use Nahida for Aura Stability
+      nahida attack:1, skill;
+    }
+    
+  }
+  else
+  {
+    if .collei.skill.ready
+    {
+       collei skill, burst;
+    }
+    else
+    {
+      collei burst;
+      
+       // If Nahida's burst didn't trigger earlier, we use it here: Don't move it outside this, otherwise you will lose dps due to insufficient elemental applications.
+      if nahida_q == 0 && .nahida.burst.ready
+      {
+        nahida burst;
+      }
+    }
+  }
+  
+  
+  // Use Kokomi burst and apply 2U hydro, otherwise charge attack for hydro app.
+  if .kokomi.energy < 70
+  {
+    kokomi charge;
+  }
+  else
+  {
+    kokomi burst;
+    koko_q = 1;
+  }
+  
+  
+  if collei_q == 1
+  {
+      // Kokomi attacks normally -> NB: Do not increase this or DPS will drop
+      kokomi attack:1, charge, attack:6;
+      
+      // Follow up with Nahiha to ensure aura stability
+      nahida skill, attack:1;
+  }
+  else
+  {
+      // Kokomi attacks normally
+      kokomi attack:3, dash, charge;
+      
+      // Nahida ensures aura stability
+      nahida skill, attack:1;
+  } 
+  
+  
+  // Kokomi follows up again - if skill is ready it will persist throughh the dendro application at the end. Only use if Kokomi didn't burst before...
+  if .kokomi.skill.ready && (koko_q == 0)
+  {
+    kokomi skill, attack:1;
+  }
+  else
+  { 
+    // Use Nilou's burst for damage & hydro application. If not available, swap to Kokomi instead
+    if .nilou.burst.ready
+    {
+      nilou burst;
+      // nahida attack:3; // Uncomment: Basically, if you have too much dendro (like 75% plus uptime) then you lose dps due to fewer reactions per second
+    }
+    else
+    {
+      kokomi attack:1, charge;
+    }
+  }
+ 
+  
+  // Re-apply dendro -> Aura Stability
+  if .collei.skill.ready
+  {
+    collei skill;
+  }
+  else
+  {
+    nahida attack:1, charge;
+  }
+  
+  // Final Koko Instance of Hydro
+  kokomi attack:1, charge;
+  
+  
+  // End of rotation loop
+  print("Nilou bloom has destroyed the simulation!");
+}

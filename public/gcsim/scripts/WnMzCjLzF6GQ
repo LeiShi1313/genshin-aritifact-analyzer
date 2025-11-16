@@ -1,0 +1,59 @@
+# - Characters
+
+venti char lvl=90/90 cons=6 talent=9,9,9 ;
+venti add weapon="polarstar" refine=1 lvl=90/90;
+venti add set="vv" count=4; #2vv 2dps is ~2k dps loss
+#venti add set="dpc" count=2;
+venti add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622; #main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="polarstar" refine=1 lvl=90/90;
+faruzan add set="gt" count=4; #2vv 2dpc is ~1k dps loss
+#faruzan add set="vv" count=2; 
+#faruzan add set="dpc" count=2;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622; #main
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+furina char lvl=90/90 cons=3 talent=9,9,9;
+furina add weapon="favsword" refine=5 lvl=90/90;
+furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main 		
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="freedom" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 heal=0.359; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.3641 cd=0.331;
+
+# - Options
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+
+# - Targets
+
+target lvl=100 resist=0.1 radius=1.5 pos=0,2.5 hp=999999999;
+
+# - Actions
+
+active furina;
+
+for let i=0; i<5; i=i+1 {
+  furina skill, dash, attack, burst;
+  venti skill, attack, aim[hold=0]; #N1 and phys CA are unnecessary if not holding polar star
+  faruzan attack, skill, burst, aim; #N1 is unnecessary if not holding polar star
+  bennett burst, skill;
+  if i {
+    furina attack:2;
+  }
+  venti skill, burst;
+  faruzan skill, aim:2;
+  venti aim, skill, aim;
+  faruzan skill, aim:2;
+}
+
+# C6R1 Venti Faruzan dual carry: Venti, Faruzan, Furina, Bennett. No interrupt resist, Venti CAs are difficult to pull off in-game. Bennett heals the entire team past the furst rotation.
+# Furina E D N1 Q, Venti E N1 c, Faruzan N1 E Q C, Bennett Q E, [Furina N2 after rotation 1], Venti E Q, Faruzan E 2C, Venti C E C, Faruzan E 2C 
+# "c" denotes a phys bow CA and "C" denotes an anemo bow CA.

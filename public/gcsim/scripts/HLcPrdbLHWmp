@@ -1,0 +1,131 @@
+#For the purpose of maximizing dmg per hit against cocijo, for achievement II
+#Only abilities that cause dmg will cause cocijo to build up his shield, 
+#  so skills like ayaka d, mona d, and barbara lingering e collision can apply aura for free
+#This sim uses ayaka for melt and cryo resonance. Without her, gaming would use mona or barb,
+#  and use the rainslasher instead.
+#  Serpent spine or high refine plunge weapon from natlan will always be better 
+#On WL 9, you have 34 hits to do ~2.7MM dmg, so on avg ~80K dmg per hit is needed. 
+#Low options because we care only about dmg/hit, not dps. Only use e/swap/d, so no energy randomness
+#This build does not need food or potion buffs; apply as needed if you have weaker weapons/artifacts
+#Gaming needs to start the fight with full energy to maximise shim buff
+#  If you successfully do 2 gaming ep per rot, should have no issue with running out of energy
+#Enable gaming 100% CR to only see variance due to human timings, and not due to crits
+#  Always leave Chev CR at 100 to eliminate her variability in results
+
+
+
+#Fewer iterations because human error is simulated, but energy/crit rng doesn't matter as much
+#Less duration because cocijo forces rotations to occur more than every 20s anyway, 
+#Over the 34 rotations that occur, can assume that on average, each rot does the dmg of the avg rot
+options iteration=100 duration=30 swap_delay=12;
+
+#Chev only hits primary target with he, so set up a fake primary at 0,1. Real target is at 0,1001
+target lvl=103 resist=0.1 particle_threshold=500000 particle_drop_count=1 pos=0,1;
+target lvl=103 resist=0.1 particle_threshold=500000 particle_drop_count=1 pos=0,1001;
+
+chevreuse char lvl=89/90 cons=6 talent=2,6,2;
+chevreuse add weapon="dialoguesofthedesertsages" refine=5 lvl=90/90;
+chevreuse add set="songofdayspast" count=4;
+chevreuse add set="vourukashasglow" count=1;
+chevreuse add stats def%=0.401 def=97 hp=7230 hp%=1.178 atk=387 atk%=0.11599999999999999 er=0.175 em=82 cr=0.027000000000000003;
+chevreuse add stats cr=1;
+
+gaming char lvl=80/90 cons=0 talent=2,9,2;
+gaming add weapon="mailedflower" refine=5 lvl=90/90;
+gaming add set="shimenawasreminiscence" count=4;
+gaming add set="gladiatorsfinale" count=1;
+gaming add stats def%=0.066 hp=5258 hp%=0.057999999999999996 atk=446 atk%=0.297 er=0.226 em=244.5 cr=0.443 cd=1.026 pyro%=0.466;
+gaming add stats cr=1;
+
+ayaka char lvl=80/90 cons=0 talent=7,8,9;
+ayaka add weapon="thedockhandsassistant" refine=1 lvl=90/90;
+ayaka add set="gladiatorsfinale" count=1;
+ayaka add set="tenacityofthemillelith" count=2;
+ayaka add set="huskofopulentdreams" count=2;
+ayaka add stats def%=0.291 hp=5103 hp%=1.2469999999999999 atk=346 atk%=0.245 er=0.486 em=19 cr=0.132 cd=0.132;
+
+charlotte char lvl=80/90 cons=1 talent=2,5,6;
+charlotte add weapon="ttds" refine=5 lvl=50/50;
+charlotte add set="oceanhuedclam" count=2;
+charlotte add set="maidenbeloved" count=2;
+charlotte add set="wandererstroupe" count=1;
+charlotte add stats def=67 hp=5736 hp%=0.426 atk=101 atk%=0.7290000000000001 er=0.195 em=21 cr=0.07 cd=0.062;
+
+
+let first_heal_frames = 1.9 * 60;
+let heal_tick_frames = 2 * 60; 
+fn human_error_frames() { #returns a 1/4s delay with uniform variance of +- 1/8s
+  return (0.5 + rand()) * 0.25 * 60 ;
+}
+
+#Chev setup- artifact heal buldup, c6 buildup
+active chevreuse;
+#Cause skill to hit at ~1s mark, for easy back calc for future actions and delays
+#Chev needs to stand in a safe space and release in middle of cocijo's spin. 
+#  Exact timing uninportant as long as it's in 2nd half of spin
+#  Need to aim away from cocijo so splash doesn't hit
+chevreuse skill[hold=41]; #Hits target 1 
+let chev_skill_ref = f(); #Normalize to t=0
+
+#need to move into melee range of cocijo after his spin ends
+#  to bait out his jump attack
+#  Will cause ayaka d and gaming ep to happen during mob downtime
+set_player_pos(0, 1000); #Future hits all on target 2
+ayaka swap; #Swap to ayaka and wait for visual indicator of chev c6 buff to apply
+#Wait until first heal tick occurs, then swap (@approx t=2)
+sleep(first_heal_frames - (f() - chev_skill_ref) + human_error_frames());
+
+#Swap to gaming and wait for chev c6 buff to appear
+gaming swap; #delay Lasts until @approx t=4s
+sleep(first_heal_frames + heal_tick_frames - (f() - chev_skill_ref) + human_error_frames());
+
+#begin swapping (and taking action if necessary) on CD
+ayaka swap;
+ayaka dash[f = human_error_frames()]; #ends at ~t=5.5s
+
+#gaming is on field for ~5.5 < t < 6.5. Chev heal ticks at t=5.9
+gaming swap; 
+
+#Should happen on CD since gaming does nothing and action queues. 
+#ends @t=7.5s, close to chev buff @t=7.9s Human delay and longer swap times delays
+#Sets up ttds that lasts 10s
+#At higher swap delays (including at the usual swap=12), 
+#  Charlotte will steal one stack of chev c6 buff,
+#  Except at the fastest human response times
+#  In the sampler, even the 75 percentile seed has Charlotte stealing a stack
+#  Only at max seed did gaming have all 3 stacks
+charlotte swap; 
+
+#skill takes long enough that it will always land after t=8s, 
+#Buffs:
+#  Will have 2/3 chev c6 (unless charlotte swap is early, then 3/3) and artifact buff
+#  Will always have ttds and shim buff (if energy managed right)
+#  Will never have mailed flower passive. Melt will cause passive to apply on next plunge
+#  Pyro resonance / cryo resonance / melt: Always active
+gaming skill, high_plunge; 
+
+#Wait for skill to reach ~2s cd. Ends after t=12s, 
+#Captures last 2 heal ticks at both t=9.9 and 11.9s 
+#Stay in melee range of mob to bait jump attack 
+delay(4 * 60 + human_error_frames()); 
+ayaka dash[f = human_error_frames()];
+gaming swap;
+
+#Either Ayaka or gaming might need to dodge/wait out a jump
+#so add an extra random second before gaming ep
+delay(human_error_frames() + rand() * 1 * 60);
+
+#(from sample) Plunge lands 17.08 <= t <= 18.1
+#Up to 25% seed, had all expected buffs except mailed flower
+#At and above 50% seed, had all expected buffs
+#Buffs:
+#  Whimsy: chev c6 heal maximises whimsy that builds from 7.9 < t < 13.9 Buff available from 13.9 < t < 23.9
+#  Chev c6: 3 stacks until t=15.9. 2 Stacks until t=17.9
+#  TTDS: Lasts until t=17.5 + first ayaka d random human error delay. In practice, will always be up
+#  Mailed Flower: Lasts until 8s after first plunge lands. If you land 2nd plunge on CD + 1s +-1s,
+#   That is 7s +- 1s from when skill was used, which means you won't have with maximum delays
+#   but will otherwise always have
+#   Can delay first plunge slightly after skill use to make this more comfortable to get
+#  Shim: Lasts 10s after first e. Since plunge is close to cd (6s), will always have
+#  Pyro resonance / cryo resonance / melt: Always active
+gaming skill, high_plunge;

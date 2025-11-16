@@ -1,0 +1,63 @@
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
+
+yaemiko char lvl=90/90 cons=0 talent=9,9,9;
+yaemiko add weapon="thewidsith" refine=3 lvl=90/90;
+yaemiko add set="marechausseehunter" count=4;
+yaemiko add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+yaemiko add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.3469 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.2974 cd=0.6605;																																								
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;				
+																																																																											
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="hakushin" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324 ;																																																																																																									
+																																																																																															
+options swap_delay=12 iteration=1000 ignore_burst_energy=false;
+
+# --- Targets
+target lvl=100 resist=0.1 hp=999999999999 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active yae;
+
+for let x = 0; x < 3; x = x + 1 {
+  yae skill:3;
+  kaz skill, high_plunge, burst;
+  furina skill, dash, burst; 
+  xianyun attack, skill, low_plunge, burst;
+  yae attack, jump, high_plunge[collision=1];
+  if .yae.burst.ready {
+    yae burst;
+  }
+  yae skill:2, attack ,skill, jump; 
+  if .airborne {
+    yae low_plunge[collision=1], dash;
+  }
+  yae jump;
+  if .airborne {
+    yae low_plunge[collision=1], attack;
+  }
+  xianyun attack:2;
+  kaz skill, high_plunge;
+  yae attack;
+  for let y = 0; y < 3; y = y + 1{
+    yae jump;
+    if .airborne {
+      yae low_plunge[collision=0], dash;
+    }
+  }
+  yae jump;  
+  if .airborne {
+    yae low_plunge[collision=1], attack;
+  }
+}

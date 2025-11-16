@@ -1,0 +1,72 @@
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  }
+	
+  return _execute_action(char_id, action_id, p);
+}
+
+options swap_delay=12 iteration=1000;
+
+navia char lvl=90/90 cons=0 talent=9,9,9;
+navia add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+navia add set="nighttime" count=4;
+navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cd=0.622;
+navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="totm" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="bs" count=2;
+rosaria add set="no" count=2;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+rosaria add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active zhongli;
+for let x=0; x<4; x=x+1 {
+  zhongli skill[hold=1], dash;
+  while !.zhongli.mods.favonius-cd { 
+    zhongli attack; 
+  }
+  navia burst;
+  shenhe attack, skill, burst;  pick_up_crystallize("any"); #pickup with shenhe tE dashing
+  if !.shenhe.mods.favonius-cd { 
+    shenhe attack;     
+  }
+  rosaria skill, burst;         pick_up_crystallize("any"); #pickup with rosaria E dashing    
+  if !.rosaria.mods.favonius-cd {
+    rosaria attack;              
+  }
+  navia skill[hold=1], attack:3, dash, attack:2;  
+  shenhe attack, skill, attack; pick_up_crystallize("any"); #pickup with shenhe tE dashing
+  if !.shenhe.mods.favonius-cd { 
+    shenhe attack;     
+  } 
+  rosaria skill;                pick_up_crystallize("any"); #pickup with rosaria E dashing
+  navia skill, attack:3, dash, attack:2, dash;
+  print(.navia.shrapnel);
+  if .navia.skill.ready {
+    navia skill;
+  }
+}
+
+# Zhongli hE dash (N# for fav) > 
+# Navia Q         > Shenhe N1 tE Q  (N1 for fav) > Rosaria EQ (N1 for fav) > 
+# Navia hE N3D N2 > Shenhe N1 tE N1 (N1 for fav) > Rosaria E > 
+# Navia tE N3D N2D (tE if available)

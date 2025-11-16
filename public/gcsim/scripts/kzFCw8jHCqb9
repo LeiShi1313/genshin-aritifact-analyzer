@@ -1,0 +1,52 @@
+options swap_delay=12 iteration=100;
+
+qiqi char lvl=90/90 cons=6 talent=10,10,10;
+qiqi add weapon="mistsplitterreforged" refine=1 lvl=90/90;
+qiqi add set="marechausseehunter" count=4;
+qiqi add stats def=16 hp=4780 atk=311 atk%=0.8210000000000001 er=0.065 em=233 cr=0.389 cd=1.5390000000000001 pyro%=0.466;
+
+bennett char lvl=90/90 cons=6 talent=9,10,10;
+bennett add weapon="skywardblade" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats def=55 hp=5318 hp%=1.252 atk=311 atk%=0.292 er=1.2300000000000002 em=33 cr=0.14800000000000002 cd=0.132 heal=0.359;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,10;
+xianyun add weapon="favoniuscodex" refine=5 lvl=90/90;
+xianyun add set="viridescentvenerer" count=4;
+xianyun add stats hp=4780 atk=311 atk%=1.581 er=1.0430000000000001 em=90 cr=0.425 cd=0.35000000000000003;
+
+furina char lvl=90/90 cons=0 talent=9,10,10;
+furina add weapon="favoniussword" refine=5 lvl=90/90;
+furina add set="goldentroupe" count=4;
+furina add stats hp=5079 hp%=1.113 atk=344 atk%=0.040999999999999995 er=0.5630000000000001 em=107 cr=0.43599999999999994 cd=1.127;
+
+
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active furina;                                   
+for let i = 0; i < 4; i = i + 1 { ## Do the rotation 4 times 
+  furina skill, dash, attack, burst; ## Furina abilities active
+  
+  xianyun skill, low_plunge, attack, burst; ## Xianyun abilities active
+  
+  bennett skill, burst; ## Bennett abilities active
+
+  xianyun attack, charge; ## Xianyun abilities active
+  wait(50); ## Xianyun swirls (sometimes)
+  
+  for let q = 0; q < 8; q = q + 1 { ## Qiqi does 8 plunges
+    qiqi jump;
+    if !.element.t0.hydro { ## Qiqi delays plunge if enemy has no hydro aura
+      delay(20); 
+    }
+    if .airborne {
+      qiqi high_plunge[collision=rand()>0.5], dash; 
+    }
+  }
+  if .qiqi.skill.ready { ## DPS gain
+    qiqi skill;
+  }
+  
+  bennett skill; ## Bennett extra skill while waiting for Furina skill cd
+}

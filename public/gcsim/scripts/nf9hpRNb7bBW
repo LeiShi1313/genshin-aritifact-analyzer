@@ -1,0 +1,92 @@
+# Razor Nahida Fischl Deyha. ~20s Rot. Razor with 16s of Field time. Nahida bursts every other rotation starting 2nd Rot. Fischl alternates skill and burst.
+
+# Team
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#razor add weapon="mailedflower" refine=5 lvl=90/90;
+#razor add weapon="archaic" refine=5 lvl=90/90;
+razor add set="ur" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Atk/El
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Em/El
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Atk/EL/Cr
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="gt" count=4;
+#nahida add set="deepwood" count=4;
+#nahida add set="scroll" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2979 cd=0.7282;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #mainstats
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+dehya char lvl=90/90 cons=0 talent=9,9,9;
+dehya add weapon="aquamarine" refine=1 lvl=90/90;
+#dehya add weapon="regalia" refine=1 lvl=90/90 +params=[pickup_delay=90]; # To Fischl
+#dehya add weapon="regalia" refine=1 lvl=90/90 +params=[pickup_delay=190]; # To Razor; 1st Dash
+dehya add set="deepwood" count=4;
+#dehya add set="scroll" count=4;
+#dehya add set="tom" count=4;
+dehya add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+# Rotation
+active razor; # SS Stacks
+
+fischl skill, attack;
+
+for let i=0; i<4; i=i+1 {
+  # Skip Q on  first rotation, then use as available 
+  nahida skill, attack;
+  if i > 0 && .nahida.burst.ready {
+    nahida burst, charge;
+  } else {
+    nahida charge;
+  }
+  
+  dehya skill:1;
+  if i > 0 {
+    dehya skill;
+  }
+  
+  # Use burst over skill
+  amy attack;
+  if .amy.burst.ready {
+    amy attack, burst;
+  } else {
+    amy skill;
+  }
+  
+  razor skill, dash, attack, burst, attack, skill, dash;
+  # Razor main DPS window 
+  while .razor.mods.razor-q > 190 { # Ends on Skill
+    if .razor.normal > 3 && .razor.skill.ready {
+      razor skill, dash;
+    } else if .razor.normal > 3 {
+        razor dash;
+    } else {
+      razor attack;
+    }
+  }
+  
+}

@@ -1,0 +1,59 @@
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="widsith" refine=3 lvl=90/90;
+klee add set="lavawalker" count=4;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="stringless" refine=3 lvl=90/90;
+venti add set="lavawalker" count=4;
+venti add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=118.92 cr=0.3972 cd=0.1324;
+
+options swap_delay=12 iteration=1000; 
+target lvl=100 resist=0.1 radius=1.5 pos=0,2.5 hp=9999999;
+target lvl=100 resist=0.1 radius=1.5 pos=2.5,0.5 hp=9999999;
+energy every interval=480,720 amount=1;
+energy every interval=480,720 amount=1;
+
+active klee;
+klee attack;
+for let r = 5; r > 0; r = r - 1 {
+  kazuha skill, high_plunge, burst;
+  bennett skill, burst;
+  venti skill, burst;
+  kazuha skill, high_plunge;
+  klee attack, burst, walk, attack, skill[bounce=3, mine=8];
+  if .klee.skill.ready {
+    klee jump, attack, skill[bounce=3, mine=8], jump;
+  } else {
+    klee attack[travel=6], charge;
+  }
+  for let r = 5; r > 0; r = r - 1 {
+    klee attack[travel=6], charge; # 5N1C
+  }  
+  klee attack;
+  
+  if (r > 1) {
+    bennett skill; # Begins next rotation
+  }
+}
+
+# Klee Mono Pyro with Double Anemo
+# First Rotation:
+# Kazuha E hP Q > Bennett E Q > Venti (N1) E Q > Kazuha E hP > Klee N1QW N1EJ N1E 5N1C N1 > Bennett E
+# Following Rotations:
+# Kazuha E hP Q > Bennett E Q > Venti (N1) E Q > Kazuha E hP > Klee N1QW N1E 6N1C N1 > Bennett E
+

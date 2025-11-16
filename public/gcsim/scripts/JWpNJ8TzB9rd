@@ -1,0 +1,47 @@
+nilou char lvl=90/90 cons=6 talent=10,10,10;
+nilou add weapon="keyofkhajnisut" refine=1 lvl=90/90;
+nilou add set="vourukashasglow" +params=[stacks=5] count=4;
+nilou add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+nilou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add weapon="favsword" refine=3 lvl=90/90;
+kirara add set="deepwood" count=4;
+kirara add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+kirara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2979 cd=0.5958 ;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favbow" refine=3 lvl=90/90;
+collei add set="emblemofseveredfate" count=4;
+collei add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+collei add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="sacrificialfragments" refine=5 lvl=90/90;
+kokomi add set="flowerofparadiselost" count=4;
+kokomi add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kokomi add stats def=39.36 def%=0.124 hp=2031.52 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.0662 cd=0.1324 ;
+
+options swap_delay=12 iteration=100;
+
+active kirara;
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+  
+  kirara skill[hold=5], burst;
+  kokomi skill, attack, charge, walk;
+  collei skill, burst;
+  nilou skill, attack:2,
+        attack:3,
+        attack:3,
+        attack:3,
+        attack:3,
+        attack:3,
+        attack:1;                
+if.nilou.burst.ready { nilou burst;} 
+else { kokomi attack, burst, attack;}
+}

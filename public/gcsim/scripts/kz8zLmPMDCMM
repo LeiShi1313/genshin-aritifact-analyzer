@@ -1,0 +1,42 @@
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacjade" refine=1 lvl=90/90;
+neuvillette add set="marechausseehunter" count=5;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+
+ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon add weapon="favbow" refine=3 lvl=90/90;
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 em=187 em=187 cr=0.311 ; #main
+ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.331 cd=0.5296;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="thewidsith" refine=3 lvl=90/90;
+yae add set="gt" count=5;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5456 er=0.4959 em=118.92 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=10000000 radius=1.5 pos=0,2;
+//target lvl=100 resist=0.1 hp=10000000 radius=1.5 pos=0,5.2;
+energy every interval=480,720 amount=1;
+
+active neuvillette;
+for let x=0; x<4; x=x+1 {
+  neuvillette skill, attack;
+  kazuha burst;
+  yae skill:3;
+  kazuha skill, high_plunge;
+  ororon skill, burst;
+  neuvillette charge, burst, skill, charge;
+  kazuha skill, high_plunge;
+  yae skill:3;
+  neuvillette charge, charge;
+}
+wait(173);

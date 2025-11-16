@@ -1,0 +1,59 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="finale" refine=5 lvl=90/90;
+ayaka add set="bs" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
+ganyu add weapon="songofstillness" refine=5 lvl=90/90;
+ganyu add set="bs" count=4;
+ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.6622;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999 freeze_resist=0; # standard ST target     # freeze_resist=1 for enemies NOT Freezable
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active escoffier;
+
+for let i=0; i<4; i=i+1 {
+  escoffier skill, burst;
+  ganyu burst, skill;
+  shenhe burst, skill;
+  for let j=0; j<2; j=j+1 {
+    if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
+      shenhe attack;
+    }
+  }
+  ayaka skill, dash, attack, burst,
+        attack, charge, dash,
+        attack, charge,
+        attack, charge;
+  ganyu skill, dash, attack;
+  shenhe attack, skill;
+  for let j=0; j<2; j=j+1 {
+    if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
+      shenhe attack;
+    }
+  }
+  ayaka skill, dash, 
+        attack:3, charge;
+}
+
+# Escoffier EQ > Ganyu Q E > Shenhe Q tE > Ayaka ED N1 Q N1CD 2[N1C] > Ganyu E > Shenhe N1 tE > Ayaka ED N3C

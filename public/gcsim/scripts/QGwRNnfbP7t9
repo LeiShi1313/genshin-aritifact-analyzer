@@ -1,0 +1,42 @@
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="deathmatch" refine=1 lvl=90/90;
+raiden add set="emblemofseveredfate" count=4;
+raiden add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1984 er=0.6282 em=39.64 cr=0.3972 cd=1.284 electro%=0.466;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=385.2 cr=0.5427 cd=0.5958 dendro%=0.466;
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="widsith" refine=3 lvl=90/90;
+lisa add set="noblesse" count=4;
+lisa add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.1102 em=79.28 cr=0.642 cd=0.7944 electro%=0.466;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="thundersoother" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+
+active raiden;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+  raidenshogun skill;
+for let i=0; i<4; i=i+1 {
+  if .fischl.skill.ready {
+    fischl attack:2, skill;
+  }
+  nahida skill, attack, burst;
+  while !.lisa.burst.ready {
+    lisa attack;
+  }
+  lisa burst;
+  fischl attack:2, burst;
+  raidenshogun burst, attack:4, dash, attack:4, skill, attack:4, dash, attack:4;
+  lisa attack, skill[hold=1], attack;
+  print("done!");
+}
+

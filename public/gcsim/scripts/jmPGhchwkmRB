@@ -1,0 +1,64 @@
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacjade" refine=1 lvl=90/90;
+neuvillette add set="mh" count=5;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.1986 cd=0.662;
+
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="favsword" refine=3 lvl=90/90;
+lynette add set="viridescentvenerer" count=4;
+lynette add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.331 cd=0.5958;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="deepwood" count=5;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="favgs" refine=3 lvl=90/90;
+//mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=198.2 cr=0.331 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+
+active neuvillette;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+
+for let i=0; i<4; i=i+1 { 
+  neuvillette skill;
+  wait(3);
+  if !.element.t0.hydro {           # if you don't have hydro on the enemy after E hit
+    neuv attack;
+  }
+  if !.element.t0.hydro {           # if you still don't have hydro on the enemy
+    neuv attack, dash, attack:2;
+  }
+  lynette attack, skill;  # Do not use E N1 with her C6, the N1 will remove Hydro which means no Vaped Mavuika Q (also no early 4pc Scroll proc)
+  if .mavuika.burst.ready {  # Mavuika C1 is helpful for this
+    mavuika burst, attack;
+    emilie skill, attack;
+  } else {
+    emilie burst, attack;
+  }
+  mavuika attack, skill;
+  lynette burst, attack;
+  neuvillette charge, burst, skill, charge;
+  if .lynette.cons >= 4 {
+    lynette dash, attack, skill;
+  } else {
+    lynette attack:2, dash;   # if lynette is Pre-C4
+  }
+  neuvillette charge, charge;
+}
+
+wait(173);
+
+# Neuv E > Lynette N1 E > Mavuika Q N1 > Emilie E > Mavuika E > Lynette Q N1 > Neuv C Q E C > Lynette N1 E > Neuv 2[C]
+# Neuv E > Lynette N1 E >                Emilie Q > Mavuika E > Lynette Q N1 > Neuv C Q E C > Lynette N1 E > Neuv 2[C]

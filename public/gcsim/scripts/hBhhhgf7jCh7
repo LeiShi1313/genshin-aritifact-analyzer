@@ -1,0 +1,79 @@
+# Kazuha Fischl Bennett Xianyun. ~20s Rot. Kazuha TF Pyro Plunge with grouping. Kazuha does not use burst and skills off cd. 100% collisions for E plunges, 50% for starwicker plunges. 
+
+# Option - Options listed by DPS
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="umbrella" refine=5 lvl=90/90;
+#kazuha add weapon="harbinger" refine=5 lvl=90/90;
+#kazuha add weapon="lionsroar" refine=3 lvl=90/90;
+#kazuha add weapon="wolffang" refine=1 lvl=90/90;
+kazuha add set="tf" count=4;
+kazuha add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # CR
+#kazuha add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+#kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # CD
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # VHunt
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # SoS
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+#bennett add weapon="sapwood" refine=5 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+#xianyun add weapon="favcodex" refine=3 lvl=90/90;
+xianyun add set="vv" count=4; 
+#xianyun add set="sodp" count=4; 
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=99.24 atk%=0.2976 er=0.3306 em=198.2 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active fischl;
+fischl skill;
+
+for let i=0; i<4; i=i+1 {
+  xianyun skill, low_plunge, burst;
+  
+  bennett skill, burst;
+  
+  fischl attack;
+  if .fischl.burst.ready {
+    fischl attack:1, burst;
+  } else {
+    fischl skill;
+  }
+  
+  kazuha attack;
+  while .xianyun.burst.cd > 30 {
+    if .kazuha.skill.ready {
+      kazuha skill, high_plunge[collision=1];
+    } else if .kazuha.status.xianyun-airborne-buff {
+      kazuha jump;
+      if .airborne {
+        kazuha high_plunge[collision=rand()>0.5], dash;
+      }
+    } else {
+      kazuha attack;
+    }
+  }
+  
+  bennett skill;
+
+}

@@ -1,0 +1,112 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="thewidsith" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 cr=0.311 dendro%=0.466;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="kagotsurubeisshin" refine=1 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 hp%=0.466 atk=311 cr=0.311 hydro%=0.466;
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="dragonsbane" refine=3 lvl=90/90;
+raiden add set="flowerofparadiselost" count=5;
+raiden add stats hp=4780 atk=311 em=187 em=187 em=187;
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.1986 cd=0.2648;
+
+options swap_delay=6 iteration=1000;
+target lvl=100 resist=0.1 hp=9999999999 pos=3.1,0 radius=2;
+energy every interval=480,720 amount=1;
+
+let m=4;
+let n=2;
+#This makes so that rand()*m+n gives a range between [n,n+m]
+
+active nahida;
+
+nahida skill;
+wait(6+(rand()*m+n));
+for let i = 0; i < 4; i = i + 1 {
+  nahida burst;
+  if i != 0 {
+    wait(rand()*m+n);
+    nahida attack;
+    wait(4+(rand()*m+n));
+    nahida charge;
+  }
+  xingqiu swap;
+  wait(rand()*m+n);
+  xingqiu burst;
+  wait(14+(rand()*m+n));
+  xingqiu attack;
+  raiden swap;
+  wait(rand()*m+n);
+  raiden skill;
+  wait(19+(rand()*m+n));
+  raiden attack;
+  yelan swap;
+  wait(rand()*m+n);
+  yelan skill;
+  wait(1+(rand()*m+n));
+  yelan attack;
+  wait(rand()*m+n);
+  yelan burst;
+  nahida swap;
+  wait(rand()*m+n);
+  nahida attack:3;
+  wait(rand()*m+n);
+  nahida skill;
+  wait(2+(rand()*m+n));
+  nahida attack;
+  wait(rand()*m+n);
+  nahida dash;
+  wait(rand()*m+n);
+  nahida attack;
+  wait(4+(rand()*m+n));
+  nahida charge;
+  xingqiu swap;
+  wait(rand()*m+n);
+  xingqiu skill;
+  wait(rand()*m+n);
+  xingqiu dash;
+  wait(rand()*m+n);
+  xingqiu attack:2;
+  nahida swap;
+  wait(rand()*m+n);
+  nahida attack:3;
+  wait(rand()*m+n);
+  nahida skill;
+  wait(2+(rand()*m+n));
+  nahida attack;
+  wait(4+(rand()*m+n));
+  nahida charge;
+  yelan swap;
+  wait(rand()*m+n);
+  yelan attack:2;
+  wait(rand()*m+n);
+  yelan skill;
+  wait(1+(rand()*m+n));
+  yelan attack:2;
+  nahida swap;
+  wait(rand()*m+n);
+  nahida attack:2;
+  wait(9+(rand()*m+n));
+  nahida charge;
+  wait(rand()*m+n);
+  nahida dash;
+  wait(rand()*m+n);
+  nahida attack:3;
+  wait(rand()*m+n);
+  nahida skill;
+  wait(2+(rand()*m+n));
+  nahida attack:2;
+  wait(rand()*m+n);
+}

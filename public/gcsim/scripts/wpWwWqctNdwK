@@ -1,0 +1,65 @@
+# Eula Xilonen Escoffier Xianyun. ~17s Rot. Eula Cryo Plunge. Chongyun uses Skill just before Xianyun and the Cryo infusion lasts for all 8 plunges. Xianyun VV also lasts for all 8 plunges. Eula immediately uses hold skill with Grimheart stacks to shred Cryo RES and her skill returns agains before her field time ends thanks to Chongyun's CDR. No burst Xilonen. 50% Collisions.
+
+# Team - Options listed by DPS
+eula char lvl=90/90 cons=0 talent=9,9,9;
+eula add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#eula add weapon="fruitfulhook" refine=1 lvl=90/90;
+eula add set="lno" count=4; # Everything else sucks
+eula add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favgs" refine=3 lvl=90/90;
+chongyun add set="no" count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active eula; # SS Stacks
+eula skill; # Grimheart stack
+
+for let i = 0; i < 4; i = i + 1 {
+  xilonen skill, attack:2;
+  
+  chongyun burst, skill;
+  
+  xianyun skill, low_plunge, burst;
+  
+  # Plunge until expiry
+  while .eula.status.xianyun-airborne-buff {
+    if .eula.skill.ready {
+      eula skill[hold=1]; # Consumes Grimheart stack for Cryo RES Shred.
+    } else {
+      eula jump;
+      if .airborne {
+        eula high_plunge[collision=rand()>0.5];
+      }
+      if .eula.status.xianyun-airborne-buff { # no dash for final plunge
+        eula dash;
+      }
+    }
+  }
+  eula attack, skill;
+}

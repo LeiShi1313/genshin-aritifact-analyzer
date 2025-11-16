@@ -1,0 +1,53 @@
+options swap_delay=12 iteration=1000;
+
+itto char lvl=90/90 cons=0 talent=9,9,9;
+itto add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+itto add set="huskofopulentdreams" count=4;
+itto add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+itto add stats def=39.36 def%=0.186 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3641 cd=0.662;
+									
+aethergeo char lvl=90/90 cons=6 talent=9,9,9;
+aethergeo add weapon="favoniussword" refine=3 lvl=90/90;
+aethergeo add set="theexile" count=4;
+aethergeo add stats hp=3571 atk=232 er=0.387 geo%=0.348;
+aethergeo add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.19836 em=31.712 cr=0.31776 cd=0.10592;
+aethergeo add set="huskofopulentdreams" count=1;
+aethergeo add stats cr=0.311;
+aethergeo add stats er=0.1102 cd=0.1324;										
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favoniuswarbow" refine=3 lvl=90/90;
+gorou add set="noblesseoblige" count=4;
+gorou add stats hp=4780 atk=311 er=0.518 geo%=0.466 cr=0.311;
+gorou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add set="tenacityofthemillelith" count=4;
+kuki add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+kuki add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active kuki;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+  kuki skill;
+  aethergeo burst;
+  gorou attack, burst, skill;
+  itto attack, burst[prestack=1],
+    attack, skill[travel=0], 
+    attack:2, charge:5,
+    attack:4, charge:5, 
+    skill[travel=0], charge;
+  wait(20);
+for let i=0; i<4; i=i+1 {
+  kuki skill;
+  aethergeo burst, skill[short_hold=1];
+  itto swap; wait(40); itto attack;
+  gorou attack, burst, skill;
+  itto attack, burst[prestack=1],
+    attack, skill[travel=0], charge:4, 
+    attack:3, charge:4, 
+    attack:3, skill[travel=0], charge:4;
+}
+

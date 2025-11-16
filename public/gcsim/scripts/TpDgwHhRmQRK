@@ -1,0 +1,44 @@
+lumineelectro char lvl=90/90 cons=6 talent=9,9,9;
+lumineelectro add weapon="sacsword" refine=3 lvl=90/90;
+lumineelectro add set="tom" count=4;
+lumineelectro add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+lumineelectro add stats atk%=0.0992 cr=0.2648 cd=0.662;
+lumineelectro add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+eula char lvl=90/90 cons=0 talent=9,9,9;
+eula add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+eula add set="pf" count=4;
+eula add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622;
+eula add stats atk%=0.0992 cd=0.5296 cr=0.331;
+eula add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+bennett char lvl=90/90 cons=5 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats er=0.4408 cr=0.1324 cd=0.5296;
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="esf" count=4;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+rosaria add stats er=0.0551 atk%=0.0496 cr=0.2648 cd=0.662;
+rosaria add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active eula;
+
+for let i = 0; i < 5; i = i + 1 {
+    eula attack:2,skill;
+    bennett attack,skill,burst;
+    rosaria skill,burst;
+    eula burst,walk,attack:3,skill[hold=1],walk[f=11],attack:4;
+    lumineelectro skill[hits=3];
+    eula attack:2;
+    rosaria skill;
+    bennett skill;
+    lumineelectro skill[hits=3];
+}

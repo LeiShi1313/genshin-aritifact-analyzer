@@ -1,0 +1,44 @@
+xinyan char lvl=90/90 cons=6 talent=9,9,9;
+xinyan add weapon="makhairaaquamarine" refine=3 lvl=90/90;
+xinyan add set="flowerofparadiselost" count=4;
+xinyan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.7384000000000001 em=532.56 cr=0.2979 cd=0.4634;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.642 cd=0.7944 dendro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=5;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="wanderingevenstar" refine=3 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats def%=0.124 def=39.36 hp=6811.52 hp%=0.5952 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=500;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+# ----  Actions List
+
+  nahida skill;
+for let x=0; x< 4; x=x+1 {
+  nahida burst, attack;
+  xingqiu burst, attack, skill, dash, attack:2;
+  kokomi skill, attack;
+  xinyan skill, attack, burst;
+  nahida 
+		attack:2, skill,
+		attack:3, dash,
+		attack:3, dash,
+		attack:3, skill,
+		attack:3, dash,
+		attack:3, dash, skill;
+    print("done");
+}
+

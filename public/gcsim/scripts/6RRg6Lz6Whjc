@@ -1,0 +1,54 @@
+amber char lvl=90/90 cons=3 talent=9,9,9;
+amber add weapon="hamayumi" refine=5 lvl=90/90;
+amber add set="wandererstroupe" count=4;
+amber add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.3972 cd=1.284 pyro%=0.466;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="noblesse" count=4;
+bennett add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=1.069 em=39.64 cr=0.642 cd=0.3972 pyro%=0.466;
+
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
+ganyu add weapon="favbow" refine=3 lvl=90/90;
+ganyu add set="emblemofseveredfate" count=4;
+ganyu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1488 er=0.6832 em=39.64 cr=0.6420 cd=0.7944 cryo%=0.466;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="favcodex" refine=3 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.551 em=679.92 cr=0.331 cd=0.1324;
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=3,0;
+energy every interval=480,720 amount=1;
+
+active bennett;
+
+let weakspot_skill_issue = 0.5;
+
+for let i = 0; i < 7; i = i + 1 {
+  bennett skill, burst;
+  sucrose skill, dash, attack;
+  ganyu skill, burst;
+   if .sucrose.burst.ready {
+   sucrose burst, attack;
+   } else {
+   sucrose attack:2;
+   }
+    for let j = 0; j < 3; j = j + 1 {
+    if rand() < weakspot_skill_issue {
+      amber aim[weakspot=1];
+    } else {
+      amber aim[weakspot=1];
+    }
+     }
+     amber skill, dash;
+  for let j = 0; j < 2; j = j + 1 {
+    if rand() < weakspot_skill_issue {
+      amber aim[weakspot=1];
+    } else {
+      amber aim[weakspot=1];
+    }
+    
+  }
+}

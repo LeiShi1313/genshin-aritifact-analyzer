@@ -1,0 +1,120 @@
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+options swap_delay=1 iteration=1000;
+
+neuvillette char lvl=90/90 cons=0 talent=9,9,9 ; 
+neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90 ;
+neuvillette add set="mh" count=4;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="eosf" count=5;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.331 cd=0.4634;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="ap" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="goldentroupe" count=4;
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #mainstats
+albedo add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+albedo add stats geo%=0.125; #albedo A1
+
+active neuvillette;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<3; i=i+1 {
+  neuvillette skill, attack:3; #catches his own particles
+  zhongli skill[hold=1], dash, attack;
+  let startFrame1 = f();
+  while !pick_up_crystallize("hydro") && f() - startFrame1 < 30 {
+    if !.zhongli.mods.favonius-cd {
+      zhongli attack;
+    } else {
+      wait(1);
+    }
+  } # until the character pickup the shard, try to force fav proc or wait, up to 30frames
+  albedo skill, attack, dash;
+  xiangling skill, dash, burst;
+  if !.xiangling.mods.favonius-cd {
+    xiangling attack;
+  }
+  neuvillette charge, burst, skill, charge;
+  xiangling attack:2, skill, dash;
+  if !.xiangling.mods.favonius-cd {
+    xiangling attack;
+  }
+  zhongli skill, attack:2, dash;
+  let startFrame2 = f();
+  while !pick_up_crystallize("hydro") && f() - startFrame2 < 30 {
+    if !.zhongli.mods.favonius-cd {
+      zhongli attack;
+    } else {
+      wait(1);
+    }
+  } # until the character pickup the shard, try to force fav proc or wait, up to 30frames
+  neuvillette charge, charge;
+}
+
+wait(173); #for the last CA
+
+# Neuv E N3 > Zhongli hED N1 > Albedo E N1D > Xiangling E dash Q (N1) > Neuv C Q E C > Xiangling N2 E dash > Zhongli tE N2D > Neuv 2[C]

@@ -1,0 +1,53 @@
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="deathmatch" refine=1 lvl=90/90;
+arle add set="fohw" count=5;
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; 
+arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="chainbreaker" refine=5 lvl=90/90;
+#fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+                                
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favoniuslance" refine=3 lvl=90/90;
+chevreuse add set="sodp" count=4;
+chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.3972;
+                                                                
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="favoniuslance" refine=3 lvl=90/90;
+thoma add set="no" count=4;
+thoma add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
+                                                                                                                                                                                                                                                        
+options swap_delay=12 iteration=1000;                                                                        
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active fischl;
+fischl skill; # starting with Electro aura in the first rot for chev passive
+for let i = 0; i < 4; i = i + 1 {
+  arle skill;
+  chevreuse burst, skill[hold=1], attack;
+  thoma attack, skill, burst;
+  fischl attack;
+  if .fischl.skill.ready {
+    fischl skill; # E is ready in 2nd rot.
+  } else {
+    fischl attack, burst; # refresh oz with Q in the first rot, for res shred uptime
+  }
+  arle charge,
+       attack:3, dash,
+       attack:3, dash,
+       attack:3, dash,
+       attack:3, dash,
+       attack:3, dash,
+       attack:3, dash;
+  if i==0 {
+    arle attack:5; # to prevent fischl E cd in the first rot, remove this if you are using EQE
+  }
+  #arle skill, burst; # if you want to see EQE, use this instead, she can burst every rot with 0ER subs
+}

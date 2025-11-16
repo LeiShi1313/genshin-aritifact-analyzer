@@ -1,0 +1,77 @@
+options swap_delay=12 iteration=500;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworneye" refine=5 lvl=90/90;
+#xianyun add set="sodp" count=4;
+#xianyun add set="ohc" count=4;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=148.86 atk%=0.2976 er=0.6061 em=39.64 cr=0.0662 cd=0.1324 ;																																												
+									
+navia char lvl=90/90 cons=0 talent=9,9,9;
+navia add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+navia add set="nighttime" count=4;
+navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;																												
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+#yelan add set="esf" count=4;
+yelan add set="no" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ;
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2648 cd=0.7944 ;																																																																		
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="harbinger" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ;
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5282;												
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active navia;
+
+  furina skill, dash, burst;
+  navia skill, burst;
+  xianyun skill, low_plunge, burst;
+  yelan burst, attack, skill, attack;
+  for let n = 2; n > 0; n = n - 1 {
+    navia skill[hold=1];
+    for let h = 3; h > 0; h = h - 1 {
+      navia jump;
+      if .airborne {
+          navia high_plunge[collision=rand()>0.5], dash;
+      }
+    }
+    navia jump;
+    if .airborne {
+        navia high_plunge[collision=rand()>0.5], attack;
+    }
+  }
+  
+for let i = 0; i < 2; i = i + 1 {
+  yelan skill, attack;
+  xianyun skill, low_plunge;
+  furina skill, dash, burst;
+  xianyun burst;
+  if !i {
+    navia skill[hold=1];
+  }
+  navia burst;
+  yelan burst, attack, skill, attack;
+  for let n = 2; n > 0; n = n - 1 {
+    navia skill[hold=1];
+    for let h = 3; h > 0; h = h - 1 {
+      navia jump;
+      if .airborne {
+          navia high_plunge[collision=rand()>0.5], dash;
+      }
+    }
+    navia jump;
+    if .airborne {
+        navia high_plunge[collision=rand()>0.5], attack;
+    }
+  }
+}
+navia skill[hold=1];

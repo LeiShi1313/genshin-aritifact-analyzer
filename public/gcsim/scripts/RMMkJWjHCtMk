@@ -1,0 +1,110 @@
+# use truncated normal distribution for random delay
+fn rand_delay(mean, stddev, min, max) {
+  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
+  let del = randnorm() * stddev + mean;
+  
+  # truncate random value according to min and max
+  if del < min {
+    del = min;
+  } else if del > max {
+    del = max;
+  }
+  
+  # execute delay
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+      # ~3% chance at 6
+      # ~7% chance at 20
+    rand_delay(14, 4, 6, 20);
+  } else if prev_action_id != .action.swap  {
+    # add delay before every non-swap
+      # ~30% chance at 0
+      # 5% chance at 8
+    rand_delay(2, 4, 0, 8);
+  } else if prev_action_id == .action.swap {
+    # add delay after swap to account for repositioning
+      # ~16% chance at 6
+      # ~16% chance at 18
+    rand_delay(12, 6, 6, 18);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+// Wrio Double Geo ft. Petra Shenhe. Shenhe Bursts when available and Wrio alternates between Burst and N2C at the end of his 5[N3CJ] combo. Rotation in config. Random Frame Delays.
+
+wrio char lvl=90/90 cons=0 talent=9,9,9;
+wrio add weapon="widsith" refine=3 lvl=90/90;
+wrio add set="mh" count=4;
+wrio add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbinger" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+chiori add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="wavebreaker" refine=1 lvl=90/90;
+shenhe add set="ap" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3641 cd=0.5958;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="totm" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=5000000; 
+energy every interval=480,720 amount=1;
+
+options iteration=1000;
+active wrio;
+
+// Rotation
+// (Wrio N1)* > Zhongli hED > Chiori EE > Shenhe hE (Q) > Wrio E 5[N3CJ] (Q or N2C)
+// * First rotation, for petra
+wrio attack;
+for let rot=0; rot<4; rot=rot+1 {
+  zhongli skill[hold=1], dash;
+  chiori skill:2;
+
+  shenhe skill[hold=1]; pick_up_crystallize("cryo");
+  if .shenhe.energy == .shenhe.energymax {
+    shenhe burst;
+  }
+
+  wrio skill;
+  for let n3cj=0; n3cj<5; n3cj=n3cj+1 {
+    wrio attack:3, charge, jump;
+  }
+  if .wrio.energy == .wrio.energymax {
+    wrio burst;
+  } else {
+    wrio attack:2, charge;
+  }
+}

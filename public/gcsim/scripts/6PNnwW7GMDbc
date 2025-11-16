@@ -1,0 +1,46 @@
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90;
+neuvillette add set="mh" count=5;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats hp%=0.4464 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=39.64 cr=0.2317 cd=0.662 er=0.1102 ; #subs
+
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311 ; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2972 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 cr=0.311 dendro%=0.466;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="gd" count=5;
+xiangling add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #main
+xiangling add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=118.92 cr=0.2648 cd=0.1324 er=0.6612 ; #subs
+
+options swap_delay=12 iteration=1000;
+
+active neuvillette;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+
+for let i=0; i<4; i=i+1 { 
+  neuvillette skill, attack:2;
+  sleep(25);
+  zhongli skill[hold=1], dash;
+  pick_up_crystallize("hydro");
+  nahida skill, burst;
+  xiangling burst, skill;
+  neuvillette charge, skill, charge, burst;
+  pick_up_crystallize("any");
+  zhongli skill[hold=1],dash;
+  xiangling attack:2,skill, dash;
+  neuvillette charge, charge, attack:2;
+}

@@ -1,0 +1,71 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favoniussword" refine=3 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gilded" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="viridescentvenerer" count=5;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; # main 
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.2317 cd=0.331;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+
+# ----  Default Enemy
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.4,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  let src = f();
+  if .nahida.skill.ready {
+    nahida skill, attack;
+  }
+  bennett burst;
+  if .fischl.skill.ready {
+    fischl skill, attack;
+  } else {
+    fischl attack:2, burst;
+  }
+  sucrose attack, skill, jump;
+  
+  if .sucrose.burst.ready {
+    sucrose burst;
+  } else {
+    sucrose skill, jump;
+  }
+  
+  nahida burst;
+  while f() - src <= 20 * 60 {
+    if .nahida.normal > 2 && .nahida.skill.ready {
+      nahida skill;
+    } else if .nahida.normal > 3 {
+      if .stam >= 20 {
+        nahida dash;
+      } else {
+        nahida jump;
+      }
+    } else {
+      nahida attack;
+    }
+  }
+  bennett skill, attack:2;
+
+}

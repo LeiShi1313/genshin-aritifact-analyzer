@@ -1,0 +1,86 @@
+# Razor Chevreuse Xiangling Bennett. ~17s Rot. Ignores Razor's burst cd. Pyro > ATK > Electro Goblet. Chevreuse Q3E in Bennett Q. XL burst every other rotation in Bennett Q. Razor Self-Aura not implemented. 
+
+# Team- Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="echoes" count=4; # Ping Dependent
+#razor add set="glad" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + Pyro; Echoes
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + ATK
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + Elec 
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+chev add set="gt" count=4;
+#chev add set="emblem" count=4;
+chev add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblem" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+#bennett add weapon="sapwood" refine=5 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000; 
+
+# Rotation
+active razor; # SS stacks
+razor skill, dash; # Sigils, Chev A4, C4
+
+for let i=0; i<4; i=i+1 {
+  if .bennett.burst.ready && .bennett.energy == .bennett.energymax {
+    bennett burst, skill;
+  } else {
+    bennett skill, burst;
+  }
+  
+  chev burst, skill[hold=1]:3;
+  
+  if .xl.burst.ready && .xl.energy == .xl.energymax {
+    xl burst;
+  }
+  xl skill[a4_delay=540], dash; # Pepper to Razor in next rot
+  
+  # Razor opening actions
+  switch {
+    case .razor.skill.ready && .razor.burst.ready && .razor.energy == .razor.energymax:
+      razor skill, dash, attack, burst;
+    case .razor.burst.ready && .razor.energy == .razor.energymax:
+      razor burst;
+    case .razor.skill.ready:
+      razor skill, dash;
+    default:
+      razor attack;
+  }
+  # Razor Main DPS window 
+  #while .razor.infusion.bennett-fire-weapon {
+  while .chev.skill.cd > 210 { 
+    if .razor.normal > 3 && .razor.skill.ready {
+      razor skill, dash;
+    } else if .razor.normal > 3 {
+      razor dash;
+    } else {
+      razor attack;
+    }
+  }
+  
+}
+

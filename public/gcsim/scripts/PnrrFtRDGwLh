@@ -1,0 +1,86 @@
+# Xilonen Albedo Gorou Chiori. ~15-17s Rot. Xilonen on-field DPS. All characters use bursts as available, with gorou sometimes using burst before Xilonen field time, given the desynced cooldowns. Reliant on high DEF and Gorou healing to maintain HoD passives. Husk and OC are similar, -1K DPS with Ezpital.
+
+# Team - Options listed by DPS
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="harbinger" refine=5 lvl=90/90;
+#xilonen add weapon="fluteofezpitzal" refine=5 lvl=90/90;
+xilonen add set="husk" count=4 +params=[stacks=4];
+#xilonen add set="oc" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #mains
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Husk HoD
+#xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; #main
+#xilonen add stats def%=0.558 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2648 cd=0.5958; # OC HoD
+#xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; #main
+#xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # OC Flute
+
+albedo char lvl=90/90 cons=0 talent=9,9,9; 
+albedo add weapon="cinnabar" refine=5 lvl=90/90;
+albedo add set="gt" count=4;
+#albedo add set="husk" count=4 +params=[stacks=4];
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #mains
+albedo add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favbow" refine=4 lvl=90/90;
+gorou add set="exile" count=4;
+gorou add stats hp=3571 atk=232 er=0.3885 def%=0.4372 cr=0.311; #main
+gorou add stats def%=0.31248 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.111216;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbinger" refine=5 lvl=90/90;
+chiori add set="gt" count=4 +params=[stacks=4];
+#chiori add set="husk" count=4 +params=[stacks=4];
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; # main
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active gorou;
+
+for let i=0; i<4; i=i+1 {
+  gorou skill;
+  if .gorou.burst.ready {
+    gorou burst;
+  }
+  if !.gorou.mods.favonius-cd {
+    gorou attack;
+  }
+
+  albedo skill;
+  if i > 0 && .albedo.burst.ready {
+    albedo burst;
+  } else {
+    albedo attack;
+  }
+  
+  if i > 0 && .chiori.burst.ready {
+    chiori burst;
+  }
+  while .chiori.skill.cd {
+    if .chiori.normal > 1 {
+      chiori charge;
+    } else {
+      chiori attack;
+    }
+  }
+  chiori skill:2;
+  
+  if .gorou.burst.ready && .xilonen.skill.cd {
+    gorou burst;
+  }
+  xilonen skill;
+  while .xilonen.nightsoul.state {
+    xilonen attack;
+    if .xilonen.burst.ready {
+      xilonen burst;
+    }
+  }
+}

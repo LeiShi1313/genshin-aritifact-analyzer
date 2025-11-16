@@ -1,0 +1,62 @@
+options swap_delay=12 iteration=1000;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="hakushinring" refine=5 lvl=90/90;
+sucrose add set="viridescent" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.2204 em=118.92 cr=0.1324 cd=0.2648;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="emblem" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="tenacity" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="noblesse" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+
+active xingqiu;
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  let src = f();
+  xingqiu burst, attack, skill, dash, attack:2;
+  fischl skill, attack;
+  sucrose attack:2;
+  if .sucrose.skill.ready {
+    sucrose skill, dash;
+  }
+  sucrose burst, attack:2;
+  beidou skill[counter=1], attack, burst;
+  fischl attack:2, burst;
+  while f() - src <= 23 * 60 {
+    if .sucrose.normal > 2 {
+      if .sucrose.skill.ready {
+        sucrose skill, jump;
+      } else if .stam >= 50 {
+        sucrose charge;
+      } else {
+        sucrose jump;
+      }
+    } else {
+      sucrose attack;
+    }
+  }
+  beidou skill[counter=1], attack:2;
+  print("Rotation done");
+}
+
+# Xingqiu Q N1 ED N2 > Fischl E N1 > Sucrose N2 EDQ N2 > Beidou E N1 Q > Fischl N2 Q > Sucrose N2E / N2C / N2J depending on stamina/charges until 23s > Beidou E N2 > Loop
+

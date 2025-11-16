@@ -1,0 +1,58 @@
+# Cyno Furina Nahida Escoffier. Long field time Cyno with long duration off field abilitiies; Cyno is on field for as long as Nahida's skill lasts. 6% of Cyno's damage is superconduct.
+
+# Team
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="fjords" refine=1 lvl=90/90;
+cyno add set="tf" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; 
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=198.2 cr=0.1324 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=118.92 cr=0.2979 cd=0.662;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="favlance" refine=3 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1653 em=39.64 cr=0.331 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  # Skip Q on  first rotation, then use as available 
+  nahida skill;
+  if i > 0 && .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida attack, charge;
+  }
+  
+  furina skill, dash, burst;
+  
+  esco skill, burst;
+  
+  cyno skill, burst, attack:1, skill;
+  for let x = 0; x < 7; x = x + 1 {
+    cyno attack:4, skill;
+  }
+}
+

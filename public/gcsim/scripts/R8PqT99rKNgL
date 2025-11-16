@@ -1,0 +1,66 @@
+options swap_delay=12 iteration=1000;
+
+neuvillette char lvl=90/90 cons=0 talent=9,9,9 ; 
+neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90 ;
+neuvillette add set="mh" count=4;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.1986 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="ap" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="cinnabarspindle" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; # main
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active neuvillette;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<3; i=i+1 {
+  neuvillette skill, attack;
+  kazuha skill, high_plunge, burst;
+  if .zhongli.burst.ready { # to fill the time of neuv E cd use 5star Q animation
+    zhongli burst;
+  } else if .chiori.burst.ready {
+    chiori burst;
+  }
+  zhongli skill[hold=1], dash, attack;
+  let startFrame1 = f();
+  while !pick_up_crystallize("hydro") && f() - startFrame1 < 30 {
+    if !.zhongli.mods.favonius-cd {
+      zhongli attack;
+    } else {
+      wait(1);
+    }
+  } # until the character pickup the shard, try to force fav proc or wait, up to 30frames
+  chiori skill:2;
+  neuvillette charge, skill, charge, burst;
+  kazuha skill, high_plunge;
+  zhongli skill, attack:2, dash;
+  let startFrame2 = f();
+  while !pick_up_crystallize("hydro") && f() - startFrame2 < 30 {
+    if !.zhongli.mods.favonius-cd {
+      zhongli attack;
+    } else {
+      wait(1);
+    }
+  } # until the character pickup the shard, try to force fav proc or wait, up to 30frames
+  neuvillette charge, charge;
+}
+
+wait(173); #for the last CA
+
+# Neuv E N1 > Kazuha tEP Q > Zhongli Q hED N1 > Chiori EE > Neuv C E C Q > Kazuha tEP > Zhongli tE N2D > Neuv 2[C]

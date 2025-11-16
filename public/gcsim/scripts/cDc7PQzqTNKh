@@ -1,0 +1,125 @@
+#~22s rotation with near-full Oz uptime thanks to 4TF, quickswapping between Fischl N2D spam, Bennett Skills, and a 3s Kirara hE. Oz consistently snapshots Bennett's buff on each summon. Fischl triggers Hyperbloom on ~60% of Blooms. Kirara and Bennett built for dmg. 12-3 Icewind Suite's base stats used for energy drops and incoming damage instances every 4-6s. Customized random action delays and starting HPs.
+
+fischl char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=85];
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="tf" count=4;
+fischl add stats hp=4780 atk=311 em=186.5 electro%=0.466 cr=0.311;
+fischl add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926; #kqms, distributed rolls: 2 em, 8 cr, 10 cd
+
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=55];
+furina add weapon="fleuve" refine=5 lvl=90/90; #festering is probably better, but avoiding limited weapons
+furina add set="totm" count=4; #not only higher dps than gt, but the shield strength is also well used
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=39.63 er=0.2202 cr=0.3966 cd=0.6605; #2 er, 10 cr, 8 cd
+
+kirara char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=75];
+kirara add weapon="wolffang" refine=1 lvl=90/90;
+kirara add set="deepwood" count=4;
+kirara add stats hp=4780 atk=311 er=0.518 dendro%=0.466 cd=0.622;
+kirara add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605; #2 atk%, 10 cr, 8 cd
+
+bennett char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=75];
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=300];
+bennett add set="instructor" count=4;
+bennett add stats hp=3571 atk=232 er=0.387 em=186.5 em=139.3;
+bennett add stats hp=406.3 atk=26.45 def=31.485 hp%=0.07925 atk%=0.07925 def%=0.0991 em=126.84 er=0.08805 cr=0.238 cd=0.1057; #4-star: 6 em, 2 cr | 5-star: 4 cr
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 type=dummy radius=2 pos=0,2.5 particle_threshold=520000 particle_drop_count=3; #Energy based on 12-3 Icewind Suite base stats
+hurt every interval=240,360 amount=15000,22500 element=cryo; #Take dmg every 4-6s, amount is very roughly similar to one big attack from lvl 100 Icewind Suite*
+#hurt can't currently trigger reactions, so I increased the dmg by 50% to emulate revmelt on the pyro aura from bennett. Ofc, this is a scuffed solution.
+
+active kirara;
+
+fn doActionList() {
+  kirara skill;
+  for let r=0; r<4; r=r+1 {
+    furina skill, dash, burst;
+    bennett burst, skill;
+    fischl attack, skill;
+    kirara skill, burst;
+    fischl attack:2, dash, attack:2, dash, attack:2;
+    bennett skill;
+    fischl attack:2, dash, attack:2, burst;
+    kirara skill[hold=180];
+    bennett skill;
+    fischl attack:2, dash, attack:2;
+  }
+}
+
+fn printActiveHPRatio() {
+  if .fischl.onfield {
+    print("Fischl HP: ", .fischl.hpratio * 100, "%");
+  } else if .furina.onfield {
+    print("Furina HP: ", .furina.hpratio * 100, "%");
+  } else if .kirara.onfield {
+    print("Kirara HP: ", .kirara.hpratio * 100, "%");
+  } else {
+    print("Bennett HP: ", .bennett.hpratio * 100, "%");
+  }
+}
+set_on_tick(printActiveHPRatio);
+
+#Random action execution delays
+fn randy(mean, standardDeviation, min, max) {
+  let value = randnorm() * standardDeviation + mean;
+  if value < min {
+    value = min;
+  } else if value > max {
+    value = max;
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .fischl.onfield:
+    prev_char_id = .keys.char.fischl;
+  case .furina.onfield:
+    prev_char_id = .keys.char.furina;
+  case .kirara.onfield:
+    prev_char_id = .keys.char.kirara;
+  default:
+    prev_char_id = .keys.char.bennett;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action is not actually a swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.burst {
+    while .fischl.onfield && !.fischl.burst.ready {
+      fischl attack;
+    }
+    while .furina.onfield && !.furina.burst.ready {
+      furina attack;
+    }
+    while .kirara.onfield && !.kirara.burst.ready {
+      kirara attack;
+    }
+    while .bennett.onfield && !.bennett.burst.ready {
+      bennett attack;
+    }
+  }
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                  #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+doActionList();

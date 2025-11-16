@@ -1,0 +1,65 @@
+# Nahida Furina Yelan Dori. ~22s Rot. On-field Nahida double Hydro Hyperbloom. 1E Yelan, 2E Dori, swapping in to use skill again. Heavy CA usage on Nahida. Nahida burst isn't worth the animation time.
+# Dori & Furina builds likely need a retooling for an ER + EM Claymore
+
+# Team
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="favgs" refine=3 lvl=90/90;
+dori add set="fopl" count=4;
+dori add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=118.92 cr=0.3972 cd=0.4634;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active nahida;
+nahida skill; 
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, attack, burst; # Yelan burst expires
+  
+  dori skill, attack:1, burst;
+  
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  nahida attack:2, skill, 
+         attack:2, charge;
+         
+  dori skill, attack:2;
+  
+  nahida attack:2, charge, dash, 
+         attack:2, charge, dash,
+         attack:3, dash,
+         attack:2, skill,
+         attack:2, charge;
+}
+

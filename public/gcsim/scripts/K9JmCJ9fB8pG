@@ -1,0 +1,53 @@
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.642 cd=0.7944 pyro%=0.466;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gladiatorsfinale" count=2;
+fischl add set="thunderingfury" count=2;
+fischl add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.11019999999999999 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.5652 atk=344.08 atk%=0.0992 er=0.551 em=39.64 cr=0.47650000000000003 cd=0.662 hydro%=0.466;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.551 em=679.92 cr=0.331 cd=0.1324;
+
+options swap_delay=12 iteration=1000 ;
+let t = 0;
+#--------------------------------------------
+
+active yelan;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+ 
+  yelan skill, burst, attack;
+  if .fischl.burst.ready {
+    fischl attack:2, burst; 
+  } else {
+    fischl attack:1, skill; 
+   
+  }
+   kazuha attack,skill,high_plunge;
+    
+ hutao attack,skill,
+     attack:2, charge, dash,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:1, charge, jump,
+     attack:2, charge, jump,
+     attack:1, charge, jump,
+     attack:1, charge, jump,
+     attack:2, charge;
+     kazuha attack,skill,high_plunge,burst;
+}
+

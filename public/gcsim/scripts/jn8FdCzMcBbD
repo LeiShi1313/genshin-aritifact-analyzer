@@ -1,0 +1,77 @@
+# Character
+wriothesley char lvl=90/90 cons=0 talent=9,9,9;
+# Weapon
+wriothesley add weapon="thewidsith" refine=3 lvl=90/90;
+# Artifact Set
+wriothesley add set="marechausseehunter" count=4;
+# Main stats
+wriothesley add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+# Sub stats
+wriothesley add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+
+# Character
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+# Weapon
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+# Artifact Set
+shenhe add set="noblesseoblige" count=4;
+# Main stats
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+# Sub stats
+shenhe add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 em=39.63 er=0.6606 cr=0.3305 cd=0.1321;
+
+# Character
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
+# Weapon
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+# Artifact Set
+escoffier add set="goldentroupe" count=4;
+# Main stats
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+# Sub stats
+escoffier add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.4460 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.2313 cd=0.6605;
+
+# Character
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+# Weapon
+chongyun add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+# Artifact Set
+chongyun add set="blizzardstrayer" count=4;
+# Main stats
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+# Sub stats
+chongyun add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 em=39.63 er=0.2752 cr=0.2974 cd=0.6605;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active chongyun; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  chongyun skill, attack; 
+  
+  escoffier skill, attack;
+  
+  shenhe skill[hold=1];
+  if.shenhe.burst.ready{
+    shenhe burst;
+  } else {
+    shenhe attack, burst;
+  } 
+  
+  chong burst; 
+  
+  wrio skill,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3;
+  if .wrio.burst.ready {
+    wrio burst;
+  } else {
+    wrio charge;
+  }
+}

@@ -1,0 +1,96 @@
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="prototypecrescent" refine=5 lvl=90/90;
+lyney add set="marechausseehunter" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
+lyney add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311 ; #main
+zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
+
+options swap_delay=6 iteration=200;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,3;
+energy every interval=480,720 amount=1;
+
+let n = 2;
+let m = 6;
+
+# Random delay (uniform) between n and m frames, inclusive
+fn rand_delay() {
+  let del = rand() * (m - n + 1) + n;
+  delay(del);
+  print(del);
+}
+
+active lyney;
+
+for let r = 4; r > 0; r = r - 1 {
+  rand_delay();
+  lyney aim;
+  rand_delay();
+  zhongli swap;
+  rand_delay();
+  zhongli skill[hold=1];
+  rand_delay();
+  zhongli dash;
+  rand_delay();
+  while (.zhongli.mods.favonius-cd==0) {
+    zhongli attack;
+  }
+  rand_delay();
+  bennett swap;
+  rand_delay();
+  bennett burst;
+  rand_delay();
+  bennett skill;
+  rand_delay();
+  xiangling swap;
+  rand_delay();
+  xiangling burst;
+  rand_delay();
+  xiangling skill;
+  rand_delay();
+  xiangling dash;
+  rand_delay();
+  lyney swap;
+  rand_delay();
+  lyney aim[weakspot=1];
+  rand_delay();
+  lyney aim;
+  rand_delay();
+  lyney burst;
+  delay(11); # Long enough for burst firework to spawn
+  rand_delay();
+  lyney skill;
+  rand_delay();
+  lyney aim[weakspot=1];
+  rand_delay(); 
+  lyney skill;
+  rand_delay();
+  lyney aim;
+  rand_delay();
+  bennett swap;
+  rand_delay();
+  bennett skill;
+  
+  if (r > 1) {
+    rand_delay();
+    lyney swap;
+  }
+}
+
+# Lyney CS > Zhongli hED > (Guarantee ZL Fav proc with NAs) > Bennett QE > Xiangling QED > Lyney 2CS Qc CS E CS > Bennett E

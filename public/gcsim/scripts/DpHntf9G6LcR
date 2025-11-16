@@ -1,0 +1,74 @@
+# Razor Furina Fischl Qiqi. ~22ish rotation. Razor Qiqi with Clam Qiqi. When Qiqi burst is not ready, she attacks until obtaining A4.
+
+# Team- Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="tidalshadow" refine=5 lvl=90/90;
+razor add set="mh" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622 ; #main
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.2648;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+qiqi char lvl=90/90 cons=0 talent=9,9,9; 
+qiqi add weapon="favsword" refine=3 lvl=90/90; 
+qiqi add set="ohc" count=4; 
+qiqi add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311 ; #main
+qiqi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.3306 em=39.64 cr=0.331 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active fischl;
+fischl skill;
+
+#active razor; # SS Stacks
+#razor skill, dash;
+  
+for let i=0; i<4; i=i+1 {
+  furina skill, dash;
+  if !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  
+  if .qiqi.skill.ready {
+    qiqi skill, attack;
+    while !.debuff.res.t0.qiqi-talisman { # Qiqi A4 has 50% proc Chance
+      qiqi attack;
+    }
+  } else if .qiqi.burst.ready {
+    qiqi burst;
+  }
+  
+  if .amy.skill.ready { 
+    amy attack:1, skill; 
+  } else { 
+    amy attack:2, burst; 
+  }
+  
+  razor skill, dash, attack, burst,
+        attack:3, skill, dash,
+        attack:3, dash,
+        attack:3, dash,
+        attack:3, skill, dash,
+        attack:3, dash,
+        attack:3, dash,
+        attack:3;
+}

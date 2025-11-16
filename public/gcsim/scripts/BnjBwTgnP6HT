@@ -1,0 +1,47 @@
+#|| Main DPS Dehya - Vaporize || Dehya Kazuha Bennett Furina || ~20s Rotation || CapnHarland
+
+dehya char lvl=90/90 cons=4 talent=10,10,10; #C4, as this is where ER reqs lessen / Triple crown to simulate what a heavily-invested, main dps, Dehya might look like
+dehya add weapon="beacon" refine=1 lvl=90/90;
+dehya add set="mh" count=4;
+dehya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #Main EM/Pyro/CD
+dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=79.28 cr=0.2648 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favsword" refine=5 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #Main EM/EM/EM
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=118.92 cr=0.3972 cd=0.331;
+
+bennett char lvl=90/90 cons=6 talent=9,9,10; #Crowned burst, as that is the most common crowned talent when someone is bulding Bennett to buff dmg 
+bennett add weapon="mistsplitter" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #Main EM/Pyro/CR
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+
+furina char lvl=90/90 cons=2 talent=9,9,10; #C2, as this is a great stopping point for someone building Dehya as main dps / Crowned burst for max buff to team/Dehya
+furina add weapon="favsword" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #Main HP/HP/CR
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1; 
+hurt every interval=180,300 amount=3500,5500 element=physical; 
+options iteration=1000 swap_delay=12;
+
+active dehya;
+
+for let i=0; i<5; i=i+1 {
+  dehya skill;
+  furina skill, dash, attack, burst; 
+  kazuha burst; #Hydro swirl to proc A4 buff and VV debuff
+  bennett burst, skill, attack;
+  kazuha skill, high_plunge; #Hydro+Pyro swirl to proc/refresh A4 buff and VV debuff
+  dehya burst, attack:10;
+  kazuha skill, high_plunge; #Hydro+Pyro swirl
+  bennett skill;
+  dehya skill, attack;
+}
+
+#Rot: Dehya E > Furina E Dash N1Q > Kaz Q > Benny E Dash Q N1 > Kaz tEP > Dehya Q N10 > Kaz tEP > Benny E > Dehya E N1
+

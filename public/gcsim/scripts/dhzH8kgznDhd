@@ -1,0 +1,67 @@
+# Cyno Collei Fischl Collei
+
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="gd" count=4;
+#razor add set="ts" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="deathmatch" refine=1 lvl=90/90;
+#cyno add set="glad" count=4;
+cyno add set="tf" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; # main
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+amy char lvl=90/90 cons=6 talent=9,9,9;
+amy add weapon="stringless" refine=3 lvl=90/90;
+amy add set="gt" count=4;
+amy add stats hp=4780 atk=311 atk%=.466 electro%=0.466 cr=0.311;
+amy add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favbow" refine=3 lvl=90/90;
+collei add set="no" count=4;
+collei add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311;
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+active razor;
+
+for let i=0; i<4; i=i+1 {
+  collei burst, skill;
+  
+  amy attack, skill;
+  
+  razor skill, dash, attack, burst, attack, skill, dash;
+  while .collei.skill.cd { 
+    if .razor.normal > 3 && .razor.skill.ready {
+      razor skill, dash;
+    } else if .razor.normal > 3 {
+      razor dash;
+    } else {
+      razor attack;
+    }
+  }
+  
+  collei skill;
+  
+  amy attack:2, burst;
+  
+  cyno skill, burst;
+  while .collei.skill.cd > 60 {
+    if .cyno.skill.ready {
+      cyno skill;
+    } else if .cyno.normal == 3 {
+      cyno dash;
+    } else {
+      cyno attack;
+    }
+  }
+}
+

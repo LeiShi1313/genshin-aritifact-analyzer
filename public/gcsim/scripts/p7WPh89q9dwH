@@ -1,0 +1,48 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats er=0.1102 cr=0.2648 cd=0.662;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="thewidsith" refine=3 lvl=90/90;
+mona add set="emblemofseveredfate" count=4;
+mona add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311;
+mona add stats em=39.64 cr=0.2648 cd=0.662;
+mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats cd=0.1324 em=79.28 cr=0.331 er=0.2204;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="thecatch" refine=5 lvl=90/90;
+raiden add set="emblemofseveredfate" count=4;
+raiden add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
+raiden add stats er=0.1102 cr=0.2648 cd=0.662;
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+
+active raiden;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+raiden skill;
+for let i=0; i<5; i=i+1 {
+    mona attack:2;
+    kazuha skill,high_plunge;
+    bennett skill,burst,attack;
+    mona burst;
+    delay(63);
+    mona skill;
+    kazuha swap;
+    delay(10);
+    kazuha attack,skill[glide_cancel=1],burst;
+    raiden burst,attack:4,skill,attack:4,dash,attack:4,dash,attack:4;
+    
+}

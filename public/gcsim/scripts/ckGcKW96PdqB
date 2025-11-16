@@ -1,0 +1,40 @@
+nilou char lvl=90/90 cons=6 talent=10,10,10;
+nilou add weapon="keyofkhajnisut" refine=1 lvl=90/90;
+nilou add set="vourukashasglow" count=2;
+nilou add set="nymph" count=2;
+nilou add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+nilou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+faruzan add set="scroll" count=5;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
+
+jean char lvl=90/90 cons=0 talent=9,9,9;
+jean add weapon="favoniussword" refine=5 lvl=90/90;
+jean add set="sodp" count=5;
+jean add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; #main
+jean add stats def%=0.1240 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.3306 em=39.64 cr=0.331 cd=0.3972;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=10;
+active kazuha;
+
+for let i = 0; i < 4; i = i + 1 {
+  
+  kazuha skill;
+  faruzan burst, skill;
+  jean burst, skill;
+  kazuha skill, burst;
+  nilou skill, attack:3, burst, attack:13;
+
+}

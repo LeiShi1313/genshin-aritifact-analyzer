@@ -1,0 +1,77 @@
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="finaleofthedeep" refine=5 lvl=90/90;
+clorinde add set="fragmentofharmonicwhimsy" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; # main
+clorinde add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favoniussword" refine=3 lvl=90/90;
+furina add set="tenacityofthemillelith" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; # main 
+furina add stats hp=507.88 hp%=0.4955 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.1322 cd=0.7926;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favoniussword" refine=3 lvl=90/90;
+xilonen add set="scrolloftheheroofcindercity" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; # main
+xilonen add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=78.70 def%=0.4956 em=39.63 er=0.4404 cr=0.2644 cd=0.1321;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="fluteofezpitzal" refine=5 lvl=90/90;
+chiori add set="goldentroupe" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; # main
+chiori add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.2478 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+
+options iteration=1000 swap_delay=12;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+# Pickup Crystallize Function
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash || ( char_id == .keys.char.chiori && action_id == .action.skill ) || ( char_id == .keys.char.xilonen && action_id == .action.skill ) || ( char_id == .keys.char.clorinde && action_id == .action.skill && .clorinde.status.clorinde-night-watch) {
+    pick_up_crystallize("any");
+  }
+    
+  return _execute_action(char_id, action_id, p);
+}
+
+active xilonen;
+
+for let i = 0; i < 4; i = i + 1 { # 4 rotations
+  
+  xilonen burst;
+  if i {
+    xilonen attack;
+  }
+  
+  if .furina.skill.ready { # Furina skills every other rotation
+    furina skill;
+  }
+  
+  furina dash, attack, burst; # N1 to trigger fav more consistently
+  xilonen skill, attack:2;
+  #pick_up_crystallize("any");
+  chiori skill:2;
+  clorinde_combo();
+  if .clorinde.burst.ready { # Clorinde and Chiori alternate bursts
+    clorinde burst;
+  } else {
+    chiori burst;
+  }
+}
+
+# Xilonen Q > Furina EdN1Q > Xilonen EN2 > Chiori EE > Clorinde E6N3E Q >
+# Xilonen Q > Furina dN1Q > Xilonen EN2 > Chiori EE > Clorinde EE6N3E > Chiori Q

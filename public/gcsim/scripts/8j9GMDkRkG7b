@@ -1,0 +1,87 @@
+# Keqing Chevreuse Fischl Mavuika. ~17s Rot. Keqing Overload. Mavuika just uses burst and skill every rotation. Keqing does EQE then N1C spam until skill refresh into more N1C. Fischl misses out on snapshotting Chevreuse's ATK buff in the first rotation.
+
+# Team - Options listed by DPS
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="finale" refine=5 lvl=90/90;
+#keqing add weapon="lionsroar" refine=3 lvl=90/90;
+keqing add set="fohw" count=4; # Finale
+#keqing add set="ts" count=4;
+#keqing add set="tf" count=2;keqing add set="glad" count=2;
+keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+#chev add weapon="dialogues" refine=5 lvl=90/90;
+chev add set="no" count=4;
+#chev add set="sodp" count=4;
+chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+#chev add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+#chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282; # Burst every rot, consistently
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=0]; # Lead slot
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+mav char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="aquamarine" refine=1 lvl=90/90;
+#mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+#mav add weapon="tidalshadow" refine=5 lvl=90/90;
+#mav add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5]; # Leading
+mav add set="scroll" count=4;
+mav add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1102 em=118.92 cr=0.3972 cd=0.4634; # 3EM
+#mav add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+#mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # EDC
+#mav add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # ADC
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active fischl; # SS Stacks
+fischl skill;
+
+#active mav; # SS Stacks
+
+for let i=0; i<4; i=i+1 {  
+  if .amy.skill.ready {
+    amy attack, skill;
+  } else if .amy.burst.ready && i > 0 {
+    amy attack:2, burst;
+  }
+  
+  if .chev.burst.ready {
+    chev burst, skill[hold=1];
+  } else {
+    chev skill[hold=1], attack:1;
+  }
+  
+  if .mav.burst.ready {
+    mav burst, skill, dash;
+  } else {
+    mav attack, skill;
+  }
+  
+  keqing skill, burst, skill,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge;
+  keqing skill:2,
+      attack, charge,
+      attack, charge,
+      attack, charge;
+}

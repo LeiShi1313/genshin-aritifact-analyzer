@@ -1,0 +1,73 @@
+itto char lvl=90/90 cons=0 talent=10,10,10;
+itto add weapon="redhornstonethresher" refine=1 lvl=90/90;
+itto add set="huskofopulentdreams" count=4;
+itto add set="wandererstroupe" count=1;
+itto add stats def%=0.634 def=88 hp=5557 hp%=0.14600000000000002 atk=311 er=0.27199999999999996 em=75 cr=0.5980000000000001 cd=0.754 geo%=0.466;
+
+zhongli char lvl=90/90 cons=0 talent=4,10,10;
+zhongli add weapon="favoniuslance" refine=5 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add set="wandererstroupe" count=1;
+zhongli add stats def=53 hp=6035 hp%=1.0190000000000001 atk=356 atk%=0.047 er=0.13 em=86 cr=0.669 cd=0.8089999999999999;
+
+chiori char lvl=90/90 cons=0 talent=1,10,10;
+chiori add weapon="urakumisugiri" refine=1 lvl=90/90;
+chiori add set="huskofopulentdreams" count=4;
+chiori add set="wandererstroupe" count=1;
+chiori add stats def%=0.707 def=51 hp=6602 hp%=0.047 atk=330 atk%=0.308 er=0.162 em=23 cr=0.493 cd=0.731 geo%=0.466;
+
+gorou char lvl=90/90 cons=6 talent=1,10,7;
+gorou add weapon="favoniuswarbow" refine=4 lvl=90/90;
+gorou add set="noblesseoblige" count=4;
+gorou add set="tenacityofthemillelith" count=1;
+gorou add stats def%=0.124 def=102 hp=6095 hp%=0.466 atk=435 atk%=0.43100000000000005 er=0.9520000000000001 cr=0.462;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active zhongli;
+
+#action list 
+
+  zhongli skill[hold=1], dash;
+  gorou attack, skill;
+  
+  if .chiori.burst.ready {
+    chiori burst;
+  }
+  
+  chiori skill:2;
+  gorou burst;
+
+  itto attack, burst[prestack=1],
+       attack, skill,
+       attack:2, charge:5,
+       attack:4, charge:5, skill[travel=0], charge;
+       sleep(21); #catch ushi particles
+
+       #"C0 1PS" combo
+
+for let i = 0; i < 3; i = i + 1 {
+
+  zhongli attack, skill; #refreshing pillar
+  
+  gorou attack, skill;
+  
+  if .chiori.burst.ready {
+    chiori burst;
+  }
+  
+  chiori skill:2;
+  gorou burst;
+  zhongli skill[hold=1], dash;
+  
+  itto attack, burst[prestack=1],
+       attack, skill, charge:4,
+       attack:3, charge:4,
+       attack:3, skill, charge:4; 
+
+       #"C0 2PS" combo
+
+}
+
+

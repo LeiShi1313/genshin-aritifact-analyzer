@@ -1,0 +1,45 @@
+charlotte char lvl=90/90 cons=0 talent=9,9,9;
+charlotte add weapon="widsith" refine=5 lvl=90/90; 
+charlotte add set="shime" count=4;
+charlotte add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311;
+charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="eosf" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=2 talent=9,9,9;
+xianyun add weapon="flowingpurity" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4959 em=218.02 cr=0.0662 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="aquila" refine=1 lvl=90/90;
+bennett add set="noblesse" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.2979 cd=0.331;
+
+options swap_delay=12 iteration=5000;
+energy every interval=480,720 amount=1;
+target lvl=100 radius=2 pos=2.1,2.4 type=ruingrader;
+target lvl=100 radius=2 pos=-2.1,2.4 type=ruingrader; 
+
+active bennett;
+
+for let i=0; i<2; i=i+1 {
+  bennett burst, skill;
+  xiangling burst, skill, dash;
+  xianyun skill, low_plunge, burst;
+  charlotte skill;
+  for let h = 8; h > 0; h = h - 1 {
+    charlotte jump;
+    if .airborne {
+      charlotte high_plunge[collision=rand()>0.5];
+    }
+  }
+  charlotte attack:2, charge, attack:2, charge, attack:2, charge;
+}
+

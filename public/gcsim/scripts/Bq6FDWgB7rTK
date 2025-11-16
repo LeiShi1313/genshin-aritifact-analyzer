@@ -1,0 +1,76 @@
+# Ayato Furina Bennett Xilonen. ~25s Rot. Buffed Ayato carries ~50 of the team DPS. 2E Xilonen/Bennett/Ayato to fill time between Ayato skills; Ayato's second skill can catch the end of Bennett's buff.
+
+# Team- Option Listed by DPS
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="blacksword" refine=1 lvl=90/90;
+#ayato add weapon="finale" refine=5 lvl=90/90;
+ayato add set="mh" count=4;
+ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
+ayato add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1653 em=39.64 cr=0.331 cd=0.662; # TBS
+#ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
+#ayato add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662; # Finale
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="festering" refine=5 lvl=90/90;
+#furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="gt" count=4;
+#furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # FD
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3641 cd=0.662; # WF
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+#bennett add set="ap" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.496 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5296;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  if i > 0 {
+    xilonen burst;
+  }
+  
+  furina skill, dash, burst;
+  
+  xilonen skill, attack:2;
+  
+  bennett skill, burst;
+  if .bennett.sets.ap >= 4 {
+    bennett dash; 
+    pick_up_crystallize("any");
+  }
+  
+  ayato skill, attack:15, burst;
+  
+  xilonen skill, attack:2;
+  
+  bennett skill, attack:2;
+  if .bennett.sets.ap >= 4 {
+    bennett dash; 
+    pick_up_crystallize("any");
+  } else {
+    ayato attack;
+  }
+  
+  ayato skill, attack:15;
+}
+

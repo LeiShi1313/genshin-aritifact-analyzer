@@ -319,6 +319,8 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
                 target.anemoResist = parseFloat(attr.groups.value);
             } else if (attr.groups?.key === "geo") {
                 target.geoResist = parseFloat(attr.groups.value);
+            } else if (attr.groups?.key === "hp_mult") {
+                target.hpMult = parseFloat(attr.groups.value);
             } else {
                 console.log(`Unknown target key: ${attr.groups?.key}`);
             }

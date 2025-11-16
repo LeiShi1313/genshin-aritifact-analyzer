@@ -1,0 +1,75 @@
+# Raiden Yelan Furina Mika. ~22s Rot. Physical Cpike Raiden does N3C/N4D. 2E Yelan.
+
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="cpike" refine=5 lvl=90/90;
+raiden add set="mh" count=4;
+#raiden add set="pf" count=4;
+raiden add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311; # main
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.1986 cd=0.7944; # Cpike/MH/CR
+#raiden add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; # main
+#raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.3972 cd=0.2648; # Cpike/MH/CD
+#raiden add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311; # main
+#raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662; # Cpike/PF/CR
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2979 cd=0.5958;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+mika char lvl=90/90 cons=6 talent=9,9,9;
+mika add weapon="favlance" refine=3 lvl=90/90;
+mika add set="clam" count=4;
+#mika add set="sodp" count=4;
+mika add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+mika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Raiden Cpike Function
+fn RaidenCpike() {
+  switch {
+  case .raiden.normal > 3 && .stam > 25:
+    raiden charge;
+  case .raiden.normal > 4 && .stam > 18:
+    raiden dash;
+  default:
+    raiden attack;
+  }
+}
+
+# Rotation
+active raiden;
+raiden skill;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  
+  yelan skill, burst, attack;
+  
+  mika burst, attack, skill;
+  
+  while !.yelan.skill.ready {
+    RaidenCpike();
+  }
+  
+  yelan skill, attack;
+  
+  raiden skill;
+  while .yelan.skill.cd > 210 {
+    RaidenCpike();
+  }
+}

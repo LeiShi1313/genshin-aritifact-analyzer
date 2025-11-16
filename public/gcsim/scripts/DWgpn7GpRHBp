@@ -1,0 +1,85 @@
+# Dori Chevreuse Fischl Bennett. ~16s Rot. Dori's Skill/Burst as available with Bennett on-field during her cooldowns. Swaps with Dori+Bennett Q active cause Overload. Fischl snapshots Bennett's buff. Chevreuse Q3E in Bennett burst *almost* every rot. Self-Overloads not implemented.
+
+# Team- Options listsed by DPS
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+dori add set="gd" count=4; # Reaction DMG; better in practice
+#dori add set="gt" count=4;
+#dori add set="tf" count=2; dori add set="sr" count=2;
+#dori add set="ohc" count=4;
+dori add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+chev add set="gt" count=4;
+chev add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+#fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # VH
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Others
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000; 
+
+# Rotation
+active dori; # SS stacks
+#dori burst; # Not nessesary here, may be better in practice
+dori skill;
+
+for let i=0; i<4; i=i+1 {
+  bennett burst;
+  
+  # Prioritize burst
+  amy attack;
+  if !.amy.skill.ready {
+    amy attack, burst;
+  } else {
+    amy skill;
+  }
+  
+  # Burst every rot is nearly identical
+  if .chev.burst.ready {
+    chev burst, skill[hold=1]:3;
+  } else {
+    chev attack, skill[hold=1]; 
+  }
+  
+  # Skill/Burst(/NA) with Dori as available, otherwise Bennett skill
+  while !.bennett.burst.ready { 
+    switch {
+      case .dori.skill.ready && .dori.swap.ready:
+        dori skill;
+      case .dori.burst.ready && .dori.swap.ready:
+        dori burst;
+      case .dori.onfield && !.bennett.swap.ready:
+        dori attack;
+      case .bennett.skill.ready && .bennett.swap.ready:
+        bennett skill;
+      default:
+        bennett attack;
+    }
+  }
+  
+  print("done");
+}
+

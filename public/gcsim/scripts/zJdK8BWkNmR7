@@ -1,0 +1,77 @@
+# Cyno Kinich Fischl Xilonen. ~25s Rot. Cyno Aggravate with a Kinich shooting one cannon shot before burst to provide Dendro in multiwave. Xilonen runs AP and picks up crystallize easily.
+
+# Team
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="deathmatch" refine=1 lvl=90/90;
+#cyno add weapon="fjords" refine=1 lvl=90/90;
+cyno add set="glad" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="scroll" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622;
+kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1102 em=59.46 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="ap" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Kinich Support
+fn kinich_Burst_Support() {
+  kinich skill;
+  kinich attack;
+  while .kinich.nightsoul.points < 20 {
+    kinich attack;
+  }
+  kinich skill;
+  while !.kinich.burst.ready {
+    kinich attack;
+  }
+  kinich burst;
+}
+
+#Rotation
+active kinich;
+
+for let i=0; i<4; i=i+1 {
+  fischl skill, attack;
+  
+  #xilonen burst;
+  xilonen skill, attack:2; pick_up_crystallize("electro");
+  
+  kinich_Burst_Support();
+  
+  fischl attack:2, burst;
+  
+  xilonen skill, attack:2; pick_up_crystallize("electro");
+  
+  cyno burst, attack:2, skill;
+  while .fischl.skill.cd > 30 {
+    if .cyno.mods.cyno-a1 && .cyno.skill.ready {
+      cyno skill;
+    } else if .cyno.normal == 4 && .stam > 20 {
+      cyno dash;
+    } else {
+      cyno attack;
+    }
+  }
+}
+

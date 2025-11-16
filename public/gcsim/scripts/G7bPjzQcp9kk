@@ -1,0 +1,63 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats er=0.1102 cr=0.2648 cd=0.662;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="deathmatch" refine=1 lvl=90/90;
+#chevreuse add weapon="songofstillness" refine=5 lvl=90/90;
+#chevreuse add weapon="favlance" refine=3 lvl=90/90; #if you use either er weapon, you can use atk or hp sands on chevreuse
+chevreuse add set="esf" count=4;
+#chevreuse add set="gt" count=4; 
+#chevreuse add set="cw" count=4; #I mean.... she uses skill twice? 
+#chevreuse add set="tenacityofthemillelith" count=2; chevreuse add set="vourukashasglow" count=2; #to increase chev buff, not worth it at this investment level
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622;
+chevreuse add stats er=0.2204 cr=0.2648 cd=0.5296;
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="mouun" refine=1 lvl=90/90;
+#sara add weapon="fadingtwilight" refine=5 lvl=90/90; #if you use either ER weapon, ER sands is unecessary and EM sands is strongest via overload procs
+#sara add weapon="favbow" refine=3 lvl=90/90;
+sara add set="eosf" count=4;
+sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311;
+sara add stats atk%=0.0992 cr=0.2648 cd=0.662;
+sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+#fischl add weapon="prototypecrescent" refine=5 lvl=90/90; #if you are insane, do quick scope ca instead of fischl attacks
+#fischl add weapon="alleyhunter" refine=1 +params=[stacks=10] lvl=90/90;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+active bennett;
+
+for let i = 0; i < 3; i = i + 1 {
+    #first half of rotation
+    bennett burst,skill;
+    sara burst;
+    #fischl aim[hold=0, weakspot=1], skill; #for prototype Crescent
+    fischl attack:2, skill;
+    sara attack,skill;
+    chevreuse attack, burst, attack, skill[hold=1]:2;
+    bennett attack:3, skill, attack:3, skill;
+    sara attack, walk, aim;
+    fischl attack:3; 
+    
+    #second half of rotation
+    bennett burst,skill;
+    sara attack, skill;
+    #fischl aim[hold=0, weakspot=1], burst; #for prototype Crescent
+    fischl attack:2, burst;
+    chevreuse attack, burst, attack, skill[hold=1]:2;
+    bennett attack:3, skill, attack:3, skill;
+    sara attack, walk, aim;
+    fischl attack:3;
+}

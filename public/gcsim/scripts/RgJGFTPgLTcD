@@ -1,0 +1,56 @@
+eula char lvl=90/90 cons=0 talent=9,9,9;
+eula add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+eula add set="mh" count=4;
+eula add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="chainbreaker" refine=5 lvl=90/90;
+#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 cr=0.311 electro%=0.466 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.3857 em=218.02 cr=0.0662 cd=0.1324;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=.1 hp=100000000 radius=2 pos=0,2.4;
+
+active eula;
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash, burst;
+  while !.furina.mods.favonius-cd {
+    furina attack;
+  }
+  fischl attack;
+  if .fischl.burst.ready && .fischl.energy == .fischl.energymax  {
+    fischl burst; 
+  } else {
+    fischl skill;
+  }
+  eula skill, attack;
+  xianyun attack, skill, low_plunge, burst;
+  if .eula.burst.ready && .eula.energy == .eula.energymax  {
+    eula burst;
+  } else {
+    eula attack:2;
+  }
+  eula skill[hold=1], attack:2;
+  for let h = 8; h > 0; h = h - 1 {
+    eula jump;
+    if .airborne {
+      eula high_plunge[collision=rand()>0.5], dash;
+    }
+  }
+}

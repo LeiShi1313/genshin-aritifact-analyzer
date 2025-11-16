@@ -1,0 +1,204 @@
+#Complex Microwave APL. Chance for GMC meteorites to break on placement, and dashes used to position pillar. Quickswapping to stack fanfare with Bennett's healing. Customized random action execution delays; TTK 12-3 Icewind Suite base stats.
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=70];
+zhongli add set="gt" count=4; #also see nighttime
+zhongli add weapon="deathmatch" refine=1 lvl=90/90;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cd=0.622; #81.41 [91.41] / 178.25 | 111.01 er
+zhongli add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+
+luminegeo char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=80];
+luminegeo add set="nighttime" count=4; #also see gt, noblesse
+luminegeo add weapon="wolffang" refine=1 lvl=90/90; #also see amenoma with atk sands, and finale
+luminegeo add stats hp=4780 atk=311 er=0.518 geo%=0.466 cd=0.622; #68.915 [70.915-86.915] / 165.04 | 162.81 er
+luminegeo add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=70];
+furina add weapon="favsword" refine=3 lvl=90/90; #also see festering with cd circlet and higher er bennett - a bit better than fav. not included because event weapon
+furina add set="gt" count=4; #also see totm with hydro goblet
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #88.35 [98.35] / 129.26 | 171.26 er
+furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=80];
+bennett add set="clam" count=4; #also see noblesse, and gt - gt isn't really competitive but 16pc gt team is funny
+bennett add weapon="finale" refine=5 lvl=90/90; #also see blackcliff/sapwood with atk sands, and wolffang
+bennett add stats hp=4780 atk=311 em=186.5 pyro%=0.466 cr=0.311; #69.15 [79.15] / 152.8 | 159.7 er
+bennett add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=39.63 er=0.3303 cr=0.3305 cd=0.6605;
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 type=icewindsuite radius=1 pos=0,1.5; #12-3 Icewind Suite stats
+#hurt every interval=300,480 amount=5000,10000;
+
+active zhongli;
+
+fn doAPL() {
+  while true {
+    switch {
+      case .furina.swap.ready && .furina.skill.ready:
+        furina skill, dash;
+      
+      case .furina.swap.ready && .furina.burst.ready && !.furina.status.furina-burst:
+        furina burst;
+      
+      case .bennett.swap.ready && .bennett.burst.ready:
+        bennett swap;
+        if .bennett.skill.ready {
+          bennett skill, dash;
+        }
+        bennett burst;
+        
+      case .luminegeo.swap.ready && .luminegeo.burst.ready:
+        if !.luminegeo.onfield && .status.bennettburst {
+          luminegeo attack; #make more time for bennett buff tick
+        }
+        if .luminegeo.skill.ready {
+          if rand() < 0.2 { #20% chance to break the meteorite
+            luminegeo skill[short_hold=1, no_meteorite=1];
+          } else {
+            luminegeo skill[short_hold=1];
+          }
+        }
+        luminegeo burst;
+        
+      case .zhongli.swap.ready && .zhongli.skill.ready && .status.bennettburst:
+        if !.zhongli.onfield {
+          zhongli attack;
+        }
+        zhongli dash; set_player_pos(0, -3); #dash back for pillar to be in the middle of gmc burst
+        
+        if (.construct.count.zhongli == 0) || !.zhongli.shielded {
+          zhongli skill[hold=1];
+        } else {
+          while .status.bennettburst && !.zhongli.mods.bennett-field {
+            zhongli attack;
+          }
+          zhongli skill;
+        }
+  
+        zhongli dash; set_player_pos(0, 0); #reset position (and dash cancel hE)
+        
+      case .zhongli.swap.ready && .zhongli.burst.ready:
+        zhongli burst;
+        
+      case .luminegeo.swap.ready && .luminegeo.skill.ready:
+        if !.luminegeo.onfield && .status.bennettburst {
+          luminegeo attack;
+        }
+        if rand() < 0.2 {
+          luminegeo skill[short_hold=1, no_meteorite=1];
+        } else {
+          luminegeo skill[short_hold=1];
+        }
+        
+      case .bennett.swap.ready && .bennett.skill.ready:
+        bennett swap;
+        while !.bennett.mods.bennett-field && .status.bennettburst {
+          bennett attack;
+        }
+        bennett skill;
+      
+      case .furina.swap.ready && ((.status.bennettburst && (.furina.hpratio < 0.7)) || (!.furina.mods.favonius-cd && .furina.weapon == .keys.weapon.favsword)):
+        if .furina.onfield {
+          furina attack;
+        } else {
+          furina swap;
+        }
+      
+      case .zhongli.swap.ready && .status.bennettburst && (.zhongli.hpratio < 0.7):
+        if .zhongli.onfield {
+          if (.zhongli.normal > 1) && (.stam >= 25) {
+            zhongli charge;
+          } else {
+            zhongli attack;
+          }
+        } else {
+          zhongli swap;
+        }
+      
+      case .luminegeo.swap.ready && .status.bennettburst && (.luminegeo.hpratio < 0.7):
+        if .luminegeo.onfield {
+          luminegeo attack;
+        } else {
+          luminegeo swap;
+        }
+      
+      case .bennett.swap.ready && .status.bennettburst && (.bennett.hpratio < 0.7):
+        if .bennett.onfield {
+          bennett attack;
+        } else {
+          bennett swap;
+        }
+      
+      case .zhongli.onfield:
+        if (.zhongli.normal > 1) && (.stam >= 25) {
+          zhongli charge;
+        } else {
+          zhongli attack;
+        }
+      case .luminegeo.onfield:
+        luminegeo attack;
+      case .furina.onfield:
+        furina attack;
+      case .bennett.onfield:
+        bennett attack;
+    }
+  }
+}
+
+#Random action execution delays combined with auto crystallize pickup on dash
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if display {
+    print("initial roll: ", value);
+  }
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print("final delay value: ", value);
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .zhongli.onfield:
+    prev_char_id = .keys.char.zhongli;
+  case .luminegeo.onfield:
+    prev_char_id = .keys.char.luminegeo;
+  case .furina.onfield:
+    prev_char_id = .keys.char.furina;
+  default:
+    prev_char_id = .keys.char.bennett;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action does not actually include an implicit swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+  
+  if action_id == .action.dash {
+    pick_up_crystallize("any"); #pick up a crystallize before each dash
+  }
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                     #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+doAPL();

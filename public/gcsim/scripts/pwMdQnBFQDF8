@@ -1,0 +1,39 @@
+options swap_delay=12 iteration=100;
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="wt" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+tighnari add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="deepwood" count=4;
+yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+# ----  Default Enemy
+target lvl=100 resist=0.1 hp=1840000 particle_threshold=460000 particle_drop_count=3;
+energy every interval=48000,72000 amount=1;
+
+active yae;
+# ----  Actions List
+
+
+while 1 {
+  switch {
+  case .yae.skill.charge==3:
+    yae attack, skill, skill, skill;
+  case .tighnari.skill.ready:
+    tighnari skill, aim;
+    if .tighnari.burst.ready {
+      tighnari burst;
+    }
+  case .yae.burst.ready && .yae.tags.totems:
+    yae attack, burst;
+  case .tighnari.status.vijnanasuffusion:
+    tighnari aim;
+  default:
+    tighnari aim;
+
+  }
+}	

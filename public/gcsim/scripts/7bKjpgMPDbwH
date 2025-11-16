@@ -1,0 +1,130 @@
+# Kazuha Furina Fischl Xianyun. ~25s Rot. APL. (TF) Kazuha Aggravate in 2T. Kazuha uses burst off CD after skill, Xianyun uses burst once per rotation, Nahida does not burst. Xianyun plunges when Kazuha's Anemo plunges are not available. Note that in situations in which this team is ideal, Sac Sword and Vhunt offer additional value. Accomodates Kazuha constellations. 80% Collisions from Kazuha Skill, 50% From Starwicker plunges. 
+
+# Team - Option Listed by DPS
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+#kazuha add weapon="sacsword" refine=5 lvl=90/90;
+#kazuha add weapon="ironsting" refine=5 lvl=90/90;
+kazuha add set="tf" count=4;
+#kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324; # 3EM; Xiphos
+#kazuha add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=198.2 cr=0.0662 cd=0.2648; # EDC; Xiphos
+#kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # 3EM; Sac
+#kazuha add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.1986 cd=0.662; # EDC; Sac
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="magicguide" refine=5 lvl=90/90;
+#nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="sacjade" refine=1 lvl=90/90;
+nahida add set="gt" count=4;
+#nahida add set="deepwood" count=4;
+#nahida add set="scroll" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # Evenstar/MG
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3641 cd=0.5958; # Jade
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+#fischl add weapon="chainbreaker" refine=5 lvl=90/90;
+#fischl add weapon="vhunt" refine=1 lvl=90/90; # Additional Grouping
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # Other; Xiphos
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662; # VHunt; Xiphos
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="hakushin" refine=5 lvl=90/90;
+#xianyun add weapon="evenstar" refine=1 lvl=90/90;
+#xianyun add weapon="magicguide" refine=5 lvl=90/90;
+#xianyun add weapon="sacfrags" refine=3 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.2317 cd=0.1986; # 3EM
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1.5 pos=-1.6,1.8 hp=100000000;
+target lvl=100 resist=0.1 radius=1.5 pos=1.6,1.8 hp=100000000;
+
+# Rotation
+active fischl;
+fischl skill;
+
+for let i=0; i<4; i=i+1 {
+  # No attack in first rot
+  if .fischl.skill.cd <= 30 {
+    fischl attack, skill;
+  }
+  
+  # Q Consumes too much FT
+  nahida skill;
+  #if .nahida.burst.ready {
+  #  nahida burst;
+  #} else {
+    nahida attack;
+  #}
+  
+  while .xianyun.skill.ready {
+    xianyun skill, low_plunge;
+  }
+  xianyun attack, burst; # N1 wanted for (Fischl C6)
+  
+  while .fischl.skill.cd >= 30 {
+    switch {
+      # Fischl Oz uptime
+      case !.amy.oz && .amy.burst.ready:
+        amy attack:2, burst;
+      # Covers Kazuha & Sac & C1
+      case .kazuha.skill.ready && .kazuha.swap.ready:
+        kazuha skill, high_plunge[collision=rand()>0.2];
+      case .kazuha.burst.ready && .kazuha.skill.cd  && .kazuha.swap.ready:
+        kazuha burst;
+      # VV refresh with TF
+      case .kazuha.sets.tf == 4 && .status.vvelectro:
+        xianyun attack;
+      # Kazuha C6
+      case .kazuha.infusion.kazuha-c6-infusion && .previous-action == .action.low_plunge:
+        kazuha attack;
+      case .kazuha.infusion.kazuha-c6-infusion && .xianyun.status.xianyun-airborne-buff:
+        kazuha jump;
+        if .airborne {
+          kazuha low_plunge[collision=rand()>0.5];
+        }
+      case .kazuha.infusion.kazuha-c6-infusion && .kazuha.normal > 1 && .stam > 25:
+        kazuha charge;
+      case .kazuha.infusion.kazuha-c6-infusion:
+        kazuha attack;
+      # Xianyun Swirl
+      case .xianyun.onfield && .previous-action == .action.low_plunge:
+        xianyun attack;
+      case .xianyun.weapon == .keys.weapon.sacfrags && .xianyun.skill.ready && .xianyun.swap.ready:
+        xianyun skill, low_plunge;
+      case .xianyun.status.xianyun-airborne-buff && .xianyun.swap.ready:
+        xianyun jump;
+        if .airborne {
+          xianyun low_plunge[collision=rand()>0.5];
+        }
+      # Defaults
+      #case .kazuha.sets.tf == 4:
+      #  kazuha attack;
+      default:
+        xianyun attack;
+    }
+  }
+  # Questionable TF Value vs Rotation Extension
+  #if .kazuha.skill.ready {
+  #  kazuha skill, high_plunge[collision=rand()>0.2];
+  #}
+  print("done");
+}

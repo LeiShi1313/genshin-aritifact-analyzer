@@ -1,0 +1,52 @@
+alhaitham char lvl=90/90 cons=0 talent=9,10,9;
+alhaitham add set="gilded" count=4;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311;
+alhaitham add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2317 cd=0.7944 ;																																																																								
+
+xingqiu char lvl=90/90 cons=2 talent=1,9,9;
+xingqiu add weapon="favoniussword" lvl=90/90 refine=1;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.2317 cd=0.662 ;																		
+                 
+kuki char lvl=90/90 cons=2 talent=1,1,1;
+kuki add weapon="ironsting" refine=1 lvl=90/90;
+kuki add set="gd" count=4;
+kuki add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+kuki add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.4634 ;										           
+
+yaoyao char lvl=90/90 cons=2 talent=1,9,1;
+yaoyao add weapon="favoniuslance" refine=1 lvl=90/90;
+yaoyao add set="deepwood" count=4;
+yaoyao add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+yaoyao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5958 ;
+
+# --- Options
+options swap_delay=12 iteration=1000;
+
+# --- Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active xingqiu;
+
+for let r=0; r<3; r=r+1 {
+  while .xingqiu.skill.cd > 20 {
+    yaoyao attack;
+  }
+  xingqiu skill, dash, burst, attack;
+  yaoyao skill, attack;
+  alhaitham burst;
+  kuki skill;
+  alhaitham attack:3, dash,
+            attack:3, skill,
+            attack:3, dash,
+            attack:3, charge,
+            attack:3, dash,
+            attack:3, dash,
+            attack:3;
+  if .yaoyao.burst.ready{
+    yaoyao burst;
+  }
+}

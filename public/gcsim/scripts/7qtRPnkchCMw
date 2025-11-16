@@ -1,0 +1,85 @@
+# Kinich Nahida Yae Fischl. ~18s Rot. QuicKinich on-field. Scroll > OC/ToM > GT Kinich/Yae for team dps. Fischl alternates skill and burst. Yae & Kinich burst if available. No Kinich short hold is -5k DPS.
+
+# Team
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="scroll" count=4;
+#kinich add set="oc" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Scroll
+#kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+#kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662; # OC
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944; # 3EM
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="tom" count=4;
+#yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Widsith
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,3.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+fn kinich_combo() {
+  kinich skill;
+  while .kinich.nightsoul.state {
+    switch .kinich.nightsoul.points {
+      case 20:
+        kinich skill[hold=1];
+      default:
+        if .kinich.blind_spot {
+          kinich attack[direction=.kinich.blind_spot];
+        } else {
+          kinich attack;
+        }
+    }
+  }
+}
+
+# Rotation
+active yae;
+yae attack;
+
+for let i=0; i<4; i=i+1 {
+  # Skip Q on  first rotation, then use as available 
+  nahida skill, attack;
+  if  i > 0 && .nahida.burst.ready {
+    nahida burst, charge;
+  } else {
+    nahida charge;
+  }
+  
+  yae attack, skill:3;
+  
+  amy attack;
+  if .amy.burst.ready {
+    amy attack:1, burst;
+  } else {
+    amy skill;
+  }
+  
+  kinich_combo();
+  if .yae.burst.ready {
+    yae attack, burst;
+  } else if .kinich.burst.ready {
+    kinich burst;
+  }
+}

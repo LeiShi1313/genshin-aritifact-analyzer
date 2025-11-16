@@ -1,0 +1,43 @@
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="gildeddreams" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.3972 cd=0.5296;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="wanderingevenstar" refine=3 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats def%=0.124 def=39.36 hp=6811.52 hp%=0.5952 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.0662 cd=0.1324;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.2204 em=266.28 cr=0.642 cd=0.662 dendro%=0.466;
+
+options swap_delay=12 iteration=1000;
+
+active nahida;
+
+# ----  Actions List
+target lvl=100 resist=0.1 radius=1.5 pos=0,2.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1.5 pos=1.5,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst, attack;
+  xingqiu burst, attack, skill, dash, attack:2;
+  kokomi skill, attack;
+  nahida attack:2, skill;
+  hutao skill,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump,
+        attack:2, charge, jump;
+    print("done");
+}
+

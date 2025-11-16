@@ -1,0 +1,38 @@
+barbara char lvl=90/90 cons=6 talent=9,9,9;
+barbara add weapon="evenstar" refine=1 lvl=90/90;
+barbara add set="tf" count=4;
+barbara add stats def%=0.124 def=39.36 hp=6811.52 hp%=0.5952 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.0662 cd=0.1324;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="tom" count=4;
+fischl add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.3968 er=0.6612 em=679.92 cr=0.0662 cd=0.1324;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpentspine" refine=1 lvl=90/90;
+beidou add set="emblemofseveredfate" count=4;
+beidou add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.551 em=39.64 cr=0.2979 cd=1.0854 electro%=0.466;
+
+options swap_delay=12 iteration=1000 ;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active barbara;
+for let x=0; x<4; x=x+1 {
+  barbara skill;
+  beidou skill[counter=2];
+  kazuha skill, high_plunge, burst;
+  fischl attack, skill;
+  beidou burst, attack:2, skill[counter=2];
+  barbara attack:2, dash, attack:3;
+  kazuha skill, high_plunge;
+  barbara attack:4, dash, attack:4;
+  fischl attack:2, burst;
+  kazuha skill, high_plunge;
+  barbara attack:4, dash, attack:4;
+}

@@ -1,0 +1,73 @@
+# Keqing Yelan Fischl Lanyan. ~18s Rot. Keqing Taser. Keqing does EN1E 4N1C N2C while protected by Lanyan' Shield. Keqing uses EN1QE after lanyan refreshes VV.
+
+# Team
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="calamityofeshu" refine=5 lvl=90/90;
+#keqing add weapon="lionsroar" refine=3 lvl=90/90;
+keqing add set="ts" count=4;
+#keqing add set="tf" count=2;keqing add set="glad" count=2;
+keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7282;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="hakushin" refine=5 lvl=90/90;
+lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main 
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2317 cd=0.7282;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets 
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+# Rotation
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  if .fischl.burst.ready && .fischl.energy == .fischl.energymax {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  
+  lanyan attack, skill:2;
+  
+  keqing skill, attack, skill,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack:2, charge;
+  
+  if .lanyan.burst.ready && .lanyan.energy == .lanyan.energymax {
+    lanyan attack, burst;
+  } else {
+    lanyan attack:1, charge:1;
+  }
+  
+  keqing skill, attack, burst, skill;
+}
+

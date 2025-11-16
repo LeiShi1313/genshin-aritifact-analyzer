@@ -1,0 +1,33 @@
+furina char lvl=90/90 cons=1 talent=1,10,8;
+furina add weapon="favoniussword" refine=5 lvl=90/90;
+furina add set="goldentroupe" count=4;
+furina add stats def=55 hp=4780 hp%=1.229 atk=311 atk%=0.158 er=0.40199999999999997 em=68 cr=0.326 cd=1.189;
+
+emilie char lvl=90/90 cons=0 talent=1,9,8;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="fragmentofharmonicwhimsy" count=2;
+emilie add set="deepwoodmemories" count=2;
+emilie add stats def%=0.051 hp=4780 hp%=0.057999999999999996 atk=338 atk%=1.002 er=0.479 em=54 cr=0.579 cd=0.5980000000000001 dendro%=0.466;
+
+dehya char lvl=90/90 cons=3 talent=1,10,10;
+dehya add weapon="favoniusgreatsword" refine=5 lvl=90/90;
+dehya add set="tenacityofthemillelith" count=4;
+dehya add stats def%=0.124 hp=5557 hp%=0.466 atk=327 atk%=0.29700000000000004 er=0.48 em=147 cr=0.544 cd=0.629 pyro%=0.466;
+
+baizhu char lvl=90/90 cons=0 talent=6,6,8;
+baizhu add weapon="prototypeamber" refine=5 lvl=90/90;
+baizhu add set="deepwoodmemories" count=4;
+baizhu add stats def%=0.321 def=35 hp=5437 hp%=1.66 atk=311 atk%=0.152 er=0.506 em=246 cr=0.07 cd=0.109;
+
+#sim config
+options iteration=1000 swap_delay=16;
+target lvl=100 resist=0.1 particle_threshold=460000 particle_drop_count=3;
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, burst;
+  emilie burst;
+  baizhu skill, burst;
+  dehya skill:2, burst, skill:10;
+  baizhu skill, attack:7;
+}

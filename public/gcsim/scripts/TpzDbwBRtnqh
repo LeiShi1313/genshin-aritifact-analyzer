@@ -1,0 +1,97 @@
+herexcellencythealmightynarukamiogoshogodofthunder char lvl=90/90 cons=0 talent=9,9,9;
+herexcellencythealmightynarukamiogoshogodofthunder add weapon="deathmatch" refine=1 lvl=90/90;
+herexcellencythealmightynarukamiogoshogodofthunder add set="emblemofseveredfate" count=5;
+herexcellencythealmightynarukamiogoshogodofthunder add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+herexcellencythealmightynarukamiogoshogodofthunder add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662 ;
+								
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 +params=[stacks=10] lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="wolffang" refine=1 lvl=90/90;
+xingqiu add set="no" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cd=0.622 hydro%=0.466 ;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="hakushin" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=5; 
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 radius=2 pos=0,2.5 hp=000000069999999999;
+energy every interval=480,720 amount=1;
+active herexcellencythealmightynarukamiogoshogodofthunder ;
+
+ herexcellencythealmightynarukamiogoshogodofthunder skill;
+for let i=0; i<5; i=i+1 {
+ {
+ if .xingqiu.burst.ready {
+    xingqiu  skill, dash, burst, attack;
+  } else {
+	xingqiu attack, skill, dash, burst, attack;
+  }
+  sucrose burst, attack, charge;
+  fischl attack:2,  burst;
+  herexcellencythealmightynarukamiogoshogodofthunder attack, burst, 
+         attack:4, dash,
+         attack:4, skill,
+         attack:4, dash,
+         attack:4;      
+  sucrose attack, skill, dash, attack:2, charge, attack:2, charge;
+  fischl attack, skill, attack;
+  sucrose attack, skill, dash, attack:2, charge, attack:2;
+}
+}
+
+# Raiden Taser w/ Sucrose on fielding during Raiden's downtime
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

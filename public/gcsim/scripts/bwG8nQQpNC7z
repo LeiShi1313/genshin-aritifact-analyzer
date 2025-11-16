@@ -1,0 +1,35 @@
+raiden char lvl=90/90 cons=0 talent=1,9,10;
+raiden add weapon="engulfinglightning" refine=1 lvl=90/90;
+raiden add set="emblem" count=4;
+raiden add stats def%=0.057999999999999996 def=61 hp=4780 hp%=0.047 atk=381 atk%=0.6930000000000001 er=0.4660000000000001 cr=0.5640000000000001 cd=0.963 electro%=0.466;
+
+chevreuse char lvl=90/90 cons=6 talent=1,9,1;
+chevreuse add weapon="dialoguesofthedesertsages" refine=5 lvl=90/90;
+chevreuse add set="noblesse" count=4;
+chevreuse add stats def%=0.131 hp=6065 hp%=1.317 atk=311 atk%=0.345 er=0.162 em=60 cr=0.256 cd=0.42000000000000004 heal=0.359;
+
+xiangling char lvl=90/90 cons=6 talent=1,6,8;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="noblesse" count=2;
+xiangling add set="crimson" count=2;
+xiangling add stats def%=0.183 def=58 hp=4780 hp%=0.15100000000000002 atk=327 atk%=0.828 er=0.317 cr=0.45899999999999996 cd=1.033 pyro%=0.466;
+
+dehya char lvl=90/90 cons=2 talent=1,10,10;
+dehya add weapon="wolfsgravestone" refine=3 lvl=90/90;
+dehya add set="tenacity" count=4;
+dehya add set="thunderingfury" count=1;
+dehya add stats def%=0.22599999999999998 hp=6095 hp%=0.466 atk=327 atk%=0.16899999999999998 er=0.11699999999999999 em=107 cr=0.603 cd=1.143 pyro%=0.466;
+
+#sim config
+options iteration=1000 swap_delay=16;
+target lvl=100 resist=0.1 particle_threshold=460000 particle_drop_count=3;
+active raiden;
+raiden skill;
+
+for let i=0; i<4; i=i+1 {
+  chevreuse skill[hold=1], burst;
+  dehya skill:2;
+  xiangling skill, burst;
+  dehya burst, skill:10;
+  raiden burst, attack:15, skill;
+}

@@ -1,0 +1,55 @@
+chiori char lvl=90/90 cons=6 talent=10,10,10;
+chiori add weapon="urakumisugiri" refine=1 lvl=90/90;
+chiori add set="huskofopulentdreams" count=4;
+chiori add stats def%=0.9119999999999999 def=42 hp=5288 hp%=0.040999999999999995 atk=349 atk%=0.20400000000000001 er=0.057999999999999996 cr=0.778 cd=0.94 geo%=0.466;
+
+arlecchino char lvl=90/90 cons=1 talent=10,9,9;
+arlecchino add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
+arlecchino add set="fragmentofharmonicwhimsy" count=4;
+arlecchino add stats def%=0.175 def=21 hp=4989 hp%=0.186 atk=362 atk%=0.559 er=0.123 cr=0.7070000000000001 cd=1.034 pyro%=0.466;
+
+bennett char lvl=80/90 cons=6 talent=1,7,9;
+bennett add weapon="aquilafavonia" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats def%=0.175 def=74 hp=5288 hp%=0.676 atk=330 er=1.671 em=21 cr=0.07 cd=0.389 heal=0.359;
+
+zhongli char lvl=90/90 cons=1 talent=2,9,8;
+zhongli add weapon="favoniuslance" refine=5 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats def%=0.27 def=81 hp=6035 hp%=1.5090000000000001 atk=311 er=0.20699999999999996 em=70 cr=0.587 cd=0.256;
+
+
+options swap_delay=3 iteration=500;
+
+target lvl=100 resist=.1 hp=100000000000 radius=2 pos=0,2.4;
+
+energy every interval=480,720 amount=1;
+
+active arle;
+
+for let i = 0; i < 6; i = i + 1 {
+
+  chiori skill:2;
+
+  arlecchino skill, attack;
+
+  zhongli skill[hold=1], dash; pick_up_crystallize("pyro");
+  zhongli attack:2;
+
+  
+  bennett skill, burst, attack;
+  
+  if .chiori.burst.ready {
+    chiori burst;
+  } 
+
+  chiori skill:2;
+
+  arlecchino charge, # be careful not to use CA before the 5s of E mark
+             attack:3, dash, 
+             attack:3, dash, 
+             attack:3, dash,
+             attack:3, dash,
+             attack:3, dash,
+             attack:3;
+}

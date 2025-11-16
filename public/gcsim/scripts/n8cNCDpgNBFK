@@ -1,0 +1,59 @@
+
+options swap_delay=12 iteration=1000;
+
+
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="totm" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3310 cd=0.7944;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9; 
+chiori add weapon="wolffang" refine=1 lvl=90/90;
+chiori add set="goldentroupe" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; #mainstats
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1655 cd=0.7282;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3310 cd=0.7944;
+
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active zhongli;
+for let x=0; x<4; x=x+1 {
+ zhongli skill[hold=1], dash;
+ chiori skill:2;
+ bennett skill,burst;
+ fischl attack;
+ if .fischl.burst.ready {
+   fischl attack,burst;
+ } else {
+   fischl skill;
+ }
+ 
+ bennett attack:2,skill,attack:3;
+ 
+ if .chiori.burst.ready {
+   chiori burst;
+ } else {
+   chiori attack:3;
+ }
+ chiori attack:3;
+ 
+ bennett skill, attack:3;
+ chiori attack:3;
+}
+

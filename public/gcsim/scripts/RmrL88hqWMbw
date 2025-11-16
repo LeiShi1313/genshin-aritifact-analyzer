@@ -1,0 +1,80 @@
+# Clorinde Fischl Nahida Bennett. ~16s Rot. Clorinde prefers crit weapons. 2E Bennett. Nahida bursts every other rotation after the first and fills time while Bennett's skill is on CD.
+
+# Team 
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="harbinger" refine=5 lvl=90/90;
+#clorinde add weapon="blacksword" refine=1 lvl=90/90;
+clorinde add set="fohw" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; # main
+clorinde add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=59.46 cr=0.2979 cd=0.662;
+#clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; # main
+#clorinde add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=79.28 cr=0.2979 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="scroll" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3641 cd=0.7282;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=150]; # to Fischl
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+# Rotation
+active nahida;
+
+for let i=0; i<5; i=i+1 {
+  nahida skill;
+  if i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+    nahida burst;
+  } else {
+    nahida attack, charge;
+  }
+  if .bennett.skill.cd {
+    nahida attack, charge;
+  }
+  
+  bennett skill, burst;
+  
+  if .fischl.skill.ready {
+    fischl attack, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  
+  clorinde_combo();
+  if .clorinde.burst.ready {
+    clorinde burst;
+  }
+  
+  bennett skill;
+}
+

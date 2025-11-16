@@ -1,0 +1,64 @@
+// kinich char lvl=90/90 cons=0 talent=9,9,9;
+// kinich add weapon="earthshaker" refine=5 lvl=90/90;
+// kinich add set="obsidiancodex" count=4;
+// kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+// kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
+
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="obsidiancodex" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="flowerofparadiselost" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.4634;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+fn kinich_combo(i) {
+  kinich skill;
+  set_player_pos(0, -3); # get away from the enemy
+  kinich attack;
+  while .kinich.nightsoul.state {
+    if .kinich.nightsoul.points == 20 {
+      kinich skill[hold=1];
+      continue;
+    }
+    kinich attack;
+  }
+}
+
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst, attack;
+  xingqiu skill, dash, attack, burst, attack;
+  kuki skill, attack;
+  kinich_combo(i);
+  if is_even(i) {
+    kinich burst;
+    kinich dash;  set_player_pos(0, 0); # get closer from the enemy
+    nahida attack, charge, jump;
+  } else {
+    kinich dash;  set_player_pos(0, 0); # get closer from the enemy
+    kuki burst;
+    nahida attack:2, charge, jump, attack:2;
+  }
+}

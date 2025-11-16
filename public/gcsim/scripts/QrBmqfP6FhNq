@@ -1,0 +1,97 @@
+# Characters																
+
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="widsith" refine=3 lvl=90/90;
+klee add set="mh" count=4;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.2648 cd=0.7944; #sub
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; #sub
+
+# Festering GT (Higher Damage)
+# furina add weapon="festering" refine=5 lvl=90/90;
+# furina add set="gt" count=4;
+# furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+# furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634; #sub
+
+# Wolf Fang GT
+# furina add weapon="wolffang" refine=1 lvl=90/90;
+# furina add set="gt" count=4;
+# furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622; #main
+# furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.1986 cd=0.3972; #sub
+
+# TOTM (stats for Fav)
+# furina add set="tom" count=4;
+# furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+# furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; #sub
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; #sub
+
+# Instructor's (Better with Higher Furina Investment)
+# bennett add set="instructor" count=4;
+# bennett add stats hp=3571 atk=232 hp%=0.348 hp%=0.348 cr=0.311 ; #main
+# bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; #sub
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="favcodex" refine=3 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.3857 em=39.64 cr=0.3972 cd=0.1324; #sub
+
+# Oathsworn Eye (same mainstats)
+# xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+# xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.3972 cd=0.1324; #sub
+
+# Options
+
+options swap_delay=12 iteration=500;
+energy every interval=480,720 amount=1;
+
+# Targets
+
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4; #1T
+
+# 2T
+# target lvl=100 resist=0.1 radius=2 pos=2.1,2.4 hp=999999999; 
+# target lvl=100 resist=0.1 radius=2 pos=-2.1,2.4 hp=999999999; 
+
+# Actions
+
+active furina;
+for let x=0; x<4; x=x+1 {
+  furina attack, skill, dash, burst;
+  xianyun skill, low_plunge;
+  #xianyun skill, low_plunge; #for C1
+  bennett burst, skill, attack;
+  xianyun attack, burst;
+  klee attack, skill[bounce=3, mine=8];
+  if .klee.burst.ready {
+    klee burst;
+  }
+  for let x=0; x<6; x=x+1 {
+    let col = rand();
+    klee attack, charge;
+    if .klee.status.xianyun-airborne-buff {
+      klee jump;
+      if .airborne{
+        if col > 0.5 {
+          klee high_plunge[collision=1];
+        }
+        else {
+          klee high_plunge;
+        }
+      }
+    }
+  }
+}
+
+# Kleerina with Bennett and Xianyun. Double swirl rotation makes Xianyun struggle with ER. Klee bursts every other rotation and has a 50% collision rate. Rotation is difficult to pull off in-game because of lack of interrupt resistance and quickly switching aura. 21/22s rotation.
+# Furina N1 E d Q, Xianyun E lP, Bennett Q E N1, Xianyun N1 Q, Klee N1E(Q) 6N1CJhP

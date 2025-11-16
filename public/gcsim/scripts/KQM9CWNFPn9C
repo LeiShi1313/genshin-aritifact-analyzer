@@ -1,0 +1,50 @@
+raiden char lvl=90/90 cons=3 talent=10,10,10;
+raiden add weapon="engulfinglightning" refine=1 lvl=90/90;
+raiden add set="emblemofseveredfate" count=4;
+raiden add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311 ; #main
+raiden add stats hp=209 atk=350 atk%=0.152 er=0.117 hp%=0.058 em=100 cr=0.424 cd=1.235;
+
+nahida char lvl=90/90 cons=4 talent=10,10,10;
+#nahida add weapon="magicguide" refine=5 lvl=90/90;
+nahida add weapon="athousandfloatingdreams" refine=1 lvl=90/90; #5 k dps
+nahida add set="goldentroupe" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+nahida add stats hp=209 atk=350 atk%=0.111 er=0.045 hp%=0.111 em=184 cr=0.346 cd=1.103;
+
+yelan char lvl=90/90 cons=6 talent=10,10,10;
+yelan add weapon="aquasimulacra" refine=1 lvl=90/90;
+yelan add set="nymphsdream" count=2;
+yelan add set="vourukashasglow" count=2;
+#yelan add set="emblemofseveredfate" count=4; #3k dps
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+yelan add stats hp=747 atk%=0.111 hp%=0.356 atk=14 cr=0.607 er=0.11 cd=1.073;
+
+baizhu char lvl=90/90 cons=1 talent=10,10,10;
+baizhu add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+baizhu add set="deepwoodmemories" count=4;
+baizhu add stats hp=4780 atk=311 hp%=1.398; #main
+baizhu add stats def%=0.131 def=63 hp=3256 hp%=0.157 atk=362 atk%=0.198 er=0.266 em=207 cr=0.078 cd=0.124;
+
+options swap_delay=4 iteration=1000 duration=100;
+target lvl=100 resist=0.1 particle_threshold=250000 particle_drop_count=1 radius=2 pos=0,1 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active raiden;
+
+raiden skill;
+for let i = 0; i < 5; i = i + 1 {
+	nahida skill, burst;
+	yelan burst, attack, skill;
+	baizhu skill, burst;
+	raiden attack, burst,
+		attack:4, dash,
+		attack:4, skill,
+		attack:4, dash,
+	       	attack:4;
+	baizhu attack, skill, dash;
+	yelan attack, skill, attack:3;
+}
+
+
+
+

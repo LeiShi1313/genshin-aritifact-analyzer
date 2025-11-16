@@ -1,0 +1,77 @@
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="prototypecrescent" refine=5 lvl=90/90;
+lyney add set="marechausseehunter" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
+lyney add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="stringless" refine=3 lvl=90/90;
+tartaglia add set="eosf" count=4;
+tartaglia add stats hp=4780 atk=311 em=187 hydro%=0.466 cr=0.311 ; #main
+tartaglia add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.3641 cd=0.2648;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwoodblade" refine=5 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,3;
+energy every interval=480,720 amount=1;
+
+active tartaglia;
+
+let bomb_planted = 0;
+
+  tartaglia skill, attack;
+  
+for let r = 5; r > 0; r = r - 1 {
+
+  if .tartaglia.energy > 50 {
+    if r < 5 {
+      tartaglia aim, skill;
+    }
+    bomb_planted = 1; # Hydro VV setup ready
+  } else {
+    bomb_planted = 0; # Hydro VV setup not ready
+  }
+  
+  if .element.t0.pyro {
+    lyney aim[weakspot=1], aim;
+    bennett skill;
+  }
+  
+  if .kazuha.burst.ready && .element.t0.pyro {
+    kazuha burst;
+  }
+  
+  bennett burst;
+  
+  if .kazuha.burst.ready {
+    kazuha skill, high_plunge, burst;
+  } else {
+    kazuha skill, high_plunge;
+  }
+  
+  if .tartaglia.burst.ready && bomb_planted == 1 {
+    tartaglia burst;
+  }
+  
+  lyney aim[weakspot=1], aim;
+  if .lyney.burst.ready {
+    lyney burst;
+    delay(11); # Long enough for burst initial hit
+    lyney skill;
+  } else {
+    lyney aim;
+  }
+  lyney aim, skill;
+  bennett skill;
+}

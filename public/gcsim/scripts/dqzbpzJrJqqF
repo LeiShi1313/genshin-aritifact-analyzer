@@ -1,0 +1,81 @@
+# Rosaria Chongyun Shenhe Escoffier. ~20s Rot. Rosaria on-field Mono Cryo. 2E Shenhe. Rosaria uses skill off CD while spamming doing N3CD (stamina permitting) until Chongyun's field expires. Escoffier tries to burst every rotation after the first.
+
+# Team - Options listed by DPS
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="lithicspear" refine=1 lvl=90/90; # Bad F2P Weapon options again
+#rosaria add weapon="deathmatch" refine=1 lvl=90/90;
+rosaria add set="bs" count=4;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Drill
+#rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+#rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=66.16 atk%=0.496 er=0.1102 em=39.64 cr=0.1324 cd=0.662; # DM
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+chongyun add set="no" count=4;
+#chongyun add set="bs" count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # NO
+#chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+#chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662; # BS
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="lamppost" refine=5 lvl=90/90;
+shenhe add set="sr" count=2;shenhe add set="ur" count=2;
+#shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.6612 em=39.64 cr=0.1655 cd=0.331;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=0;
+
+# Rotation
+active chongyun; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  if i > 0 && .esco.burst.ready && .esco.energy == .esco.energymax {
+    esco burst;
+  }
+  esco skill;
+  
+  shenhe skill, burst;
+  
+  chongyun burst, skill;
+  
+  rosaria skill, burst;
+  
+  rosaria attack;
+  while .shenhe.skill.cd {
+    if .rosaria.skill.ready {
+      rosaria skill;
+    } else if .rosaria.normal > 3 && .stam > 43 {
+      rosaria charge, dash;
+    } else {
+      rosaria attack;
+    }
+  }
+  
+  shenhe skill, attack;
+  
+  while .status.chongyunfield || .rosaria.infusion.chongyun-ice-weapon {
+    if .rosaria.skill.ready {
+      rosaria skill;
+    } else if .rosaria.normal > 3 && .stam > 43 {
+      rosaria charge, dash;
+    } else {
+      rosaria attack;
+    }
+  }
+}
+

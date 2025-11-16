@@ -1,0 +1,68 @@
+xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu add weapon="favoniussword" refine=5 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944 ;	
+				
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="favlance" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944 ;	
+																			
+wanderer char lvl=90/90 cons=0 talent=9,9,9; 
+wanderer add weapon="favcodex" refine=5 lvl=90/90;
+wanderer add set="vv" count=4;
+wanderer add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+wanderer add stats def%=0.124 def=39.36 hp%=0.0992 hp=507.88 atk%=0.1984 atk=33.08 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active xingqiu;
+
+for let i=0; i<4; i=i+1 {
+  xingqiu attack, burst, attack;
+  bennett burst, attack, skill;
+  xiangling attack, burst, attack, skill, dash;
+  bennett attack, skill;
+  xingqiu attack, skill, dash;
+  wanderer attack, burst, attack, skill, attack:3, attack:3, attack:3, attack:3, attack:2, charge, skill, low_plunge;  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

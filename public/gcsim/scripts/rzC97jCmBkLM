@@ -1,0 +1,52 @@
+hutao char lvl=90/90 cons=0 talent=10,10,9 +params=[start_hp=1];
+hutao add weapon="balladofthefjords" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
+hutao add stats def=55.104 def%=0.1736 hp=711.032 hp%=0.13888 atk=46.312 atk%=0.13888 er=0.15428 em=55.496 cr=0.27804 cd=0.9268 ;
+
+fischl char lvl=90/90 cons=4 talent=9,9,9;
+fischl add weapon="stringless" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=64.944 def%=0.2046 hp=838.002 hp%=0.16368 atk=54.582 atk%=0.16368 er=0.18183 em=65.406 cr=0.273075 cd=0.65538 ;
+
+xingqiu char lvl=90/90 cons=5 talent=9,9,9;
+xingqiu add weapon="favoniussword" lvl=90/90 refine=1;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=55.104 def%=0.1736 hp=711.032 hp%=0.13888 atk=46.312 atk%=0.13888 er=0.46284 em=55.496 cr=0.2317 cd=0.64876 ;
+
+bennett char lvl=90/90 cons=3 talent=9,9,9;
+bennett add weapon="sapwoodblade" refine=3 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats hp=3571 atk=232 er=0.3885 pyro%=0.466 cr=0.23325 ; #main
+bennett add stats def=34.6368 def%=0.10912 hp=446.9344 hp%=0.087296 atk=29.1104 atk%=0.087296 er=0.290928 em=34.8832 cr=0.14564 cd=0.29128 ;
+
+
+options swap_delay=12 iteration=1000 ;
+#--------------------------------------------
+
+active xingqiu;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  xingqiu skill, burst, attack;
+  bennett skill, attack, burst;
+  if .fischl.burst.ready {
+    fischl attack:2, burst; 
+  } else {
+    fischl attack:1, skill; 
+  }
+  hutao attack:1 ,skill,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge, jump,
+     attack:2, charge;
+  bennett attack, skill, attack:4;
+}
+

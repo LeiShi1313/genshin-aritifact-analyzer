@@ -1,0 +1,107 @@
+# Beidou Chevreuse Fischl Bennett. ~16s Rot. Beidou on-field Overload; uses NA's only with N2D, assumes Beidou takes damage to activate her C4; Beidou bursts as available. Electro>ATK Goblet. 
+# Fischl snapshots Bennett's buff. Bennett buffed Chevreuse bursts every other rot. 25% perfect counter, 25% counter. Self-Overloads not implemented. 
+
+# Team- Options listsed by DPS
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#beidou add weapon="talkingstick" refine=1 lvl=90/90; beidou add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Mock implementation
+beidou add set="echoes" count=4;
+#beidou add set="ts" count=4;
+#beidou add set="gd" count=4;
+#beidou add set="tf" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + Electro
+#beidou add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # CD + Atk
+#beidou add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+#beidou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + Pyro
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+chev add set="gt" count=4;
+#chev add set="emblem" count=4;
+chev add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+#fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # VHunt
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Others
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662; # ADC
+#bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187 ; #main
+#bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=158.56 cr=0.2648 cd=0.1324; # EM
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+#hurt every interval=50, 70 amount=1000,3000 element=physical; # Aggressive
+hurt every interval=300, 450 amount=1000,3000 element=physical;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000; 
+
+# Beidou 20% Perfect Counter, 20% 1 Hit Counter
+fn rand_counter() {
+  let counter = rand();
+  if counter > 0.75 {
+    counter = 2;
+  } else if counter > 0.75 && counter <= 0.5 {
+    counter = 1;
+  } 
+  else {
+    counter = 0;
+  }
+  
+  return counter;
+}
+
+# Rotation
+active beidou; # SS stacks
+beidou skill; # Chev A1
+
+for let i=0; i<4; i=i+1 {
+  bennett skill, burst;
+  
+  # Burst+C4 Combo every other rotation
+  if .chev.burst.ready {
+    chev burst, skill[hold=1]:2;
+  } else {
+    chev skill[hold=1], attack:1;
+  }
+  
+  # Prioritize burst
+  amy attack;
+  if !.amy.skill.ready {
+    amy attack, burst;
+  } else {
+    amy skill;
+  }
+  
+  # Beidou
+  while .beidou.mods.bennett-field || .status.bennettburst { 
+    switch {
+      case .beidou.skill.ready:
+        beidou skill[counter=rand_counter()];
+      case .beidou.burst.ready:
+        beidou burst;
+      case .beidou.normal > 2 && .beidou.dash.ready && .stam > 18:
+        beidou dash;
+      default:
+        beidou attack;
+    }
+  }
+  
+  print("done");
+}

@@ -1,0 +1,34 @@
+options swap_delay=12 iteration=100 duration=200;
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="wanderers" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=1; 
+kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add set="deepwood" count=4;
+kuki add stats hp=4780 atk=311 electro%=0.466 em=187 cr=0.311; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+# ----  Default Enemy
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1;
+
+active kuki;
+# ----  Actions List
+
+while 1 {
+if .kuki.skill.ready {
+kuki skill;
+}
+if .tighnari.skill.ready {
+tighnari skill, aim:3;
+} else {
+tighnari aim;
+} if .tighnari.burst.ready {
+tighnari burst;
+} else {
+tighnari aim;
+}
+}	

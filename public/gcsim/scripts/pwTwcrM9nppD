@@ -1,0 +1,69 @@
+# Lisa Xingqiu Nahida Beidou ~22s Rot. Lisa Hyperbloom with DR and IR. Xingqiu burst continues into Nahida's field time in the next rotation. 10% Counter, 20% Perfect Counter.
+
+# Team
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="fruit" refine=5 lvl=90/90;
+lisa add set="fopl" count=4;
+lisa add stats hp=4780 atk=311 em=187 em=187 em=187;
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.3641 cd=0.331;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="emblem" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.1655 cd=0.331;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9; 
+beidou add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="eosf" count=4;
+beidou add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622 ; #main										
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets 
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=3,0 hp=100000000; # 2nd
+
+# Beidou 20% Perfect Counter, 10% 1 Hit Counter
+fn rand_counter() {
+  let counter = rand();
+  if counter > 0.80 {
+    counter = 2;
+  } else if counter > 0.7 && counter <= 0.80 {
+    counter = 1;
+  } 
+  else {
+    counter = 0;
+  }
+  
+  return counter;
+}
+
+# Rotation
+active nahida;
+  
+for let i = 0; i < 4; i = i + 1 {
+  nahida skill, attack, burst;
+  
+  xingqiu skill, dash, burst, attack;
+  
+  lisa attack, burst, attack;
+  
+  beidou skill[counter=rand_counter()], attack, burst;
+  
+  lisa attack:3, dash, attack:3, dash;
+  lisa attack:3, dash, attack:3, dash; 
+  lisa attack:3, dash, attack:3, skill[hold=1];
+  
+  beidou attack, skill[counter=rand_counter()]; # Catches Lisa's partches
+}

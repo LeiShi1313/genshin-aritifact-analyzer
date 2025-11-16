@@ -1,0 +1,79 @@
+# Cyno Chevreuse Mavuika Ororon. ~24s Rot. Cyno Overload. Mauvika EQ every rotation after Ororon; she builds full EM. SoDP > NO Chevreuse.
+
+# Team
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="deathmatch" refine=1 lvl=90/90;
+cyno add set="echoes" count=4; # Ping dependence
+#cyno add set="glad" count=4;
+cyno add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+chev add set="sodp" count=4;
+#chev add set="no" count=4; # Long rotation, no snapshots
+chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.3972; # SoDP
+#chev add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp%=0.466; #main
+#chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.1986; # NO
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="aquamarine" refine=1 lvl=90/90;
+#mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+#mavuika add set="oc" count=4;
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # 3EM Scroll
+#mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+#mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.1986 cd=0.7944; # EDC OC
+
+ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon add weapon="chainbreaker" refine=5 lvl=90/90;
+#ororon add set="scroll" count=4;
+ororon add set="tf" count=2;ororon add set="glad" count=2;
+ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active cyno;
+cyno skill;
+
+for let i=0; i<4; i=i+1 {
+  # Burst as available
+  if .chev.sets.no > 4 {
+    chev burst, skill[hold=1]:3;
+  } else {
+    if .chev.burst.ready {
+      chev burst, skill[hold=1];
+    } else {
+      chev attack:1, skill[hold=1];
+    }
+  }
+  
+  ororon skill, burst;
+  
+  if .mav.burst.ready {
+    mav burst, skill, dash;
+  } else {
+    mav dash, skill;
+  }
+  
+  cyno skill, burst;
+  while .cyno.mods.cyno-q > 240 {
+    if .cyno.skill.ready { # && .cyno.mods.cyno-a1 {
+      cyno skill;
+    } else if .cyno.normal == 4 && .stam > 18 {
+      cyno dash;
+    } else {
+      cyno attack;
+    }
+  }
+}

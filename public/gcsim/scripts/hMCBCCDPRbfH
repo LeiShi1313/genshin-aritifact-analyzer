@@ -1,0 +1,50 @@
+options swap_delay=12 debug=true iteration=1000 duration=110 mode=sl;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; # main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.0993 cd=0.1986;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=559.5 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="harbingerofdawn" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.1986 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+target lvl=100 resist=.1 hp=10000000;
+energy every interval=480,720 amount=1;
+active yelan;
+
+let rotations = 5;
+
+while rotations {
+  yelan skill;
+  kazuha skill, high_plunge;
+  kokomi skill;
+  xingqiu burst, attack, skill, dash, attack:1;
+  yelan burst, attack;
+  kazuha skill, high_plunge, attack, burst;
+  yelan attack, skill, attack;
+  kokomi attack, burst;
+  let kokomi_n2w_sequences = 10;
+  while kokomi_n2w_sequences {
+    kokomi attack:2, walk;
+    kokomi_n2w_sequences = kokomi_n2w_sequences - 1;
+  }
+  yelan attack;
+  rotations = rotations - 1;
+}
+

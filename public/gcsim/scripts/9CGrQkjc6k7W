@@ -1,0 +1,185 @@
+alhaitham char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
+alhaitham add set="mh" count=4;
+                   
+#Wolf-Fang Build ----------------------------------------------------------------
+alhaitham add weapon="wolffang" refine=1 lvl=90/90; #almost exactly equal to iron sting build (without changing kuki refine; see comment there)
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #55.695 [91.695 / 99.695] / 178.25 | 111.01 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=178.335 er=0.1101 cr=0.23135 cd=0.6605;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 9[7]    er 2[0]   cr 7[5]    cd 10[8]
+                   #sub; total[distributed] rolls
+
+#Iron Sting Build ---------------------------------------------------------------
+#alhaitham add weapon="ironsting" refine=5 lvl=90/90;
+#alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #44.66 [80.66] / 178.25 | 111.01 er
+#alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3966 cd=0.6605;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 4[2]  er 2[0]   cr 12[10] cd 10[8]
+                   #sub; total[distributed] rolls
+                   
+#HoD Build ----------------------------------------------------------------------
+#alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90; #better but somewhat reliant on not getting hit
+#alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #62.745 [98.745] / 225.11 | 111.01 er
+#alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=138.705 er=0.1101 cr=0.29745 cd=0.6605;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 7[5]    er 2[0]   cr 9[7]    cd 10[8]
+
+#LoFI Build ---------------------------------------------------------------------
+#alhaitham add weapon="lofi" refine=1 lvl=90/90;
+#alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #63.235 [99.235] / 217.46 | 111.01 er
+#alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=138.705 er=0.1101 cr=0.23135 cd=0.7926;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 7[5]    er 2[0]   cr 7[5]    cd 12[10]
+
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=70];
+furina add set="deepwood" count=4;
+#furina add set="gt" count=4;
+furina add weapon="fleuve" refine=5 lvl=90/90;
+#furina add weapon="festeringdesire" refine=5 lvl=90/90; #better but avoiding event weaps
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #63.86 [79.86] / 178.25 | 156.95 [188.95] er
+furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+                #hp 2[0]   atk 2[0]  def 2[0]  hp% 4[2]   atk% 2[0]   def% 2[0]   em 2[0]  er 2[0]   cr 12[10] cd 10[8]
+                      
+sucrose char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=70];
+sucrose add weapon="ttds" refine=5 lvl=90/90;
+#sucrose add weapon="sacfrags" refine=3 lvl=90/90; #very VERY similar to ttds
+#sucrose add set="vv" count=4;
+#sucrose add set="deepwood" count=4;
+#sucrose add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #44.66 / 102.84 | 111.01 er
+#sucrose add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.1101 cr=0.3966 cd=0.5284;
+                 #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 6[4]   er 2[0]   cr 12[10] cd 8[6]
+
+sucrose add set="instructor" count=4;
+sucrose add stats hp=3571 atk=232 em=186.5 em=139.3 em=139.3; #31.445 / 65.855 | 108.805 er
+sucrose add stats hp=406.3 atk=26.45 def=31.485 hp%=0.07925 atk%=0.07925 def%=0.0991 em=95.13 er=0.08805 cr=0.13225 cd=0.15855;
+#4-star subs      hp 2[0]  atk 2[0]  def 2[0]   hp% 2[0]    atk% 2[0]    def% 2[0]   em 6[4]  er 2[0]    cr 5[3]    cd 3[1]
+sucrose add stats cr=0.1322;
+#5-star subs      cr 4[4]
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=60];
+#kuki add weapon="ironsting" refine=1 lvl=90/90; #used with r5 iron sting alhaitham bc 10 copies of the same craftable lol
+kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add set="fopl" count=4;
+#kuki add set="gilded" count=4;
+#kuki add set="tf" count=4;
+#kuki add set="wt" count=2;
+#kuki add set="gilded" count=2;
+kuki add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #41.355 / 83.025 | 133.03 er
+kuki add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.4404 cr=0.3305 cd=0.2642;
+              #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 6[4]   er 8[6]   cr 10[8]   cd 4[2]
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+# --- Options
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+
+# --- Targets
+target lvl=100 resist=0.1 hp=999999999999 radius=2 pos=0,2.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+#hurt every interval=360,600 amount=6000,10000 element=physical;
+
+active kuki;
+
+#Kuki E Dash [N1] > Furina E Dash Q > Sucrose [N1 E Dash]/[N2] > Alhaitham hE LP N4CD N4CD N3C > Kuki E Dash N1 > Sucrose [N1 E Dash]/[N2] > Alhaitham Q > Kuki [Q]/[N2] > Alhaitham N3D N3CD N4CD N3C
+for let r=0; r<3; r=r+1 {
+  kuki skill, dash;
+  if !.furina.swap.ready {
+    kuki attack;
+  }
+  
+  furina skill, dash;
+  while !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  
+  sucrose attack;
+  if .sucrose.skill.ready {
+    sucrose skill, dash;
+  } else {
+    sucrose attack;
+  }
+  #if .sucrose.burst.ready {
+    #sucrose burst; #worse than the later timing for her burst
+  #}
+  
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:4, charge, dash,
+            attack:4, charge, dash,
+            attack:3, charge;
+            
+  kuki skill, dash, attack;
+  
+  sucrose attack;
+  if .sucrose.skill.ready {
+    sucrose skill, dash;
+  } else {
+    sucrose attack;
+  }
+  #if .sucrose.burst.ready {
+    #sucrose burst; #slight DPS loss (and, ingame, risks launching enemies)
+  #}
+  
+  alhaitham swap;
+  while !.alhaitham.burst.ready {
+    alhaitham attack;
+  }
+  alhaitham burst;
+  
+  kuki swap;
+  if .kuki.burst.ready {
+    kuki burst;
+  } else {
+    kuki attack:2;
+  }
+  
+  alhaitham attack:3, dash,
+            attack:3, charge, dash,
+            attack:4, charge, dash,
+            attack:3, charge;
+}

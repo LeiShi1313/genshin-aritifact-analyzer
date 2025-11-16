@@ -1,0 +1,52 @@
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+//mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+//mavuika add weapon="earthshaker" refine=5 lvl=90/90;
+mavuika add set="obsidiancodex" count=4;
+mavuika add stats hp=4780 atk=311 em=186.5 pyro%=0.466 cd=0.622;
+mavuika add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.3968 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.2648 cd=0.662;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favoniussword" refine=3 lvl=90/90;
+xilonen add set="scrolloftheheroofcindercity" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.3717 em=39.63 er=0.1101 cr=0.3305 cd=0.6605;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0992 def=39.35 def%=0.1239 em=39.64 er=0.551 cr=0.1986 cd=0.662;
+
+kamisatoayaka char lvl=90/90 cons=0 talent=9,9,9;
+kamisatoayaka add weapon="favoniussword" refine=3 lvl=90/90;
+kamisatoayaka add set="archaicpetra" count=4;
+#kamisatoayaka add set="emblem" count=4;
+kamisatoayaka add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+kamisatoayaka add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.2973 def=39.35 def%=0.1239 em=39.63 er=0.5505 cr=0.3305 cd=0.1321; # AP
+#kamisatoayaka add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+#kamisatoayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944; # Emblem
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active mavuika;
+
+for let x=0; x<4; x=x+1{
+  mavuika skill;
+  bennett skill, burst;
+  xilo skill, attack:2;
+  while !.xilonen.mods.favonius-cd {
+    xilonen attack;
+  }
+  ayaka skill, dash;
+  pick_up_crystallize("any");
+  ayaka burst;
+  mav burst, charge:2, dash,
+             charge:2, charge[final=1], dash,
+             charge:2, dash,
+             charge:2, dash,
+             charge, dash;
+  mavuika charge:4, dash;
+}

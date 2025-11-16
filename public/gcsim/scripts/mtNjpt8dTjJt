@@ -1,0 +1,55 @@
+options iteration=1000 swap_delay=12;
+
+wrio char lvl=90/90 cons=0 talent=9,9,9;
+wrio add weapon="widsith" refine=3 lvl=90/90; 
+wrio add set="mh" count=4;
+wrio add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+charlotte char lvl=90/90 cons=6 talent=9,9,9;
+charlotte add weapon="ttds" refine=5 lvl=90/90; 
+charlotte add set="totm" count=4;
+//charlotte add set="ap" count=4;
+charlotte add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; 
+charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.1655 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3  lvl=90/90;
+shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.4959 em=39.64 cr=0.3972 cd=0.1324;
+
+
+active shenhe;
+target lvl=100 resist=0.1 hp=999999999 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+for let x=0; x<4; x=x+1 {
+  shenhe attack:2, skill[hold=1], burst;
+  xilonen skill, attack:2;
+  if !.xilonen.mods.favonius-cd {
+    xilonen attack;
+  }
+  charlotte skill, burst, attack; # catches her own particles
+  if .charlotte.sets.ap >=4 {
+    charlotte dash; pick_up_crystallize("cryo");
+  }
+  wrio skill,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:4;
+  if .wrio.burst.ready && .wrio.energy == .wrio.energymax {
+    wrio burst;
+  } else {
+    wrio charge, jump, attack:2;
+  }
+}

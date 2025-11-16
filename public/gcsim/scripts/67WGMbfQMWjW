@@ -1,0 +1,52 @@
+options swap_delay=12 iteration=1000;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="gildeddreams" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=1; 
+kuki add weapon="favoniussword" refine=3 lvl=90/90;
+kuki add set="thunderingfury" count=4;
+kuki add stats hp=4780 atk=311 electro%=0.466 em=187 cr=0.311; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida  add weapon="magicguide" refine=5 lvl=90/90;
+nahida  add set="deepwood" count=4;
+nahida  add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+nahida  add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+# ----  Default Enemy
+
+active kuki;
+# ----  Actions List
+
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst;
+  fischl attack, skill;  
+  kuki skill, burst; 
+  kazuha skill, high_plunge, burst;
+  fischl attack:4;
+  kazuha attack:2, skill, high_plunge;
+  kazuha attack:3;
+
+  nahida skill, attack:3, dash;
+  fischl attack, burst;  
+  kuki skill, burst; 
+  kazuha skill, high_plunge, burst;
+  fischl attack:4;
+  kazuha attack:2, skill, high_plunge;
+  kazuha attack:3;
+
+}

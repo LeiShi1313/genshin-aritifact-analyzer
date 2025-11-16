@@ -1,0 +1,78 @@
+# Kaeya Rosaria Bennett Xianyun. ~19s Rot. Kaeya Melt Plunge with Rosaria && VV. At least 7 Melted plunge. Swapping Xianyun back in for VV is a DPS loss after the 1st rotation. 50% Collisions. 
+
+# Team - Options listed by DPS
+kaeya char lvl=90/90 cons=6 talent=9,9,9;
+kaeya add weapon="harbinger" refine=5 lvl=90/90;
+#kaeya add weapon="umbrella" refine=5 lvl=90/90;
+kaeya add set="lno" count=4;
+kaeya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+kaeya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662; # HoD
+#kaeya add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+#kaeya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Umbrella
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="scroll" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss.
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=148.86 atk%=0.3968 er=0.4959 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Kaeya Plunge Combo
+fn KaeyaPlunge() {
+  kaeya jump;
+  if .airborne {
+    kaeya high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active xianyun;
+
+for let i = 0; i < 4; i = i + 1 {
+  xianyun skill, low_plunge, burst;
+  
+  bennett skill, burst;
+  
+  # VV action - not worthwhile
+  if .xianyun.sets.vv >= 4 && i == 0 {
+    xianyun attack:2;
+  }
+  
+  rosaria skill, burst;
+  
+  kaeya skill, burst, dash;
+  KaeyaPlunge(); kaeya dash;
+  KaeyaPlunge(); kaeya dash;
+  KaeyaPlunge(); kaeya dash;
+  KaeyaPlunge(); kaeya dash;
+  KaeyaPlunge(); kaeya skill;
+  KaeyaPlunge(); kaeya dash;
+  KaeyaPlunge(); kaeya dash;
+  KaeyaPlunge(); 
+  
+  bennett skill;
+  if !.bennett.mods.favonius-cd && .bennett.weapon == .keys.weapon.favsword{ # Better for energy
+    bennett attack;
+  }
+}

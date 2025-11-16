@@ -1,0 +1,31 @@
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+hutao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1324 cd=0.7944 ;																								
+options swap_delay=12 iteration=1000 ;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=9999999;
+energy every interval=480,720 amount=1;
+
+active yelan;
+for let i = 0; i<3; i=i+1 {
+  yelan burst, attack:5, skill, attack:4;
+  hutao skill,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:2, charge, jump, attack;
+  print ("done");
+}

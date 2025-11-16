@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "scrape-gcsim": "npx tsx scripts/scrape-gcsim.ts",
     "gcsim": "npx tsx scripts/gcsim.ts",
     "genshin-db": "npm install --save-dev genshin-db@latest",
     "gen": "npm run genshin-db && npm run scripts && npm run proto && npm run proto-esm",

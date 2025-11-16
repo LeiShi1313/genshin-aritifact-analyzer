@@ -1,0 +1,56 @@
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="xiphos" refine=1 lvl=90/90;
+albedo add set="fopl" count=5;
+albedo add stats hp=4780 atk=311 em=187 em=187 em=187; #mainstats
+albedo add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; #substats
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favcodex" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 dendro%=0.466 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3641 cd=0.7282;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favlance" refine=3 lvl=90/90;
+candace add set="fopl" count=4;
+candace add stats hp=4780 atk=311 em=187 em=187 em=187;
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
+
+
+kaeya char lvl=90/90 cons=6 talent=9,9,9; 	
+kaeya add weapon="favsword" refine=3 lvl=90/90; 
+kaeya add set="eosf" count=4; 
+kaeya add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; 
+kaeya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+	
+#rosaria char lvl=90/90 cons=6 talent=9,9,9;
+#rosaria add weapon="favoniuslance" refine=3 lvl=90/90;
+#rosaria add set="emblemofseveredfate" count=4;
+#rosaria add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.8486 em=39.64 cr=0.642 cd=0.662 cryo%=0.466;
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2,1 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active albedo;
+albedo skill, attack;
+for let i=0; i<4; i=i+1 { 
+  
+  nahida attack, burst, skill;
+  kaeya skill, burst;  
+  candace skill, burst, attack;
+  albedo attack,skill, burst, attack:2, charge, jump, attack:3, dash, attack:3;
+  kaeya skill, dash;
+  albedo attack, skill;
+  candace skill, attack:2;}
+
+
+
+
+
+
+
+
+
+

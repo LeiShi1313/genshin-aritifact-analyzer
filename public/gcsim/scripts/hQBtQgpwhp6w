@@ -1,0 +1,67 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+bennett add stats em=39.64 cr=0.2648 cd=0.662;
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="ttds" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats em=79.28 cr=0.331 cd=0.3972;
+sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="sacsword" refine=3 lvl=90/90;
+xingqiu add set="goldentroupe" count=4;
+xingqiu add stats hp=4780 atk=311 em=187 hydro%=0.466 cr=0.311;
+xingqiu add stats atk%=0.0992 cr=0.2648 cd=0.662;
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="catch" refine=5 lvl=90/90;
+xiangling add set="cw" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+xiangling add stats em=39.64 cr=0.2648 cd=0.662;
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 debug=true iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=-2.4,0 radius=2;
+energy every interval=480,720 amount=1;
+active xingqiu;
+
+for let i = 0; i < 4; i = i + 1 {
+    set_player_pos(1.2,0);# 0.8 < 1.2 ≤ 1.6
+    xingqiu burst,attack;
+    wait(3);
+    bennett burst,attack,skill;
+    sucrose attack;
+    wait(7);
+    sucrose skill,dash;
+    xiangling attack,skill,dash,attack,burst;
+    xingqiu skill;
+    let e = .xingqiu.skill.ready;
+    if(e) {
+        xingqiu skill;
+    }
+    xingqiu dash;
+    set_player_pos(0,0);
+    if(!e) {
+        xingqiu attack:3;
+    }
+    bennett attack:3,skill;
+    xingqiu attack:2;
+    bennett attack:2,skill,attack;
+    xiangling attack:3,skill,dash,attack;
+    bennett skill,attack;
+    xiangling attack:3;
+    bennett attack:3,skill;
+    if(e) {
+        xiangling attack,dash;
+    }else {
+        xingqiu attack:2;
+        sucrose skill,dash,attack;
+        xingqiu attack,dash;
+    }
+}

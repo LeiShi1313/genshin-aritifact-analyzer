@@ -1,0 +1,68 @@
+# Characters
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="widsith" refine=3 lvl=90/90;
+klee add set="gd" count=4;
+#klee add set="glad" count=2; # 2pc2pc atk/cw or atk/atk is slightly worse
+#klee add set="cw" count=2;
+#klee add set="sr" count=2;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+#klee add weapon="flowingpurity" refine=5 lvl=90/90; # this is technically higher dps. lol
+#klee add set="fohw" count=4;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="pamber" refine=5 lvl=90/90;
+lisa add set="scroll" count=4;
+lisa add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.551 em=158.56 cr=0.0662 cd=0.1324;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+# Options
+options swap_delay=12 iteration=1000;	
+target lvl=100 resist=0.1 radius=2 pos=0,2.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+# Actions
+active klee;
+
+klee attack;
+for let i=0; i<5; i=i+1 {
+  lisa burst, attack;
+  chevreuse burst, skill[hold=1]:2;
+  while !.chev.mods.favonius-cd {
+    chevreuse attack;
+  }
+  if .fischl.skill.ready {
+    fischl attack, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  klee attack, skill[bounce=3, mine=8], burst, walk;
+  if .klee.skill.ready {
+    klee attack, skill[bounce=3, mine=8], jump;
+  } else {
+    klee attack[travel=6], charge; # N1C
+  }
+  for let i=0; i<3; i=i+1 {
+    klee attack[travel=6], charge, # N1C
+         attack, walk, attack[travel=6], charge; #N2C
+  }
+}
+wait(20); # So sim doesn't end with final CA mid animation
+
+# Klee overload with Lisa. Klee alternates between N1Cs and N2Cs to maintain stamina. 20s rotation.
+# Klee walk-cancels the first NA in the N2C to string together 2 N1s.
+# {Klee N1} > Lisa QN1 > Chev QhEhE [N1 to proc fav] > Fischl N1E / N2Q > Klee N1EQW {N1EJ}/N1C N1C N2C N1C N2C N1C N2C > repeat from Lisa
+# {only on first rot}

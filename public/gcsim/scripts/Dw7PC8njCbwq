@@ -1,0 +1,141 @@
+#Energy drops based on 12-3 Icewind Suite; Customized random frame delays; No jump cancels; KurtC. Many alternative build options.
+#Rot is a bit weird. In Alhaitham's Burst window, Kuki N3 sims better than using her Burst (or any of the other things I tried, including Kuki N1 E Dash, Alhaitham N3D, and Xingqiu N2). This is the case with or without a high ER Kuki build.
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add set="gilded" count=4;
+#alhaitham add weapon="lofi" refine=1 lvl=90/90;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
+#alhaitham add weapon="ironsting" refine=5 lvl=90/90;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #69.15 [97.15] / 176.12 | 116.515 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=59.445 er=0.16515 cr=0.3305 cd=0.7926;
+
+#alhaitham add weapon="wolffang" refine=1 lvl=90/90;
+#alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #72.22 [80.22] / 178.25 | 116.515 er
+#alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=59.445 er=0.16515 cr=0.3966 cd=0.6605;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #69.15 / 129.26 | 202.27 er
+xingqiu add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=39.63 er=0.2202 cr=0.3305 cd=0.7926;
+                 
+#xingqiu add set="deepwood" count=4;
+#xingqiu add set="noblesse" count=4;
+#xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #59.235 / 122.655 | 204.29 er
+#xingqiu add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=39.63 er=0.4404 cr=0.23135 cd=0.72655;
+                 
+#xingqiu add set="instructor" count=4;
+#xingqiu add stats hp=3571 atk=232 atk%=0.348 hydro%=0.348 cr=0.311; #54.615 / 60.57 | 204.2825 er
+#xingqiu add stats hp=406.3 atk=26.45 def=31.485 hp%=0.07925 atk%=0.07925 def%=0.0991 em=31.71 er=0.440325 cr=0.18515 cd=0.1057;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add set="fopl" count=4;
+kuki add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #44.66 / 102.84 | 111.01 er (higher crit build)
+kuki add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.1101 cr=0.3966 cd=0.5284;            
+#kuki add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #31.44 / 63.21 | 166.06 er (higher er build)
+#kuki add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.6606 cr=0.2644 cd=0.1321;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="moonpiercer" refine=5 lvl=90/90 +params=[pickup_delay=330]; #leaf generally picked up by Alhaitham after first N3D
+yaoyao add set="deepwood" count=4;
+#yaoyao add set="totm" count=4;
+yaoyao add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
+yaoyao add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926;
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+# --- Options
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+
+# --- Targets
+target lvl=100 resist=0.1 hp=999999999999 radius=2 pos=0,2.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+
+active xingqiu;
+
+#Xingqiu E Dash Q N1 > Yaoyao E N1 > Kuki E Dash N1 > Alhaitham Q > Kuki N3 > Alhaitham N3D N3 E N3D N3CD N3D N3D N3
+for let r=0; r<4; r=r+1 {
+  while .xingqiu.skill.cd > 30 && .xingqiu.normal < 3 {
+    xingqiu attack; #mostly just to get rid of the warning lol
+  }
+  xingqiu skill, dash;
+  while !.xingqiu.burst.ready {
+    xingqiu attack;
+  }
+  xingqiu burst, attack;
+  yaoyao skill, attack;
+  kuki skill, dash, attack;
+  #if .kuki.burst.ready {
+    #kuki burst, attack;
+  #}
+  alhaitham swap;
+  while !.alhaitham.burst.ready {
+    alhaitham attack;
+  }
+  alhaitham burst;
+  #kuki swap;
+  #if .kuki.burst.ready {
+    #kuki burst;
+  #} else {
+    #kuki attack:3;
+  #}
+  kuki attack:3;
+  #xingqiu attack:2; #for instructor xq
+  alhaitham attack:3, dash,
+            attack:3, skill,
+            attack:3, dash,
+            attack:3, charge, dash,
+            attack:3, dash,
+            attack:3, dash,
+            attack:3;
+}

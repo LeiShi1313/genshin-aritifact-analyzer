@@ -1,0 +1,49 @@
+options swap_delay=12 iteration=1000;
+
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="makhairaaquamarine" refine=1 lvl=90/90;
+razor add set="gildeddreams" count=4;
+razor add stats hp=4780 atk=311 em=187 em=187 em=187;
+razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296 ;
+																
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="amenomakageuchi" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+amy char lvl=90/90 cons=6 talent=9,9,9;
+amy add weapon="stringless" refine=3 lvl=90/90;
+amy add set="thundersoother" count=4;
+amy add stats hp=4780 atk=311 atk%=.466 electro%=0.466 cr=0.311;
+amy add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+						
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favbow" refine=3 lvl=90/90;
+collei add set="deepwood" count=4;
+collei add stats hp=4780 atk=311 er=0.518 dendro%=0.466 cr=0.311;
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active amy;
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  amy attack:2;
+  if .amy.skill.ready {
+  	amy skill;
+  } else {
+  	amy burst;
+  }
+  xingqiu skill, dash, burst, attack;
+  collei attack, skill, attack, burst;
+  razor skill, dash, attack, burst,
+    attack:3, skill, dash,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, skill, dash,
+    attack:3, dash,
+    attack:2;
+  print("end");
+}
+

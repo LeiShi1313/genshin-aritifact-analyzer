@@ -1,0 +1,66 @@
+mualani char lvl=90/90 cons=0 talent=9,9,9;
+mualani add weapon="sacrificialjade" refine=1 lvl=90/90;
+mualani add set="obsidiancodex" count=5;
+mualani add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+mualani add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.1102 em=178.38 cr=0.0662 cd=0.662;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favlance" refine=3 lvl=90/90;
+candace add set="ins" count=4;
+candace add stats hp=3571 atk=232 er=0.3885 hp%=0.3495 cr=0.311 ; #main
+candace add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.138852 em=33.2976 cr=0.27804 cd=0.27804;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="scroll" count=2;
+xiangling add set="eosf" count=2;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.551 em=39.64 cr=0.331 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+
+active candace;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+fn mualani_combo() {
+  #doing 3[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<3; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+for let i=0; i<4; i=i+1 {
+  candace skill, burst, attack;
+  if !.candace.mods.favonius-cd && .candace.weapon == .keys.weapon.favlance {
+    candace attack;
+  } else {
+    wait(8); #catch her own hydro particles on-field
+  }
+  xilonen skill, attack, burst, attack;
+  xiangling burst, skill, dash; 
+  candace skill, attack;    # if burst is used here, mualani Q can't be vaped unless you make xiangling apply more pyro
+  mualani skill;
+  mualani_combo();
+  if .mualani.burst.ready && .mualani.energy == .mualani.energymax {
+    mualani burst;
+    mualani attack;
+  } else {
+    mualani attack:3; # waiting for Xiangling 20s cd
+  }
+}
+
+# Candace EQ N1 > Xilonen E N1 Q N1 > Xiangling Q ED > Candace E N1 > Mualani E 3[3-stacked bite] (Q if available) >

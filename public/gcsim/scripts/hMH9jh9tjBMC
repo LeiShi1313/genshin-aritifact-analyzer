@@ -1,0 +1,41 @@
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="fopl" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favoniuslance" refine=3 lvl=90/90;
+yaoyao add set="deepwood" count=4;
+yaoyao add stats hp=4780 hp%=0 atk%=0.466 atk=311 def%=0 em=0 heal=0 phys%=0 er=0 cr=0.311 dendro%=0.466 cd=0;
+yaoyao add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1984 er=0.1102 cr=0.331 cd=0.7944 ;
+
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+tighnari add set="gd" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="favoniuscodex" refine=3 lvl=90/90;
+mona add set="instructor" count=4;
+mona add stats hp=3824 atk=248.8 er=0.518 hydro%=0.348 cr=0.232; #main
+mona add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.31744 er=0.08816 em=31.712 cr=0.2648 cd=0.42368;
+
+options iteration=1000 swap_delay=12 workers=30 mode=sl;
+target lvl=100 resist=0.1 hp=200000000000;
+energy every interval=480,720 amount=1;
+
+active yaoyao;
+
+for let x = 4; x; x = x - 1 {
+  yaoyao attack, skill, attack;
+  mona dash, attack;
+  kuki skill, attack:3;
+  mona dash, skill, burst, attack;
+  tighnari skill, aim, burst, aim:2, attack;
+  mona dash, attack;
+}
+

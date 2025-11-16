@@ -1,0 +1,42 @@
+furina char lvl=90/90 cons=6 talent=9,9,9;
+furina add weapon="splendor" refine=1 lvl=90/90; 
+furina add set="mh" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.3972;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=180];
+bennett add set="ins" count=4;
+bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 cr=0.232 ; #main
+bennett add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.194628 cd=0.500472;
+
+kaz char lvl=90/90 cons=0 talent=9,9,9;
+kaz add weapon="xiphos" refine=5 lvl=90/90;
+kaz add set="vv" count=4;
+kaz add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kaz add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.3641 cd=0.331;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=5 lvl=90/90;
+nahida add set="no" count=4;
+nahida add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.331 cd=0.7282;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+active nahida;
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst;
+  bennett skill, burst;
+  furina skill, burst;
+  kazuha burst, skill, high_plunge;
+  furina charge; 
+  delay(26);
+  furina attack:4, charge;
+  bennett skill;
+  kazuha skill[hold=1], high_plunge;
+  nahida attack:3;
+
+}

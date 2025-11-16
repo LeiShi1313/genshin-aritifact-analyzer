@@ -1,0 +1,47 @@
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="chainbreaker" refine=5 lvl=90/90;
+chasca add set="obsidiancodex" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse add weapon="dialoguesofthedesertsages" refine=5 lvl=90/90;
+chevreuse add set="sodp" count=4;
+chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 heal=0.359;
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.0662 cd=0.3972;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+
+active mavuika;
+
+for let i=0; i<4; i=i+1 {
+  chev skill[hold=1], attack, dash;
+  furina skill, dash, attack, burst;
+  mavuika burst, charge:2, dash, charge, skill, dash;
+  chasca skill;
+  chasca aim:4;
+  chasca aim[bullets=4];
+  if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+    chasca burst;
+  } else {
+    //
+  }
+}
+wait(82); # 82f wait for the last 4bullet CA to hit
+
+# Chev hE N1D > Furina ED N1 Q > Mavuika Q C2D C1ED > Chasca E 4[C] C_4bullets (Q)

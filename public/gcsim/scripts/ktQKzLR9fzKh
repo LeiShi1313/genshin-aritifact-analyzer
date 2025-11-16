@@ -1,0 +1,51 @@
+diluc char lvl=90/90 cons=0 talent=9,9,9;
+diluc add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+diluc add set="gd" count=4;
+diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 cr=0.311 hydro%=0.466; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="favcodex" refine=5 lvl=90/90;
+xianyun add set="viridescentvenerer" count=5;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 cr=0.311 pyro%=0.466 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,3;
+energy every interval=480,720 amount=1;
+
+active xq;
+for let r = 0; r < 4; r = r + 1 {
+  xingqiu attack, skill, dash, burst, attack;
+  bennett skill, dash;
+  set_player_pos(0,-1); #dash away to prevent xingqiu's orbital hydro app
+  bennett burst;
+  xianyun attack;
+  set_player_pos(0,0);  #get closer with her skill
+  xianyun skill, low_plunge, attack, burst;
+  diluc swap;
+  for let h = 0; h < 6; h = h + 1 {
+    diluc attack, jump;
+    if .airborne {
+      diluc high_plunge[collision=1];
+    } else {
+      break;
+    }
+  }
+  diluc skill, attack, skill:2;
+  bennett skill, attack:2;
+}
+

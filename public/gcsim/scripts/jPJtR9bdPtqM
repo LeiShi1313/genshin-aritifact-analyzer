@@ -1,0 +1,67 @@
+# Raiden Chevreuse Mavuika Fischl. ~18 Rot. Raiden Mavuika Overload, Raiden bursts every rotation, Mavuika every other with 2[C2D] ED. Fischl burst every rotation before raiden and uses skill after Raiden burst if available. Sometimes Raiden is best off covering burst CD downtime with NA alongside Fischl C6.
+
+# Team - Options listed by DPS
+raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden add weapon="deathmatch" refine=1 lvl=90/90;
+raiden add set="emblem" count=4;
+raiden add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="deathmatch" refine=1 lvl=90/90;
+chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="aquamarine" refine=1 lvl=90/90;
+#mavuika add weapon="tidalshadow" refine=5 lvl=90/90;
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # 3EM
+#mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # ADC
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+#fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=100000;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active raiden;
+raiden skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  # Just enough time to cover Sara burst CD
+  if i > 0 && .mav.burst.ready {
+    mav burst, charge:2, dash,
+               charge:2, dash,
+               skill, dash;
+  } else {
+    mav attack, skill;
+  }
+  
+  chevreuse burst, skill[hold=1]:3;
+
+  fischl attack:2, burst;
+  
+  # Raiden is better off covering this gap with Fischl C6
+  while .raiden.burst.cd {
+    raiden attack;
+  }
+  raiden burst, attack:4, dash, attack:4, skill, attack:4, dash, attack:4;
+  
+  if .fischl.skill.ready {
+    fischl attack, skill;
+  }
+}

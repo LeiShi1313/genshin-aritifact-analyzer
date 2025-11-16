@@ -1,0 +1,50 @@
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="vhunt" refine=1 lvl=90/90;
+tartaglia add set="nymphsdream" count=4;
+tartaglia add stats hp=4780 atk=311 hydro%=0.466 atk%=0.466 cd=0.622; #main
+tartaglia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2648 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.2979 cd=0.7944;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="favcodex" refine=3 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+
+active tartaglia;
+
+for let i = 0; i < 4; i = i + 1 {
+  tartaglia aim;
+  citlali attack, skill, attack, burst;
+  bennett burst, skill;
+  xiangling burst, skill, dash;
+  tartaglia walk, burst, walk[f=11], skill,
+    attack:2, charge, jump,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge;
+  bennett attack, skill;
+  xiangling attack, skill, dash;
+  childe aim;
+  bennett skill;
+}
+
+# ~25s rotations
+# Tartaglia C > Citlali N1 E N1 Q > Bennett Q E > Xiangling Q ED > Tartaglia W QW E N2CJ 4[N2CD] N2C > Bennett N1 E > Xiangling N1 ED > Childe C > Bennett E

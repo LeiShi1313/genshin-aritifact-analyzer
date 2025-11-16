@@ -1,0 +1,75 @@
+# Razor Rosaria Escoffier Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging. OHC > SoDP Xianyun, but bubbles may miss. 50% Collisions. 
+
+# Team - Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#razor add weapon="fruitfulhook" refine=1 lvl=90/90;
+razor add set="lno" count=4;
+#razor add set="sr" count=4;
+#razor add set="pf" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3641 cd=0.662;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+#xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active razor; # SS Stacks
+
+# Razor Plunge Combo
+fn RazorPlunge() {
+  razor jump;
+  if .airborne {
+    razor high_plunge[collision=rand()>0.5];
+  }
+}
+
+for let i = 0; i < 4; i = i + 1 {
+  if i > 0 && .esco.burst.ready && .esco.energy == .esco.energymax {
+    esco burst;
+  } else if i > 0 {
+    esco attack;
+  }
+  esco skill;
+  
+  xianyun skill, low_plunge, burst;
+  
+  rosaria skill, burst;
+  
+  razor skill;
+  RazorPlunge(); razor dash;
+  RazorPlunge(); razor dash;
+  RazorPlunge(); razor dash;
+  RazorPlunge(); razor dash;
+  RazorPlunge(); razor skill;
+  RazorPlunge(); razor dash;
+  RazorPlunge(); razor dash;
+  RazorPlunge();
+  
+  rosaria skill;
+}

@@ -1,0 +1,58 @@
+#Yae Fischl hyperbloom. Baizhu is given some additional field time to make up for his lower off field application
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #mainstats
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; #kqms - distributed rolls: 2 atk%, 8 cr, 10 cd
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; #3 er, 10 cr, 7 cd
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="mh" count=4;
+yae add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; #2 em, 10 cr, 8 cd
+
+baizhu char lvl=90/90 cons=0 talent=9,9,9;
+baizhu add weapon="hakushin" refine=5 lvl=90/90;
+baizhu add set="ins" count=4;
+baizhu add stats hp=3571 atk=232 er=0.387 dendro%=0.466 hp%=0.348;
+baizhu add stats def=31.485 def%=0.0991 hp=406.3 hp%=0.07925 atk=26.45 atk%=0.07925 er=0.440325 em=31.71 cr=0.18515 cd=0.1057; #4-star: 3 er, 5 cr | 5-star: 4 er
+
+options swap_delay=12 iteration=500;
+target lvl=100 resist=0.1 hp=100000000 radius=4 pos=0,4.5;
+energy every interval=480,720 amount=1;
+
+active yae;
+
+for let x = 0; x < 3; x = x + 1 {
+  if x==0 {
+    yae skill:3;
+  } else {
+    yae  skill, attack, skill, attack, skill;
+  }
+  furina skill, dash, burst;
+  baizhu skill, burst, attack;
+  fischl skill, attack;
+  yae attack:2;
+  if .yae.burst.ready {
+    yae burst;
+  } else {
+    yae charge, jump;
+  } #should burst every rotation, just here for unlucky energy generation
+  yae skill:3,
+      attack:1, charge, dash,
+      attack:2; 
+  baizhu attack:2, skill, attack:2;
+  fischl attack:2, burst;
+  yae attack:1, charge, jump,
+      attack:1, charge, jump;
+  baizhu  attack:2, charge, attack:2; #4 na to get 2 dendro apps
+  
+  print("Rotation Done");
+}

@@ -1,0 +1,53 @@
+# --- Team
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; # main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.0993 cd=0.1986;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favoniuslance" refine=3 lvl=90/90;
+candace add set="no" count=4;
+candace add stats hp=4780 atk=311 hp%=0.466 cr=0.311 hydro%=0.466;
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="finaleofthedeep" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+# --- Options
+options swap_delay=12 iteration=100;
+energy every interval=480,720 amount=1;
+
+# --- Targets
+target lvl=100 resist=.1 hp=10000000 pos=0,2.4 radius=2;
+
+# --- Rotation
+active yelan;
+
+let rotations = 5;
+
+while rotations {
+  kokomi skill, attack;
+  xingqiu burst, attack, skill, dash, attack:2;
+  yelan attack, burst, attack;
+  yelan skill, attack;
+  candace skill, attack, burst;
+  kokomi attack, burst;
+  let kokomi_n2w_sequences = 10;
+  while kokomi_n2w_sequences {
+    kokomi attack:2, walk;
+    kokomi_n2w_sequences = kokomi_n2w_sequences - 1;
+  }
+  yelan skill, attack:4;
+  candace skill,attack;
+  rotations = rotations - 1;
+}

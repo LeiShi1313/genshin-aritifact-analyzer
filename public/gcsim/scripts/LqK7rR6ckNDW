@@ -1,0 +1,58 @@
+wanderer char lvl=90/90 cons=0 talent=9,9,9; 
+wanderer add weapon="thewidsith" refine=3 lvl=90/90;
+wanderer add set="dpc" count=4;
+wanderer add stats hp=4780 atk=311 atk%=0.466 cr=0.311 anemo%=0.466 ; #main
+wanderer add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favbow" refine=3 lvl=90/90;
+faruzan add set="eosf" count=4;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2648 cd=0.5296;
+
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+active zhongli;
+for let i=0; i<5; i=i+1 {
+if i {bennett skill;}
+
+  zhongli skill[hold=1], dash;
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
+  }
+  while !.faruzan.mods.favonius-cd && !.faruzan.burst.ready {
+    faruzan attack;
+  }
+  faruzan burst;
+  bennett skill, burst;
+  if .wanderer.burst.ready {
+    wanderer attack, burst;}  
+  wanderer attack:2, skill, attack, charge;
+  while .wanderer.skydweller-points > 3 {
+    if .wanderer.normal < 3 {
+      wanderer attack;
+    } else if .wanderer.mods.wanderer-a4 {
+      wanderer dash;
+    } else if .wanderer.skydweller-points > 4 {
+      wanderer charge;
+    } else {
+      break;
+    }
+  }
+  wanderer skill, low_plunge;
+
+}

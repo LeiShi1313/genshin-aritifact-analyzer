@@ -1,0 +1,84 @@
+# Tighnari Nahida Fischl Sara. ~28s Rot. Tighnari Sara AggraSpread. Sara tries to buff Fischl and Tighnari. Nahida on-fields in during downtime. Nahida actions can likely be optimized. 
+
+# Team - Optionss listed by DPS
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+#tighnari add weapon="ode" refine=5 lvl=90/90;
+tighnari add set="gd" count=4;
+#tighnari add set="wt" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662; # Sling
+#tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311;
+#tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # Ode
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="sacjade" refine=1 lvl=90/90;
+#nahida add weapon="widsith" refine=3 lvl=90/90;
+#nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3641 cd=0.5958; # Jade
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.331 cd=0.5958; # Widsith
+#nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # Evenstar
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="twilight" refine=5 lvl=90/90;
+#sara add set="no" count=4;
+sara add set="scroll" count=4;
+sara add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active sara;
+
+for let i=0; i<4; i=i+1 {
+  sara skill;
+  
+  if i == 0 {
+    fischl attack;
+  }
+  fischl attack:1, skill;
+  
+  nahida skill, attack, burst;
+  
+  sara aim;
+  
+  tighnari skill, aim, burst, aim:2;
+  
+  nahida attack, skill, 
+         attack:2, charge, dash, 
+         attack:2, charge; # dash,
+         #attack:1, charge;
+  
+  sara skill;
+  if .sara.burst.ready {
+    sara burst;
+  }
+  
+  fischl attack:2, burst;
+  
+  sara aim;
+  
+  tighnari skill, aim, burst, aim:2;
+  
+  nahida attack, skill, 
+         attack:2, charge, dash, 
+         attack:2, charge, dash,
+         attack:1, charge;
+}

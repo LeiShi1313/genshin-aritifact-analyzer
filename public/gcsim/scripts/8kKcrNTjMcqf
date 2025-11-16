@@ -1,0 +1,47 @@
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.3972 cd=1.284 pyro%=0.466;
+
+dehya char lvl=90/90 cons=0 talent=9,9,9;
+dehya add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+dehya add set="instructor" count=4;
+dehya add stats def%=0.0992 def=31.488 hp=3977.304 hp%=0.07936 atk=258.464 atk%=0.07936 er=0.08816 em=171.962 cr=0.5179100000000001 cd=0.43692 pyro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.6612 em=679.92 cr=0.2648 cd=0.1324;
+
+options swap_delay=12 debug=true iteration=100 workers=50 ;
+
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active yelan;
+for let x=0; x<4; x=x+1 {
+	yelan burst,attack;
+	dehya attack,skill;
+	kazuha burst,skill,high_plunge;
+	yelan skill,attack;
+	hutao skill,
+	attack:1,charge,dash,
+	attack:1,charge,jump,
+	attack:1,charge,jump,
+	attack:1,charge,jump,
+	attack:1,charge,jump,
+	attack:1,charge,jump,
+	attack:1,charge,jump,
+	attack:1,charge,jump,
+	attack:1,charge,jump;
+	yelan skill,attack:4;
+	kazuha skill,high_plunge,attack;
+	wait (13); #(catch his own particles)
+}
+

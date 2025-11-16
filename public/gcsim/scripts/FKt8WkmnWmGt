@@ -1,0 +1,59 @@
+options swap_delay=12 iteration=100;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi add weapon="fruitoffulfillment" refine=3 lvl=90/90;
+#kokomi add set="ohc" count=4;
+kokomi add set="fopl" count=4;
+kokomi add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.0662 cd=0.1324 ;
+
+kaveh char lvl=90/90 cons=6 talent=9,9,9;
+kaveh add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+kaveh add set="ohc" count=4;
+kaveh add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kaveh add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+#nahida add weapon="solarpearl" refine=1 lvl=90/90; 
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+#nahida add weapon="fruitoffulfillment" refine=5 lvl=90/90;  
+#nahida add weapon="mappamare" refine=5 lvl=90/90; 
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.396 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="xiphos" refine=1 lvl=90/90;  
+xingqiu add set="fopl" count=4;
+xingqiu add stats hp=4780 atk=311 em=561; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.1986 cd=0.2648;
+
+# ----  Default Enemy
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+
+energy every interval=480,720 amount=1;
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+
+
+# ----  Actions List
+  kokomi skill;
+  nahida skill,burst;
+  xingqiu skill,burst,attack;
+  kaveh skill,attack;
+  kokomi burst;
+  kaveh burst;
+  while .kaveh.burst.cd > 540 {
+    if .kaveh.skill.ready {
+      kaveh skill;
+    } else if .kaveh.normal == 3 {
+      kaveh walk;
+    } else {
+        kaveh attack;
+    }
+  }
+  nahida attack:2,charge;
+}
+

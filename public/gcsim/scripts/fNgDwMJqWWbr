@@ -1,0 +1,41 @@
+options swap_delay=12;
+
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="finaleofthedeep" refine=5 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.3972;
+
+charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte add weapon="favcodex" refine=3 lvl=90/90;
+charlotte add set="no" count=4;
+charlotte add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
+charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favoniussword" refine=3 lvl=90/90;
+furina add set="tenacity" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+active furina;	
+
+target lvl=100 resist=0.1 radius=1 pos=0,2 hp=999999999; 
+
+energy every interval=480,720 amount=1;
+
+for let x = 0; x < 4; x = x + 1 {
+ furina skill, dash, burst; 
+ kazuha burst;
+ charlotte burst, skill;
+ kazuha skill, high_plunge;
+ ayaka skill, dash, attack:2, charge, burst, attack:2, charge;
+ kazuha skill, high_plunge;
+ ayaka dash, attack, charge, skill, dash, attack, charge;
+}

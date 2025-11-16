@@ -1,0 +1,48 @@
+kamisatoayaka char lvl=90/90 cons=0 talent=9,9,9; 
+kamisatoayaka add weapon="harbingerofdawn" refine=5 lvl=90/90;
+kamisatoayaka add set="blizzardstrayer" count=5;
+kamisatoayaka add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622 ; #main
+kamisatoayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=5 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=1;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+shenhe add set="blizzardstrayer" count=4;
+shenhe add set="shimenawasreminiscence" count=1;
+shenhe add stats hp=4780 atk=311 atk%=0.4660 atk%=0.4660 atk%=0.4660;
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add set="wandererstroupe" count=1;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=118.92 cr=0.3972 cd=0.1324;
+
+options swap_delay=12 debug=true iteration=1000 workers=50 ;
+
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+energy every interval=480,720 amount=1;
+
+
+active ayaka;
+
+for let x=0; x<4; x=x+1 {
+
+ayaka skill, attack, charge;
+kazuha skill, high_plunge, burst;
+shenhe skill, burst;
+bennett burst, skill;
+ayaka dash, skill, attack, burst;
+kazuha skill, high_plunge;
+shenhe attack, skill;
+ayaka dash, attack:2, charge, dash, attack:2, charge;
+}
+
+

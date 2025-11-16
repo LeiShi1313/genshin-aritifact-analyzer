@@ -1,0 +1,88 @@
+mualani char lvl=90/90 cons=0 talent=10,10,10;
+mualani add weapon="surfsup" refine=1 lvl=90/90;
+mualani add set="obsidiancodex" count=4;
+mualani add stats def%=0.124 hp=5646 hp%=0.664 atk=327 atk%=0.193 er=0.052000000000000005 em=316.5 cr=0.268 cd=0.964 hydro%=0.466;
+
+xiangling char lvl=90/90 cons=6 talent=3,8,9;
+xiangling add weapon="favoniuslance" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=2;
+xiangling add stats def%=0.336 def=58 hp=5736 hp%=0.057999999999999996 atk=377 atk%=0.513 er=1.613 em=19 cr=0.40800000000000003 cd=0.156;
+
+xilonen char lvl=90/90 cons=0 talent=1,9,8;
+xilonen add weapon="peakpatrolsong" refine=1 lvl=90/90;
+xilonen add set="scrolloftheheroofcindercity" count=4;
+xilonen add stats def%=1.6909999999999998 def=16 hp=6155 hp%=0.09300000000000001 atk=340 atk%=0.11699999999999999 er=1.056 em=49 cr=0.19 cd=0.272;
+
+chiori char lvl=90/90 cons=6 talent=10,10,10;
+chiori add weapon="urakumisugiri" refine=1 lvl=90/90;
+chiori add set="huskofopulentdreams" count=4;
+chiori add stats def%=1.131 def=99 hp=4780 hp%=0.057999999999999996 atk=344 atk%=0.09899999999999999 er=0.057999999999999996 cr=0.669 cd=0.8630000000000001 geo%=0.466;
+
+options swap_delay=12 iteration=1000;
+
+active chiori;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  # pick up crystallize after some actions with 50% chance
+  if rand() >= 0.5 && (
+       action_id == .action.dash
+    || char_id == .keys.char.mualani && action_id == .action.walk
+    || char_id == .keys.char.xilonen && action_id == .action.skill
+  ) {
+    pick_up_crystallize("any");
+  }
+  return _execute_action(char_id, action_id, p);
+}
+
+let last_burst = false;
+fn mualani_combo() {
+  last_burst = false;
+
+  mualani skill;
+  for let k = 0; k < 3 && .mualani.nightsoul.state; k = k + 1 {
+    if k == 2 && .mualani.burst.ready {
+      mualani burst;
+      last_burst = true;
+      break;
+    }
+    
+    while .mualani.momentum < 3 {
+      mualani walk[f=1];
+    }
+    mualani attack;
+  }
+  
+  if .mualani.nightsoul.state {
+    mualani skill;
+  }
+}
+
+for let i = 0; i < 4; i = i + 1 {
+  chiori skill:2;
+  mualani attack:3;
+  xilonen skill, attack:2;
+  
+  # up to 3 attacks to use burst
+  for let k = 0; k < 3; k = k + 1 {
+    if .xiangling.burst.ready {
+      xiangling burst;
+      break;
+    }
+    xiangling attack;
+  }
+  xiangling skill, dash;
+  
+  if .chiori.skill.ready { # if chiori c6
+    chiori skill:2;
+  }
+  mualani_combo();
+}
+
+# count last burst damage
+if last_burst {
+  wait(12);
+}

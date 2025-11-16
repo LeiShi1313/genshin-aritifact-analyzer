@@ -37,6 +37,9 @@ const portCharacters = async () => {
       .replace(/[^0-9a-z]/gi, "_")
       .toLowerCase();
     proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
+    if (key === 'lan_yan') {
+      console.log('debug');
+    }
 
     trans['en'][key] = eng.name;
     for (let lng of Object.keys(utils.lngToRegion)) {

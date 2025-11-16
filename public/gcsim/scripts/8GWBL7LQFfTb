@@ -1,0 +1,57 @@
+# Mavuika Escoffier Kaeya Bennett. ~18s Rot. Mavuika double Cryo Melt without Natlan. Mavuika Q 6[C2D] CD E. 200 FS bust first rotation only.
+
+# Team - Options listed by DPS
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.1324 cd=0.662;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="totm" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+kaeya char lvl=90/90 cons=6 talent=9,9,9;
+kaeya add weapon="favsword" refine=3 lvl=90/90;
+kaeya add set="ins" count=4;
+kaeya add stats hp=4780 atk=311 er=0.3885 cryo%=0.3495 cr=0.311; #main
+kaeya add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active mavuika; # SS Stacks
+
+# This whole thing is pretty fragile for fighting spirit generation
+for let i=0; i<4; i=i+1 {
+  mavuika skill;
+
+  escoffier skill;
+  
+  bennett attack, skill, burst; # N1 kills frames for better melt timing
+  
+  kaeya skill, attack, burst;
+  
+  mavuika burst;
+  mavuika charge:2, dash;
+  mavuika charge:2, dash;
+  mavuika charge:2, dash;
+  mavuika charge:2, dash;
+  mavuika charge:2, dash;
+  mavuika charge:2, dash;
+  mavuika charge:1, dash;
+}

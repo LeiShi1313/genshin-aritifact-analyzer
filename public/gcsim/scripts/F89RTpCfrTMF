@@ -1,0 +1,45 @@
+xinyan char lvl=90/90 cons=6 talent=9,9,9;
+xinyan add weapon="skywardpride" refine=1 lvl=90/90;
+xinyan add set="paleflame" count=2;
+xinyan add set="bloodstainedchivalry" count=2;
+xinyan add stats hp=4780 atk=311 atk%=0.466 cd=0.622 phys%=0.583;
+xinyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.4634;
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="favoniuslance" refine=3 lvl=90/90;
+yunjin add set="huskofopulentdreams" count=4 +params=[stacks=4];
+yunjin add stats hp=4780 atk=311 def%=1.749;
+yunjin add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.3972;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="deathmatch" refine=1 lvl=90/90;
+rosaria add set="emblemofseveredfate" count=4;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cr=0.311 cryo%=0.466;
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.0662 cd=0.7944;
+
+zhongli char lvl=90/90 cons=6 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 cr=0.311 geo%=0.466;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active zhongli;
+#THIS SIM HOLDS 0 SIGNIFICANCE AND SHOULD BE IGNORED
+#severly unoptimized and overall pretty shit sim
+#pls dont attack me, this sim is just a placeholder till someone does phys na xinyan properly
+#why na over charge? cuz i want to
+#why tf is yunjin here? uh uhm.. cuz theyre besties...
+#why no bennett? i have c6 so i wouldnt be able to play this sim
+#what should you get out of this sim? abosultely nothing :D
+for let x=0; x<4; x=x+1 {
+  zhongli attack, skill[hold=1], dash;
+  rosaria skill,burst;
+  yunjin skill,burst;
+  xinyan skill,burst,attack:4;
+  rosaria skill;
+  yunjin skill, attack:2;
+  xinyan attack:4,dash,attack:3;
+}

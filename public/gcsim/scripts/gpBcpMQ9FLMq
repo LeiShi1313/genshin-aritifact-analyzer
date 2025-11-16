@@ -1,0 +1,62 @@
+options swap_delay=12 iteration=500;
+
+
+hutao char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp=1];
+hutao add weapon="dragonsbane" refine=3 lvl=90/90;
+hutao add set="mh" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+hutao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xq char lvl=90/90 cons=6 talent=9,9,9 ; 
+xq add weapon="wolffang" refine=1 lvl=90/90;
+xq add set="emblemofseveredfate" count=4;
+xq add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622 ; #main
+xq add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;																															
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662 ;																																																																										
+										
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;																																										
+
+active furina;
+target lvl=100 resist=0.1 radius=2 pos=0,2.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+furina skill, dash, burst;
+
+for let i=0; i<4; i=i+1 {
+
+if i > 0 {furina skill, attack, burst;}
+while !.furina.mods.favonius-cd {
+furina attack;}
+
+xq burst,attack;
+
+bennett burst, attack, skill;
+
+xq attack, skill, dash, attack:2;
+
+hutao skill,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:2, charge, jump, attack;
+    if .hutao.burst.ready { hutao burst; }
+    else {hutao  attack;}
+
+
+bennett skill, attack;
+
+}

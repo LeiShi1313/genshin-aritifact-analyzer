@@ -1,0 +1,73 @@
+# Bennett Yelan Fischl Chevreuse. ~19s Rot. Bennett Chevreuse Overvape with Yelan. Fischl alternates skill and burst in Bennett's burst before Chevreuse so Chevresue can to obtain more Overcharged balls. Chevreuse does N1 QE N1 EE. On field Bennett spams skill of CD for the rest of the rotation.
+
+# Team - Options listed by DPS
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+#bennett add weapon="finale" refine=5 lvl=90/90;
+bennett add set="cw" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" lvl=90/90 refine=4;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main 
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+ 
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662; # VH
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # SoS
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="fjords" refine=1 lvl=90/90;
+#chevreuse add weapon="deathmatch" refine=1 lvl=90/90;
+chevreuse add set="cw" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; # Fjords
+#chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; #main
+#chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=99.1 cr=0.3641 cd=0.4634; # DM
+
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active yelan;
+for let i=0; i<4; i=i+1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  bennett skill, attack, burst;
+  
+  if .fischl.skill.ready {
+    fischl attack, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  
+  chev attack, burst, attack, skill[hold=1]:1, attack, skill[hold=1]:2;
+  
+  bennett attack:2, skill;
+  while .status.bennettburst || .bennett.infusion.bennett-fire-weapon {
+    if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+}

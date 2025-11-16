@@ -1,0 +1,45 @@
+# Xiao Faruzan GMC Zhongli. All members force Favonius procs. 12 Plunges. 50% Collisions.
+
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="deathmatch" refine=1 lvl=90/90;
+xiao add set="longnightsoath" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622 ; #main 
+xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.2755 em=39.64 cr=0.2648 cd=0.662;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+faruzan add set="noblesseoblige" count=4;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main 
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+luminegeo char lvl=90/90 cons=6 talent=9,9,9;
+luminegeo add weapon="favoniussword" refine=3 lvl=90/90;
+luminegeo add set="exile" count=4;
+luminegeo add stats hp=3571 atk=232 atk%=0.3495 geo%=0.3495 cr=0.311 ; #main
+luminegeo add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.23142 em=33.2976 cr=0.27804 cd=0.166824;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+#enemy config
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active zhongli;
+
+for let i=0; i<4; i=i+1 {
+  zhongli skill[hold=1];
+  luminegeo burst, skill;
+  faruzan burst;
+  
+  xiao skill:2, burst;
+
+  for let j = 12; j > 0; j = j - 1 { 
+    xiao jump, high_plunge[collision=rand()>0.5];
+  }
+}
+

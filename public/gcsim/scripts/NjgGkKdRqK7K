@@ -1,0 +1,41 @@
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.3306 em=679.92 cr=0.331 cd=0.3972;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="favoniuswarbow" refine=4 lvl=90/90;
+sara add set="noblesseoblige" count=4;
+sara add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
+
+yaemiko char lvl=90/90 cons=0 talent=9,9,9;
+yaemiko add weapon="thewidsith" refine=3 lvl=90/90;
+yaemiko add set="gildeddreams" count=4;
+yaemiko add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.22039999999999998 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
+
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add weapon="sapwoodblade" refine=5 lvl=90/90+params=[pickup_delay=310]; 
+kirara add set="instructor" count=4;
+kirara add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.0992 er=0.49520000000000003 em=39.64 cr=0.49805 cd=0.5296 dendro%=0.466;
+
+																						
+# ----  Default Enemy
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active yae;
+yae skill:3;
+#wait(5);
+for let i = 1; i <= 5; i = i + 1 {
+kazuha skill, high_plunge,burst;
+kirara skill,burst;
+sara skill,aim,burst;
+yae attack,burst,skill,skill,skill;
+kazuha skill,high_plunge;
+kirara skill[hold=34];
+sara  attack:2,skill, aim;
+yae attack,charge,dash,attack:2,charge,dash;
+yae skill,skill,attack,skill;
+}
+

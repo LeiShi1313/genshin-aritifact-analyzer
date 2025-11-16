@@ -1,0 +1,46 @@
+ // Whale on-field Xianyun C6R5 DPS calculations.
+ // Assumes C6 supports with R5 weapons, KQM standards, single rotation.
+ // Multiple rotations require very high ER on Bennett and Furina.
+
+xianyun char lvl=90/90 cons=6 talent=9,9,9;
+xianyun add weapon="crane" refine=5 lvl=90/90;
+xianyun add set="mh" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main 
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1982 em=39.64 er=0.1101 cr=0.3966 cd=0.6605;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9; 
+faruzan add weapon="elegy" refine=5 lvl=90/90 ;
+faruzan add set="totm" count=4;
+faruzan add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311 ; #main
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.2204 em=39.64 cr=0.331 cd=0.662;
+
+furina char lvl=90/90 cons=6 talent=9,9,9;
+furina add weapon="splendor" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2477 atk=33.08 atk%=0.0992 er=0.1101 em=39.64 cr=0.3305 cd=0.7265;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="freedomsworn" refine=5 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=66.14 atk%=0.2973 er=0.3303 em=39.64 cr=0.1983 cd=0.5284;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+
+active furina;
+for let i=0; i<1; i=i+1 {
+  furina skill, dash, burst;
+  faruzan burst;
+  bennett skill, burst;
+  
+  xianyun skill, low_plunge, burst;
+  
+  for let h = 6; h > 0; h = h - 1 {
+    xianyun skill:3, high_plunge;
+  }
+}

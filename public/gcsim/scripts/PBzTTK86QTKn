@@ -1,0 +1,91 @@
+# Lanyan Faruzan Furina Bennett. ~20s Rot. On-field Faruzan with SubDPS Lanyan. Lanyan uses available skill and burst in Bennett's burst, then Faruzan fires aimed shots with Bennett skills during her downtime.
+
+# Team
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="sacfrags" refine=5 lvl=90/90;
+#lanyan add weapon="widsith" refine=3 lvl=90/90;
+lanyan add set="mh" count=4;
+#lanyan add set="gt" count=4;
+#lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 em=187 anemo%=0.466 cd=0.622; #main
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # MH; EDC
+#lanyan add stats hp=4780 atk=311 em=187 anemo%=0.466 cr=0.311; #main
+#lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Other; EDC
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9; 
+faruzan add weapon="favbow" refine=4 lvl=90/90;
+#faruzan add weapon="crescent" refine=5 lvl=90/90;
+#faruzan add weapon="scion" refine=1 lvl=90/90;
+faruzan add set="vv" count=4;
+#faruzan add set="mh" count=4;
+#faruzan add set="gt" count=4;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Other
+#faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main
+#faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # MH
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+#furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # GT
+#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # ToM
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.2204 em=39.64 cr=0.2979 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 2nd
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  
+  bennett skill, burst;
+  
+  faruzan skill, burst;
+  
+  lanyan attack;
+  # Spend all avaiable skills
+  while .lanyan.skill.ready {
+    lanyan skill:2;
+  }
+  if .lanyan.burst.ready {
+    lanyan burst;
+  }
+  
+  faruzan aim:2, skill, aim:2;
+  
+  # Use Faruzan Huricane Arrows when available, otherwise on-field Bennett
+  while .furina.skill.cd {
+    switch {
+      case .faruzan.hurricane-count && .faruzan.swap.ready || (.faruzan.hurricane-count && .faruzan.onfield):
+        faruzan aim;
+      case .faruzan.skill.ready && .faruzan.swap.ready:
+        faruzan skill;
+      case .bennett.skill.ready && .bennett.swap.ready:
+        bennett skill;
+      case .bennett.attack.ready && .bennett.onfield:
+        bennett attack;
+      default:
+        faruzan attack;
+    }
+  }
+}

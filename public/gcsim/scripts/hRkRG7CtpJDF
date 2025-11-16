@@ -1,0 +1,67 @@
+# Characters
+
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="favcodex" refine=3 lvl=90/90;
+klee add set="glad" count=2;
+klee add set="cw" count=2;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="favsword" refine=3 lvl=90/90;
+albedo add set="husk" count=4;
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
+albedo add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="favcodex" refine=3 lvl=90/90;
+lisa add set="noblesse" count=4;
+lisa add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=158.56 cr=0.3972 cd=0.1324;
+
+
+jean char lvl=90/90 cons=0 talent=9,9,9;
+jean add weapon="favsword" refine=3 lvl=90/90;
+jean add set="vv" count=4;
+jean add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311; #main
+jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.331 cd=0.5958;
+
+																	
+
+# Options
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+active albedo;
+
+# Targets
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+# Actions
+
+for let i=0; i<4; i=i+1 {
+  albedo skill, burst, attack;
+  klee attack, skill[bounce=3, mine=8];
+  jean skill;
+  if .jean.burst.ready && .jean.energy == .jean.energymax {
+    jean burst;
+  }
+  jean attack;
+  if .lisa.burst.ready && .lisa.energy == .lisa.energymax {
+    lisa burst;
+  }
+  klee attack, burst;
+  for let c=0; c<6; c=c+1 {
+    klee attack, charge;
+  }
+  klee attack, walk, attack, charge;
+}
+
+# Allow final Klee CA and Burst to complete execution until hitmark
+wait(25);
+
+# Spark Knight Klee and her fellow Knights of Favonius run into a little trouble. Klee overload with Albedo, Lisa, Jean. Lisa bursts in 1/2 of the rotations and Jean bursts in 2/3 of the rotations.
+# ~20 second rotation
+# Albedo E Q N1 > Klee N1 E > Jean E [Q] N1 > [Lisa Q] > Klee N1 Q 6N1C N2C
