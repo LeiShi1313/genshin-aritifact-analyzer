@@ -61,25 +61,19 @@ const portSets = async () => {
     }
 
     await Promise.all(positions.map(async (pos) => {
-      if (eng.images[pos]) {
-        const imagePath = `./src/assets/artifacts/${key}_${pos}.${eng.images[
-          pos
-        ].slice(-3)}`;
-        if (!fs.existsSync(imagePath) || fs.statSync(imagePath).size === 0) {
+      if (eng.images[`filename_${pos}`]) {
+        const imagePath = `./src/assets/artifacts/${key}_${pos}.png`;
+        if (!utils.isValidImage(imagePath)) {
           try {
-            console.log(`Downloading image for ${e} ${pos}`);
-            await utils.download_image(eng.images[pos], imagePath);
+            await utils.download_from_yuheng(
+              eng.images[`filename_${pos}`],
+              "artifact",
+              imagePath
+            );
           } catch (e) {
-            try {
-              await utils.download_from_yuheng(
-                eng.images[pos].substring(eng.images[pos].lastIndexOf("/") + 1),
-                "artifact",
-                imagePath
-              );
-            } catch (e) {
-              console.error(e)
-            }
+            console.error(e)
           }
+
         }
       }
 
@@ -115,4 +109,4 @@ const portSets = async () => {
   );
 };
 portSets();
-export {portSets};
+export { portSets };
