@@ -43,7 +43,13 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
         let charLine = `${char} char `
             + `lvl=${characterInfo.level}/${characterInfo.maxLevel} `
             + `cons=${characterInfo.constellation} `
-            + `talent=${characterInfo.talents.join(",")};\n`
+            + `talent=${characterInfo.talents.join(",")}`;
+        // Add character params if any
+        if (characterInfo.params && characterInfo.params.length > 0) {
+            charLine += " +params=[" + characterInfo.params.map(param => `${param.key}=${param.value}`).join(",") + "]";
+        }
+        charLine += ";\n";
+
         let weaponLine = "";
         if (characterInfo.weaponInfo) {
             weaponLine = `${char} add `
@@ -64,36 +70,75 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
             setLine += ";\n";
             setLines.push(setLine);
         }
-        const stats: Record<string, number> = {};
+
+        // Group stats by label
+        const statsByLabel: Record<string, Record<string, number>> = {};
         for (let stat of characterInfo.stats) {
+            const label = stat.label || "default";
+            if (!statsByLabel[label]) {
+                statsByLabel[label] = {};
+            }
             const key = attributeTypeToGCSimStat(stat.type);
-            stats[key] = stats[key] ? stats[key] + stat.value : stat.value;
+            statsByLabel[label][key] = (statsByLabel[label][key] || 0) + stat.value;
         }
-        let statLine = `${char} add stats `
-            + Object.entries(stats).map(([key, value]) => `${key}=${value}`).join(" ")
-            + ";\n";
-        result += charLine + weaponLine + setLines.join("\n") + statLine + "\n";
+
+        // Generate stat lines
+        let statLines = [];
+        for (let [label, stats] of Object.entries(statsByLabel)) {
+            let statLine = `${char} add stats `
+                + Object.entries(stats).map(([key, value]) => `${key}=${value}`).join(" ");
+            if (label !== "default") {
+                statLine += ` +label=${label}`;
+            }
+            statLine += ";\n";
+            statLines.push(statLine);
+        }
+
+        // Add random substats if present
+        if (characterInfo.randomSubstats) {
+            const rs = characterInfo.randomSubstats;
+            let randomLine = `${char} add stats random rarity=${rs.rarity}`;
+            if (rs.sand) randomLine += ` sand=${attributeTypeToGCSimStat(rs.sand)}`;
+            if (rs.goblet) randomLine += ` goblet=${attributeTypeToGCSimStat(rs.goblet)}`;
+            if (rs.circlet) randomLine += ` circlet=${attributeTypeToGCSimStat(rs.circlet)}`;
+            randomLine += ";\n";
+            statLines.push(randomLine);
+        }
+
+        result += charLine + weaponLine + setLines.join("") + statLines.join("") + "\n";
     })
 
     if (script.options) {
-        result += "options " + Object.entries(script.options).filter(([_, value]) => value || value > 0).map(([key, value]) => `${camelToSnakeCase(key)}=${value}`).join(" ") + ";\n\n";
+        result += "options " + Object.entries(script.options).filter(([_, value]) => value !== undefined && value !== null && (typeof value === 'boolean' || value > 0 || typeof value === 'string')).map(([key, value]) => `${camelToSnakeCase(key)}=${value}`).join(" ") + ";\n\n";
     }
     if (script.energySettings) {
+        const intervals = script.energySettings.end
+            ? `${script.energySettings.start},${script.energySettings.end}`
+            : `${script.energySettings.start}`;
         result += `energy ${gCSimScriptEnergySettings_EnergyTypeToJSON(script.energySettings.type).toLowerCase()} `
-            + `interval=${script.energySettings.intervals.join(",")} `
+            + `interval=${intervals} `
             + `amount=${script.energySettings.amount};\n\n`;
     }
     for (let target of script.targets) {
-        result += `target`
-            + (target.position.length ? ` pos=${target.position.join(",")}` : "")
+        result += `target`;
+        if (target.type) {
+            result += ` type=${target.type.typeName}`;
+            if (target.type.hpMultiplier || target.type.particles !== undefined) {
+                result += `[`;
+                const params = [];
+                if (target.type.hpMultiplier) params.push(`hp_mult=${target.type.hpMultiplier}`);
+                if (target.type.particles !== undefined) params.push(`particles=${target.type.particles ? 1 : 0}`);
+                result += params.join(",") + `]`;
+            }
+        }
+        result += (target.position.length ? ` pos=${target.position.join(",")}` : "")
             + (target.radius ? ` radius=${target.radius}` : "")
             + (target.level ? ` lvl=${target.level}` : "")
             + (target.resist ? ` resist=${target.resist}` : "")
-            + (target.intervals.length ? ` interval=${target.intervals.join(",")}` : "")
             + (target.hp ? ` hp=${target.hp}` : "")
-            + (target.amount ? ` amount=${target.amount}` : "")
             + (target.particleThreshold ? ` particle_threshold=${target.particleThreshold}` : "")
             + (target.particleDropCount ? ` particle_drop_count=${target.particleDropCount}` : "")
+            + (target.particleElement ? ` particle_element=${target.particleElement.toString().toLowerCase()}` : "")
             + (target.freezeResist ? ` freeze_resist=${target.freezeResist}` : "")
             + (target.electroResist ? ` electro=${target.electroResist}` : "")
             + (target.hydroResist ? ` hydro=${target.hydroResist}` : "")
@@ -103,16 +148,22 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
             + (target.physicalResist ? ` physical=${target.physicalResist}` : "")
             + (target.anemoResist ? ` anemo=${target.anemoResist}` : "")
             + (target.geoResist ? ` geo=${target.geoResist}` : "")
+            + (target.hpMult ? ` hp_mult=${target.hpMult}` : "")
             + ";\n";
     }
     if (script.targets.length > 0) {
         result += "\n";
     }
-    
+
     if (script.hurtSettings) {
+        const intervals = script.hurtSettings.end
+            ? `${script.hurtSettings.start},${script.hurtSettings.end}`
+            : `${script.hurtSettings.start}`;
         result += `hurt ${gCSimScriptHurtSettings_HurtTypeToJSON(script.hurtSettings.type).toLowerCase()} `
-            + `interval=${script.hurtSettings.intervals.join(",")} `
-            + `amount=${script.hurtSettings.amount};\n\n`;
+            + `interval=${intervals} `
+            + `amount=${script.hurtSettings.amount.min},${script.hurtSettings.amount.max}`
+            + (script.hurtSettings.element ? ` element=${script.hurtSettings.element.toString().toLowerCase()}` : "")
+            + ";\n\n";
     }
     result += script.scripts.join("\n");
     return result;

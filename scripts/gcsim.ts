@@ -21,6 +21,7 @@ const gcsimHurtRegx = /\s*hurt\s+(?<type>once|every)\s+(?<attrs>.*?)\s*;/gm;
 const gcsimOptionsRegx = /\s*options\s+(?<attrs>.*?);/gm;
 const gcsimParamsRegx = /\s*\+params\s*=\s*\[(?<params>.*?)\]/gm;
 const gcsimKeyValRegx = /(?<key>[\w_%]+)\s*=\s*(?<value>\d+\s*,\s*\d+\s*,\s*\d+|[\d*\.*\d+]+\s*,\s*[\d*\.*\d+]+|\d+\/\d+|\d*\.*\d+|\d+)\s*/gm;
+const gcsimTargetTypeRegx = /type\s*=\s*(?<typename>\w+)(?:\[(?<params>[^\]]+)\])?/;
 const statMap: { [key: string]: string } = {
     hp: "HP",
     atk: "ATK",
@@ -110,11 +111,21 @@ const parseParams = (line: string): GCSimScriptParam[] => {
 
 const parseStats = (line: string): GCSimScriptCharacterStat[] => {
     const stats = [];
+    let label: string | undefined;
+
+    // Check for +label=xxx
+    const labelMatch = line.match(/\+label\s*=\s*(\w+)/);
+    if (labelMatch) {
+        label = labelMatch[1];
+        line = line.replace(/\+label\s*=\s*\w+/, ''); // Remove label from line
+    }
+
     for (let match of line.matchAll(gcsimKeyValRegx)) {
         if (match.groups?.key && statMap.hasOwnProperty(match.groups?.key)) {
             stats.push(GCSimScriptCharacterStat.fromJSON({
                 type: statMap[match.groups.key],
-                value: parseFloat(match.groups.value)
+                value: parseFloat(match.groups.value),
+                label: label
             }));
         } else {
             console.log(`Unknown stat key: ${match.groups?.key}`);
@@ -122,6 +133,36 @@ const parseStats = (line: string): GCSimScriptCharacterStat[] => {
     }
     return stats;
 }
+
+const parseRandomSubstats = (line: string) => {
+    const randomSubstats: any = {
+        rarity: 5 // default to 5
+    };
+
+    for (let match of line.matchAll(gcsimKeyValRegx)) {
+        if (match.groups?.key === 'rarity') {
+            randomSubstats.rarity = parseInt(match.groups.value);
+        } else if (match.groups?.key === 'sand') {
+            const statKey = match.groups.value;
+            if (statMap.hasOwnProperty(statKey)) {
+                randomSubstats.sand = statMap[statKey];
+            }
+        } else if (match.groups?.key === 'goblet') {
+            const statKey = match.groups.value;
+            if (statMap.hasOwnProperty(statKey)) {
+                randomSubstats.goblet = statMap[statKey];
+            }
+        } else if (match.groups?.key === 'circlet') {
+            const statKey = match.groups.value;
+            if (statMap.hasOwnProperty(statKey)) {
+                randomSubstats.circlet = statMap[statKey];
+            }
+        }
+    }
+
+    return randomSubstats;
+}
+
 const parseSetInfo = (wsname: string, line: string): GCSimScriptSetInfo => {
     const setInfo: GCSimScriptSetInfo = {
         count: 0,
@@ -167,7 +208,19 @@ const parseOptions = (script: string, parsedScript: GCSimScript) => {
         const options: { [key: string]: any } = {};
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key && attr.groups.value) {
-                options[attr.groups.key as string] = attr.groups?.value;
+                const key = attr.groups.key as string;
+                let value: any = attr.groups.value;
+
+                // Handle boolean values
+                if (value === 'true' || value === 'false') {
+                    value = value === 'true';
+                }
+                // Handle frame_defaults
+                else if (key === 'frame_defaults') {
+                    value = value; // Keep as string
+                }
+
+                options[key] = value;
             }
         }
         parsedScript.options = GCSimScriptOptions.fromJSON(options);
@@ -195,6 +248,7 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
                 stats: [],
                 params: [],
                 startHp: 0,
+                randomSubstats: undefined,
             };
         }
         if (match.groups.ch) {
@@ -222,9 +276,15 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
                 console.log(`Character ${char} missing level/constellation/talents: ${attrs}`);
             }
         } else if (match.groups.stats) {
-            parseStats(match.groups.attrs).forEach(stat => {
-                characters[char].stats.push(stat);
-            })
+            const attrs = match.groups.attrs;
+            // Check if it's random substats
+            if (attrs.includes('random')) {
+                characters[char].randomSubstats = parseRandomSubstats(attrs);
+            } else {
+                parseStats(attrs).forEach(stat => {
+                    characters[char].stats.push(stat);
+                })
+            }
         } else if (match.groups.ws === "weapon") {
             characters[char].weaponInfo = parseWeaponInfo((GCSIM_WEAPON_ALIASES as any)[match.groups.wsname], match.groups.attrs);
         } else if (match.groups.ws === "set") {
@@ -240,11 +300,15 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
 
 const parseEnergy = (script: string, parsedScript: GCSimScript) => {
     for (let match of script.matchAll(gcsimEnergyRegx)) {
-        const energy: GCSimScriptEnergySettings = { type: 0, intervals: [], amount: 0 };
+        const energy: GCSimScriptEnergySettings = { type: 0, start: 0, amount: 0 };
         energy.type = gCSimScriptEnergySettings_EnergyTypeFromJSON(match.groups?.type.toUpperCase());
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key === "interval") {
-                energy.intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                const intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                energy.start = intervals[0];
+                if (intervals.length > 1) {
+                    energy.end = intervals[1];
+                }
             } else if (attr.groups?.key === "amount") {
                 energy.amount = parseInt(attr.groups.value);
             } else {
@@ -267,9 +331,7 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
             radius: 0,
             level: 0,
             resist: 0,
-            intervals: [],
             hp: 0,
-            amount: 0,
             particleThreshold: 0,
             particleDropCount: 0,
             freezeResist: 0,
@@ -282,7 +344,33 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
             anemoResist: 0,
             geoResist: 0,
         };
-        for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx)) {
+
+        let attrs = match.groups.attrs;
+
+        // Parse target type if present (e.g., type=aeonblightdrake[hp_mult=3.00])
+        const typeMatch = attrs.match(gcsimTargetTypeRegx);
+        if (typeMatch?.groups?.typename) {
+            const targetType: any = {
+                typeName: typeMatch.groups.typename
+            };
+
+            // Parse type parameters if present
+            if (typeMatch.groups.params) {
+                for (let param of typeMatch.groups.params.matchAll(gcsimKeyValRegx)) {
+                    if (param.groups?.key === "hp_mult") {
+                        targetType.hpMultiplier = parseFloat(param.groups.value);
+                    } else if (param.groups?.key === "particles") {
+                        targetType.particles = parseInt(param.groups.value) !== 0;
+                    }
+                }
+            }
+
+            target.type = targetType;
+            // Remove type from attrs to avoid parsing it again
+            attrs = attrs.replace(gcsimTargetTypeRegx, '');
+        }
+
+        for (let attr of attrs.matchAll(gcsimKeyValRegx)) {
             if (attr.groups?.key === "pos") {
                 target.position = attr.groups.value.split(",").map(pos => parseFloat(pos));
             } else if (attr.groups?.key === "radius") {
@@ -291,16 +379,14 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
                 target.level = parseInt(attr.groups.value);
             } else if (attr.groups?.key === "resist") {
                 target.resist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "intervals") {
-                target.intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
             } else if (attr.groups?.key === "hp") {
                 target.hp = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "amount") {
-                target.amount = parseInt(attr.groups.value);
             } else if (attr.groups?.key === "particle_threshold") {
                 target.particleThreshold = parseInt(attr.groups.value);
             } else if (attr.groups?.key === "particle_drop_count") {
                 target.particleDropCount = parseInt(attr.groups.value);
+            } else if (attr.groups?.key === "particle_element") {
+                target.particleElement = elementFromJSON(attr.groups.value.toUpperCase());
             } else if (attr.groups?.key === "freeze_resist") {
                 target.freezeResist = parseFloat(attr.groups.value);
             } else if (attr.groups?.key === "electro") {
@@ -334,13 +420,17 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
 
 const parseHurt = (script: string, parsedScript: GCSimScript) => {
     for (let match of script.matchAll(gcsimHurtRegx)) {
-        const hurt: GCSimScriptHurtSettings = { type: 0, intervals: [], amount: { min: 0, max: 0 }, element: 0 };
+        const hurt: GCSimScriptHurtSettings = { type: 0, start: 0, amount: { min: 0, max: 0 }, element: 0 };
         hurt.type = gCSimScriptHurtSettings_HurtTypeFromJSON(match.groups?.type.toUpperCase());
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key === "interval") {
-                hurt.intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                const intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                hurt.start = intervals[0];
+                if (intervals.length > 1) {
+                    hurt.end = intervals[1];
+                }
             } else if (attr.groups?.key === "amount") {
-                const amounts = attr.groups.value.split(",").map(amount => parseInt(amount));
+                const amounts = attr.groups.value.split(",").map(amount => parseFloat(amount));
                 hurt.amount = {
                     min: amounts[0],
                     max: amounts[1],

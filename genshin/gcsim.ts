@@ -8,11 +8,13 @@ import { Weapon, weaponFromJSON, weaponToJSON } from "./weapon.js";
 
 export const protobufPackage = "io.leishi.genshin.proto";
 
+/** Key-value parameter for character/weapon/set customization */
 export interface GCSimScriptParam {
   key: string;
   value: string;
 }
 
+/** Weapon configuration */
 export interface GCSimScriptWeaponInfo {
   weapon: Weapon;
   level: number;
@@ -21,30 +23,55 @@ export interface GCSimScriptWeaponInfo {
   params: GCSimScriptParam[];
 }
 
+/** Artifact set configuration */
 export interface GCSimScriptSetInfo {
   set: Set;
+  /** Number of pieces (2 or 4) */
   count: number;
   params: GCSimScriptParam[];
 }
 
+/** Character stat with optional label for grouping (e.g., "flower", "feather") */
 export interface GCSimScriptCharacterStat {
   type: AttributeType;
   value: number;
+  /** Label for stat grouping (e.g., "flower", "sands") */
+  label: string;
 }
 
+/**
+ * Random substat generation based on artifact main stats
+ * Example: diluc add stats random rarity=5 sand=hp% goblet=pyro% circlet=cr;
+ */
+export interface GCSimScriptRandomSubstats {
+  /** Artifact rarity (4 or 5) */
+  rarity: number;
+  /** Sands main stat */
+  sand: AttributeType;
+  /** Goblet main stat */
+  goblet: AttributeType;
+  /** Circlet main stat */
+  circlet: AttributeType;
+}
+
+/** Character configuration */
 export interface GCSimScriptCharacterInfo {
   character: Character;
   level: number;
   maxLevel: number;
   constellation: number;
+  /** [attack, skill, burst] */
   talents: number[];
   weaponInfo: GCSimScriptWeaponInfo | undefined;
   setInfos: GCSimScriptSetInfo[];
   stats: GCSimScriptCharacterStat[];
   params: GCSimScriptParam[];
   startHp: number;
+  /** Random substat config */
+  randomSubstats: GCSimScriptRandomSubstats | undefined;
 }
 
+/** Simulation options */
 export interface GCSimScriptOptions {
   defhalt: boolean;
   hitlag: boolean;
@@ -59,16 +86,31 @@ export interface GCSimScriptOptions {
   jumpDelay: number;
   dashDelay: number;
   aimDelay: number;
+  /** Ignore energy requirements for bursts */
+  ignoreBurstEnergy: boolean;
+  /** Preset delay config (e.g., "human") */
+  frameDefaults: string;
 }
 
+/**
+ * Energy settings for periodic energy generation
+ * Example: energy once interval=300 amount=1
+ * Example: energy every interval=300,600 amount=1
+ */
 export interface GCSimScriptEnergySettings {
   type: GCSimScriptEnergySettings_EnergyType;
-  intervals: number[];
+  /** For ONCE: the frame. For EVERY: min interval */
+  start: number;
+  /** For EVERY: max interval (random between start and end) */
+  end: number;
+  /** Energy amount per drop */
   amount: number;
 }
 
 export enum GCSimScriptEnergySettings_EnergyType {
+  /** ONCE - One-time energy drop at specific frame */
   ONCE = 0,
+  /** EVERY - Periodic energy drops */
   EVERY = 1,
   UNRECOGNIZED = -1,
 }
@@ -100,15 +142,26 @@ export function gCSimScriptEnergySettings_EnergyTypeToJSON(object: GCSimScriptEn
   }
 }
 
+/**
+ * Hurt settings for periodic damage to active character
+ * Example: hurt once interval=300 amount=1,300 element=physical
+ * Example: hurt every interval=480,720 amount=1,300 element=physical
+ */
 export interface GCSimScriptHurtSettings {
   type: GCSimScriptHurtSettings_HurtType;
-  intervals: number[];
+  /** For ONCE: the frame. For EVERY: min interval */
+  start: number;
+  /** For EVERY: max interval (random between start and end) */
+  end: number;
+  /** Damage range (random between min and max) */
   amount: GCSimScriptHurtSettings_HurtAmount | undefined;
   element: Element;
 }
 
 export enum GCSimScriptHurtSettings_HurtType {
+  /** ONCE - One-time damage at specific frame */
   ONCE = 0,
+  /** EVERY - Periodic damage */
   EVERY = 1,
   UNRECOGNIZED = -1,
 }
@@ -145,37 +198,75 @@ export interface GCSimScriptHurtSettings_HurtAmount {
   max: number;
 }
 
-export interface GCSimScriptTarget {
-  position: number[];
-  radius: number;
-  level: number;
-  resist: number;
-  intervals: number[];
-  hp: number;
-  amount: number;
-  particleThreshold: number;
-  particleDropCount: number;
-  freezeResist: number;
-  electroResist: number;
-  hydroResist: number;
-  pyroResist: number;
-  cryoResist: number;
-  dendroResist: number;
-  physicalResist: number;
-  anemoResist: number;
-  geoResist: number;
-  hpMult: number;
+/**
+ * Predefined enemy type configuration
+ * Example: target type=hilichurl[hp_mult=2.0,particles=1];
+ */
+export interface GCSimScriptTargetType {
+  /** Enemy type name (e.g., "hilichurl", "ruin_guard") */
+  typeName: string;
+  /** HP multiplier */
+  hpMultiplier: number;
+  /** Whether to drop particles */
+  particles: boolean;
 }
 
+/** Target/enemy configuration */
+export interface GCSimScriptTarget {
+  /** Position [x, y] - exactly 2 values */
+  position: number[];
+  /** Hitbox radius */
+  radius: number;
+  /** Enemy level (1-100) */
+  level: number;
+  /** Base resistance for all elements */
+  resist: number;
+  /** Enemy HP */
+  hp: number;
+  /** Drop particle every X damage dealt */
+  particleThreshold: number;
+  /** Number of particles to drop */
+  particleDropCount: number;
+  /** Freeze resistance */
+  freezeResist: number;
+  /** Electro resistance */
+  electroResist: number;
+  /** Hydro resistance */
+  hydroResist: number;
+  /** Pyro resistance */
+  pyroResist: number;
+  /** Cryo resistance */
+  cryoResist: number;
+  /** Dendro resistance */
+  dendroResist: number;
+  /** Physical resistance */
+  physicalResist: number;
+  /** Anemo resistance */
+  anemoResist: number;
+  /** Geo resistance */
+  geoResist: number;
+  /** Predefined enemy type */
+  type:
+    | GCSimScriptTargetType
+    | undefined;
+  /** Element of dropped particles */
+  particleElement: Element;
+}
+
+/** Complete GCSim script configuration */
 export interface GCSimScript {
   options: GCSimScriptOptions | undefined;
   characterInfos: GCSimScriptCharacterInfo[];
   targets: GCSimScriptTarget[];
   energySettings: GCSimScriptEnergySettings | undefined;
-  hurtSettings: GCSimScriptHurtSettings | undefined;
+  hurtSettings:
+    | GCSimScriptHurtSettings
+    | undefined;
+  /** Action script lines (not parsed) */
   scripts: string[];
 }
 
+/** Collection of GCSim scripts */
 export interface GCSim {
   scripts: GCSimScript[];
 }
@@ -396,7 +487,7 @@ export const GCSimScriptSetInfo = {
 };
 
 function createBaseGCSimScriptCharacterStat(): GCSimScriptCharacterStat {
-  return { type: 0, value: 0 };
+  return { type: 0, value: 0, label: "" };
 }
 
 export const GCSimScriptCharacterStat = {
@@ -406,6 +497,9 @@ export const GCSimScriptCharacterStat = {
     }
     if (message.value !== 0) {
       writer.uint32(21).float(message.value);
+    }
+    if (message.label !== "") {
+      writer.uint32(26).string(message.label);
     }
     return writer;
   },
@@ -423,6 +517,9 @@ export const GCSimScriptCharacterStat = {
         case 2:
           message.value = reader.float();
           break;
+        case 3:
+          message.label = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -435,6 +532,7 @@ export const GCSimScriptCharacterStat = {
     return {
       type: isSet(object.type) ? attributeTypeFromJSON(object.type) : 0,
       value: isSet(object.value) ? Number(object.value) : 0,
+      label: isSet(object.label) ? String(object.label) : "",
     };
   },
 
@@ -442,6 +540,7 @@ export const GCSimScriptCharacterStat = {
     const obj: any = {};
     message.type !== undefined && (obj.type = attributeTypeToJSON(message.type));
     message.value !== undefined && (obj.value = message.value);
+    message.label !== undefined && (obj.label = message.label);
     return obj;
   },
 
@@ -449,6 +548,83 @@ export const GCSimScriptCharacterStat = {
     const message = createBaseGCSimScriptCharacterStat();
     message.type = object.type ?? 0;
     message.value = object.value ?? 0;
+    message.label = object.label ?? "";
+    return message;
+  },
+};
+
+function createBaseGCSimScriptRandomSubstats(): GCSimScriptRandomSubstats {
+  return { rarity: 0, sand: 0, goblet: 0, circlet: 0 };
+}
+
+export const GCSimScriptRandomSubstats = {
+  encode(message: GCSimScriptRandomSubstats, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.rarity !== 0) {
+      writer.uint32(8).int32(message.rarity);
+    }
+    if (message.sand !== 0) {
+      writer.uint32(16).int32(message.sand);
+    }
+    if (message.goblet !== 0) {
+      writer.uint32(24).int32(message.goblet);
+    }
+    if (message.circlet !== 0) {
+      writer.uint32(32).int32(message.circlet);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GCSimScriptRandomSubstats {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGCSimScriptRandomSubstats();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.rarity = reader.int32();
+          break;
+        case 2:
+          message.sand = reader.int32() as any;
+          break;
+        case 3:
+          message.goblet = reader.int32() as any;
+          break;
+        case 4:
+          message.circlet = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GCSimScriptRandomSubstats {
+    return {
+      rarity: isSet(object.rarity) ? Number(object.rarity) : 0,
+      sand: isSet(object.sand) ? attributeTypeFromJSON(object.sand) : 0,
+      goblet: isSet(object.goblet) ? attributeTypeFromJSON(object.goblet) : 0,
+      circlet: isSet(object.circlet) ? attributeTypeFromJSON(object.circlet) : 0,
+    };
+  },
+
+  toJSON(message: GCSimScriptRandomSubstats): unknown {
+    const obj: any = {};
+    message.rarity !== undefined && (obj.rarity = Math.round(message.rarity));
+    message.sand !== undefined && (obj.sand = attributeTypeToJSON(message.sand));
+    message.goblet !== undefined && (obj.goblet = attributeTypeToJSON(message.goblet));
+    message.circlet !== undefined && (obj.circlet = attributeTypeToJSON(message.circlet));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GCSimScriptRandomSubstats>, I>>(object: I): GCSimScriptRandomSubstats {
+    const message = createBaseGCSimScriptRandomSubstats();
+    message.rarity = object.rarity ?? 0;
+    message.sand = object.sand ?? 0;
+    message.goblet = object.goblet ?? 0;
+    message.circlet = object.circlet ?? 0;
     return message;
   },
 };
@@ -465,6 +641,7 @@ function createBaseGCSimScriptCharacterInfo(): GCSimScriptCharacterInfo {
     stats: [],
     params: [],
     startHp: 0,
+    randomSubstats: undefined,
   };
 }
 
@@ -501,6 +678,9 @@ export const GCSimScriptCharacterInfo = {
     }
     if (message.startHp !== 0) {
       writer.uint32(80).int32(message.startHp);
+    }
+    if (message.randomSubstats !== undefined) {
+      GCSimScriptRandomSubstats.encode(message.randomSubstats, writer.uint32(90).fork()).ldelim();
     }
     return writer;
   },
@@ -549,6 +729,9 @@ export const GCSimScriptCharacterInfo = {
         case 10:
           message.startHp = reader.int32();
           break;
+        case 11:
+          message.randomSubstats = GCSimScriptRandomSubstats.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -569,6 +752,9 @@ export const GCSimScriptCharacterInfo = {
       stats: Array.isArray(object?.stats) ? object.stats.map((e: any) => GCSimScriptCharacterStat.fromJSON(e)) : [],
       params: Array.isArray(object?.params) ? object.params.map((e: any) => GCSimScriptParam.fromJSON(e)) : [],
       startHp: isSet(object.startHp) ? Number(object.startHp) : 0,
+      randomSubstats: isSet(object.randomSubstats)
+        ? GCSimScriptRandomSubstats.fromJSON(object.randomSubstats)
+        : undefined,
     };
   },
 
@@ -601,6 +787,9 @@ export const GCSimScriptCharacterInfo = {
       obj.params = [];
     }
     message.startHp !== undefined && (obj.startHp = Math.round(message.startHp));
+    message.randomSubstats !== undefined && (obj.randomSubstats = message.randomSubstats
+      ? GCSimScriptRandomSubstats.toJSON(message.randomSubstats)
+      : undefined);
     return obj;
   },
 
@@ -618,6 +807,9 @@ export const GCSimScriptCharacterInfo = {
     message.stats = object.stats?.map((e) => GCSimScriptCharacterStat.fromPartial(e)) || [];
     message.params = object.params?.map((e) => GCSimScriptParam.fromPartial(e)) || [];
     message.startHp = object.startHp ?? 0;
+    message.randomSubstats = (object.randomSubstats !== undefined && object.randomSubstats !== null)
+      ? GCSimScriptRandomSubstats.fromPartial(object.randomSubstats)
+      : undefined;
     return message;
   },
 };
@@ -637,6 +829,8 @@ function createBaseGCSimScriptOptions(): GCSimScriptOptions {
     jumpDelay: 0,
     dashDelay: 0,
     aimDelay: 0,
+    ignoreBurstEnergy: false,
+    frameDefaults: "",
   };
 }
 
@@ -680,6 +874,12 @@ export const GCSimScriptOptions = {
     }
     if (message.aimDelay !== 0) {
       writer.uint32(104).int32(message.aimDelay);
+    }
+    if (message.ignoreBurstEnergy === true) {
+      writer.uint32(112).bool(message.ignoreBurstEnergy);
+    }
+    if (message.frameDefaults !== "") {
+      writer.uint32(122).string(message.frameDefaults);
     }
     return writer;
   },
@@ -730,6 +930,12 @@ export const GCSimScriptOptions = {
         case 13:
           message.aimDelay = reader.int32();
           break;
+        case 14:
+          message.ignoreBurstEnergy = reader.bool();
+          break;
+        case 15:
+          message.frameDefaults = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -753,6 +959,8 @@ export const GCSimScriptOptions = {
       jumpDelay: isSet(object.jumpDelay) ? Number(object.jumpDelay) : 0,
       dashDelay: isSet(object.dashDelay) ? Number(object.dashDelay) : 0,
       aimDelay: isSet(object.aimDelay) ? Number(object.aimDelay) : 0,
+      ignoreBurstEnergy: isSet(object.ignoreBurstEnergy) ? Boolean(object.ignoreBurstEnergy) : false,
+      frameDefaults: isSet(object.frameDefaults) ? String(object.frameDefaults) : "",
     };
   },
 
@@ -771,6 +979,8 @@ export const GCSimScriptOptions = {
     message.jumpDelay !== undefined && (obj.jumpDelay = Math.round(message.jumpDelay));
     message.dashDelay !== undefined && (obj.dashDelay = Math.round(message.dashDelay));
     message.aimDelay !== undefined && (obj.aimDelay = Math.round(message.aimDelay));
+    message.ignoreBurstEnergy !== undefined && (obj.ignoreBurstEnergy = message.ignoreBurstEnergy);
+    message.frameDefaults !== undefined && (obj.frameDefaults = message.frameDefaults);
     return obj;
   },
 
@@ -789,12 +999,14 @@ export const GCSimScriptOptions = {
     message.jumpDelay = object.jumpDelay ?? 0;
     message.dashDelay = object.dashDelay ?? 0;
     message.aimDelay = object.aimDelay ?? 0;
+    message.ignoreBurstEnergy = object.ignoreBurstEnergy ?? false;
+    message.frameDefaults = object.frameDefaults ?? "";
     return message;
   },
 };
 
 function createBaseGCSimScriptEnergySettings(): GCSimScriptEnergySettings {
-  return { type: 0, intervals: [], amount: 0 };
+  return { type: 0, start: 0, end: 0, amount: 0 };
 }
 
 export const GCSimScriptEnergySettings = {
@@ -802,13 +1014,14 @@ export const GCSimScriptEnergySettings = {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
-    writer.uint32(18).fork();
-    for (const v of message.intervals) {
-      writer.int32(v);
+    if (message.start !== 0) {
+      writer.uint32(16).int32(message.start);
     }
-    writer.ldelim();
+    if (message.end !== 0) {
+      writer.uint32(24).int32(message.end);
+    }
     if (message.amount !== 0) {
-      writer.uint32(24).int32(message.amount);
+      writer.uint32(32).int32(message.amount);
     }
     return writer;
   },
@@ -824,16 +1037,12 @@ export const GCSimScriptEnergySettings = {
           message.type = reader.int32() as any;
           break;
         case 2:
-          if ((tag & 7) === 2) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.intervals.push(reader.int32());
-            }
-          } else {
-            message.intervals.push(reader.int32());
-          }
+          message.start = reader.int32();
           break;
         case 3:
+          message.end = reader.int32();
+          break;
+        case 4:
           message.amount = reader.int32();
           break;
         default:
@@ -847,7 +1056,8 @@ export const GCSimScriptEnergySettings = {
   fromJSON(object: any): GCSimScriptEnergySettings {
     return {
       type: isSet(object.type) ? gCSimScriptEnergySettings_EnergyTypeFromJSON(object.type) : 0,
-      intervals: Array.isArray(object?.intervals) ? object.intervals.map((e: any) => Number(e)) : [],
+      start: isSet(object.start) ? Number(object.start) : 0,
+      end: isSet(object.end) ? Number(object.end) : 0,
       amount: isSet(object.amount) ? Number(object.amount) : 0,
     };
   },
@@ -855,11 +1065,8 @@ export const GCSimScriptEnergySettings = {
   toJSON(message: GCSimScriptEnergySettings): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = gCSimScriptEnergySettings_EnergyTypeToJSON(message.type));
-    if (message.intervals) {
-      obj.intervals = message.intervals.map((e) => Math.round(e));
-    } else {
-      obj.intervals = [];
-    }
+    message.start !== undefined && (obj.start = Math.round(message.start));
+    message.end !== undefined && (obj.end = Math.round(message.end));
     message.amount !== undefined && (obj.amount = Math.round(message.amount));
     return obj;
   },
@@ -867,14 +1074,15 @@ export const GCSimScriptEnergySettings = {
   fromPartial<I extends Exact<DeepPartial<GCSimScriptEnergySettings>, I>>(object: I): GCSimScriptEnergySettings {
     const message = createBaseGCSimScriptEnergySettings();
     message.type = object.type ?? 0;
-    message.intervals = object.intervals?.map((e) => e) || [];
+    message.start = object.start ?? 0;
+    message.end = object.end ?? 0;
     message.amount = object.amount ?? 0;
     return message;
   },
 };
 
 function createBaseGCSimScriptHurtSettings(): GCSimScriptHurtSettings {
-  return { type: 0, intervals: [], amount: undefined, element: 0 };
+  return { type: 0, start: 0, end: 0, amount: undefined, element: 0 };
 }
 
 export const GCSimScriptHurtSettings = {
@@ -882,16 +1090,17 @@ export const GCSimScriptHurtSettings = {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
-    writer.uint32(18).fork();
-    for (const v of message.intervals) {
-      writer.int32(v);
+    if (message.start !== 0) {
+      writer.uint32(16).int32(message.start);
     }
-    writer.ldelim();
+    if (message.end !== 0) {
+      writer.uint32(24).int32(message.end);
+    }
     if (message.amount !== undefined) {
-      GCSimScriptHurtSettings_HurtAmount.encode(message.amount, writer.uint32(26).fork()).ldelim();
+      GCSimScriptHurtSettings_HurtAmount.encode(message.amount, writer.uint32(34).fork()).ldelim();
     }
     if (message.element !== 0) {
-      writer.uint32(32).int32(message.element);
+      writer.uint32(40).int32(message.element);
     }
     return writer;
   },
@@ -907,19 +1116,15 @@ export const GCSimScriptHurtSettings = {
           message.type = reader.int32() as any;
           break;
         case 2:
-          if ((tag & 7) === 2) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.intervals.push(reader.int32());
-            }
-          } else {
-            message.intervals.push(reader.int32());
-          }
+          message.start = reader.int32();
           break;
         case 3:
-          message.amount = GCSimScriptHurtSettings_HurtAmount.decode(reader, reader.uint32());
+          message.end = reader.int32();
           break;
         case 4:
+          message.amount = GCSimScriptHurtSettings_HurtAmount.decode(reader, reader.uint32());
+          break;
+        case 5:
           message.element = reader.int32() as any;
           break;
         default:
@@ -933,7 +1138,8 @@ export const GCSimScriptHurtSettings = {
   fromJSON(object: any): GCSimScriptHurtSettings {
     return {
       type: isSet(object.type) ? gCSimScriptHurtSettings_HurtTypeFromJSON(object.type) : 0,
-      intervals: Array.isArray(object?.intervals) ? object.intervals.map((e: any) => Number(e)) : [],
+      start: isSet(object.start) ? Number(object.start) : 0,
+      end: isSet(object.end) ? Number(object.end) : 0,
       amount: isSet(object.amount) ? GCSimScriptHurtSettings_HurtAmount.fromJSON(object.amount) : undefined,
       element: isSet(object.element) ? elementFromJSON(object.element) : 0,
     };
@@ -942,11 +1148,8 @@ export const GCSimScriptHurtSettings = {
   toJSON(message: GCSimScriptHurtSettings): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = gCSimScriptHurtSettings_HurtTypeToJSON(message.type));
-    if (message.intervals) {
-      obj.intervals = message.intervals.map((e) => Math.round(e));
-    } else {
-      obj.intervals = [];
-    }
+    message.start !== undefined && (obj.start = Math.round(message.start));
+    message.end !== undefined && (obj.end = Math.round(message.end));
     message.amount !== undefined &&
       (obj.amount = message.amount ? GCSimScriptHurtSettings_HurtAmount.toJSON(message.amount) : undefined);
     message.element !== undefined && (obj.element = elementToJSON(message.element));
@@ -956,7 +1159,8 @@ export const GCSimScriptHurtSettings = {
   fromPartial<I extends Exact<DeepPartial<GCSimScriptHurtSettings>, I>>(object: I): GCSimScriptHurtSettings {
     const message = createBaseGCSimScriptHurtSettings();
     message.type = object.type ?? 0;
-    message.intervals = object.intervals?.map((e) => e) || [];
+    message.start = object.start ?? 0;
+    message.end = object.end ?? 0;
     message.amount = (object.amount !== undefined && object.amount !== null)
       ? GCSimScriptHurtSettings_HurtAmount.fromPartial(object.amount)
       : undefined;
@@ -1022,15 +1226,80 @@ export const GCSimScriptHurtSettings_HurtAmount = {
   },
 };
 
+function createBaseGCSimScriptTargetType(): GCSimScriptTargetType {
+  return { typeName: "", hpMultiplier: 0, particles: false };
+}
+
+export const GCSimScriptTargetType = {
+  encode(message: GCSimScriptTargetType, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.typeName !== "") {
+      writer.uint32(10).string(message.typeName);
+    }
+    if (message.hpMultiplier !== 0) {
+      writer.uint32(21).float(message.hpMultiplier);
+    }
+    if (message.particles === true) {
+      writer.uint32(24).bool(message.particles);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GCSimScriptTargetType {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGCSimScriptTargetType();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.typeName = reader.string();
+          break;
+        case 2:
+          message.hpMultiplier = reader.float();
+          break;
+        case 3:
+          message.particles = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GCSimScriptTargetType {
+    return {
+      typeName: isSet(object.typeName) ? String(object.typeName) : "",
+      hpMultiplier: isSet(object.hpMultiplier) ? Number(object.hpMultiplier) : 0,
+      particles: isSet(object.particles) ? Boolean(object.particles) : false,
+    };
+  },
+
+  toJSON(message: GCSimScriptTargetType): unknown {
+    const obj: any = {};
+    message.typeName !== undefined && (obj.typeName = message.typeName);
+    message.hpMultiplier !== undefined && (obj.hpMultiplier = message.hpMultiplier);
+    message.particles !== undefined && (obj.particles = message.particles);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GCSimScriptTargetType>, I>>(object: I): GCSimScriptTargetType {
+    const message = createBaseGCSimScriptTargetType();
+    message.typeName = object.typeName ?? "";
+    message.hpMultiplier = object.hpMultiplier ?? 0;
+    message.particles = object.particles ?? false;
+    return message;
+  },
+};
+
 function createBaseGCSimScriptTarget(): GCSimScriptTarget {
   return {
     position: [],
     radius: 0,
     level: 0,
     resist: 0,
-    intervals: [],
     hp: 0,
-    amount: 0,
     particleThreshold: 0,
     particleDropCount: 0,
     freezeResist: 0,
@@ -1042,7 +1311,8 @@ function createBaseGCSimScriptTarget(): GCSimScriptTarget {
     physicalResist: 0,
     anemoResist: 0,
     geoResist: 0,
-    hpMult: 0,
+    type: undefined,
+    particleElement: 0,
   };
 }
 
@@ -1062,52 +1332,47 @@ export const GCSimScriptTarget = {
     if (message.resist !== 0) {
       writer.uint32(37).float(message.resist);
     }
-    writer.uint32(42).fork();
-    for (const v of message.intervals) {
-      writer.int32(v);
-    }
-    writer.ldelim();
     if (message.hp !== 0) {
-      writer.uint32(53).float(message.hp);
-    }
-    if (message.amount !== 0) {
-      writer.uint32(56).int32(message.amount);
+      writer.uint32(45).float(message.hp);
     }
     if (message.particleThreshold !== 0) {
-      writer.uint32(64).int32(message.particleThreshold);
+      writer.uint32(48).int32(message.particleThreshold);
     }
     if (message.particleDropCount !== 0) {
-      writer.uint32(72).int32(message.particleDropCount);
+      writer.uint32(56).int32(message.particleDropCount);
     }
     if (message.freezeResist !== 0) {
-      writer.uint32(85).float(message.freezeResist);
+      writer.uint32(69).float(message.freezeResist);
     }
     if (message.electroResist !== 0) {
-      writer.uint32(93).float(message.electroResist);
+      writer.uint32(77).float(message.electroResist);
     }
     if (message.hydroResist !== 0) {
-      writer.uint32(101).float(message.hydroResist);
+      writer.uint32(85).float(message.hydroResist);
     }
     if (message.pyroResist !== 0) {
-      writer.uint32(109).float(message.pyroResist);
+      writer.uint32(93).float(message.pyroResist);
     }
     if (message.cryoResist !== 0) {
-      writer.uint32(117).float(message.cryoResist);
+      writer.uint32(101).float(message.cryoResist);
     }
     if (message.dendroResist !== 0) {
-      writer.uint32(125).float(message.dendroResist);
+      writer.uint32(109).float(message.dendroResist);
     }
     if (message.physicalResist !== 0) {
-      writer.uint32(133).float(message.physicalResist);
+      writer.uint32(117).float(message.physicalResist);
     }
     if (message.anemoResist !== 0) {
-      writer.uint32(141).float(message.anemoResist);
+      writer.uint32(125).float(message.anemoResist);
     }
     if (message.geoResist !== 0) {
-      writer.uint32(149).float(message.geoResist);
+      writer.uint32(133).float(message.geoResist);
     }
-    if (message.hpMult !== 0) {
-      writer.uint32(157).float(message.hpMult);
+    if (message.type !== undefined) {
+      GCSimScriptTargetType.encode(message.type, writer.uint32(138).fork()).ldelim();
+    }
+    if (message.particleElement !== 0) {
+      writer.uint32(144).int32(message.particleElement);
     }
     return writer;
   },
@@ -1139,56 +1404,46 @@ export const GCSimScriptTarget = {
           message.resist = reader.float();
           break;
         case 5:
-          if ((tag & 7) === 2) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.intervals.push(reader.int32());
-            }
-          } else {
-            message.intervals.push(reader.int32());
-          }
-          break;
-        case 6:
           message.hp = reader.float();
           break;
-        case 7:
-          message.amount = reader.int32();
-          break;
-        case 8:
+        case 6:
           message.particleThreshold = reader.int32();
           break;
-        case 9:
+        case 7:
           message.particleDropCount = reader.int32();
           break;
-        case 10:
+        case 8:
           message.freezeResist = reader.float();
           break;
-        case 11:
+        case 9:
           message.electroResist = reader.float();
           break;
-        case 12:
+        case 10:
           message.hydroResist = reader.float();
           break;
-        case 13:
+        case 11:
           message.pyroResist = reader.float();
           break;
-        case 14:
+        case 12:
           message.cryoResist = reader.float();
           break;
-        case 15:
+        case 13:
           message.dendroResist = reader.float();
           break;
-        case 16:
+        case 14:
           message.physicalResist = reader.float();
           break;
-        case 17:
+        case 15:
           message.anemoResist = reader.float();
           break;
-        case 18:
+        case 16:
           message.geoResist = reader.float();
           break;
-        case 19:
-          message.hpMult = reader.float();
+        case 17:
+          message.type = GCSimScriptTargetType.decode(reader, reader.uint32());
+          break;
+        case 18:
+          message.particleElement = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -1204,9 +1459,7 @@ export const GCSimScriptTarget = {
       radius: isSet(object.radius) ? Number(object.radius) : 0,
       level: isSet(object.level) ? Number(object.level) : 0,
       resist: isSet(object.resist) ? Number(object.resist) : 0,
-      intervals: Array.isArray(object?.intervals) ? object.intervals.map((e: any) => Number(e)) : [],
       hp: isSet(object.hp) ? Number(object.hp) : 0,
-      amount: isSet(object.amount) ? Number(object.amount) : 0,
       particleThreshold: isSet(object.particleThreshold) ? Number(object.particleThreshold) : 0,
       particleDropCount: isSet(object.particleDropCount) ? Number(object.particleDropCount) : 0,
       freezeResist: isSet(object.freezeResist) ? Number(object.freezeResist) : 0,
@@ -1218,7 +1471,8 @@ export const GCSimScriptTarget = {
       physicalResist: isSet(object.physicalResist) ? Number(object.physicalResist) : 0,
       anemoResist: isSet(object.anemoResist) ? Number(object.anemoResist) : 0,
       geoResist: isSet(object.geoResist) ? Number(object.geoResist) : 0,
-      hpMult: isSet(object.hpMult) ? Number(object.hpMult) : 0,
+      type: isSet(object.type) ? GCSimScriptTargetType.fromJSON(object.type) : undefined,
+      particleElement: isSet(object.particleElement) ? elementFromJSON(object.particleElement) : 0,
     };
   },
 
@@ -1232,13 +1486,7 @@ export const GCSimScriptTarget = {
     message.radius !== undefined && (obj.radius = message.radius);
     message.level !== undefined && (obj.level = Math.round(message.level));
     message.resist !== undefined && (obj.resist = message.resist);
-    if (message.intervals) {
-      obj.intervals = message.intervals.map((e) => Math.round(e));
-    } else {
-      obj.intervals = [];
-    }
     message.hp !== undefined && (obj.hp = message.hp);
-    message.amount !== undefined && (obj.amount = Math.round(message.amount));
     message.particleThreshold !== undefined && (obj.particleThreshold = Math.round(message.particleThreshold));
     message.particleDropCount !== undefined && (obj.particleDropCount = Math.round(message.particleDropCount));
     message.freezeResist !== undefined && (obj.freezeResist = message.freezeResist);
@@ -1250,7 +1498,8 @@ export const GCSimScriptTarget = {
     message.physicalResist !== undefined && (obj.physicalResist = message.physicalResist);
     message.anemoResist !== undefined && (obj.anemoResist = message.anemoResist);
     message.geoResist !== undefined && (obj.geoResist = message.geoResist);
-    message.hpMult !== undefined && (obj.hpMult = message.hpMult);
+    message.type !== undefined && (obj.type = message.type ? GCSimScriptTargetType.toJSON(message.type) : undefined);
+    message.particleElement !== undefined && (obj.particleElement = elementToJSON(message.particleElement));
     return obj;
   },
 
@@ -1260,9 +1509,7 @@ export const GCSimScriptTarget = {
     message.radius = object.radius ?? 0;
     message.level = object.level ?? 0;
     message.resist = object.resist ?? 0;
-    message.intervals = object.intervals?.map((e) => e) || [];
     message.hp = object.hp ?? 0;
-    message.amount = object.amount ?? 0;
     message.particleThreshold = object.particleThreshold ?? 0;
     message.particleDropCount = object.particleDropCount ?? 0;
     message.freezeResist = object.freezeResist ?? 0;
@@ -1274,7 +1521,10 @@ export const GCSimScriptTarget = {
     message.physicalResist = object.physicalResist ?? 0;
     message.anemoResist = object.anemoResist ?? 0;
     message.geoResist = object.geoResist ?? 0;
-    message.hpMult = object.hpMult ?? 0;
+    message.type = (object.type !== undefined && object.type !== null)
+      ? GCSimScriptTargetType.fromPartial(object.type)
+      : undefined;
+    message.particleElement = object.particleElement ?? 0;
     return message;
   },
 };

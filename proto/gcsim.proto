@@ -8,11 +8,13 @@ import "element.proto";
 import "weapon.proto";
 import "set.proto";
 
+// Key-value parameter for character/weapon/set customization
 message GCSimScriptParam {
     string key = 1;
     string value = 2;
 }
 
+// Weapon configuration
 message GCSimScriptWeaponInfo {
     Weapon weapon = 1;
     int32 level = 2;
@@ -21,30 +23,45 @@ message GCSimScriptWeaponInfo {
     repeated GCSimScriptParam params = 5;
 }
 
+// Artifact set configuration
 message GCSimScriptSetInfo {
     Set set = 1;
-    int32 count = 2;
+    int32 count = 2;  // Number of pieces (2 or 4)
     repeated GCSimScriptParam params = 3;
 }
 
+// Character stat with optional label for grouping (e.g., "flower", "feather")
 message GCSimScriptCharacterStat {
     AttributeType type = 1;
     float value = 2;
+    string label = 3;  // Label for stat grouping (e.g., "flower", "sands")
 }
 
+// Random substat generation based on artifact main stats
+// Example: diluc add stats random rarity=5 sand=hp% goblet=pyro% circlet=cr;
+message GCSimScriptRandomSubstats {
+    int32 rarity = 1;           // Artifact rarity (4 or 5)
+    AttributeType sand = 2;     // Sands main stat
+    AttributeType goblet = 3;   // Goblet main stat
+    AttributeType circlet = 4;  // Circlet main stat
+}
+
+// Character configuration
 message GCSimScriptCharacterInfo {
     Character character = 1;
     int32 level = 2;
     int32 max_level = 3;
     int32 constellation = 4;
-    repeated int32 talents = 5;
+    repeated int32 talents = 5;  // [attack, skill, burst]
     GCSimScriptWeaponInfo weapon_info = 6;
     repeated GCSimScriptSetInfo set_infos = 7;
     repeated GCSimScriptCharacterStat stats = 8;
     repeated GCSimScriptParam params = 9;
     int32 start_hp = 10;
+    GCSimScriptRandomSubstats random_substats = 11;  // Random substat config
 }
 
+// Simulation options
 message GCSimScriptOptions {
     bool defhalt = 1;
     bool hitlag = 2;
@@ -59,64 +76,84 @@ message GCSimScriptOptions {
     int32 jump_delay = 11;
     int32 dash_delay = 12;
     int32 aim_delay = 13;
+    bool ignore_burst_energy = 14;  // Ignore energy requirements for bursts
+    string frame_defaults = 15;     // Preset delay config (e.g., "human")
 }
 
+// Energy settings for periodic energy generation
+// Example: energy once interval=300 amount=1
+// Example: energy every interval=300,600 amount=1
 message GCSimScriptEnergySettings {
     enum EnergyType {
-        ONCE = 0;
-        EVERY = 1;
+        ONCE = 0;   // One-time energy drop at specific frame
+        EVERY = 1;  // Periodic energy drops
     }
     EnergyType type = 1;
-    repeated int32 intervals = 2;
-    int32 amount = 3;
+    int32 start = 2;  // For ONCE: the frame. For EVERY: min interval
+    int32 end = 3;    // For EVERY: max interval (random between start and end)
+    int32 amount = 4; // Energy amount per drop
 }
 
+// Hurt settings for periodic damage to active character
+// Example: hurt once interval=300 amount=1,300 element=physical
+// Example: hurt every interval=480,720 amount=1,300 element=physical
 message GCSimScriptHurtSettings {
     enum HurtType {
-        ONCE = 0;
-        EVERY = 1;
+        ONCE = 0;   // One-time damage at specific frame
+        EVERY = 1;  // Periodic damage
     }
     message HurtAmount {
         float min = 1;
         float max = 2;
     }
     HurtType type = 1;
-    repeated int32 intervals = 2;
-    HurtAmount amount = 3;
-    Element element = 4;
+    int32 start = 2;       // For ONCE: the frame. For EVERY: min interval
+    int32 end = 3;         // For EVERY: max interval (random between start and end)
+    HurtAmount amount = 4; // Damage range (random between min and max)
+    Element element = 5;
 }
 
+// Predefined enemy type configuration
+// Example: target type=hilichurl[hp_mult=2.0,particles=1];
+message GCSimScriptTargetType {
+    string type_name = 1;     // Enemy type name (e.g., "hilichurl", "ruin_guard")
+    float hp_multiplier = 2;  // HP multiplier
+    bool particles = 3;       // Whether to drop particles
+}
+
+// Target/enemy configuration
 message GCSimScriptTarget {
-    repeated float position = 1;
-    float radius = 2;
-    int32 level = 3;
-    float resist = 4;
-    repeated int32 intervals = 5;
-    float hp = 6;
-    int32 amount = 7;
-    int32 particle_threshold = 8;
-    int32 particle_drop_count = 9;
-    float freeze_resist = 10;
-    float electro_resist = 11;
-    float hydro_resist = 12;
-    float pyro_resist = 13;
-    float cryo_resist = 14;
-    float dendro_resist = 15;
-    float physical_resist = 16;
-    float anemo_resist = 17;
-    float geo_resist = 18;
-    float hp_mult = 19;
+    repeated float position = 1;  // Position [x, y] - exactly 2 values
+    float radius = 2;             // Hitbox radius
+    int32 level = 3;              // Enemy level (1-100)
+    float resist = 4;             // Base resistance for all elements
+    float hp = 5;                 // Enemy HP
+    int32 particle_threshold = 6; // Drop particle every X damage dealt
+    int32 particle_drop_count = 7; // Number of particles to drop
+    float freeze_resist = 8;      // Freeze resistance
+    float electro_resist = 9;     // Electro resistance
+    float hydro_resist = 10;      // Hydro resistance
+    float pyro_resist = 11;       // Pyro resistance
+    float cryo_resist = 12;       // Cryo resistance
+    float dendro_resist = 13;     // Dendro resistance
+    float physical_resist = 14;   // Physical resistance
+    float anemo_resist = 15;      // Anemo resistance
+    float geo_resist = 16;        // Geo resistance
+    GCSimScriptTargetType type = 17;  // Predefined enemy type
+    Element particle_element = 18;    // Element of dropped particles
 }
 
+// Complete GCSim script configuration
 message GCSimScript {
     GCSimScriptOptions options = 1;
     repeated GCSimScriptCharacterInfo character_infos = 2;
     repeated GCSimScriptTarget targets = 3;
     GCSimScriptEnergySettings energy_settings = 4;
     GCSimScriptHurtSettings hurt_settings = 5;
-    repeated string scripts = 6;
+    repeated string scripts = 6;  // Action script lines (not parsed)
 }
 
+// Collection of GCSim scripts
 message GCSim {
     repeated GCSimScript scripts = 1;
 }

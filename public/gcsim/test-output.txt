@@ -1,0 +1,67 @@
+ningguang char lvl=90/90 cons=6 talent=9,9,9;
+ningguang add weapon="thewidsith" lvl=90/90 refine=3;
+ningguang add set="nighttimewhispersintheechoingwoods" count=4;
+ningguang add stats hp=5287.8800048828125 atk=344.0800018310547 atk%=0.6643999963998795 geo%=0.4659999907016754 cr=0.6419999897480011 def%=0.12399999797344208 def=39.36000061035156 hp%=0.09920000284910202 er=0.11020000278949738 em=39.63999938964844 cd=0.7943999767303467;
+
+layla char lvl=90/90 cons=6 talent=9,9,9;
+layla add weapon="favoniussword" lvl=90/90 refine=3;
+layla add set="tenacityofthemillelith" count=4;
+layla add stats hp=5287.8800048828125 atk=344.0800018310547 hp%=0.6643999963998795 cryo%=0.4659999907016754 cr=0.6419999897480011 def%=0.12399999797344208 def=39.36000061035156 atk%=0.09920000284910202 er=0.11020000278949738 em=39.63999938964844 cd=0.7943999767303467;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favoniuslance" lvl=90/90 refine=3;
+rosaria add set="noblesseoblige" count=5;
+rosaria add stats hp=5287.8800048828125 atk=344.0800018310547 atk%=0.6643999963998795 cryo%=0.4659999907016754 cr=0.6419999897480011 def%=0.12399999797344208 def=39.36000061035156 hp%=0.09920000284910202 er=0.11020000278949738 em=39.63999938964844 cd=0.7943999767303467;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbingerofdawn" lvl=90/90 refine=5;
+chiori add set="goldentroupe" count=4 +params=[stacks=4];
+chiori add stats hp=5287.8800048828125 atk=344.0800018310547 def%=1.0789999961853027 geo%=0.4659999907016754 cd=1.2839999794960022 def=39.36000061035156 hp%=0.09920000284910202 atk%=0.09920000284910202 er=0.11020000278949738 em=39.63999938964844 cr=0.2648000121116638;
+
+options defhalt=false hitlag=false ignore_burst_energy=false frame_defaults=;
+
+energy every interval=480,720 amount=1;
+
+target pos=0,2.4000000953674316 radius=2 lvl=100 resist=0.10000000149011612;
+
+let normal_attack_state = 1;
+let c_left = 0;
+let c_twirl = 2;
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+	pick_up_crystallize("any");
+  }
+  return _execute_action(char_id, action_id, p);
+}
+active layla;
+for {
+  switch {
+    case .layla.burst.ready && .layla.skill.ready && .layla.swap.ready:
+      layla burst, skill;
+    case .layla.burst.ready && .layla.swap.ready:
+      layla burst;
+    case .layla.skill.ready && .layla.swap.ready:
+      layla skill;
+    case .rosaria.skill.ready && .rosaria.swap.ready && !.ningguang.onfield:
+      rosaria skill;
+    case .rosaria.burst.ready && .rosaria.swap.ready:
+      rosaria burst;
+    case .chiori.skill.ready && .chiori.swap.ready:
+      chiori skill:2;
+    case .ningguang.skill.ready && .ningguang.swap.ready && (!.status.bennettburst || .ningguang.mods.bennett-field):
+      ningguang skill, dash, attack;
+    case .ningguang.burst.ready && .ningguang.swap.ready:
+      ningguang burst, walk, attack;
+    case .ningguang.jadeCount == 7 && .ningguang.swap.ready:
+      ningguang charge;
+    case .ningguang.onfield && .state == normal_attack_state:
+      if .ningguang.prevAttack == c_left || .ningguang.prevAttack == c_twirl {
+        ningguang charge;
+      } else {
+        ningguang walk;
+      }
+    default:
+      ningguang attack;
+  }
+}
