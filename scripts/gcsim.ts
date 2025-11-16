@@ -20,8 +20,11 @@ const gcsimTargetRegx = /\s*target\s+(?<attrs>.*?)\s*;/gm;
 const gcsimHurtRegx = /\s*hurt\s+(?<type>once|every)\s+(?<attrs>.*?)\s*;/gm;
 const gcsimOptionsRegx = /\s*options\s+(?<attrs>.*?);/gm;
 const gcsimParamsRegx = /\s*\+params\s*=\s*\[(?<params>.*?)\]/gm;
-const gcsimKeyValRegx = /(?<key>[\w_%]+)\s*=\s*(?<value>\d+\s*,\s*\d+\s*,\s*\d+|[\d*\.*\d+]+\s*,\s*[\d*\.*\d+]+|\d+\/\d+|\d*\.*\d+|\d+)\s*/gm;
+const gcsimKeyValRegx = /(?<key>[\w_%]+)\s*=\s*(?<value>true|false|\d+\s*,\s*\d+\s*,\s*\d+|[\d*\.*\d+]+\s*,\s*[\d*\.*\d+]+|\d+\/\d+|\d*\.*\d+|\d+|[\w_]+)\s*/gm;
 const gcsimTargetTypeRegx = /type\s*=\s*(?<typename>\w+)(?:\[(?<params>[^\]]+)\])?/;
+
+// Convert snake_case to camelCase
+const snakeToCamelCase = (str: string) => str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
 const statMap: { [key: string]: string } = {
     hp: "HP",
     atk: "ATK",
@@ -204,27 +207,39 @@ const parseWeaponInfo = (wsname: string, line: string) => {
 }
 
 const parseOptions = (script: string, parsedScript: GCSimScript) => {
+    // Set gcsim defaults (matching gcsim/pkg/gcs/parser/parser.go:48-52)
+    const allOptions: { [key: string]: any } = {
+        defhalt: true,      // default defhalt to true
+        hitlag: true,       // default hitlag enabled
+        workers: 20,        // default 20 workers
+        iteration: 1000,    // default 1000 iterations
+        swapDelay: 1,       // default swap timer of 1
+    };
+
     for (let match of script.matchAll(gcsimOptionsRegx)) {
-        const options: { [key: string]: any } = {};
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key && attr.groups.value) {
-                const key = attr.groups.key as string;
+                const snakeKey = attr.groups.key as string;
+                const camelKey = snakeToCamelCase(snakeKey);
                 let value: any = attr.groups.value;
 
                 // Handle boolean values
                 if (value === 'true' || value === 'false') {
                     value = value === 'true';
                 }
-                // Handle frame_defaults
-                else if (key === 'frame_defaults') {
-                    value = value; // Keep as string
+                // Handle numeric values
+                else if (!isNaN(Number(value))) {
+                    value = Number(value);
                 }
+                // Otherwise keep as string (e.g., frame_defaults)
 
-                options[key] = value;
+                allOptions[camelKey] = value;
             }
         }
-        parsedScript.options = GCSimScriptOptions.fromJSON(options);
     }
+
+    parsedScript.options = GCSimScriptOptions.fromJSON(allOptions);
+
     script = script.replace(gcsimOptionsRegx, "");
     return script;
 }
@@ -477,7 +492,14 @@ const parseScripts = async (): Promise<GCSim> => {
     }
     return { scripts };
 }
-parseScripts().then(async gcsim => {
-    console.log(`Parsed ${gcsim.scripts.length} scripts`);
-    await fs.promises.writeFile(path.join(__dirname, "../public/gcsim/gcsim.bin"), GCSim.encode(gcsim).finish());
-})
+
+// Export parseScript for testing
+export { parseScript };
+
+// Only run if this is the main module
+if (import.meta.url === `file://${process.argv[1]}`) {
+    parseScripts().then(async gcsim => {
+        console.log(`Parsed ${gcsim.scripts.length} scripts`);
+        await fs.promises.writeFile(path.join(__dirname, "../public/gcsim/gcsim.bin"), GCSim.encode(gcsim).finish());
+    });
+}

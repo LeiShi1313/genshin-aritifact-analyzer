@@ -18,7 +18,9 @@ const setToGCSimSet = (set: Set) => {
 
 const attributeTypeToGCSimStat = (at: AttributeType) => {
     const type = attributeTypeToJSON(at);
-    if (type.endsWith("DAMAGE_BONUS")) {
+    if (type === "PHYSICAL_DAMAGE_BONUS") {
+        return "phys%";
+    } else if (type.endsWith("DAMAGE_BONUS")) {
         return type.replace("_DAMAGE_BONUS", "%").toLowerCase();
     } else if (type.endsWith("PERCENT")) {
         return type.replace("_PERCENT", "%").toLowerCase();
@@ -38,6 +40,44 @@ const attributeTypeToGCSimStat = (at: AttributeType) => {
 }
 const gcsimScriptToScript = (script: GCSimScript): string => {
     let result = "";
+
+    // Options first
+    if (script.options) {
+        const optionEntries = Object.entries(script.options)
+            .filter(([key, value]) => {
+                // Skip undefined/null values
+                if (value === undefined || value === null) return false;
+
+                // Skip empty strings
+                if (typeof value === 'string' && value.length === 0) return false;
+
+                // Skip default values (matching gcsim defaults)
+                if (key === 'defhalt' && value === true) return false;
+                if (key === 'hitlag' && value === true) return false;
+                if (key === 'workers' && value === 20) return false;
+                if (key === 'iteration' && value === 1000) return false;
+                if (key === 'swapDelay' && value === 1) return false;
+                if (key === 'ignoreBurstEnergy' && value === false) return false;
+
+                // Include booleans that are not defaults
+                if (typeof value === 'boolean') return true;
+
+                // Include non-zero numbers
+                if (typeof value === 'number' && value > 0) return true;
+
+                // Include non-empty strings
+                if (typeof value === 'string') return true;
+
+                return false;
+            })
+            .map(([key, value]) => `${camelToSnakeCase(key)}=${value}`);
+
+        if (optionEntries.length > 0) {
+            result += "options " + optionEntries.join(" ") + ";\n\n";
+        }
+    }
+
+    // Then characters
     script.characterInfos.map(characterInfo => {
         const char = characterToGCSimCharacter(characterInfo.character);
         let charLine = `${char} char `
@@ -107,10 +147,6 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
 
         result += charLine + weaponLine + setLines.join("") + statLines.join("") + "\n";
     })
-
-    if (script.options) {
-        result += "options " + Object.entries(script.options).filter(([_, value]) => value !== undefined && value !== null && (typeof value === 'boolean' || value > 0 || typeof value === 'string')).map(([key, value]) => `${camelToSnakeCase(key)}=${value}`).join(" ") + ";\n\n";
-    }
     if (script.energySettings) {
         const intervals = script.energySettings.end
             ? `${script.energySettings.start},${script.energySettings.end}`
