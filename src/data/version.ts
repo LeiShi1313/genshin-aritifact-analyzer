@@ -3,4 +3,4 @@
 
 export const GENSHIN_GAME_VERSION = "6.1";
 export const GENSHIN_DB_VERSION = "5.2.6";
-export const LAST_UPDATED = "2025-11-14T10:51:02.437Z";
+export const LAST_UPDATED = "2025-11-16T10:54:24.622Z";
