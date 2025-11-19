@@ -70,6 +70,18 @@
     "Pick one": "Pick one",
     "Pick": "Pick",
     "V2_lock_file_tooltip": "V2 lock file will lock AND unlock artifacts.",
+    "Search characters...": "Search characters...",
+    "Clear All": "Clear All",
+    "Teams": "Teams",
+    "Script": "Script",
+    "Filter by Character": "Filter by Character",
+    "No scripts found with selected characters": "No scripts found with selected characters",
+    "No scripts available": "No scripts available",
+    "Cancel Simulation": "Cancel Simulation",
+    "Not Running": "Not Running",
+    "Status": "Status",
+    "Running": "Running",
+    "Ready": "Ready",
 
     "Loaded X gcsim scripts": "Loaded {{num, number}} gcsim scripts",
     "Unsupported file format, please use supported file format": "Unsupported file format, please use supported file format",
@@ -109,5 +121,10 @@
 
     "About": "About",
 
-    "主C": "Main Carry"
+    "主C": "Main Carry",
+    "constellation": "C{{count}}",
+    "Run": "Run",
+    "Run All Scripts": "Run All Scripts",
+    "Results": "Results",
+    "Loading": "Loading"
 }

@@ -66,7 +66,8 @@ const App = () => {
               <Route path="gcsim" element={<GCSim />} >
                 <Route index element={<GCSimSelect />} />
                 <Route path="teams" element={<GCSimTeams />} />
-                </Route>
+                <Route path="teams/:artifactsId" element={<GCSimTeams />} />
+              </Route>
 
               <Route path="config" element={<Config />} />
             </Route>

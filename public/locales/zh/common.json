@@ -70,6 +70,18 @@
     "Pick one": "选择",
     "Pick": "选择",
     "V2_lock_file_tooltip": "V2 lock 文件将同时锁定和解锁圣遗物",
+    "Search characters...": "搜索角色...",
+    "Clear All": "清除全部",
+    "Teams": "队伍",
+    "Script": "脚本",
+    "Filter by Character": "按角色筛选",
+    "No scripts found with selected characters": "未找到包含所选角色的脚本",
+    "No scripts available": "无可用脚本",
+    "Cancel Simulation": "取消模拟",
+    "Not Running": "未运行",
+    "Status": "状态",
+    "Running": "运行中",
+    "Ready": "就绪",
 
     "Loaded X gcsim scripts": "已加载{{num, number}}个gcsim脚本",
     "Unsupported file format, please use supported file format": "不支持的文件格式，请使用支持的文件格式",
@@ -109,5 +121,10 @@
 
     "About": "关于",
 
-    "主C": "主C"
+    "主C": "主C",
+    "constellation": "{{count}}命",
+    "Run": "运行",
+    "Run All Scripts": "运行所有脚本",
+    "Results": "结果",
+    "Loading": "加载中"
 }

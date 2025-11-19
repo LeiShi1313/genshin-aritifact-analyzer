@@ -66,6 +66,18 @@
     "Sub Stats": "Statistiques Secondaires",
     "Pick one": "Choisir un",
     "Pick": "Choisir",
+    "Search characters...": "Rechercher des personnages...",
+    "Clear All": "Tout Effacer",
+    "Teams": "Équipes",
+    "Script": "Script",
+    "Filter by Character": "Filtrer par Personnage",
+    "No scripts found with selected characters": "Aucun script trouvé avec les personnages sélectionnés",
+    "No scripts available": "Aucun script disponible",
+    "Cancel Simulation": "Annuler la Simulation",
+    "Not Running": "Non en Cours",
+    "Status": "Statut",
+    "Running": "En Cours",
+    "Ready": "Prêt",
 
     "Unsupported file format, please use supported file format": "Format de fichier non supporté, veuillez utiliser un format de fichier pris en charge",
     "Found X builds in file Y": "Trouvé {{num, number}} constructions dans le fichier {{fileName}}",
@@ -104,5 +116,10 @@
 
     "About": "About",
 
-    "主C": "Main Carry"
+    "主C": "Main Carry",
+    "constellation": "C{{count}}",
+    "Run": "Exécuter",
+    "Run All Scripts": "Exécuter Tous les Scripts",
+    "Results": "Résultats",
+    "Loading": "Chargement"
 }

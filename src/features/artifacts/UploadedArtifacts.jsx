@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { X, LockOpen } from "phosphor-react";
+import { X, LockOpen, Users } from "phosphor-react";
 
 import { removeUploadedArtifacts } from "../../store/reducers/uploads";
 
@@ -48,13 +48,13 @@ const UploadedArtifacts = () => {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="my-auto flex h-[60vh] w-full flex-col items-center justify-start  space-y-2 overflow-auto">
-          
+      <div className="my-auto flex h-[60vh] w-full flex-col items-center justify-start space-y-2 overflow-y-auto px-4 pb-8">
+
         {Object.keys(uploaded)
           .filter((key) => uploaded[key].items)
           .map((key) => (
             <div
-              className="flex flex-row items-center justify-center"
+              className="flex flex-row items-center justify-center gap-2"
               key={key}
             >
               <div
@@ -63,7 +63,15 @@ const UploadedArtifacts = () => {
               >
                 <UploadedDetails uploaded={uploaded[key]} />
               </div>
-              <div className="tooltip" data-tip={t("Delete")}>
+              <div className="tooltip tooltip-bottom z-50" data-tip={t("Teams")}>
+                <Users
+                  size={24}
+                  weight="bold"
+                  className="cursor-pointer text-success"
+                  onClick={() => navigate(`/gcsim/teams/${key}`)}
+                />
+              </div>
+              <div className="tooltip tooltip-bottom z-50" data-tip={t("Delete")}>
                 <X
                   size={24}
                   weight="bold"
@@ -71,7 +79,7 @@ const UploadedArtifacts = () => {
                   onClick={() => dispatch(removeUploadedArtifacts(key))}
                 />
               </div>
-              <div className="tooltip" data-tip={t("Unlock All")}>
+              <div className="tooltip tooltip-bottom z-50" data-tip={t("Unlock All")}>
                 {uploaded[key].format === "GOOD" && (
                   <LockOpen
                     size={24}

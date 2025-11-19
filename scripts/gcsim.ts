@@ -472,7 +472,9 @@ const parseScript = (script: string): GCSimScript => {
         hurtSettings: undefined,
         scripts: [],
     };
+    // Remove comments starting with # or //
     script = script.replace(/\s*#.*$/gm, "");
+    script = script.replace(/\/\/.*$/gm, "");
     script = parseOptions(script, parsedScript);
     script = parseCharacters(script, parsedScript);
     script = parseEnergy(script, parsedScript);

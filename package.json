@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "scrape-gcsim": "npx tsx scripts/scrape-gcsim.ts",
-    "gcsim": "npx tsx scripts/gcsim.ts",
+    "gcsim": "npm run clean-gen && npx tsx scripts/gcsim.ts",
     "test-roundtrip": "npx tsx tests/test-roundtrip.ts",
     "analyze-diffs": "node tests/analyze-diffs.mjs",
     "clean-gen": "node tests/clean-gen.mjs",
@@ -40,6 +40,7 @@
     "react-loading": "^2.0.3",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.1",
+    "react-window": "^2.2.3",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1"
   },
@@ -47,6 +48,7 @@
     "@tailwindcss/typography": "^0.5.7",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/react-window": "^1.8.8",
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.12",
     "axios": "^1.2.2",
