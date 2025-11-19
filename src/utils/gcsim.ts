@@ -127,10 +127,11 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
         for (let [label, stats] of Object.entries(statsByLabel)) {
             let statLine = `${char} add stats `
                 + Object.entries(stats).map(([key, value]) => `${key}=${value}`).join(" ");
+            statLine += ";";
             if (label !== "default") {
-                statLine += ` +label=${label}`;
+                statLine += ` //${label}`;
             }
-            statLine += ";\n";
+            statLine += "\n";
             statLines.push(statLine);
         }
 
@@ -157,6 +158,23 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
     }
     for (let target of script.targets) {
         result += `target`;
+        result += (target.position.length ? ` pos=${target.position.join(",")}` : "")
+            + (target.radius ? ` radius=${target.radius}` : "")
+            + (target.level ? ` lvl=${target.level}` : "")
+            + (target.resist ? ` resist=${target.resist}` : "")
+            + (target.hp ? ` hp=${target.hp}` : "")
+            + (target.particleThreshold ? ` particle_threshold=${target.particleThreshold}` : "")
+            + (target.particleDropCount ? ` particle_drop_count=${target.particleDropCount}` : "")
+            + (target.particleElement ? ` particle_element=${target.particleElement.toString().toLowerCase()}` : "")
+            + (target.freezeResist ? ` freeze_resist=${target.freezeResist}` : "")
+            + (target.electroResist ? ` electro=${target.electroResist}` : "") // Deprecated
+            + (target.hydroResist ? ` hydro=${target.hydroResist}` : "") // Deprecated
+            + (target.pyroResist ? ` pyro=${target.pyroResist}` : "") // Deprecated
+            + (target.cryoResist ? ` cryo=${target.cryoResist}` : "") // Deprecated
+            + (target.dendroResist ? ` dendro=${target.dendroResist}` : "") // Deprecated
+            + (target.physicalResist ? ` physical=${target.physicalResist}` : "") // Deprecated
+            + (target.anemoResist ? ` anemo=${target.anemoResist}` : "") // Deprecated
+            + (target.geoResist ? ` geo=${target.geoResist}` : ""); // Deprecated
         if (target.type) {
             result += ` type=${target.type.typeName}`;
             if (target.type.hpMultiplier || target.type.particles !== undefined) {
@@ -167,25 +185,7 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
                 result += params.join(",") + `]`;
             }
         }
-        result += (target.position.length ? ` pos=${target.position.join(",")}` : "")
-            + (target.radius ? ` radius=${target.radius}` : "")
-            + (target.level ? ` lvl=${target.level}` : "")
-            + (target.resist ? ` resist=${target.resist}` : "")
-            + (target.hp ? ` hp=${target.hp}` : "")
-            + (target.particleThreshold ? ` particle_threshold=${target.particleThreshold}` : "")
-            + (target.particleDropCount ? ` particle_drop_count=${target.particleDropCount}` : "")
-            + (target.particleElement ? ` particle_element=${target.particleElement.toString().toLowerCase()}` : "")
-            + (target.freezeResist ? ` freeze_resist=${target.freezeResist}` : "")
-            + (target.electroResist ? ` electro=${target.electroResist}` : "")
-            + (target.hydroResist ? ` hydro=${target.hydroResist}` : "")
-            + (target.pyroResist ? ` pyro=${target.pyroResist}` : "")
-            + (target.cryoResist ? ` cryo=${target.cryoResist}` : "")
-            + (target.dendroResist ? ` dendro=${target.dendroResist}` : "")
-            + (target.physicalResist ? ` physical=${target.physicalResist}` : "")
-            + (target.anemoResist ? ` anemo=${target.anemoResist}` : "")
-            + (target.geoResist ? ` geo=${target.geoResist}` : "")
-            + (target.hpMult ? ` hp_mult=${target.hpMult}` : "")
-            + ";\n";
+        result += ";\n";
     }
     if (script.targets.length > 0) {
         result += "\n";

@@ -8,8 +8,11 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWasmExecutor } from "../../hooks/useWasmExecutor";
 import MultiCharacterSelect from "../characters/MultiCharacterSelect";
 import ScriptCard from "./ScriptCard";
+import ScriptOptionsConfig, { ScriptOverrides } from "./ScriptOptionsConfig";
 import { SimResults } from "../../gcsim/types/sim";
 import { gcsimScriptToScript } from "../../utils/gcsim";
+import { GCSimScript, GCSimScriptCharacterStat, GCSimScriptSetInfo } from "../../genshin/gcsim";
+import { AttributePosition, attributePositionToJSON } from "../../genshin/attribute";
 
 interface ScriptState {
   isRunning: boolean;
@@ -21,6 +24,77 @@ interface ScriptState {
   };
 }
 
+/**
+ * Convert artifact position to label string for GCSimScriptCharacterStat
+ */
+const getPositionLabel = (position: AttributePosition): string => {
+  const positionName = attributePositionToJSON(position);
+  return positionName.toLowerCase();
+};
+
+/**
+ * Convert artifacts to GCSimScriptCharacterStat array
+ * Each artifact contributes: 1 main stat + N sub stats (all with same label)
+ */
+const artifactsToStats = (artifacts: any[]): GCSimScriptCharacterStat[] => {
+  const stats: GCSimScriptCharacterStat[] = [];
+
+  artifacts.forEach(artifact => {
+    const label = getPositionLabel(artifact.position);
+
+    // Add main attribute
+    if (artifact.mainAttribute) {
+      stats.push({
+        type: artifact.mainAttribute.type,
+        value: artifact.mainAttribute.value,
+        label: label
+      });
+    }
+
+    // Add sub attributes
+    if (artifact.subAttributes) {
+      artifact.subAttributes.forEach((subAttr: any) => {
+        stats.push({
+          type: subAttr.type,
+          value: subAttr.value,
+          label: label
+        });
+      });
+    }
+  });
+
+  return stats;
+};
+
+/**
+ * Aggregate artifact sets and return GCSimScriptSetInfo array
+ * Only includes sets with 2+ pieces
+ */
+const aggregateArtifactSets = (artifacts: any[]): GCSimScriptSetInfo[] => {
+  const setCounts: { [key: number]: number } = {};
+
+  // Count artifacts per set
+  artifacts.forEach(artifact => {
+    if (artifact.set) {
+      setCounts[artifact.set] = (setCounts[artifact.set] || 0) + 1;
+    }
+  });
+
+  // Create set infos for sets with 2+ pieces
+  const setInfos: GCSimScriptSetInfo[] = [];
+  Object.entries(setCounts).forEach(([setId, count]) => {
+    if (count >= 2) {
+      setInfos.push({
+        set: parseInt(setId),
+        count: count >= 4 ? 4 : 2, // Cap at 4 pieces for set bonuses
+        params: []
+      });
+    }
+  });
+
+  return setInfos;
+};
+
 const Teams = () => {
   const { t } = useTranslation();
   const { artifactsId } = useParams();
@@ -31,6 +105,7 @@ const Teams = () => {
   const [workers, setWorkers] = useLocalStorage<number>("wasm-num-workers", 1);
   const [selectedCharacters, setSelectedCharacters] = useState<number[]>([]);
   const [scriptStates, setScriptStates] = useState<{ [index: number]: ScriptState }>({});
+  const [scriptOverrides, setScriptOverrides] = useState<ScriptOverrides>({});
 
   // Use the custom hook for WASM executor lifecycle management
   const { isReady, isRunning, run, cancel } = useWasmExecutor({
@@ -54,12 +129,58 @@ const Teams = () => {
     }));
 
     try {
-      const config = gcsimScriptToScript(script);
+      // Merge script with overrides
+      const scriptWithOverrides = GCSimScript.fromJSON(GCSimScript.toJSON(script));
+
+      // Apply option overrides if present
+      if (scriptOverrides.options && Object.keys(scriptOverrides.options).length > 0) {
+        if (!scriptWithOverrides.options) {
+          scriptWithOverrides.options = {};
+        }
+        Object.assign(scriptWithOverrides.options, scriptOverrides.options);
+      }
+
+      // Apply energy settings overrides if present
+      if (scriptOverrides.energySettings && Object.keys(scriptOverrides.energySettings).length > 0) {
+        if (!scriptWithOverrides.energySettings) {
+          scriptWithOverrides.energySettings = {};
+        }
+        Object.assign(scriptWithOverrides.energySettings, scriptOverrides.energySettings);
+      }
+
+      // Apply target overrides if present
+      if (scriptOverrides.target && Object.keys(scriptOverrides.target).length > 0) {
+        if (!scriptWithOverrides.targets || scriptWithOverrides.targets.length === 0) {
+          scriptWithOverrides.targets = [{}];
+        }
+        // Apply overrides to the first target
+        Object.assign(scriptWithOverrides.targets[0], scriptOverrides.target);
+      }
+
+      // Apply artifact stats and sets for each character
+      if (scriptWithOverrides.characterInfos) {
+        scriptWithOverrides.characterInfos.forEach(charInfo => {
+          const characterArtifacts = characterToArtifacts[charInfo.character];
+
+          if (characterArtifacts && characterArtifacts.length > 0) {
+            // Replace character stats with artifact stats
+            charInfo.stats = artifactsToStats(characterArtifacts);
+
+            // Replace set infos with aggregated artifact sets
+            charInfo.setInfos = aggregateArtifactSets(characterArtifacts);
+
+            console.log(`Applied ${characterArtifacts.length} artifacts to character ${charInfo.character}:`, {
+              stats: charInfo.stats.length,
+              sets: charInfo.setInfos
+            });
+          }
+        });
+      }
+
+      const config = gcsimScriptToScript(scriptWithOverrides);
       console.log(`Running simulation ${index} with config:`, config);
 
       const runResult = await run(config, (simResult: SimResults, hash: string) => {
-        console.log(`Simulation ${index} result received:`, simResult);
-
         // Update progress and result
         setScriptStates(prev => ({
           ...prev,
@@ -162,6 +283,13 @@ const Teams = () => {
     <div className="flex min-h-screen w-full max-w-screen-lg flex-col px-4 lg:px-0">
       <div className="my-8 flex w-full flex-col gap-4">
         <h1 className="text-2xl font-bold">Teams</h1>
+
+        {/* Script Options Configuration */}
+        <ScriptOptionsConfig
+          overrides={scriptOverrides}
+          onChange={setScriptOverrides}
+          onClear={() => setScriptOverrides({})}
+        />
 
         {/* Character Filter */}
         <div className="flex w-full flex-col gap-2">
