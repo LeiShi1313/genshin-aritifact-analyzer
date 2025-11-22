@@ -2,28 +2,40 @@
 // @ts-ignore
 self.importScripts("/gcsim/wasm_exec.js");
 
-if (!WebAssembly.instantiateStreaming) {
-  // polyfill
-  WebAssembly.instantiateStreaming = async (resp, importObject) => {
-    const source = await (await resp).arrayBuffer();
-    return await WebAssembly.instantiate(source, importObject);
-  };
+// Fetch and decompress gzipped WASM
+async function fetchWasm(url: string): Promise<ArrayBuffer> {
+  const response = await fetch(url);
+  const buffer = await response.arrayBuffer();
+
+  // Check if gzip compressed (magic bytes: 1f 8b)
+  const bytes = new Uint8Array(buffer);
+  if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
+    // Decompress using DecompressionStream
+    const ds = new DecompressionStream('gzip');
+    const decompressedStream = new Response(buffer).body!.pipeThrough(ds);
+    return await new Response(decompressedStream).arrayBuffer();
+  }
+
+  return buffer;
 }
 
 // @ts-ignore
 function ready(req: { wasm: string }) {
   const go = new Go();
-  WebAssembly.instantiateStreaming(fetch(req.wasm), go.importObject)
-      .then((result) => {
-        go.run(result.instance);
-        console.log("aggregator loaded okay");
-        postMessage({ type: AggResponse.Ready });
-      }).catch((e) => {
-        console.error(e);
-        postMessage({
-          type: AggResponse.Failed,
-          reason: e instanceof Error ? e.message : "Unknown Error" });
+  fetchWasm(req.wasm)
+    .then((buffer) => WebAssembly.instantiate(buffer, go.importObject))
+    .then((result) => {
+      go.run(result.instance);
+      console.log("aggregator loaded okay");
+      postMessage({ type: AggResponse.Ready });
+    })
+    .catch((e) => {
+      console.error(e);
+      postMessage({
+        type: AggResponse.Failed,
+        reason: e instanceof Error ? e.message : "Unknown Error",
       });
+    });
 }
 
 // @ts-ignore
