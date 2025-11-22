@@ -101,14 +101,34 @@ const Teams = () => {
   const { t } = useTranslation();
   const { artifactsId } = useParams();
   const { scripts, isScriptLoading } = useSelector((state: any) => state.gcsim);
-  const artifacts = useSelector(
-    (state: any) => (state.uploads.artifacts[artifactsId] ?? {}).items ?? []
+  const uploadedData = useSelector(
+    (state: any) => state.uploads.artifacts[artifactsId] ?? {}
   );
+  const artifacts = uploadedData.items ?? [];
+  const uploadedCharacters = uploadedData.characters ?? [];
+  const uploadedWeapons = uploadedData.weapons ?? [];
+  const isGOODFormat = uploadedData.format === 'GOOD';
   const [workers, setWorkers] = useLocalStorage<number>("wasm-num-workers", 1);
   const [selectedCharacters, setSelectedCharacters] = useState<number[]>([]);
   const [scriptStates, setScriptStates] = useState<{ [index: number]: ScriptState }>({});
   const [scriptOverrides, setScriptOverrides] = useState<ScriptOverrides>({});
   const [characterOverrides, setCharacterOverrides] = useState<CharacterOverrides>({});
+
+  // Build character-to-artifacts mapping from artifacts (must be before handleSelectedCharactersChange)
+  const characterToArtifacts = useMemo(() => {
+    const mapping: { [key: number]: any[] } = {};
+
+    artifacts.forEach((artifact: any) => {
+      if (artifact.character && artifact.character !== 0) {
+        if (!mapping[artifact.character]) {
+          mapping[artifact.character] = [];
+        }
+        mapping[artifact.character].push(artifact);
+      }
+    });
+
+    return mapping;
+  }, [artifacts]);
 
   // Handle character override changes
   const handleCharacterOverrideChange = useCallback((characterId: number, override: CharacterOverride) => {
@@ -128,7 +148,33 @@ const Teams = () => {
     });
   }, []);
 
-  // When a character is selected, initialize their override state
+  // Helper to infer sets from artifacts
+  const inferSetsFromArtifacts = (charArtifacts: any[]): { set: number; count: 2 | 4 }[] | undefined => {
+    if (!charArtifacts || charArtifacts.length === 0) return undefined;
+
+    // Count artifacts by set
+    const setCounts: { [key: number]: number } = {};
+    charArtifacts.forEach((art: any) => {
+      if (art.set) {
+        setCounts[art.set] = (setCounts[art.set] || 0) + 1;
+      }
+    });
+
+    // Convert to SetOverride format (only sets with 2+ pieces)
+    const sets: { set: number; count: 2 | 4 }[] = [];
+    Object.entries(setCounts).forEach(([setId, count]) => {
+      if (count >= 2) {
+        sets.push({
+          set: parseInt(setId),
+          count: count >= 4 ? 4 : 2,
+        });
+      }
+    });
+
+    return sets.length > 0 ? sets : undefined;
+  };
+
+  // When a character is selected, initialize their override state with GOOD data if available
   const handleSelectedCharactersChange = useCallback((newSelected: number[]) => {
     setSelectedCharacters(newSelected);
     // Initialize overrides for newly added characters
@@ -136,7 +182,45 @@ const Teams = () => {
       const updated = { ...prev };
       newSelected.forEach(charId => {
         if (!updated[charId]) {
-          updated[charId] = { enabled: true };
+          // Start with default override
+          const override: CharacterOverride = { enabled: true };
+
+          // If GOOD format, try to populate from uploaded character/weapon data
+          if (isGOODFormat) {
+            // Find character info from uploaded data
+            const charInfo = uploadedCharacters.find(
+              (c: any) => c.character === charId
+            );
+            if (charInfo) {
+              override.level = charInfo.level;
+              override.maxLevel = charInfo.maxLevel;
+              override.constellation = charInfo.constellation;
+              if (charInfo.talents && charInfo.talents.length === 3) {
+                override.talents = [charInfo.talents[0], charInfo.talents[1], charInfo.talents[2]];
+              }
+            }
+
+            // Find weapon equipped by this character
+            const weaponInfo = uploadedWeapons.find(
+              (w: any) => w.location === charId
+            );
+            if (weaponInfo && weaponInfo.weapon) {
+              override.weapon = {
+                weapon: weaponInfo.weapon,
+                level: weaponInfo.level,
+                maxLevel: weaponInfo.maxLevel,
+                refinement: weaponInfo.refinement,
+              };
+            }
+          }
+
+          // Infer sets from character's equipped artifacts
+          const charArtifacts = characterToArtifacts[charId];
+          if (charArtifacts) {
+            override.sets = inferSetsFromArtifacts(charArtifacts);
+          }
+
+          updated[charId] = override;
         }
       });
       // Remove overrides for deselected characters
@@ -148,7 +232,7 @@ const Teams = () => {
       });
       return updated;
     });
-  }, []);
+  }, [isGOODFormat, uploadedCharacters, uploadedWeapons, characterToArtifacts]);
 
   // Use the custom hook for WASM executor lifecycle management
   const { isReady, isRunning, run, cancel } = useWasmExecutor({
@@ -329,22 +413,6 @@ const Teams = () => {
     }
   };
 
-  // Build character-to-artifacts mapping from artifacts
-  const characterToArtifacts = useMemo(() => {
-    const mapping: { [key: number]: any[] } = {};
-
-    artifacts.forEach((artifact: any) => {
-      if (artifact.character && artifact.character !== 0) {
-        if (!mapping[artifact.character]) {
-          mapping[artifact.character] = [];
-        }
-        mapping[artifact.character].push(artifact);
-      }
-    });
-
-    return mapping;
-  }, [artifacts]);
-
   // Get list of available characters from artifacts
   const availableCharacters = useMemo(() => {
     return Object.keys(characterToArtifacts).map(Number).sort();
@@ -425,6 +493,7 @@ const Teams = () => {
                   override={characterOverrides[charId] || { enabled: true }}
                   onChange={(override) => handleCharacterOverrideChange(charId, override)}
                   onRemove={() => handleRemoveCharacter(charId)}
+                  uploadedWeapons={uploadedWeapons}
                 />
               ))}
             </div>

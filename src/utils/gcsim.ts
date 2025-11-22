@@ -1,9 +1,34 @@
-import { GCSimScript, gCSimScriptEnergySettings_EnergyTypeToJSON, gCSimScriptHurtSettings_HurtTypeToJSON } from "../genshin/gcsim";
+import { GCSimScript, GCSimScriptCharacterInfo, gCSimScriptEnergySettings_EnergyTypeToJSON, gCSimScriptHurtSettings_HurtTypeToJSON } from "../genshin/gcsim";
 import { Character, characterToJSON } from "../genshin/character";
 import { Weapon, weaponToJSON } from "../genshin/weapon";
 import { Set, setToJSON } from "../genshin/set";
 import { AttributeType, attributeTypeToJSON } from "../genshin/attribute";
 import { elementToJSON } from "../genshin/element";
+
+/**
+ * Character override configuration (matching types.ts)
+ */
+export interface CharacterOverrideForScript {
+  enabled: boolean;
+  level?: number;
+  maxLevel?: number;
+  constellation?: number;
+  talents?: [number, number, number];
+  weapon?: {
+    weapon: Weapon;
+    level?: number;
+    maxLevel?: number;
+    refinement?: number;
+  };
+  sets?: Array<{
+    set: Set;
+    count: 2 | 4;
+  }>;
+}
+
+export type CharacterOverridesMap = {
+  [characterId: number]: CharacterOverrideForScript;
+};
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 
 const characterToGCSimCharacter = (character: Character) => {
@@ -240,6 +265,80 @@ export const inferMaxLevel = (level: number): LevelInfo => {
   if (level >= 21) return { maxLevel: 40, isAmbiguous: false, options: [] };
   if (level === 20) return { maxLevel: 20, isAmbiguous: true, options: [20, 40] };
   return { maxLevel: 20, isAmbiguous: false, options: [] };
+};
+
+/**
+ * Apply character overrides to a GCSimScript
+ * Returns a new script with overrides applied (does not mutate original)
+ */
+export const applyCharacterOverrides = (
+  script: GCSimScript,
+  characterOverrides: CharacterOverridesMap
+): GCSimScript => {
+  // Deep clone the script
+  const newScript = GCSimScript.fromJSON(GCSimScript.toJSON(script));
+
+  if (!newScript.characterInfos) return newScript;
+
+  newScript.characterInfos.forEach(charInfo => {
+    const charId = charInfo.character;
+    const override = characterOverrides[charId];
+
+    if (!override?.enabled) return;
+
+    // Apply level override
+    if (override.level !== undefined) {
+      charInfo.level = override.level;
+    }
+
+    // Apply maxLevel override
+    if (override.maxLevel !== undefined) {
+      charInfo.maxLevel = override.maxLevel;
+    }
+
+    // Apply constellation override
+    if (override.constellation !== undefined) {
+      charInfo.constellation = override.constellation;
+    }
+
+    // Apply talents override
+    if (override.talents) {
+      charInfo.talents = [...override.talents];
+    }
+
+    // Apply weapon override
+    if (override.weapon?.weapon) {
+      charInfo.weaponInfo = {
+        weapon: override.weapon.weapon,
+        level: override.weapon.level ?? charInfo.weaponInfo?.level ?? 90,
+        maxLevel: override.weapon.maxLevel ?? charInfo.weaponInfo?.maxLevel ?? 90,
+        refinement: override.weapon.refinement ?? charInfo.weaponInfo?.refinement ?? 1,
+        params: [],
+      };
+    }
+
+    // Apply set overrides
+    if (override.sets && override.sets.length > 0) {
+      charInfo.setInfos = override.sets.map(setOverride => ({
+        set: setOverride.set,
+        count: setOverride.count,
+        params: [],
+      }));
+    }
+  });
+
+  return newScript;
+};
+
+/**
+ * Generate a gcsim script string with character overrides applied
+ */
+export const generateOverriddenScript = (
+  script: GCSimScript,
+  characterOverrides: CharacterOverridesMap
+): string => {
+  const overriddenScript = applyCharacterOverrides(script, characterOverrides);
+  return gcsimScriptToScript(overriddenScript);
 };
 
 export { gcsimScriptToScript };

@@ -170,5 +170,13 @@
     "Select Weapon": "Select Weapon",
     "Select Set": "Select Set",
     "Clear": "Clear",
-    "Add Set": "Add Set"
+    "Add Set": "Add Set",
+    "Loading gcsim scripts...": "Loading gcsim scripts...",
+    "No uploaded artifacts": "No uploaded artifacts",
+    "Select Uploaded Artifacts": "Select Uploaded Artifacts",
+    "GCSim": "GCSim",
+    "Artifacts": "Artifacts",
+    "Characters": "Characters",
+    "Copy Script": "Copy Script",
+    "Copied!": "Copied!"
 }

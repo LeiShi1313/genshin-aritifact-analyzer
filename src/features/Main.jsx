@@ -6,8 +6,7 @@ import classNames from "classnames";
 import { ChartLine } from "phosphor-react";
 import md5 from "crypto-js/md5";
 
-import { deserializeFromMona, deserializeFromGood } from "../utils/artifact";
-import { monaPositionToAttributePosition } from "../utils/attribute";
+import { parseImportFile } from "../utils/import";
 import { uploadArtifacts } from "../store/reducers/uploads";
 import { getGenshinGameVersion } from "../utils/genshindb";
 import IconConfig from "../assets/svgs/IconConfig";
@@ -45,31 +44,21 @@ const Main = () => {
         alert(t("Unsupported file format, please use supported file format"));
         return;
       }
-      const artifacts = [];
 
-      let format = null;
-      if (content["format"] === "GOOD") {
-        format = "GOOD";
-        for (const art of content["artifacts"]) {
-          const a = deserializeFromGood(art);
-          artifacts.push(deserializeFromGood(art));
-        }
-      } else if (
-        content["version"] === "1" &&
-        Object.keys(monaPositionToAttributePosition).every((k) => k in content)
-      ) {
-        format = "YAS";
-        for (const k of Object.keys(content)) {
-          if (k === "version") continue;
-          for (const art of content[k]) {
-            artifacts.push(deserializeFromMona(art));
-          }
-        }
-      } else {
+      const result = parseImportFile(content);
+      if (!result.format) {
         alert(t("Unsupported file format, please use supported file format"));
         return;
       }
-      dispatch(uploadArtifacts({ key, artifacts, format, name: file.name }));
+
+      dispatch(uploadArtifacts({
+        key,
+        artifacts: result.artifacts,
+        format: result.format,
+        name: file.name,
+        characters: result.characters,
+        weapons: result.weapons,
+      }));
       setFileLoading(false);
       navigate(`/artifacts/${key}`);
     };

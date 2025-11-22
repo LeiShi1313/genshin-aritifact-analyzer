@@ -56,5 +56,13 @@
     "Select Weapon": "武器を選択",
     "Select Set": "聖遺物セットを選択",
     "Clear": "クリア",
-    "Add Set": "セットを追加"
+    "Add Set": "セットを追加",
+    "Loading gcsim scripts...": "gcsimスクリプトを読み込み中...",
+    "No uploaded artifacts": "アップロードされた聖遺物がありません",
+    "Select Uploaded Artifacts": "アップロード済み聖遺物を選択",
+    "GCSim": "GCSim",
+    "Artifacts": "聖遺物",
+    "Characters": "キャラクター",
+    "Copy Script": "スクリプトをコピー",
+    "Copied!": "コピーしました！"
 }

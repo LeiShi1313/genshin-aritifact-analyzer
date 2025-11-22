@@ -1,23 +1,44 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { X, LockOpen, Users } from "phosphor-react";
+import { X, LockOpen, Users, Diamond, Sword, UserCircle, ChartLine } from "phosphor-react";
 
 import { removeUploadedArtifacts } from "../../store/reducers/uploads";
 
 const UploadedDetails = ({ uploaded }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+
+  const artifactCount = uploaded.items?.length ?? 0;
+  const characterCount = uploaded.characters?.length ?? 0;
+  const weaponCount = uploaded.weapons?.length ?? 0;
+
   return (
-    <div className="flex w-full flex-col items-center justify-center space-y-1 text-ellipsis">
-      {uploaded.name && (
-        <span className="w-full truncate">{uploaded.name}</span>
-      )}
-      <div className="flex flex-col items-center justify-center space-x-1 text-xs md:flex-row">
-        {uploaded.date && <span>{uploaded.date.toLocaleString()}</span>}
-        <span>
-          {t("Total")}: {uploaded.items.length}
+    <div className="flex w-full flex-col items-center justify-center text-ellipsis">
+      <div className="flex w-full items-center justify-center gap-2">
+        {uploaded.format && (
+          <span className="badge badge-xs badge-secondary">{uploaded.format}</span>
+        )}
+        {uploaded.name && (
+          <span className="truncate text-sm">{uploaded.name}</span>
+        )}
+      </div>
+      <div className="flex flex-row items-center justify-center gap-2 text-xs opacity-80">
+        <span className="flex items-center gap-1" title={t("Artifacts")}>
+          <Diamond size={12} weight="fill" className="text-accent" />
+          {artifactCount}
         </span>
+        {characterCount > 0 && (
+          <span className="flex items-center gap-1" title={t("Characters")}>
+            <UserCircle size={12} weight="fill" className="text-info" />
+            {characterCount}
+          </span>
+        )}
+        {weaponCount > 0 && (
+          <span className="flex items-center gap-1" title={t("Weapons")}>
+            <Sword size={12} weight="fill" className="text-warning" />
+            {weaponCount}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -63,8 +84,8 @@ const UploadedArtifacts = () => {
               >
                 <UploadedDetails uploaded={uploaded[key]} />
               </div>
-              <div className="tooltip tooltip-bottom z-50" data-tip={t("Teams")}>
-                <Users
+              <div className="tooltip tooltip-bottom z-50" data-tip={t("GCSim")}>
+                <ChartLine
                   size={24}
                   weight="bold"
                   className="cursor-pointer text-success"

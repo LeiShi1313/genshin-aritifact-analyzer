@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
+import { Copy, Check } from "phosphor-react";
 import CharacterInfo from "./CharacterInfo";
 import { SimResults } from "../../gcsim/types/sim";
 import { CharacterOverrides } from "./types";
+import { generateOverriddenScript } from "../../utils/gcsim";
 
 interface ScriptState {
   isRunning: boolean;
@@ -34,6 +37,7 @@ const ScriptCard = ({
   characterOverrides = {}
 }: ScriptCardProps) => {
   const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
 
   // Helper function to get translated character name
   const getCharacterName = (characterKey: string) => {
@@ -51,6 +55,32 @@ const ScriptCard = ({
     onRun();
   };
 
+  const handleCopy = async () => {
+    try {
+      const scriptText = generateOverriddenScript(script, characterOverrides);
+
+      // Try modern clipboard API first
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(scriptText);
+      } else {
+        // Fallback for non-HTTPS contexts
+        const textArea = document.createElement('textarea');
+        textArea.value = scriptText;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy script:", err);
+    }
+  };
+
   return (
     <div className="flex w-full flex-col gap-2 rounded-lg bg-base-200 p-2 shadow-lg sm:p-4">
       {/* Script header */}
@@ -58,15 +88,29 @@ const ScriptCard = ({
         <div className="text-xs font-medium opacity-70 sm:text-sm">
           {t("Script")} #{index + 1}
         </div>
-        {onRun && (
-          <button
-            onClick={handleRun}
-            disabled={!isWasmReady || isRunning}
-            className="btn btn-primary btn-xs sm:btn-sm"
-          >
-            {isRunning ? t("Running") : t("Run")}
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          <div className="tooltip tooltip-bottom" data-tip={copied ? t("Copied!") : t("Copy Script")}>
+            <button
+              onClick={handleCopy}
+              className="btn btn-ghost btn-xs sm:btn-sm"
+            >
+              {copied ? (
+                <Check size={16} weight="bold" className="text-success" />
+              ) : (
+                <Copy size={16} weight="bold" />
+              )}
+            </button>
+          </div>
+          {onRun && (
+            <button
+              onClick={handleRun}
+              disabled={!isWasmReady || isRunning}
+              className="btn btn-primary btn-xs sm:btn-sm"
+            >
+              {isRunning ? t("Running") : t("Run")}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Main content row - characters and progress/results */}

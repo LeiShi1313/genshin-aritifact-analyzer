@@ -56,5 +56,13 @@
     "Select Weapon": "무기 선택",
     "Select Set": "세트 선택",
     "Clear": "지우기",
-    "Add Set": "세트 추가"
+    "Add Set": "세트 추가",
+    "Loading gcsim scripts...": "gcsim 스크립트 로딩 중...",
+    "No uploaded artifacts": "업로드된 성유물이 없습니다",
+    "Select Uploaded Artifacts": "업로드된 성유물 선택",
+    "GCSim": "GCSim",
+    "Artifacts": "성유물",
+    "Characters": "캐릭터",
+    "Copy Script": "스크립트 복사",
+    "Copied!": "복사됨!"
 }

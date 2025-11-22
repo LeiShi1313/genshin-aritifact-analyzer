@@ -9,15 +9,24 @@ import { characterMetadata } from "../../utils/character";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
 import { enumToIdx } from "../../utils/enum";
 import { inferMaxLevel } from "../../utils/gcsim";
-import { CharacterOverride, SetOverride } from "./types";
+import { CharacterOverride, SetOverride, MAX_LEVEL_OPTIONS } from "./types";
 import characterData from "../../data/characters.json";
 import weaponData from "../../data/weapons.json";
+
+interface UploadedWeaponInfo {
+  weapon: Weapon;
+  level: number;
+  maxLevel: number;
+  refinement: number;
+  location: number; // Character enum
+}
 
 interface SelectedCharacterCardProps {
   characterId: number;
   override: CharacterOverride;
   onChange: (override: CharacterOverride) => void;
   onRemove: () => void;
+  uploadedWeapons?: UploadedWeaponInfo[];
 }
 
 const SelectedCharacterCard = ({
@@ -25,6 +34,7 @@ const SelectedCharacterCard = ({
   override,
   onChange,
   onRemove,
+  uploadedWeapons = [],
 }: SelectedCharacterCardProps) => {
   const { t, i18n } = useTranslation();
   const [showWeaponModal, setShowWeaponModal] = useState(false);
@@ -499,8 +509,15 @@ const SelectedCharacterCard = ({
                     <a
                       className="flex items-center gap-2 rounded-lg p-1"
                       onClick={() => {
+                        // Check if this weapon exists in uploaded data
+                        const uploadedWeapon = uploadedWeapons.find(w => w.weapon === id);
                         updateOverride({
-                          weapon: { weapon: id },
+                          weapon: {
+                            weapon: id,
+                            level: uploadedWeapon?.level ?? 90,
+                            maxLevel: uploadedWeapon?.maxLevel ?? 90,
+                            refinement: uploadedWeapon?.refinement ?? 1,
+                          },
                         });
                         setShowWeaponModal(false);
                       }}

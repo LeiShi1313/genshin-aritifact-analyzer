@@ -165,5 +165,13 @@
     "Select Weapon": "Sélectionner une Arme",
     "Select Set": "Sélectionner un Set",
     "Clear": "Effacer",
-    "Add Set": "Ajouter un Set"
+    "Add Set": "Ajouter un Set",
+    "Loading gcsim scripts...": "Chargement des scripts gcsim...",
+    "No uploaded artifacts": "Aucun artéfact téléchargé",
+    "Select Uploaded Artifacts": "Sélectionner les Artéfacts Téléchargés",
+    "GCSim": "GCSim",
+    "Artifacts": "Artéfacts",
+    "Characters": "Personnages",
+    "Copy Script": "Copier le Script",
+    "Copied!": "Copié !"
 }

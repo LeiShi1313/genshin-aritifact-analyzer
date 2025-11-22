@@ -56,5 +56,13 @@
     "Select Weapon": "選擇武器",
     "Select Set": "選擇套裝",
     "Clear": "清除",
-    "Add Set": "添加套裝"
+    "Add Set": "添加套裝",
+    "Loading gcsim scripts...": "正在載入gcsim腳本...",
+    "No uploaded artifacts": "沒有已上傳的聖遺物",
+    "Select Uploaded Artifacts": "選擇已上傳的聖遺物",
+    "GCSim": "GCSim",
+    "Artifacts": "聖遺物",
+    "Characters": "角色",
+    "Copy Script": "複製腳本",
+    "Copied!": "已複製！"
 }
