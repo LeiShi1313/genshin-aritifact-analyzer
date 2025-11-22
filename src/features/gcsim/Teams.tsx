@@ -240,6 +240,24 @@ const Teams = () => {
     workerCount: workers,
   });
 
+  // Handle cancel - clear all running states
+  const handleCancel = useCallback(() => {
+    cancel();
+    setScriptStates(prev => {
+      const updated = { ...prev };
+      Object.keys(updated).forEach(key => {
+        if (updated[Number(key)]?.isRunning) {
+          updated[Number(key)] = {
+            ...updated[Number(key)],
+            isRunning: false,
+            error: "Simulation cancelled",
+          };
+        }
+      });
+      return updated;
+    });
+  }, [cancel]);
+
   // Handle running a script simulation
   const handleRunScript = async (index: number, script: any) => {
     if (!run || !isReady) return;
@@ -516,7 +534,7 @@ const Teams = () => {
             </span>
             {isRunning && (
               <button
-                onClick={cancel}
+                onClick={handleCancel}
                 className="btn btn-error btn-xs sm:btn-sm"
               >
                 {t("Cancel Simulation")}
