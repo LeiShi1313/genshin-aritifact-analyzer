@@ -1,0 +1,76 @@
+# Hutao Furina Citlali Escoffier. ~20s Rot. Hutao MeltVape.-7K DPS with Freeze immunity, Melt count is more than halved. Citlali Pyro Scroll is incidental.
+
+# Team - Options listed by DPS
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="fjords" refine=1 lvl=90/90;
+hutao add set="mh" count=4;
+#hutao add set="sr" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.5456 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1655 cd=0.662; # Freezable
+#hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622; #main
+#hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # Freeze immune
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622; #main  # Hydro goblet is fine too
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+#citlali add weapon="evenstar" refine=1 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.2317 cd=0.7944; # TTDS
+#citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+#citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Evenstar
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622; #main
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.2204 em=39.64 cr=0.1324 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=0;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1;
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill; # No dash for stamina reasons
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd && !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  if .furina.weapon == .keys.weapon.favsword && !.furina.mods.favonius-cd {
+    furina attack;
+  }
+  
+  esco skill, burst;
+  
+  citlali skill, burst;
+  
+  hutao skill,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:1, charge, jump,
+        attack:2, charge, jump, attack;
+  if .hutao.burst.ready {
+    hutao burst;
+  } else {
+    hutao attack:1;
+  }
+}

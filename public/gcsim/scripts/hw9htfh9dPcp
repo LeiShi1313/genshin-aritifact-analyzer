@@ -1,0 +1,46 @@
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="lionsroar" refine=3 lvl=90/90;
+keqing add set="thunderingfury" count=5;
+keqing add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; # main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="favsword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;		
+								
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2648 cd=0.662;			
+																				
+xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2648 cd=0.662;		
+																								
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+#target lvl=100 resist=0.1 hp=100000000 pos=0,3 radius=2;
+energy every interval=480,720 amount=1;
+
+active keqing;
+
+for let i = 0; i < 5; i = i + 1 {
+  keqing skill, skill, attack;
+  kazuha burst, skill, high_plunge;
+  bennett burst, skill;
+  xiangling burst, attack, skill, dash;
+  kazuha skill, high_plunge;
+  keqing skill, burst, skill,
+    attack, charge, 
+    attack, skill, 
+    attack, charge,
+    attack, charge,
+    attack, charge;
+  kazuha skill, high_plunge;
+  bennett skill;
+}

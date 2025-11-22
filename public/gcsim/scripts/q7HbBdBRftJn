@@ -1,0 +1,65 @@
+# Bennett Fischl Duo. ~18s Rot. CW Bennett edges out TF. Fischl alternate skill and burst.
+
+# With CW Fischl
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=5 lvl=90/90;
+bennett add set="cw" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+fischl add set="gt" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+# With TF Bennett
+#bennett char lvl=90/90 cons=6 talent=9,9,9;
+#bennett add weapon="alleyflash" refine=5 lvl=90/90;
+#bennett add set="tf" count=4;
+#bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+#fischl char lvl=90/90 cons=6 talent=9,9,9;
+#fischl add weapon="stringless" refine=3 lvl=90/90;
+#fischl add set="gt" count=5;
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active bennett;
+
+for let i=0; i<4; i=i+1 {
+  if .bennett.skill.ready {
+    bennett skill;
+  }
+  bennett burst;
+  if .bennett.skill.ready {
+    bennett skill;
+  }
+  
+  fischl attack;
+  if .fischl.skill.ready {
+    fischl skill;
+  } else {
+    fischl attack, burst;
+  }
+  
+  while !.bennett.burst.ready {
+    if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+  
+}

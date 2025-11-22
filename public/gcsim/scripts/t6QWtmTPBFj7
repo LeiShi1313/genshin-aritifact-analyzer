@@ -1,0 +1,104 @@
+# Razor Nahida Furina Mika. ~24s Rotation. Hybrid Razor's DMG is Phys > Electro > Dendro. GT ~= ToM Furina. SoDP viable on Mika.
+
+# Team - Options listed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="mh" count=4;
+#razor add set="gd" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Atk/Atk/CD
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=79.28 cr=0.2979 cd=0.662; # MH
+#razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622;
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Atk/Phys/CD
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Atk/El/CD
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=79.28 cr=0.2979 cd=0.662; # MH
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Em/El/CD
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
+#razor add stats hp=4780 atk=311 em=187 em=187 cd=0.622 ; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Em/Em/Cd
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2979 cd=0.7282;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+#furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; # GT
+#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+#furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; # ToM
+
+mika char lvl=90/90 cons=6 talent=9,9,9; 
+mika add weapon="favlance" refine=3 lvl=90/90;
+mika add set="clam" count=4;
+#mika add set="sodp" count=4;
+#mika add set="no" count=4;
+mika add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+mika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.1324; # CR
+#mika add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
+#mika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.3972 cd=0.1324; # HB
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active razor; # Serpent Spine stacks
+razor skill, dash; # Sigils for 1st burst
+
+for let x=0; x<4; x=x+1 {
+  nahida skill, attack; 
+  if .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+  
+  furina skill, dash;
+  if !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  
+  mika burst, skill;
+  
+  # Razor out of burst actions; account for energy deficiency
+  while !.razor.mods.razor-q {
+    if .razor.burst.ready && .razor.skill.ready {
+      razor skill, dash, attack, burst;
+    } else if .razor.burst.ready {
+      razor burst;
+    } else if .razor.skill.ready {
+      razor skill, dash;
+    } else if .razor.normal > 3 {
+      razor dash;
+    } else {
+      razor attack;
+    }
+  }
+  # Razor Main DPS window 
+  while .razor.mods.razor-q > 200 { # 3 skill uses
+    if .razor.normal > 3 && .razor.skill.ready {
+        razor skill, dash;
+    } else if .razor.normal > 3 {
+      razor dash;
+    } else {
+      razor attack;
+    }
+  }
+}

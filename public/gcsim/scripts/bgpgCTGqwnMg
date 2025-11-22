@@ -1,0 +1,73 @@
+# Diluc Candace Xiangling Xianyun. ~20s Rot. Diluc Hydro Vape using Candace's infusion. Xianyun VVs Pyro. Have fun with ER.
+
+# Team
+diluc char lvl=90/90 cons=0 talent=9,9,9;
+diluc add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+diluc add set="longnightsoath" count=4;
+#diluc add set="sr" count=4;
+diluc add stats hp=4780 atk=311 em=187 hydro%=0.466 cd=0.622; #main
+diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favlance" refine=3 lvl=90/90;
+candace add set="no" count=4; # Eye-watering ER Req with 1 E
+#candace add set="emblem" count=4;
+candace add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favlance" refine=3 lvl=90/90;
+xiangling add set="scroll" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="favcodex" refine=3 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4;
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=49.62 atk%=0.3968 er=0.2755 em=39.64 cr=0.3972 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 hp=100000000 pos=0,2;
+#target lvl=100 resist=0.1 hp=100000000 pos=2,0;
+
+# Freminet Plunge Combo
+fn DilucPlunge() {
+  diluc jump;
+  if .airborne {
+    diluc high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active diluc; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  xl burst, skill, dash;
+  
+  xianyun skill, low_plunge, attack, burst;
+  
+  candace skill, burst;
+  
+  diluc attack, skill:1;
+  DilucPlunge(); diluc dash;
+  DilucPlunge(); diluc dash;
+  DilucPlunge(); diluc skill;
+  DilucPlunge(); diluc dash;
+  DilucPlunge(); diluc skill;
+  DilucPlunge(); diluc dash;
+  DilucPlunge(); diluc dash;
+  DilucPlunge(); #diluc attack;
+  
+  candace skill, attack;
+  
+  xiangling attack:3;
+}
+

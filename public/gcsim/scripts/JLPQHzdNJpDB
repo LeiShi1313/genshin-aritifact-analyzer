@@ -1,0 +1,64 @@
+gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+gaming add set="cw" count=4;
+gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+//elegy amber
+//gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+//elegy amber
+#xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+#xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+//elegy amber
+#furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.5958;
+
+
+amber char lvl=90/90 cons=6 talent=9,9,9; 
+amber add weapon="favbow" refine=4 lvl=90/90;
+//amber add weapon="elegy" refine=1 lvl=90/90;
+amber add set="exile" count=4;
+amber add stats hp=3571 atk=232 er=0.3885 pyro%=0.3495 cr=0.311 ; #main
+amber add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active gaming;
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  amber burst, attack;
+  xianyun attack, skill, low_plunge, burst;
+  gaming burst, attack:2,
+         skill, low_plunge;
+         wait(40);
+  gaming skill, low_plunge;
+          wait(40);
+  gaming skill, low_plunge;
+          wait(40);
+  gaming skill, low_plunge;
+         wait(40);
+  gaming skill, low_plunge,
+         skill, low_plunge,
+         skill, low_plunge;
+   
+
+  
+
+
+  
+}

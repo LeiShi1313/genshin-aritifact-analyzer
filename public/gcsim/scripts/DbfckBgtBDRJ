@@ -1,0 +1,44 @@
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="finaleofthedeep" refine=5 lvl=90/90;
+ayato add set="mh" count=4;
+ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622; #main
+ayato add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main 
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="scroll" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; #main
+shenhe add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*12 em=19.82*2 cr=0.0331*10 cd=0.0662*2;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+escoffier add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*5 em=19.82*2 cr=0.0331*7 cd=0.0662*10;
+
+#enemy config
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+#rotation
+active furina;
+
+for let i = 0; i < 4; i = i + 1 {
+  furina skill, dash, burst;
+  escoffier skill, burst;
+  shenhe skill, burst;
+  ayato skill, attack:15, burst;
+  shenhe skill, attack;
+  escoffier attack:3;
+  ayato skill, attack:13;
+}
+
+# ~26s rotation
+# Furina ED Q > Escoffier EQ > Shenhe tEQ > Ayato E N15 Q > Shenhe tE N1 > Escoffier N3 > Ayato E N13

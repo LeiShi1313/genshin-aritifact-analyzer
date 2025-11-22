@@ -1,0 +1,114 @@
+# Kazuha Nahida Fischl Kuki. ~18s Rot. (TF) Kazuha Aggravate in 2 Target. Kuki drops below 50% HP in later rotations for additional burst ticks. 70% Collisions.
+
+# Team - Mostly Ordered by DPS
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="ironsting" refine=5 lvl=90/90;
+#kazuha add weapon="umbrella" refine=5 lvl=90/90; # Strictly < Iron Sting in Aoe
+#kazuha add weapon="wolffang" refine=1 lvl=90/90;
+#kazuha add weapon="sacsword" refine=5 lvl=90/90;
+kazuha add set="tf" count=4;
+#kazuha add set="ts" count=4; # w/ Sac, sometimes
+#kazuha add set="vv" count=4; # More DPS, less grouping (and fun)
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.3641 cd=0.2648;
+#kazuha add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
+#kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/El/Cr
+#kazuha add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; # main
+#kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Em/El/Cd
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="magicguide" refine=5 lvl=90/90;
+#nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="gt" count=4;
+#nahida add set="deepwood" count=4;
+#nahida add set="gd" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+#fischl add weapon="vhunt" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+#fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; #EM/Cd; Vhunt
+
+# DPS Kuki
+kuki char lvl=90/90 cons=6 talent=9,9,9; # start_hp=1;
+kuki add weapon="wolffang" refine=1 lvl=90/90;
+#kuki add weapon="ironsting" refine=5 lvl=90/90;
+#kuki add weapon="umbrella" refine=5 lvl=90/90; # Strictly < Iron Sting in Aoe
+#kuki add weapon="xiphos" refine=5 lvl=90/90;
+#kuki add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=120]; # To whoever, honestly
+kuki add set="gt" count=4;
+#kuki add set="ts" count=4;
+#kuki add set="gd" count=4;
+#kuki add set="tf" count=4;
+#kuki add set="ins" count=4; kuki add set="ins" count=1; # (Goblet)
+kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.3641 cd=0.331;
+#kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # EM Weps
+#kuki add stats hp=3571 atk=232 em=140.25 electro%=0.466 cr=0.23325 ; #main
+#kuki add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=31.712 cr=0.28466 cd=0.43692; # Ins
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1.5 pos=-1.6,1.8 hp=100000000;
+target lvl=100 resist=0.1 radius=1.5 pos=1.6,1.8 hp=100000000;
+
+# Kazuha TF Rotation
+fn TFCombo() {
+  # Keep Kazuha skill on CD
+  if .kazuha.skill.ready {
+    kazuha attack, skill, high_plunge[collision=rand()>0.3];
+  } else if .kazuha.burst.ready && .kazuha.energy == .kazuha.energymax {
+    kazuha attack, burst;
+  } else {
+    kazuha attack;
+  }
+}
+
+# Rotation
+active nahida; #SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  # Spend Kuki C4
+  kuki skill, attack;
+  #kuki skill;
+
+  # Nahida omit burst without energy
+  nahida skill, attack;
+  if .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+  
+  # Fischl burst over skill
+  amy attack;
+  if .amy.burst.ready && .amy.energy == .amy.energymax {
+    amy attack:1, burst;
+  } else {
+    amy skill;
+  }
+  
+  # Kuki burst, energy permitting
+  if .kuki.burst.ready && .kuki.energy == .kuki.energymax {
+    kuki burst;
+  }
+  
+  # While OZ is on field
+  while .fischl.oz {
+    TFCombo();
+  }
+
+  print("done");
+}
+

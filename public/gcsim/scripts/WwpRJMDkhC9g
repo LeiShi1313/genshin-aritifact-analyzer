@@ -1,0 +1,111 @@
+#"Dolphin" investment Hybrid Hyperbloom-Aggravate-Hyper Raiden largely enabled by SoSS. Soluna's idea, and their personal stats (mostly; see config). ~21s rotation, relatively unoptimized. 12-3 Icewind Suite's base stats used for energy drops. Customized random action delays and starting HPs.
+#reference video: https://youtu.be/AU9D2WPLlls?t=795 ("You (probably) shouldn't get C2 Furina." by Soluna)
+
+raiden char lvl=90/90 cons=1 talent=1,9,10 +params=[start_hp%=90]; #talents are guesswork except for furina's
+raiden add weapon="staffofthescarletsands" refine=1 lvl=90/90;
+raiden add set="emblemofseveredfate" count=4;
+raiden add stats hp=5288 atk=511 def=197 em=441 cr=0.331 cd=1.143 er=0.518; #Soluna's personal stats
+
+furina char lvl=90/90 cons=2 talent=1,9,10 +params=[start_hp%=65];
+furina add weapon="favsword" refine=5 lvl=80/90;
+furina add set="gt" count=4;
+furina add stats hp=7456 atk=311 def=118 em=122 cr=0.362 cd=1.112 er=1.072 hydro%=0.466; #personal stats - furina has WAY more er than necessary (at least in this sim's context)
+
+nahida char lvl=90/90 cons=2 talent=6,10,9 +params=[start_hp%=75];
+nahida add weapon="pamber" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=6921 atk=410 def=171 em=747; #these are the personal stats i could observe from the video
+nahida add stats er=0.1102 cr=0.331 cd=0.3972; #gaps filled in with some kqms-based rolls (yes this is VERY scuffed, but it shouldn't make a super big difference)
+#distributed subs: 8 cr, 4 cd ^
+
+bennett char lvl=90/90 cons=6 talent=1,9,10 +params=[start_hp%=75];
+bennett add weapon="aquilafavonia" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats hp=7338 atk=308 def=156 em=92; #personal stats i could observe from the video
+bennett add stats er=0.518 pyro%=0.348 cr=0.232; #assumed mainstats
+bennett add stats er=0.132075 cr=0.19835 cd=0.4492; #4-star distributed subs: [1 er, 3 cr, 4 cd] + 5-star: [2 cr, 2 cd]
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=99999999 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+options swap_delay=1;
+
+active raiden;
+
+fn doActionList() {
+  raiden skill;
+  for let i=0; i<4; i=i+1 {
+    furina skill, dash, burst;
+    nahida skill[hold=6], burst, attack;
+    bennett burst, skill;
+    nahida attack:2, charge;
+    raiden burst,
+           attack:4, skill,
+           attack:4, dash,
+           attack:4, dash,
+           attack:4;
+    bennett skill;
+  }
+}
+
+#Random action execution delays
+fn randy(mean, standardDeviation, min, max) {
+  let value = randnorm() * standardDeviation + mean;
+  if value < min {
+    value = min;
+  } else if value > max {
+    value = max;
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .raiden.onfield:
+    prev_char_id = .keys.char.raiden;
+  case .furina.onfield:
+    prev_char_id = .keys.char.furina;
+  case .nahida.onfield:
+    prev_char_id = .keys.char.nahida;
+  default:
+    prev_char_id = .keys.char.bennett;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action is not actually a swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.burst {
+    while .raiden.onfield && !.raiden.burst.ready {
+      raiden attack;
+    }
+    while .furina.onfield && !.furina.burst.ready {
+      furina attack;
+    }
+    while .nahida.onfield && !.nahida.burst.ready {
+      nahida attack;
+    }
+    while .bennett.onfield && !.bennett.burst.ready {
+      bennett attack;
+    }
+  }
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                  #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+doActionList();

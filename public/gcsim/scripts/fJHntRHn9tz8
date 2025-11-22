@@ -1,0 +1,49 @@
+jean char lvl=90/90 cons=0 talent=9,9,9; 
+jean add weapon="favoniussword" refine=3 lvl=90/90; 
+jean add set="vv" count=4; 
+jean add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main 
+jean add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634 ;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="goldentroupe" count=5;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main 
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;											
+										
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main 
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+							
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="rust" refine=3 lvl=90/90;
+yoimiya add set="marechausseehunter" count=4;
+#yoimiya add set="shime" count=4;
+yoimiya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main 
+yoimiya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662 ;
+																
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; energy every interval=480,720 amount=1;
+options swap_delay=12 iteration=100;
+#-------------------------------------------- 
+#action list:
+active furina;
+  furina skill, dash, burst;
+for let i = 0; i < 4; i = i + 1 {
+  if i {
+   furina attack, burst, skill;
+  } 
+  yelan burst, attack;
+  
+  jean burst, attack, skill;
+  
+  yelan attack, skill, attack;
+  
+  yoimiya skill, attack:5, dash, 
+                 attack:5, dash, 
+                 attack:5;
+                  
+  yelan attack, skill, attack; 
+  
+  jean skill;
+}

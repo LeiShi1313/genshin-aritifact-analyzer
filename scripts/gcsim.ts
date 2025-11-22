@@ -1,4 +1,7 @@
-import { GCSimScript, GCSimScriptCharacterStat, GCSimScriptCharacterInfo, GCSimScriptOptions, GCSimScriptParam, GCSimScriptSetInfo, GCSimScriptWeaponInfo, GCSimScriptEnergySettings, GCSimScriptEnergySettings_EnergyType, gCSimScriptEnergySettings_EnergyTypeFromJSON, GCSimScriptTarget, GCSimScriptHurtSettings, gCSimScriptHurtSettings_HurtTypeFromJSON } from '../genshin/gcsim.js';
+import fs from "fs";
+import path from "path";
+import { URL } from "url";
+import { GCSim, GCSimScript, GCSimScriptCharacterStat, GCSimScriptCharacterInfo, GCSimScriptOptions, GCSimScriptParam, GCSimScriptSetInfo, GCSimScriptWeaponInfo, GCSimScriptEnergySettings, GCSimScriptEnergySettings_EnergyType, gCSimScriptEnergySettings_EnergyTypeFromJSON, GCSimScriptTarget, GCSimScriptHurtSettings, gCSimScriptHurtSettings_HurtTypeFromJSON } from '../genshin/gcsim.js';
 import { elementFromJSON } from "../genshin/element.js";
 import { Character, characterFromJSON } from "../genshin/character.js";
 import { Weapon, weaponFromJSON } from '../genshin/weapon.js';
@@ -10,14 +13,18 @@ import CHARACTERS from '../src/data/characters.json' assert { type: "json" };
 import WEAPONS from '../src/data/weapons.json' assert { type: "json" };
 import SETS from '../src/data/sets.json' assert { type: "json" };
 
-const characterAlternatives = Object.keys(GCSIM_CHARACTER_ALIASES).join("|");
-const gcsimCharRegx = new RegExp(`\\s*(?<char>${characterAlternatives})\\s*((?<ch>char)|add\\s*(?<stats>stats)|add\\s*(?<ws>weapon|set)\\s*=\\s*\\"(?<wsname>\\w+)\\")\\s*(?<attrs>.*?)\\s*;`, "gm");
-const gcsimEnergyRegx = /\s*energy\s*(?<type>once|every)\s*(?<attrs>.*?);/gm;
-const gcsimTargetRegx = /\s*target\s*(?<attrs>.*?);/gm;
-const gcsimHurtRegx = /\s*hurt\s*(?<type>once|every)\s*(?<attrs>.*?);/gm;
-const gcsimOptionsRegx = /\s*options\s*(?<attrs>.*?);/gm;
+const __dirname = new URL('.', import.meta.url).pathname;
+const gcsimCharRegx = /\s*(?<char>\w+)\s+((?<ch>char)|add\s+(?<stats>stats)|add\s+(?<ws>weapon|set)\s*=\s*\"(?<wsname>\w+)\")\s+(?<attrs>.*?)\s*;/gm;
+const gcsimEnergyRegx = /\s*energy\s+(?<type>once|every)\s+(?<attrs>.*?)\s*;/gm;
+const gcsimTargetRegx = /\s*target\s+(?<attrs>.*?)\s*;/gm;
+const gcsimHurtRegx = /\s*hurt\s+(?<type>once|every)\s+(?<attrs>.*?)\s*;/gm;
+const gcsimOptionsRegx = /\s*options\s+(?<attrs>.*?);/gm;
 const gcsimParamsRegx = /\s*\+params\s*=\s*\[(?<params>.*?)\]/gm;
-const gcsimKeyValRegx = /(?<key>[\w_%]+)=(?<value>\d+\s*,\s*\d+\s*,\s*\d+|[\d*\.*\d+]+\s*,\s*[\d*\.*\d+]+|\d+\/\d+|\d*\.*\d+|\d+)/gm;
+const gcsimKeyValRegx = /(?<key>[\w_%]+)\s*=\s*(?<value>true|false|\d+\s*,\s*\d+\s*,\s*\d+|[\d*\.*\d+]+\s*,\s*[\d*\.*\d+]+|\d+\/\d+|\d*\.*\d+|\d+|[\w_]+)\s*/gm;
+const gcsimTargetTypeRegx = /type\s*=\s*(?<typename>\w+)(?:\[(?<params>[^\]]+)\])?/;
+
+// Convert snake_case to camelCase
+const snakeToCamelCase = (str: string) => str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
 const statMap: { [key: string]: string } = {
     hp: "HP",
     atk: "ATK",
@@ -37,10 +44,10 @@ const statMap: { [key: string]: string } = {
     "geo%": "GEO_DAMAGE_BONUS",
     "hydro%": "HYDRO_DAMAGE_BONUS",
     "physical%": "PHYSICAL_DAMAGE_BONUS",
+    "phys%": "PHYSICAL_DAMAGE_BONUS",
     "pyro%": "PYRO_DAMAGE_BONUS",
 }
 
-const parsedScripts = [];
 
 const gcsimCharacterToCharacter = (char: string): Character => {
     if (char === "yaemiko") {
@@ -107,11 +114,21 @@ const parseParams = (line: string): GCSimScriptParam[] => {
 
 const parseStats = (line: string): GCSimScriptCharacterStat[] => {
     const stats = [];
+    let label: string | undefined;
+
+    // Check for +label=xxx
+    const labelMatch = line.match(/\+label\s*=\s*(\w+)/);
+    if (labelMatch) {
+        label = labelMatch[1];
+        line = line.replace(/\+label\s*=\s*\w+/, ''); // Remove label from line
+    }
+
     for (let match of line.matchAll(gcsimKeyValRegx)) {
         if (match.groups?.key && statMap.hasOwnProperty(match.groups?.key)) {
             stats.push(GCSimScriptCharacterStat.fromJSON({
-                key: statMap[match.groups.key],
-                value: parseFloat(match.groups.value)
+                type: statMap[match.groups.key],
+                value: parseFloat(match.groups.value),
+                label: label
             }));
         } else {
             console.log(`Unknown stat key: ${match.groups?.key}`);
@@ -119,6 +136,36 @@ const parseStats = (line: string): GCSimScriptCharacterStat[] => {
     }
     return stats;
 }
+
+const parseRandomSubstats = (line: string) => {
+    const randomSubstats: any = {
+        rarity: 5 // default to 5
+    };
+
+    for (let match of line.matchAll(gcsimKeyValRegx)) {
+        if (match.groups?.key === 'rarity') {
+            randomSubstats.rarity = parseInt(match.groups.value);
+        } else if (match.groups?.key === 'sand') {
+            const statKey = match.groups.value;
+            if (statMap.hasOwnProperty(statKey)) {
+                randomSubstats.sand = statMap[statKey];
+            }
+        } else if (match.groups?.key === 'goblet') {
+            const statKey = match.groups.value;
+            if (statMap.hasOwnProperty(statKey)) {
+                randomSubstats.goblet = statMap[statKey];
+            }
+        } else if (match.groups?.key === 'circlet') {
+            const statKey = match.groups.value;
+            if (statMap.hasOwnProperty(statKey)) {
+                randomSubstats.circlet = statMap[statKey];
+            }
+        }
+    }
+
+    return randomSubstats;
+}
+
 const parseSetInfo = (wsname: string, line: string): GCSimScriptSetInfo => {
     const setInfo: GCSimScriptSetInfo = {
         count: 0,
@@ -160,15 +207,39 @@ const parseWeaponInfo = (wsname: string, line: string) => {
 }
 
 const parseOptions = (script: string, parsedScript: GCSimScript) => {
+    // Set gcsim defaults (matching gcsim/pkg/gcs/parser/parser.go:48-52)
+    const allOptions: { [key: string]: any } = {
+        defhalt: true,      // default defhalt to true
+        hitlag: true,       // default hitlag enabled
+        workers: 20,        // default 20 workers
+        iteration: 1000,    // default 1000 iterations
+        swapDelay: 1,       // default swap timer of 1
+    };
+
     for (let match of script.matchAll(gcsimOptionsRegx)) {
-        const options: { [key: string]: any } = {};
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key && attr.groups.value) {
-                options[attr.groups.key as string] = attr.groups?.value;
+                const snakeKey = attr.groups.key as string;
+                const camelKey = snakeToCamelCase(snakeKey);
+                let value: any = attr.groups.value;
+
+                // Handle boolean values
+                if (value === 'true' || value === 'false') {
+                    value = value === 'true';
+                }
+                // Handle numeric values
+                else if (!isNaN(Number(value))) {
+                    value = Number(value);
+                }
+                // Otherwise keep as string (e.g., frame_defaults)
+
+                allOptions[camelKey] = value;
             }
         }
-        parsedScript.options = GCSimScriptOptions.fromJSON(options);
     }
+
+    parsedScript.options = GCSimScriptOptions.fromJSON(allOptions);
+
     script = script.replace(gcsimOptionsRegx, "");
     return script;
 }
@@ -192,6 +263,7 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
                 stats: [],
                 params: [],
                 startHp: 0,
+                randomSubstats: undefined,
             };
         }
         if (match.groups.ch) {
@@ -199,22 +271,35 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
             characters[char].params = parseParams(attrs);
             attrs = attrs.replace(gcsimParamsRegx, "");
 
+            let [hasLevel, hasCons, hasTalents] = [false, false, false];
             for (let attr of attrs.matchAll(gcsimKeyValRegx)) {
                 if (attr.groups?.key === "lvl") {
                     const [level, maxLevel] = attr.groups.value.split("/");
                     characters[char].level = parseInt(level);
                     characters[char].maxLevel = parseInt(maxLevel);
+                    hasLevel = true;
                 } else if (attr.groups?.key === "cons") {
                     characters[char].constellation = parseInt(attr.groups.value);
+                    hasCons = true;
                 } else if (attr.groups?.key === "talent") {
                     const talents = attr.groups.value.split(",");
                     characters[char].talents = talents.map(talent => parseInt(talent));
+                    hasTalents = true;
                 }
             }
+            if (!hasLevel || !hasCons || !hasTalents) {
+                console.log(`Character ${char} missing level/constellation/talents: ${attrs}`);
+            }
         } else if (match.groups.stats) {
-            parseStats(match.groups.attrs).forEach(stat => {
-                characters[char].stats.push(stat);
-            })
+            const attrs = match.groups.attrs;
+            // Check if it's random substats
+            if (attrs.includes('random')) {
+                characters[char].randomSubstats = parseRandomSubstats(attrs);
+            } else {
+                parseStats(attrs).forEach(stat => {
+                    characters[char].stats.push(stat);
+                })
+            }
         } else if (match.groups.ws === "weapon") {
             characters[char].weaponInfo = parseWeaponInfo((GCSIM_WEAPON_ALIASES as any)[match.groups.wsname], match.groups.attrs);
         } else if (match.groups.ws === "set") {
@@ -230,11 +315,15 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
 
 const parseEnergy = (script: string, parsedScript: GCSimScript) => {
     for (let match of script.matchAll(gcsimEnergyRegx)) {
-        const energy: GCSimScriptEnergySettings = { type: 0, intervals: [], amount: 0 };
+        const energy: GCSimScriptEnergySettings = { type: 0, start: 0, amount: 0 };
         energy.type = gCSimScriptEnergySettings_EnergyTypeFromJSON(match.groups?.type.toUpperCase());
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key === "interval") {
-                energy.intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                const intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                energy.start = intervals[0];
+                if (intervals.length > 1) {
+                    energy.end = intervals[1];
+                }
             } else if (attr.groups?.key === "amount") {
                 energy.amount = parseInt(attr.groups.value);
             } else {
@@ -257,9 +346,7 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
             radius: 0,
             level: 0,
             resist: 0,
-            intervals: [],
             hp: 0,
-            amount: 0,
             particleThreshold: 0,
             particleDropCount: 0,
             freezeResist: 0,
@@ -272,7 +359,33 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
             anemoResist: 0,
             geoResist: 0,
         };
-        for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx)) {
+
+        let attrs = match.groups.attrs;
+
+        // Parse target type if present (e.g., type=aeonblightdrake[hp_mult=3.00])
+        const typeMatch = attrs.match(gcsimTargetTypeRegx);
+        if (typeMatch?.groups?.typename) {
+            const targetType: any = {
+                typeName: typeMatch.groups.typename
+            };
+
+            // Parse type parameters if present
+            if (typeMatch.groups.params) {
+                for (let param of typeMatch.groups.params.matchAll(gcsimKeyValRegx)) {
+                    if (param.groups?.key === "hp_mult") {
+                        targetType.hpMultiplier = parseFloat(param.groups.value);
+                    } else if (param.groups?.key === "particles") {
+                        targetType.particles = parseInt(param.groups.value) !== 0;
+                    }
+                }
+            }
+
+            target.type = targetType;
+            // Remove type from attrs to avoid parsing it again
+            attrs = attrs.replace(gcsimTargetTypeRegx, '');
+        }
+
+        for (let attr of attrs.matchAll(gcsimKeyValRegx)) {
             if (attr.groups?.key === "pos") {
                 target.position = attr.groups.value.split(",").map(pos => parseFloat(pos));
             } else if (attr.groups?.key === "radius") {
@@ -281,34 +394,34 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
                 target.level = parseInt(attr.groups.value);
             } else if (attr.groups?.key === "resist") {
                 target.resist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "intervals") {
-                target.intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
             } else if (attr.groups?.key === "hp") {
-                target.hp = parseInt(attr.groups.value);
-            } else if (attr.groups?.key === "amount") {
-                target.amount = parseInt(attr.groups.value);
-            } else if (attr.groups?.key === "particleThreshold") {
+                target.hp = parseFloat(attr.groups.value);
+            } else if (attr.groups?.key === "particle_threshold") {
                 target.particleThreshold = parseInt(attr.groups.value);
-            } else if (attr.groups?.key === "particleDropCount") {
+            } else if (attr.groups?.key === "particle_drop_count") {
                 target.particleDropCount = parseInt(attr.groups.value);
-            } else if (attr.groups?.key === "freezeResist") {
+            } else if (attr.groups?.key === "particle_element") {
+                target.particleElement = elementFromJSON(attr.groups.value.toUpperCase());
+            } else if (attr.groups?.key === "freeze_resist") {
                 target.freezeResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "electroResist") {
+            } else if (attr.groups?.key === "electro") {
                 target.electroResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "hydroResist") {
+            } else if (attr.groups?.key === "hydro") {
                 target.hydroResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "pyroResist") {
+            } else if (attr.groups?.key === "pyro") {
                 target.pyroResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "cryoResist") {
+            } else if (attr.groups?.key === "cryo") {
                 target.cryoResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "dendroResist") {
+            } else if (attr.groups?.key === "dendro") {
                 target.dendroResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "physicalResist") {
+            } else if (attr.groups?.key === "physical") {
                 target.physicalResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "anemoResist") {
+            } else if (attr.groups?.key === "anemo") {
                 target.anemoResist = parseFloat(attr.groups.value);
-            } else if (attr.groups?.key === "geoResist") {
+            } else if (attr.groups?.key === "geo") {
                 target.geoResist = parseFloat(attr.groups.value);
+            } else if (attr.groups?.key === "hp_mult") {
+                target.hpMult = parseFloat(attr.groups.value);
             } else {
                 console.log(`Unknown target key: ${attr.groups?.key}`);
             }
@@ -322,13 +435,17 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
 
 const parseHurt = (script: string, parsedScript: GCSimScript) => {
     for (let match of script.matchAll(gcsimHurtRegx)) {
-        const hurt: GCSimScriptHurtSettings = { type: 0, intervals: [], amount: { min: 0, max: 0 }, element: 0 };
+        const hurt: GCSimScriptHurtSettings = { type: 0, start: 0, amount: { min: 0, max: 0 }, element: 0 };
         hurt.type = gCSimScriptHurtSettings_HurtTypeFromJSON(match.groups?.type.toUpperCase());
         for (let attr of match.groups?.attrs.matchAll(gcsimKeyValRegx) ?? []) {
             if (attr.groups?.key === "interval") {
-                hurt.intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                const intervals = attr.groups.value.split(",").map(interval => parseInt(interval));
+                hurt.start = intervals[0];
+                if (intervals.length > 1) {
+                    hurt.end = intervals[1];
+                }
             } else if (attr.groups?.key === "amount") {
-                const amounts = attr.groups.value.split(",").map(amount => parseInt(amount));
+                const amounts = attr.groups.value.split(",").map(amount => parseFloat(amount));
                 hurt.amount = {
                     min: amounts[0],
                     max: amounts[1],
@@ -355,88 +472,36 @@ const parseScript = (script: string): GCSimScript => {
         hurtSettings: undefined,
         scripts: [],
     };
+    // Remove comments starting with # or //
+    script = script.replace(/\s*#.*$/gm, "");
+    script = script.replace(/\/\/.*$/gm, "");
     script = parseOptions(script, parsedScript);
     script = parseCharacters(script, parsedScript);
     script = parseEnergy(script, parsedScript);
     script = parseTarget(script, parsedScript);
     script = parseHurt(script, parsedScript);
-    script = script.replace(/#.*$/gm, "");
 
     parsedScript.scripts = script.split("\n").filter(line => line.trim() !== "");
     return parsedScript;
 }
 
-let script = `
-hutao char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp=1]; hutao add  weapon="deathmatch" refine=1 lvl=90/90;
-hutao add      set="shimenawasreminiscence" count=4; 
-hutao add  stats hp=4780 atk=311 em=187 cd=0.622 pyro%=0.466 ; 
-hutao add  stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
-			
-yelan char lvl=90/90 cons=0 talent=9,9,9;
-yelan add weapon="favoniuswarbow" refine=3 lvl=90/90; 
-yelan add set="emblemofseveredfate" count=4;
-yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main 
-yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+const parseScripts = async (): Promise<GCSim> => {
+    const scripts: Array<GCSimScript> = [];
+    const files = await fs.promises.readdir(path.join(__dirname, "../public/gcsim/scripts"))
+    for (const file of files) {
+        const script = await fs.promises.readFile(path.join(__dirname, "../public/gcsim/scripts", file), "utf-8");
+        scripts.push(parseScript(script));
+    }
+    return { scripts };
+}
 
-nilou char lvl=90/90 cons=1 talent=9,9,9;
-nilou add weapon="keyofkhajnisut" refine=1 lvl=90/90;
-nilou add set="tenacityofthemillelith" count=2;
-nilou add set="vourukashasglow" count=2;
-nilou add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
-nilou add stats def=39.36 def%=0.124 hp=2539.4 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.1324;
+// Export parseScript for testing
+export { parseScript };
 
-zhongli char lvl=90/90 cons=0 talent=9,9,9;
-zhongli add weapon="favoniuslance" lvl=90/90 refine=3; 
-zhongli add set="archaicpetra" count=4; 
-zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
-zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
-
-options swap_delay=12 iteration=100;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
-energy every interval=480,720 amount=1;
-
-
-#--------------------------------------------
-
-
-#action list:
-active nilou;
-
-for let i=0; i<4; i=i+1 { 
-
-#nilou skill:4;
-nilou skill, attack:2, skill;
-
-zhongli skill[hold=1], dash;
-if i { 
-    zhongli burst; 
-  }
-while !.zhongli.mods.favonius-cd && !.yelan.burst.ready { 
-    zhongli attack;
-   } 
-
-while !.yelan.mods.favonius-cd && !.yelan.burst.ready {
-    yelan attack;
-   }
-yelan burst, attack:3, skill;
-  
-hutao attack, skill;
-if.hutao.cons<1 {
-  for let h=9; h>0; h = h - 1 {
-    hutao attack:2, charge, jump;
-   }
- } else {
-  for let h=11; h>0; h=h - 1{
-   hutao attack:2, charge, dash;}  
- } 
-
-if .yelan.tags.yelan_breakthrough {
-        yelan skill, aim;}
-        else {
-        yelan skill, attack:2;}
-
-nilou attack:2;
-  
-}`
-const parsedScript = parseScript(script);
-console.log(GCSimScript.fromJSON(parsedScript));
+// Only run if this is the main module
+if (import.meta.url === `file://${process.argv[1]}`) {
+    parseScripts().then(async gcsim => {
+        console.log(`Parsed ${gcsim.scripts.length} scripts`);
+        await fs.promises.writeFile(path.join(__dirname, "../public/gcsim/gcsim.bin"), GCSim.encode(gcsim).finish());
+    });
+}

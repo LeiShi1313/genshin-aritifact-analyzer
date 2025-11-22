@@ -2,18 +2,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CaretDown, Activity } from "phosphor-react";
 import classNames from "classnames";
+import { ChartLine } from "phosphor-react";
 import md5 from "crypto-js/md5";
 
-import { deserializeFromMona, deserializeFromGood } from "../utils/artifact";
-import { monaPositionToAttributePosition } from "../utils/attribute";
+import { parseImportFile } from "../utils/import";
 import { uploadArtifacts } from "../store/reducers/uploads";
+import { getGenshinGameVersion } from "../utils/genshindb";
 import IconConfig from "../assets/svgs/IconConfig";
 import IconUpload from "../assets/svgs/IconUpload";
 import IconArtifactsFile from "../assets/svgs/IconArtifactsFile";
 import IconBuilds from "../assets/svgs/IconBuilds";
-import GenshinDBPackageInfo from "../../node_modules/genshin-db/package.json"
 
 const Main = () => {
   const { t, i18n } = useTranslation();
@@ -45,31 +44,21 @@ const Main = () => {
         alert(t("Unsupported file format, please use supported file format"));
         return;
       }
-      const artifacts = [];
 
-      let format = null;
-      if (content["format"] === "GOOD") {
-        format = "GOOD";
-        for (const art of content["artifacts"]) {
-          const a = deserializeFromGood(art);
-          artifacts.push(deserializeFromGood(art));
-        }
-      } else if (
-        content["version"] === "1" &&
-        Object.keys(monaPositionToAttributePosition).every((k) => k in content)
-      ) {
-        format = "YAS";
-        for (const k of Object.keys(content)) {
-          if (k === "version") continue;
-          for (const art of content[k]) {
-            artifacts.push(deserializeFromMona(art));
-          }
-        }
-      } else {
+      const result = parseImportFile(content);
+      if (!result.format) {
         alert(t("Unsupported file format, please use supported file format"));
         return;
       }
-      dispatch(uploadArtifacts({ key, artifacts, format, name: file.name }));
+
+      dispatch(uploadArtifacts({
+        key,
+        artifacts: result.artifacts,
+        format: result.format,
+        name: file.name,
+        characters: result.characters,
+        weapons: result.weapons,
+      }));
       setFileLoading(false);
       navigate(`/artifacts/${key}`);
     };
@@ -81,7 +70,7 @@ const Main = () => {
       <div className="max-w-md">
         <h1 className="flex flex-row mb-10 text-4xl md:text-5xl font-bold items-center">
           {t("Genshin Artifacts Analyzer")}
-          <div className="badge badge-primary self-start">{GenshinDBPackageInfo.version.slice(0,3)}</div>
+          <div className="badge badge-primary self-start">{getGenshinGameVersion()}</div>
         </h1>
         <div className="flex flex-col items-stretch justify-center gap-2">
           <button
@@ -121,6 +110,15 @@ const Main = () => {
           >
             <IconBuilds />
             {t("Edit Builds")}
+            <div className="w-8" />
+          </button>
+
+          <button
+            className="btn btn-primary justify-between rounded-full"
+            onClick={() => navigate("/gcsim")}
+          >
+            <ChartLine size={20} weight="bold"/>
+            {t("DPS Simulator")}&nbsp;(gcsim)
             <div className="w-8" />
           </button>
 

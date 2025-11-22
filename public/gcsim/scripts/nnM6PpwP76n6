@@ -1,0 +1,48 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+//fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+//fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+//furina add set="scroll" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*5 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*9;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="fopl" count=4;
+//kuki add set="instructor" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+//kuki add stats hp=3571 atk=232 em=187 em=139 em=139 ; #main
+//kuki add stats def%=0.062*2*0.84 def=19.68*2*0.84 hp=253.94*2*0.84 hp%=0.0496*2*0.84 atk=16.54*2*0.84 atk%=0.0496*2*0.84 er=0.0551*2*0.84 em=19.82*6*0.84 cr=0.0331*10*0.84 cd=0.0662*2*0.84;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=3 pos=0,3.3 hp=100000000;
+//target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active furina;
+
+for let i=0; i<5; i=i+1 {
+  furina skill, dash, attack, burst;
+  nahida skill, burst;
+  kuki skill, attack;
+  fischl skill, attack;
+  nahida attack:2, charge, attack:3, skill, attack:2, charge, attack:5, charge, dash, attack:3, skill;
+  fischl attack:2, burst;
+  kuki burst, attack;
+  nahida attack, charge;
+}
+

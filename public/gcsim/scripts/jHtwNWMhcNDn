@@ -1,0 +1,205 @@
+#Burgeons: ~50% Albedo, ~15% Nahida, ~20% Bennett, ~15% untriggered (Bloom DMG). Partial APL quickswapping between Nahida and Albedo. Energy drops based on 12-3 pizza cutters; Customized random frame delays.
+
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add weapon="ironsting" refine=5 lvl=90/90;
+albedo add set="fopl" count=4;
+albedo add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #44.66 / 102.84 | 111.01 er
+albedo add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.1101 cr=0.3966 cd=0.5284;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #88.35 / 129.26 | 191.26 er
+xingqiu add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+            
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #44.66 [62.47-68.66] / 102.84 | 111.01 er
+nahida add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.1101 cr=0.3966 cd=0.5284;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=240];
+bennett add set="instructor" count=4;
+bennett add stats hp=3571 atk=232 er=0.518 em=139.3 em=139.3; #10.29 / 60.57 | 235.515 er
+bennett add stats hp=406.3 atk=26.45 def=31.485 hp%=0.07925 atk%=0.07925 def%=0.0991 em=174.39 er=0.26415 cr=0.0529 cd=0.1057;
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 resist=0.1 hp=99999999 radius=1 pos=0,1.5 particle_threshold=242650 particle_drop_count=1; #Energy drops based on 12-3 pizza cutters
+target lvl=100 resist=0.1 hp=99999999 radius=1 pos=4,0.5 particle_threshold=242650 particle_drop_count=1;
+
+active albedo;
+
+#basically... [Albedo E] > Nahida hE N1 Q > Xingqiu E Dash Q N1 > Bennett E Q > Albedo N1 E N1 Q N1 > Albedo/Nahida APL
+albedo skill;
+for let r=0; r<4; r=r+1 {
+
+  #Nahida
+  let marked = false;
+  if .nahida.skill.ready {
+    nahida skill[hold=1];
+    marked = true;
+  }
+  nahida attack;
+  while !.nahida.burst.ready || (.xingqiu.skill.cd > 120) {
+    if .nahida.skill.ready {
+      nahida skill;
+    } else if .nahida.normal > 2 {
+      nahida charge;
+    } else {
+      nahida attack;
+    }
+  }
+  nahida burst;
+  if !marked && .nahida.skill.ready {
+    nahida skill[hold=1];
+  }
+  
+  #Xingqiu
+  xingqiu skill, dash;
+  pick_up_crystallize("any");
+  while !.xingqiu.burst.ready {
+    if .xingqiu.skill.ready {
+      xingqiu skill, dash;
+      pick_up_crystallize("any");
+    } else {
+      xingqiu attack;
+    }
+  }
+  xingqiu burst, attack;
+  if .xingqiu.skill.ready {
+    xingqiu skill, dash;
+    pick_up_crystallize("any");
+    xingqiu attack;
+  }
+      
+  #Bennett
+  bennett skill;
+  while !.bennett.burst.ready {
+    if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+  bennett burst;
+  
+  #Albedo
+  albedo attack, skill, attack;
+  while !.albedo.burst.ready {
+    if .albedo.skill.ready {
+      albedo skill;
+    } else {
+      albedo attack;
+    }
+  }
+  #let burstMoment = f();
+  albedo burst, attack;
+  
+  #APL (Albedo/Nahida)
+  while (.xingqiu.skill.cd > 150) && (.albedo.mods.bennett-field > 20 || .status.bennettburst > 60) {
+    switch {
+    
+      case .nahida.swap.ready && .element.t0.hydro:
+        nahida swap;
+        
+        while .element.t0.hydro || !.albedo.swap.ready {
+          if (.gadgets.dendrocore.count >= 2) && .albedo.swap.ready {
+            albedo attack;
+            break;
+          }
+            
+          switch {
+          
+            case .previous-action == .action.charge:
+              nahida dash;
+              pick_up_crystallize("any");
+              
+            case .nahida.skill.ready:
+              nahida skill;
+              
+            case .nahida.normal > 2:
+              nahida charge;
+              
+            default:
+              nahida attack;
+          }
+        }
+        
+      #case .bennett.swap.ready && .bennett.skill.ready && !.albedo.mods.instructor:
+        #bennett skill, attack;
+        
+      #case .albedo.swap.ready && (.albedo.mods.albedo-skill-icd > 100) && .albedo.skill.ready && (f() - burstMoment > 160):
+        #albedo skill;
+        
+      case .albedo.normal > 3:
+        if .albedo.skill.ready {
+          albedo skill;
+        } else {
+          albedo charge, dash;
+          pick_up_crystallize("any");
+        }
+        
+      default:
+        albedo attack;
+    }
+  }
+  
+  while !.nahida.swap.ready {
+    albedo attack;
+  }
+  
+  print("Rotation ", r, " done");
+}

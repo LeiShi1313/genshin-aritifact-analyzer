@@ -1,0 +1,145 @@
+#Sara buffs both Fischl and Alhaitham in a ~26s rotation. DMG Build Kirara + WF Alhaitham is higher dps than Full HP Kirara + HoD Alhaitham. See config for notes on shield uptime/stacking. KurtC, Custom random action delays, 12-3 Icewind Suite energy.
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add set="gilded" count=4;
+alhaitham add weapon="wolffang" refine=1 lvl=90/90;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #72.22 [74.22-80.22] / 178.25 | 111.01 er
+alhaitham add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 er=0.1101 em=79.26 cr=0.3966 cd=0.6605; #2 em, 10 cr, 8 cd rolls
+
+// alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90; #69.15 [97.15] / 176.12 | 111.01 er
+// #alhaitham add weapon="ironsting" refine=5 lvl=90/90; #69.15 / 129.26 | 111.01 er
+// alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311;
+// alhaitham add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 er=0.1101 em=79.26 cr=0.3305 cd=0.7926; #2 em, 8 cr, 10 cd
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="scionoftheblazingsun" refine=1 lvl=90/90;
+#sara add weapon="blackcliffwarbow" refine=1 lvl=90/90; #stats not optimized for blackcliff/stringless
+#sara add weapon="stringless" refine=3 lvl=90/90;
+sara add set="instructor" count=4;
+sara add stats hp=3571 atk=232 atk%=0.348 electro%=0.466 cr=0.232; #54.515 / 108.13 | 122.0125 er
+sara add stats hp=406.3 hp%=0.07925 atk=26.45 atk%=0.07925 def=31.485 def%=0.0991 er=0.220125 em=31.71 cr=0.07935 cd=0.5813; #4-star: 3 er, 1 cr, 4 cd | 5-star: 4 cd
+
+// #sara add set="noblesse" count=4;
+// sara add set="totm" count=4;
+// sara add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #87.53 / 129.26 | 122.02 er
+// sara add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 er=0.2202 em=39.63 cr=0.3305 cd=0.7926; #2 er, 8 cr, 10 cd
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="goldentroupe" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
+fischl add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.3305 cd=0.7926; #2 atk%, 8 cr, 10 cd
+
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add set="deepwood" count=4;
+#DMG BUILD
+kirara add weapon="harbingerofdawn" refine=5 lvl=90/90;
+#kirara add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=360];
+kirara add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #69.15 [97.15] / 176.12 | 111.01 er
+kirara add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.3305 cd=0.7926; #2 atk%, 8 cr, 10 cd
+
+#SHIELD BUILD
+// kirara add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=360];
+// kirara add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #44.66 / 102.84 | 141.64 er
+// kirara add stats hp=507.88 hp%=0.2973 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.3966 cd=0.5284; #4 hp%, 10 cr, 6 cd
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 hp=99999999 resist=0.1 radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3;
+#target lvl=100 hp=99999999 resist=0.1 radius=2 pos=0,2.5 particle_threshold=520000 particle_drop_count=3;
+
+active kirara;
+let shieldEarlier = true; #set to false for different rotation order around kirara shield (see notes below)
+
+fn doActionList() {
+  
+  #Base: Kirara [E/short hE] > Sara E CA > Fischl N1 E > Sara Q > Alhaitham hE LP N2CD N3C > Kirara E Q > Sara E > Fischl N2 Q > Alhaitham Q > Sara CA > Alhaitham N4CD N4CD N3
+  for let r=0; r<3; r=r+1 {
+    kirara skill[short_hold=r>0]; #tap on 1st rotation, short hold later
+    sara skill, aim;
+    fischl attack, skill;
+    sara burst; #6 Stormcluster hits per burst with radius=1, 12 with radius=2 (can be further played around with)
+    alhaitham skill[hold=1], low_plunge[short=rand()<1/3], #1/3 chance to successfully short plunge
+              attack:2, charge, dash,
+              attack:3, charge;
+    if shieldEarlier == true {
+      kirara skill, burst; #Shield stacks, but expires ~2-3s before Alhaitham's 2nd combo is over. May have slightly lower dps (100ish?)
+    }
+    sara skill;
+    fischl attack:2, burst;
+    if shieldEarlier == false {
+      kirara skill, burst; #Shield basically fully covers Alhaitham's 2nd combo, but doesn't stack, and doesn't cover Fischl's part immediately before this.
+    }
+    alhaitham burst;
+    sara aim;
+    alhaitham attack:4, charge, dash,
+              attack:4, charge, dash,
+              attack:3;
+  }
+}
+
+#Random action delays, and implied attacks while an attempted burst is not ready
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .alhaitham.onfield:
+    prev_char_id = .keys.char.alhaitham;
+  case .sara.onfield:
+    prev_char_id = .keys.char.sara;
+  case .fischl.onfield:
+    prev_char_id = .keys.char.fischl;
+  default:
+    prev_char_id = .keys.char.kirara;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action is not actually a swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+  
+  if action_id == .action.burst {
+    while .alhaitham.onfield && !.alhaitham.burst.ready {
+      alhaitham attack;
+    }
+    while .sara.onfield && !.sara.burst.ready {
+      sara attack;
+    }
+    while .fischl.onfield && !.fischl.burst.ready {
+      fischl attack;
+    }
+    while .kirara.onfield && !.kirara.burst.ready {
+      kirara attack;
+    }
+  }
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                     #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+doActionList();

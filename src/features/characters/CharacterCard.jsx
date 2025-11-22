@@ -1,10 +1,12 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Character } from "../../genshin/character";
 import { characterMetadata } from "../../utils/character";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
 import classNames from "classnames";
 
-const CharacterCard = ({ character, text = "name", width = 24, textColor, isFit }) => {
+const CharacterCard = ({ character, text = undefined, width = 24, textColor, saturate = false, constellation = undefined }) => {
+  const { t, i18n } = useTranslation();
   const imgUrl = useMemo(
     () =>
       new URL(
@@ -18,10 +20,24 @@ const CharacterCard = ({ character, text = "name", width = 24, textColor, isFit 
 
   const charStar = Number(characterMetadata[Character[character]].rarity);
 
+  // Display character name if text is undefined
+  const displayText = useMemo(() => {
+    if (text === undefined) {
+      return t(Character[character].toLowerCase(), { ns: "characters" });
+    }
+    return text;
+  }, [text, character, t]);
+
+  // Format constellation text based on language
+  const constellationText = useMemo(() => {
+    if (constellation === undefined || constellation === null) return null;
+    return t('constellation', { count: constellation });
+  }, [constellation, t]);
+
   return (
     <figure
       className={
-        classNames("flex flex-col items-center justify-start overflow-hidden rounded bg-base-100 shadow-md", {"saturate-[0.4]": !isFit})
+        classNames("flex flex-col items-center justify-start overflow-hidden rounded bg-base-100 shadow-md", { "saturate-[0.4]": saturate })
       }
     >
       <div
@@ -29,12 +45,19 @@ const CharacterCard = ({ character, text = "name", width = 24, textColor, isFit 
         style={{ backgroundColor: starRarityToBgColor(charStar) }}
       >
         <img src={imgUrl} style={{ width: width / 4 + "rem" }} />
+
+        {/* Constellation badge */}
+        {constellationText && (
+          <div className="absolute right-0 top-0 rounded-bl-lg bg-blue-600/70 px-1.5 py-0.5 text-xs font-bold text-white">
+            {constellationText}
+          </div>
+        )}
       </div>
       <figcaption
-        className="font-bold text-primary"
+        className="text-xs font-bold text-primary sm:text-sm"
         style={{ color: textColor }}
       >
-        {text}
+        {displayText}
       </figcaption>
     </figure>
   );

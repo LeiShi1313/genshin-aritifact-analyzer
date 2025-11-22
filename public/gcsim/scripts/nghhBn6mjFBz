@@ -1,0 +1,66 @@
+options swap_delay=12 debug=true iteration=100;
+
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="thewidsith" refine=3 lvl=90/90;
+klee add set="lavawalker" count=4;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="favbow" refine=4 lvl=90/90;
+venti add set="viridescentvenerer" count=4;
+venti add stats hp=4780 atk=311 em=561; # main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=118.92 cr=0.3972 cd=0.2648;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=3,0; # Impossibly high HP so target doesn't die but sim duration cannot be set. Possitioned so Venti's Burst hits
+energy every interval=480,720 amount=1; # Clear particle every 8-12s
+
+active klee;
+
+# End simulation after 5 rotations
+let rotations = 5;
+
+klee attack;
+while rotations {
+  venti attack, skill, burst;
+  bennett burst, skill;
+  xiangling burst, skill;
+  venti skill, attack;
+  klee attack, burst, walk,
+    attack, skill[bounce=3, mine=8];
+  if .klee.skill.ready {
+    klee jump, attack, skill[bounce=3, mine=8], jump;
+  } else {
+    klee attack[travel=6], charge; # travel=6 is used to force N1 hitmark to be before CA has begun execution
+  }
+  let klee_n1c_sequences = 5;
+  while klee_n1c_sequences {
+    klee attack[travel=6], charge;
+    klee_n1c_sequences = klee_n1c_sequences - 1;
+  }
+  klee attack;
+  print("Rotation done");
+  rotations = rotations - 1;
+  if (rotations) {
+    bennett attack, skill;
+  }
+}
+
+# Allow final Klee CA and Burst to complete execution until hitmark
+wait(25);
+
+# Klee N1 > Kazuha E hP Q > Bennett QE > Xiangling QE > Kazuha E hP > Klee N1Q N1E N1E 5N1C
+# Repeat with Bennett N1E to begin and a Klee N1C replaces N1E
+

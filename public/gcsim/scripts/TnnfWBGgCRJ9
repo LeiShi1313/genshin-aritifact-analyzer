@@ -1,0 +1,95 @@
+# Sethos Tighnari Fischl Lanyan. ~18s Rot. Sethos Tighnari Aggravate. Sethos uses a Shadowpiercing at the start of the rotation and after his burst, which is wrapped by skills for energy reasons. Tighnari uses burst after 1 CA, energy permiiting. Fischl alternates skill and burst. Lanyan swirls electro before after and Sethos with skill or burst. AGAIN, Sethos uses his burst. 
+
+# Team - Options Listed by DPS
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+#sethos add weapon="hunterspath" refine=1 lvl=90/90;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="wt" count=4;
+#sethos add set="gd" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622;
+sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EEC
+#sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+#sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.3641 cd=0.331; # EDC
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="ode" refine=5 lvl=90/90;
+#tighnari add weapon="slingshot" refine=5 lvl=90/90;
+#tighnari add weapon="twilight" refine=5 lvl=90/90;
+tighnari add set="scroll" count=4;
+#tighnari add set="deepwood" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Ode/FT
+#tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Slingshot
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="hakushin" refine=5 lvl=90/90;
+#lanyan add weapon="evenstar" refine=1 lvl=90/90;
+#lanyan add weapon="sacfrags" refine=5 lvl=90/90;
+lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 em=187 em=187 cr=0.311; # main 
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # EEC
+#lanyan add stats hp=4780 atk=311 em=187 anemo%=0.466 cr=0.311; # main 
+#lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2317 cd=0.7282; # EDC
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Combos
+fn sethosCombo() {
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, skill;
+}
+
+# Rotation
+active sethos;
+sethos aim[hold=2];
+
+for let i=0; i<4; i=i+1 {
+  # Fading Twlight rarely bursts 3 times
+	tighnari skill, aim;
+	if .tighnari.burst.ready {
+	  tighnari burst, aim:2;
+	} else {
+	  tighnari aim:2;
+	}
+	
+  if .amy.skill.ready { 
+    amy attack, skill;
+  } else {
+    amy attack:2, burst;
+  }
+  
+  lanyan attack, skill:2;
+
+  sethos skill; #aim[hold=2] # High ping only; dodges energy drain
+  sethosCombo();
+  sethos aim[hold=2]:1;
+  
+  if .lanyan.skill.ready {
+    lanyan skill:2;
+  } else if .lanyan.burst.ready && .lanyan.energy == .lanyan.energymax {
+    lanyan burst;
+  } else {
+    lanyan attack:2;
+  }
+}

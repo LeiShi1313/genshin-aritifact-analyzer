@@ -1,0 +1,90 @@
+# Alhaitham Emilie Mavuika Xianyun. ~19s Rot. Alhaitham Burning Plunge. AlHaitham NAs after each plunge for mirror triggers. Xianyun adds extra N1s before and after ElPQ to clear burning so Mavuika can trigger Scroll again. 60% Collisions.
+
+# Team - Options ordered by DPS
+haitham char lvl=90/90 cons=0 talent=9,9,9;
+haitham add weapon="harbinger" refine=5 lvl=90/90;
+#haitham add weapon="finale" refine=5 lvl=90/90;
+#haitham add weapon="lionsroar" refine=3 lvl=90/90;
+haitham add set="ur" count=4;
+#haitham add set="longnightsoath" count=4;
+haitham add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311;
+haitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+#emilie add set="deepwood" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#mavuika add weapon="earthshaker" refine=5 lvl=90/90;
+#mavuika add weapon="aquamarine" refine=1 lvl=90/90;
+mavuika add set="scroll" count=4;
+#mavuika add set="deepwood" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.3972 cd=0.3972; # SS
+#mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # ES
+#mavuika add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=118.92 cr=0.3972 cd=0.3972; # Aqua
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="deepwood" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="no" count=4;
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active mav; # SS Stacks
+mav skill; # burning uptime
+
+for let i=0; i<4; i=i+1 {
+  if i > 0 && .emilie.burst.ready && .emilie.energy == .emilie.energymax {
+    emilie burst;
+  } else {
+    emilie skill, attack;
+  }
+  
+  if .mavuika.burst.ready && .mavuika.skill.ready {
+    mavuika burst, skill, dash;
+  } else if .mavuika.burst.ready {
+    mavuika burst;
+  } else if .mavuika.skill.ready {
+    mavuika attack, skill;
+  }
+  
+  xianyun attack, skill, low_plunge, burst, attack; # N1s needed for more Scroll
+  
+  haitham skill[hold=1], low_plunge[short=1], attack;
+  # Plunge Combo w/ skill as available
+  while .haitham.status.xianyun-airborne-buff {
+    #if .haitham.mirrors < 3 && .haitham.burst.ready { # DPS Loss
+    #  haitham burst;
+    #} else {
+      haitham jump;
+      if .airborne {
+        haitham high_plunge[collision=rand()>0.4];
+      }
+      haitham attack:1;
+    #}
+  }
+  if .haitham.burst.ready {
+    haitham burst;
+  }
+  
+  print("done");
+}

@@ -1,0 +1,78 @@
+# Sethos Nahida Yelan Kuki. ~18s Rot. Sethos Hyperbloom with Kuki. Yelan ER needs are high. Sethos encloses his burst with skill uses. Sethos uses dash instead of walk to reposition to hit boom cores between N2s.
+
+# Team
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="wt" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622;
+sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EEC
+#sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+#sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.3972 cd=0.3972; # EDC
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="fruit" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.1986 cd=0.3972;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+#kuki add weapon="umbrella" refine=5 lvl=90/90;
+#kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="fopl" count=4;
+#kuki add set="gd" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.2979 cd=0.1986;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+#target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000;
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  if i == 0 {
+    nahida skill, burst;
+  } else {
+    nahida skill, attack, burst;
+  }
+  
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  kuki skill, attack;
+  if .kuki.burst.ready {
+    kuki burst;
+  }
+  
+  sethos attack, skill, attack;
+  sethos burst;
+  sethos attack:2, dash,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2,
+         skill;
+  sethos attack, aim[hold=2]:2, attack;
+}
+

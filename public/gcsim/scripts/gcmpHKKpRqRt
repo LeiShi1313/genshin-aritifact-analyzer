@@ -1,0 +1,107 @@
+# (C5)Dori Furina Rosaria Xianyun. ~20s Rot. Dori Phys Plunge. Dori uses burst as available at the end of the rotation. OHC > SoDP Xianyun, but bubbles may miss. C6 Dori is -6K DPS. 50% Collisions. 
+
+# Team
+dori char lvl=90/90 cons=5 talent=9,9,9;
+dori add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#dori add weapon="tidalshadow" refine=5 lvl=90/90;
+#dori add weapon="snowtombed" refine=5 lvl=90/90;
+dori add set="longnightsoath" count=4;
+#dori add set="pf" count=4;
+#dori add set="mh" count=4;
+dori add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # SS + Other
+#dori add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+#dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662; # SS + MH
+#dori add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+#dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # STSS/TS + MH
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.331; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.4634; # GT
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+#rosaria add set="emblem" count=4; 
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+#xianyun add set="no" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Dori Plunge Combo
+fn DoriPlunge() {
+  dori jump;
+  if .airborne {
+    dori high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active dori; # SS Stacks
+
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash;
+  if !.furina.burst.ready { # DPS gain
+    furina attack;
+  }
+  furina burst;
+  
+  xianyun skill, low_plunge;
+  if !.xianyun.burst.ready {
+    xianyun attack;
+  }
+  xianyun burst;
+  
+  rosaria skill, burst;
+  
+  dori skill;
+  while .dori.status.xianyun-airborne-buff {
+    DoriPlunge();
+    if .dori.skill.ready {
+      dori skill;
+    } else if !.dori.status.xianyun-airborne-buff { # Xianyun-q expiration
+      dori attack;
+    } else {
+      dori dash;
+    }
+  }
+  
+  rosaria skill;
+  
+  while .furina.skill.cd { 
+    switch {
+      case .dori.burst.ready:
+        dori burst;
+      case .dori.skill.ready:
+        dori skill;
+      case .dori.normal > 2 && .dori.dash.ready && .stam > 18:
+        dori dash;
+      default:
+        dori attack;
+    }
+  }
+  
+  print("done");
+  
+}
+

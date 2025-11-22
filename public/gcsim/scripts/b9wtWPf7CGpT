@@ -1,0 +1,46 @@
+freminet char lvl=90/90 cons=6 talent=10,10,10;
+freminet add weapon="songofbrokenpines" refine=1 lvl=90/90;
+freminet add set="paleflame" count=4;
+freminet add stats def=42 hp=5079 atk=338 atk%=0.81 er=0.234 em=23 cr=0.742 cd=0.7769999999999999 phys%=0.583;
+
+furina char lvl=90/90 cons=0 talent=9,10,10;
+furina add weapon="favoniussword" refine=5 lvl=90/90;
+furina add set="goldentroupe" count=4;
+furina add stats def=39 hp=5497 hp%=1.171 atk=311 er=0.45499999999999996 em=60 cr=0.405 cd=1.181;
+
+fischl char lvl=90/90 cons=6 talent=1,10,8;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="goldentroupe" count=4;
+fischl add stats def%=0.066 def=90 hp=4989 atk=356 atk%=0.8170000000000001 er=0.279 em=37 cr=0.548 cd=0.738 electro%=0.466;
+
+mika char lvl=90/90 cons=6 talent=1,10,10;
+mika add weapon="rightfulreward" refine=5 lvl=90/90;
+mika add set="noblesseoblige" count=4;
+mika add stats def%=0.256 def=39 hp=7947 hp%=1.0430000000000001 atk=338 er=0.41500000000000004 em=21 cr=0.311 cd=0.358 heal=0.359;
+
+target lvl=100 resist=0.1 hp=9999999;
+energy every interval=480,720 amount=1;
+
+#sim config
+options swap_delay=4 debug=true iteration=1000 workers=30 mode=sl;
+active furina;
+
+for let i=0; i<4; i=i+1 {
+
+  furina skill, dash, burst;
+  mika skill, burst;
+   if .amy.skill.ready { 
+    amy skill, attack; 
+  } else { 
+    amy attack:2, burst; 
+  }
+  freminet skill, burst,
+           attack:2, skill, skill,
+           attack:2, skill, attack:2, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time
+           attack:2, skill, attack:2, skill,
+           attack:3, skill;
+           
+  
+}
+
+# Furina EdQ > Mika EQ > Fischl E N1 / N2 Q > Frem EQ N2 EE 4N2E N3 E

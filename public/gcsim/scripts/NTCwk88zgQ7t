@@ -1,0 +1,46 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="xiphos" refine=1 lvl=90/90;
+bennett add set="fopl" count=4;
+bennett add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=350];
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.2317 cd=0.662;
+
+options iteration=1000 workers=50 swap_delay=12;
+target lvl=100 resist=0.1 hp=999999999 radius=2 pos=2.5,0;
+energy every interval=480,720 amount=1;
+
+active nahida;
+
+for let x = 0; x < 4; x = x + 1 {
+  
+  nahida burst, skill;
+  xingqiu skill, dash, burst, attack;
+  bennett skill, attack, burst;
+  if .fischl.burst.ready {
+    fischl attack:2, burst; 
+  } else {
+    fischl attack:3, skill, attack; 
+  }
+  bennett attack, skill,
+          attack:4, skill,
+          attack:4, skill,
+          attack:4, skill,
+          attack:4, skill; 
+}

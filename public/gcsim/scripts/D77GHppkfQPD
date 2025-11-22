@@ -1,0 +1,80 @@
+# Lyney Amber Lynette Bennett. ~16s Rot. Lyney pulls rabbits and cats from hats, but IR marrs the stars in combat. The twins take a Fantastic Voyage, while Amber backs the show from storage. 
+
+# Team - Options Listed by DPS
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="crescent" refine=5 lvl=90/90;
+#lyney add weapon="songofstillness" refine=5 lvl=90/90;
+lyney add set="mh" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
+lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+amber char lvl=90/90 cons=6 talent=9,9,9;
+amber add weapon="favbow" refine=3 lvl=90/90; 
+amber add set="tom" count=4;
+amber add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+amber add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="favsword" refine=3 lvl=90/90;
+lynette add set="vv" count=5;
+lynette add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311 ; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.4634;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active lyney;
+
+for let i = 0; i < 4; i = i + 1 {
+  if i > 0 { # not necessary on the first rotation
+    lyney aim[weakspot=1];
+  }
+  
+  while .amber.skill.ready {
+    amber skill;
+  }
+  if .amber.burst.ready {
+    amber burst;
+  }
+
+  if !.bennett.burst.ready {
+    bennett skill;
+  }
+  bennett burst;
+  
+  lynette skill;
+  if .lynette.skill.ready {
+    lynette skill;
+  }
+  for let i = 0; i < 2; i = i + 1 { # fill time
+    if !.lynette.burst.ready {
+      lynette attack;
+    }
+  }
+  lynette burst;
+   
+  lyney aim[weakspot=1], aim, aim;
+  if .lyney.burst.ready {
+    lyney burst;
+    delay(11); # To avoid cancelling burst before dealing dqmage
+    lyney skill;
+  } else {
+    lyney aim;
+  }
+  lyney aim, skill;
+  
+  print("done");
+}

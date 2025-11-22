@@ -1,0 +1,104 @@
+# Sethos Nahida Fischl (C2)Xilonen. ~24s Rot. "Comfy" Sethos Aggravate rotation makes use of Xilonen C2 ER. Sethos uses skill in-between Shadow Peircing shots within Sand King's Boon and does L1 CAs after burst mode. Xilonen bursts every rotation. Nahida dashes for the AP crystalize.
+
+# Team
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="wt" count=4;
+#sethos add set="dpc" count=4;
+#sethos add set="tf" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EEC
+#sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+#sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EDC
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="hakushin" refine=5 lvl=90/90;
+nahida add set="ap" count=4;
+#nahida add set="gt" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=118.92 cr=0.2979 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=2 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311 ; #main
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Combo works with varyinng sets
+fn sethosCombo() {
+  if .sethos.skill.ready {
+    sethos skill;
+  }
+  sethos burst;
+  while .sethos.mods.sethos-burst {
+    if .sethos.skill.ready {
+      sethos skill;
+    } else if .sethos.normal > 2 {
+      sethos walk;
+    } else {
+      sethos attack;
+    }
+  }
+}
+
+# Rotation
+active amy;
+
+for let i=0; i<4; i=i+1 {
+  while !.amy.skill.ready {
+    amy attack;
+  }
+  amy skill, attack;
+  
+  xilonen skill, attack:2;
+  xilonen burst;
+  
+  nahida skill, attack;
+  # Nearly every rotation
+  if .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+  # AP Action
+  if .nahida.sets.ap {
+    nahida dash; 
+    pick_up_crystallize("electro");
+  }
+  
+  # L2 Aimed shots within A4
+  sethos aim[hold=2]:2;
+  sethos skill; 
+  sethos aim[hold=2]:2;
+  
+  amy attack:2, burst;
+  
+  xilonen skill, attack:2;
+  
+  sethosCombo();
+  # L1 Aimed shots
+  while .sethos.energy > 20 {
+    sethos aim[hold=1];
+    if .sethos.skill.ready {
+      sethos skill;
+    }
+  }
+
+}
+
+# by Zanzi

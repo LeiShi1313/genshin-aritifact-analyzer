@@ -1,0 +1,40 @@
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="amenomakageuchi" refine=5 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="wavebreakersfin" refine=1 lvl=90/90;
+rosaria add set="blizzardstrayer" count=4;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="wavebreakersfin" refine=1 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.6612 em=39.64 cr=0.1655 cd=0.331;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6061 em=118.92 cr=0.1986 cd=0.331;
+									
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active ayaka;
+
+for let x=0; x<5; x=x+1 {
+  ayaka dash, attack:2, skill, attack:2; 
+  kazuha skill, high_plunge, burst;
+  shenhe skill, burst;
+  rosaria skill, burst;
+  ayaka dash, attack, skill, burst, attack:2, charge;
+  shenhe skill, attack;
+  kazuha skill, high_plunge;
+  rosaria skill, attack;
+}

@@ -1,0 +1,46 @@
+options swap_delay=12 iteration=1000;
+
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="balladofthefjords" refine=1 lvl=90/90;
+cyno add set="thunderingfury" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+cyno add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.2648 cd=0.662;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def=39.36 def%=0.248 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active cyno;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+cyno skill;
+for let i=0; i<4; i=i+1 {
+  xilonen skill, attack:2, burst;
+  nahida skill, attack, burst;
+  furina skill, dash, burst;
+  xilonen skill, attack:2;
+  cyno skill, burst, attack, skill,
+    attack:4, skill, 
+    attack:4, skill, 
+    attack:4, skill,
+    attack:4, skill,
+    attack:4, skill,
+    attack:4;
+}
+
+# (Cyno E) > Xilonen E N2 Q (electro crystallize) > Nahida E N1 Q > Furina ED Q > Xilonen E N2 (hydro crystallize) > Cyno E Q N1 E 5[N4E] N4

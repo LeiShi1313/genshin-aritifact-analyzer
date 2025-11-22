@@ -1,0 +1,68 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+wrio char lvl=90/90 cons=0 talent=9,9,9;
+wrio add weapon="widsith" refine=3 lvl=90/90;
+wrio add set="mh" count=4;
+wrio add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2648 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=326];
+bennett add set="scroll" count=5;        
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
+
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="favoniussword" refine=5 lvl=90/90;
+lynette add set="vv" count=5;
+lynette add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311 ; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.331 cd=0.1324;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622 ; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000; 
+energy every interval=480,720 amount=1;
+
+#Rotation assumptions
+active wrio;
+wrio attack; # cryo aura
+
+for let r=0; r<4; r=r+1 {
+  if r && .emilie.burst.ready && .emilie.energy == .emilie.energymax {
+    emilie burst;
+  } else {
+    emilie skill, attack;
+  }
+  lynette attack, skill;
+  bennett skill, burst;
+  if .lynette.skill.ready {
+    lynette skill;
+  }
+  lynette attack, burst;
+  wrio skill,
+       attack:3, charge, jump,
+       attack:3, charge, jump, 
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:4;
+  if .wrio.burst.ready && .wrio.energy == .wrio.energymax  {
+    wrio burst;
+  } else {
+    wrio charge, jump;
+  }
+  while !.element.t0.cryo { # try to leave cryo in-game for lynette to swirl it in the next rot.
+    wrio attack;
+  }
+}
+
+# Emilie Q / E N1 > Lynette N1 E > Bennett EQ > Lynette (E) N1 Q > Wriothesley E 5[N3CJ] > Wriothesley N4 Q / N4CJ (N1 until Cryo aura)
+
+# Alternate rot for C0 Lynette:
+# Emilie Q / E N1 > Lynette E N2CJ > Bennett EQ > Lynette Q N1 > Wriothesley E 5[N3CJ] > Wriothesley N4 Q / N4CJ (N1 until Cryo aura) > (Lynette N2 if on Fav)

@@ -1,0 +1,49 @@
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="favoniuslance" refine=5 lvl=90/90;
+thoma add set="flowerofparadiselost" count=4;
+thoma add stats hp=4780 hp%=0 atk%=0 atk=311 def%=0 em=561 heal=0 phys%=0 er=0 cr=0 pyro%=0 cd=0;
+thoma add stats def=39.36 def%=0.124 em=118.92 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.0992 er=0.6612 cr=0.2648 cd=0.1324 ;
+
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favoniuslance" refine=3 lvl=90/90;
+yaoyao add set="tenacityofthemillelith" count=4;
+yaoyao add stats hp=4780 hp%=0 atk%=0.466 atk=311 def%=0 em=0 heal=0 phys%=0 er=0 cr=0.311 dendro%=0.466 cd=0;
+yaoyao add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1488 er=0.1653 cr=0.331 cd=0.7944 ;
+
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 hp%=0 atk%=0.466 atk=311 def%=0 em=0 heal=0 phys%=0 er=0 cr=0.311 hydro%=0.466 cd=0;
+xingqiu add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.1984 er=0.1102 cr=0.331 cd=0.7944 ;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.11019999999999999 em=679.92 cr=0.3972 cd=0.5296;
+
+options swap_delay=12 iteration=100;
+
+# ----  Default Enemy
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=0.1 pos=0,0 hp=10000000;
+target lvl=100 resist=0.1 pos=2.2,0 hp=10000000;
+# ----
+active nahida;
+
+let rotations = 6;
+
+while rotations {
+   
+   nahida skill, burst, attack:1;
+   xingqiu attack:1, skill, burst;
+   yaoyao attack:1, skill;
+   thoma skill, attack:1, burst;
+   yaoyao burst, attack:3, dash, attack:2, jump;
+   nahida attack:2, dash, attack:3, dash, attack:3;
+   nahida attack:3, dash, attack:3, dash, attack:2;
+
+   rotations= rotations - 1; 
+}

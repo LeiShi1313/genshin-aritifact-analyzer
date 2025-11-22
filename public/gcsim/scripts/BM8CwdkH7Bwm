@@ -1,0 +1,41 @@
+options swap_delay=12 iteration=1000;
+
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="lionsroar" refine=3 lvl=90/90;
+ayato add set="echoes" count=4;
+ayato add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+ayato add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favoniuswarbow" refine=4 lvl=90/90;
+collei add set="deepwoodmemories" count=4;
+collei add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311; #main
+collei add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="fopl" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+active ayato;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  ayato burst;
+  fischl attack, skill;
+  collei skill;
+  kuki skill;
+  ayato skill, attack:16;
+  fischl attack:2, burst;
+  collei burst, skill;
+  kuki burst;
+  ayato skill, attack:16;
+}

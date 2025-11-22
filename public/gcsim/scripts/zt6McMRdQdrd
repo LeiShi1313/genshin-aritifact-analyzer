@@ -1,0 +1,55 @@
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="oc" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="deepwood" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.3972;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.1655 cd=0.5958;
+
+options swap_delay=12 iteration=10000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+fn kinich_combo() {
+  kinich skill;
+  kinich attack;
+  while .kinich.nightsoul.state {
+    if .kinich.nightsoul.points == 20 {
+      kinich skill[hold=1];
+      continue;
+    }
+    kinich attack;
+  }
+}
+
+active kinich; # SS Stacks
+
+for let i=0; i<4; i=i+1 { # 4 rotations
+  if i {
+    kinich dash;
+    bennett skill, dash;
+  }
+  furina skill, dash, burst;
+  mavuika attack, skill;
+  bennett burst, dash; # dash to collect mavuika's particles
+  mav burst, dash; # dash to reapply pyro
+  kinich_combo();
+
+}
+

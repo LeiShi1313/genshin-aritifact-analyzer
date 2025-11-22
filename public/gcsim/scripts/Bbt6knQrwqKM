@@ -1,0 +1,80 @@
+# Clorinde Nahida Emilie Thoma. ~18s Rot. (TF) Clorinde Quickburn. Clorinde owns most of the Overloads, so Thoma builds HP. Nahida omits burst while Emilie bursts every rotation.
+
+# Team- Options listed by DPS
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="calamityofeshu" refine=5 lvl=90/90;
+#clorinde add weapon="finale" refine=5 lvl=90/90;
+clorinde add set="tf" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+clorinde add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="scroll" count=4;
+#nahida add set="tom" count=4;
+#nahida add set="gt" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="favoniuslance" refine=3 lvl=90/90;
+thoma add set="deepwood" count=4;
+#thoma add set="no" count=4;
+thoma add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=198.2 cr=0.331 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Clorinde Combo
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  # Burst is a slight DPS loss
+  nahida skill, attack;
+  #if i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+  #  nahida burst;
+  #} else {
+    nahida charge;
+  #}
+  
+  # Always burst;
+  #if i > 0 && .emilie.burst.ready {
+    emilie burst;
+  #} else {
+  #  emilie skill, attack;
+  #}
+  
+  thoma skill, attack, burst;
+  
+  clorinde_combo();
+  if .clorinde.burst.ready {
+    clorinde burst;
+  }
+  clorinde_combo();
+  
+}

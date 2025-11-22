@@ -1,0 +1,68 @@
+# Furina Candace Xingqiu Xianyun. ~20s Rot. C0 Furina Hydro Plunge with N1 Cancels.
+
+# Team
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="harbinger" refine=5 lvl=90/90;
+furina add set="longnightsoath" count=4;
+#furina add set="mh" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634; # LNO
+#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.0993 cd=0.662; # MH
+
+candace char lvl=90/90 cons=6 talent=9,9,9; 
+candace add weapon="favlance" refine=3 lvl=90/90;
+#candace add set="ap" count=4; # scammy
+candace add set="no" count=4;
+#candace add set="emblem" count=4;
+candace add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="emblem" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=99.24 atk%=0.3968 er=0.4959 em=99.1 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 hp=100000000 pos=0,1.4;
+#target lvl=100 resist=0.1 hp=100000000 pos=2,0;
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  
+  xq skill, dash, burst, attack;
+  
+  xianyun skill, low_plunge, attack, burst;
+  
+  candace skill, attack, burst, attack;
+  
+  furina attack;
+  for let p=0; p<8; p=p+1 {
+    if .furina.status.xianyun-airborne-buff {
+      furina jump;
+      if .airborne {
+        furina high_plunge[collision=1];
+        if p < 8 {
+          furina attack;
+        }
+      }
+    }
+  }
+  
+}
+

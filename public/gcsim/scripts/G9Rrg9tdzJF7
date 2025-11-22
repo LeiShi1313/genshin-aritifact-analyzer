@@ -1,0 +1,63 @@
+options swap_delay=12 iteration=1000;
+
+# Builds
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="xiphos" refine=1 lvl=90/90;
+lynette add set="vv" count=4;
+lynette add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.2648 cd=0.1324;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.1655 cd=0.331;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="gt" count=5;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.1324 cd=0.7944;
+
+dehya char lvl=90/90 cons=0 talent=9,9,9; 
+dehya add weapon="favgs" refine=3 lvl=90/90;
+dehya add set="ins" count=4;
+dehya add stats hp=3571 atk=232 em=140.25 em=187 cr=0.23325; #main
+dehya add stats def%=0.104 def=33.06 hp=426.62 hp%=0.0833 atk=27.79 atk%=0.0833 er=0.4166 em=116.54 cr=0.278 cd=0.1112;
+
+# Targets and Energy
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=0.8 pos=1.2,0 hp=100000000;
+target lvl=100 resist=0.1 radius=0.8 pos=0,1.2 hp=100000000;
+target lvl=100 resist=0.1 radius=0.8 pos=-1.2,0 hp=100000000;
+
+#Rotation
+active furina;
+for let i=0; i<4; i=i+1 {
+
+  furina skill, dash, burst;
+  nahida skill;
+  if .nahida.burst.ready {
+    nahida burst;
+  }
+  nahida charge;
+  if .dehya.skill.cd {
+    nahida attack;
+  }
+  if .dehya.burst.ready {
+    dehya skill, attack, burst, skill;
+  } else { 
+    dehya skill, attack, skill; 
+  }
+  lynette skill, burst,
+          attack:2, charge,
+          attack:2, charge,
+          attack, charge, 
+          attack, charge,
+          skill,
+          attack, charge,
+          attack:2, charge, 
+          attack:2, charge;
+}
+
+# Furina ED Q > Nahida E (Q) C (NA until Dehya E is off cd) > Dehya E N1 Q E or E N1 E > Lynette EQ 2[N2C] 2[N1C] E N1C 2[N2C]

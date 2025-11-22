@@ -1,0 +1,113 @@
+mualani char lvl=90/90 cons=0 talent=9,9,9;
+mualani add weapon="sacrificialjade" refine=1 lvl=90/90;
+mualani add set="obsidiancodex" count=4;
+mualani add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+mualani add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.0662 cd=0.662;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="sacfrag" refine=3 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.6061 em=118.92 cr=0.0662 cd=0.1324;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+luminepyro char lvl=90/90 cons=6 talent=9,9,9;
+luminepyro add weapon="favsword" refine=3 lvl=90/90;
+luminepyro add set="ap" count=4;
+luminepyro add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+luminepyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+options swap_delay=11 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active mualani;
+
+fn mualani_combo1() {
+  # Doing 1[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<1; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}  
+  
+fn mualani_combo2() {
+  # Doing 2[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<2; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+fn mualani_combo3() {
+  # Doing 3[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<3; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+
+for let i=0; i<3; i=i+1 {
+
+  mualani attack;
+  
+  xilonen skill, attack:2;
+  
+  if .luminepyro.burst.ready {
+    
+    sucrose skill, dash, burst;
+    
+    luminepyro dash, burst;
+    pick_up_crystallize("hydro");
+    
+    mualani skill;
+    mualani_combo2();
+    if .mualani.burst.ready > 0 {
+      mualani skill, burst[travel=0];
+    } else {
+      mualani_combo1();
+      mualani skill;
+    }
+   
+  } else {
+    
+    sucrose skill, dash;
+    
+    luminepyro dash, skill;
+    pick_up_crystallize("hydro");
+    
+    mualani skill;
+    mualani_combo3();
+    mualani skill;
+    if i == 1 {
+      mualani charge;
+    }
+    
+  }
+  
+}
+
+# ~13-14s rotations
+# Mualani N1 > Xilonen E N2 > Sucrose EDQ > Pyro Traveler D Q  > Mualani E 2[3-stack bite] Q/1[3-stack bite]
+# Mualani N1 > Xilonen E N2 > Sucrose ED  > Pyro Traveler D tE > Mualani E 3[3-stack bite] (C)

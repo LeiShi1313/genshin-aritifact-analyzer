@@ -1,0 +1,213 @@
+#Educational. Lots of self damage between Burning and Burgeon combined with limited Bennett uptime for Alhaitham makes this team risky. 
+#~21s rotation; fav Alhaitham is important for team's and his own energy. 
+#Optimized sim with many build options in config.
+#KurtC, customized random delays, 12-3 Icewind Suite energy drops.
+
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="favsword" refine=3 lvl=90/90;
+alhaitham add set="deepwood" count=4;
+#alhaitham add set="gilded" count=4; #other deepwood holders: xingqiu > xiangling > no one (keep in mind that xingqiu is a less reliable holder for aoe)
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #69.15 / 129.26 | 171.26 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926;
+
+// alhaitham add set="mh" count=4; #pretty consistent stacks with burning and burgeon, performs a bit better than gilded
+// alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #44.66 [80.66] / 178.25 | 171.26 er
+// alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3966 cd=0.6605;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add set="eosf" count=4;
+#xiangling add set="gilded" count=4;
+#xiangling add set="deepwood" count=4; #needs more er without eosf 2pc
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #55.93 [67.93] / 129.26 | 239.76 er
+xiangling add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.2202 cr=0.1983 cd=0.7926;
+
+// xiangling add weapon="kitain" refine=5 lvl=90/90;
+// xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #62.54 / 116.05 | 204.83 er
+// xiangling add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.3303 cr=0.2644 cd=0.6605;
+
+// xiangling add weapon="favlance" refine=3 lvl=90/90;
+// xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #62.54 / 116.05 | 224.45 er
+// xiangling add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.2202 cr=0.2644 cd=0.6605;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #69.15 / 129.26 | 191.26 er
+xingqiu add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+
+// #xingqiu add set="noblesse" count=4;
+// xingqiu add set="deepwood" count=4;
+// xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #69.15 / 129.26 | 182.27 er
+// xingqiu add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=39.63 er=0.2202 cr=0.3305 cd=0.7926;
+
+#Healer build bennett may be slightly more effective at keeping Alhaitham alive, but uptime and circle impact are still limiting
+bennett char lvl=90/90 cons=6 talent=9,9,9; #c6 is worth ~1.5k dps
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=540]; #leaf is supposedly picked up by Alhaitham after first N3D... but timing is inconsistent
+bennett add set="noblesse" count=4;
+#bennett add set="deepwood" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 em=186.5; #38.05 / 76.42 | 220.11 er
+bennett add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=237.78 er=0.1101 cr=0.3305 cd=0.2642;
+
+#healer build
+// bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #18.22 / 63.21 | 220.11 er
+// bennett add stats hp=507.88 atk=33.07 def=39.35 hp%=0.4955 atk%=0.0991 def%=0.1239 em=237.78 er=0.1101 cr=0.1322 cd=0.1321;
+
+// bennett add set="instructor" count=4;
+// bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 em=139.3; #20.87 / 60.57 | 217.905 er
+// bennett add stats hp=406.3 atk=26.45 def=31.485 hp%=0.07925 atk%=0.07925 def%=0.0991 em=174.39 er=0.08805 cr=0.1587 cd=0.1057;
+
+
+#Random frame delays
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .alhaitham.onfield:
+    prev_char_id = .keys.char.alhaitham;
+  case .xiangling.onfield:
+    prev_char_id = .keys.char.xiangling;
+  case .xingqiu.onfield:
+    prev_char_id = .keys.char.xingqiu;
+  default:
+    prev_char_id = .keys.char.bennett;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action is not actually a swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                     #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+fn burningMaint() { #essentially 50% chance for each burning tick to do self dmg
+  if rand() < 0.5 {
+    set_player_pos(0,0.3); #can take burning dmg
+  } else {
+    set_player_pos(0,0); #out of burning range (xq orbitals are in range either way)
+  }
+  switch {
+    case .alhaitham.onfield:
+      print("Alhaitham HP:", .alhaitham.hpratio * 100, "%");
+    case .xiangling.onfield:
+      print("Xiangling HP:", .xiangling.hpratio * 100, "%");
+    case .xingqiu.onfield:
+      print("Xingqiu HP:", .xingqiu.hpratio * 100, "%");
+    default:
+      print("Bennett HP:", .bennett.hpratio * 100, "%");
+  }
+}
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 hp=99999999 resist=0.1 radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+
+active xingqiu;
+set_on_tick(burningMaint);
+let LeaveCircleImpact = false;
+let BurstSwap = false;
+
+#Base: Xingqiu E Dash Q N1 > Bennett Q N1 E > Xiangling N1 Q N1 E Dash > Alhaitham N1 Q N1D N4D N3 E N3D N3CD N3C
+for let r=0; r<4; r=r+1 {
+  xingqiu skill, dash;
+  while !.xingqiu.burst.ready {
+    if .xingqiu.skill.ready {
+      xingqiu skill, dash;
+    } else {
+      xingqiu attack;
+    }
+  }
+  xingqiu burst, attack;
+  if .xingqiu.skill.ready {
+    xingqiu skill, dash, attack;
+  }
+  while !.xingqiu.mods.favonius-cd && (.xingqiu.normal < 4) && (.xingqiu.weapon == .keys.weapon.favsword) {
+    xingqiu attack;
+  }
+  
+  bennett swap;
+  while !.bennett.burst.ready {
+    if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+  bennett burst, attack;
+  if .bennett.skill.ready {
+    bennett skill;
+  }
+  
+  xiangling attack;
+  while !.xiangling.burst.ready {
+    if .bennett.skill.ready {
+      bennett attack, skill;
+      xiangling attack;
+    // } else if .xiangling.skill.ready {
+    //   xiangling skill;
+    } else {
+      xiangling attack;
+    }
+  }
+  xiangling burst, attack;
+  if .xiangling.skill.ready {
+    xiangling skill;
+  }
+  while !.xiangling.mods.favonius-cd && (.xiangling.normal < 3) && (.xiangling.weapon == .keys.weapon.favlance) {
+    xiangling attack;
+  }
+  
+  alhaitham attack;
+  while !.alhaitham.burst.ready {
+    alhaitham attack;
+  }
+  alhaitham burst;
+  if LeaveCircleImpact {
+    set_player_pos(0, 7); #causes some other issues bc of reduced energy drops so it's more scuffed than it should be unless u readjust ER
+    set_target_pos(0, 5.5); #also can leave dendro cores behind
+  }
+  if BurstSwap {
+    bennett attack, skill; #lowers er and can refresh instructor but still doesn't really seem worth
+    alhaitham attack:3, dash;
+  } else {
+    alhaitham attack:1, dash, #has c6 bennett pyro infusion before getting mirrors
+              attack:4, dash;
+  }
+  alhaitham attack:3, skill,
+            attack:3, dash,
+            attack:3, charge, dash,
+            attack:3, charge;
+  
+  if LeaveCircleImpact {
+    set_player_pos(0, 0);
+    set_target_pos(0, 1.5);
+  }
+}

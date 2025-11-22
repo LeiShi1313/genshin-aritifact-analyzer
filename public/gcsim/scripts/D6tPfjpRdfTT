@@ -1,0 +1,111 @@
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+gaming add set="cw" count=5;
+gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworneye" refine=5 lvl=90/90;
+xianyun add set="vv" count=5;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+
+options swap_delay=1 iteration=1000; # swap delay 1f is default anyways, so it can be removed
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active furina;
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash, burst;
+  while !.furina.mods.favonius-cd {
+    furina attack;
+  }
+  bennett skill, burst;
+  if !.element.t0.pyro {
+    bennett attack; # if the aura isn't pyro after EQ do 1 pyro normal attack
+  }
+  xianyun attack[travel=0], skill, low_plunge, burst; # N1 to swirl pyro right after swapping in
+  gaming skill, high_plunge, burst;
+  for let p=0; p<3; p=p+1 {
+    if .gaming.status.xianyun-airborne-buff {
+      gaming jump;
+      if .airborne {
+        let col = rand();
+        if col > 0.5 {
+          gaming high_plunge[collision=1];
+        } else {
+          gaming high_plunge;
+        }
+      }
+    }
+    gaming skill, high_plunge;
+  }
+  bennett skill, attack, dash;
+}
+
+# Furina E dash Q > Bennett E Q (N1) > Xianyun N1 E lP Q > Gaming EP Q 3[JHP EP] > bennett E N1 dash

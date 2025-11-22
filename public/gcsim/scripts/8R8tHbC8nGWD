@@ -1,0 +1,48 @@
+#team config
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
+alhaitham add set="deepwood" count=5;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #mainstats
+alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2317 cd=0.7282; #substats
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="favoniussword" refine=3 lvl=90/90;
+kuki add set="exile" count=5;
+kuki add stats hp=3571 atk=232 er=0.387 electro%=0.348 cr=0.311; #mainstats 
+kuki add stats def%=0.00992 def=31.48 hp=406.3 hp%=0.0794 atk=26.46 atk%=0.0794 er=0.3086 em=31.72 cr=0.265 cd=0.1324; #substats
+
+#enemy config
+target lvl=100 resist=0.1 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+#sim config
+options swap_delay=12 debug=true iteration=1000 workers=30 mode=sl;
+active kuki;
+
+#action list 
+
+for let r = 0; r < 5; r = r + 1 {
+
+  while !.kuki.burst.ready {
+  kuki attack;
+  }
+  kuki burst;
+  alhaitham burst,attack;
+  kuki skill;
+  
+  alhaitham attack:3,dash,
+            attack:3,dash,
+            attack:2,skill,
+            attack:3,dash,
+            attack:3,dash,
+            attack,charge,
+            attack:3,dash,
+            attack:3,dash,
+            attack:3,dash,
+            attack:3,dash,
+            attack:3,dash,
+            attack:2;
+         
+}
+

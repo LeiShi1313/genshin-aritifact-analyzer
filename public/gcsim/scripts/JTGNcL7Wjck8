@@ -1,0 +1,61 @@
+# Diluc Furina Yelan Xianyun. ~25s Rot. Diluc weaves normals between low plunges while Yelan burst is active, then dash dancels high plunges. No Pyro VV. 
+
+# Team
+diluc char lvl=90/90 cons=0 talent=9,9,9;
+diluc add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+diluc add set="longnightsoath" count=4;
+#diluc add set="mh" count=4;
+diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # LNO
+#diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+#diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=118.92 cr=0.0662 cd=0.662; # MH
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3857 em=59.46 cr=0.0662 cd=0.1324;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active furina;
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  
+  yelan skill, burst, attack;
+  
+  xianyun skill, low_plunge, attack, burst;
+  
+  diluc skill, attack, burst, attack;
+  for let h = 0; h < 5; h = h + 1 {
+    diluc jump;
+    if .airborne { 
+      diluc low_plunge[collision=rand()>0.5], attack;
+    }
+  }
+  # Yelan burst expiry
+  for let h = 0; h < 3; h = h + 1 {
+    diluc jump;
+    if .airborne { 
+      diluc high_plunge[collision=rand()>0.5], dash;
+    }
+  }
+  diluc skill:3;
+}
+

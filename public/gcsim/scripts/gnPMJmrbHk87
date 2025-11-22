@@ -1,0 +1,64 @@
+#Keqing Aggravate with Fichsl, DMC and Zhongli
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=5;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; # main
+zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # sub
+
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="harbinger" refine=5 lvl=90/90;
+keqing add set="thunderingfury" count=5;
+keqing add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
+keqing add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="thundersoother" count=5;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+aetherdendro char lvl=90/90 cons=6 talent=9,9,9;
+aetherdendro add weapon="favsword" refine=3 lvl=90/90;
+aetherdendro add set="instructor" count=5;
+aetherdendro add stats hp=3824 atk=248.8 em=149.6 dendro%=0.466 cr=0.2488 ; #main
+aetherdendro add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=71.352 cr=0.31776 cd=0.76792 ;							
+
+# 12 frame swap delay
+options swap_delay=12 iteration=1000;
+
+active fischl;
+
+# End simulation after 4 rotations
+
+# First rotation use Fischl CS to proc Petra before Oz
+fischl aim;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  zhongli skill[hold=1], dash;
+  aetherdendro skill, burst;
+  fischl attack:2, burst;
+  keqing skill, burst, skill,
+    attack, charge, 
+    attack, charge, 
+    attack, skill;
+    wait(22);
+    keqing attack, charge;
+    wait(16);
+    keqing attack, charge;
+  zhongli skill[hold=1], dash;
+  aetherdendro attack:2, skill;
+  fischl attack, skill;
+  keqing skill, burst, skill,
+    attack, charge, 
+    attack, charge, 
+    attack, skill;
+    wait(22);
+    keqing attack, charge;
+    wait(16);
+    keqing attack, charge;
+
+}

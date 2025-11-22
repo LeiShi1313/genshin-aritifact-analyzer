@@ -8,12 +8,14 @@ export const uploadsSlice = createSlice({
   },
   reducers: {
     uploadArtifacts: (state, action) => {
-      const { key, artifacts, format, name } = action.payload;
+      const { key, artifacts, format, name, characters, weapons } = action.payload;
       state.artifacts[key] = {
         items: artifacts,
         format,
         name,
         date: new Date(),
+        characters: characters || [],
+        weapons: weapons || [],
       }
     },
     removeUploadedArtifacts: (state, action) => {

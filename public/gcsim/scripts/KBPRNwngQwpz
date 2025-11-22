@@ -1,0 +1,48 @@
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbinger" refine=5 lvl=90/90;
+alhaitham add set="gd" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add weapon="sapwood" refine=5 lvl=90/90+params=[pickup_delay=120];
+kirara add set="deepwood" count=4;
+kirara add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466 ; #main
+kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+																																																														
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active yae;
+
+for let i=0; i<4; i=i+1 {
+  yae attack, skill:3;
+  kirara skill,burst;
+  fischl skill, attack;
+  alhaitham skill[hold=1], low_plunge, 
+            attack:3, dash, 
+            attack:3, dash,
+            attack:3;            
+  yae skill:2,attack,skill;     
+  kirara skill, attack;
+  alhaitham burst;
+  fischl attack:2, burst;
+  alhaitham attack:3, dash,
+            attack:3, charge, dash, 
+            attack:3, dash,
+            attack:3, charge;       
+}
+

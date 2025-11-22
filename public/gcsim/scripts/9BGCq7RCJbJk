@@ -1,0 +1,45 @@
+mona char lvl=90/90 cons=0 talent=10,10,10;
+mona add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+mona add set="noblesseoblige" count=4;
+mona add stats def%=0.183 def=19 hp=5587 hp%=0.157 atk=365 atk%=0.5710000000000001 er=0.5820000000000001 em=98 cr=0.311 cd=0.7 hydro%=0.466;
+
+faruzan char lvl=90/90 cons=6 talent=10,10,10;
+faruzan add weapon="favoniuswarbow" refine=5 lvl=90/90;
+faruzan add set="viridescentvenerer" count=4;
+faruzan add stats hp=5916 hp%=0.198 atk=346 atk%=0.5820000000000001 er=0.622 em=86 cr=0.587 cd=0.381 anemo%=0.466;
+
+xianyun char lvl=90/90 cons=0 talent=10,10,10;
+xianyun add weapon="thewidsith" refine=5 lvl=90/90;
+xianyun add set="marechausseehunter" count=4;
+xianyun add stats def=54 hp=5288 atk=362 atk%=0.524 er=0.616 em=19 cr=0.41600000000000004 cd=1.2760000000000002 anemo%=0.466;
+
+furina char lvl=90/90 cons=0 talent=2,10,10;
+#furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="goldentroupe" count=4;
+furina add stats def=77 hp=5019 hp%=1.258 atk=311 atk%=0.11099999999999999 er=0.292 cr=0.443 cd=1.26;
+furina add weapon="favoniussword" refine=5 lvl=90/90;
+
+options swap_delay=12 iteration=500 ;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=10000000; 
+energy every interval=480,720 amount=1;
+
+active furina;	
+for let i = 0; i<4; i=i+1 { 
+ furina skill, dash, burst; 
+ faruzan skill, dash, burst; 
+ mona skill, dash, burst;  #skill burst gang
+ 
+ xianyun skill:1, high_plunge, burst,
+       jump, high_plunge, dash,
+       jump, high_plunge, dash,
+       jump, high_plunge, dash,
+       jump, high_plunge, dash,
+       jump, high_plunge, dash,
+       jump, high_plunge, dash,
+       jump, high_plunge, dash,
+       jump, high_plunge;
+       
+ faruzan attack:3;    #fav procs
+       
+}
+

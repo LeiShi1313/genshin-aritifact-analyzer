@@ -1,0 +1,83 @@
+# --- Pre-action hook setup
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  }
+	
+  return _execute_action(char_id, action_id, p);
+}
+
+# --- Team
+navia char lvl=90/90 cons=0 talent=9,9,9; 
+navia add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+navia add set="nighttimewhispers" count=5;
+navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311 ; #main
+navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tom" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311 ; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2648 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="flowingpurity" refine=5 lvl=90/90;
+xianyun add set="clam" count=5;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+#oathsworn eye is almost same as flowingpurity
+#xianyun add weapon="oathsworneye" refine=5 lvl=90/90;
+#xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+#xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.2755 em=39.64 cr=0.1653 cd=0.1324;
+
+#fav is a few hundred worse
+#xianyun add weapon="favoniuscodex" refine=3 lvl=90/90;
+#xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+#xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4959 em=39.64 cr=0.3641 cd=0.1324;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active zhongli;
+for let x = 0; x < 4; x = x + 1 {
+  zhongli skill[hold=1], dash;
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
+  }
+  navia burst;
+  furina skill, dash, burst;
+  while !.furina.mods.favonius-cd {
+    furina attack;
+  }
+  xianyun skill, low_plunge, burst;  pick_up_crystallize("any"); 
+  navia skill[hold=1];
+  for let h = 4; h > 0; h = h - 1 {
+    navia jump;
+    if .airborne {
+      navia high_plunge[collision=rand()>0.5], dash;
+    }
+  }
+  zhongli attack:2, skill;
+  for let n=0; n<2; n=n+1 {
+    if !.zhongli.mods.favonius-cd {
+      zhongli attack;
+    }
+  }
+  navia skill[hold=1];
+  for let h = 4; h > 0; h = h - 1 {
+    navia jump;
+    if .airborne {
+      navia high_plunge[collision=rand()>0.5], dash;
+    }
+  }
+}

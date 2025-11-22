@@ -1,0 +1,57 @@
+options iteration=1000 swap_delay=12;
+
+wrio char lvl=90/90 cons=0 talent=9,9,9;
+wrio add weapon="widsith" refine=3 lvl=90/90; 
+wrio add set="mh" count=4;
+wrio add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="wavebreakersfin" refine=1 lvl=90/90;
+shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.2204 em=39.64 cr=0.3972 cd=0.3972;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+
+active wrio;
+target lvl=100 resist=0.1 hp=999999999 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+wrio attack;
+for let x=0; x<4; x=x+1 {
+  xilonen skill, attack:2;
+  shenhe skill[hold=1], attack;
+  if is_even(x) {
+    shenhe burst;
+  }
+  if .shenhe.sets.ap >= 4 {
+    shenhe dash; pick_up_crystallize("cryo");
+  }
+  kazuha skill, high_plunge;
+  if !is_even(x) {
+    kazuha burst;
+  }
+  wrio skill,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump;
+  if .wrio.burst.ready {
+    wrio burst;
+  } else {
+    wrio attack:3, charge;
+  }
+}

@@ -1,0 +1,70 @@
+# Gaming Furina Yelan Bennett. ~22s Rot. Dead simple Gaming Double Hydro with 0 delay skill-plunges off CD, weaving NAs in between. 1xE Yelan. Gaming Vapes ~91% of his plunges. Tom > GT Furina. You'll probably do N0's with Yelan for better in-game performance.
+
+# Team - Options Ranked by DPS
+gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#gaming add weapon="uomms" refine=5 lvl=90/90;
+gaming add set="cw" count=4;
+#gaming add set="mh" count=4;
+gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; # CW/SS
+#gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+#gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # MH/UOMMS
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.4634; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.4634; # GT
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="ins" count=4;
+#bennett add set="no" count=4;
+bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.3495 cr=0.23325; #main
+bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=95.136 cr=0.21184 cd=0.63552;
+#bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2648 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active gaming; #SS Stacks
+
+for let i = 0; i < 4; i = i + 1 {
+  furina skill, dash, burst;
+  
+  yelan skill, burst, attack;
+  
+  bennett skill, burst;
+  
+  gaming burst;
+  while .gaming.mods.gaming-q {
+    let plunges = 0;
+    if .gaming.skill.ready {
+      gaming skill, high_plunge;
+      plunges = plunges + 1;
+    } else if plunges == 5 {
+      furina swap;
+    } else {
+      gaming attack;
+    }
+  }
+}
+

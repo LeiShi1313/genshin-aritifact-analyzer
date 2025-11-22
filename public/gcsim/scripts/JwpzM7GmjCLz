@@ -1,0 +1,41 @@
+ayato char lvl=90/90 cons=0 talent=9,10,10;
+ayato add weapon="pjc" refine=1 lvl=90/90;
+ayato add set="glad" count=4;
+ayato add stats def=60 hp=4989 hp%=0.047 atk=329 atk%=0.653 er=0.324 cr=0.494 cd=1.328 hydro%=0.466;
+
+thoma char lvl=90/90 cons=6 talent=2,9,9;
+thoma add weapon="dragonsbane" refine=5 lvl=90/90;
+thoma add set="fopl" count=4;
+thoma add stats def=116 hp=5557 hp%=0.448 atk=387 atk%=0.041 er=0.673 em=699.5 cd=0.054;
+
+fischl char lvl=90/90 cons=6 talent=1,10,10;
+fischl add weapon="stringless" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats def=51 hp=4780 hp%=0.105 atk=356 atk%=0.833 er=0.214 em=60 cr=0.564 cd=0.824 electro%=0.466;
+
+aetherdendro char lvl=90/90 cons=6 talent=1,9,9;
+aetherdendro add weapon="favsword" refine=5 lvl=90/90;
+aetherdendro add set="deepwood" count=4;
+aetherdendro add stats def=54 hp=4989 atk=448 atk%=0.269 er=1.003 em=16 cr=0.587 cd=0.412 dendro%=0.466;
+
+#target lvl=100 resist=0.1 radius=1 pos=-1.05,1.4 hp=999999999; 
+#target lvl=100 resist=0.1 radius=1 pos=1.05,1.4 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,3.5 hp=999999999;
+energy every interval=480,720 amount=1;
+
+#sim config
+options swap_delay=4 debug=true iteration=1000 workers=30 mode=sl;
+active ayato;
+
+for let i=0; i<4; i=i+1 {
+    ayato burst[radius=2];
+    aetherdendro skill, attack, burst;
+    fischl attack, skill;
+    thoma skill, burst;
+    ayato skill, attack:15;
+    aetherdendro skill, attack;
+    fischl burst, attack:2;
+    thoma skill, attack;
+    ayato skill, attack:15;
+}

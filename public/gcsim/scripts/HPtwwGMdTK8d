@@ -1,0 +1,80 @@
+# Clorinde Nahida Lisa Xilonen. ~25s Rot. Thundering Fury Clorinde Aggravate with Lisa. Clorinde burst over lisa skill is a DPS gain. Nahida bursts every other rotation. Xilonen does not burst.
+
+# Team - Options listed by DPS
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="finale" refine=5 lvl=90/90;
+clorinde add set="tf" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+clorinde add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="tom" count=4;
+#nahida add set="scroll" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.2648 cd=0.5296; # Clorinde Burst
+#nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.2979 cd=0.5958; # Lisa Skill
+
+lisa char lvl=90/90 cons=6 talent=9,9,9; 
+lisa add weapon="widsith" refine=3 lvl=90/90;
+lisa add set="emblem" count=4;
+#lisa add set="gd" count=4;
+lisa add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=59.46 cr=0.331 cd=0.662; # Clorinde Burst
+#lisa add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+#lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Lisa Skill
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+#xilonen add set="ap" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1 pos=-1.2,1.4 hp=100000000;
+
+# Clorinde Combo
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+#Rotation
+active lisa;
+lisa attack;
+
+for let i=0; i<4; i=i+1 {
+  #xilonen burst;
+  xilonen skill, attack:2;
+  
+  lisa burst;
+  
+  nahida skill; 
+  if .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+
+  clorinde_combo();
+  clorinde burst; # optional
+  
+  #lisa skill[hold=1]; # worse than Clorinde burst;
+  
+  xilonen skill, attack:2;
+
+  clorinde_combo();
+}

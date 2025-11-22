@@ -1,0 +1,42 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="thewidsith" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; # main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+dori add set="gildeddreams" count=4;
+dori add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.3306 em=118.92 cr=0.3972 cd=0.1324;
+
+jean char lvl=90/90 cons=0 talent=9,9,9;
+jean add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+jean add set="gildeddreams" count=4;
+jean add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.2204 em=118.92 cr=0.1324 cd=0.2648;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; # main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+
+active nahida;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+    nahida skill;
+for let i=0; i<4; i=i+1 {
+    nahida burst;
+    yelan skill, burst, attack;
+    dori attack, skill, attack, burst;
+    jean attack, skill, attack, burst, attack;
+    nahida attack:2, skill, attack;
+    yelan attack, skill, attack:2;
+    dori attack, skill, attack;
+    jean attack, skill, attack;
+    nahida attack:2, skill, attack:2, charge; 
+    print("done");
+}

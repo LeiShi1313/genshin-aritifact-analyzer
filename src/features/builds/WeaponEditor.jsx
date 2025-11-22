@@ -3,11 +3,11 @@ import classNames from "classnames";
 import { Plus, X } from "phosphor-react";
 import { useTranslation } from "react-i18next";
 import { Weapon } from "../../genshin/weapon";
-import { enumToIdx } from "../../utils/enum";
+import WeaponSelect from "../weapons/WeaponSelect";
 
 const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
   const { t, i18n } = useTranslation();
-  const weapon = 0;
+  const [selectedWeapon, setSelectedWeapon] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
@@ -20,10 +20,14 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
     }
   }, [filterFn]);
 
-  const handleWeaponAdd = (e) => {
-    setWeapons((arr) => [...arr, Number(e.target.value)]);
-    setIsAdding(false);
-  };
+  useEffect(() => {
+    if (selectedWeapon !== 0) {
+      setWeapons((arr) => [...arr, selectedWeapon]);
+      setSelectedWeapon(0);
+      setIsAdding(false);
+    }
+  }, [selectedWeapon]);
+
   const handleWeaponRemove = (idx) => {
     setWeapons((arr) => arr.filter((_, i) => i !== idx));
   };
@@ -66,29 +70,16 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
         </div>
       )}
       {isAdding && (
-        <select
-          className="select select-ghost"
-          value={weapon}
-          onChange={handleWeaponAdd}
-        >
-          <option disabled key={0} value={0}>
-            {t("Pick one")}
-          </option>
-          {[...enumToIdx(Weapon)]
-            .sort((a, b) =>
-              t(`${Weapon[a].toLowerCase()}`, { ns: "weapons" }).localeCompare(
-                t(`${Weapon[b].toLowerCase()}`, { ns: "weapons" }),
-                i18n.language
-              )
-            )
-            .filter((key) => !weapons.includes(key))
-            .filter((key) => (filterFn !== null ? filterFn(key) : true))
-            .map((key) => (
-              <option key={key} value={key}>
-                {t(`${Weapon[key].toLowerCase()}`, { ns: "weapons" })}
-              </option>
-            ))}
-        </select>
+        <WeaponSelect
+          weapon={selectedWeapon}
+          setWeapon={setSelectedWeapon}
+          awaken={true}
+          filterFn={
+            filterFn
+              ? (key) => !weapons.includes(key) && filterFn(key)
+              : (key) => !weapons.includes(key)
+          }
+        />
       )}
     </>
   );

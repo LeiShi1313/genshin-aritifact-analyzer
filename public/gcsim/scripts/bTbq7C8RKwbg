@@ -1,0 +1,42 @@
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="mistsplitterreforged" refine=1 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; #sub
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+kokomi add set="tenacityofthemillelith" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; #main
+kokomi add stats def%=0.1240 def=39.36 hp=1015.76 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=39.64 cr=0.0662 cd=0.1324; # sub
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="favoniuswarbow" refine=5 lvl=90/90;
+venti add set="viridescentvenerer" count=4;
+venti add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+venti add stats def%=0.1240 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # sub
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="wavebreakersfin" refine=1 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+shenhe add stats def%=0.1240 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.2648 cd=0.3972; # sub
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=100000000 pos=3,0;
+
+active ayaka;
+ayaka dash;
+for let i = 0; i < 5; i = i + 1{
+  venti skill, burst;
+  shenhe skill, burst;
+  kokomi skill, dash;
+  ayaka dash, attack, skill, attack, burst, attack:2, charge;
+  venti skill, attack;
+  shenhe skill, attack;
+  ayaka dash, attack:2, charge, dash, attack:2, skill, attack, charge, attack, charge;
+  print("rotation done");
+}
+
+

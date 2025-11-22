@@ -1,0 +1,55 @@
+target lvl=100 resist=0.1 radius=1 pos=0,1.1 hp=100000000;
+options iteration=1000 duration=81.5 swap_delay=6; 
+
+raidenshogun char lvl=90/90 cons=0 talent=3,10,9;
+raidenshogun add weapon="thecatch" refine=5 lvl=90/90;
+raidenshogun add set="emblemofseveredfate" count=4;
+raidenshogun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+raidenshogun add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+
+kaedeharakazuha char lvl=90/90 cons=0 talent=8,8,8;
+kaedeharakazuha add weapon="favoniussword" refine=5 lvl=90/90;
+kaedeharakazuha add set="viridescentvenerer" count=4;
+kaedeharakazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+kaedeharakazuha add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=118.89 er=0.4404 cr=0.3966 cd=0.1321;
+
+yelan char lvl=90/90 cons=1 talent=8,10,10;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622;
+yelan add stats hp=507.88 hp%=0.2973 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=39.63 er=0.3303 cr=0.2644 cd=0.5284;
+
+fischl char lvl=90/90 cons=6 talent=10,10,10;
+fischl add weapon="thestringless" refine=5 lvl=90/90;
+fischl add set="goldentroupe" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=39.63 er=0.2752 cr=0.2974 cd=0.7926;
+
+active raiden;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+
+  raiden skill, dash, attack;
+  yelan burst, attack;
+  kazuha burst, attack;
+  if .fischl.burst.ready {
+    fischl burst;  
+  }else {
+    fischl skill;
+  }
+  kazuha attack, skill, high_plunge;
+  yelan attack, skill, attack, skill, attack;
+  raiden burst, attack:3,charge, attack:3,charge, attack:3,charge, attack,charge;
+  # kazuha skill, high_plunge;
+}
+
+# Rotation : 
+# Raiden E Dash NA
+# Yelan Q NA
+# Kazuha Q NA 
+# Fischl Q/E 
+# Kazuha NA E P
+# Yelan NA > E > NA > E > NA
+# Raiden Q 3N3C N1C 
+# repeat

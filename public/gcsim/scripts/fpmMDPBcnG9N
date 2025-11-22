@@ -1,0 +1,87 @@
+# Razor Nahida Emilie Bennett. ~23s Rot. Razor Quickload with 64%/54% Burning/Quicken uptime. SS may be inconsistent. Self-Overloads not implemented.
+
+# Team
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5]; # Inconsistent
+#razor add weapon="talkingstick" refine=1 lvl=90/90; # Passive not implemented; MH SS alt.
+#razor add weapon="mailedflower" refine=5 lvl=90/90; # Reaction DMG
+#razor add weapon="uomms" refine=5 lvl=90/90;
+razor add set="ur" count=4; # General
+razor add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
+#razor add stats hp=4780 atk=311 er=0.518 atk%=0.466 cd=0.622; #main
+razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662; # SS/UR
+#razor add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+#razor add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # MF/UR
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#razor add stats hp=4780 atk=311 em=187 atk%=0.466 cr=0.311; #main
+#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282; # UOMMS/UR
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=5;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # deals burning AoE, enables MH, -SS stacks
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active razor; # SS Stacks
+razor skill, dash; 
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, attack;
+  if i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+  
+  if .emilie.burst.ready  && .emilie.energy == .emilie.energymax {
+    emilie burst;
+  } else {
+    emilie attack, skill;
+  }
+  
+  bennett skill, burst;
+  
+  razor skill, dash, attack, burst, attack:1, skill, dash;
+  # Razor main DPS window 
+  while .razor.infusion.bennett-fire-weapon { 
+    if .razor.normal > 3 {
+      if .razor.skill.ready {
+        razor skill, dash;
+      } else {
+        razor dash;
+      }
+    } else {
+      razor attack;
+    }
+  }
+  
+  bennett skill, attack;
+  
+  print("done");
+}
+

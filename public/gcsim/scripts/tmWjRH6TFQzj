@@ -1,0 +1,42 @@
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="deepwood" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;		
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="favsword" refine=3 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;		
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="forestregalia" refine=5 lvl=90/90 +params=[pickup_delay=140];
+beidou add set="instructor" count=4;
+beidou add stats hp=3571 atk=232 atk%=0.3495 electro%=0.3495 cr=0.311 ; #main
+beidou add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.30856 em=31.712 cr=0.11916 cd=0.50312;		
+																										
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbinger" refine=5 lvl=90/90;
+alhaitham add set="gd" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+alhaitham add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;	
+				
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
+#target lvl=100 resist=0.1 hp=100000000 pos=0,3 radius=2;
+energy every interval=480,720 amount=1;
+
+active fischl;
+
+for let i = 0; i < 5; i = i + 1 {
+  fischl skill;
+  kazuha skill, high_plunge, burst;
+  beidou skill, burst;
+  alhaitham skill[hold=1], low_plunge[short=1], attack:3, dash, attack:3, dash, attack:3;
+  fischl attack, burst;
+  beidou skill;
+  alhaitham burst;
+  kazuha skill, high_plunge;
+  alhaitham attack:3, dash, attack:3, charge, attack:3, dash, attack:3, dash, attack:3;
+}

@@ -1,0 +1,78 @@
+kokomi char lvl=90/90 cons=6 talent=10,10,10;
+kokomi add weapon="sacrificialfragments" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add set="viridescentvenerer" count=1;
+kokomi add stats def%=0.35100000000000003 hp=6125 hp%=0.74 atk=330 atk%=0.099 er=0.052000000000000005 em=696.5 cr=0.167;
+
+nilou char lvl=90/90 cons=2 talent=10,10,10;
+nilou add weapon="keyofkhajnisut" refine=1 lvl=90/90;
+nilou add set="heartofdepth" count=1;
+nilou add set="tenacityofthemillelith" count=2;
+nilou add set="vourukashasglow" count=2;
+nilou add stats def%=0.321 def=16 hp=6901 hp%=1.707 atk=325 atk%=0.111 er=0.09 em=313 cd=0.078;
+
+collei char lvl=90/90 cons=6 talent=10,10,10;
+collei add weapon="elegy" refine=1 lvl=90/90;
+collei add set="deepwoodmemories" count=4;
+collei add set="blizzardstrayer" count=1;
+collei add stats def%=0.11699999999999999 def=57 hp=5079 hp%=0.152 atk=311 atk%=0.618 er=0.427 em=100 cr=0.517 cd=0.629 dendro%=0.466;
+
+kirara char lvl=90/90 cons=5 talent=10,10,10;
+kirara add weapon="thedockhandsassistant" refine=1 lvl=90/90;
+kirara add set="oceanhuedclam" count=1;
+kirara add set="vourukashasglow" count=2;
+kirara add set="tenacityofthemillelith" count=2;
+kirara add stats def=65 hp=6991 hp%=1.724 atk=327 atk%=0.315 er=0.40199999999999997 em=39 cr=0.062 cd=0.132;
+
+options swap_delay=12 iteration=1000 duration=90;
+
+#target lvl=100 resist=0.1 radius=1 pos=0,1.5;
+target lvl=100 resist=0.1 pos=-1.1, 1.1 radius=1;
+target lvl=100 resist=0.1 pos=1.1, 1.1 radius=1;
+energy every interval=480,720 amount=1;
+
+active nilou;
+
+for {
+  switch {
+  case .status.kokomiburst && .collei.status.collei-burst:
+    switch {
+    case .kokomi.normal < 3:
+      kokomi attack;
+    default:
+      kokomi attack, dash;
+    }
+  
+  case .nilou.skill.ready && .nilou.swap.ready && !.nilou.status.tranquilityaura:
+    nilou skill, attack:2, skill;
+  case !.element.t0.dendro && .collei.skill.ready && .collei.swap.ready
+    && !(.collei.status.collei-skill || .collei.status.collei-a1):
+    collei skill;
+  case !.element.t0.hydro && .kokomi.skill.ready && .kokomi.swap.ready
+    && !.status.kokomiskill:
+    kokomi skill;
+  case !.element.t0.dendro && .kirara.skill.ready && .kirara.swap.ready:
+    kirara skill[short_hold=1];
+  case !.element.t0.dendro && .kirara.burst.ready && .kirara.swap.ready:
+    kirara burst;
+  case !.element.t0.hydro && .nilou.burst.ready && .nilou.swap.ready:
+    nilou burst;
+  case !.element.t0.dendro && .collei.burst.ready && .collei.swap.ready
+    && !.collei.status.collei-skill:
+    collei burst;
+  case !.element.t0.hydro && .kokomi.burst.ready && .kokomi.swap.ready
+    && .collei.status.collei-burst && (.collei.status.collei-skill || .collei.status.collei-a1):
+    kokomi burst;
+
+  case .kokomi.onfield:
+    switch {
+    case .kokomi.normal < 3:
+      kokomi attack;
+    default:
+      kokomi walk;
+    }
+  case .nilou.onfield: if .nilou.swap.ready { kokomi swap; } else { nilou attack; }
+  case .collei.onfield: if .collei.swap.ready { kokomi swap; } else { collei attack; }
+  case .kirara.onfield: if .kirara.swap.ready { kokomi swap; } else { kirara attack; }
+  }
+}

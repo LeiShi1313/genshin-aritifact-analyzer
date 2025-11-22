@@ -1,0 +1,137 @@
+#~22s full rotation. Optimized Alhaitham combo without jump cancels (allowing for dashes). 12-3 Icewind Suite's base stats used for energy drops and the incoming damage instances every 4-6s. Customized random action delays and starting HPs.
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
+alhaitham add weapon="wolffang" refine=1 lvl=90/90; #hod (lower cr and higher em subs) is better with this hurt setting, in reality depends on enemy dmg taken.
+alhaitham add set="mh" count=4;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #44.66 [80.66] / 178.25 | 111.01 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=178.335 er=0.1101 cr=0.23135 cd=0.6605; #2 em, 10 cr, 8 cd rolls
+
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=60];
+furina add weapon="favsword" refine=3 lvl=90/90; #festering is possibly similar or better, not included because it's limited (might need adjusted stats on everyone)
+furina add set="totm" count=4; #also see gt with hp goblet
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #88.35 / 129.26 | 171.26 er
+furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926; #2 hp%, 8 cr, 10 cd
+
+nahida char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=65];
+nahida add weapon="pamber" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 em=186.5 cr=0.311; #69.15 [83.17] / 129.26 | 111.01 er
+nahida add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926; #2 em, 8 cr, 10 cd rolls
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=60];
+kuki add weapon="ironsting" refine=5 lvl=90/90; #xiphos is probably better but limited (needs adjusted stats on everyone)
+kuki add set="fopl" count=4; #also see instructor (with 4* artifact stats)
+kuki add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #18.22 / 63.21 | 166.06 er
+kuki add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.6606 cr=0.2644 cd=0.1321; #4 em, 10 er, 6 cr
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+target lvl=100 type=dummy radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3; #Energy based on 12-3 Icewind Suite base stats
+hurt every interval=240,360 amount=10000,15000; #Take dmg every 4-6s, amount is very roughly similar to one big attack from lvl 100 Icewind Suite
+
+active nahida;
+
+fn doActionList() {
+  nahida skill[hold=12];
+  for let r=0; r<4; r=r+1 {
+    furina skill, dash, burst;
+    if r > 0 {
+      nahida skill[hold=12];
+    }
+    nahida burst;
+    kuki skill;
+    alhaitham burst;
+    if .kuki.burst.ready {
+      kuki burst;
+    } else {
+      nahida attack:2, charge;
+    }
+    alhaitham attack:3, dash, 
+              attack:3, charge, dash,
+              attack:3, charge, dash,
+              skill[hold=1]; alhaithamLowPlunge();
+    alhaitham attack:3, charge, dash,
+              attack:3;
+  }
+}
+
+fn alhaithamLowPlunge() {
+  if rand() < 1/3 { #1/3 chance to get the short plunge animation
+    alhaitham low_plunge[short=1];
+  } else {
+    alhaitham low_plunge;
+  }
+}
+
+#Random action execution delays
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if display {
+    print("initial roll: ", value);
+  }
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print("final value: ", value);
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .alhaitham.onfield:
+    prev_char_id = .keys.char.alhaitham;
+  case .furina.onfield:
+    prev_char_id = .keys.char.furina;
+  case .nahida.onfield:
+    prev_char_id = .keys.char.nahida;
+  default:
+    prev_char_id = .keys.char.kuki;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action is not actually a swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+  
+  if action_id == .action.dash {
+    pick_up_crystallize("any");
+  } #pick up a crystallize if available when dashing
+
+  if action_id == .action.burst {
+    while .alhaitham.onfield && !.alhaitham.burst.ready {
+      alhaitham attack;
+    }
+    while .furina.onfield && !.furina.burst.ready {
+      furina attack;
+    }
+    while .nahida.onfield && !.nahida.burst.ready {
+      nahida attack;
+    }
+    while .kuki.onfield && !.kuki.burst.ready {
+      kuki attack;
+    }
+  } #when trying to burst, attack until burst is ready
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                     #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+doActionList();

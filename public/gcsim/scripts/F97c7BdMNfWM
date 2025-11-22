@@ -1,0 +1,54 @@
+options swap_delay=12 iteration=1000;
+
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="deathmatch" refine=1 lvl=90/90;
+cyno add set="glad" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+amy char lvl=90/90 cons=6 talent=9,9,9;
+amy add weapon="stringless" refine=3 lvl=90/90;
+amy add set="thundersoother" count=4;
+amy add stats hp=4780 atk=311 atk%=.466 electro%=0.466 cr=0.311;
+amy add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+collei char lvl=90/90 cons=6 talent=9,9,9;
+collei add weapon="favbow" refine=3 lvl=90/90;
+collei add set="noblesseoblige" count=4;
+collei add stats hp=4780 atk=311 er=0.518 dendro%=0.466 cr=0.311;
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+
+active amy;
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+  amy aim;
+for let i=0; i<4; i=i+1 {
+  zhongli skill[hold=1], dash;
+  collei skill, burst;
+  amy attack:2;
+  if .amy.skill.ready {
+  	amy skill;
+  } else {
+  	amy burst;
+  }
+  cyno skill, burst;
+  while .element.t0.quicken {
+  	if .cyno.mods.cyno-a1 && .cyno.skill.ready {
+  		cyno skill;
+  	} else if .cyno.normal == 5 {
+  		cyno dash;
+  	} else {
+  		cyno attack;
+  	}
+  }
+}
+

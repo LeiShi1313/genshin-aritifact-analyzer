@@ -1,0 +1,103 @@
+options swap_delay=12 workers=64 iteration=1000;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; # main 
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.2648 cd=0.3972;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="thewidsith" refine=3 lvl=90/90;
+yae add set="gildeddreams" count=5;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="thundersoother" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="moonpiercer" refine=5 +params=[pickup_delay=240] lvl=90/90;
+yaoyao add set="instructor" count=5;
+yaoyao add stats hp=3571 atk=232 atk%=0.348 dendro%=0.3495 cr=0.311; # main
+yaoyao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.5296;
+
+
+energy every interval=480,720 amount=1; 
+target lvl=100 pos=0, 1.4 resist=0.1 hp=99999999999999999; # Impossibly high HP
+
+active yae;
+
+yae skill:3;
+
+yaoyao skill; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+fischl attack, skill; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+
+yae charge, jump, attack, burst; print("Yae burst done. Next at f= ", f() + 22*60, " : ", f()/60 + 22, "s");
+yae skill, attack, skill:2, attack;
+
+kazuha skill, high_plunge, attack:2; print("Supplementary Kazuha skill done. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s");
+
+yae skill, attack, charge, jump;
+fischl attack, burst; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+yaoyao skill, attack:2; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+yae attack, skill, charge, jump, skill, attack, charge, jump, skill;
+kazuha skill, high_plunge, attack:2; print("Supplementary Kazuha skill done. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s");
+fischl attack, skill; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+yaoyao burst, attack:2, skill, attack:2; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+yae attack, burst; print("Yae burst done. Next at f= ", f() + 22*60, " : ", f()/60 + 22, "s");
+yae skill:2, attack, skill, attack;
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+fischl attack, burst; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+yae attack, charge, jump, skill, skill, attack, charge, jump;
+kazuha skill, high_plunge, attack:2; print("Supplementary Kazuha skill done. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s");
+yaoyao skill, attack:2; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+yae skill, charge, jump, skill, attack;
+fischl attack, skill; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+yae attack, burst; print("Yae burst done. Next at f= ", f() + 22*60, " : ", f()/60 + 22, "s");
+yae skill:2, attack, skill, charge, jump;
+
+kazuha skill, high_plunge, attack:2; print("Supplementary Kazuha skill done. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s");
+fischl attack, burst; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+yaoyao skill, attack:2; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+yae attack, skill;
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+yae charge, jump, skill, attack, skill, charge, jump;
+kazuha skill, high_plunge, attack:2; print("Supplementary Kazuha skill done. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s");
+fischl attack, skill; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+
+yae attack, burst; print("Yae burst done. Next at f= ", f() + 22*60, " : ", f()/60 + 22, "s");
+yae skill, attack, skill:2, charge, jump;
+
+yaoyao skill, attack:2; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+fischl attack, burst; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+yae attack, skill;
+kazuha skill, high_plunge, attack:2; print("Supplementary Kazuha skill done. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s");
+yae charge, jump, skill, attack, skill, charge, jump, attack, charge, jump, skill, charge, jump;
+fischl attack, skill; print("Oz refreshed. Next at f= ", f() + 12*60, " : ", f()/60 + 12, "s");
+yaoyao skill, attack:2; print("Yuegui refreshed. Next at f= ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+kazuha skill, high_plunge, burst, attack; print("Kazuha skill and burst refreshed. Next at f= ", f() + 6*60, " : ", f()/60 + 6, "s", " and ", f() + 15*60, " : ", f()/60 + 15, "s");
+
+yae attack, burst; print("Yae burst done. Next at f= ", f() + 22*60, " : ", f()/60 + 22, "s");
+yae skill:2, attack, skill, charge, jump, attack, charge;
+

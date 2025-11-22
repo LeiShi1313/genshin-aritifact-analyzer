@@ -1,0 +1,80 @@
+# AlHaitham Yae Fischl Xianyun. ~18s Rot. Alhaitham Quicken Plunge. Alhaitham does EP 7JlPN1 C (Q/N2). 60% Collisions.
+
+# Team - Options ordered by DPS
+haitham char lvl=90/90 cons=0 talent=9,9,9;
+haitham add weapon="harbinger" refine=5 lvl=90/90;
+#haitham add weapon="wolffang" refine=1 lvl=90/90;
+haitham add set="lno" count=4;
+#haitham add set="deepwood" count=4;
+#haitham add set="gd" count=4;
+haitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311;
+haitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # HoD
+#haitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622;
+#haitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # WF
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="evenstar" refine=1 lvl=90/90;
+#yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="deepwood" count=4;
+#yae add set="gt" count=4;
+#yae add set="tom" count=4;
+#yae add set="scroll" count=4;
+yae add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # Evenstar
+#yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Widisth
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+#fischl add set="tom" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="hakushin" refine=5 lvl=90/90;
+#xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active yae;
+
+for let x = 0; x < 4; x = x + 1 {
+  yae skill:3;
+  
+  if .amy.skill.ready {
+    amy attack:1, skill;
+  } else {
+    amy attack:2, burst;
+  }
+  
+  xianyun skill, low_plunge, attack:1, burst;
+  
+  haitham skill[hold=1], low_plunge[short=1];
+  while .haitham.status.xianyun-airborne-buff {
+    haitham jump;
+    if .airborne {
+      haitham low_plunge[collision=rand()>0.4], attack:1;
+    }
+  }
+  haitham charge;
+  if .haitham.burst.ready {
+    haitham burst;
+  } else {
+    haitham attack:2;
+  }
+  
+  print("done");
+}

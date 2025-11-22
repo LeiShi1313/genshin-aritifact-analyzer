@@ -1,0 +1,60 @@
+wanderer char lvl=90/90 cons=0 talent=9,9,9; 
+wanderer add weapon="thewidsith" refine=3 lvl=90/90;
+wanderer add set="dpc" count=4;
+wanderer add stats hp=4780 atk=311 atk%=0.466 cr=0.311 anemo%=0.466 ; #main
+wanderer add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=3 lvl=90/90;
+yelan add set="eosf" count=4;
+#yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+#yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;										
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=3 lvl=90/90;
+zhongli add set="tom" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2648 cd=0.5296;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=1000000000;
+energy every interval=480,720 amount=1;
+
+active yelan;
+
+for let i = 0; i < 5; i = i + 1 {
+  zhongli attack, skill[hold=1], dash;
+  while (!.zhongli.mods.favonius-cd) {
+    zhongli attack;
+  }
+  yelan skill, burst, attack;
+  while (!.yelan.mods.favonius-cd) {
+    yelan attack;
+  }
+  bennett skill, burst, attack;
+  wanderer attack, skill;
+  while .wanderer.skydweller-points > 3 {
+    switch {
+    case .wanderer.normal < 3:
+      wanderer attack;
+    case .wanderer.mods.wanderer-a4:
+      wanderer dash;
+    default:
+      wanderer charge;
+    }
+  }
+  if .wanderer.burst.ready {
+    wanderer burst;
+  } else {
+    wanderer low_plunge;
+  }
+  bennett skill;
+}

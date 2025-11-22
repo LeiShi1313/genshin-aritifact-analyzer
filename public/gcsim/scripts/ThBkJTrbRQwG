@@ -1,0 +1,107 @@
+# Navia Mavuika Xilonen Xianyun. ~20s Rot. Navia Plunge. After the first rotation, Mavuika uses 2CDFD to fill time.  Xianyun TTDS covers all plunges for Navia. C0 Xilonen doesn't provide RES shred but is worth using for Scroll and energy; 2 Xilonen skill are funneled to Navia.
+
+# Team - Options listed by DPS
+navia char lvl=90/90 cons=0 talent=9,9,9; 
+navia add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#navia add weapon="tidalshadow" refine=5 lvl=90/90;
+#navia add weapon="fruitfulhook" refine=1 lvl=90/90;
+navia add set="nighttime" count=4;
+#navia add set="longnightsoath" count=4;
+navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #main
+navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+mav char lvl=90/90 cons=0 talent=9,9,9;
+mav add weapon="tidalshadow" refine=5 lvl=90/90;
+#mav add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#mav add weapon="earthshaker" refine=5 lvl=90/90;
+mav add set="oc" count=4;
+#mav add set="gt" count=4;
+#mav add set="scroll" count=4;
+mav add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # OC; Other
+#mav add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+#mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662; # OC; SS
+#mav add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Other
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="ttds" refine=5 lvl=90/90;
+#xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="no" count=4;
+#xianyun add set="ohc" count=4; # Better with Oathsowrn; Bubbles may miss
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324; # TTDS
+#xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+#xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;  Oathsworn
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Pickup Crystallize Function
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash || ( char_id == .keys.char.xilonen && action_id == .action.skill) {
+    pick_up_crystallize("any");
+  }
+    
+  return _execute_action(char_id, action_id, p);
+}
+
+#Rotation
+active navia; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  if .mav.burst.ready { # && i > 0 {
+    mav burst, skill, dash;
+  } else {
+    mav skill, dash;
+  }
+  if i > 0 {
+    mav charge:2, charge[final=1], dash;
+  }
+  
+  xilonen skill, attack:2; pick_up_crystallize("any");
+  
+  navia burst;
+  
+  xianyun skill, low_plunge, burst; 
+  
+  navia skill;
+  for let h = 4; h > 0; h = h - 1 {
+    navia jump;
+    if .airborne {
+      navia high_plunge[collision=rand()>0.5];
+    }
+    if h > 1 {
+      navia dash;
+    }
+  }
+  
+  xilonen skill, attack:2;
+  
+  navia skill;
+  for let h = 4; h > 0; h = h - 1 {
+    navia jump;
+    if .airborne {
+      navia high_plunge[collision=rand()>0.5];
+    }
+    if h > 1 {
+      navia dash;
+    }
+  }
+  if .navia.skill.ready {
+    navia skill;
+  }
+}

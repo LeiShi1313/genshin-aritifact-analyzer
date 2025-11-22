@@ -43,6 +43,8 @@ export const download_from_yuheng = async (resource_name, type, image_path) => {
         url = `https://homdgcat.wiki/homdgcat-res/Relic/${resource_name}.png`;
     } else if (type ==='gacha') {
         url = `https://homdgcat.wiki/homdgcat-res/Gacha/${resource_name}.png`;
+    } else if (type === 'weapon') {
+        url = `https://homdgcat.wiki/homdgcat-res/Weapon/${resource_name}.png`;
     } else {
         url = `https://homdgcat.wiki/homdgcat-res/Avatar/${resource_name}.png`;
     }
@@ -155,4 +157,53 @@ export const lngToRegion = {
     'Spanish': 'es',
     'French': 'fr',
     'German': 'de',
+}
+
+/**
+ * Validates if a file is a valid image by checking its magic bytes (file signature)
+ * Supports PNG, JPEG, GIF, and WebP formats
+ * @param {string} filePath - Path to the image file
+ * @returns {boolean} - True if the file is a valid image, false otherwise
+ */
+export const isValidImage = (filePath) => {
+    try {
+        // Check if file exists and has content
+        if (!fs.existsSync(filePath) || fs.statSync(filePath).size === 0) {
+            return false;
+        }
+
+        // Read the first 12 bytes to check file signatures
+        const fd = fs.openSync(filePath, 'r');
+        const buffer = Buffer.alloc(12);
+        fs.readSync(fd, buffer, 0, 12, 0);
+        fs.closeSync(fd);
+
+        // PNG signature: 89 50 4E 47 0D 0A 1A 0A
+        const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]);
+        if (buffer.subarray(0, 8).equals(PNG_SIGNATURE)) {
+            return true;
+        }
+
+        // JPEG signature: FF D8 FF
+        if (buffer[0] === 0xFF && buffer[1] === 0xD8 && buffer[2] === 0xFF) {
+            return true;
+        }
+
+        // GIF signature: 47 49 46 38 (GIF8)
+        const GIF_SIGNATURE = Buffer.from([0x47, 0x49, 0x46, 0x38]);
+        if (buffer.subarray(0, 4).equals(GIF_SIGNATURE)) {
+            return true;
+        }
+
+        // WebP signature: 52 49 46 46 ... 57 45 42 50 (RIFF...WEBP)
+        if (buffer[0] === 0x52 && buffer[1] === 0x49 && buffer[2] === 0x46 && buffer[3] === 0x46 &&
+            buffer[8] === 0x57 && buffer[9] === 0x45 && buffer[10] === 0x42 && buffer[11] === 0x50) {
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        console.error(`Error validating image ${filePath}: ${error.message}`);
+        return false;
+    }
 }

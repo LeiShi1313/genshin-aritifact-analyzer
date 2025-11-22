@@ -1,0 +1,49 @@
+options swap_delay=12 debug=true workers=30;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="emblemofseveredfate" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main										
+beidou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=5000;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="gilded" count=4;
+kuki add stats hp=4780 atk=311  em=187  em=187  em=187  ; #main
+kuki add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296 ;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favcodex" refine=3 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 dendro%=0.466 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3641 cd=0.7282;
+
+candace char lvl=90/90 cons=6 talent=9,9,9;
+candace add weapon="favlance" refine=3 lvl=90/90;
+candace add set="instructor" count=4;
+# EM DMG CRIT
+candace add stats hp=3824 atk=248.8 em=149.6 hydro%=0.466 cr=0.2488 ; #main						
+candace add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=190.272 cr=0.18536 cd=0.10592 ; #12 liquid subs per kqmc
+
+# ----  Default Enemy
+options debug=true iteration=1000 duration=126 mode=sl hitlag=true swap_delay=12;
+target lvl=100 resist=.1 hp=1800000000000 pos=0, 0;
+target lvl=100 resist=.1 hp=1800000000000 pos=2.1, 0;
+
+energy every interval=480,720 amount=1;
+
+active nahida;
+# ----  Actions List
+
+for let i = 1; i <=5; i = i + 1 {
+  nahida skill, burst, attack;
+  kuki skill, dash, attack;
+  beidou skill[counter=1], burst;
+  wait(8);								# catch particles before swap
+  candace attack, burst, attack:3, skill, attack;
+  nahida skill, attack:2, charge;
+  beidou attack, skill[counter=1], attack:2;
+  kuki attack, burst;
+  candace attack:3, skill, attack:3;
+}
+

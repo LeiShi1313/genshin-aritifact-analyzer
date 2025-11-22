@@ -1,0 +1,77 @@
+# Dori Furina Yelan Bennett. ~22s Rot. Overvape Dori using C6 Bennett. MH: ATK > Pyro > Electro, TF: ATK >= Electro > Pyro Goblet. Yelan does 2Es. Self-Overloads not implemented.  
+
+# Team - Options listsed by DPS
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#dori add weapon="talkingstick" refine=1 lvl=90/90; dori add stats atk%=0.16 pyro%=0.12 electro%=0.12; # Passive not implemented
+dori add set="mh" count=4;
+#dori add set="tf" count=4;
+dori add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=118.92 cr=0.2979 cd=0.662; # MH; ATK > Pyro > Electro 
+#dori add stats hp=4780 atk=311 em=187 atk%=0.466 cd=0.622; #main
+#dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.3972 cd=0.5958; # TF; ATK >= Electro > Pyro
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.1655 cd=0.5958;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active dori; # SS stacks
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  bennett skill, burst, attack;
+  
+  #dori skill, attack:2, dash, attack:2;
+  while .dori.mods.bennett-field || .status.bennettburst { 
+    switch {
+      case .yelan.skill.ready:
+        yelan skill, attack;
+      case .dori.skill.ready:
+        dori skill;
+      case .dori.burst.ready: # && .previous-action == .action.attack:
+        dori burst;
+      case .dori.normal > 2 && .dori.dash.ready && .stam > 18:
+        dori dash;
+      default:
+        dori attack;
+    }
+  }
+  
+}
+

@@ -1,0 +1,48 @@
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
+alhaitham add set="gilded" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ; #main
+alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=10800; #half HP
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="flowerofparadiselost" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=10000000 radius=2 pos=2.4,0;
+active nahida;
+
+ 
+  for let r = 0; r < 5; r = r + 1 {
+  nahida skill, burst;
+  if .kuki.burst.ready {kuki burst;}
+  yelan burst, skill, attack;
+  alhaitham burst;
+  kuki attack, skill;
+  alhaitham attack:3,dash,
+            attack:3,dash,
+            attack:3,dash,
+            attack:3;
+  yelan attack, skill, attack;
+  alhaitham skill[hold=1], low_plunge[short=1], 
+            attack:2, charge, dash, 
+            attack:3, charge;
+  
+            }
+

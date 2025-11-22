@@ -1,0 +1,66 @@
+# KQMS substats, gaming plunges are timed to line up with rosaria burst ticks. 6 melted plunges, last plunge does not melt and is used for energy.
+
+gaming char lvl=90/90 cons=6 talent=9,9,9;
+gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+gaming add set="cw" count=4;
+gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; 
+gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3641 cd=0.662;
+
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favoniuslance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favoniuslance" refine=3 lvl=90/90;
+chevreuse add set="sodp" count=4;
+chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; 
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.2204 em=138.74 cr=0.3972 cd=0.1324;
+
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; 
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
+
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+
+active gaming; # SS
+
+for let i=0; i<4; i=i+1 {
+  
+  chev attack, skill[hold=1];
+  while .chev.mods.favonius-cd == 0 {
+    chev attack;
+  }
+  sucrose skill, dash, attack;
+  if .sucrose.burst.ready {
+    sucrose burst;
+  }
+  rosaria skill,burst;
+  while .rosaria.mods.favonius-cd == 0 {
+    rosaria attack;
+  }
+  gaming burst;
+  wait(45);
+  for let p=0; p<4; p=p+1 {
+    gaming skill;
+    wait(20);
+    gaming low_plunge;
+  } 
+  for let p=0; p<2; p=p+1 {
+    gaming skill;
+    wait(40);
+    gaming high_plunge;
+  }
+  gaming skill, high_plunge, dash;
+  
+}

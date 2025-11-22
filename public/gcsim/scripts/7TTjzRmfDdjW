@@ -1,0 +1,59 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+wrio char lvl=90/90 cons=0 talent=9,9,9;
+wrio add weapon="widsith" refine=3 lvl=90/90; 
+wrio add set="mh" count=4;
+wrio add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="emblem" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+// xingqiu add set="scroll" count=4;
+// xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+// xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte add weapon="ttds" refine=5 lvl=90/90;
+charlotte add set="noblesse" count=4;
+charlotte add stats hp=4780 atk=311 er=0.518 cryo%=0.466 atk%=0.466;
+charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.4634;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active xingqiu;
+
+for let i=0; i<4;i=i+1 {
+  xingqiu skill, dash, burst, attack:4;
+  if is_even(i) {
+    escoffier skill, burst;
+  } else {
+    escoffier skill, attack:3;
+  }
+  charlotte skill, attack, burst, attack;
+  wrio skill,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:3, charge, jump,
+       attack:4;
+  if is_even(i) {
+    wrio burst;
+  } else {
+    wrio charge, jump;
+  }
+}

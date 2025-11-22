@@ -1,0 +1,78 @@
+# Bennett Furina Fischl Lisa. ~20s Rot. Overvape Thundering Fury Bennett. Oz Snapshots Bennett. Lisa uses burst every rotation as available in Bennett Q.
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+#bennett add weapon="wolffang" refine=1 lvl=90/90; # At the expense of team DPS
+#bennett add weapon="umbrella" refine=5 lvl=90/90;
+bennett add set="tf" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; #EM/CR; AF
+#bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; #EM/CD; WF
+#bennett add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; #3EM
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7944; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7944; # GT
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # VHunt
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # SoS
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="pamber" refine=5 lvl=90/90;
+#lisa add weapon="hakushin" refine=5 lvl=90/90;
+lisa add set="no" count=4;
+#lisa add set="sodp" count=4;
+lisa add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #heal=0.359;
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+#Rotation
+active furina;
+
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash, burst;
+  
+  bennett skill, burst;
+  
+  if .lisa.burst.ready && .lisa.energy == .lisa.energymax {
+    lisa burst;
+  }
+  
+  if .fischl.skill.ready {
+    fischl attack:1, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  
+  #bennett skill, attack;
+  while !.bennett.burst.ready && !.furina.skill.ready {
+    if .lisa.burst.ready && .lisa.energy == .lisa.energymax {
+      lisa burst;
+    } else if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+}

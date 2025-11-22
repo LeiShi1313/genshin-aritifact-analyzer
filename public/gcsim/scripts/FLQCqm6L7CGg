@@ -1,0 +1,40 @@
+collei char lvl=90/90 cons=6 talent=9,9,9; 
+collei add weapon="fadingtwilight" refine=5 lvl=90/90;
+collei add set="deepwood" count=5;
+collei add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9; 
+tighnari add weapon="hamayumi" refine=5 lvl=90/90;
+tighnari add set="wandererstroupe" count=5;
+tighnari add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+luminedendro char lvl=90/90 cons=6 talent=9,9,9; 
+luminedendro add weapon="favsword" refine=5 lvl=90/90;
+luminedendro add set="noblesse" count=4;
+luminedendro add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311 ; #main
+luminedendro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favlance" refine=5 lvl=90/90;
+zhongli add set="totm" count=5;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=1000;
+
+active zhongli;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+	zhongli skill[hold=1], dash, attack;
+	luminedendro skill, burst;
+	collei burst, skill;
+	tighnari skill, aim:3, burst;
+	luminedendro attack:2, skill;
+	zhongli attack:2, skill;
+	tighnari aim:4;
+}
+

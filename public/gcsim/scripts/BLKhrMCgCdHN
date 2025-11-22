@@ -1,0 +1,78 @@
+# Bennett Furina Yelan Escoffier. ~22s Rot. Benentt Vape/Melt. 1E Yelan. MH ~= CW Bennett. -2K DPS with Freeze immunity. Escoffier bursts every other rotation after the first; building enough ER to burt every rotation results in similar DPS.
+
+# Team - Options listed by DPS
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="finale" refine=5 lvl=90/90;
+#bennett add weapon="alleyflash" refine=1 lvl=90/90;
+#bennett add weapon="umbrella" refine=5 lvl=90/90;
+bennett add set="mh" count=4;
+#bennett add set="cw" count=4;
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # MH
+#bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # CW
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4; # Similar
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296; # GT
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2648 cd=0.5958; # Q every other
+#escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
+#escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.4408 em=39.64 cr=0.0993 cd=0.331; # Q every rot
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1;
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  
+  esco skill;
+  if i > 0 && .esco.burst.ready {
+    esco burst;
+  }
+  
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  bennett burst, attack, skill;
+  while .yelan.mods.yelanburst {
+  #while .status.bennettburst {
+  #hile .bennett.infusion.bennett-fire-weapon {
+    if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+	
+}
+

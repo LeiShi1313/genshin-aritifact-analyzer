@@ -1,0 +1,71 @@
+// GO Mavuika config
+// {"name":"diona/rosaria team","targets":[{"weight":1,"path":["skill","skillDmg"],"hitMode":"avgHit","bonusStats":{"pyro_dmg_":28},"description":""},{"weight":1,"path":["skill","radianceDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":40},"description":""},{"weight":2,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","bonusStats":{"critRate_":12,"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":40,"eleMas":200,"atk_":20,"critRate_":-40},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":40,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":40,"eleMas":200},"description":""},{"weight":2,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":27,"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":15,"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":-25,"pyro_enemyRes_":-33,"pyro_dmg_":40,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":15,"pyro_enemyRes_":-33,"pyro_dmg_":28,"eleMas":200,"atk_":20},"description":""},{"weight":0.5,"path":["skill","chargedCyclicDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":15,"pyro_dmg_":28,"eleMas":200},"description":""},{"weight":1,"path":["skill","chargedFinalDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":27,"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":0.5,"path":["skill","chargedFinalDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":15,"pyro_dmg_":28,"eleMas":200},"description":""},{"weight":1,"path":["skill","sprintDmg"],"hitMode":"avgHit","bonusStats":{"critRate_":12,"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","sprintDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","sprintDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":40,"eleMas":200,"atk_":20,"critRate_":-40},"description":""},{"weight":1,"path":["skill","sprintDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":28,"eleMas":200,"atk_":20,"critRate_":-40},"description":""},{"weight":1,"path":["skill","sprintDmg"],"hitMode":"avgHit","bonusStats":{"pyro_enemyRes_":-33,"pyro_dmg_":28,"eleMas":200},"description":""},{"weight":1,"path":["normal","0"],"hitMode":"avgHit","bonusStats":{"physical_enemyRes_":-20},"description":""},{"weight":1,"path":["normal","1"],"hitMode":"avgHit","bonusStats":{"physical_enemyRes_":-20},"description":""},{"weight":0.5,"path":["skill","chargedFinalDmg"],"hitMode":"avgHit","bonusStats":{"pyro_dmg_":28,"eleMas":200},"description":""},{"weight":1,"path":["burst","skillDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":27,"pyro_enemyRes_":-33,"pyro_dmg_":75,"eleMas":200,"atk_":20},"description":""},{"weight":1,"path":["skill","radianceDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":27,"pyro_enemyRes_":-33,"pyro_dmg_":40},"description":""},{"weight":1,"path":["skill","radianceDmg"],"hitMode":"avgHit","reaction":"melt","bonusStats":{"critRate_":27,"pyro_enemyRes_":-33,"pyro_dmg_":75,"atk_":20},"description":""}]}
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+//mavuika add weapon="tbs" refine=1 lvl=90/90; // ~125.7%
+//mavuika add weapon="serpentspine" refine=5 lvl=90/90 +params=[stacks=5]; // ~101.5%
+mavuika add weapon="tidalshadow" refine=5 lvl=90/90; // 100%
+//mavuika add weapon="mailedflower" refine=5 lvl=90/90; // ~95.4%
+//mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5]; // ~95.3%
+//mavuika add weapon="earthshaker" refine=5 lvl=90/90; // ~88.8%
+mavuika add set="obsidiancodex" count=4;
+
+//tidal shadow stats
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+mavuika add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1487 def=39.35 def%=0.1239 em=118.89 er=0.1101 cr=0.2974 cd=0.6605;
+
+//mailed flower + earth shaker stats
+//mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+//mavuika add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.3469 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.2974 cd=0.6605;
+
+// serpent spine stats
+//mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+//mavuika add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.4955 def=39.35 def%=0.1239 em=118.89 er=0.1101 cr=0.0661 cd=0.6605;
+
+// thousand blazing suns stats
+//mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+//mavuika add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.3964 def=39.35 def%=0.1239 em=99.08 er=0.1101 cr=0.1652 cd=0.6605;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def=39.36 def%=0.248 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+diona char lvl=90/90 cons=6 talent=9,9,9;
+diona add weapon="sacrificialbow" refine=4 lvl=90/90;
+diona add set="noblesseoblige" count=4;
+diona add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+diona add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.5946 def=39.35 def%=0.1239 em=39.63 er=0.5505 cr=0.0661 cd=0.2642;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=5 lvl=90/90;
+rosaria add set="ap" count=4;
+#rosaria add set="ins" count=4;
+#rosaria add set="emblem" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+rosaria add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.3469 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.5945; # 4 Star
+#rosaria add stats hp=3571 atk=232 er=0.518 pyro%=0.3495 cr=0.23325; #main
+#rosaria add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648; # 4 Star
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active mavuika;
+
+for let x=0; x<4; x=x+1{
+
+  mavuika skill;
+  xilonen skill, attack:2;
+  rosaria skill, burst, dash;
+  pick_up_crystallize("any");
+  diona burst, skill[hold=1], skill[hold=1];
+  mavuika burst;
+  wait(10); // wait 7-14 frames 
+  mav             charge:3, charge[final=1], dash,
+                  charge:2, dash,
+                  charge:2, dash,
+                  charge:2, dash;
+  mavuika charge:2, dash, charge:2, attack:3;
+}

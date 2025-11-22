@@ -4,7 +4,7 @@ const defaultDaisyuiTheme = require("daisyui/src/theming/themes");
 const characterThemes = require('./src/data/genshin_character_themes.json');
 
 module.exports = {
-  content: ["./src/**/*.{html,js,jsx}"],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
       sans: ["GS", ...defaultTailwindTheme.fontFamily.sans],

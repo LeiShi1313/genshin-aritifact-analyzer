@@ -1,0 +1,63 @@
+options swap_delay=12 debug=true iteration=1000;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.5510 em=118.92 cr=0.331 cd=0.1324;
+
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="theviridescenthunt" refine=1 lvl=90/90;
+tartaglia add set="nymphsdream" count=4;
+tartaglia add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
+tartaglia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.4660 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=.1 pos=1.2,1.2 hp=10000000;
+target lvl=100 resist=.1 pos=-1.2,1.2 hp=10000000;
+
+let rotations = 4;
+
+active tartaglia;
+for let r = 4; r > 0; r = r - 1 {
+  # Move 2nd target so that Childe E only hits 1st
+  set_target_pos(1.2, 6, 0);
+  if .tartaglia.skill.ready {
+    tartaglia walk, skill;
+    bennett burst;
+  } else {
+    bennett burst, skill;
+    tartaglia aim;
+  }
+  kazuha burst;
+  set_target_pos(1.2, 1.2, 0);
+  kazuha skill, high_plunge;
+  xiangling burst, skill, dash;
+  tartaglia walk, burst, walk, skill,
+            attack:2, charge, dash,
+            attack:2, charge, dash,        
+            attack:2, charge, dash,
+            attack:2, charge, dash,
+            attack:2, charge, dash,
+            attack:2, charge, dash;
+  kazuha skill, high_plunge;
+  bennett skill;
+  xiangling attack, skill;
+  tartaglia aim;
+  bennett skill;
+  xiangling attack:2, dash;
+  kazuha skill, high_plunge;
+}

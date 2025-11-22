@@ -1,0 +1,55 @@
+options swap_delay=12 iteration=1000;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi add weapon="hakushinring" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 hp%=0.466 atk=311 heal=0.359 hydro%=0.466; #main
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.3472 er=0.4959 em=39.64 cr=0.0662 cd=0.1324;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="tf" count=4;
+fischl add stats hp=4780 atk=311 em=186.5 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2979 cd=0.7282;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=559.5 ; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=118.92 cr=0.3972 cd=0.1324;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="magicguide" refine=5 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #main
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.2648 cd=0.5296;
+
+
+active fischl;
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+    fischl skill;
+    kazuha attack, skill, high_plunge;
+    kokomi attack, skill;
+
+    nahida skill[hold=1], burst;
+    kazuha attack, skill, high_plunge, burst;
+    fischl burst;
+    nahida attack:2, skill;
+
+    # version 1
+    kokomi burst;
+    while .fischl.oz {
+        if .kokomi.normal == 3 { kokomi dash, walk[f=2]; }
+        kokomi attack;
+    }
+    while !.fischl.skill.ready { fischl attack; }
+
+    # version 2
+    # kokomi burst, attack:2, dash, attack:2;
+    # kazuha skill, high_plunge;
+    # nahida skill, attack:3, dash, attack:3;
+    # kazuha skill, high_plunge;
+}

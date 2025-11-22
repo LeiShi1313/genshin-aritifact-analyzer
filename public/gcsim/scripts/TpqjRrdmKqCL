@@ -1,0 +1,55 @@
+options swap_delay=12 iteration=1000 ;
+
+hutao char lvl=90/90 cons=0 talent=9,9,9 start_hp=1;
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" lvl=90/90 refine=3;
+zhongli add set="tenacityofthemillelith" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" lvl=90/90 refine=1;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=561;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3306 em=118.92 cr=0.1324 cd=0.1324;
+
+let t = 0;
+#--------------------------------------------
+
+active zhongli;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+	let t = f();
+	zhongli skill[hold=1], jump;
+	xingqiu burst, attack, skill, dash, attack:2;
+	kazuha skill, high_plunge, attack, burst, attack;
+	hutao skill;
+	for let x=1; x<=8; x=x+1 {
+		hutao attack:2, charge;
+		if x != 8 {
+		  hutao jump;
+		} else if .hutao.burst.ready {
+		  hutao burst;
+		} else {
+		  hutao jump;
+		}
+	}
+	kazuha skill, high_plunge, attack:3;
+	while f() - t < 21*60 {
+		zhongli attack;
+	}
+}
+

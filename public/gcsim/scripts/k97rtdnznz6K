@@ -1,0 +1,45 @@
+options iteration=1000 swap_delay=12;
+
+raidenshogun char lvl=90/90 cons=0 talent=9,9,9; 
+raidenshogun add weapon="thecatch" refine=5 lvl=90/90;
+raidenshogun add set="emblemofseveredfate" count=5;
+raidenshogun add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+raidenshogun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha add weapon="ironsting" refine=5 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=561 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+kujousara char lvl=90/90 cons=6 talent=9,9,9;
+kujousara add weapon="fadingtwilight" refine=5 lvl=90/90;
+kujousara add set="emblemofseveredfate" count=5;
+kujousara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311 ; #main
+kujousara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+
+target lvl=100 resist=0.1 hp = 999999999 radius=2 pos = 0,2.4;
+energy every interval=480,720 amount=1;
+
+active raiden;
+raidenshogun skill;
+
+for let x = 0; x < 5; x = x + 1 {
+  kazuha skill[hold=1], high_plunge, attack:2;
+  kujousara skill, aim;
+  wait(25);
+  bennett burst;
+  kazuha burst;
+  kujousara burst;
+  raidenshogun burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
+  bennett skill, attack:2, dash;
+  
+  print("Rotation Done");
+}

@@ -1,0 +1,47 @@
+eula char lvl=90/90 cons=0 talent=9,9,9;
+eula add weapon="uomms" refine=5 lvl=90/90;
+eula add set="mh" count=5;
+eula add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622 ; #main
+eula add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=5 lvl=90/90;
+rosaria add set="noblesse" count=5;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="tom" count=5;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296 ;																				
+
+mika char lvl=90/90 cons=6 talent=9,9,9;
+mika add weapon="favoniuslance" refine=5 lvl=90/90;
+mika add set="ohc" count=5;
+mika add stats hp=4780 atk=311 hp%=0.466 cryo%=0.466 cr=0.311 ; #main
+mika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;																																																														
+									
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active furina;
+
+for let i=0; i<4; i=i+1 { 
+  furina skill, dash, burst;
+  mika burst;
+  rosaria skill;
+    while !.rosaria.mods.favonius-cd {
+    rosaria attack;
+  }
+  rosaria burst;
+  mika skill, attack;
+  eula skill, burst, walk, attack:4, skill[hold=1], walk[f=11], attack:4, dash, attack:2;
+  rosaria skill;
+    while !.rosaria.mods.favonius-cd {
+    rosaria attack;
+  }
+  eula attack:2;
+}
+

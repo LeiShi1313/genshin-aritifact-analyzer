@@ -1,0 +1,74 @@
+# Sethos Yelan Fischl Lanyan. ~18s Rot. Sethos Taser. 8N2W. Sethos encloses his burst with skill uses and fires 2 Shadowpiecing shots after burst ends. Sethos and Lanyan both want EM goblet for optimal DPS.
+
+# Team
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="wt" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.3972 cd=0.3972;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.331 cd=0.7282;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="hakushin" refine=5 lvl=90/90;
+lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main 
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2317 cd=0.7282;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets - Hyperbloom Ownership varies with size
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+# Rotation
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  if .fischl.burst.ready && .fischl.energy == .fischl.energymax {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  
+  lanyan attack, skill:2;
+  
+  sethos skill, attack; # aim[hold=2]; # High ping only 
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, skill;
+  sethos attack, aim[hold=2]:2;
+  
+  if .lanyan.burst.ready && .lanyan.energy == .lanyan.energymax {
+    lanyan attack, burst;
+  } else {
+    lanyan attack;
+  }
+}
+

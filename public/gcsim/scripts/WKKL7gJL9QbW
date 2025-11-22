@@ -1,0 +1,83 @@
+# Heizou Nahida Furina Fischl. ~25s Rot. Heizou Salad with an EM build P-Amber Heizou triggering hyperbloom with swirls and bursting twice per rotation to heal the team.
+
+# Team - Options listed by DPS
+heizou char lvl=90/90 cons=6 talent=9,9,9;
+heizou add weapon="pamber" refine=5 lvl=90/90;
+heizou add set="vv" count=4;
+#heizou add set="tf" count=4;
+heizou add stats hp=4780 atk=311 em=187 em=187 em=187;
+heizou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.2648 cd=0.1324; # 3EM
+#heizou add stats hp=4780 atk=311 em=187 em=187 heal=0.359 ; #main
+#heizou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=158.56 cr=0.1986 cd=0.1324; # More Heals
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="fruit" refine=5 lvl=90/90;
+#ahida add weapon="magicguide" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.2317 cd=0.4634; # 3EM
+#nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944; # Fruit
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5296;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+#fischl add weapon="twilight" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282; # Stringless
+#fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Twilight
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2.6 pos=0,3.0 hp=100000000; # Fischl Triggers minimal HB
+#target lvl=100 resist=0.1 radius=2.2 pos=0,2.5 hp=100000000; # Fischl Triggers some HB
+
+# Max Declension Guarantee
+fn declensionCombo() {
+  switch {
+    case .heizou.skill.ready && .heizou.declension == 4:
+      heizou skill;
+    case .heizou.normal > 1 && .heizou.burst.ready:
+      heizou burst;
+    case .heizou.normal > 1:
+      heizou charge;
+    default:
+      heizou attack;
+  }
+}
+
+#Rotation
+active fischl;
+
+for let i=0; i<4; i=i+1 {
+  fischl skill, attack;
+  
+  nahida skill, attack, burst;
+  
+  furina skill, dash, burst;
+  
+  while .fischl.oz {
+    declensionCombo();
+  }
+  
+  fischl attack:2, burst;
+  
+  while .fischl.skill.cd > 30 {
+    declensionCombo();
+  }
+  
+  print("done");
+}
+

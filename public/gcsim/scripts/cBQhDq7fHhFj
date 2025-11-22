@@ -1,0 +1,61 @@
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="harbingerofdawn" refine=5 lvl=90/90;
+xilonen add set="obsidiancodex" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+xilonen add stats def%=0.62 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.2648 cd=0.4634;
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favoniuswarbow" refine=3 lvl=90/90;
+gorou add set="exile" count=4;
+gorou add stats hp=3571 atk=232 er=0.387 geo%=0.348 cr=0.311;
+gorou add stats def%=0.31248 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.111216;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacity" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #mainstats
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbingerofdawn" refine=5 lvl=90/90;
+chiori add set="husk" count=4 +params=[stacks=4];
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+chiori add stats def%=0.186 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active zhongli;
+
+for let i = 0; i < 4; i = i + 1 {
+  let stl = rand();
+  if stl > 0 { #adjust this value to add a random chance for stele to break on cast
+    zhongli skill[hold=1], dash;
+  } else {
+    zhongli skill[hold_nostele=1], dash;
+  }
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
+  }
+  gorou skill;
+  if i && .gorou.burst.ready{
+    gorou burst;
+  }
+  while !.gorou.mods.favonius-cd {
+    gorou attack;
+  }
+  chiori swap;
+  if !.chiori.burst.ready {
+    chiori attack;
+  }
+  chiori burst, skill:2;
+  xilonen skill;
+  while !.xilonen.burst.ready {
+    xilonen attack;
+  }
+  xilonen burst;
+  while .xilonen.nightsoul.state{
+    xilonen attack;
+  }
+}

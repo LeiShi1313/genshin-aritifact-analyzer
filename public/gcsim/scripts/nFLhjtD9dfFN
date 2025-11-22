@@ -1,0 +1,54 @@
+options swap_delay=12 iteration=1000;	
+
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="widsith" refine=3 lvl=90/90;
+klee add set="glad" count=2;
+klee add set="cw" count=2;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1653 em=39.64 cr=0.2979 cd=0.7282;
+
+yae char lvl=90/90 cons=0 talent=9,9,9; 
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+																														
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+																			
+active yae;
+target lvl=100 resist=0.1 radius=2 pos=0,2.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+
+for let i=0; i<4; i=i+1 {
+ 
+  yae skill:3;
+  chevreuse burst, skill[hold=1];
+  if .yae.burst.ready {
+    yae burst, skill:3;
+  }
+  if .fischl.skill.ready {
+    fischl attack,skill;
+  } else {
+    fischl attack, burst;
+  }
+  klee attack, burst, walk;
+  klee attack, skill[bounce=3, mine=8], jump;
+  for let i=0; i<6; i=i+1 {
+      klee attack, charge;
+  }
+}
+wait(25); # So sim doesn't end with final CA mid animation
+
+#Klee overload with Yae, Fischl, Chev. Yae bursts every other rotation. 16/19 second rotation
+#Yae 3E, Chev Q hE, (Yae Q 3E), Fischl N1 E/Q, Klee N1QW N1EJ 6N1C

@@ -1,0 +1,85 @@
+# Kazuha Furina Chongyun Xianyun. ~19s Rot. Kazuha Freeze plunge. Kazuha hEP 6[JhPD] (Q) tEP. Chongyun goes before Xianyun; Chongyun's field expires just before Kazuha last starwicker plunge. 100% Collision from skill plunges, 80% collisions from Starwicker.
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="harbinger" refine=5 lvl=90/90;
+#kazuha add weapon="finale" refine=5 lvl=90/90;
+kazuha add set="longnightsoath" count=4;
+#kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # GT
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favgs" refine=3 lvl=90/90;
+chongyun add set="no" count=4;
+#chongyun add set="scroll" count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4;  # Bubbles may miss
+#xianyun add set="sodp" count=4;
+#xianyun add set="sr" count=2; xianyun add set="glad" count=2;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.2204 em=158.56 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active furina;
+
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash;
+  if !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  
+  chongyun burst, skill;
+  
+  xianyun skill, low_plunge, burst;
+  
+  # Double swirl
+  kazuha skill[hold=1], high_plunge[collision=1];
+  # Plunge combo
+  while .kazuha.status.xianyun-airborne-buff {
+    kazuha jump;
+    if .airborne {
+      kazuha high_plunge[collision=rand()>0.2];
+    }
+    if .kazuha.status.xianyun-airborne-buff {
+      kazuha dash;
+    }
+  }
+  if .kazuha.burst.ready {
+    kazuha burst;
+  }
+  while .kazuha.skill.cd {
+    if .kazuha.normal > 1 {
+      kazuha charge;
+    } else {
+      kazuha attack;
+    }
+  }
+  kazuha skill[hold=0], high_plunge[collision=1];
+
+  
+  print("done");
+}
+

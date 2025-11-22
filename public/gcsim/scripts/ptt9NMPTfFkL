@@ -1,0 +1,81 @@
+fn rand_delay(mean, stddev) {
+  let del = randnorm() * stddev + mean;
+  if del > (mean + mean) {
+    del = mean + mean;
+  }
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    rand_delay(12, 3);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+
+charlotte char lvl=85/90 cons=5 talent=6,6,6;
+charlotte add weapon="favoniuscodex" refine=5 lvl=90/90;
+charlotte add set="archaicpetra" count=1;
+charlotte add set="songofdayspast" count=4;
+charlotte add stats def=63 hp=5288 hp%=0.46599999999999997 atk=383 atk%=1.276 er=0.6099999999999999 cr=0.41200000000000003 cd=0.187;
+
+navia char lvl=90/90 cons=0 talent=9,10,10;
+navia add weapon="verdict" refine=1 lvl=90/90;
+navia add set="gladiatorsfinale" count=2;
+navia add set="goldentroupe" count=2;
+navia add set="gildeddreams" count=1;
+navia add stats hp=5019 hp%=0.153 atk=367 atk%=0.5650000000000001 er=0.40199999999999997 em=40 cr=0.37700000000000006 cd=1.6400000000000001 geo%=0.466;
+
+rosaria char lvl=85/90 cons=6 talent=8,8,8;
+rosaria add weapon="deathmatch" refine=5 lvl=90/90;
+rosaria add set="emblemofseveredfate" count=4;
+rosaria add set="shimenawasreminiscence" count=1;
+rosaria add stats def=90 hp=5497 hp%=0.09300000000000001 atk=311 atk%=0.251 er=0.6860000000000002 em=82 cr=0.486 cd=0.893 cryo%=0.466;
+
+luminegeo char lvl=89/90 cons=6 talent=9,9,9;
+luminegeo add weapon="favoniussword" refine=5 lvl=90/90;
+luminegeo add set="noblesseoblige" count=4;
+luminegeo add set="crimsonwitchofflames" count=1;
+luminegeo add stats def=37 hp=5079 atk=345 atk%=0.612 er=0.362 em=37 cr=0.719 cd=0.918 geo%=0.466;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=.1 hp=999999999 pos=0,0 radius=2;
+
+energy every interval=480,720 amount=1;
+active navia;
+#-------------------------------------------
+for let x = 0; x < 5; x = x + 1 {
+    navia burst;pick_up_crystallize("any");
+	charlotte skill[hold=1], burst, attack:2 ;pick_up_crystallize("any");
+	rosaria skill,burst, attack:2; pick_up_crystallize("any");
+	travelergeo burst, skill[short_hold=1]; pick_up_crystallize("any");
+	navia skill, attack:3, dash, attack:2, skill, attack:3, dash, attack:2; pick_up_crystallize("any");
+}
+
+# Navia Q -> Charlotte HoldE Q -> Rosaria EQ -> GeoTraveler QE -> Navia E N3D N2 N3D N2
+# Navia Reaches 100% CR. That's all it matters.
+# Double Fav Weapons to help Charlotte and Navia reach ER Requirement
+# I do not recommend this team.

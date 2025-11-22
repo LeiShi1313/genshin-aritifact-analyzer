@@ -1,0 +1,53 @@
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="hamayumi" refine=5 lvl=90/90;
+chasca add set="sr" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+// chasca char lvl=90/90 cons=0 talent=9,9,9;
+// chasca add weapon="chainbreaker" refine=5 lvl=90/90;
+// chasca add set="oc" count=4;
+// chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+// chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=138.74 cr=0.0993 cd=0.662;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
+shenhe add set="scroll" count=2;
+shenhe add set="sr" count=2;
+shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311; #main
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.331 cd=0.3972;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=5;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="scroll" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+
+active rosaria;
+
+for let i=0; i<4; i=i+1 {
+  rosaria skill, attack;
+  shenhe skill[hold=1], attack, burst;
+  bennett skill, burst;
+  rosaria skill, burst;
+  chasca skill;
+  chasca aim:4;
+  chasca aim[bullets=4];
+  // if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+  //   chasca burst;
+  // } else {
+  //   chasca attack:3;
+  // }
+}
+wait(82); # wait for aim[bullets=4] hits the enemy at the last rot

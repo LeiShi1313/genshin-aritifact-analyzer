@@ -1,0 +1,65 @@
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="finale" refine=5 lvl=90/90;
+clorinde add set="echoes" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+clorinde add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+luminepyro char lvl=90/90 cons=6 talent=9,9,9;
+luminepyro add weapon="favsword" refine=3 lvl=90/90;
+luminepyro add set="scroll" count=4;
+luminepyro add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+luminepyro add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*6 cr=0.0331*12 cd=0.0662*4;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+chevreuse add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*10 cd=0.0662*8;
+
+options iteration=1000 swap_delay=12;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+      set_player_pos(0, 0);
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+active yae;
+
+yae skill:3;
+luminepyro skill, burst;
+chevreuse burst, skill[hold=1];
+clorinde_combo();
+clorinde burst;
+
+for let i=0; i<4; i=i+1 {
+  if .yae.burst.ready {
+    yae burst, skill:3;
+  } else {
+    clorinde attack, charge, attack;
+    yae skill:3;
+  }
+  chevreuse burst, skill[hold=1]:3;
+  luminepyro skill, burst;
+  clorinde_combo();
+  clorinde burst;
+}
+
+# ~18s rotations (~15s opener)
+# Opener: Yae 3[E] > Pyro Traveler tE Q > Chevreuse Q hE > Clorinde E combo Q
+# Ongoing (with Yae Q): Yae Q 3[E] > Chevreuse Q 3[hE] > Pyro Traveler tE Q > Clorinde E combo Q
+# Ongoing (without Yae Q): Clorinde N1C N1 > Yae 3[E] > Chevreuse Q 3[hE] > Pyro Traveler tE Q > Clorinde E combo Q

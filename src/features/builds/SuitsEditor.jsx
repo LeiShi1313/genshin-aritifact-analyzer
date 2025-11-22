@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Set } from "../../genshin/set";
 import { get2pcSets } from "../../utils/build";
 import { enumToIdx } from "../../utils/enum";
+import SetSelect from "../sets/SetSelect";
 
 const SuitsEditor = ({ suits, setSuits }) => {
   const { t, i18n } = useTranslation();
@@ -113,36 +114,22 @@ const SuitsEditor = ({ suits, setSuits }) => {
       )}
       {isAdding && (
         <div className="flex w-full flex-row items-center">
-          <select
-            className="select select-ghost w-4/5"
-            value={0}
-            onChange={handleSetAdd}
-          >
-            <option disabled key={0} value={0}>
-              {t("Pick one")}
-            </option>
-            {[...enumToIdx(Set)]
-              .sort((a, b) =>
-                t(`${Set[a].toLowerCase()}`, { ns: "sets" }).localeCompare(
-                  t(`${Set[b].toLowerCase()}`, { ns: "sets" }),
-                  i18n.language
-                )
-              )
-              // TODO: find a better way to validate
-              .filter(
-                (key) =>
+          <div className="w-4/5">
+            <SetSelect
+              set={0}
+              setSet={(value) => handleSetAdd({ target: { value } })}
+              filterFn={(key) => {
+                // TODO: find a better way to validate
+                const validForCombos =
                   setCombos.length < 2 ||
-                  (setCombos.length >= 2 && Set[key].startsWith("PRAYER"))
-              )
-              .filter(
-                (key) => !setCombos.map((combo) => combo.set).includes(key)
-              )
-              .map((key) => (
-                <option key={key} value={key}>
-                  {t(`${Set[key].toLowerCase()}`, { ns: "sets" })}
-                </option>
-              ))}
-          </select>
+                  (setCombos.length >= 2 && Set[key].startsWith("PRAYER"));
+                const notAlreadySelected = !setCombos
+                  .map((combo) => combo.set)
+                  .includes(key);
+                return validForCombos && notAlreadySelected;
+              }}
+            />
+          </div>
           <Check
             className="cursor-pointer"
             onClick={() => handleChecked()}

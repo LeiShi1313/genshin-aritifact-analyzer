@@ -1,0 +1,47 @@
+options swap_delay=12 iteration=1000  workers=8 ;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=5 lvl=90/90;
+bennett add set="noblesse" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+dehya char lvl=90/90 cons=0 talent=9,9,9; 
+dehya add weapon="akuoumaru" refine=1 lvl=90/90;
+dehya add set="eosf" count=4;
+dehya add stats hp=4780 atk=311 er=.518 cr=0.311 pyro%=0.466 ; #main
+dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="catch" refine=5 lvl=90/90;
+rosaria add set="eosf" count=5;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ;
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kaeya char lvl=90/90 cons=6 talent=9,9,9; 	
+kaeya add weapon="favsword" refine=5 lvl=90/90;
+kaeya add set="eosf" count=4;
+kaeya add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+kaeya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active dehya;
+
+target lvl=100 resist=.1 hp=1700000000000;
+
+energy every interval=480,720 amount=1;
+
+
+for let i =0; i < 5; i = i + 1 {
+	dehya skill;
+	bennett skill, burst;
+	rosaria skill, burst;
+	kaeya skill, burst;
+	dehya burst, skill:10;
+	bennett skill;
+	dehya skill, attack;
+	rosaria skill;
+	kaeya skill, attack;
+	dehya attack:2;
+}
+
+

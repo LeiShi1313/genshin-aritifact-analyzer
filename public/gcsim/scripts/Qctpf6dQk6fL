@@ -1,0 +1,51 @@
+options swap_delay=12 iteration=1000;
+
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="deathmatch" refine=1 lvl=90/90;
+cyno add set="glad" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="ap" count=4;
+#TotM is close in DPS
+#nahida add set="totm" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=158.56 cr=0.2648 cd=0.5296;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+active fischl;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  fischl skill, attack;
+  xilonen skill, attack:2, burst;
+  nahida attack, skill, burst, attack:2, charge, dash; pick_up_crystallize("any");
+  fischl attack:2, burst;
+  xilonen skill, attack:2;
+  cyno burst, attack:2, skill;
+  while .fischl.skill.cd > 30 {
+    if .cyno.mods.cyno-a1 && .cyno.skill.ready {
+      cyno skill;
+    } else if .cyno.normal == 4 && .stam > 20 {
+      cyno dash;
+    } else {
+      cyno attack;
+    }
+  }
+}
+
+# Fischl E N1 > Xilonen E N2 Q > Nahida N1 E Q N2CD (pick up shard for AP) > Fischl N2 Q > Xilonen E N2 > Cyno Q N2E combo

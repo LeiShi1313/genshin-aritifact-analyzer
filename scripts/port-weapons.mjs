@@ -25,7 +25,7 @@ const portWeapons = async () => {
   proto_file.write("}\n\n");
   proto_file.write("enum Weapon {\n");
   proto_file.write(`    WEAPON_UNSPECIFIED = ${idx++};\n`);
-  names.forEach((e) => {
+  names.forEach(async (e) => {
     const eng = genshindb.weapons(e);
     if (!eng) {
       console.warn(`No weapon found for ${e}!`);
@@ -49,6 +49,28 @@ const portWeapons = async () => {
         trans[utils.lngToRegion[lng]] = {};
       }
       trans[utils.lngToRegion[lng]][key] = data.name;
+      if (data.images.filename_icon) {
+        const imagePath = `./src/assets/weapons/${key}.png`;
+        if (!utils.isValidImage(imagePath)) {
+          let result = await utils.download_from_yuheng(
+            data.images.filename_icon,
+            "weapon",
+            imagePath
+          );
+          if (!result) console.error(`Failed to download image for weapon ${e}`);
+        }
+      }
+      if (data.images.filename_awakenIcon) {
+        const imagePath = `./src/assets/weapons/${key}_awaken.png`;
+        if (!utils.isValidImage(imagePath)) {
+          let result = await utils.download_from_yuheng(
+            data.images.filename_awakenIcon,
+            "weapon",
+            imagePath
+          );
+          if (!result) console.error(`Failed to download awaken image for weapon ${e}`);
+        }
+      }
     }
   });
   proto_file.write("}\n");

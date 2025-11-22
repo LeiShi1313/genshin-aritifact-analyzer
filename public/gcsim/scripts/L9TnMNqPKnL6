@@ -1,0 +1,84 @@
+# Bennett Yelan Fischl Ororon. ~18s Rot. Thundering Fury Bennett with Yelan. Ororon uses skill and burst in Bennett's burst; No Pyro scroll. Fischl alternates skill and burst in Bennett's burst.  
+
+# Team - Options ordered by DPS
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="umbrella" refine=5 lvl=90/90;
+#bennett add weapon="alleyflash" refine=1 lvl=90/90;
+#bennett add weapon="wolffang" refine=1 lvl=90/90;
+bennett add set="tf" count=4;
+#bennett add set="cw" count=4; # The ideal substats and YL ER look different anyway
+bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2317 cd=0.7282; # EEDr
+#bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.3641 cd=0.331; # EDCd
+#bennett add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.2979 cd=0.7944; # EECr; WF
+#bennett add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # 3EM
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="esf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # VH
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # SoS
+
+ororon char lvl=90/90 cons=6 talent=9,9,9;
+ororon add weapon="chainbreaker" refine=5 lvl=90/90;
+#ororon add weapon="alleyhunter" refine=1 lvl=90/90 +params[stacks=10];
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+#Rotation
+active fischl;
+fischl skill;
+
+for let x = 0; x < 4; x = x + 1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  bennett skill, attack, burst;
+  
+  ororon attack, skill, burst;
+  
+  if .fischl.skill.ready {
+    fischl attack:1, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  
+  bennett attack;
+  while .yelan.mods.yelanburst {
+  #while .yelan.burst.cd {
+  #while .status.bennettburst || .bennett.infusion.bennett-fire-weapon {
+    if .bennett.skill.ready {
+      bennett skill;
+    } else {
+      bennett attack;
+    }
+  }
+  
+}

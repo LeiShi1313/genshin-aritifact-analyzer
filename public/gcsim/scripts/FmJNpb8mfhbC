@@ -1,0 +1,50 @@
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacjade" refine=1 lvl=90/90;
+neuvillette add set="marechausseehunter" count=5;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.1986 cd=0.662;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lisa char lvl=90/90 cons=2 talent=9,9,9;
+lisa add weapon="fruit" refine=5 lvl=90/90;
+lisa add set="scroll" count=2;
+lisa add set="eosf" count=2;
+lisa add stats hp=4780 atk=311 er=0.518 em=187 em=187;
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=158.56 cr=0.0662 cd=0.3972;
+                                                                                                                                                                                                
+ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon add weapon="favbow" refine=3 lvl=90/90;
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 resist=0.1 hp=10000000 radius=2 pos=0,2.4;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+active neuvillette;
+for let x=0; x<4; x=x+1 {
+  neuvillette skill;
+  xilonen skill, burst, attack:2;
+  if .xilonen.sets.ap >= 4 {
+    xilonen dash; pick_up_crystallize("hydro");
+  }
+  ororon skill, burst;
+  lisa burst;
+  neuvillette charge, burst, skill, charge;
+  xilonen skill, attack:2;
+  if .xilonen.sets.ap >= 4 {
+    xilonen dash; pick_up_crystallize("hydro");
+  }
+  ororon attack:3;
+  while !.ororon.mods.favonius-cd {
+    ororon attack;
+  }
+  neuvillette charge:2;
+}
+wait(173);

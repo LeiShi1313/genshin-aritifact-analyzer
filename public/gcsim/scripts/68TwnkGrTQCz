@@ -1,0 +1,67 @@
+# Kaeya Furina Chongyun Xilonen. ~22s Rot. Cryo Infused Freeze Kaeya. Reliable Cryo Scroll, incidental Hydro Scroll buff. 2E Xilonen. Freeze immunity is -5K DPS.
+
+# Team - Options listsed by DPS
+kaeya char lvl=90/90 cons=6 talent=9,9,9;
+kaeya add weapon="finale" refine=5 lvl=90/90;
+kaeya add set="bs" count=4;
+#kaeya add set="mh" count=4; # Freeze immune
+kaeya add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+kaeya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662; # BS
+#kaeya add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+#kaeya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # MH; Freeze Immune
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3641 cd=0.4634;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favgs" refine=3 lvl=90/90;
+chongyun add set="no" count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.434 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5958;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1; # Freeze Immunity
+
+# Rotation
+active xilonen;
+
+for let i=0; i<4; i=i+1 {
+  xilonen burst;
+  
+  furina skill, dash, burst;
+  
+  chongyun burst, skill;
+  
+  xilonen attack, skill, attack:2;
+  
+  kaeya skill, dash, burst;
+  while .furina.skill.cd > 120 {
+    switch {
+      case .kaeya.skill.ready:
+        kaeya skill, dash;
+      case .kaeya.normal > 2 && .stam > 25:
+        kaeya charge;
+      case .kaeya.normal > 3 && .stam > 18:
+        kaeya dash;
+      default:
+        kaeya attack;
+    }
+  }
+  
+  xilonen skill, attack:2;
+}

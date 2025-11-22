@@ -1,0 +1,58 @@
+options swap_delay=12 iteration=1000;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="thestringless" refine=3 lvl=90/90;
+fischl add set="ts" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kaedeharakazuha char lvl=90/90 cons=0 talent=9,9,9;
+kaedeharakazuha add weapon="xiphos" refine=1 lvl=90/90;
+kaedeharakazuha add set="thunderingfury" count=4;
+kaedeharakazuha add stats hp=4780 atk=311 em=561 ; #main
+kaedeharakazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+venti char lvl=90/90 cons=0 talent=9,9,9;
+venti add weapon="thestringless" refine=3 lvl=90/90;
+venti add set="viridescentvenerer" count=5;
+venti add stats hp=4780 atk=311 em=561 ; #main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favlance" refine=3 lvl=90/90;
+yaoyao add set="instructor" count=4;
+yaoyao add stats hp=3571 atk=232 er=0.518 em=140.25 cr=0.23;
+yaoyao add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.41876 em=110.992 cr=0.38396 cd=0.10592;
+
+
+active venti;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<5; i=i+1 {
+    venti burst;
+    if .fischl.skill.ready {
+        fischl skill, attack;
+    } else {
+        fischl attack:2, burst;
+    }
+    venti skill, attack;
+    yaoyao skill, attack:2;
+    kaedeharakazuha skill, high_plunge, burst;
+    # kaedeharakazuha skill, high_plunge;
+    wait(10); # optimizing kazuha's swirl icd
+    kaedeharakazuha skill;
+    wait(10); # optimizing kazuha's swirl icd
+    kaedeharakazuha high_plunge;    
+    yaoyao burst, attack:2;
+    venti skill, attack;
+    kaedeharakazuha attack:4;
+    wait(3); # optimizing kazuha's swirl icd
+    kaedeharakazuha skill, high_plunge;
+    kaedeharakazuha attack:2;
+
+    print("done");
+}
+

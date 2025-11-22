@@ -1,0 +1,80 @@
+# Kazuha Chongyun Escoffier Xianyun. ~19s Rot. Kazuha Cryo plunge. Kazuha hEP 6[JhPD] (Q) tEP. Chongyun passes particles to Xianyun. Escoffier only bursts when ready. 100% Collision from skill plunges, 60% collisions from Starwicker.
+
+# Team - Options listsed by DPS
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="harbinger" refine=5 lvl=90/90;
+kazuha add set="lno" count=4;
+#kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favgs" refine=3 lvl=90/90;
+chongyun add set="no" count=4;
+#chongyun add set="scroll" count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+#xianyun add weapon="ttds" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.3306 em=118.92 cr=0.0662 cd=0.1324; # Oathsworn
+#xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+#xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.2204 em=118.92 cr=0.0662 cd=0.1324; # TTDS
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active esco;
+
+for let x = 0; x < 4; x = x + 1 {
+  esco skill;
+  if x > 0 && .esco.burst.ready {
+    esco burst;
+  }
+  
+  chongyun burst, skill;
+  
+  xianyun skill, low_plunge, burst;
+  
+  kazuha skill[hold=1], high_plunge[collision=1];
+  # Plunge combo
+  while .kazuha.status.xianyun-airborne-buff {
+    kazuha jump;
+    if .airborne {
+      kazuha high_plunge[collision=rand()>0.4];
+    }
+    if .kazuha.status.xianyun-airborne-buff {
+      kazuha dash;
+    }
+  }
+  if .kazuha.burst.ready {
+    kazuha burst;
+  }
+  while .kazuha.skill.cd {
+    if .kazuha.normal > 1 {
+      kazuha charge;
+    } else {
+      kazuha attack;
+    }
+  }
+  kazuha skill[hold=0], high_plunge[collision=1];
+
+  
+  print("done");
+}

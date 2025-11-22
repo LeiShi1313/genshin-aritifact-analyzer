@@ -1,0 +1,58 @@
+options swap_delay=12 iteration=1000;
+
+# Builds
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="deathmatch" refine=1 lvl=90/90;
+arle add set="fohw" count=5;
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="harbinger" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622 ; # main
+chiori add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli add weapon="favlance" refine=5 lvl=90/90;
+zhongli add set="ap" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="finaleofthedeep" refine=5 lvl=90/90;
+lynette add set="vv" count=5;
+lynette add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6061 em=39.64 cr=0.1986 cd=0.5958;
+
+# Target and Energy
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+# Rotation
+active arle;
+for let i = 0; i < 4; i = i + 1 {
+  arlecchino skill;
+  lynette skill;
+  if .lynette.burst.ready {
+    lynette burst;
+  }
+  chiori skill:2;
+  zhongli skill[hold=1], dash;
+  pick_up_crystallize("any");
+  if .chiori.burst.ready {
+    chiori burst;
+  } else {
+    zhongli burst;
+  }
+  arlecchino attack, charge, 
+             attack:3, dash, 
+             attack:3, dash, 
+             attack:3, dash,
+             attack:3, dash,
+             attack:3, dash,
+             attack:3;
+}
+
+# Arle E > Lynette E(Q) > Chiori 2[E] > Zhongli hED (pick up shard) > Chiori Q or Zhongli Q > Arle N1 C 5[N3D] N3
+

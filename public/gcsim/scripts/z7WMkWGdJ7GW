@@ -1,0 +1,68 @@
+# Yanfei Furina Rosaria Xianyun. ~20s Rot. Yanfei Melts or Vapes catalyst plunges(No Shatter) with slight delays when lacking Aura. 50% Collisions.
+
+# Team
+yanfei char lvl=90/90 cons=6 talent=9,9,9;
+yanfei add weapon="widsith" refine=3 lvl=90/90;
+yanfei add set="longnightsoath" count=4;
+#yanfei add set="mh" count=4;
+#yanfei add set="cw" count=4;
+yanfei add stats hp=4780 atk=311.0 em=187 pyro%=0.4660 cr=0.311;
+yanfei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+#yanfei add stats hp=4780 atk=311.0 em=187 pyro%=0.4660 cd=0.622;
+#yanfei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.5952 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.1324;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311 ; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+#xianyun add set="no" count=4; # Bubbles may miss
+#xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active furina;
+
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash, burst;
+  
+  xianyun skill, low_plunge, burst;
+  
+  rosaria skill, burst;
+  
+  yanfei skill;
+  #for let h = 8; h > 0; h = h - 1 {
+  while .yanfei.status.xianyun-airborne-buff {
+    # Slight mid-air wait for aura
+    yanfei jump;
+    if !.element.t0.frozen || !.element.t0.cryo || !.element.t0.hydro {
+      wait(16);
+    }
+    if.airborne{
+      yanfei high_plunge[collision=rand()>0.5], dash;
+    }
+  }
+  yanfei skill, charge;
+  
+}
+

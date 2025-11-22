@@ -1,0 +1,99 @@
+# Navia Furina Mona Xianyun. ~20s Rot. Navia Plunge with Mona Providing ATK% and DMG bonus just before Navia unloads skill and plunge. Navia bursts every other rotation. Navia fills some time with Phys NA at the end of the rotation.
+
+# Team
+navia char lvl=90/90 cons=0 talent=9,9,9;
+navia add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+navia add set="nighttime" count=4;
+#navia add set="longnightsoath" count=4;
+navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.1986 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311;
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282; # GT
+
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="ttds" refine=5 lvl=90/90;
+mona add set="no" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.2755 em=39.64 cr=0.1655 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+#xianyun add set="ohc" count=4; # Buubles may miss
+xianyun add set="vv" count=4;
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=148.86 atk%=0.3968 er=0.4959 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+
+# Pickup Crystallize with Every dash
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+    pick_up_crystallize("any");
+  }
+    
+  return _execute_action(char_id, action_id, p);
+}
+
+# Navia Plunge Combo
+fn NaviaPlunge() {
+  navia jump;
+  if .airborne {
+    navia high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active navia; # SS stacks
+navia skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  
+  xianyun skill, low_plunge, burst;
+  
+  if .navia.burst.ready && .navia.energy == .navia.energymax {
+    navia burst;
+  }
+  
+  mona skill, burst;
+  
+  if i == 0 {
+    navia skill[hold=1];
+  } else {
+    navia skill[hold=0];
+  }
+  NaviaPlunge(); navia dash;
+  NaviaPlunge(); navia dash;
+  NaviaPlunge(); navia dash;
+  NaviaPlunge(); navia dash;
+  navia skill[hold=0];
+  NaviaPlunge(); navia dash;
+  NaviaPlunge(); navia dash;
+  NaviaPlunge(); navia dash;
+  NaviaPlunge(); navia attack:2;
+  if !.navia.burst.cd {
+    navia dash, attack:2;
+  }
+  
+}

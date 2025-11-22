@@ -1,0 +1,48 @@
+#builds
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="deathmatch" refine=1 lvl=90/90;
+arle add set="fohw" count=5;
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; 
+arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.2979 cd=0.662;
+        
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="favoniuslance" refine=3 lvl=90/90;
+rosaria add set="eosf" count=5;
+rosaria add stats hp=4780 atk=311 atk%=.466 cryo%=0.466 cr=0.311 ;
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="eosf" count=5;
+shenhe add stats hp=4780 atk=311 er=.518 atk%=0.466 atk%=0.466;
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=.1653 em=39.64 cr=0.3972 cd=0.331;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=.1102 em=39.64 cr=0.331 cd=0.7944;
+
+#configuration
+options swap_delay=1 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+#rotation
+active arle;
+
+for let i = 0; i < 4; i = i + 1 {
+  arle skill, attack;
+  bennett skill, burst;
+  shenhe attack, skill[hold=1], burst;
+  rosaria skill, burst;
+  arle charge, 
+       attack:3, dash,
+       attack:3, dash, 
+       attack:3, dash,
+       attack:3, dash,
+       attack:3, dash,
+       attack:3, dash,
+       attack;
+  rosaria skill, attack:2;
+}

@@ -1,0 +1,77 @@
+# Charlotte Xiangling Bennett Xianyun. ~20s Rot. Charlotte Melt plunge with no Cryo VV. Charlotte uses hold skill. Without hold skill Charlotte can N1 cancel plunges at the start of the rotation with fliping the aura.
+
+# Team
+charlotte char lvl=90/90 cons=6 talent=9,9,9;
+charlotte add weapon="widsith" refine=3 lvl=90/90; 
+charlotte add set="longnightsoath" count=4;
+#charlotte add set="sr" count=4;
+charlotte add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311;
+charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favlance" refine=3 lvl=90/90;
+xiangling add set="emblem" count=4;
+xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.2317 cd=0.662;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+#xianyun add set="sodp" count=4;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3857 em=59.46 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active xianyun;
+
+for let i=0; i<4; i=i+1 {
+  xianyun skill, low_plunge, attack, burst;
+  
+  bennett burst, skill;
+  
+  xl burst, skill, dash;
+  
+  charlotte skill[hold=1];
+  #if .charlotte.burst.ready && .charlotte.energy == .charlotte.energymax {
+  #  charlotte burst;
+  #}
+  # Tinker with value to avoid overtaking Pyro
+  let j=0;
+  while .xianyun.status.xianyun-airborne-buff {
+    if .xianyun.status.xianyun-airborne-buff {
+      charlotte jump;
+      if .airborne {
+        charlotte high_plunge[collision=rand()>0.5];
+        j = j + 1;
+      }
+      if j < 1 { # adjust if not using hold skill
+        charlotte attack;
+      } else if j == 8 {
+        charlotte attack;
+      } else {
+        charlotte dash;
+      }
+    }
+  }
+  if .charlotte.burst.ready && .charlotte.energy == .charlotte.energymax {
+    charlotte burst;
+  }
+  
+  bennett attack, skill;
+  
+  xiangling attack:3;
+}

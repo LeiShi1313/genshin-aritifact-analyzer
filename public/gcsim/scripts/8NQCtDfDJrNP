@@ -1,0 +1,65 @@
+# Citlali Ororon Fischl Xilonen. ~16s Rot. EM Citlali Superconduct in 2T. Scroll > OC Ororon for higher Citlali damage.
+
+# Team - Options listed by DPS
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="evenstar" refine=1 lvl=90/90;
+citlali add set="gd" count=4;
+citlali add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=118.92 cr=0.331 cd=0.1986;
+
+ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon add weapon="chainbreaker" refine=5 lvl=90/90;
+#ororon add set="oc" count=4;
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Scroll
+#ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296; # OC
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+# Options
+options iteration=300; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1 pos=-1.2,1.4 hp=100000000;
+target lvl=100 resist=0.1 radius=1 pos=1.2,1.4 hp=100000000;
+
+# Rotation
+active citlali;
+
+for let i=0; i<4; i=i+1 {
+  citlali skill, burst;
+  
+  xilo skill, attack:2;
+  
+  amy attack;
+  if .amy.burst.ready {
+    amy attack:1, burst;
+  } else {
+    amy skill;
+  }
+  
+  ororon skill, burst;
+  
+  while .citlali.skill.cd {
+    switch {
+      case .citlali.normal > 1 && .stam > 50:
+        citlali charge;
+      default:
+        citlali attack;
+    }
+  }
+}

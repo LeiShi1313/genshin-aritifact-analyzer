@@ -1,0 +1,29 @@
+xiao char lvl=90/90 cons=6 talent=9,9,9;
+xiao add weapon="pjws" refine=5 lvl=90/90;
+xiao add set="vh" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622;
+xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3641 cd=0.662;
+
+target lvl=100 resist=0.1 radius=0.5 pos=0,0.9 hp=999999999; 
+target lvl=100 resist=0.1 radius=0.5 pos=0,2   hp=999999999; 
+energy every interval=480,720 amount=1; 
+#options swap_delay=12 iteration=1000;
+active xiao;
+
+xiao skill;
+
+for let i=0; i<6; i=i+1 {
+
+  xiao skill:2, burst;
+  
+  xiao jump, low_plunge , skill:3;
+  xiao jump, low_plunge , skill:3;
+  xiao jump, high_plunge, skill:4;
+  
+  xiao jump, high_plunge, skill:4;
+  xiao jump, high_plunge, skill:4;
+  xiao jump, high_plunge, skill:4;
+  
+  xiao attack; # filler while waiting for energy
+
+}

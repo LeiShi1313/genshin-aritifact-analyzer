@@ -37,6 +37,8 @@ const generate_gcsim = async () => {
         }
         characterAliases[alias] = key.toLowerCase();
     }
+    characterAliases['lanyan'] = 'lan_yan';
+    characterAliases['yangu'] = 'ganyu'
     Object.keys(characterKeys).forEach(key => characterAliases[key] = key);
     await fs.promises.writeFile(
         path.join(__dirname, "../src/data/gcsim/characters.json"),

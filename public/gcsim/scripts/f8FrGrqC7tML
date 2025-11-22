@@ -1,0 +1,60 @@
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="slingshot" refine=5 lvl=90/90;
+yoimiya add set="shime" count=4;
+yoimiya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main 5* set
+yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+                                
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favoniuslance" refine=3 lvl=90/90;
+chevreuse add set="sodp" count=4;
+chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.3972;
+                                                                
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+                                                                                                                                                                                                                                                        
+options swap_delay=12 iteration=1000;                                                                        
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active fischl;
+fischl skill;
+for let i = 0; i < 4; i = i + 1 {
+  if is_even(i) {
+    chevreuse burst, skill[hold=1], dash;
+  } else {
+    chev skill[hold=1], attack:2;
+  }
+  if !i { 
+    yoimiya burst; # first rotation
+  }
+  bennett skill, burst;
+  fischl attack:3;  # some NAs before summoning Oz can make sure Fischl get Chev C6 DMG% buff. (And Chev E healing for Song of Stillness passive if using that)
+  if .fischl.skill.ready {
+    fischl skill;
+  } else {
+    fischl burst;
+  }
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  if !is_even(i) {  # Burst at the even(2,4,6,---) rotation
+    yoimiya attack; # N1 is filler for the next rot's E cd
+    yoimiya burst;
+  } else {
+    yoimiya attack:4, dash;
+  }
+}
+
+# Fischl E (First rot only) > 
+# Chev Q hE > Yoimiya Q > Bennett EQ > Fischl N3 Q > Yoimiya E 4[N5D] >
+# Chev hE N2 >            Bennett EQ > Fischl N3 E > Yoimiya E 3[N5D] N1 Q > 
+# Chev Q hE >             Bennett EQ > Fischl N3 Q > Yoimiya E 4[N5D] >
+# Chev hE N2 >            Bennett EQ > Fischl N3 E > Yoimiya E 3[N5D] N1 Q >

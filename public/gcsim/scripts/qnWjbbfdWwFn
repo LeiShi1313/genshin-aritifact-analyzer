@@ -1,0 +1,127 @@
+#Defenseless team with some vertical investment (still KQMS artifacts). No swap after Alhaitham's Burst. ~28s split rotation. 12-3 Icewind Suite's base stats used for energy drops. Customized random action delays.
+
+alhaitham char lvl=90/90 cons=2 talent=9,10,9;
+alhaitham add weapon="lofi" refine=1 lvl=90/90;
+alhaitham add set="gilded" count=4;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #73.2 / 217.5 | 111.01 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926; #2 em, 10 cr, 8 cd distributed rolls (KQMs stats)
+
+fischl char lvl=90/90 cons=6 talent=9,10,9;
+fischl add weapon="aqua" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #69.2 / 217.5 | 111.01 er
+fischl add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926; #2 atk%, 8 cr, 10 cd
+
+yae char lvl=90/90 cons=2 talent=9,10,9;
+yae add weapon="kagura" refine=1 lvl=90/90;
+yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #88.4 / 195.4 | 111.01 er
+yae add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926; #2 em, 8 cr, 10 cd
+
+nahida char lvl=90/90 cons=2 talent=9,10,9;
+nahida add weapon="athousandfloatingdreams" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #44.7 [65.5] / 138.6 | 111.01 er | 896 em
+nahida add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=198.15 er=0.1101 cr=0.3966 cd=0.2642; #8 em, 10 cr, 2 cd
+
+options swap_delay=1 iteration=1000;
+target lvl=100 type=dummy radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3; #Energy based on 12-3 Icewind Suite base stats
+
+active yae;
+
+fn doActionList() {
+  for let i=0; i<3; i=i+1 {
+    yae skill:3;
+    nahida skill[hold=12], burst;
+    fischl attack, skill;
+    alhaitham skill[hold=1]; alhaithamLowPlunge();
+    alhaitham attack:2, charge, dash, 
+              attack:3, charge;
+    yae burst; #very minor dps decrease, definitely worth using as a finisher or in aoe
+    yae skill:3;
+    fischl attack:2, burst;
+    alhaitham burst,
+              attack:3, dash,
+              attack:4, charge, dash, 
+              attack:3, charge, dash,
+              attack:3;
+  }
+}
+
+fn alhaithamLowPlunge() {
+  if rand() < 1/3 { #1/3 chance to get the short plunge animation
+    alhaitham low_plunge[short=1];
+  } else {
+    alhaitham low_plunge;
+  }
+}
+
+#Random action execution delays
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if display {
+    print("initial roll: ", value);
+  }
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print("final value: ", value);
+  }
+  return value;
+}
+
+let prev_char_id = -1;
+switch {
+  case .alhaitham.onfield:
+    prev_char_id = .keys.char.alhaitham;
+  case .fischl.onfield:
+    prev_char_id = .keys.char.fischl;
+  case .yae.onfield:
+    prev_char_id = .keys.char.yae;
+  default:
+    prev_char_id = .keys.char.nahida;
+} #this switch statement prevents "swap delay" from being added at the start of each iteration when the first action is not actually a swap
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.burst {
+    while .alhaitham.onfield && !.alhaitham.burst.ready {
+      alhaitham attack;
+    }
+    while .fischl.onfield && !.fischl.burst.ready {
+      fischl attack;
+    }
+    while .yae.onfield && !.yae.burst.ready {
+      yae attack;
+    }
+    while .nahida.onfield && !.nahida.burst.ready {
+      nahida attack;
+    }
+  }
+
+  if action_id == .action.swap {
+    delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
+                                                     #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
+    
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
+    
+  } else if prev_action_id != .action.attack {
+    delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+doActionList();

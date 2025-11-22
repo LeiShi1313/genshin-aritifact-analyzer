@@ -1,0 +1,51 @@
+options swap_delay=12 debug=true iteration=1000;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="wanderingevenstar" refine=1 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="deepwood" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+baizhu char lvl=90/90 cons=0 talent=9,9,9;
+baizhu add weapon="favoniuscodex" refine=3 lvl=90/90;
+baizhu add set="ohc" count=4;
+baizhu add stats hp=4780 atk=311 hp%=0.466 dendro%=0.466 cr=0.311 ; #main
+baizhu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 pos=3.5,0 resist=.1 hp=999999999999 radius=3;
+# target lvl=100 pos=1,0.5 resist=.1 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+active baizhu;
+
+for let i = 0; i < 4; i = i + 1 {
+    
+    baizhu skill, burst;
+    fischl skill;
+    xingqiu burst, attack, skill, dash, attack:2;
+    sucrose attack:2, skill, dash,
+            attack:3, charge,
+            attack:3, charge,
+            attack:2;
+    baizhu attack:2, skill;
+    fischl attack, burst;
+    sucrose attack, charge, skill, dash, burst; 
+    baizhu attack:3, dash, 
+           attack:3, walk, 
+           attack:3, walk, 
+           attack:3, walk, 
+           attack:3;
+
+}

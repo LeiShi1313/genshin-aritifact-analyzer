@@ -1,0 +1,44 @@
+amber char lvl=90/90 cons=6 talent=9,9,9;
+amber add weapon="favbow" refine=4 lvl=90/90;
+amber add set="fopl" count=4;
+amber add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.3972 cd=0.5296;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9; 
+beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="eosf" count=5;
+beidou add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622 ; #main										
+beidou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;	
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="no" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5654 er=0.3306 em=39.64 cr=0.642 cd=0.662 hydro%=0.466;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favcodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.11019999999999999 em=679.92 cr=0.3972 cd=0.5296;
+
+options swap_delay=12 iteration=100;
+
+# ----  Default Enemy
+
+
+# ----
+active beidou;
+
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+   beidou skill[counter=2];
+   nahida skill, burst;
+   xingqiu burst, attack;
+   beidou burst, attack;
+   amber skill, burst, attack;
+   xingqiu skill, dash;
+   beidou skill[counter=2];
+   amber attack:2, aim, attack:3, aim, attack:3, aim, attack:3, aim;
+
+}

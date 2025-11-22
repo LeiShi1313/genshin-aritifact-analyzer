@@ -1,0 +1,88 @@
+# Eula Furina Chongyun Xianyun. ~20s Rot. Eula Cryo Plunge. Xianyun must use N1 to Swirl Cryo from Eula's skill, then Chongyun uses Burst and Skill before Eula begins to plunge. Eula immediately uses hold skill with Grimheart stacks to shred Cryo RES. Eula burst uses burst/skill and NAs while waiting for Furina's skill cd. 50% Collisions.
+
+# Team
+eula char lvl=90/90 cons=0 talent=9,9,9;
+eula add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#eula add weapon="fruitfulhook" refine=1 lvl=90/90;
+eula add set="longnightsoath" count=4;
+#eula add set="sr" count=4;
+#eula add set="mh" count=4;
+eula add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # LNO/SR
+#eula add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+#eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=49.62 atk%=0.496 er=0.1102 em=39.64 cr=0.1655 cd=0.662; # MH
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="totm" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.331; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.331; # GT
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favgs" refine=3 lvl=90/90;
+chongyun add set="no" count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.2204 em=118.92 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active eula; # SS Stacks
+eula skill; # Grimheart stacks; A1
+
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  
+  #eula attack; # for sim warning
+  eula skill; # Grimheart stack
+  
+  xianyun attack, skill, low_plunge, burst; # N1 Needed for Cryo VV
+  
+  chongyun burst, skill;
+  
+  # Plunge until expiry
+  while .eula.status.xianyun-airborne-buff {
+    if .eula.skill.ready {
+      eula skill[hold=1]; # Consumes Grimheart stack for Cryo RES Shred.
+    } else {
+      eula jump;
+      if .airborne {
+        eula high_plunge[collision=rand()>0.5];
+      }
+      if .eula.status.xianyun-airborne-buff { # no dash for final plunge
+        eula dash;
+      }
+    }
+  }
+  while .furina.skill.cd {
+    if .eula.burst.ready && .eula.energy == .eula.energymax {
+      eula burst, skill;
+    } else if .eula.skill.ready {
+      eula skill;
+    } else {
+      eula attack;
+    }
+  }
+  
+}

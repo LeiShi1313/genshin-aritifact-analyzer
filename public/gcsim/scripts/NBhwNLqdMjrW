@@ -1,0 +1,88 @@
+# Lynette Yelan Fischl Bennett. ~20s Rot. On-field Lynette Soup in ST Target with C6 Bennett infusion contributing Overloads. Fischl snapshots Bennett's buff. Fischl alternates skill and burst.
+
+# Team- Option Listed by DPS
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="xiphos" refine=1 lvl=90/90;
+lynette add set="vv" count=4; # +DMG, -Fun
+#lynette add set="tf" count=4;
+lynette add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.2979 cd=0.1986;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="chainbreaker" refine=5 lvl=90/90;
+#fischl add weapon="songofstillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # SoS
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1.5 pos=-1.6,1.8 hp=100000000;
+#target lvl=100 resist=0.1 radius=1.5 pos=1.6,1.8 hp=100000000;
+
+# Lynette Rotation
+fn LynetteCombo() {
+  # Keep Lynette skill on CD
+  if .lynette.skill.ready {
+    lynette attack, skill;
+  } else if .lynette.burst.ready && .lynette.energy == .lynette.energymax {
+    lynette attack, burst;
+  } else if .lynette.normal > 4 && .stam > 25 {
+    lynette charge;
+  } else {
+    lynette attack;
+  }
+}
+
+# Rotation
+active fischl;
+
+for let i=0; i<4; i=i+1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  bennett burst, attack, skill;
+  
+  # burst over skill
+  amy attack;
+  if .amy.burst.ready && .amy.energy == .amy.energymax {
+    amy attack:1, burst;
+  } else {
+    amy skill;
+  }
+  
+  lynette attack, burst;
+  # While Oz is on field
+  while .fischl.oz { #|| .lynette.mods.bennett-field {
+    LynetteCombo();
+  }
+  
+  bennett skill;
+
+  print("done");
+}
+

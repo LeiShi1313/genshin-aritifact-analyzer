@@ -1,0 +1,54 @@
+
+navia char lvl=90/90 cons=0 talent=6,10,10;
+navia add weapon="verdict" refine=1 lvl=90/90;
+navia add set="gladiatorsfinale" count=2;
+navia add set="crimsonwitchofflames" count=1;
+navia add set="emblemofseveredfate" count=2;
+navia add stats def%=0.066 def=16 hp=5079 atk=329 atk%=0.6060000000000001 er=0.37 em=42 cr=0.579 cd=1.2200000000000002 geo%=0.466;
+
+mona char lvl=85/90 cons=6 talent=7,7,7;
+mona add weapon="favcodex" refine=5 lvl=90/90;
+mona add set="noblesseoblige" count=4;
+mona add set="thundersoother" count=1;
+mona add stats def=32 hp=5766 atk=311 atk%=0.28600000000000003 er=0.92 em=35 cr=0.665 cd=0.7929999999999999 hydro%=0.466;
+
+bennett char lvl=85/90 cons=6 talent=6,8,8;
+bennett add weapon="skywardblade" refine=1 lvl=90/90;
+bennett add set="theexile" count=4;
+bennett add set="echoesofanoffering" count=1;
+bennett add stats def%=0.24 def=65 hp=3953 hp%=0.733 atk=364 atk%=0.133 er=1.026 em=55 cr=0.035;
+
+zhongli char lvl=89/90 cons=6 talent=10,10,10;
+zhongli add weapon="favoniuslance" refine=5 lvl=90/90;
+zhongli add set="totm" count=4;
+zhongli add set="gildeddreams" count=1;
+zhongli add stats def%=0.124 hp=6304 hp%=0.5710000000000001 atk=311 er=0.23299999999999998 em=42 cr=0.657 cd=0.918 geo%=0.466;
+
+#char stats
+
+#enemy config
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=10000000;
+energy every interval=480,720 amount=1;
+
+#rotation
+
+active navia;
+
+for let i = 0; i < 5; i = i + 1 {
+navia burst; pick_up_crystallize("any");
+bennett skill, burst, attack:2; pick_up_crystallize("any");
+zhongli burst, skill, attack:2; pick_up_crystallize("any");
+mona skill, burst, attack:2; pick_up_crystallize("any");
+navia skill, attack:3, dash, attack:2, skill, attack:2; pick_up_crystallize("any"); 
+}
+
+# ER Requirement unfortunately has to be this high... The exile set and fav weapons as well as Navia's absurd ER all serve a purpose ↓
+# -> **Allow Mona C4 effect to cover both Navia's E aka 100% crit rate** <-
+# All the "2A"s are for getting particles
+# Navia Q -> Bennett EQ 2A -> Zhongli QE 2A-> Mona EQ 2A -> Navia E 3A dash 2A E 2A
+# Zhongli could be C0, change skill to skill[hold = 1]
+# C4 Mona (15% crit rate) is essential since I want Navia to crit her every single E
+# Fav weapon will NOT create particles if the wearer could not deal damage. 
+# For example, Hydro Tulpa is immune to hydro aka Mona's skill, so fav codex will produce no particles.

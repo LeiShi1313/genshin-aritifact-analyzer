@@ -1,0 +1,45 @@
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+mavuika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2648 cd=0.662 ;
+
+kaeya char lvl=90/90 cons=6 talent=9,9,9;         
+kaeya add weapon="favsword" refine=3 lvl=90/90;
+kaeya add set="ap" count=4;
+#kaeya add set="emblem" count=4;
+#kaeya add set="ins" count=4;
+kaeya add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+kaeya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # AP
+#kaeya add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
+#kaeya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944; # Emblem
+#kaeya add stats hp=3571 atk=232 er=0.518 cryo%=0.348 cr=0.232; #main
+#kaeya add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648; # Ins
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesse" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662 ;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active mavuika;
+
+for let i=0; i<6; i=i+1 {
+  mavuika skill;
+  bennett burst, skill;
+  xilonen skill, attack:2;
+  kaeya skill, dash; pick_up_crystallize("pyro");
+  kaeya burst;
+  mav burst, charge:2, dash, charge:3, dash, charge:4;
+  mavuika dash, charge:6, dash;
+}

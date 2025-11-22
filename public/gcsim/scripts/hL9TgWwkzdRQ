@@ -1,0 +1,57 @@
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="finale" refine=5 lvl=90/90;
+ayaka add set="bs" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+ayaka add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*12 cd=0.0662*9;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+shenhe add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
+
+mualani char lvl=90/90 cons=0 talent=9,9,9;
+mualani add weapon="ttds" refine=5 lvl=90/90;
+mualani add set="scroll" count=4;
+mualani add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+mualani add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="ap" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active ayaka;
+
+ayaka dash;
+
+for let i=0; i<4; i=i+1 {
+  
+  xilonen burst, skill, attack:2; pick_up_crystallize("cryo");
+  
+  shenhe skill, burst;
+  
+  mualani skill, attack, skill, attack;
+
+  ayaka skill, dash, attack, burst, attack:2, charge;
+  
+  xilonen skill, attack:2; pick_up_crystallize("cryo");
+  
+  shenhe attack, skill;
+
+  mualani skill, attack;
+  if .mualani.burst.ready {
+    mualani burst;
+  }
+  
+  ayaka skill, dash, attack, charge, attack:2, charge;
+
+}
+
+# 21s rotations
+# (Ayaka D) > Xilonen Q E N2 > Shenhe tEQ > Mualani E N1 E N1 > Ayaka ED N1 Q N2C > Xilonen E N2 > Shenhe N1 E > Mualani E N1 Q > Ayaka ED N1C N2C

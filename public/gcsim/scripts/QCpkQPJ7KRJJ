@@ -1,0 +1,79 @@
+# Furina Candace Xilonen Xianyun. ~20s Rot. C0 Furina Hydro Plunge. 2E Xilonen and Candace. Xilonen does not burst. NO instead of AP Candace is -2K DPS.
+
+# Team
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="harbinger" refine=5 lvl=90/90;
+furina add set="longnightsoath" count=4;
+#furina add set="mh" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662; # LNO
+#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.1655 cd=0.662;# MH
+
+candace char lvl=90/90 cons=6 talent=9,9,9; 
+candace add weapon="favlance" refine=3 lvl=90/90;
+candace add set="ap" count=4; # sus
+#candace add set="no" count=4;
+#candace add set="emblem" count=4;
+candace add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 hp=100000000 pos=0,1.4;
+#target lvl=100 resist=0.1 hp=100000000 pos=2,0;
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash;
+  while !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  
+  xianyun skill, low_plunge, burst;
+  
+  xilonen skill, attack:2;
+  
+  if .candace.sets.ap == 4 {
+    candace skill, dash; pick_up_crystallize("any");
+    candace burst;
+  } else {
+    candace skill, burst, attack;
+  }
+  
+  furina attack;
+  for let p=0; p<8; p=p+1 {
+    if .furina.status.xianyun-airborne-buff {
+      furina jump;
+      if .airborne {
+        furina high_plunge[collision=1];
+        if p < 7 {
+          furina dash;
+        }
+      }
+    }
+  }
+  
+  xilonen skill, attack:2;
+  
+  candace skill, attack;
+}

@@ -1,0 +1,91 @@
+# Klee Emilie Bennett Xianyun. ~19s Rot. Klee Burning Plunge. Plunges are canceled with skill, NA, or CA, stamina permitting. Klee uses burst if available before plunging. Klee prefers UR > LNO.  50% Collisions.
+
+# Team - OPtions listed by DPS
+klee char lvl=90/90 cons=0 talent=9,9,9;
+klee add weapon="widsith" refine=3 lvl=90/90;
+#klee add weapon="flowingpurity" refine=5 lvl=90/90;
+klee add set="ur" count=4;
+#klee add set="longnightsoath" count=4;
+#klee add set="lw" count=4;
+#klee add set="cw" count=4;
+#klee add set="sr" count=4;
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+#emilie add set="deepwood" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90;
+#bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=120];
+bennett add set="no" count=4;
+#bennett add set="deepwood" count=4; # close
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+#xianyun add set="no" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.551 em=158.56 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active klee;
+klee attack; # Pyro VV in 1st rot
+
+for let i = 0; i < 4; i = i + 1 {
+  # Burst after the 1st rot
+  if i > 0 && .emilie.burst.ready && .emilie.energy == .emilie.energymax {
+    emilie burst;
+  } else {
+    emilie attack, skill;
+  }
+  
+  xianyun skill, low_plunge, burst; 
+  
+  bennett skill, burst;
+  
+  # Klee N1 (E/EQ) before plunging 
+  klee attack;
+  if .klee.skill.ready {
+    klee skill[bounce=3, mine=8];
+  }
+  if .klee.burst.ready {
+    klee burst;
+  }
+  # 8JPN1(C)
+  let plunges = 0;
+  while .xianyun.status.xianyun-airborne-buff {
+    klee jump;
+    if .airborne {
+      klee low_plunge[collision=rand()>0.5];
+      plunges = plunges + 1; print(plunges);
+    }
+    if .xianyun.status.xianyun-airborne-buff { # No cancels for the final plunge
+      if .klee.skill.ready {
+        klee attack, skill[bounce=3, mine=8];
+      } else if .stam > 50 {
+        klee charge;
+      } else {
+        klee attack;
+      }
+    }
+  }
+
+}

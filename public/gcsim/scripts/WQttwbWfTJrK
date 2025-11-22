@@ -1,0 +1,79 @@
+# PMC Yelan Fischl Bennett. ~19s Rot. PMC Overvape DPS. 1E Yelan, 2E Bennett. PMC uses hold skill and bursts as available between weaving NAs. Scroll closely trails for team DPS.
+
+# Team - Options Listed by DPS
+aetherpyro char lvl=90/90 cons=6 talent=9,9,9  +params=[base_atk_buff=1, skirk_story_buff=1];
+aetherpyro add weapon="umbrella" refine=5 lvl=90/90;
+aetherpyro add set="oc" count=4;
+#aetherpyro add set="scroll" count=4;
+aetherpyro add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+aetherpyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # OC
+#aetherpyro add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#aetherpyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Scroll
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+#fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662; # VHunt
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # SoS
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Front
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; # Right
+
+# Rotation
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+
+  bennett burst, attack, skill;
+  
+  if .fischl.skill.ready {
+    fischl attack, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  
+  aetherpyro attack, skill[hold=1], attack:2, charge; # similar
+  while .yelan.mods.yelanburst {
+  #while .aetherpyro.mods.nightsoul-blessing {
+    switch {
+      case .aetherpyro.burst.ready && .aetherpyro.normal > 1:
+        aetherpyro burst;
+      case .aetherpyro.normal > 3 && .stam > 25: # N3C
+        aetherpyro charge;
+      case .aetherpyro.normal > 3 && .aetherpyro.dash.ready && .stam > 18: # N3D
+        aetherpyro dash;
+      default:
+        aetherpyro attack;
+    }
+  }
+  
+  bennett skill;
+}

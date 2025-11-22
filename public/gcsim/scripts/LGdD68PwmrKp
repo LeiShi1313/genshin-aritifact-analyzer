@@ -1,0 +1,46 @@
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main										
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2979 cd=0.7282;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="kitaincrossspear" refine=5 lvl=90/90;
+xiangling add set="crimsonwitchofflames" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+																														
+
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="favoniuscodex" refine=5 lvl=90/90;
+mona add set="tenacityofthemillelith" count=5;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
+mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+										
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+active bennett;
+
+target lvl=100 resist=.1 hp=1700000000000;
+
+energy every interval=480,720 amount=1;
+
+for let i =0; i < 5; i = i + 1 {
+
+    bennett skill, burst;
+    kazuha skill, high_plunge;
+    mona skill,burst;
+	xiangling skill,attack:1;
+	mona attack:4;
+	bennett attack, skill,attack;
+	kazuha skill, high_plunge;
+	bennett attack,skill;
+	mona attack,dash;
+	bennett attack;
+}
+

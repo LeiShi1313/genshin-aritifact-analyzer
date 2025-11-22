@@ -1,0 +1,79 @@
+# Yoimiya Beidou Fischl Xingqiu. ~24s Rot. (TF) Yoimiya is able to use her skill twice per rotation, with her burst capping the rotation end. 3EM >= EDC Yoimiya. 10% Counter, 15% Perfect Counter.
+
+# Team
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="rust" refine=3 lvl=90/90;
+#yoimiya add weapon="chainbreaker" refine=5 lvl=90/90;
+yoimiya add set="tf" count=4;
+yoimiya add stats hp=4780 atk=311 em=187 em=187 em=187;
+yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=118.92 cr=0.331 cd=0.5958; # 3EM
+#yoimiya add stats hp=4780 atk=311 em=187 em=187 cr=0.311;
+#yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1653 em=158.56 cr=0.0993 cd=0.7944; # EEC
+#yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+#yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=198.2 cr=0.0993 cd=0.7944; # EDC
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="emblem" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+#fischl add set="tom" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="no" count=4;
+#xingqiu add set="emblem" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.331 cd=0.7282;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,3.4 hp=100000000; # No Contact Rainswords
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Contact Rainswords
+
+#target lvl=100 resist=0.1 radius=1 pos=4,3.4 hp=100000000; # Secondary Target
+
+# Beidou 15% Perfect Counter, 15% 1 Hit Counter
+fn rand_counter() {
+  let counter = rand();
+  if counter > 0.85 {
+    counter = 2;
+  } else if counter > 0.75 && counter <= 0.85 {
+    counter = 1;
+  } else {
+    counter = 0;
+  }
+  
+  return counter;
+}
+
+# Rotation
+active beidou; # SS stacks
+
+for let x=0; x<4; x=x+1 {
+  xingqiu skill, dash, burst, attack;
+  
+  beidou skill[counter=rand_counter()], attack, burst;
+  
+  fischl attack, skill;
+  
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5;
+  
+  beidou skill[counter=rand_counter()];
+  
+  fischl attack:2, burst;
+  
+  yoimiya skill, attack:5, dash, attack:4, burst;
+}
+

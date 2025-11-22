@@ -1,0 +1,75 @@
+# Hutao Yelan Fischl Kuki. ~18s Rot. Hutao Overvape with Kuki enabling MH to edge out SR. 9N2CJ Hutao. No burst Kuki. 1E Yelan.
+
+# Team
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="fjords" refine=1 lvl=90/90;
+#hutao add weapon="dbane" refine=3 lvl=90/90;
+hutao add set="mh" count=4;
+#hutao add set="sr" count=4;
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
+hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.2979 cd=0.662;
+#hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+#hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # SR
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="tom" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1.5 pos=0,1.8 hp=100000000;
+
+# Rotation
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } 
+  while !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  kuki skill;
+  
+  if .fischl.burst.ready {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  
+  hutao skill,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2;
+  
+  print("done");
+}
+

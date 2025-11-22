@@ -1,0 +1,50 @@
+options swap_delay=12 debug=true iteration=100;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9; 
+yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="blizzardstrayer" count=4;
+shenhe add stats hp=4780 atk=311 cryo%=0.466 atk%=0.466 atk%=0.466; #main
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662 ;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon= "harbinger" refine=5 lvl=90/90;
+xingqiu add set= "blizzardstrayer" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4960 er=0.2204 em=39.64 cr=0.1324 cd=0.662 ;
+  
+chongyun char lvl=90/90 cons=6 talent=9,9,9; 
+chongyun add weapon= "serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+chongyun add set= "no"  count=4;
+chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+chongyun add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ; 
+
+target lvl=100 resist=0.1 hp=10000000 radius=2 pos=0, 2.4;
+energy every interval=480,720 amount=1;
+
+active xingqiu;
+
+let rotations = 1;
+while rotations < 5 {
+
+  xingqiu burst, attack;
+  chongyun attack, skill;
+  yelan attack, burst, attack, skill;
+  shenhe attack, skill, attack, burst;
+  chongyun attack, burst;
+  xingqiu attack, skill, dash, attack:3;
+  yelan attack:2, skill;
+  shenhe attack,skill;
+  xingqiu attack:2;
+  shenhe attack:3;
+  yelan attack:3;
+  xingqiu attack;
+  
+  rotations = rotations + 1;
+}
+

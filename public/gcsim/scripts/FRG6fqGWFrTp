@@ -1,0 +1,45 @@
+#DW Zhongli + GT Nahida > AP Zhongli + DW Nahida > Ins Zhongli + DW Nahida > TOTM Zhongli + DW Nahida
+#The simulated DPS difference between highest and lowest is about 2%, so comfort is prioritized.
+
+#If Wolf Fang is not available passiveless Harbinger has higher simulated DPS than the Pipe,
+#even though the Pipe allows Furina to burst every 2 rotations rather than 3.
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="gt" count=4;							
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="blacktassel" refine=5 lvl=90/90;
+zhongli add set="totm" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
+
+#Pamber enables Nahida to burst every rotation, which is important with on field Kuki.
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="pamber" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=158.56 cr=0.0662 cd=0.5296;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add set="fopl" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=99999999 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active furina;
+for let i = 0; i < 5; i = i + 1 {
+  let timer = f();
+  furina skill;
+  if .furina.burst.ready && .furina.energy == .furina.energymax {
+    furina burst;
+  }
+  zhongli skill[hold=1];
+  nahida skill, burst;
+  kuki skill;
+  sleep(timer + 20 * 60 - f());
+}

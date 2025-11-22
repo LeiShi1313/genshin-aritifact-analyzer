@@ -1,0 +1,49 @@
+# Cyno Nahida Emilie Thoma. ~26s Rot. Cyno Double Dendro Quickburn, 4TF Cyno N4E spam combo. Cyno has high ER requirement as Solo Electro esp when not using 4TF.
+
+# Team Config
+cyno char lvl=90/90 cons=0 talent=9,9,9;
+cyno add weapon="fjords" refine=1 lvl=90/90;
+#cyno add weapon="deathmatch" refine=1 lvl=90/90;
+cyno add set="tf" count=4;
+cyno add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+cyno add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.3972;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="scroll" count=4;
+#nahida add set="gt" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="favlance" refine=3 lvl=90/90;
+thoma add set="deepwood" count=4;
+thoma add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=218.02 cr=0.331 cd=0.1324;
+
+#enemy config
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active cyno;
+#action list 
+cyno skill;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst, attack; # pass TKP particles to Emilie
+  emilie burst;
+  thoma skill, attack, burst;
+  cyno skill, burst, attack, skill;
+  for let x = 0; x < 6; x = x + 1 {
+    cyno attack:4, skill;
+  }
+  cyno attack:3;
+}
+

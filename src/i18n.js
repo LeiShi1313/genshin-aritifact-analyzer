@@ -22,7 +22,7 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    ns: ['common', 'artifacts', 'characters', 'sets', 'weapons'],
+    ns: ['common', 'artifacts', 'characters', 'sets', 'weapons', 'enemy'],
     defaultNS: 'common',
     backend: {
       backends: [

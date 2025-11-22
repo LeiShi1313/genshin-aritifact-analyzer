@@ -1,0 +1,141 @@
+#Deepwood: Albedo > Kuki. Decent amount of Crystallizes and dashes to help with HoD, but low Kuki E uptime. No jump cancels. Customized random frame delays; 12-3 Icewind Suite energy.
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add set="gilded" count=4;
+#alhaitham add set="deepwood" count=4;
+alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90; #somewhat reliant on not getting hit
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #69.15 [97.15] / 176.12 | 111.01 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926;
+
+#alhaitham add weapon="wolffang" refine=1 lvl=90/90;
+#alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #72.22 [80.22] / 178.25 | 111.01 er
+#alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3966 cd=0.6605;
+
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #69.15 / 129.26 | 191.26 er
+fischl add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+
+
+albedo char lvl=90/90 cons=0 talent=9,9,9;
+albedo add set="deepwood" count=4;
+#albedo add set="husk" count=4 +params=[stacks=4];
+#albedo add set="gt" count=4;
+albedo add weapon="harbingerofdawn" refine=5 lvl=90/90;
+albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #59.235 [87.235] / 169.515 | 111.01 er
+albedo add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.4956 em=39.63 er=0.1101 cr=0.23135 cd=0.72655;
+
+#albedo add weapon="cinnabar" refine=5 lvl=90/90;
+#albedo add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
+#albedo add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.2478 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=180];
+kuki add set="instructor" count=4;
+kuki add stats hp=3571 atk=232 em=139.3 electro%=0.466 cr=0.232; #48.04 / 100.205 | 139.435 er
+kuki add stats hp=406.3 atk=26.45 def=31.485 hp%=0.07925 atk%=0.07925 def%=0.0991 em=31.71 er=0.08805 cr=0.19835 cd=0.50205;
+
+#kuki add set="deepwood" count=4;
+#kuki add stats hp=4780 atk=311 em=186.5 electro%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
+#kuki add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3305 cd=0.7926;
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+# --- Options
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+
+# --- Targets
+target lvl=100 resist=0.1 hp=999999999999 radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+
+active fischl;
+
+for let r=0; r<3; r=r+1 {
+  fischl attack, skill;
+  albedo skill, attack;
+  while !.albedo.burst.ready {
+    albedo attack;
+  }
+  albedo burst;
+  kuki swap;
+  while !.kuki.burst.ready {
+    kuki attack;
+  }
+  kuki burst;
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:2, charge, dash,
+            attack:3, charge;
+  fischl attack:2;
+  while !.fischl.burst.ready {
+    fischl attack;
+  }
+  fischl burst;
+  albedo skill, attack;
+  #while !.albedo.burst.ready {
+    #albedo attack;
+  #}
+  #albedo burst;
+  alhaitham swap;
+  while !.alhaitham.burst.ready {
+    alhaitham attack;
+  }
+  alhaitham burst;
+  kuki skill, dash, attack;
+  alhaitham attack:3, charge, dash,
+            attack:3, charge, dash,
+            attack:3, charge, dash,
+            attack:3, charge, dash,
+            attack:3;
+}

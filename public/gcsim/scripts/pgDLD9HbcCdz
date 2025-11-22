@@ -1,0 +1,62 @@
+# Lisa Kirara Fischl Xilonen. ~24s Rot. Lisa Aggravate. Lisa attack strings not optimized; The dash cancels are a gain, but stamina heavy. 2E Xilonen. Xilonen doesn't burst. Ins Kirara is a ~3K DPS loss.
+
+# Team - Options listsed by DPS
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="widsith" refine=3 lvl=90/90;
+lisa add set="ts" count=4;
+#lisa add set="gd" count=4;
+lisa add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add weapon="sapwood" refine=5 lvl=90/90+params=[pickup_delay=240]; # Ins; During Fischl skill dash
+kirara add set="ap" count=4;
+#kirara add set="ins" count=4;
+kirara add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=178.38 cr=0.3972 cd=0.331; # AP/Shields
+#kirara add stats hp=3571 atk=232 hp%=0.466 hp%=0.3495 hp%=0.3495; #main
+#kirara add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.333648 cd=0.222432; # Ins/Shields
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+	
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+# Rotation
+active lisa;
+lisa attack;
+
+for let i=0; i<4; i=i+1 {
+  xilonen skill, attack:2;
+  #xilonen burst;
+  
+  kirara skill[short_hold=1]; pick_up_crystallize("any");
+  kirara burst;
+
+  fischl skill, attack:2;
+  
+  lisa attack, burst, attack, charge, dash, attack:2, charge, dash, attack:2;
+  
+  xilonen skill, attack:2;
+  
+  kirara skill[short_hold=1]; pick_up_crystallize("any");
+  
+  fischl attack:2, burst;
+  
+  lisa skill, attack:1, skill, attack:3, charge, dash, skill[hold=1], attack:1, charge;
+}

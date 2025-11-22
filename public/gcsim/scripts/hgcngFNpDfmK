@@ -1,0 +1,69 @@
+varesa char lvl=90/90 cons=0 talent=9,9,9;
+varesa add weapon="thewidsith" refine=3 lvl=90/90;
+varesa add set="longnightsoath" count=4;
+varesa add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+varesa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="fadingtwilight" refine=5 lvl=90/90;
+sara add set="scroll" count=4;
+sara add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="deathmatch" refine=1 lvl=90/90;
+chevreuse add set="gt" count=4;
+chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+
+options iteration=1000 swap_delay=12;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+fn varesa_combo(amt) {
+  for let j = 0; j < amt; j = j + 1 {
+    if .varesa.skill.ready {
+      varesa skill, attack, high_plunge[collision=1]; # ECP
+    //} else if .xianyun.status.xianyun-airborne-buff { # Uncomment if using Xianyun
+    //  varesa jump;
+    //  if .airborne {
+    //    varesa high_plunge[collision=1]; # JP
+    //  }
+    } else {
+      varesa charge, high_plunge[collision=1]; # CP
+    }
+    if .varesa.energy >= 30 && .varesa.status.apex-drive {
+      varesa burst;
+    }
+  }
+}
+
+active varesa;
+
+varesa_combo(1);
+
+for let i=0; i<4; i=i+1 {
+  bennett skill, burst;
+  if .chevreuse.burst.ready {
+    chevreuse burst;
+  }
+  chevreuse skill[hold=1];
+  sara skill;
+  varesa_combo(3);
+  bennett skill;
+  if .sara.burst.ready {
+    sara burst;
+  } else {
+    sara aim;
+  }
+  varesa_combo(2);
+}
+
+# ~17s rotations
+# (Varesa 1 Plunge Combo) > Bennett EQ > Chevreuse (Q) hE > Sara E > Varesa 3 Plunge Combos > Bennett E > Sara Q/C > Varesa 2 Plunge Combos

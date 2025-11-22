@@ -156,7 +156,7 @@ const ArtifactFitnessCard = ({
                   textColor={valueToColor(fits[key] * 10)}
                   width={characterCardWidth}
                   isBestFit={fits[key] >= bestScore}
-                  isFit={fits[key] >= Number(minFitness)}
+                  saturate={fits[key] < Number(minFitness)}
                 />
               </div>
             ))}

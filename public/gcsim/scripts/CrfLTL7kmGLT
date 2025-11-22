@@ -1,0 +1,82 @@
+# - Characters
+
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="crescent" refine=5 lvl=90/90;
+#lyney add weapon="songofstillness" refine=5 lvl=90/90; # ~6k dps loss (~4.5k increase over crescent without passive)
+lyney add set="marechausseehunter" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+chev add set="sodp" count=4;
+chev add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+# - Options
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+let weak = 1; # set to 0 if you're using any weapon other than crescent or if you don't hit weakspots
+
+# - Target
+
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.5;
+
+# - Actions
+
+active bennett;
+
+for let i = 0; i < 5; i = i + 1 {
+
+  if i { # not necessary on the first rotation
+    lyney aim[weakspot=weak];
+  }
+    
+  if !i || !.bennett.burst.ready {
+    bennett skill;
+  }
+  bennett burst;
+  
+  if .kazuha.burst.ready {
+    kazuha burst;
+  } else {
+    kazuha skill[hold=1], high_plunge;
+  }   
+  
+  if .chev.burst.ready {
+    chev skill[hold=1], burst;
+  } else {
+    chev skill[hold=1], attack;
+  }
+  if !.chev.mods.favonius-cd {
+    chev attack;
+  }
+  
+  lyney aim[weakspot=weak], aim, aim;
+  if .lyney.burst.ready {
+    lyney burst;
+    delay(11); # just so he doesn't cancel his own burst before it deals damage
+    lyney skill;
+  } else {
+    lyney aim;
+  }
+  lyney skill; # 4 stacks 1st rot, 5 onwards
+  
+}
+# Lyney Mono Pyro with C6 Chev and no interrupt resistance: Lyney, Chevreuse, Bennett, Kazuha. 15s 4CA rotation. Not having C6 Chev is around a 14% dps loss.
+# Bennett (E) Q, Kazuha Q / hE hP, Chev hEQ / hEN1 (N2 if no fav proc), Lyney 3C QE / C E C
+# Bennett only uses his skill in the first rotation and when his energy isn't full
+# Chev does 1 extra normal attack if she doesn't trigger fav

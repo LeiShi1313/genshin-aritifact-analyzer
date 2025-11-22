@@ -1,0 +1,65 @@
+# - Characters
+
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="crescent" refine=5 lvl=90/90;
+#lyney add weapon="songofstillness" refine=5 lvl=90/90; # ~3k dps loss (~4k increase over crescent without passive)
+lyney add set="marechausseehunter" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+yae char lvl=90/90 cons=0 talent=9,9,9; 
+yae add weapon="widsith" refine=3 lvl=90/90; # yae gets a widsith buff every other rotation
+yae add set="gt" count=4;
+#yae add set="tom" count=4; # marginal team dps increase, gets worse with higher yae investment
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+																														
+fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl add weapon="alleyhunter" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
+				
+# - Options
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+let weak = 1; # set to 0 if you're using any weapon other than crescent or if you don't hit weakspots
+
+# - Target
+
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.5;
+
+# - Actions
+
+active yae;
+
+for let r=0; r<4; r=r+1 {
+  if r { # not necessary on the first rotation
+    lyney aim[weakspot=weak];
+  }
+  yae skill:3;
+  chev burst, skill[hold=1];
+  if !.chev.mods.favonius-cd {
+    chev skill[hold=1];
+  }
+  if .fischl.burst.ready {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  lyney aim[weakspot=weak], aim, aim, burst;
+  delay(11); # just so he doesn't cancel his own burst before it deals damage
+  lyney skill, skill; # 4 stacks 1st rot, 5 onwards
+
+}
+
+# Lyney Overload. Yae does not burst in this rotation but she often wants to in-game. Low pyro aura uptime makes C6 Chev a more significant DPS increase for Lyney. Building Chev for more healing allows Lyney to more comfortably stack mare and prop surplus in-game. 15s rotation.
+# Yae 3E > Chevreuse Q hE (hE to fish for fav) > Fischl N2Q / N1E > Lyney 3C QE E C
+# Chev's additional hE can be replaced with an N1 pre C4

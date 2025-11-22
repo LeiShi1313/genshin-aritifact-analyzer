@@ -1,0 +1,110 @@
+# use truncated normal distribution for random delay
+fn rand_delay(mean, stddev, min, max) {
+  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
+  let del = randnorm() * stddev + mean;
+  
+  # truncate random value according to min and max
+  if del < min {
+    del = min;
+  } else if del > max {
+    del = max;
+  }
+  
+  # execute delay
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.swap {
+    # add delay before swap
+      # ~3% chance at 6
+      # ~7% chance at 20
+    rand_delay(14, 4, 6, 20);
+  } else if prev_action_id == .action.attack && action_id == .action.attack {
+    // no delay
+  } else if prev_action_id == .action.attack && action_id == .action.charge {
+    // no delay
+  } else if prev_action_id == .action.swap && action_id == .action.burst {
+    // no delay
+  } else if prev_action_id != .action.swap  {
+    # add delay before every non-swap
+      # ~30% chance at 0
+      # 5% chance at 8
+    rand_delay(2, 4, 0, 8);
+  } else if prev_action_id == .action.swap {
+    # add delay after swap to account for repositioning
+      # ~16% chance at 6
+      # ~16% chance at 18
+    rand_delay(12, 6, 6, 18);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+options iteration=1000;
+
+# Build assumptions
+dehya char lvl=90/90 cons=1 talent=9,9,9; 
+dehya add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+dehya add set="vg" count=4;
+dehya add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; #main stats: ER Pyro% CD
+dehya add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main stats: ATK% Pyro% CR
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9; 
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="scroll" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; # Main stats: EM EM EM
+kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*6 cr=0.0331*2 cd=0.0662*2;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="gt" count=4;
+chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main stats: ATK% Pyro% CR
+chevreuse add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+# Target, Energy and damage taken assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+hurt every interval=180,300 amount=3500,5500 element=physical; # damage taken assumed every 3-5s
+
+# Rotation assumptions
+active dehya; # SS Stacks
+
+for let i=0; i<5; i=i+1 {
+  kuki skill, attack;
+  dehya skill;
+  bennett burst, skill;
+  chevreuse burst, skill[hold=1]:3;
+  bennett skill;
+  dehya burst, attack:10;
+  if .kuki.burst.ready {
+    kuki burst;
+  } else {
+    bennett attack:2;
+  }
+  bennett skill;
+  dehya skill, attack;
+}
+
+# ~21s rotation
+# Kuki E N1 > Dehya E > Bennett Q E > Chevreuse Q 3[hE] > Bennett E > Dehya Q N10 > (Kuki Q) > Bennett (N2) E > Dehya E N1

@@ -1,0 +1,76 @@
+#Noelle Zhongli Furina Chiori, APL version. Chiori only uses Burst when Furina's fanfare is 200 points or more.
+
+options swap_delay=12 iteration=1000;
+
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+noelle add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+noelle add set="mh" count=4;
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+noelle add stats def%=0.496 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.640 cr=0.2648 cd=0.6620;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tom" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.640 cr=0.3310 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.640 cr=0.3972 cd=0.3972;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="cinnabarspindle" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.640 cr=0.3972 cd=0.6620;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=4999999;
+energy every interval=480,720 amount=1;
+
+let shield = -20*60;
+active zhongli;
+for {
+  switch {
+    case .zhongli.swap.ready && .zhongli.skill.ready && (f() - shield) > 15*60:
+      zhongli skill[hold=1], dash;
+      shield = f();
+      while !.zhongli.mods.favonius-cd { 
+        zhongli attack; 
+      }
+
+    case .furina.burst.ready && .furina.skill.ready && .furina.swap.ready:
+      furina skill, dash, burst;
+
+    case .chiori.burst.ready && .chiori.swap.ready && .furina.fanfare > 200:
+      chiori burst;
+    case .chiori.skill.ready && .chiori.swap.ready:
+      chiori skill:2;
+
+    case .noelle.skill.ready && .noelle.swap.ready:
+      noelle skill;
+      if .noelle.status.noelle-burst { 
+        noelle attack:2;
+      }
+
+    case .noelle.burst.ready && .noelle.swap.ready && !.noelle.status.noelle-burst:
+      noelle burst;
+      noelle attack:2;
+
+    case .noelle.normal == 4:
+      noelle dash;
+    case .noelle.status.noelle-burst:
+      noelle attack;
+
+    case .noelle.onfield:
+      noelle attack;
+    case .zhongli.onfield:
+      zhongli attack;
+    case .chiori.onfield:
+      chiori attack;
+    case .furina.onfield:
+      furina attack;
+  }
+}
+

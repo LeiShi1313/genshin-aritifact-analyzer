@@ -1,0 +1,180 @@
+hutao char lvl=90/90 cons=0 talent=10,10,10;
+hutao add weapon="staffofhoma" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4; # CHECK LINE 37!
+#hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cr=0.311; # mainstats for kqmc artifact optimization
+hutao add stats def%=0.051 def=39 hp=4780 hp%=0.7520000000000001 atk=349 atk%=0.057999999999999996 em=124 cr=0.653 cd=0.956 pyro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,10,10;
+yelan add weapon="aquasimulacra" refine=2 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+#yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622; # mainstats for kqmc artifact optimization
+yelan add stats def=21 hp=5587 hp%=0.35 atk=325 atk%=0.047 er=0.835 em=44 cr=0.46699999999999997 cd=1.2040000000000002 hydro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=6,9,9;
+xingqiu add weapon="favoniussword" refine=5 lvl=90/90;
+xingqiu add set="noblesseoblige" count=4;
+#xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; # mainstats for kqmc artifact optimization
+xingqiu add stats def=58 hp=4780 hp%=0.19899999999999998 atk=372 atk%=0.11099999999999999 er=0.738 em=42 cr=0.6300000000000001 cd=0.909 hydro%=0.466;
+
+zhongli char lvl=90/90 cons=0 talent=6,10,9;
+zhongli add weapon="deathmatch" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=4;
+#zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cd=0.622; # mainstats for kqmc artifact optimization
+zhongli add stats def%=0.131 def=58 hp=5975 hp%=0.7290000000000001 atk=311 atk%=0.14600000000000002 em=72 cr=0.23299999999999998 cd=1.3290000000000002 geo%=0.466;
+
+# --- Options
+options swap_delay=12 duration=90 iteration=500;
+energy every interval=480,720 amount=1;
+
+# --- Targets
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
+
+# ====== Vars ====== #
+let HuTaoBaseHP = 15552; # Level 90 HuTao's base HP
+let HuTaoMaxHP = HuTaoBaseHP + (.hutao.stats.hp% * HuTaoBaseHP) + .hutao.stats.hp;
+let HuTaoCurrentHP = HuTaoMaxHP;
+let HuTaoHalfMaxHP = 0.5 * HuTaoMaxHP;
+let useBurst = false; # Set to false for 4pc shimenawasreminiscence (Recommended)
+
+fn HuTaoComboLimit() {
+    if .hutao.cons >= 1 {
+      return 10;
+    } else {
+      return 8;
+    }
+}
+
+fn XingqiuActions() {
+    xingqiu burst;
+    while !.xingqiu.skill.ready {
+      xingqiu attack;
+    }
+    xingqiu skill, attack;
+}
+
+fn XingqiuCDLogging() {
+    # ====== Logging while Xingqiu is still in bathroom ====== #
+    if .yelan.burst.cd {
+      print("Yelan Burst Cooldown: [", .yelan.burst.cd, "]");
+    }
+    if .yelan.energy < .yelan.energymax {
+      print("Yelan Low Energy: [", .yelan.energy, " < ", .yelan.energymax, "]");
+    }
+    if .xingqiu.burst.cd {
+      print("Xingqiu Burst Cooldown: [", .xingqiu.burst.cd, "]");
+    }
+    if .xingqiu.skill.cd {
+      print("Xingqiu Skill Cooldown: [", .xingqiu.skill.cd, "]");
+    }
+    if .xingqiu.energy < .xingqiu.energymax {
+      print("Xingqiu Low Energy: [", .xingqiu.energy, " < ", .xingqiu.energymax, "]");
+    }
+    # ====== END Logging ====== #
+}
+
+fn HuTaoDashOrJump(a) {
+    if .hutao.cons == 0 {
+        print("HuTao (", a, ")N2CJ");
+        hutao jump;
+    } else {
+        print("HuTao (", a, ")N2CD");
+        hutao dash;
+    }
+}
+
+fn HuTaoBurstHeal() {
+    if HuTaoCurrentHP <= HuTaoMaxHP {
+      HuTaoCurrentHP = HuTaoCurrentHP + (HuTaoMaxHP * 0.136);
+    } else {
+      HuTaoCurrentHP = HuTaoCurrentHP + (HuTaoMaxHP * 0.102);
+    }
+}
+# ====== End Vars ====== #
+
+# --- Start
+active zhongli;
+
+# --- Rotation
+let x = 1;
+while x <= 5 {
+  print("Rotation ", x ," started");
+  zhongli skill[hold=1];
+  if .yelan.burst.cd { # What should we do while Yelan is still making a cup of tea?
+    print("Yelan Burst Cooldown: [", .yelan.burst.cd, "]");
+    
+    if .yelan.cons >= 1 { # C1 Yelan
+      yelan skill, attack;
+    }
+    
+    while !.xingqiu.burst.ready {
+        
+      XingqiuCDLogging();  
+      
+      if .yelan.cons >= 1 && !(.yelan.energy < .yelan.energymax) { # C1 Yelan and energy maxed
+        break;
+      }
+        
+      xingqiu attack;
+    }
+    
+    if .yelan.cons >= 1 && !(.yelan.energy < .yelan.energymax) { # C1 Yelan and energy maxed
+      while .yelan.skill.cd {
+        yelan attack;
+      }
+      yelan skill, burst;
+      XingqiuActions();
+    } else {
+      XingqiuActions();
+      yelan skill, burst;
+    }
+    
+  } else {
+    yelan burst, skill;
+    if .yelan.cons >= 1 { # C1 Yelan
+      while .yelan.skill.cd {
+        yelan attack;
+      }
+      yelan skill;
+    } 
+    XingqiuActions();
+  }
+    
+  let a = 1;
+  print("HuTao Skill");
+  hutao skill;
+  HuTaoCurrentHP = HuTaoCurrentHP * 0.7;
+  print("HuTao HP: [", HuTaoCurrentHP,"]");
+  while .hutao.mods.paramita && a <= HuTaoComboLimit() { # Do (a - limit)N2C(D/J) loop.
+    hutao attack:2, charge;
+    HuTaoDashOrJump(a);
+    a = a + 1;
+  }
+  
+  if .hutao.mods.paramita { # Check if Hu Tao is still in paramita's state.
+    # Do burst when ready and if enemy is infused by hydro and HuTao's HP below 50%.
+    if .hutao.burst.ready 
+      && .element.t0.hydro
+      && HuTaoCurrentHP <= HuTaoHalfMaxHP
+      && useBurst {
+          print("HuTao Burst");
+          hutao burst;
+          HuTaoBurstHeal();
+          print("HuTao HP: [", HuTaoCurrentHP,"]");
+    } else {  # Or else do one more N2C(D/J).
+        if .hutao.mods.paramita {
+            hutao attack;
+        }
+        if .hutao.mods.paramita {
+            hutao attack;
+        }
+        if .hutao.mods.paramita {
+            hutao charge;
+        }
+        HuTaoDashOrJump(a);
+    }
+  }
+  
+  print("Rotation ", x ," done");
+  x = x + 1;
+}
+

@@ -1,0 +1,63 @@
+# Kazuha Xingqiu Nahida Bennett. ~23s Rot. Kazuha Burgeon in 2 Target. Kazuha does NA in Bennett's burst. Assumes XQ rainswords contact opponents. 2E Bennett builds EM.
+
+# Team
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+#kazuha add set="fopl" count=4;
+#kazuha add set="gd" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="fruit" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="emblem" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=220];
+#bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="ins" count=4;
+bennett add set="no" count=1; # (Circlet)
+bennett add stats hp=3571 atk=232 em=187 em=139 em=139; #main
+bennett add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.555408 em=66.5952 cr=0.055608 cd=0.111216; # Sapwood
+#bennett add stats hp=3571 atk=232 em=139 em=139 cr=0.311; #main
+#bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=126.848 cr=0.2648 cd=0.42368; # Fav
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1 pos=-1.3,1.4 hp=100000000;
+target lvl=100 resist=0.1 radius=1 pos=1.3,1.4 hp=100000000; 
+
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst;
+  
+  xq skill, dash, burst, attack;
+  
+  bennett skill, attack, burst, attack;
+  
+  while .status.bennettburst || .kazuha.infusion.bennett-fire-weapon {
+    if .kazuha.skill.ready {
+      kazuha skill, high_plunge[collision=rand()>0.5];
+    } else if .kazuha.burst.ready {
+      kazuha attack, burst;
+    } else {
+      kazuha attack;
+    }
+  }
+  
+  bennett skill, attack;
+}

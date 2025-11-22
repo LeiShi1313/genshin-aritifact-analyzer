@@ -1,0 +1,83 @@
+# Dori Furina Lisa Nahida. ~24s Rot. Psuedo-APL. Dori Quickbloom sans TF with Lisa.
+
+# Team - Options listsed by DPS
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="aquamarine" refine=1 lvl=90/90;
+#dori add weapon="mailedflower" refine=5 lvl=90/90;
+#dori add weapon="rainslasher" refine=3 lvl=90/90;
+dori add set="fopl" count=4;
+#dori add set="gd" count=4;
+#dori add set="ohc" count=4;
+dori add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.331;
+
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="widsith" refine=3 lvl=90/90;
+lisa add set="emblem" count=4;
+#lisa add set="scroll" count=4;
+lisa add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311;
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=178.38 cr=0.2979 cd=0.331;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=3 lvl=90/90;
+#nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="magicguide" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; # main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=79.28 cr=0.331 cd=0.3972;
+#nahida add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # 3EM/Evenstar
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; # main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.1655 cd=0.7282; # EDC/MagicGuide
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+#target lvl=100 resist=0.1 radius=3 pos=0,3.3 hp=100000000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000;
+
+# Rotation
+active lisa;
+
+for let i=0; i<4; i=i+1 {
+  if .nahida.skill.ready {
+    nahida skill;
+  }
+  nahida burst;
+  if i > 0 {
+    nahida attack, charge;
+  }
+  
+  furina skill, dash, burst;
+  
+  dori skill, attack:2, dash, attack:2, burst;
+  
+  lisa burst, skill[hold=1];
+  lisa attack:1;
+  #wait(20);
+  
+  while .furina.mods.furina-burst {
+    if .dori.skill.ready && .dori.swap.ready {
+      dori skill;
+    } else if .dori.normal > 2 && .stam > 18 {
+      dori dash;
+    } else if .dori.infusion.dori-c6 {
+      dori attack;
+    } else if .nahida.skill.ready {
+      nahida skill;
+    } else {
+      nahida attack, charge;
+    }
+  }
+
+}

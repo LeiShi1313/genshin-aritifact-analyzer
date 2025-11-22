@@ -1,0 +1,104 @@
+# Keqing Yelan Furina Bennett. ~22s Rot. Pyro Keqing on-field spamming CA. She only detonates the Lightning stilleto with a CA to save time. Keqing bursts after Yelan's burst expires to conserve stamina. 2E Yelan. No healing to Furina/Bennett.
+
+# Team
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="finale" refine=5 lvl=90/90;
+#keqing add weapon="theblacksword" refine=1 lvl=90/90;
+#keqing add weapon="umbrella" refine=5 lvl=90/90;
+#keqing add weapon="lionsroar" refine=3 lvl=90/90;
+keqing add set="mh" count=4;
+keqing add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; # main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EM Finale
+#keqing add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; # main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662; # EM TBS
+#keqing add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; # main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=178.38 cr=0.2317 cd=0.662; # ATK TBS
+#keqing add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; # main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK Umbrella
+#keqing add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; # main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EM LR
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+#yelan add set="no" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="scroll" count=4;
+#bennett add set="no" count=4;
+#bennett add set="sodp" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=138.74 cr=0.2979 cd=0.1324; # Heals
+#bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+#bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=138.74 cr=0.1324 cd=0.4634; # DMG
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  
+  # Keqing DMG vs Yelan DMG
+  #bennett skill, burst, attack;
+  bennett skill, burst;
+  
+  # CW might be decent with EE & TBS, but out of scope
+  while !.yelan.skill.ready {
+    if .status.keqingstiletto && .keq.normal > 1 {
+      keq charge;
+    } else if .keq.skill.ready && .previous-action != .action.skill {
+      keq skill;
+    } else if .keq.normal > 1 && .stam > 25 {
+      keq charge;
+    } else if .keq.normal > 3 && .stam > 18 {
+      keq dash;
+    } else {
+      keq attack;
+    }
+  }
+  
+  # Keqing DMG vs Yelan DMG
+  #yelan attack, skill, attack;
+  yelan skill, attack;
+  
+  while .yelan.mods.yelanburst {
+    if .status.keqingstiletto && .keq.normal > 1 {
+      keq charge;
+    } else if .keq.skill.ready && .previous-action != .action.skill {
+      keq skill;
+    } else if .keq.normal > 1 && .stam > 25 {
+      keq charge;
+    } else if .keq.normal > 3 && .stam > 18 {
+      keq dash;
+    } else {
+      keq attack;
+    }
+  }
+  keqing burst; # Preserve stamina
+}

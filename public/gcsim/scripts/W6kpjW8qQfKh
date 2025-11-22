@@ -1,0 +1,71 @@
+# Kinch Yae Fischl Kazuha. ~36s Rot. Kinich on-field Aggravate with Scroll. Yae & Kinich burst every rotation. No Kinich short hold is -5k DPS.
+
+# Team
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="scroll" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="gt" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+fn kinich_combo() {
+  kinich skill;
+  kinich attack;
+  while .kinich.nightsoul.state {
+    if .kinich.nightsoul.points == 20 {
+      kinich skill[hold=1];
+      continue;
+    }
+    kinich attack;
+  }
+}
+
+# Rotation
+active yae;
+
+for let i=0; i<4; i=i+1 {
+  yae skill:3;
+
+  kazuha skill, high_plunge;
+  
+  fischl attack, skill;
+  
+  kinich_combo();
+
+  yae burst, skill:3;
+
+  kazuha skill, high_plunge, burst;
+  
+  fischl attack:2, burst;
+  
+  kinich_combo();
+  kinich burst;
+  
+  yae attack:2;
+}

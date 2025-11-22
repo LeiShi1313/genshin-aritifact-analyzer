@@ -1,0 +1,35 @@
+# Character
+klee char lvl=90/90 cons=6 talent=9,9,9; # config works with any con
+klee add weapon="lostprayer" refine=1 lvl=90/90 +params=[stacks=4]; # standing in the abyss chamber for 16s fully stacks LP
+klee add set="glad" count=2;
+klee add set="shim" count=2;
+#klee add set="lw" count=4; # slightly worse than 2p2pc and prefers an atk% goblet
+#klee add set="echoes" count=4; # best theoretical ST dps but impractical ingame
+klee add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+# Options
+options swap_delay=12 iteration=1000 duration=90;
+target lvl=100 resist=.1 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+# Actions
+active klee;
+while 1 {
+  switch {
+    case .previous-action == .action.attack && .klee.burst.ready: # N1QW whenever available
+      klee burst, walk;
+    case .previous-action == .action.attack && .klee.skill.ready: # N1EJ whenever available
+      klee skill[bounce=3, mine=8], jump;
+    case .previous-action == .action.attack && .klee.status.a1-spark && .stam >= 18: # N1CdC when a spark is created
+      klee charge, dash, charge;
+    case .previous-action == .action.attack && .stam >= 60: # N1C whenever there's enough stamina
+      klee charge;
+    case .previous-action == .action.attack: # walk cancel every N1 to chain them together
+      klee walk;
+    default:
+      klee attack[travel=6];
+  }
+}
+
+# APL C6R1 Solo Klee. Klee uses a CdC combo when she has a spark to maximize her CA damage while retaining stamina. Klee chains her N1s together with walk cancels. Klee does not build ER and bursts around every 30 seconds.

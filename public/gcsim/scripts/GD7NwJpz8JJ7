@@ -1,0 +1,50 @@
+# Characters - - - -
+
+neuv char lvl=90/90 cons=0 talent=9,9,9;
+neuv add weapon="prototypeamber" refine=5 lvl=90/90;
+neuv add set="mh" count=4;
+neuv add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+neuv add stats def=39.36 def%=0.124 atk=33.08 atk%=0.0992 hp=507.88 hp%=0.2976 em=39.64 er=0.1102 cr=0.2648 cd=0.7944;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="pipe" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+furina add stats def=39.36 def%=0.124 atk=33.08 atk%=0.0992 hp=507.88 hp%=0.1984 em=39.64 er=0.1102 cr=0.3972 cd=0.662;
+
+barbara char lvl=90/90 cons=6 talent=9,9,9;
+barbara add weapon="favcodex" refine=5 lvl=90/90;
+barbara add set="clam" count=4;
+barbara add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
+barbara add stats def=39.36 def%=0.124 atk=33.08 atk%=0.0992 hp=507.88 hp%=0.496 em=39.64 er=0.551 cr=0.1986 cd=0.1324;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=5 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 em=118.92 er=0.551 cr=0.331 cd=0.1324;
+
+# Config - - - -
+
+options iteration=100 duration=100 swap_delay=12;
+target lvl=100 hp=9999999 resist=0.1 particle_threshold=460000 particle_drop_count=3;
+# 12-3 Maguu Kenki Particles
+
+# Rotations - - - -
+
+active neuv;
+
+for let i=0;i<4;i=i+1 {
+  neuv skill;
+  furina skill, dash, burst;
+  barbara burst;
+  while !.barbara.mods.favonius-cd {
+    barbara attack;
+  }
+  kazuha skill, high_plunge, burst;
+  neuv charge, skill, charge, burst;
+  kazuha skill, high_plunge;
+  neuv charge:2;
+  }
+wait(173);
+# Neuv E > Furina EQ > Barbara Q (#NA) > Kazuha EQ > Neuv CA E CA Q > Kazuha E > Neuv 2CA > Repeat

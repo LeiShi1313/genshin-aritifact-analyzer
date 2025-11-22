@@ -1,0 +1,53 @@
+#builds
+raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden add weapon="thecatch" refine=5 lvl=90/90;
+raiden add set="esf" count=5;
+raiden add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; 
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add set="esf" count=5;
+#sara add weapon="fadingtwilight" refine=5 lvl=90/90;
+#sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311 ;
+#sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+sara add weapon="mouun" refine=1 lvl=90/90;
+sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311;
+sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958; 
+
+bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1653 em=39.64 cr=0.331 cd=0.7282;                                                                                                                      
+                                                                                                                   
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="deathmatch" refine=1 lvl=90/90;
+chevreuse add set="gt" count=4;
+chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; 
+chevreuse add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+#chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+#chevreuse add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.3641 cd=0.3972;
+                                                                                                                                 
+#configuration                                                                                                                                                                                                                                                        
+options swap_delay=12 iteration=1000;                                                                        
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+#rotation
+active raiden;
+raiden skill;
+for let i = 0; i < 4; i = i + 1 {
+  sara skill, aim; #Sara buffs herself first for better Bennett uptime and better personal damage
+  bennett burst; #if low ping, you can swap to Chevreuse fast enough to get Sara's buff, hence Bennett's skill is skipped
+  chevreuse burst, attack, skill[hold=1]:3;
+  sara burst;
+  raiden burst, 
+    attack:3, charge, dash, 
+    attack:3, charge, dash, 
+    attack:2, charge, dash, 
+    attack, charge, dash, 
+    skill;
+  bennett skill, attack;
+  chevreuse attack:3; # funnel Pyro particles to Chev
+}
+

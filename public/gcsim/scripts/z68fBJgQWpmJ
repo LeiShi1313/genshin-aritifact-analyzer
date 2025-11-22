@@ -1,0 +1,46 @@
+tartaglia char lvl=90/90 cons=0 talent=9,9,9;
+tartaglia add weapon="theviridescenthunt" refine=1 lvl=90/90;
+tartaglia add set="noblesseoblige" count=4;
+tartaglia add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.6644 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90;
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.4408 em=226.64 cr=0.5758 cd=0.662 pyro%=0.466;
+
+ayato char lvl=90/90 cons=0 talent=9,9,9;
+ayato add weapon="favoniussword" refine=3 lvl=90/90;
+ayato add set="heartofdepth" count=4;
+ayato add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="instructor" count=4;
+bennett add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.0992 er=0.49720000000000003 em=39.64 cr=0.4968 cd=0.5296 pyro%=0.466;
+
+options swap_delay=12 debug=true iteration=1000;
+
+energy every interval=480,720 amount=1;
+target lvl=100 resist=.1 hp=10000000;
+target lvl=100 resist=.1 hp=10000000 pos=2.1,0;
+target lvl=100 resist=.1 hp=10000000 pos=-2.1,0;
+
+active bennett;
+
+for let i = 0; i < 4; i = i + 1 {
+bennett    burst,skill;
+tartaglia  burst;
+ayato      burst;
+bennett    skill;
+xiangling  burst,skill;
+ayato      skill, attack:13;
+tartaglia  skill,attack:2,charge,
+           attack:2,charge,dash,
+           attack:2,charge,dash;
+bennett    attack,skill;
+xiangling  skill;
+ayato      skill, attack:7;
+  print("end");
+}
+ #Bennett QE - Tartaglia Q - Ayato Q - Bennett E - Xiangling QE - Ayato E N13 - Tartaglia E N2CD N2CD - Bennett NE - Xiangling E - Ayato E N7
+

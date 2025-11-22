@@ -1,0 +1,44 @@
+//Scroll+Elegy Faruzan is better than GT+Harp Faruzan by ~4k dps
+//ToTM Furina is better than GT Furina by ~5k dps
+//Noblesse beats Clam with c2 Xianyun. Clam is slightly higher simmed DPS for c0 Xianyun but can be inconsistent
+
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="staffofhoma" refine=1 lvl=90/90;
+xiao add set="marechausseehunter" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main 
+xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3641 cd=0.5958;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9; 
+faruzan add weapon="elegy" refine=1 lvl=90/90 ;
+faruzan add set="scroll" count=4;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.2204 em=39.64 cr=0.331 cd=0.662;
+
+furina char lvl=90/90 cons=3 talent=9,9,9;
+furina add weapon="favoniussword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main 
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=2 talent=9,9,9;
+xianyun add weapon="cranesechoingcall" refine=1 lvl=90/90;
+xianyun add set="no" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main 
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
+
+options swap_delay=12;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+//Rotation by bam2997
+active faruzan;
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  xianyun skill, low_plunge, burst;
+  faruzan burst;
+  
+  xiao skill:2, burst;
+  for let h = 9; h > 0; h = h - 1 {
+      xiao jump, high_plunge[collision=rand()>0.5];
+    }
+}

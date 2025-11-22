@@ -1,0 +1,53 @@
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="stringless" refine=3 lvl=90/90;
+faruzan add set="thunderingfury" count=4;
+faruzan add stats hp=4780 atk=311 em=187 em=187 em=187;
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="favbow" refine=3 lvl=90/90;
+fischl add set="thunderingfury" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.2979 cd=0.331;
+
+options swap_delay=12 iteration=1000 duration=120;
+
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 ; 
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 ; 
+
+active faruzan;
+
+for {
+  switch {
+    case !.fischl.oz && .fischl.burst.ready && .fischl.swap.ready:
+      fischl attack:2, burst;
+    case !.fischl.oz && .fischl.skill.ready && .fischl.swap.ready:
+      fischl attack, skill;
+    case .faruzan.hurricane-count && .faruzan.swap.ready:
+      faruzan aim;
+    case .kazuha.skill.ready && .kazuha.swap.ready:
+      kazuha skill, high_plunge;
+    case .kazuha.burst.ready && .kazuha.swap.ready:
+      kazuha burst;
+    case .nahida.skill.ready && .nahida.swap.ready && !.debuff.res.t0.nahida-e:
+      nahida skill;
+    case .faruzan.burst.ready && .faruzan.swap.ready:
+      faruzan burst;
+    case .faruzan.skill.ready && .faruzan.swap.ready:
+      faruzan skill;
+    default:
+      faruzan attack;
+  }
+}

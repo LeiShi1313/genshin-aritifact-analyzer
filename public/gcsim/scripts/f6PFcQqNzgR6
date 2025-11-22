@@ -1,0 +1,78 @@
+# Keqing Furina Ororon Xianyun. ~21s Rot. Keqing Taser Plunge. Xianyun refreshes VV mid rotation. 4 plunges in each half. Ororon before Furina. Hold skill aerial plunge not implemented. 50% Collisons.
+ 
+# Team
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="harbinger" refine=5 lvl=90/90;
+#keqing add weapon="lionsroar" refine=3 lvl=90/90;
+#keqing add weapon="finale" refine=5 lvl=90/90;
+keqing add set="longnightsoath" count=4;
+#keqing add set="mh" count=4;
+#keqing add set="ts" count=4;
+keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # CR; TS
+#keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD; LR
+#keqing add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662; # CD; HoD
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.3972;
+
+ororon char lvl=90/90 cons=6 talent=9,9,9;
+ororon add weapon="favbow" refine=4 lvl=90/90;
+#ororon add weapon="chainbreaker" refine=5 lvl=90/90;
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
+ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="hakushin" refine=5 lvl=90/90;
+#xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3306 em=79.28 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Keqing Plunge Combo
+fn KeqingPlunge() {
+  keq jump;
+  if .airborne {
+    keq high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active ororon;
+
+for let i = 0; i < 4; i = i + 1 {
+  ororon skill, burst;
+  
+  furina skill, dash, burst;
+  
+  xianyun skill, low_plunge, burst;
+  
+  keq skill:2; 
+  KeqingPlunge(); keq dash; 
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); keq burst;
+  
+  xianyun attack:2; sleep(20);
+  
+  keq skill:2;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); 
+}

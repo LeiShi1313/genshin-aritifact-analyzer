@@ -1,0 +1,50 @@
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favbow" refine=4 lvl=90/90;
+faruzan add set="scroll" count=5;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+faruzan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="deathmatch" refine=1 lvl=90/90;
+xiao add set="longnightsoath" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main 
+xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.2204 em=39.64 cr=0.3641 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="widsith" refine=3 lvl=90/90;
+lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+options swap_delay=12 iteration=100;
+
+active furina;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+furina skill, dash, burst;
+for let i=0; i<3; i=i+1 {
+  if i {
+    furina skill, dash;
+  }
+  faruzan skill, burst;
+  if .lanyan.burst.ready {
+    lanyan burst;
+  }
+  lanyan skill:2;
+  
+  if .lanyan.skill.ready {
+    lanyan skill:2;
+  }
+  xiao skill:2, burst;
+
+  for let h = 12; h > 0; h = h - 1 {
+
+    xiao jump, high_plunge[collision=rand()>0.5];
+  }
+}

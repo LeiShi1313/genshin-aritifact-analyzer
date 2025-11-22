@@ -1,0 +1,46 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.642 cd=0.7944 dendro%=0.466;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+yaemiko char lvl=90/90 cons=0 talent=9,9,9;
+yaemiko add weapon="sacrificialfragments" refine=3 lvl=90/90;
+yaemiko add set="flowerofparadiselost" count=4;
+yaemiko add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.3972 cd=0.5296;
+
+baizhu char lvl=90/90 cons=0 talent=9,9,9;
+baizhu add weapon="prototypeamber" refine=5 lvl=90/90;
+baizhu add set="oceanhuedclam" count=4;
+baizhu add stats def%=0.124 def=39.36 hp=5287.88 hp%=1.6956 atk=344.08 atk%=0.0992 er=0.8486 em=39.64 cr=0.0662 cd=0.1324;
+
+options swap_delay=12 iteration=500;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active yae;
+
+for let x = 0; x < 4; x = x + 1 {
+  if !x {
+    yae skill:3;
+  } else {
+    yae attack, skill, attack, skill, attack, skill, attack:2, charge, dash;
+  }
+  nahida attack, skill, burst;
+  baizhu skill, burst;
+  xingqiu skill, dash, burst, attack;
+  yae attack:2, charge, dash, attack, skill, attack, skill, attack, skill, attack:2, charge, dash;
+  nahida skill, attack;
+  yae attack:3;
+  if .yae.burst.ready {
+    yae burst;
+  } else {
+    yae dash, attack:2, charge, dash;
+  }
+
+  print("Rotation Done");
+}

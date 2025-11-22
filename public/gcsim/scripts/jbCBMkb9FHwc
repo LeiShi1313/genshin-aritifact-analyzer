@@ -1,0 +1,132 @@
+#Deepwood: Yelan > Furina > Alhaitham. No jump cancels. Customized random frame delays + Starting HP%s; Hurt interval; 12-3 Icewind Suite energy.
+
+alhaitham char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
+alhaitham add set="mh" count=4;
+
+#alhaitham add weapon="ironsting" refine=5 lvl=90/90;
+#alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #44.66 [80.66] / 171.645 | 127.525 er
+#alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=39.63 er=0.27525 cr=0.3966 cd=0.59445;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 2[0]  er 5[3]    cr 12[10] cd 9[7]
+
+alhaitham add weapon="wolffang" refine=1 lvl=90/90;
+alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #55.695 [91.695 / 99.695] / 178.25 | 127.525 er
+alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.27525 cr=0.23135 cd=0.6605;
+                   #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 6[4]   er 5[3]    cr 7[5]    cd 10[8]
+
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=70];
+#furina add weapon="festeringdesire" refine=5 lvl=90/90; #better but avoiding limited weaps
+furina add weapon="fleuve" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+#furina add set="deepwood" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #63.86 [79.86] / 178.25 | 156.95 [188.95] er
+furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+                #hp 2[0]   atk 2[0]  def 2[0]  hp% 4[2]   atk% 2[0]   def% 2[0]   em 2[0]  er 2[0]   cr 12[10] cd 10[8]
+
+yelan char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=70];
+yelan add weapon="favoniuswarbow" refine=4 lvl=90/90;
+yelan add set="deepwood" count=4;
+#yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #88.35 / 129.26 | 171.26 er
+yelan add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
+               #hp 2[0]   atk 2[0]  def 2[0]  hp% 4[2]   atk% 2[0]   def% 2[0]   em 2[0]  er 2[0]   cr 10[8]  cd 12[10]
+
+kuki char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=60];
+kuki add weapon="ironsting" refine=5 lvl=90/90;
+kuki add set="fopl" count=4;
+kuki add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #44.66 / 102.84 | 111.01 er
+kuki add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=118.89 er=0.1101 cr=0.3966 cd=0.5284;
+              #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 6[4]   er 2[0]   cr 12[10] cd 8[6]
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+# --- Options
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+
+# --- Targets
+target lvl=100 resist=0.1 hp=999999999999 radius=1 pos=0,1.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+hurt every interval=480,720 amount=6000,10000 element=physical;
+
+active furina;
+
+#Furina E Dash Q > Yelan E Q > Alhaitham N1 Q > Kuki N1 E Dash > Alhaitham N3D N3 E N3D N3CD N3D N3D N3C
+for let r=0; r<4; r=r+1 {
+  furina skill, dash;
+  while !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  
+  yelan skill;
+  while !.yelan.burst.ready {
+    if .yelan.skill.ready {
+      yelan skill;
+    } else {
+      yelan attack;
+    }
+  }
+  yelan burst;
+  
+  alhaitham attack;
+  while !.alhaitham.burst.ready {
+    alhaitham attack;
+  }
+  alhaitham burst;
+  kuki attack, skill, dash;
+  alhaitham attack:3, dash,
+            attack:3, skill,
+            attack:3, dash,
+            attack:3, charge, dash,
+            attack:3, dash,
+            attack:3, dash,
+            attack:3, charge;
+}

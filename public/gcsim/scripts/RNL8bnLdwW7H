@@ -1,0 +1,63 @@
+ningguang char lvl=90/90 cons=6 talent=9,9,9;
+ningguang add weapon="thewidsith" refine=3 lvl=90/90;
+ningguang add set="archaicpetra" count=2;
+ningguang add set="glad" count=2;
+ningguang add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #main
+ningguang add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 hydro%=0.466 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+beidou add set="emblemofseveredfate" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=237.84 cr=0.1655 cd=0.4634;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=100000000000 pos=0,2;
+target lvl=100 resist=0.1 hp=100000000000 pos=2,2;
+energy every interval=480,720 amount=1;
+
+let normal_attack_state = 1;
+let c_right = 1;
+
+active xingqiu;
+
+for let i = 0; i < 5; i = i + 1 {
+  xingqiu burst, attack:2;
+  bennett skill, attack, burst;
+  beidou attack, skill[counter=1], burst, attack;
+  xingqiu attack, skill, dash, attack:2;
+  let start = f();
+  while f() - start < 10*60 {
+    switch {
+    case .ningguang.skill.ready:
+      ningguang skill, dash;
+    case .ningguang.burst.ready:
+      ningguang burst;
+    case .state == normal_attack_state:
+      switch .ningguang.prevAttack {
+      case c_right:
+        ningguang walk;
+      default:
+  	    ningguang charge;
+      }
+    default:
+      ningguang attack;
+    }
+  }
+  beidou skill[counter=1], attack:2;
+  bennett skill, attack:3;
+  print("end");
+}
+

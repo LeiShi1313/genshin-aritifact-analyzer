@@ -1,0 +1,58 @@
+xiao char lvl=90/90 cons=0 talent=9,9,9;
+xiao add weapon="deathmatch" refine=1 lvl=90/90;
+//xiao add set="mh" count=4;
+//xiao add set="vermillionhereafter" count=4;
+xiao add set="longnightsoath" count=4;
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622;
+xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3641 cd=0.5958;
+// SacFragments + C1+ Sucrose
+//xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favbow" refine=4 lvl=90/90;
+faruzan add set="totm" count=4;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="ttds" refine=5 lvl=90/90;
+sucrose add set="scroll" count=4;
+sucrose add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+active faruzan;
+
+for let i=0; i<4; i=i+1 {
+  faruzan skill, burst;
+  while !.faru.mods.favonius-cd {
+    faruzan attack;
+  }
+  bennett skill, burst;
+  sucrose swap; wait(16);  # if you Sucrose ED too fast, you hit the swap cd and fail to pre-funnel. so you need to wait
+  sucrose skill;
+  if i && .sucrose.skill.ready && .sucrose.weapon != .keys.weapon.ttds {  # skip in the 1st rot, try to use 2nd E
+    sucrose skill, dash;
+  } else {
+    sucrose dash;
+  }
+  xiao skill:2, burst;
+  for let h = 12; h > 0; h = h - 1 {
+    let col = rand();
+    if col > 0.5 {
+      xiao jump, high_plunge[collision=1];
+    } else {
+      xiao jump, high_plunge;
+    }
+  }
+}
+print("end");

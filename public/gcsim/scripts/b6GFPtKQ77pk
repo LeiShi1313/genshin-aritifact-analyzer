@@ -1,0 +1,128 @@
+#25s rot for Fischl, we do a bit of rolling. Kokomi N2Ds; options for N2C/N2W. Customized random frame delays; 90% Start HP; Energy drops based on 12-3 Icewind Suite.
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
+kokomi add weapon="hakushinring" refine=5 lvl=90/90;
+#kokomi add weapon="pamber" refine=5 lvl=90/90;
+kokomi add set="clam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; #kokomi | 141.64 er
+kokomi add stats hp=1015.76 hp%=0.4955 atk=33.07 atk%=0.5946 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.0661 cd=0.1321;
+                #hp 4[2]    hp% 10[8]  atk 2[0]  atk% 12[10] def 2[0]  def% 2[0]   er 2[0]   em 2[0]  cr 2[0]   cd 2[0]
+                #sub; total[distributed] rolls
+                
+sayu char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=90];
+sayu add weapon="favgs" refine=3 lvl=90/90;
+sayu add set="vv" count=4;
+sayu add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; #44.66 / 63.21 | 171.26 er
+sayu add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.3964 def=39.35 def%=0.1239 er=0.1101 em=118.89 cr=0.3966 cd=0.1321;
+              #hp 2[0]   hp% 2[0]   atk 2[0]  atk% 8[6]   def 2[0]  def% 2[0]   er 2[0]   em 6[4]   cr 12[10] cd 2[0]
+
+fischl char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=90];
+fischl add weapon="songofstillness" refine=5 lvl=90/90;
+#fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
+fischl add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.3305 cd=0.7926;
+                #hp 2[0]   hp% 2[0]   atk 2[0]  atk% 4[2]   def 2[0]  def% 2[0]   er 2[0]   em 2[0]  cr 10[8]  cd 12[10]
+                
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
+furina add weapon="harbingerofdawn" refine=5 lvl=90/90;
+#furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #63.86 [91.86] / 225.11 | 111.01 er
+furina add stats hp=507.88 hp%=0.1982 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.3966 cd=0.6605;
+                #hp 2[0]   hp% 4[2]   atk 2[0]  atk% 2[0]   def 2[0]  def% 2[0]   er 2[0]   em 2[0]  cr 12[10] cd 10[8]
+
+fn randy(mean, standardDeviation, min, max, display) {
+  let value = randnorm() * standardDeviation + mean;
+  if value > max {
+    value = max;
+  } else if value < min {
+    value = min;
+  }
+  if display {
+    print(value);
+  }
+  return value;
+}
+
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    delay(randy(9.5, 1.5, 5, 17, 0));
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    delay(randy(3, 1, 0, 6, 0));
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    delay(randy(3, 1, 0, 6, 0));
+  }
+
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
+
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
+
+active fischl;
+
+#Fischl N1 E > Kokomi E Dash N1 > Furina E Dash Q > Sayu Q hE (2.5s) > Fischl N2 Q > Kokomi Q [N2Ds] > Sayu hE (0.5s)
+for let i=0; i<3; i=i+1 {
+  fischl attack, skill;
+  kokomi skill, dash, attack;
+  furina skill, dash;
+  while !.furina.burst.ready {
+    furina attack;
+  }
+  furina burst;
+  sayu swap;
+  while !.sayu.burst.ready {
+    sayu attack;
+  }
+  sayu burst, skill[hold=150];
+  fischl attack:2;
+  while !.fischl.burst.ready {
+    fischl attack;
+  }
+  fischl burst;
+  
+  kokomi burst;
+  while .status.kokomiburst {
+    switch {
+      case .kokomi.normal < 3:
+        kokomi attack;
+      #case .stam >= 50: #N2C if stamina allows
+        #kokomi charge;
+      case .stam >= 18: #N2D if stamina allows
+        kokomi dash;
+      default:          #N2W
+        kokomi walk;
+    }
+  }
+  
+  sayu skill[hold=30];
+}

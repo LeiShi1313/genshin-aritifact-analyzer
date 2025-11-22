@@ -1,0 +1,107 @@
+# Sethos Tighnari Fischl Nahida. ~18s Rot. Sethos Tighanri Aggravate. Sethos uses a Shadowpiercing shot to apply Electro at the start of the rotation. Fischl alternates skill and burst. Sethos uses burst.
+
+# Team
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+#sethos add weapon="hunterspath" refine=1 lvl=90/90;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="wt" count=4;
+#sethos add set="tf" count=4;
+sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.3972 cd=0.4634;
+
+tighnari char lvl=90/90 cons=0 talent=9,9,9;
+tighnari add weapon="slingshot" refine=5 lvl=90/90;
+#tighnari add weapon="ode" refine=5 lvl=90/90;
+tighnari add set="deepwood" count=4;
+#tighnari add set="gd" count=4;
+#tighnari add set="wt" count=4;
+#tighnari add set="scroll" count=4;
+tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Slingshot
+#tighnari add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+#tighnari add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Ode/Twilight
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="sacjade" refine=1 lvl=90/90;
+#nahida add weapon="widsith" refine=3 lvl=90/90;
+nahida add set="scroll" count=4;
+#nahida add set="deepwood" count=4;
+#nahida add set="gt" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # Evenstar
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3641 cd=0.5958; # Jade
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.331 cd=0.5958; # Widsith
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Combo works with varyinng sets
+fn sethosCombo() {
+  if .sethos.skill.ready {
+    sethos skill;
+  }
+  sethos burst;
+  while .sethos.mods.sethos-burst {
+    if .sethos.skill.ready {
+      sethos skill;
+    } if .sethos.normal > 2 {
+      sethos walk;
+    } else {
+      sethos attack;
+    }
+  }
+}
+
+# Rotation
+active sethos;
+sethos aim[hold=2];
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, attack;
+  if i > 0 && .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+	
+	# Burst every rot is close with Twilight
+	tighnari skill, aim;
+	if .tighnari.burst.ready {
+	  tighnari burst, aim:2;
+	} else {
+	  tighnari aim:2;
+	}
+	
+  amy attack;
+  if .amy.burst.ready {
+    amy attack, burst;
+  } else {
+    amy skill;
+  }
+
+  sethosCombo();
+  while .sethos.energy > 55 {
+    sethos aim[hold=2];
+    if .sethos.skill.ready {
+      sethos skill;
+    }
+  }
+  
+  print("done");
+}

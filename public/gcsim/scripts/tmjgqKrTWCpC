@@ -1,0 +1,51 @@
+#|| Hypercarry Dehya - Melt || Dehya Citlali Bennett Rosaria || ~20s Rotation || CapnHarland ||
+
+dehya char lvl=90/90 cons=4 talent=10,10,10; #C4, as this is where ER reqs lessen / Triple crown to simulate what a heavily-invested, main dps, Dehya might look like
+dehya add weapon="redhorn" refine=1 lvl=90/90;
+#dehya add weapon="serpentspine" refine=5 lvl=90/90 +params=[stacks=5];
+dehya add set="eosf" count=4;
+dehya add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #Main EM/Pyro/CR
+dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+#dehya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #Main EM/Pyro/CD when using SS
+
+citlali char lvl=90/90 cons=2 talent=9,9,9; #C2 for extra pyro res shred and EM buff; dmg buffs from C1 are also appreciated 
+citlali add weapon="starcallerswatch" refine=1 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 em=187 em=187 em=187; #Main EM/EM/EM
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.331 cd=0.331;
+
+bennett char lvl=90/90 cons=6 talent=9,9,10; #Crowned burst, as that is the most common crowned talent when bulding Bennett to buff dmg 
+bennett add weapon="mistsplitter" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #Main Atk/Pyro/CR
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="favlance" refine=5 lvl=90/90;
+rosaria add set="bs" count=2;
+rosaria add set="finaleofthedeepgalleries" count=2;
+#rosaria add set="no" count=2; When using 2pc BS/NO, dps decreases by a couple hundred; use which either has better substats
+#rosaria add set="eosf" count=4; When using EoSF, dps decreases by a couple hundred; use which either has better substats
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #Main Atk/Cryo/CR
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1; 
+hurt every interval=180,300 amount=3500,5500 element=physical; 
+options iteration=1000 swap_delay=12;
+
+active dehya;
+
+for let i=0; i<5; i=i+1 {
+  dehya skill;
+  bennett skill, burst, attack;
+  citlali skill, burst;
+  rosaria skill, burst;
+  dehya burst, attack:10;
+  rosaria skill;
+  bennett skill;
+  dehya skill, attack;
+}
+
+#Rot: Dehya E > Bennett EQ N1 > Citlali EQ > Rosaria EQ > Dehya Q N10 > Rosaria E > Bennett E > Dehya E N1
+

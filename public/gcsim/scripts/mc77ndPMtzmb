@@ -1,0 +1,63 @@
+mualani char lvl=90/90 cons=0 talent=9,9,9;
+mualani add weapon="sacrificialjade" refine=1 lvl=90/90;
+mualani add set="obsidiancodex" count=5;
+mualani add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+mualani add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.0662 cd=0.662;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=5;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+//mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="prototypeamber" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.2317 cd=0.4634;
+
+options swap_delay=12 iteration=1000;
+
+active mavuika;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+energy every interval=480,720 amount=1;
+
+fn mualani_combo() {
+  #doing 3[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<3; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+for let i=0; i<4; i=i+1 {
+  nahida attack, skill, burst;
+  if is_even(i) {
+    mavuika burst, skill;
+    emilie skill, attack;
+  } else {
+    mavuika skill, attack;
+    emilie burst;
+  }
+  mualani skill;
+  mualani_combo();
+  if is_even(i) {
+    mualani burst;
+  }
+}
+
+# Nahida E Q > Mavuika Q E > Emilie E > Mualani E 3[3-stacked bite] Q > 
+# Nahida E Q > Mavuika   E > Emilie Q > Mualani E 3[3-stacked bite]   >

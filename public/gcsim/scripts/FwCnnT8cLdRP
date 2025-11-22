@@ -1,0 +1,96 @@
+# Dori Nahida Fischl Xianyun. ~25s Rot. Dori Aggravate plunge, no TF. 2 Sets of 3 plunges. EM and ATK are similar on Dori. 50% Collisions.
+
+# Team- Options listsed by DPS
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#dori add weapon="rainslasher" refine=3 lvl=90/90;
+dori add set="longnightsoath" count=4;
+#dori add set="ts" count=4;
+dori add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # TK/El/Cd
+#dori add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; # main
+#dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Em/El/Cr
+#dori add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+#dori add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Atk/El/Cr; Rainslasher
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="scroll" count=4;
+#nahida add set="gt" count=4;
+#nahida add set="deepwood" count=4;
+#nahida add set="tom" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="hakushin" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=237.84 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Dori Plunge Combo
+fn DoriPlunge() {
+  dori jump;
+  if .airborne {
+    dori high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Xianyun Plunge Combo
+fn XianyunPlunge() {
+  xianyun jump;
+  if .airborne {
+    xianyun high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active dori; #SS Stacks
+dori burst;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, attack, charge, burst;
+  
+  amy attack:2, burst; # No ER concern to obstruct plunges
+  #amy attack, skill; # lower DPS
+  
+  xianyun skill, low_plunge, attack, burst;
+  
+  dori skill;
+  dori attack;
+  DoriPlunge(); dori dash;
+  DoriPlunge(); dori dash;
+  DoriPlunge();
+  
+  nahida skill, attack, charge;
+  
+  amy attack, skill; # See above
+  #amy attack:2, burst; # See above
+  
+  xianyun attack:1; # Refresh VV
+  XianyunPlunge();
+  
+  # Plunge earlier or low plunge if timing concerns
+  dori skill;
+  dori attack;
+  DoriPlunge(); dori dash;
+  DoriPlunge(); dori dash;
+  DoriPlunge(); dori burst;
+  
+  print("done");
+}

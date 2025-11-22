@@ -37,6 +37,9 @@ const portCharacters = async () => {
       .replace(/[^0-9a-z]/gi, "_")
       .toLowerCase();
     proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
+    if (key === 'lan_yan') {
+      console.log('debug');
+    }
 
     trans['en'][key] = eng.name;
     for (let lng of Object.keys(utils.lngToRegion)) {
@@ -57,7 +60,7 @@ const portCharacters = async () => {
 
     for (let imageType of ["icon", "gacha"]) {
       const imagePath = `./src/assets/characters/${key}_${imageType}.png`;
-      if (fs.existsSync(imagePath) && fs.statSync(imagePath).size > 0) continue;
+      if (utils.isValidImage(imagePath)) continue;
       if (eng.images[imageType]) {
         console.log(`Downloading image for ${e}: ${eng.images[imageType]}`);
         let result = await utils.download_image(eng.images[imageType], imagePath);

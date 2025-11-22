@@ -1,0 +1,97 @@
+# Alhaitham Nahida Fischl Xianyun. ~28s Rot. AlHaitham Spread plunge in a split rotation with Fischl Q during AlHaitham's Q window. Spends high plunges then does mirror combos until Nahida E expiration. 70% collisions after E plunge, 50% after burst.
+
+# Team - Options listed by DPS
+haitham char lvl=90/90 cons=0 talent=9,9,9;
+haitham add weapon="harbinger" refine=5 lvl=90/90;
+haitham add set="gd" count=4;
+#haitham add set="longnightsoath" count=4;
+#haitham add set="deepwood" count=2; haitham add set="gd" count=2;
+haitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311;
+haitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="twilight" refine=5 lvl=90/90;
+#fischl add weapon="chainbreaker" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+#fischl add set="totm" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # TW
+#fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282; # CB
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+#xianyun add set="no" count=4;
+#xianyun add set="vv" count=4; # No swirls
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=148.86 atk%=0.2976 er=0.6061 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Collision Rates
+let farColl = 0.5; #50%
+let closeColl = 0.3; #70%
+
+# Al Haitham Plunge Combo
+fn alhaitham_plunge(collision) {
+  haitham jump;
+  if .airborne {
+    haitham high_plunge[collision=rand()>collision];
+  }
+}
+  
+# Rotation
+active fischl;
+
+for let i = 0; i < 4; i = i + 1 {
+  fischl attack, skill;  
+  
+  nahida skill, attack;
+  if .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+    nahida burst;
+  } else {
+    nahida charge;
+  }
+  
+  xianyun skill, low_plunge, burst;
+  
+  haitham skill[hold=1], low_plunge[short=1];
+  haitham attack:2; alhaitham_plunge(closeColl);
+  haitham attack:2; alhaitham_plunge(closeColl);
+  haitham attack:2; alhaitham_plunge(closeColl);
+  haitham attack:2; alhaitham_plunge(closeColl);
+  haitham attack:2, burst;
+  
+  amy attack:2, burst;
+
+  haitham attack:2; alhaitham_plunge(farColl);
+  haitham attack:2; alhaitham_plunge(farColl);
+  haitham attack:2; alhaitham_plunge(farColl);
+  #while .haitham.mirrors {
+  while .debuff.res.t0.nahida-e {
+    if .haitham.normal > 3 && .stam > 25 {
+      haitham charge;
+    } else if .haitham.normal > 3 && .stam > 18 {
+      haitham dash;
+    } else {
+      haitham attack;
+    }
+  }
+  
+}
+

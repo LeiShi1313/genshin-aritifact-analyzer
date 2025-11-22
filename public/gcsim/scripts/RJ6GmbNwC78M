@@ -1,0 +1,94 @@
+# Keqing Furina Rosaria Xianyun. ~20s Rot. Keqing Phys Plunge. Keqing does not burst and uses EN1C off cd. LNO>MH>PF Keqing. Hold skill aerial plunge not implemented. 50% Collisions.
+
+# Team - Options ordered by DPS
+keqing char lvl=90/90 cons=0 talent=9,9,9;
+keqing add weapon="harbinger" refine=5 lvl=90/90;
+#keqing add weapon="rancour" refine=5 lvl=90/90;
+#keqing add weapon="finale" refine=5 lvl=90/90;
+keqing add set="lno" count=4;
+#keqing add set="pf" count=4;
+#keqing add set="mh" count=4;
+keqing add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # MH + Rancour/Other + HoD
+#keqing add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311; #main
+#keqing add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Other
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="totm" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.331; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
+#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.331; # GT
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+#rosaria add set="emblem" count=4; 
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="ohc" count=4;
+#xianyun add set="vv" count=4;
+#xianyun add set="no" count=4;
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+
+# Keqing Plunge Combo
+fn KeqingPlunge() {
+  keqing jump;
+  if .airborne {
+    keqing high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active furina;
+
+for let x = 0; x < 4; x = x + 1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  
+  xianyun skill, low_plunge, burst;
+  
+  rosaria skill, burst;
+  
+  # Gain buffs/SC
+  keq skill;
+  keqing attack, charge;
+  # Plunge
+  while .keqing.status.xianyun-airborne-buff {
+    if .previous-action == .action.skill {
+      keqing attack, charge;
+    } else {
+      KeqingPlunge();
+      if .keqing.skill.ready {
+        keqing skill;
+      } else if !.keqing.status.xianyun-airborne-buff { # Xianyun-q expiration
+        rosaria swap;
+      } else {
+        keqing dash;
+      }
+    }
+  }
+  
+  rosaria skill;
+  print("done");
+}
+

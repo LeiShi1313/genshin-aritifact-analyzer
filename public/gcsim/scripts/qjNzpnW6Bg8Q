@@ -1,0 +1,61 @@
+#|| BurnMelt Yun Jin || Yun Jin Chongyun Thoma Emilie || ~19s Rotation || CapnHarland ||
+
+yunjin char lvl=90/90 cons=6 talent=9,9,9;
+yunjin add weapon="deathmatch" refine=1 lvl=90/90;
+yunjin add set="ur" count=4;
+yunjin add stats hp=4780 atk=311 er=0.518 def%=0.583 cd=0.622; #main - DEF% Goblet is slightly better than Cryo% Goblet
+yunjin add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="favgs" refine=5 lvl=90/90;
+chongyun add set="scroll" count=4;
+chongyun add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311; #main - ATK% Sands is similar DPS
+chongyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*11;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="favlance" refine=5 lvl=90/90;
+thoma add set="deepwood" count=4;
+thoma add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+thoma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*6 cr=0.0331*10 cd=0.0662*2;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*7;
+
+# Options
+options iteration=1000 swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active yunjin;
+
+yunjin skill[perfect=1];
+
+for let i=0; i<4; i=i+1 {
+  if i && .emilie.burst.ready {
+    emilie burst;
+  } else {
+    emilie skill;
+  }
+  
+  thoma skill, burst, attack;
+
+  chongyun skill;
+  
+  yunjin burst,
+         attack:4, skill[perfect=1],
+         attack:4, dash,
+         attack:4, dash,
+         attack:4, dash,
+         attack:3;
+
+  chongyun burst, attack;
+}
+
+# All Yun Jin parries are perfect
+# Rotation: (Yun Jin tE) > Emilie E/Q > Thoma EQ N1 > Chongyun E > Yun Jin Q N4 tE 3[N4D] N3 > Chonyun Q N1

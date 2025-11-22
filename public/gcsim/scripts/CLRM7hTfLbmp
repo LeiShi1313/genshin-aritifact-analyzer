@@ -1,0 +1,59 @@
+mavuika char lvl=80/90 cons=0 talent=1,10,10;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="obsidiancodex" count=4;
+mavuika add set="wandererstroupe" count=1;
+mavuika add stats def%=0.057999999999999996 hp=4780 hp%=0.09300000000000001 atk=374 atk%=0.6070000000000001 em=263 cr=0.34199999999999997 cd=1.251 pyro%=0.466;
+
+rosaria char lvl=80/90 cons=6 talent=9,9,9;
+rosaria add weapon="balladofthefjords" refine=2 lvl=90/90;
+rosaria add set="noblesseoblige" count=4;
+rosaria add set="emblemofseveredfate" count=1;
+rosaria add stats def%=0.139 def=159 hp=5587 hp%=0.373 atk=343 atk%=0.298 er=0.836 em=23 cr=0.416 cd=0.17099999999999999 cryo%=0.466;
+
+xilonen char lvl=80/90 cons=0 talent=1,10,9;
+xilonen add weapon="fluteofezpitzal" refine=5 lvl=90/90;
+xilonen add set="scrolloftheheroofcindercity" count=4;
+xilonen add set="wandererstroupe" count=1;
+xilonen add stats def%=1.7979999999999998 def=58 hp=986 hp%=0.099 atk=119 atk%=0.21000000000000002 er=0.32399999999999995 em=56 cr=0.062 cd=0.14;
+
+layla char lvl=90/90 cons=6 talent=1,10,10;
+layla add weapon="favoniussword" refine=5 lvl=90/90;
+layla add set="blizzardstrayer" count=1;
+layla add set="tenacityofthemillelith" count=4;
+layla add stats def%=0.131 def=210 hp=5557 hp%=1.078 atk=346 er=0.16899999999999998 em=81 cr=0.517 cd=0.614;
+
+options iteration=100 swap_delay=9;
+
+target lvl=100 resist=0.1 pos=0,2.4 hp=9999999999 particle_threshold=730000 particle_drop_count=3;
+
+active mavuika;
+mav skill;
+
+for let i=0;i<5;i=i+1{
+  
+  if .layla.burst.ready{
+    layla burst;
+  }
+  layla skill;
+  if .layla.burst.ready{
+    layla burst;
+  }
+  
+  xilonen skill, attack:2;
+  if .xilonen.burst.ready{
+    xilonen burst;
+  }
+  
+  if .rosa.burst.ready{
+    rosa burst;
+  }
+  rosa skill;
+  if .rosa.burst.ready{
+    rosa attack:2, burst;
+  }
+
+  mavuika burst;
+  sleep(60);
+  mavuika charge:2, dash, charge:2, dash, charge:7, charge[final=1],  skill;
+
+}  

@@ -1,0 +1,58 @@
+
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="balladofthefjords" refine=1 lvl=90/90;
+hutao add set="shimenawasreminiscence" count=4;
+hutao add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=266.28 cr=0.642 cd=0.794 pyro%=0.466;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=4 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1104 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="ap" count=4;
+zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.640 cr=0.3310 cd=0.7944;																			
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="goldentroupe" count=5;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662 ;																																	
+		
+								
+options swap_delay=12 iteration=500;
+target lvl=100 resist=0.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active furina;
+
+for let i=0; i<4; i=i+1 { 
+
+  furina skill, dash,burst;
+  
+  zhongli skill[hold=1], jump;   pick_up_crystallize("any");
+
+  yelan burst, attack:2;
+  
+  zhongli attack:4; pick_up_crystallize("any");
+  
+  yelan  attack, skill, attack;
+  
+  hutao skill,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:1, charge, jump,
+    attack:2, charge, jump, attack; 
+    
+  
+  yelan  skill, attack:2;
+
+
+}

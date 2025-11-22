@@ -1,0 +1,46 @@
+wanderer char lvl=90/90 cons=6 talent=9,9,9;
+wanderer add weapon="tulaytullahsremembrance" refine=1 lvl=90/90;
+wanderer add set="shimenawa" count=5;
+wanderer add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+wanderer add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
+faruzan add weapon="favoniuswarbow" refine=5 lvl=90/90;
+faruzan add set="tenacity" count=4;
+faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
+faruzan add stats def=39.36 def%=0.124 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
+
+tartaglia char lvl=90/90 cons=4 talent=9,9,9;
+tartaglia add weapon="stringless" refine=5 lvl=90/90;
+tartaglia add set="noblesseoblige" count=2;
+tartaglia add set="heartofdepth" count=2;
+tartaglia add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+tartaglia add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 atk%=0.0992 er=0.2204 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=5 talent=9,9,9;
+bennett add weapon="aquilafavonia" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ;
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=9999999999999 radius=1 pos=0,1.4;
+target lvl=100 resist=0.1 hp=9999999999999 radius=1 pos=2.4,0.5;
+
+active faruzan;
+
+for let i=0; i<1; i=i+1 {
+  faruzan skill, burst;
+  bennett skill, burst;
+  tartaglia burst;
+  wanderer skill;
+  while .status.bennettburst > 0 {
+    if .wanderer.normal == 1 && .wanderer.mods.wanderer-a4 {
+      wanderer dash;
+    } else {
+      wanderer attack;
+    }
+  }
+  wanderer burst;
+}

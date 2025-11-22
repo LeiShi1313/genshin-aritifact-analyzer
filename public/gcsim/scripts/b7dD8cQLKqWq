@@ -1,0 +1,48 @@
+options swap_delay=12 iteration=1000;
+
+baizhu char lvl=90/90 cons=0 talent=9,9,9;
+baizhu add weapon="favcodex" refine=5 lvl=90/90;
+baizhu add set="clam" count=4;
+baizhu add stats hp=4780 atk=311 atk%=0.466 cr=0.311 dendro%=0.466; #main
+baizhu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+lynette char lvl=90/90 cons=6 talent=9,9,9;
+lynette add weapon="favsword" refine=5 lvl=90/90;
+lynette add set="deepwood" count=4;
+lynette add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
+lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=5 lvl=90/90;
+yelan add set="emblemofseveredfate" count=4;
+yelan add stats hp=4780 hp%=0.466 atk=311 cr=0.311 hydro%=0.466; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="dragonsbane" refine=3 lvl=90/90;
+thoma add set="fopl" count=4;
+thoma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+
+target lvl=100 resist=0.1 hp=9999999999 pos=2.5,0 radius=2;
+energy every interval=480,720 amount=1;
+
+active yelan;
+
+for let i = 0; i < 4; i = i + 1 {
+
+  yelan skill, attack;
+  lynette burst, skill;
+  baizhu attack, skill, burst;
+  thoma skill, attack, burst;
+  yelan burst, attack, skill;
+  baizhu attack:3, dash, 
+         attack:3, skill, 
+         attack:3, dash, 
+         attack:3, dash, 
+         attack:3, dash;
+
+}
+
+# Yelan E N1 > Lynette QE > Baizhu N1 EQ > Thoma E N1 Q > Yelan Q N1 E > Baizhu N3D N3 E 3[N3D]

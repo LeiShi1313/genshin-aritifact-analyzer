@@ -1,0 +1,59 @@
+beidou char lvl=90/90 cons=6 talent=9,9,9;
+beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+beidou add set="emblemofseveredfate" count=4;
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main										
+beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3641 cd=0.4634;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; # main
+kokomi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.496 er=0.3306 em=39.64 cr=0.0662 cd=0.1324;
+
+nahida char lvl=90/90 cons=0 talent=9,9,8;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="dragonsbane" refine=3 lvl=90/90;
+raiden add set="flowerofparadiselost" count=5;
+raiden add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+options swap_delay=12 iteration=1000;
+
+active kokomi;
+target lvl=100 resist=.1 hp=1000000000 pos=0,2.3;
+# target lvl=100 resist=.1 hp=1000000000 pos=2.3,2.3;
+energy every interval=480,720 amount=1;
+
+  kokomi skill;
+  raiden attack, skill;
+  nahida skill, burst;
+  
+  beidou skill[counter=1],burst;
+  kokomi attack, burst;
+  let kokomi_n2w_sequences = 14;
+    while kokomi_n2w_sequences {
+    kokomi attack:2, walk;
+    kokomi_n2w_sequences = kokomi_n2w_sequences - 1;
+  }
+  
+  beidou skill[counter=1];
+  
+for let i=0; i<4; i=i+1 {
+  
+  kokomi skill, attack;
+  raiden attack, skill;
+  nahida attack, skill, attack:2, burst;
+  beidou skill[counter=1], burst;
+  kokomi attack, burst;
+  let kokomi_n2w_sequences = 12;
+    while kokomi_n2w_sequences {
+    kokomi attack:2, walk;
+    kokomi_n2w_sequences = kokomi_n2w_sequences - 1;
+  }
+  beidou skill[counter=1];
+}

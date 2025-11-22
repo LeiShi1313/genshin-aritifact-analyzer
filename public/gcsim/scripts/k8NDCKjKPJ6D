@@ -1,0 +1,68 @@
+# PMC Furina Bennett Citlali. ~20s Rot. PMC VapeMelt. 2E Bennett. PMC uses burst as available after hE N1C and spams N2C/N3D. -4K DPS with Freeze immunity.
+
+# Team - Options Listed by DPS
+aetherpyro char lvl=90/90 cons=6 talent=9,9,9  +params=[base_atk_buff=1, skirk_story_buff=1];
+aetherpyro add weapon="eshu" refine=5 lvl=90/90;
+aetherpyro add set="oc" count=4;
+aetherpyro add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+aetherpyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="gt" count=4;
+#furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+#citlali add weapon="evenstar" refine=1 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=0;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1; # Freeze immune
+
+# Rotation
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd && !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+  
+  bennett skill, burst;
+  
+  citlali skill, burst;
+  
+  aetherpyro skill[hold=1], attack, charge;
+  while .aetherpyro.mods.bennett-field || .status.bennettburst { 
+    switch {
+      case .aetherpyro.burst.ready: # && .aetherpyro.normal > 1:
+        aetherpyro burst;
+      case .aetherpyro.normal > 2 && .stam > 25: # N2C
+        aetherpyro charge;
+      case .aetherpyro.normal > 3 && .aetherpyro.dash.ready && .stam > 18: # N3D
+        aetherpyro dash;
+      default:
+        aetherpyro attack;
+    }
+  }
+  
+  bennett skill;
+}

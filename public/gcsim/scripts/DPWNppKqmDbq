@@ -1,0 +1,37 @@
+// Apply element -> Xilonen E N2 -> Chiori (Q if available) EE -> Blank attacks, 18s rotation
+
+chiori char lvl=90/90 cons=6 talent=9,9,9;
+chiori add weapon="urakumisugiri" refine=5 lvl=90/90;
+chiori add set="husk" count=4 +params=[stacks=4];
+chiori add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311 ; #main
+chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+mualani char lvl=1/20 cons=0 talent=9,9,9;
+mualani add weapon="apprenticesnotes" refine=1 lvl=1/20;
+
+xl char lvl=1/20 cons=6 talent=9,9,9;
+xl add weapon="beginnersprotector" refine=1 lvl=1/20;
+
+xilonen char lvl=90/90 cons=6 talent=9,9,9; 
+xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+options swap_delay=12 iteration=1000;
+
+active mualani;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=1000000000; 
+energy every interval=480,720 amount=1;
+
+mualani attack; // Ensure Scroll is triggered on first rotation
+for let i = 0; i < 4; i = i + 1 {
+  xilonen skill, attack:2;
+  if .chiori.burst.ready {
+    chiori burst, skill:2;
+  } else {
+    chiori skill:2;
+  }
+  mualani attack:28; // Fill time between rotations and activate Chiori coordinated attacks
+}

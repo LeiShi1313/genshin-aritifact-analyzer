@@ -1,0 +1,82 @@
+# Yae Xilonen Sara Xianyun. ~24s Rot. Yae Taser Plunge. After 5 plunges, Xianyun refeshes VV, then Sara burst. Yae bursts every other rotation. Yae always catches Sara's crowfeather. 50% Collisons.
+
+# Team
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="widsith" refine=3 lvl=90/90;
+#yae add weapon="flowingpurity" refine=5 lvl=90/90;
+yae add set="longnightsoath" count=5;
+#yae add set="ts" count=5;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+sara char lvl=90/90 cons=6 talent=9,9,9;
+sara add weapon="twilight" refine=5 lvl=90/90;
+sara add set="emblem" count=4;
+sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.2755 em=39.64 cr=0.2979 cd=0.3972;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="hakushin" refine=5 lvl=90/90;
+#xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.4408 em=79.28 cr=0.0662 cd=0.1324;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Yae Plunge Combo
+fn YaePlunge() {
+  yae jump;
+  if .airborne {
+    yae high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active sara;
+
+for let i = 0; i < 4; i = i + 1 {
+  sara skill, attack:2;
+  
+  yae skill:3;
+
+  xilonen skill, attack:2;
+  
+  xianyun skill, low_plunge, burst;
+  
+  sara aim;
+  
+  YaePlunge(); yae dash;
+  YaePlunge(); yae dash; 
+  YaePlunge(); yae dash; # Hakushin Expires
+  YaePlunge(); yae dash;
+  YaePlunge(); yae attack;
+  yae skill:3;  # VV/Sara C6 expire
+  
+  xilonen skill, attack:2;
+  
+  xianyun attack:2; sleep(20); # Refresh VV
+  
+  sara burst; # Q needed, E cant reliably be retrived when jumping
+  
+  YaePlunge(); yae dash;
+  YaePlunge(); yae dash;
+  YaePlunge(); yae attack;
+  if .yae.burst.ready {
+    yae burst;
+  }
+  
+}
+

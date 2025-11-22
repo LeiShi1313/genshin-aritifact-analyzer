@@ -1,0 +1,68 @@
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
+nahida add set="deepwoodmemories" count=4;
+nahida add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311;
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
+zhongli add set="tenacityofthemillelith" count=5;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #main
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+thoma char lvl=90/90 cons=6 talent=9,9,9;
+thoma add weapon="kitain" refine=5 lvl=90/90;
+thoma add set="fopl" count=4;
+thoma add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.2317 cd=0.331;
+
+
+options swap_delay=12 debug=true iteration=200 workers=64;
+target lvl=100 resist=0.1 pos=-1.1, 1.1 hp=999999999999;
+target lvl=100 resist=0.1 pos=1.1, 1.1 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+let cur_target = 1;
+fn switch_target() {
+  if cur_target == 1 {
+    cur_target = 2;
+    set_default_target(2);
+  } else {
+    cur_target = 1;
+    set_default_target(1);
+  }
+  return 0;
+}
+
+active nahida;
+
+nahida skill;
+for let x = 0; x < 5; x = x + 1 {
+	zhongli skill[hold=1], dash;
+	switch_target();
+	xingqiu burst, attack;
+    thoma burst, attack, skill, attack, dash;
+    switch_target();
+    thoma attack;
+	nahida attack:3, skill, 
+		attack:3, charge;
+	xingqiu skill, dash;
+    switch_target();
+
+    xingqiu attack:2;
+	nahida attack:3, skill, 
+		attack:3, charge, dash;
+        switch_target();
+    nahida attack:4, dash;
+    switch_target();
+    nahida attack:3, skill, 
+		attack:3, charge;
+	print("done");
+}
+

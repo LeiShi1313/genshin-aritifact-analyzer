@@ -1,0 +1,41 @@
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="gildeddreams" count=4;
+kuki add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.11019999999999999 em=679.92 cr=0.3972 cd=0.5296;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="thewidsith" refine=3 lvl=90/90;
+nahida add set="gildeddreams" count=4;
+nahida add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.11019999999999999 em=266 cr=0.642 cd=0.7944 dendro%=0.466;
+
+luminedendro char lvl=90/90 cons=6 talent=9,9,9;
+luminedendro add weapon="favoniussword" refine=3 lvl=90/90;
+luminedendro add set="deepwoodmemories" count=4;
+luminedendro add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.1984 er=0.6282 em=39.64 cr=0.642 cd=0.7944 dendro%=0.466;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=5;
+kokomi add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.962 atk=344.08 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324 heal=0.359 hydro%=0.466;
+
+active nahida;
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+nahida skill;
+for let i = 0; i < 4; i = i + 1 {
+
+  kokomi attack, skill, dash;
+  luminedendro skill, burst, attack:2;
+  kuki attack,skill;
+  nahida skill, attack:2;
+  if .nahida.burst.ready {
+      nahida burst,attack;
+    }
+  kokomi attack, burst;
+  while .kokomi.skill.cd > 85 {
+      kokomi attack:2, dash, walk[f=2];
+    }
+}
+ 

@@ -1,0 +1,43 @@
+# All KQMC & Kurtc
+
+raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden add weapon="favoniuslance" refine=3 lvl=90/90;
+raiden add set="totm" count=4;
+raiden add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+raiden add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 er=0.2755 em=39.64 cr=0.2979 cd=0.7944 ;
+																														
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="thecatch" refine=5 lvl=90/90; 
+xiangling add set="emblemofseveredfate" count=4;
+xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.1986 cd=0.7944 ;
+								
+lisa char lvl=90/90 cons=6 talent=9,9,9;
+lisa add weapon="evenstar" refine=1 lvl=90/90;
+lisa add set="no" count=4;
+lisa add stats hp=4780 atk=311 em=187 em=187 em=187; #main											
+lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3978 er=0.6612 em=79.28 cr=0.132 cd=0.1324 ;
+					
+xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu add weapon="wolffang" refine=1 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622; #main
+xingqiu add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36 em=39.64 cr=0.3972 cd=0.5296 er=0.3306 ;
+																			
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=2.1,1.5 hp=999999999; 
+#target lvl=100 resist=0.1 radius=2 pos=-2.1,1.5 hp=999999999; 
+energy every interval=480,720 amount=1;
+active raiden;
+
+raiden skill;
+for let i = 0; i < 4; i = i + 1
+
+{ lisa attack, burst;
+  xingqiu burst, skill, dash, attack:2;
+  xiangling burst, attack, skill, dash;
+  raiden attack, burst, attack:4, dash, attack:4, dash, attack:4, dash, attack:4;
+  raiden skill, attack:2;
+  lisa attack:1, skill[hold=1], attack:2; }
+  
+  # Lisa n1q > Xingqoi q ed n2 > Xiangling q n1ed > Raiden n1q 3n4d n4e n2 > Lisa n1 hE n2

@@ -1,0 +1,52 @@
+options swap_delay=12 iteration=1000;
+
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
+kokomi add weapon="flowingpurity" refine=5 lvl=90/90;
+kokomi add set="oceanhuedclam" count=4;
+kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359 ; #main
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.5952 er=0.2204 em=39.64 cr=0.0662 cd=0.1324 ;																															
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=5;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.551 em=118.92 cr=0.0662 cd=0.1324;	
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="finaleofthedeep" refine=5 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=5;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;											
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblemofseveredfate" count=5;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+target lvl=100 resist=.1 hp=10000000;
+energy every interval=480,720 amount=1;
+active koko;
+  
+for let i=0; i<4; i=i+1 {
+  kokomi skill;
+  xq burst, attack, skill, dash, attack:2;
+  yelan burst, attack;
+  kazuha burst;
+  yelan attack, skill;
+  kokomi attack, burst,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, walk,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, walk,
+         attack:2, dash,
+         attack:2, dash,
+         attack:2, walk,
+         attack:2, dash,
+         attack:2;
+  yelan skill, attack;
+  kazuha skill, high_plunge;
+}
+

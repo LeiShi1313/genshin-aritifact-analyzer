@@ -1,0 +1,90 @@
+# Sethos Nahida Fischl Lanyan. ~16s Rot. A simple Sethos Aggravate rotation. Sethos burst is enclosed by skill uses. Lanyan's shield lasts the duration of Sethos's field time. Sethos leads with a CA to establish Quicken.
+
+# Talent
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="wt" count=4;
+#sethos add set="gd" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622;
+sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EEC
+#sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622;
+#sethos add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.3972 cd=0.5958; # EDC
+
+nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="magicguide" refine=5 lvl=90/90;
+nahida add set="scroll" count=4;
+#nahida add set="gt" count=4;
+#nahida add set="totm" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.2317 cd=0.4634;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; # main
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+lanyan char lvl=90/90 cons=6 talent=9,9,9;
+lanyan add weapon="hakushin" refine=5 lvl=90/90;
+#lanyan add weapon="evenstar" refine=1 lvl=90/90;
+lanyan add set="vv" count=4;
+lanyan add stats hp=4780 atk=311 em=187 anemo%=0.466 cr=0.311; # main 
+lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # EDC
+#lanyan add stats hp=4780 atk=311 em=187 em=187 cr=0.311; # main 
+#lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # EEC
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1 pos=-1.2,1.4 hp=100000000; # Front
+#target lvl=100 resist=0.1 radius=1 pos=1.2,1.4 hp=100000000; # Rear
+
+# Sethos 8N2W N1
+fn sethosCombo() {
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2,
+         skill;
+}
+
+# Rotation
+active sethos;
+sethos aim[hold=2];
+
+for let i = 0; i < 4; i = i + 1 {
+  nahida skill, attack;
+  if .nahida.burst.ready {
+    nahida burst, charge;
+  } else {
+    nahida charge;
+  }
+  
+  if .amy.skill.ready { 
+    amy attack, skill;
+  } else {
+    amy attack:2, burst;
+  }
+  
+  lanyan attack, skill:2;
+  
+  sethos skill;
+  sethosCombo();
+  sethos aim[hold=2]:2;
+  
+  if .lanyan.burst.ready && .lanyan.energy == .lanyan.energymax {
+    lanyan burst;
+  } else {
+    lanyan attack, charge;
+  }
+}
+

@@ -1,0 +1,51 @@
+amber char lvl=90/90 cons=4 talent=9,9,9;
+amber add weapon="thestringless" refine=3 lvl=90/90;
+amber add set="crimsonwitchofflames" count=4;
+amber add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.642 cd=0.7944 pyro%=0.466;
+
+chongyun char lvl=90/90 cons=6 talent=9,9,9;
+chongyun add weapon="serpentspine" refine=1 lvl=90/90;
+chongyun add set="emblemofseveredfate" count=4;
+chongyun add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.2204 em=39.64 cr=0.3972 cd=1.284 cryo%=0.466;
+
+diona char lvl=90/90 cons=6 talent=9,9,9;
+diona add weapon="favoniuswarbow" refine=3 lvl=90/90;
+diona add set="noblesseoblige" count=4;
+diona add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.5652 atk=344.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.642 cd=0.662 cryo%=0.466;
+
+kazuha char lvl=90/90 cons=1 talent=9,9,9;
+kazuha add weapon="favoniussword" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.3968 er=0.1102 em=679.92 cr=0.3972 cd=0.1324;
+
+											
+
+											
+													
+																																																						
+																				
+##Default Enemy
+options swap_delay=12 debug=true iteration=1000 workers=50 mode=sl;
+target lvl=100 resist=0.1 hp=100000000 pos=0,0;
+energy every interval=480,720 amount=1;
+
+active diona;
+let rotations = 5;
+
+while rotations {
+
+  diona skill,burst,attack;
+  kazuha skill, high_plunge;
+  if .kazuha.burst.ready {
+  kazuha burst;}
+  amber burst;
+  kazuha skill, high_plunge;
+  chongyun burst,skill;
+  amber skill,aim[bunny=1],jump;
+  diona skill,dash;
+  amber skill,aim[bunny=1],dash;
+  chongyun attack:4;
+  amber aim[weakspot=1];
+  
+  rotations = rotations - 1;}
+
