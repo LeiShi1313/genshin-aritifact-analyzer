@@ -1,3 +1,4 @@
+import { memo } from "react";
 import CharacterCard from "../characters/CharacterCard";
 import { CharacterOverride } from "./types";
 
@@ -12,7 +13,7 @@ interface CharacterInfoProps {
   override?: CharacterOverride;
 }
 
-const CharacterInfo = ({ characterInfo, saturate = false, override }: CharacterInfoProps) => {
+const CharacterInfo = memo(({ characterInfo, saturate = false, override }: CharacterInfoProps) => {
   // Use override values if enabled and set, otherwise use script values
   const displayLevel = override?.enabled && override.level !== undefined
     ? override.level
@@ -35,6 +36,8 @@ const CharacterInfo = ({ characterInfo, saturate = false, override }: CharacterI
       />
     </div>
   );
-};
+});
+
+CharacterInfo.displayName = 'CharacterInfo';
 
 export default CharacterInfo;

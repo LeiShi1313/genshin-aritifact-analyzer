@@ -1,11 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Character } from "../../genshin/character";
 import { characterMetadata } from "../../utils/character";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
 import classNames from "classnames";
 
-const CharacterCard = ({ character, text = undefined, width = 24, textColor, saturate = false, constellation = undefined }) => {
+const CharacterCard = memo(({ character, text = undefined, width = 24, textColor, saturate = false, constellation = undefined }) => {
   const { t, i18n } = useTranslation();
   const imgUrl = useMemo(
     () =>
@@ -61,6 +61,8 @@ const CharacterCard = ({ character, text = undefined, width = 24, textColor, sat
       </figcaption>
     </figure>
   );
-};
+});
+
+CharacterCard.displayName = 'CharacterCard';
 
 export default CharacterCard;
