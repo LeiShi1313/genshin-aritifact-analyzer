@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import ReactLoading from "react-loading";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,8 @@ import { useWasmExecutor } from "../../hooks/useWasmExecutor";
 import MultiCharacterSelect from "../characters/MultiCharacterSelect";
 import ScriptCard from "./ScriptCard";
 import ScriptOptionsConfig, { ScriptOverrides } from "./ScriptOptionsConfig";
+import SelectedCharacterCard from "./SelectedCharacterCard";
+import { CharacterOverride, CharacterOverrides } from "./types";
 import { SimResults } from "../../gcsim/types/sim";
 import { gcsimScriptToScript } from "../../utils/gcsim";
 import { GCSimScript, GCSimScriptCharacterStat, GCSimScriptSetInfo } from "../../genshin/gcsim";
@@ -106,6 +108,47 @@ const Teams = () => {
   const [selectedCharacters, setSelectedCharacters] = useState<number[]>([]);
   const [scriptStates, setScriptStates] = useState<{ [index: number]: ScriptState }>({});
   const [scriptOverrides, setScriptOverrides] = useState<ScriptOverrides>({});
+  const [characterOverrides, setCharacterOverrides] = useState<CharacterOverrides>({});
+
+  // Handle character override changes
+  const handleCharacterOverrideChange = useCallback((characterId: number, override: CharacterOverride) => {
+    setCharacterOverrides(prev => ({
+      ...prev,
+      [characterId]: override
+    }));
+  }, []);
+
+  // Handle removing a character from selection
+  const handleRemoveCharacter = useCallback((characterId: number) => {
+    setSelectedCharacters(prev => prev.filter(id => id !== characterId));
+    setCharacterOverrides(prev => {
+      const newOverrides = { ...prev };
+      delete newOverrides[characterId];
+      return newOverrides;
+    });
+  }, []);
+
+  // When a character is selected, initialize their override state
+  const handleSelectedCharactersChange = useCallback((newSelected: number[]) => {
+    setSelectedCharacters(newSelected);
+    // Initialize overrides for newly added characters
+    setCharacterOverrides(prev => {
+      const updated = { ...prev };
+      newSelected.forEach(charId => {
+        if (!updated[charId]) {
+          updated[charId] = { enabled: true };
+        }
+      });
+      // Remove overrides for deselected characters
+      Object.keys(updated).forEach(key => {
+        const id = Number(key);
+        if (!newSelected.includes(id)) {
+          delete updated[id];
+        }
+      });
+      return updated;
+    });
+  }, []);
 
   // Use the custom hook for WASM executor lifecycle management
   const { isReady, isRunning, run, cancel } = useWasmExecutor({
@@ -157,19 +200,76 @@ const Teams = () => {
         Object.assign(scriptWithOverrides.targets[0], scriptOverrides.target);
       }
 
-      // Apply artifact stats and sets for each character
+      // Apply character overrides and artifact stats/sets for each character
       if (scriptWithOverrides.characterInfos) {
         scriptWithOverrides.characterInfos.forEach(charInfo => {
-          const characterArtifacts = characterToArtifacts[charInfo.character];
+          const charId = charInfo.character;
+          const override = characterOverrides[charId];
 
+          // Apply character overrides if enabled
+          if (override?.enabled) {
+            // Apply level override
+            if (override.level !== undefined) {
+              charInfo.level = override.level;
+            }
+
+            // Apply maxLevel override
+            if (override.maxLevel !== undefined) {
+              charInfo.maxLevel = override.maxLevel;
+            }
+
+            // Apply constellation override
+            if (override.constellation !== undefined) {
+              charInfo.constellation = override.constellation;
+            }
+
+            // Apply talents override
+            if (override.talents) {
+              charInfo.talents = [...override.talents];
+            }
+
+            // Apply weapon override
+            if (override.weapon?.weapon) {
+              charInfo.weaponInfo = {
+                weapon: override.weapon.weapon,
+                level: override.weapon.level ?? charInfo.weaponInfo?.level ?? 90,
+                maxLevel: override.weapon.maxLevel ?? charInfo.weaponInfo?.maxLevel ?? 90,
+                refinement: override.weapon.refinement ?? charInfo.weaponInfo?.refinement ?? 1,
+                params: [],
+              };
+            }
+
+            // Apply set overrides
+            if (override.sets && override.sets.length > 0) {
+              charInfo.setInfos = override.sets.map(setOverride => ({
+                set: setOverride.set,
+                count: setOverride.count,
+                params: [],
+              }));
+            }
+
+            console.log(`Applied overrides to character ${charId}:`, {
+              level: charInfo.level,
+              maxLevel: charInfo.maxLevel,
+              constellation: charInfo.constellation,
+              talents: charInfo.talents,
+              weapon: charInfo.weaponInfo,
+              sets: charInfo.setInfos,
+            });
+          }
+
+          // Apply artifact stats and sets (only if no set override from character overrides)
+          const characterArtifacts = characterToArtifacts[charId];
           if (characterArtifacts && characterArtifacts.length > 0) {
             // Replace character stats with artifact stats
             charInfo.stats = artifactsToStats(characterArtifacts);
 
-            // Replace set infos with aggregated artifact sets
-            charInfo.setInfos = aggregateArtifactSets(characterArtifacts);
+            // Only replace set infos if not already overridden
+            if (!override?.enabled || !override.sets || override.sets.length === 0) {
+              charInfo.setInfos = aggregateArtifactSets(characterArtifacts);
+            }
 
-            console.log(`Applied ${characterArtifacts.length} artifacts to character ${charInfo.character}:`, {
+            console.log(`Applied ${characterArtifacts.length} artifacts to character ${charId}:`, {
               stats: charInfo.stats.length,
               sets: charInfo.setInfos
             });
@@ -250,13 +350,21 @@ const Teams = () => {
     return Object.keys(characterToArtifacts).map(Number).sort();
   }, [characterToArtifacts]);
 
-  // Filter scripts based on selected characters
+  // Filter scripts based on selected characters, preserving original indices
   const filteredScripts = useMemo(() => {
-    if (!scripts || selectedCharacters.length === 0) {
-      return scripts || [];
+    if (!scripts) return [];
+
+    // Map scripts with their original indices
+    const scriptsWithIndices = scripts.map((script: any, originalIndex: number) => ({
+      script,
+      originalIndex
+    }));
+
+    if (selectedCharacters.length === 0) {
+      return scriptsWithIndices;
     }
 
-    return scripts.filter((script: any) => {
+    return scriptsWithIndices.filter(({ script }: { script: any }) => {
       const scriptCharacters = script.characterInfos.map(
         (info: any) => info.character
       );
@@ -298,10 +406,30 @@ const Teams = () => {
           </label>
           <MultiCharacterSelect
             selectedCharacters={selectedCharacters}
-            setSelectedCharacters={setSelectedCharacters}
+            setSelectedCharacters={handleSelectedCharactersChange}
             availableCharacters={availableCharacters}
           />
         </div>
+
+        {/* Selected Character Override Cards */}
+        {selectedCharacters.length > 0 && (
+          <div className="flex w-full flex-col gap-2">
+            <label className="text-sm font-medium">
+              {t("Character Overrides")}
+            </label>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {selectedCharacters.map((charId) => (
+                <SelectedCharacterCard
+                  key={charId}
+                  characterId={charId}
+                  override={characterOverrides[charId] || { enabled: true }}
+                  onChange={(override) => handleCharacterOverrideChange(charId, override)}
+                  onRemove={() => handleRemoveCharacter(charId)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Scripts count and status */}
         <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -343,26 +471,31 @@ const Teams = () => {
           <div className="h-full w-full">
             <List
               style={{ height: "calc(100vh - 400px)", width: "100%" }}
-              rowComponent={({ index, style, scripts, selected, onRunHandler, isReadyProp, states }) => (
-                <div style={{ ...style, padding: "8px 0" }}>
-                  <ScriptCard
-                    script={scripts[index]}
-                    index={index}
-                    selectedCharacters={selected}
-                    onRun={() => onRunHandler(index, scripts[index])}
-                    isWasmReady={isReadyProp}
-                    scriptState={states[index]}
-                  />
-                </div>
-              )}
+              rowComponent={({ index, style, scriptsWithIndices, selected, onRunHandler, isReadyProp, states, overrides }) => {
+                const { script, originalIndex } = scriptsWithIndices[index];
+                return (
+                  <div style={{ ...style, padding: "8px 0" }}>
+                    <ScriptCard
+                      script={script}
+                      index={originalIndex}
+                      selectedCharacters={selected}
+                      onRun={() => onRunHandler(originalIndex, script)}
+                      isWasmReady={isReadyProp}
+                      scriptState={states[originalIndex]}
+                      characterOverrides={overrides}
+                    />
+                  </div>
+                );
+              }}
               rowCount={filteredScripts.length}
               rowHeight={250}
               rowProps={{
-                scripts: filteredScripts,
+                scriptsWithIndices: filteredScripts,
                 selected: selectedCharacters,
                 onRunHandler: handleRunScript,
                 isReadyProp: isReady,
                 states: scriptStates,
+                overrides: characterOverrides,
               }}
             />
           </div>

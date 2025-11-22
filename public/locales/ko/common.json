@@ -8,7 +8,10 @@
     "Mean DPS": "평균 DPS",
     "Min DPS": "최소 DPS",
     "Max DPS": "최대 DPS",
+    "Min": "최소",
+    "Max": "최대",
     "Duration": "지속 시간",
+    "Total Damage": "총 피해량",
     "Character DPS": "캐릭터 DPS",
     "Script Options": "스크립트 옵션",
     "Iterations": "반복 횟수",
@@ -45,5 +48,13 @@
     "Physical Resist": "물리 저항",
     "Freeze Resist": "빙결 저항",
     "Particle Threshold": "입자 임계값",
-    "Particle Drop Count": "입자 드롭 수"
+    "Particle Drop Count": "입자 드롭 수",
+    "Character Overrides": "캐릭터 설정",
+    "Override": "덮어쓰기",
+    "Talents": "특성",
+    "Weapon": "무기",
+    "Select Weapon": "무기 선택",
+    "Select Set": "세트 선택",
+    "Clear": "지우기",
+    "Add Set": "세트 추가"
 }

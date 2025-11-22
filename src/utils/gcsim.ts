@@ -3,6 +3,7 @@ import { Character, characterToJSON } from "../genshin/character";
 import { Weapon, weaponToJSON } from "../genshin/weapon";
 import { Set, setToJSON } from "../genshin/set";
 import { AttributeType, attributeTypeToJSON } from "../genshin/attribute";
+import { elementToJSON } from "../genshin/element";
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 
 const characterToGCSimCharacter = (character: Character) => {
@@ -198,11 +199,47 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
         result += `hurt ${gCSimScriptHurtSettings_HurtTypeToJSON(script.hurtSettings.type).toLowerCase()} `
             + `interval=${intervals} `
             + `amount=${script.hurtSettings.amount.min},${script.hurtSettings.amount.max}`
-            + (script.hurtSettings.element ? ` element=${script.hurtSettings.element.toString().toLowerCase()}` : "")
+            + (script.hurtSettings.element ? ` element=${elementToJSON(script.hurtSettings.element).toString().toLowerCase()}` : "")
             + ";\n\n";
     }
     result += script.scripts.join("\n");
     return result;
 }
+
+// Ascension boundaries where maxLevel can be ambiguous
+export const ASCENSION_BOUNDARIES = [20, 40, 50, 60, 70, 80, 90, 95] as const;
+
+export interface LevelInfo {
+  maxLevel: number;
+  isAmbiguous: boolean;
+  options: number[];
+}
+
+/**
+ * Infer maxLevel from level
+ * Returns { maxLevel, isAmbiguous, options }
+ * - maxLevel: the inferred maxLevel (or lower bound if ambiguous)
+ * - isAmbiguous: true if level is at ascension boundary
+ * - options: array of possible maxLevel values if ambiguous
+ */
+export const inferMaxLevel = (level: number): LevelInfo => {
+  if (level >= 96) return { maxLevel: 100, isAmbiguous: false, options: [] };
+  if (level === 95) return { maxLevel: 95, isAmbiguous: true, options: [95, 100] };
+  if (level >= 91) return { maxLevel: 95, isAmbiguous: false, options: [] };
+  if (level === 90) return { maxLevel: 90, isAmbiguous: true, options: [90, 95] };
+  if (level >= 81) return { maxLevel: 90, isAmbiguous: false, options: [] };
+  if (level === 80) return { maxLevel: 80, isAmbiguous: true, options: [80, 90] };
+  if (level >= 71) return { maxLevel: 80, isAmbiguous: false, options: [] };
+  if (level === 70) return { maxLevel: 70, isAmbiguous: true, options: [70, 80] };
+  if (level >= 61) return { maxLevel: 70, isAmbiguous: false, options: [] };
+  if (level === 60) return { maxLevel: 60, isAmbiguous: true, options: [60, 70] };
+  if (level >= 51) return { maxLevel: 60, isAmbiguous: false, options: [] };
+  if (level === 50) return { maxLevel: 50, isAmbiguous: true, options: [50, 60] };
+  if (level >= 41) return { maxLevel: 50, isAmbiguous: false, options: [] };
+  if (level === 40) return { maxLevel: 40, isAmbiguous: true, options: [40, 60] };
+  if (level >= 21) return { maxLevel: 40, isAmbiguous: false, options: [] };
+  if (level === 20) return { maxLevel: 20, isAmbiguous: true, options: [20, 40] };
+  return { maxLevel: 20, isAmbiguous: false, options: [] };
+};
 
 export { gcsimScriptToScript };

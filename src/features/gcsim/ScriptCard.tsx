@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import CharacterInfo from "./CharacterInfo";
 import { SimResults } from "../../gcsim/types/sim";
+import { CharacterOverrides } from "./types";
 
 interface ScriptState {
   isRunning: boolean;
@@ -20,6 +21,7 @@ interface ScriptCardProps {
   onRun?: () => void;
   isWasmReady?: boolean;
   scriptState?: ScriptState;
+  characterOverrides?: CharacterOverrides;
 }
 
 const ScriptCard = ({
@@ -28,7 +30,8 @@ const ScriptCard = ({
   selectedCharacters,
   onRun,
   isWasmReady = false,
-  scriptState
+  scriptState,
+  characterOverrides = {}
 }: ScriptCardProps) => {
   const { t } = useTranslation();
 
@@ -78,82 +81,138 @@ const ScriptCard = ({
                 !selectedCharacters.includes(characterInfo.character) &&
                 selectedCharacters.length > 0
               }
+              override={characterOverrides[characterInfo.character]}
             />
           ))}
         </div>
 
-        {/* Progress and Results section - takes remaining space */}
-        <div className="flex flex-1 flex-col gap-2">
-          {/* Progress bar - always takes up space to maintain consistent height */}
-          <div className="flex min-h-[52px] flex-col gap-1 rounded-lg bg-base-300 p-2">
-            {isRunning && progress.total > 0 ? (
-              <>
-                <div className="flex items-center justify-between text-xs opacity-70">
-                  <span>{t("Progress")}</span>
-                  <span>{progress.current} / {progress.total}</span>
-                </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-base-100">
-                  <div
-                    className="h-full bg-primary transition-all duration-300"
-                    style={{ width: `${(progress.current / progress.total) * 100}%` }}
+        {/* Progress/Results section - fixed 5-row layout */}
+        <div className="flex flex-1 flex-col gap-1 rounded-lg bg-base-300 p-2 text-xs">
+          {/* Row 1: Progress bar OR Results label */}
+          <div className="flex h-5 items-center">
+            {isRunning ? (
+              progress.total > 0 ? (
+                <div className="flex w-full items-center gap-2">
+                  <span className="opacity-70">{t("Progress")}</span>
+                  <progress
+                    className="progress progress-primary flex-1"
+                    value={progress.current}
+                    max={progress.total}
                   />
+                  <span className="opacity-70">{progress.current}/{progress.total}</span>
                 </div>
-              </>
-            ) : isRunning ? (
-              <div className="flex items-center justify-center gap-2">
-                <ReactLoading type="spin" height={20} width={20} className="fill-primary" />
-                <span className="text-xs sm:text-sm">{t("Running")}...</span>
-              </div>
-            ) : null}
+              ) : (
+                <div className="flex items-center gap-2">
+                  <ReactLoading type="spin" height={14} width={14} className="fill-primary" />
+                  <span>{t("Running")}...</span>
+                </div>
+              )
+            ) : result?.statistics ? (
+              <span className="font-semibold opacity-70">{t("Results")}</span>
+            ) : (
+              <div className="skeleton h-4 w-20" />
+            )}
           </div>
 
-          {/* Results */}
-          {result && result.statistics && (
-            <div className="flex flex-col gap-2 rounded-lg bg-base-300 p-2 sm:p-3">
-              <div className="text-xs font-bold sm:text-sm">{t("Results")}:</div>
-
-              <div className="flex flex-col gap-4 md:flex-row">
-                {/* DPS Summary */}
-                <div className="grid flex-1 grid-cols-2 gap-2 text-xs">
-                  <div className="flex flex-col">
-                    <span className="opacity-70">{t("Mean DPS")}</span>
-                    <span className="font-bold">{result.statistics.dps?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="opacity-70">{t("Min DPS")}</span>
-                    <span className="font-bold">{result.statistics.dps?.min?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="opacity-70">{t("Max DPS")}</span>
-                    <span className="font-bold">{result.statistics.dps?.max?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="opacity-70">{t("Duration")} (s)</span>
-                    <span className="font-bold">{result.statistics.duration?.mean?.toFixed(1)}</span>
-                  </div>
-                </div>
-
-                {/* Character DPS */}
-                {result.statistics.character_dps && result.statistics.character_dps.length > 0 && (
-                  <div className="flex flex-1 flex-col gap-1">
-                    <span className="text-xs font-semibold opacity-70">{t("Character DPS")}:</span>
-                    <div className="flex flex-col gap-1">
-                      {result.character_details?.map((char, idx) => {
-                        const charDps = result.statistics?.character_dps?.[idx];
-                        if (!charDps) return null;
-                        return (
-                          <div key={idx} className="flex items-center justify-between text-xs">
-                            <span>{getCharacterName(char.name)}</span>
-                            <span className="font-mono">{charDps.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
+          {/* Row 2: Mean DPS | Character 1 */}
+          <div className="flex h-5 gap-x-8">
+            <div className="flex flex-1 items-center justify-between">
+              <span className="opacity-70">{t("Mean DPS")}:</span>
+              {result?.statistics ? (
+                <span className="font-bold">{result.statistics.dps?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+              ) : (
+                <div className="skeleton h-3 w-16" />
+              )}
             </div>
-          )}
+            <div className="flex flex-1 items-center justify-between">
+              {result?.character_details?.[0] ? (
+                <>
+                  <span className="opacity-70">{getCharacterName(result.character_details[0].name)}:</span>
+                  <span className="font-mono">{result.statistics?.character_dps?.[0]?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                </>
+              ) : (
+                <>
+                  <div className="skeleton h-3 w-12" />
+                  <div className="skeleton h-3 w-16" />
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Row 3: Max | Character 2 */}
+          <div className="flex h-5 gap-x-8">
+            <div className="flex flex-1 items-center justify-between">
+              <span className="opacity-70">{t("Max")}:</span>
+              {result?.statistics ? (
+                <span className="font-mono">{result.statistics.dps?.max?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+              ) : (
+                <div className="skeleton h-3 w-16" />
+              )}
+            </div>
+            <div className="flex flex-1 items-center justify-between">
+              {result?.character_details?.[1] ? (
+                <>
+                  <span className="opacity-70">{getCharacterName(result.character_details[1].name)}:</span>
+                  <span className="font-mono">{result.statistics?.character_dps?.[1]?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                </>
+              ) : (
+                <>
+                  <div className="skeleton h-3 w-12" />
+                  <div className="skeleton h-3 w-16" />
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Row 4: Min | Character 3 */}
+          <div className="flex h-5 gap-x-8">
+            <div className="flex flex-1 items-center justify-between">
+              <span className="opacity-70">{t("Min")}:</span>
+              {result?.statistics ? (
+                <span className="font-mono">{result.statistics.dps?.min?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+              ) : (
+                <div className="skeleton h-3 w-16" />
+              )}
+            </div>
+            <div className="flex flex-1 items-center justify-between">
+              {result?.character_details?.[2] ? (
+                <>
+                  <span className="opacity-70">{getCharacterName(result.character_details[2].name)}:</span>
+                  <span className="font-mono">{result.statistics?.character_dps?.[2]?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                </>
+              ) : (
+                <>
+                  <div className="skeleton h-3 w-12" />
+                  <div className="skeleton h-3 w-16" />
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Row 5: Total Damage | Character 4 */}
+          <div className="flex h-5 gap-x-8">
+            <div className="flex flex-1 items-center justify-between">
+              <span className="opacity-70">{t("Total Damage")}:</span>
+              {result?.statistics ? (
+                <span className="font-mono">{result.statistics.total_damage?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+              ) : (
+                <div className="skeleton h-3 w-16" />
+              )}
+            </div>
+            <div className="flex flex-1 items-center justify-between">
+              {result?.character_details?.[3] ? (
+                <>
+                  <span className="opacity-70">{getCharacterName(result.character_details[3].name)}:</span>
+                  <span className="font-mono">{result.statistics?.character_dps?.[3]?.mean?.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                </>
+              ) : (
+                <>
+                  <div className="skeleton h-3 w-12" />
+                  <div className="skeleton h-3 w-16" />
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

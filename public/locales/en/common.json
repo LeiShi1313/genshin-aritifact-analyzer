@@ -122,7 +122,10 @@
     "Mean DPS": "Mean DPS",
     "Min DPS": "Min DPS",
     "Max DPS": "Max DPS",
+    "Min": "Min",
+    "Max": "Max",
     "Duration": "Duration",
+    "Total Damage": "Total Damage",
     "Character DPS": "Character DPS",
     "Script Options": "Script Options",
     "Iterations": "Iterations",
@@ -159,5 +162,13 @@
     "Physical Resist": "Physical Resist",
     "Freeze Resist": "Freeze Resist",
     "Particle Threshold": "Particle Threshold",
-    "Particle Drop Count": "Particle Drop Count"
+    "Particle Drop Count": "Particle Drop Count",
+    "Character Overrides": "Character Overrides",
+    "Override": "Override",
+    "Talents": "Talents",
+    "Weapon": "Weapon",
+    "Select Weapon": "Select Weapon",
+    "Select Set": "Select Set",
+    "Clear": "Clear",
+    "Add Set": "Add Set"
 }

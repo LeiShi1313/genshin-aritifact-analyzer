@@ -8,7 +8,10 @@
     "Mean DPS": "平均DPS",
     "Min DPS": "最小DPS",
     "Max DPS": "最大DPS",
+    "Min": "最小",
+    "Max": "最大",
     "Duration": "継続時間",
+    "Total Damage": "総ダメージ",
     "Character DPS": "キャラクターDPS",
     "Script Options": "スクリプトオプション",
     "Iterations": "反復回数",
@@ -45,5 +48,13 @@
     "Physical Resist": "物理耐性",
     "Freeze Resist": "凍結耐性",
     "Particle Threshold": "粒子閾値",
-    "Particle Drop Count": "粒子ドロップ数"
+    "Particle Drop Count": "粒子ドロップ数",
+    "Character Overrides": "キャラクター設定",
+    "Override": "上書き",
+    "Talents": "天賦",
+    "Weapon": "武器",
+    "Select Weapon": "武器を選択",
+    "Select Set": "聖遺物セットを選択",
+    "Clear": "クリア",
+    "Add Set": "セットを追加"
 }

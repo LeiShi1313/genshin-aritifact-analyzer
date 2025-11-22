@@ -122,7 +122,10 @@
     "Mean DPS": "平均伤害",
     "Min DPS": "最低伤害",
     "Max DPS": "最高伤害",
+    "Min": "最低",
+    "Max": "最高",
     "Duration": "持续时间",
+    "Total Damage": "总伤害",
     "Character DPS": "角色伤害",
     "Script Options": "脚本选项",
     "Iterations": "迭代次数",
@@ -159,5 +162,13 @@
     "Physical Resist": "物理抗性",
     "Freeze Resist": "冻结抗性",
     "Particle Threshold": "微粒阈值",
-    "Particle Drop Count": "微粒掉落数量"
+    "Particle Drop Count": "微粒掉落数量",
+    "Character Overrides": "角色覆盖设置",
+    "Override": "覆盖",
+    "Talents": "天赋",
+    "Weapon": "武器",
+    "Select Weapon": "选择武器",
+    "Select Set": "选择套装",
+    "Clear": "清除",
+    "Add Set": "添加套装"
 }
