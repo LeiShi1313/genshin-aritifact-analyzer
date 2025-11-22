@@ -3,3 +3,5 @@ dist/
 test/
 scripts/test.cjs
 public/gcsim/scripts/*.gen
+genshin_export_*.json
+mona*.json
