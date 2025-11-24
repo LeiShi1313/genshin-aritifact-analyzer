@@ -26,6 +26,7 @@ const Config = lazy(() => import("./features/configs/Config"));
 const GCSim = lazy(() => import("./features/gcsim/GCSim"));
 const GCSimSelect = lazy(() => import("./features/gcsim/Select"));
 const GCSimTeams = lazy(() => import("./features/gcsim/Teams"));
+const Memorial = lazy(() => import("./features/Memorial"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,8 @@ const App = () => {
 
               <Route path="config" element={<Config />} />
             </Route>
+            {/* Hidden memorial page */}
+            <Route path="/xigua" element={<Memorial />} />
             {/* Place new routes over this */}
             {/* <Route path="/app/*" element={<Layout />} /> */}
             {/* <Route index path="/" exact element={<Navigate to="/login" />} /> */}
