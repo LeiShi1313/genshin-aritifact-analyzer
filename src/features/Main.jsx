@@ -60,7 +60,7 @@ const Main = () => {
         weapons: result.weapons,
       }));
       setFileLoading(false);
-      navigate(`/artifacts/${key}`);
+      navigate(`/uploaded`);
     };
     fileReader.readAsText(file, "UTF-8");
   };

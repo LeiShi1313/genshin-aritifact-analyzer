@@ -178,5 +178,7 @@
     "Artifacts": "圣遗物",
     "Characters": "角色",
     "Copy Script": "复制脚本",
-    "Copied!": "已复制！"
+    "Copied!": "已复制！",
+    "Select": "Select",
+    "No artifacts available": "No artifacts available"
 }

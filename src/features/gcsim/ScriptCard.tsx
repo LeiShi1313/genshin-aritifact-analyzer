@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { Copy, Check } from "phosphor-react";
@@ -27,7 +27,7 @@ interface ScriptCardProps {
   characterOverrides?: CharacterOverrides;
 }
 
-const ScriptCard = ({
+const ScriptCard = memo(({
   script,
   index,
   selectedCharacters,
@@ -268,6 +268,35 @@ const ScriptCard = ({
       )}
     </div>
   );
-};
+}, (prevProps, nextProps) => {
+  // Custom comparison: only re-render if relevant props changed
+  if (prevProps.index !== nextProps.index) return false;
+  if (prevProps.isWasmReady !== nextProps.isWasmReady) return false;
+  if (prevProps.script !== nextProps.script) return false;
+
+  // Compare selectedCharacters arrays
+  if (prevProps.selectedCharacters.length !== nextProps.selectedCharacters.length) return false;
+  if (!prevProps.selectedCharacters.every((c, i) => c === nextProps.selectedCharacters[i])) return false;
+
+  // Compare scriptState (this is where the optimization matters)
+  const prevState = prevProps.scriptState;
+  const nextState = nextProps.scriptState;
+  if (prevState?.isRunning !== nextState?.isRunning) return false;
+  if (prevState?.error !== nextState?.error) return false;
+  if (prevState?.progress?.current !== nextState?.progress?.current) return false;
+  if (prevState?.progress?.total !== nextState?.progress?.total) return false;
+  // Compare result by reference (new result object = re-render)
+  if (prevState?.result !== nextState?.result) return false;
+
+  // Compare characterOverrides for this script's characters only
+  const scriptChars = prevProps.script.characterInfos.map((c: any) => c.character);
+  for (const charId of scriptChars) {
+    if (prevProps.characterOverrides?.[charId] !== nextProps.characterOverrides?.[charId]) return false;
+  }
+
+  return true; // Props are equal, skip re-render
+});
+
+ScriptCard.displayName = 'ScriptCard';
 
 export default ScriptCard;

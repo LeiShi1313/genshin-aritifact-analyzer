@@ -1,5 +1,7 @@
 import { Weapon } from "../../genshin/weapon";
 import { Set } from "../../genshin/set";
+import { Artifact } from "../../genshin/artifact";
+import { AttributePosition } from "../../genshin/attribute";
 
 /**
  * Set override configuration
@@ -10,6 +12,19 @@ import { Set } from "../../genshin/set";
 export interface SetOverride {
   set: Set;
   count: 2 | 4;
+}
+
+/**
+ * Artifact override for a single position
+ * Can either reference an uploaded artifact or use custom values
+ */
+export interface ArtifactOverride {
+  /** The artifact position (flower, plume, sands, goblet, circlet) */
+  position: AttributePosition;
+  /** The artifact to use (from uploaded artifacts) */
+  artifact?: Artifact;
+  /** If true, this position is cleared (no artifact) */
+  cleared?: boolean;
 }
 
 /**
@@ -47,6 +62,9 @@ export interface CharacterOverride {
 
   /** Set overrides (max 2 sets) */
   sets?: SetOverride[];
+
+  /** Artifact overrides by position */
+  artifacts?: ArtifactOverride[];
 }
 
 /**

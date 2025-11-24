@@ -218,6 +218,24 @@ const Teams = () => {
           const charArtifacts = characterToArtifacts[charId];
           if (charArtifacts) {
             override.sets = inferSetsFromArtifacts(charArtifacts);
+
+            // Initialize artifact overrides with equipped artifacts for all 5 positions
+            const positions = [
+              AttributePosition.FLOWER,
+              AttributePosition.PLUME,
+              AttributePosition.SANDS,
+              AttributePosition.GOBLET,
+              AttributePosition.CIRCLET,
+            ];
+            override.artifacts = positions.map(position => {
+              const equippedArtifact = charArtifacts.find(
+                (a: any) => a.position === position
+              );
+              return {
+                position,
+                artifact: equippedArtifact || undefined,
+              };
+            });
           }
 
           updated[charId] = override;
@@ -360,20 +378,35 @@ const Teams = () => {
             });
           }
 
-          // Apply artifact stats and sets (only if no set override from character overrides)
-          const characterArtifacts = characterToArtifacts[charId];
-          if (characterArtifacts && characterArtifacts.length > 0) {
-            // Replace character stats with artifact stats
-            charInfo.stats = artifactsToStats(characterArtifacts);
+          // Determine which artifacts to use:
+          // If artifact overrides exist, use them (empty/undefined positions = no artifact)
+          // Otherwise, fall back to character's equipped artifacts
+          let artifactsToUse: any[] = [];
 
-            // Only replace set infos if not already overridden
+          if (override?.enabled && override.artifacts) {
+            // Use artifact overrides - only include positions with actual artifacts
+            // Positions without artifacts are intentionally empty
+            artifactsToUse = override.artifacts
+              .filter(ao => ao.artifact)
+              .map(ao => ao.artifact);
+          } else {
+            // No overrides - use character's equipped artifacts
+            artifactsToUse = characterToArtifacts[charId] || [];
+          }
+
+          if (artifactsToUse.length > 0) {
+            // Replace character stats with artifact stats
+            charInfo.stats = artifactsToStats(artifactsToUse);
+
+            // Only replace set infos if not already overridden by explicit set selection
             if (!override?.enabled || !override.sets || override.sets.length === 0) {
-              charInfo.setInfos = aggregateArtifactSets(characterArtifacts);
+              charInfo.setInfos = aggregateArtifactSets(artifactsToUse);
             }
 
-            console.log(`Applied ${characterArtifacts.length} artifacts to character ${charId}:`, {
+            console.log(`Applied ${artifactsToUse.length} artifacts to character ${charId}:`, {
               stats: charInfo.stats.length,
-              sets: charInfo.setInfos
+              sets: charInfo.setInfos,
+              fromOverride: !!(override?.enabled && override.artifacts && override.artifacts.length > 0)
             });
           }
         });
@@ -431,10 +464,31 @@ const Teams = () => {
     }
   };
 
-  // Get list of available characters from artifacts
+  // Allow all characters to be selected (MultiCharacterSelect will use enumToIdx(Character))
   const availableCharacters = useMemo(() => {
-    return Object.keys(characterToArtifacts).map(Number).sort();
-  }, [characterToArtifacts]);
+    return null;
+  }, []);
+
+  // Track which characters have uploaded data (GOOD format or artifacts)
+  const charactersWithData = useMemo(() => {
+    const charIds = new Set<number>();
+
+    // Add characters from GOOD format
+    if (isGOODFormat) {
+      uploadedCharacters.forEach((char: any) => {
+        if (char.character) {
+          charIds.add(char.character);
+        }
+      });
+    }
+
+    // Add characters with artifacts
+    Object.keys(characterToArtifacts).forEach(charId => {
+      charIds.add(Number(charId));
+    });
+
+    return charIds;
+  }, [isGOODFormat, uploadedCharacters, characterToArtifacts]);
 
   // Filter scripts based on selected characters, preserving original indices
   const filteredScripts = useMemo(() => {
@@ -494,6 +548,7 @@ const Teams = () => {
             selectedCharacters={selectedCharacters}
             setSelectedCharacters={handleSelectedCharactersChange}
             availableCharacters={availableCharacters}
+            charactersWithData={charactersWithData}
           />
         </div>
 
@@ -512,6 +567,7 @@ const Teams = () => {
                   onChange={(override) => handleCharacterOverrideChange(charId, override)}
                   onRemove={() => handleRemoveCharacter(charId)}
                   uploadedWeapons={uploadedWeapons}
+                  uploadedArtifacts={artifacts}
                 />
               ))}
             </div>
