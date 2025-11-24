@@ -7,7 +7,7 @@ import { List } from "react-window";
 import IconClose from "../../assets/svgs/IconClose";
 import CharacterListItem from "./CharacterListItem";
 
-const MultiCharacterSelect = ({ selectedCharacters, setSelectedCharacters, availableCharacters = null }) => {
+const MultiCharacterSelect = ({ selectedCharacters, setSelectedCharacters, availableCharacters = null, charactersWithData = null }) => {
   const { t, i18n } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -178,13 +178,14 @@ const MultiCharacterSelect = ({ selectedCharacters, setSelectedCharacters, avail
             {/* Virtual list of characters */}
             <List
               style={{ height: 400, width: "100%" }}
-              rowComponent={({ index, style, characters, isSelectedFn, toggleFn }) => {
+              rowComponent={({ index, style, characters, isSelectedFn, toggleFn, hasDataFn }) => {
                 const characterId = characters[index];
                 return (
                   <div style={{ ...style, paddingBottom: '4px' }}>
                     <CharacterListItem
                       characterId={characterId}
                       isSelected={isSelectedFn(characterId)}
+                      hasData={hasDataFn ? hasDataFn(characterId) : false}
                       onToggle={() => toggleFn(characterId)}
                     />
                   </div>
@@ -196,6 +197,7 @@ const MultiCharacterSelect = ({ selectedCharacters, setSelectedCharacters, avail
                 characters: characterList,
                 isSelectedFn: isSelected,
                 toggleFn: toggleCharacter,
+                hasDataFn: charactersWithData ? (id) => charactersWithData.has(id) : null,
               }}
             />
           </div>

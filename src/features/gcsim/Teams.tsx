@@ -464,10 +464,31 @@ const Teams = () => {
     }
   };
 
-  // Get list of available characters from artifacts
+  // Allow all characters to be selected (MultiCharacterSelect will use enumToIdx(Character))
   const availableCharacters = useMemo(() => {
-    return Object.keys(characterToArtifacts).map(Number).sort();
-  }, [characterToArtifacts]);
+    return null;
+  }, []);
+
+  // Track which characters have uploaded data (GOOD format or artifacts)
+  const charactersWithData = useMemo(() => {
+    const charIds = new Set<number>();
+
+    // Add characters from GOOD format
+    if (isGOODFormat) {
+      uploadedCharacters.forEach((char: any) => {
+        if (char.character) {
+          charIds.add(char.character);
+        }
+      });
+    }
+
+    // Add characters with artifacts
+    Object.keys(characterToArtifacts).forEach(charId => {
+      charIds.add(Number(charId));
+    });
+
+    return charIds;
+  }, [isGOODFormat, uploadedCharacters, characterToArtifacts]);
 
   // Filter scripts based on selected characters, preserving original indices
   const filteredScripts = useMemo(() => {
@@ -527,6 +548,7 @@ const Teams = () => {
             selectedCharacters={selectedCharacters}
             setSelectedCharacters={handleSelectedCharactersChange}
             availableCharacters={availableCharacters}
+            charactersWithData={charactersWithData}
           />
         </div>
 

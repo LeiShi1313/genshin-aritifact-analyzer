@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { Character } from "../../genshin/character";
 
-const CharacterListItem = ({ characterId, isSelected, onToggle }) => {
+const CharacterListItem = ({ characterId, isSelected, hasData = false, onToggle }) => {
   const { t } = useTranslation();
 
   const getCharacterIconUrl = (id) => {
@@ -22,11 +22,16 @@ const CharacterListItem = ({ characterId, isSelected, onToggle }) => {
       )}
       onClick={onToggle}
     >
-      <img
-        className="aspect-square w-8 rounded"
-        src={getCharacterIconUrl(characterId)}
-        alt={t(Character[characterId].toLowerCase(), { ns: "characters" })}
-      />
+      <div className="relative">
+        <img
+          className="aspect-square w-8 rounded"
+          src={getCharacterIconUrl(characterId)}
+          alt={t(Character[characterId].toLowerCase(), { ns: "characters" })}
+        />
+        {hasData && (
+          <div className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-success border border-neutral"></div>
+        )}
+      </div>
       {t(Character[characterId].toLowerCase(), { ns: "characters" })}
       {isSelected && (
         <svg

@@ -101,7 +101,6 @@ const ArtifactSlots = memo(({
 
   // Format artifact stats for tooltip
   const getArtifactTooltip = (artifact: Artifact): string => {
-    console.log(artifact)
     const lines: string[] = [];
 
     // Set name
