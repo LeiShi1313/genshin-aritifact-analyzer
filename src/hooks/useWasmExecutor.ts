@@ -106,7 +106,15 @@ export function useWasmExecutor(
         return Promise.resolve(false);
       }
 
-      return executorRef.current.run(config, onUpdate);
+      // Wrap the run call with error handling to ensure isRunning flag is reset
+      return executorRef.current.run(config, onUpdate).catch((error) => {
+        // Cancel to reset the executor's running state
+        if (executorRef.current) {
+          executorRef.current.cancel();
+        }
+        // Re-throw the error so the caller can handle it
+        throw error;
+      });
     },
     []
   );
