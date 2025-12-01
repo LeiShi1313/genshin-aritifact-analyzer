@@ -1,11 +1,10 @@
 import { useState, memo } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
-import { Copy, Check } from "phosphor-react";
+import { Copy, Check, Eye } from "phosphor-react";
 import CharacterInfo from "./CharacterInfo";
 import { SimResults } from "../../gcsim/types/sim";
 import { CharacterOverrides } from "./types";
-import { generateOverriddenScript } from "../../utils/gcsim";
 
 interface ScriptState {
   isRunning: boolean;
@@ -22,6 +21,8 @@ interface ScriptCardProps {
   index: number;
   selectedCharacters: number[];
   onRun?: () => void;
+  onCopy?: () => Promise<boolean>;
+  onView?: () => void;
   isWasmReady?: boolean;
   scriptState?: ScriptState;
   characterOverrides?: CharacterOverrides;
@@ -32,6 +33,8 @@ const ScriptCard = memo(({
   index,
   selectedCharacters,
   onRun,
+  onCopy,
+  onView,
   isWasmReady = false,
   scriptState,
   characterOverrides = {}
@@ -56,26 +59,14 @@ const ScriptCard = memo(({
   };
 
   const handleCopy = async () => {
+    if (!onCopy) return;
+
     try {
-      const scriptText = generateOverriddenScript(script, characterOverrides);
-
-      // Try modern clipboard API first
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(scriptText);
-      } else {
-        // Fallback for non-HTTPS contexts
-        const textArea = document.createElement('textarea');
-        textArea.value = scriptText;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-9999px';
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
+      const success = await onCopy();
+      if (success) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       }
-
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy script:", err);
     }
@@ -89,6 +80,14 @@ const ScriptCard = memo(({
           {t("Script")} #{index + 1}
         </div>
         <div className="flex items-center gap-2">
+          <div className="tooltip tooltip-bottom" data-tip={t("View Script")}>
+            <button
+              onClick={onView}
+              className="btn btn-ghost btn-xs sm:btn-sm"
+            >
+              <Eye size={16} weight="bold" />
+            </button>
+          </div>
           <div className="tooltip tooltip-bottom" data-tip={copied ? t("Copied!") : t("Copy Script")}>
             <button
               onClick={handleCopy}
@@ -293,6 +292,11 @@ const ScriptCard = memo(({
   for (const charId of scriptChars) {
     if (prevProps.characterOverrides?.[charId] !== nextProps.characterOverrides?.[charId]) return false;
   }
+
+  // Compare function references
+  if (prevProps.onCopy !== nextProps.onCopy) return false;
+  if (prevProps.onRun !== nextProps.onRun) return false;
+  if (prevProps.onView !== nextProps.onView) return false;
 
   return true; // Props are equal, skip re-render
 });

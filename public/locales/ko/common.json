@@ -65,6 +65,9 @@
     "Characters": "캐릭터",
     "Copy Script": "스크립트 복사",
     "Copied!": "복사됨!",
+    "View Script": "스크립트 보기",
+    "No script text available": "사용 가능한 스크립트가 없습니다",
+    "Close": "닫기",
     "Select": "Select",
     "No artifacts available": "No artifacts available"
 }

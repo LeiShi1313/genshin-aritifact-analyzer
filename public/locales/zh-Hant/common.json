@@ -64,5 +64,10 @@
     "Artifacts": "聖遺物",
     "Characters": "角色",
     "Copy Script": "複製腳本",
-    "Copied!": "已複製！"
+    "Copied!": "已複製！",
+    "View Script": "查看腳本",
+    "No script text available": "沒有可用的腳本內容",
+    "Close": "關閉",
+    "Select": "選擇",
+    "No artifacts available": "沒有可用的聖遺物"
 }

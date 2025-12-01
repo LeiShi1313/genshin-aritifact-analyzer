@@ -167,7 +167,7 @@ const MultiCharacterSelect = ({ selectedCharacters, setSelectedCharacters, avail
             {selectedCharacters.length > 0 && (
               <div className="mb-2">
                 <button
-                  className="btn btn-outline btn-sm w-full"
+                  className="btn btn-outline btn-sm w-full text-neutral-content"
                   onClick={() => setSelectedCharacters([])}
                 >
                   {t("Clear All")} ({selectedCharacters.length})

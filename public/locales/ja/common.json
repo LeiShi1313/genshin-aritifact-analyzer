@@ -65,6 +65,9 @@
     "Characters": "キャラクター",
     "Copy Script": "スクリプトをコピー",
     "Copied!": "コピーしました！",
+    "View Script": "スクリプトを表示",
+    "No script text available": "利用可能なスクリプトがありません",
+    "Close": "閉じる",
     "Select": "Select",
     "No artifacts available": "No artifacts available"
 }

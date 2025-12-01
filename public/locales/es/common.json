@@ -65,6 +65,9 @@
     "Characters": "Personajes",
     "Copy Script": "Copiar Script",
     "Copied!": "¡Copiado!",
+    "View Script": "Ver Script",
+    "No script text available": "No hay texto de script disponible",
+    "Close": "Cerrar",
     "Select": "Select",
     "No artifacts available": "No artifacts available"
 }

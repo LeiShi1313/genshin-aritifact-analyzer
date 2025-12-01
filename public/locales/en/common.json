@@ -179,6 +179,9 @@
     "Characters": "Characters",
     "Copy Script": "Copy Script",
     "Copied!": "Copied!",
+    "View Script": "View Script",
+    "No script text available": "No script text available",
+    "Close": "Close",
     "Select": "Select",
     "No artifacts available": "No artifacts available"
 }

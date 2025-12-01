@@ -12,9 +12,8 @@ import ScriptOptionsConfig, { ScriptOverrides } from "./ScriptOptionsConfig";
 import SelectedCharacterCard from "./SelectedCharacterCard";
 import { CharacterOverride, CharacterOverrides } from "./types";
 import { SimResults } from "../../gcsim/types/sim";
-import { gcsimScriptToScript } from "../../utils/gcsim";
-import { GCSimScript, GCSimScriptCharacterStat, GCSimScriptSetInfo } from "../../genshin/gcsim";
-import { AttributePosition, attributePositionToJSON } from "../../genshin/attribute";
+import { gcsimScriptToScript, generateOverriddenScript, applyAllOverrides } from "../../utils/gcsim";
+import { AttributePosition } from "../../genshin/attribute";
 
 interface ScriptState {
   isRunning: boolean;
@@ -25,77 +24,6 @@ interface ScriptState {
     total: number;
   };
 }
-
-/**
- * Convert artifact position to label string for GCSimScriptCharacterStat
- */
-const getPositionLabel = (position: AttributePosition): string => {
-  const positionName = attributePositionToJSON(position);
-  return positionName.toLowerCase();
-};
-
-/**
- * Convert artifacts to GCSimScriptCharacterStat array
- * Each artifact contributes: 1 main stat + N sub stats (all with same label)
- */
-const artifactsToStats = (artifacts: any[]): GCSimScriptCharacterStat[] => {
-  const stats: GCSimScriptCharacterStat[] = [];
-
-  artifacts.forEach(artifact => {
-    const label = getPositionLabel(artifact.position);
-
-    // Add main attribute
-    if (artifact.mainAttribute) {
-      stats.push({
-        type: artifact.mainAttribute.type,
-        value: artifact.mainAttribute.value,
-        label: label
-      });
-    }
-
-    // Add sub attributes
-    if (artifact.subAttributes) {
-      artifact.subAttributes.forEach((subAttr: any) => {
-        stats.push({
-          type: subAttr.type,
-          value: subAttr.value,
-          label: label
-        });
-      });
-    }
-  });
-
-  return stats;
-};
-
-/**
- * Aggregate artifact sets and return GCSimScriptSetInfo array
- * Only includes sets with 2+ pieces
- */
-const aggregateArtifactSets = (artifacts: any[]): GCSimScriptSetInfo[] => {
-  const setCounts: { [key: number]: number } = {};
-
-  // Count artifacts per set
-  artifacts.forEach(artifact => {
-    if (artifact.set) {
-      setCounts[artifact.set] = (setCounts[artifact.set] || 0) + 1;
-    }
-  });
-
-  // Create set infos for sets with 2+ pieces
-  const setInfos: GCSimScriptSetInfo[] = [];
-  Object.entries(setCounts).forEach(([setId, count]) => {
-    if (count >= 2) {
-      setInfos.push({
-        set: parseInt(setId),
-        count: count >= 4 ? 4 : 2, // Cap at 4 pieces for set bonuses
-        params: []
-      });
-    }
-  });
-
-  return setInfos;
-};
 
 const Teams = () => {
   const { t } = useTranslation();
@@ -113,6 +41,11 @@ const Teams = () => {
   const [scriptStates, setScriptStates] = useState<{ [index: number]: ScriptState }>({});
   const [scriptOverrides, setScriptOverrides] = useState<ScriptOverrides>({});
   const [characterOverrides, setCharacterOverrides] = useState<CharacterOverrides>({});
+  const [viewScriptModal, setViewScriptModal] = useState<{ isOpen: boolean; scriptText: string; scriptIndex: number }>({
+    isOpen: false,
+    scriptText: '',
+    scriptIndex: -1
+  });
 
   // Build character-to-artifacts mapping from artifacts (must be before handleSelectedCharactersChange)
   const characterToArtifacts = useMemo(() => {
@@ -276,6 +209,53 @@ const Teams = () => {
     });
   }, [cancel]);
 
+  // Handle copying a script with all overrides applied
+  const handleCopyScript = useCallback(async (script: any) => {
+    try {
+      const scriptText = generateOverriddenScript(
+        script,
+        scriptOverrides,
+        characterOverrides,
+        characterToArtifacts
+      );
+
+      // Try modern clipboard API first
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(scriptText);
+      } else {
+        // Fallback for non-HTTPS contexts
+        const textArea = document.createElement('textarea');
+        textArea.value = scriptText;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+
+      return true; // Success
+    } catch (err) {
+      console.error("Failed to copy script:", err);
+      return false; // Failure
+    }
+  }, [scriptOverrides, characterOverrides, characterToArtifacts]);
+
+  // Handle viewing a script in modal
+  const handleViewScript = useCallback((index: number, script: any) => {
+    const scriptText = generateOverriddenScript(
+      script,
+      scriptOverrides,
+      characterOverrides,
+      characterToArtifacts
+    );
+    setViewScriptModal({
+      isOpen: true,
+      scriptText,
+      scriptIndex: index
+    });
+  }, [scriptOverrides, characterOverrides, characterToArtifacts]);
+
   // Handle running a script simulation
   const handleRunScript = async (index: number, script: any) => {
     if (!run || !isReady) return;
@@ -292,82 +272,21 @@ const Teams = () => {
     }));
 
     try {
-      // Merge script with overrides
-      const scriptWithOverrides = GCSimScript.fromJSON(GCSimScript.toJSON(script));
+      // Apply all overrides using the centralized logic
+      const scriptWithOverrides = applyAllOverrides(
+        script,
+        scriptOverrides,
+        characterOverrides,
+        characterToArtifacts
+      );
 
-      // Apply option overrides if present
-      if (scriptOverrides.options && Object.keys(scriptOverrides.options).length > 0) {
-        if (!scriptWithOverrides.options) {
-          scriptWithOverrides.options = {};
-        }
-        Object.assign(scriptWithOverrides.options, scriptOverrides.options);
-      }
-
-      // Apply energy settings overrides if present
-      if (scriptOverrides.energySettings && Object.keys(scriptOverrides.energySettings).length > 0) {
-        if (!scriptWithOverrides.energySettings) {
-          scriptWithOverrides.energySettings = {};
-        }
-        Object.assign(scriptWithOverrides.energySettings, scriptOverrides.energySettings);
-      }
-
-      // Apply target overrides if present
-      if (scriptOverrides.target && Object.keys(scriptOverrides.target).length > 0) {
-        if (!scriptWithOverrides.targets || scriptWithOverrides.targets.length === 0) {
-          scriptWithOverrides.targets = [{}];
-        }
-        // Apply overrides to the first target
-        Object.assign(scriptWithOverrides.targets[0], scriptOverrides.target);
-      }
-
-      // Apply character overrides and artifact stats/sets for each character
+      // Debug logging for applied overrides
       if (scriptWithOverrides.characterInfos) {
         scriptWithOverrides.characterInfos.forEach(charInfo => {
           const charId = charInfo.character;
           const override = characterOverrides[charId];
 
-          // Apply character overrides if enabled
           if (override?.enabled) {
-            // Apply level override
-            if (override.level !== undefined) {
-              charInfo.level = override.level;
-            }
-
-            // Apply maxLevel override
-            if (override.maxLevel !== undefined) {
-              charInfo.maxLevel = override.maxLevel;
-            }
-
-            // Apply constellation override
-            if (override.constellation !== undefined) {
-              charInfo.constellation = override.constellation;
-            }
-
-            // Apply talents override
-            if (override.talents) {
-              charInfo.talents = [...override.talents];
-            }
-
-            // Apply weapon override
-            if (override.weapon?.weapon) {
-              charInfo.weaponInfo = {
-                weapon: override.weapon.weapon,
-                level: override.weapon.level ?? charInfo.weaponInfo?.level ?? 90,
-                maxLevel: override.weapon.maxLevel ?? charInfo.weaponInfo?.maxLevel ?? 90,
-                refinement: override.weapon.refinement ?? charInfo.weaponInfo?.refinement ?? 1,
-                params: [],
-              };
-            }
-
-            // Apply set overrides
-            if (override.sets && override.sets.length > 0) {
-              charInfo.setInfos = override.sets.map(setOverride => ({
-                set: setOverride.set,
-                count: setOverride.count,
-                params: [],
-              }));
-            }
-
             console.log(`Applied overrides to character ${charId}:`, {
               level: charInfo.level,
               maxLevel: charInfo.maxLevel,
@@ -378,35 +297,17 @@ const Teams = () => {
             });
           }
 
-          // Determine which artifacts to use:
-          // If artifact overrides exist, use them (empty/undefined positions = no artifact)
-          // Otherwise, fall back to character's equipped artifacts
-          let artifactsToUse: any[] = [];
+          // Log artifact application
+          const hasArtifactOverrides = override?.enabled && override.artifacts;
+          const artifactCount = hasArtifactOverrides
+            ? override.artifacts?.filter(ao => ao.artifact).length || 0
+            : (characterToArtifacts[charId] || []).length;
 
-          if (override?.enabled && override.artifacts) {
-            // Use artifact overrides - only include positions with actual artifacts
-            // Positions without artifacts are intentionally empty
-            artifactsToUse = override.artifacts
-              .filter(ao => ao.artifact)
-              .map(ao => ao.artifact);
-          } else {
-            // No overrides - use character's equipped artifacts
-            artifactsToUse = characterToArtifacts[charId] || [];
-          }
-
-          if (artifactsToUse.length > 0) {
-            // Replace character stats with artifact stats
-            charInfo.stats = artifactsToStats(artifactsToUse);
-
-            // Only replace set infos if not already overridden by explicit set selection
-            if (!override?.enabled || !override.sets || override.sets.length === 0) {
-              charInfo.setInfos = aggregateArtifactSets(artifactsToUse);
-            }
-
-            console.log(`Applied ${artifactsToUse.length} artifacts to character ${charId}:`, {
+          if (artifactCount > 0) {
+            console.log(`Applied ${artifactCount} artifacts to character ${charId}:`, {
               stats: charInfo.stats.length,
               sets: charInfo.setInfos,
-              fromOverride: !!(override?.enabled && override.artifacts && override.artifacts.length > 0)
+              fromOverride: !!hasArtifactOverrides
             });
           }
         });
@@ -458,7 +359,7 @@ const Teams = () => {
         [index]: {
           ...prev[index],
           isRunning: false,
-          error: err instanceof Error ? err.message : "Simulation failed"
+          error: `Simulation error: ${err}`
         }
       }));
     }
@@ -614,7 +515,7 @@ const Teams = () => {
           <div className="h-full w-full">
             <List
               style={{ height: "calc(100vh - 400px)", width: "100%" }}
-              rowComponent={({ index, style, scriptsWithIndices, selected, onRunHandler, isReadyProp, states, overrides }) => {
+              rowComponent={({ index, style, scriptsWithIndices, selected, onRunHandler, onCopyHandler, onViewHandler, isReadyProp, states, overrides }) => {
                 const { script, originalIndex } = scriptsWithIndices[index];
                 return (
                   <div style={{ ...style, padding: "8px 0" }}>
@@ -623,6 +524,8 @@ const Teams = () => {
                       index={originalIndex}
                       selectedCharacters={selected}
                       onRun={() => onRunHandler(originalIndex, script)}
+                      onCopy={() => onCopyHandler(script)}
+                      onView={() => onViewHandler(originalIndex, script)}
                       isWasmReady={isReadyProp}
                       scriptState={states[originalIndex]}
                       characterOverrides={overrides}
@@ -636,6 +539,8 @@ const Teams = () => {
                 scriptsWithIndices: filteredScripts,
                 selected: selectedCharacters,
                 onRunHandler: handleRunScript,
+                onCopyHandler: handleCopyScript,
+                onViewHandler: handleViewScript,
                 isReadyProp: isReady,
                 states: scriptStates,
                 overrides: characterOverrides,
@@ -644,6 +549,43 @@ const Teams = () => {
           </div>
         )}
       </div>
+
+      {/* Script View Modal */}
+      {viewScriptModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setViewScriptModal({ isOpen: false, scriptText: '', scriptIndex: -1 })}>
+          <div className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-lg bg-base-200 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-base-300 p-4">
+              <h3 className="text-lg font-bold">
+                {t("Script")} #{viewScriptModal.scriptIndex + 1}
+              </h3>
+              <button
+                onClick={() => setViewScriptModal({ isOpen: false, scriptText: '', scriptIndex: -1 })}
+                className="btn btn-ghost btn-sm btn-circle"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="max-h-[calc(90vh-8rem)] overflow-auto p-4">
+              <pre className="text-sm whitespace-pre-wrap font-mono bg-base-300 p-4 rounded-lg">
+                {viewScriptModal.scriptText || t('No script text available')}
+              </pre>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-end gap-2 border-t border-base-300 p-4">
+              <button
+                onClick={() => setViewScriptModal({ isOpen: false, scriptText: '', scriptIndex: -1 })}
+                className="btn btn-sm"
+              >
+                {t("Close")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

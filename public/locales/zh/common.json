@@ -179,6 +179,9 @@
     "Characters": "角色",
     "Copy Script": "复制脚本",
     "Copied!": "已复制！",
+    "View Script": "查看脚本",
+    "No script text available": "没有可用的脚本内容",
+    "Close": "关闭",
     "Select": "Select",
     "No artifacts available": "No artifacts available"
 }
