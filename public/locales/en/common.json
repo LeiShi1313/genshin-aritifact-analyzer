@@ -183,5 +183,13 @@
     "No script text available": "No script text available",
     "Close": "Close",
     "Select": "Select",
-    "No artifacts available": "No artifacts available"
+    "No artifacts available": "No artifacts available",
+    "Search artifacts...": "Search artifacts...",
+    "Main Stat": "Main Stat",
+    "Set": "Set",
+    "Available Sets": "Available Sets",
+    "All Sets": "All Sets",
+    "Clear All Filters": "Clear All Filters",
+    "No artifacts match the filters": "No artifacts match the filters",
+    "Reset to equipped artifacts": "Reset to equipped artifacts"
 }

@@ -68,6 +68,14 @@
     "View Script": "Skript anzeigen",
     "No script text available": "Kein Skripttext verfügbar",
     "Close": "Schließen",
-    "Select": "Select",
-    "No artifacts available": "No artifacts available"
+    "Select": "Auswählen",
+    "No artifacts available": "Keine Artefakte verfügbar",
+    "Search artifacts...": "Artefakte suchen...",
+    "Main Stat": "Hauptattribut",
+    "Set": "Set",
+    "Available Sets": "Verfügbare Sets",
+    "All Sets": "Alle Sets",
+    "Clear All Filters": "Alle Filter löschen",
+    "No artifacts match the filters": "Keine Artefakte entsprechen den Filtern",
+    "Reset to equipped artifacts": "Auf ausgerüstete Artefakte zurücksetzen"
 }

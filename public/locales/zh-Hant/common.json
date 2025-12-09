@@ -69,5 +69,13 @@
     "No script text available": "沒有可用的腳本內容",
     "Close": "關閉",
     "Select": "選擇",
-    "No artifacts available": "沒有可用的聖遺物"
+    "No artifacts available": "沒有可用的聖遺物",
+    "Search artifacts...": "搜尋聖遺物...",
+    "Main Stat": "主詞條",
+    "Set": "套裝",
+    "Available Sets": "可用套裝",
+    "All Sets": "所有套裝",
+    "Clear All Filters": "清除所有篩選",
+    "No artifacts match the filters": "沒有符合篩選條件的聖遺物",
+    "Reset to equipped artifacts": "重置為已裝備的聖遺物"
 }

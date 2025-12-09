@@ -6,7 +6,7 @@ import { Artifact } from "../../../genshin/artifact";
 import { Set } from "../../../genshin/set";
 import { ArtifactOverride } from "../types";
 import { getArtifactIconUrl } from "../utils";
-import SelectionModal from "./SelectionModal";
+import ArtifactSelectionModal from "../../artifacts/ArtifactSelectionModal";
 
 // Check if attribute type is a percentage type
 const isPercentageStat = (type: AttributeType): boolean => {
@@ -240,102 +240,15 @@ const ArtifactSlots = memo(({
       </div>
 
       {/* Artifact Selection Modal */}
-      {showModal !== null && (() => {
-        const currentOverride = getArtifactOverride(showModal);
-        const currentArtifact = currentOverride?.artifact;
-        const availableArtifacts = getArtifactsForPosition(showModal);
-
-        // Sort artifacts: selected first, then by set name
-        const sortedArtifacts = [...availableArtifacts].sort((a, b) => {
-          const aIsSelected = currentArtifact && a === currentArtifact;
-          const bIsSelected = currentArtifact && b === currentArtifact;
-          if (aIsSelected && !bIsSelected) return -1;
-          if (!aIsSelected && bIsSelected) return 1;
-          return 0;
-        });
-
-        const isArtifactSelected = (artifact: Artifact): boolean => {
-          if (!currentArtifact) return false;
-          // Compare by reference or by unique properties
-          return artifact === currentArtifact ||
-            (artifact.set === currentArtifact.set &&
-             artifact.position === currentArtifact.position &&
-             artifact.mainAttribute?.type === currentArtifact.mainAttribute?.type &&
-             artifact.mainAttribute?.value === currentArtifact.mainAttribute?.value);
-        };
-
-        return (
-          <SelectionModal
-            title={`${t("Select")} ${t(AttributePosition[showModal]?.toLowerCase(), { ns: "artifacts" })}`}
-            onClose={() => setShowModal(null)}
-            width="w-96"
-          >
-            {/* Clear option */}
-            <li>
-              <a
-                className="flex items-center gap-2 rounded-lg p-2 text-error"
-                onClick={() => handleArtifactChange(showModal, null)}
-              >
-                <span className="text-sm">{t("Clear")}</span>
-              </a>
-            </li>
-            <li className="menu-title">
-              <span>{t("Uploaded Artifacts")}</span>
-            </li>
-            {sortedArtifacts.length === 0 ? (
-              <li className="disabled">
-                <span className="text-xs opacity-50">{t("No artifacts available")}</span>
-              </li>
-            ) : (
-              sortedArtifacts.map((artifact, idx) => {
-                const isSelected = isArtifactSelected(artifact);
-                const mainType = artifact.mainAttribute
-                  ? t(AttributeType[artifact.mainAttribute.type]?.toLowerCase(), { ns: "artifacts" })
-                  : "";
-                const mainValue = artifact.mainAttribute
-                  ? formatStatValue(artifact.mainAttribute.type, artifact.mainAttribute.value)
-                  : "";
-
-                return (
-                  <li key={idx}>
-                    <a
-                      className={classNames(
-                        "flex items-start gap-2 rounded-lg p-2",
-                        isSelected && "bg-primary/20 border border-primary"
-                      )}
-                      onClick={() => handleArtifactChange(showModal, artifact)}
-                    >
-                      <img className="h-12 w-12 shrink-0" src={getArtifactIconUrl(artifact)} />
-                      <div className="flex flex-1 flex-col gap-0.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">
-                            {t(Set[artifact.set]?.toLowerCase(), { ns: "sets" })}
-                          </span>
-                          {isSelected && (
-                            <span className="badge badge-primary badge-xs">Selected</span>
-                          )}
-                        </div>
-                        <span className="text-xs">
-                          +{artifact.level} | {mainType}: {mainValue}
-                        </span>
-                        {artifact.subAttributes && artifact.subAttributes.length > 0 && (
-                          <span className="text-[10px] opacity-50">
-                            {artifact.subAttributes.map(sub => {
-                              const subType = t(AttributeType[sub.type]?.toLowerCase(), { ns: "artifacts" });
-                              const subValue = formatStatValue(sub.type, sub.value);
-                              return `${subType} +${subValue}`;
-                            }).join(" | ")}
-                          </span>
-                        )}
-                      </div>
-                    </a>
-                  </li>
-                );
-              })
-            )}
-          </SelectionModal>
-        );
-      })()}
+      {showModal !== null && (
+        <ArtifactSelectionModal
+          position={showModal}
+          currentArtifact={getArtifactOverride(showModal)?.artifact}
+          availableArtifacts={getArtifactsForPosition(showModal)}
+          onSelect={(artifact) => handleArtifactChange(showModal, artifact)}
+          onClose={() => setShowModal(null)}
+        />
+      )}
     </div>
   );
 });

@@ -431,7 +431,6 @@ const Teams = () => {
   return (
     <div className="flex min-h-screen w-full max-w-screen-lg flex-col px-4 lg:px-0">
       <div className="my-8 flex w-full flex-col gap-4">
-        <h1 className="text-2xl font-bold">Teams</h1>
 
         {/* Script Options Configuration */}
         <ScriptOptionsConfig

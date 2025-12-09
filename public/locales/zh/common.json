@@ -182,6 +182,14 @@
     "View Script": "查看脚本",
     "No script text available": "没有可用的脚本内容",
     "Close": "关闭",
-    "Select": "Select",
-    "No artifacts available": "No artifacts available"
+    "Select": "选择",
+    "No artifacts available": "没有可用的圣遗物",
+    "Search artifacts...": "搜索圣遗物...",
+    "Main Stat": "主词条",
+    "Set": "套装",
+    "Available Sets": "可用套装",
+    "All Sets": "所有套装",
+    "Clear All Filters": "清除所有筛选",
+    "No artifacts match the filters": "没有符合筛选条件的圣遗物",
+    "Reset to equipped artifacts": "重置为已装备的圣遗物"
 }

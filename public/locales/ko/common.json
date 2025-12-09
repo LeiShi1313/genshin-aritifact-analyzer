@@ -68,6 +68,14 @@
     "View Script": "스크립트 보기",
     "No script text available": "사용 가능한 스크립트가 없습니다",
     "Close": "닫기",
-    "Select": "Select",
-    "No artifacts available": "No artifacts available"
+    "Select": "선택",
+    "No artifacts available": "사용 가능한 성유물이 없습니다",
+    "Search artifacts...": "성유물 검색...",
+    "Main Stat": "메인 옵션",
+    "Set": "세트",
+    "Available Sets": "사용 가능한 세트",
+    "All Sets": "모든 세트",
+    "Clear All Filters": "모든 필터 지우기",
+    "No artifacts match the filters": "필터 조건에 맞는 성유물이 없습니다",
+    "Reset to equipped artifacts": "장착된 성유물로 재설정"
 }

@@ -1,10 +1,11 @@
 import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Set } from "../../../genshin/set";
-import { SetOverride } from "../types";
-import { getSetIconUrl } from "../utils";
-import { enumToIdx } from "../../../utils/enum";
-import SelectionModal from "./SelectionModal";
+import { NumberFour, NumberTwo } from "phosphor-react";
+import { Set } from "../../genshin/set";
+import { SetOverride } from "../gcsim/types";
+import { getSetIconUrl } from "../gcsim/utils";
+import { enumToIdx } from "../../utils/enum";
+import SelectionModal from "../gcsim/components/SelectionModal";
 
 interface SetSectionProps {
   sets?: SetOverride[];
@@ -51,12 +52,14 @@ const SetSection = memo(({
     setShowModal(null);
   };
 
-  const handleSetCountChange = (setIndex: number, count: 2 | 4) => {
+  const handleSetCountToggle = (setIndex: number) => {
     const currentSets = sets || [];
     if (setIndex >= currentSets.length) return;
 
     const newSets = [...currentSets];
-    newSets[setIndex] = { ...newSets[setIndex], count };
+    const currentCount = newSets[setIndex].count;
+    const newCount = currentCount === 2 ? 4 : 2;
+    newSets[setIndex] = { ...newSets[setIndex], count: newCount as 2 | 4 };
 
     // If we have 2 sets, ensure total is valid (each should be 2)
     if (newSets.length === 2) {
@@ -89,15 +92,19 @@ const SetSection = memo(({
                 {t(Set[setOverride.set].toLowerCase(), { ns: "sets" })}
               </span>
             </button>
-            <select
-              className="select select-bordered select-xs w-14"
-              value={setOverride.count}
-              onChange={(e) => handleSetCountChange(idx, Number(e.target.value) as 2 | 4)}
-              disabled={!enabled || (sets?.length || 0) > 1}
+            <label
+              className="toggle text-base-content cursor-pointer"
+              title={setOverride.count === 4 ? "4-piece" : "2-piece"}
             >
-              <option value={2}>2</option>
-              <option value={4}>4</option>
-            </select>
+              <input
+                type="checkbox"
+                checked={setOverride.count === 4}
+                onChange={() => handleSetCountToggle(idx)}
+                disabled={!enabled || (sets?.length || 0) > 1}
+              />
+              <NumberFour aria-label="4-piece" weight="bold" />
+              <NumberTwo aria-label="2-piece" weight="bold" />
+            </label>
             <button
               className="btn btn-ghost btn-xs"
               onClick={() => handleSetChange(idx, null)}

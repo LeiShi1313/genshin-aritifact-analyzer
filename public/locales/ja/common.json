@@ -68,6 +68,14 @@
     "View Script": "スクリプトを表示",
     "No script text available": "利用可能なスクリプトがありません",
     "Close": "閉じる",
-    "Select": "Select",
-    "No artifacts available": "No artifacts available"
+    "Select": "選択",
+    "No artifacts available": "聖遺物がありません",
+    "Search artifacts...": "聖遺物を検索...",
+    "Main Stat": "メイン効果",
+    "Set": "セット",
+    "Available Sets": "利用可能なセット",
+    "All Sets": "すべてのセット",
+    "Clear All Filters": "すべてのフィルターをクリア",
+    "No artifacts match the filters": "フィルター条件に一致する聖遺物がありません",
+    "Reset to equipped artifacts": "装備中の聖遺物にリセット"
 }

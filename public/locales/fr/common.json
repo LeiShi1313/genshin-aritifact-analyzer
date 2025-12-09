@@ -177,6 +177,14 @@
     "View Script": "Voir le Script",
     "No script text available": "Aucun texte de script disponible",
     "Close": "Fermer",
-    "Select": "Select",
-    "No artifacts available": "No artifacts available"
+    "Select": "Sélectionner",
+    "No artifacts available": "Aucun artéfact disponible",
+    "Search artifacts...": "Rechercher des artéfacts...",
+    "Main Stat": "Statistique principale",
+    "Set": "Ensemble",
+    "Available Sets": "Ensembles disponibles",
+    "All Sets": "Tous les ensembles",
+    "Clear All Filters": "Effacer tous les filtres",
+    "No artifacts match the filters": "Aucun artéfact ne correspond aux filtres",
+    "Reset to equipped artifacts": "Réinitialiser aux artéfacts équipés"
 }
