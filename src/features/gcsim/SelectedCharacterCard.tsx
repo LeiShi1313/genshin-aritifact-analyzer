@@ -85,7 +85,7 @@ const SelectedCharacterCard = ({
   };
 
   return (
-    <div className="rounded-lg bg-base-200 p-3 shadow-md">
+    <div className="rounded-lg bg-base-200 p-3 border-base-300 border-1 shadow-xl">
       {/* Header with character info and enable toggle */}
       <div className="flex items-start gap-3">
         {/* Character Image */}

@@ -73,7 +73,7 @@ const ScriptCard = memo(({
   };
 
   return (
-    <div className="flex w-full flex-col gap-2 rounded-lg bg-base-200 p-2 shadow-lg sm:p-4">
+    <div className="flex w-full flex-col gap-2 rounded-lg bg-base-200 p-2 border-base-300 border shadow-lg sm:p-4">
       {/* Script header */}
       <div className="flex items-center justify-between">
         <div className="text-xs font-medium opacity-70 sm:text-sm">

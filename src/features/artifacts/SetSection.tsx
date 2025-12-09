@@ -71,14 +71,12 @@ const SetSection = memo(({
   };
 
   return (
-    <div className="mt-2">
-      <div className="flex items-center gap-2">
-        <span className="text-xs opacity-70">{t("Sets")}:</span>
-      </div>
-      <div className="mt-1 flex flex-col gap-1">
+    <div className="mt-2 grid grid-cols-[auto_1fr] gap-2 items-start">
+      <span className="text-xs opacity-70 mt-2">{t("Sets")}:</span>
+      <div className="flex flex-col gap-1">
         {/* Render existing sets */}
         {sets?.map((setOverride, idx) => (
-          <div key={idx} className="flex items-center gap-2 pl-10">
+          <div key={idx} className="flex items-center gap-2">
             <button
               className="btn btn-ghost btn-sm flex-1 justify-start gap-0 text-left normal-case p-[0.25rem]"
               onClick={() => setShowModal(idx)}

@@ -8,7 +8,7 @@
   --color-neutral: #424f65;
   --color-neutral-content: #ece5d8;
   --color-base-100: #ece5d8;
-  --color-base-200: rgba(242, 242, 242, 0);
+  --color-base-200: rgba(242, 242, 242, 80%);
   --color-base-300: #d4d4d4;
   --color-info: #3abff8;
   --color-success: #36d399;

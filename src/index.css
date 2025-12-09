@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @import "./themes.css";
-
 @plugin "daisyui" {
   themes: genshin, genshin_dark, FURINA, WRIOTHESLEY, NEUVILLETTE, CHARLOTTE, LYNEY, LYNETTE, FREMINET, NAVIA, CLORINDE, EMILIE, SIGEWINNE, ARLECCHINO, CHIORI, SETHOS, XILONEN, KINICH, KACHINA, ORORON, CHASCA, MAVUIKA, light, dark, cupcake, bumblebee, emerald, corporate, synthwave, retro, cyberpunk, valentine, halloween, garden, forest, aqua, lofi, pastel, fantasy, wireframe, black, luxury, dracula, cmyk, autumn, business, acid, lemonade, night, coffee, winter;
 }
