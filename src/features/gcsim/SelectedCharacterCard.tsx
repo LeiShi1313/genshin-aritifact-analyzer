@@ -186,8 +186,9 @@ const SelectedCharacterCard = ({
       </div>
 
       {/* Talents */}
-      <div className="mt-2 flex items-center gap-2">
+      <div className="mt-2 flex items-center justify-between gap-2">
         <span className="text-xs opacity-70 text-nowrap">{t("Talents")}:</span>
+        <div className="flex items-start justify-start flex-1 gap-2">
         {[0, 1, 2].map((idx) => (
           <input
             key={idx}
@@ -206,6 +207,7 @@ const SelectedCharacterCard = ({
             disabled={!override.enabled}
           />
         ))}
+        </div>
         {override.talents && (
           <button
             className="btn btn-ghost btn-xs"

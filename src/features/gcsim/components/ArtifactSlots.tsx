@@ -100,32 +100,40 @@ const ArtifactSlots = memo(({
   };
 
   // Format artifact stats for tooltip
-  const getArtifactTooltip = (artifact: Artifact): string => {
-    const lines: string[] = [];
+  const renderArtifactTooltip = (artifact: Artifact) => {
+    return (
+      <div className="tooltip-content">
+        <div className="text-left">
+          {/* Set name and level */}
+          <div className="font-bold">
+            {t(Set[artifact.set]?.toLowerCase(), { ns: "sets" })} +{artifact.level}
+          </div>
+          <div className="border-t border-base-content/20 my-1" />
 
-    // Set name
-    lines.push(`${t(Set[artifact.set]?.toLowerCase(), { ns: "sets" })} +${artifact.level}`);
-    lines.push("─────────");
+          {/* Main stat */}
+          {artifact.mainAttribute && (
+            <div>
+              {t(AttributeType[artifact.mainAttribute.type]?.toLowerCase(), { ns: "artifacts" })}:{" "}
+              {formatStatValue(artifact.mainAttribute.type, artifact.mainAttribute.value)}
+            </div>
+          )}
 
-    // Main stat
-    if (artifact.mainAttribute) {
-      const mainType = t(AttributeType[artifact.mainAttribute.type]?.toLowerCase(), { ns: "artifacts" });
-      const mainValue = formatStatValue(artifact.mainAttribute.type, artifact.mainAttribute.value);
-      lines.push(`${mainType}: ${mainValue}`);
-    }
+          <div className="border-t border-base-content/20 my-1" />
 
-    lines.push("─────────");
-
-    // Sub stats
-    if (artifact.subAttributes && artifact.subAttributes.length > 0) {
-      artifact.subAttributes.forEach(sub => {
-        const subType = t(AttributeType[sub.type]?.toLowerCase(), { ns: "artifacts" });
-        const subValue = formatStatValue(sub.type, sub.value);
-        lines.push(`${subType}: +${subValue}`);
-      });
-    }
-
-    return lines.join("\n");
+          {/* Sub stats */}
+          {artifact.subAttributes && artifact.subAttributes.length > 0 && (
+            <div className="space-y-0.5 text-xs opacity-70">
+              {artifact.subAttributes.map((sub, idx) => (
+                <div key={idx}>
+                  {t(AttributeType[sub.type]?.toLowerCase(), { ns: "artifacts" })}:{" "}
+                  +{formatStatValue(sub.type, sub.value)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
   };
 
   // Get artifacts available for a specific position (only level 20)
@@ -219,20 +227,15 @@ const ArtifactSlots = memo(({
             </button>
           );
 
-          return hasArtifact ? (
-            <div
-              key={position}
-              className="tooltip tooltip-top whitespace-pre-line text-left"
-              data-tip={getArtifactTooltip(artifactOverride.artifact!)}
-            >
-              {buttonElement}
-            </div>
-          ) : (
-            <div
-              key={position}
-              className="tooltip tooltip-top"
-              data-tip={t(positionKey, { ns: "artifacts" })}
-            >
+          return (
+            <div key={position} className="tooltip tooltip-top">
+              {hasArtifact ? (
+                renderArtifactTooltip(artifactOverride.artifact!)
+              ) : (
+                <div className="tooltip-content">
+                  {t(positionKey, { ns: "artifacts" })}
+                </div>
+              )}
               {buttonElement}
             </div>
           );

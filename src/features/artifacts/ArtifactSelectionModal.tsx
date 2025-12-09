@@ -369,12 +369,15 @@ const ArtifactSelectionModal = memo(({
                     <li key={idx}>
                       <a
                         className={classNames(
-                          "flex items-start gap-2 rounded-lg p-2",
+                          "flex items-start gap-4 rounded-lg p-2",
                           isSelected && "bg-primary/20 border border-primary"
                         )}
                         onClick={() => onSelect(artifact)}
                       >
-                        <img className="h-12 w-12 shrink-0" src={getArtifactIconUrl(artifact)} />
+                        <div className="indicator mt-2">
+                          <span className="indicator-item text-[0.7rem] top-1 right-1">+{artifact.level}</span>
+                          <img className="h-12 w-12 shrink-0" src={getArtifactIconUrl(artifact)} />
+                        </div>
                         <div className="flex flex-1 flex-col gap-0.5">
                           <div className="flex items-center justify-between">
                             <span className="text-sm font-medium">
@@ -384,11 +387,11 @@ const ArtifactSelectionModal = memo(({
                               <span className="badge badge-primary badge-xs">Selected</span>
                             )}
                           </div>
-                          <span className="text-xs">
-                            +{artifact.level} | {mainType}: {mainValue}
+                          <span className="text-sm">
+                            {mainType}: {mainValue}
                           </span>
                           {artifact.subAttributes && artifact.subAttributes.length > 0 && (
-                            <span className="text-[10px] opacity-50">
+                            <span className="text-[12px] opacity-50">
                               {artifact.subAttributes.map(sub => {
                                 const subType = t(AttributeType[sub.type]?.toLowerCase(), { ns: "artifacts" });
                                 const subValue = formatStatValue(sub.type, sub.value);
