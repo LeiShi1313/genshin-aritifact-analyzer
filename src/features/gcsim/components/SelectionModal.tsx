@@ -25,7 +25,7 @@ const SelectionModal = memo(({ title, onClose, children, width = "w-80" }: Selec
               x
             </button>
           </div>
-          <ul className="menu max-h-96 flex-nowrap overflow-auto p-2">
+          <ul className="menu w-full max-h-96 flex-nowrap overflow-auto p-2">
             {children}
           </ul>
         </div>

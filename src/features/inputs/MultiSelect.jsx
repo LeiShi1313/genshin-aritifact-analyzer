@@ -79,7 +79,7 @@ const MultiSelect = ({
         />
       </div>
       <div className="dropdown-content rounded-t-box rounded-b-box left-0 top-full h-[50vh] w-56 translate-y-0 overflow-y-auto bg-base-200 text-base-content shadow-2xl">
-        <ul className="menu menu-compact p-3">
+        <ul className="menu menu-compact w-full p-3">
           {[...options]
             .sort((a, b) =>
               renderFunc(a).localeCompare(renderFunc(b), i18n.language)

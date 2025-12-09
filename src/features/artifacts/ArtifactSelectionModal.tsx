@@ -332,7 +332,7 @@ const ArtifactSelectionModal = memo(({
             )}
 
             {/* Artifact List */}
-            <ul className="menu max-h-96 flex-nowrap overflow-auto p-0">
+            <ul className="menu w-full max-h-96 flex-nowrap overflow-auto p-0">
               {/* Clear option */}
               <li>
                 <a

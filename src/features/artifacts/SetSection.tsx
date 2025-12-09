@@ -78,9 +78,9 @@ const SetSection = memo(({
       <div className="mt-1 flex flex-col gap-1">
         {/* Render existing sets */}
         {sets?.map((setOverride, idx) => (
-          <div key={idx} className="flex items-center gap-2">
+          <div key={idx} className="flex items-center gap-2 pl-10">
             <button
-              className="btn btn-ghost btn-sm flex-1 justify-start gap-2 text-left normal-case"
+              className="btn btn-ghost btn-sm flex-1 justify-start gap-0 text-left normal-case p-[0.25rem]"
               onClick={() => setShowModal(idx)}
               disabled={!enabled}
             >
@@ -102,8 +102,8 @@ const SetSection = memo(({
                 onChange={() => handleSetCountToggle(idx)}
                 disabled={!enabled || (sets?.length || 0) > 1}
               />
-              <NumberFour aria-label="4-piece" weight="bold" />
               <NumberTwo aria-label="2-piece" weight="bold" />
+              <NumberFour aria-label="4-piece" weight="bold" />
             </label>
             <button
               className="btn btn-ghost btn-xs"
