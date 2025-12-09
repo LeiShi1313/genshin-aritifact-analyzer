@@ -95,8 +95,8 @@ const SetSection = memo(({
               onChange={(e) => handleSetCountChange(idx, Number(e.target.value) as 2 | 4)}
               disabled={!enabled || (sets?.length || 0) > 1}
             >
-              <option value={2}>2pc</option>
-              <option value={4}>4pc</option>
+              <option value={2}>2</option>
+              <option value={4}>4</option>
             </select>
             <button
               className="btn btn-ghost btn-xs"

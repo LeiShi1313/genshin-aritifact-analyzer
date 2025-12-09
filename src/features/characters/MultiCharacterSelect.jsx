@@ -159,7 +159,7 @@ const MultiCharacterSelect = ({ selectedCharacters, setSelectedCharacters, avail
                 placeholder={t("Search characters...")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input input-bordered input-sm w-full"
+                className="input input-bordered input-sm text-neutral w-full"
               />
             </div>
 

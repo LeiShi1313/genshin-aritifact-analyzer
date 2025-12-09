@@ -2,9 +2,10 @@ import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { Weapon } from "../../../genshin/weapon";
-import { WeaponOverride, MAX_LEVEL_OPTIONS } from "../types";
+import { WeaponOverride } from "../types";
 import { getWeaponIconUrl } from "../utils";
 import { enumToIdx } from "../../../utils/enum";
+import { inferWeaponMaxLevel } from "../../../utils/gcsim";
 import SelectionModal from "./SelectionModal";
 import weaponData from "../../../data/weapons.json";
 
@@ -50,6 +51,14 @@ const WeaponSection = memo(({
       );
   }, [weaponType, t, i18n.language]);
 
+  // Compute inferred maxLevel info based on current weapon level
+  const weaponLevelInfo = useMemo(() => {
+    if (weapon?.level === undefined) {
+      return { maxLevel: undefined, isAmbiguous: false, options: [] as number[] };
+    }
+    return inferWeaponMaxLevel(weapon.level);
+  }, [weapon?.level]);
+
   const handleSelectWeapon = (id: number) => {
     const uploadedWeapon = uploadedWeapons.find(w => w.weapon === id);
     onChange({
@@ -65,6 +74,27 @@ const WeaponSection = memo(({
     if (!weapon) return;
     onChange({ ...weapon, ...updates });
   };
+
+  // Handle weapon level change - auto-set maxLevel if not ambiguous
+  const handleWeaponLevelChange = (newLevel: number | undefined) => {
+    if (newLevel === undefined) {
+      updateWeapon({ level: undefined, maxLevel: undefined });
+      return;
+    }
+
+    const info = inferWeaponMaxLevel(newLevel);
+    if (info.isAmbiguous) {
+      const currentMaxValid = weapon?.maxLevel && info.options.includes(weapon.maxLevel);
+      updateWeapon({
+        level: newLevel,
+        maxLevel: currentMaxValid ? weapon.maxLevel : info.maxLevel,
+      });
+    } else {
+      updateWeapon({ level: newLevel, maxLevel: info.maxLevel });
+    }
+  };
+
+  const effectiveWeaponMaxLevel = weapon?.maxLevel ?? weaponLevelInfo.maxLevel;
 
   return (
     <div className="mt-2">
@@ -103,31 +133,26 @@ const WeaponSection = memo(({
         )}
       </div>
 
-      {/* Weapon details */}
+      {/* Weapon Level, Max Level & Refinement */}
       {weapon?.weapon && (
-        <div className="mt-1 flex flex-wrap items-center gap-2 pl-14">
-          <div className="flex items-center gap-1">
-            <span className="text-xs opacity-70">Lv:</span>
-            <input
-              type="number"
-              className="input input-bordered input-xs w-14"
-              min={1}
-              max={90}
-              placeholder="-"
-              value={weapon.level ?? ""}
-              onChange={(e) =>
-                updateWeapon({
-                  level: e.target.value ? Number(e.target.value) : undefined,
-                })
-              }
-              disabled={!enabled}
-            />
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="text-xs opacity-70">{t("Max")}:</span>
+        <div className="mt-2 flex items-center gap-2 pl-10">
+          <input
+            type="number"
+            className="input input-bordered input-xs w-14"
+            min={1}
+            max={90}
+            placeholder="-"
+            value={weapon.level ?? ""}
+            onChange={(e) =>
+              handleWeaponLevelChange(e.target.value ? Number(e.target.value) : undefined)
+            }
+            disabled={!enabled}
+          />
+          <span className="text-xs opacity-70">/</span>
+          {weaponLevelInfo.isAmbiguous ? (
             <select
               className="select select-bordered select-xs w-16"
-              value={weapon.maxLevel ?? ""}
+              value={weapon.maxLevel ?? weaponLevelInfo.maxLevel ?? ""}
               onChange={(e) =>
                 updateWeapon({
                   maxLevel: e.target.value ? Number(e.target.value) : undefined,
@@ -135,14 +160,17 @@ const WeaponSection = memo(({
               }
               disabled={!enabled}
             >
-              <option value="">-</option>
-              {MAX_LEVEL_OPTIONS.map((lvl) => (
+              {weaponLevelInfo.options.map((lvl) => (
                 <option key={lvl} value={lvl}>
                   {lvl}
                 </option>
               ))}
             </select>
-          </div>
+          ) : (
+            <span className="text-xs font-medium w-8 text-center">
+              {effectiveWeaponMaxLevel ?? "-"}
+            </span>
+          )}
           <div className="flex items-center gap-1">
             <span className="text-xs opacity-70">R:</span>
             <select

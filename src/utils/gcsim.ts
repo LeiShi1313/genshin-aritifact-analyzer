@@ -360,6 +360,28 @@ export const inferMaxLevel = (level: number): LevelInfo => {
 };
 
 /**
+ * Infer weapon maxLevel from level
+ * Weapons max out at level 90
+ * Returns { maxLevel, isAmbiguous, options }
+ */
+export const inferWeaponMaxLevel = (level: number): LevelInfo => {
+  if (level >= 90) return { maxLevel: 90, isAmbiguous: false, options: [] };
+  if (level >= 81) return { maxLevel: 90, isAmbiguous: false, options: [] };
+  if (level === 80) return { maxLevel: 80, isAmbiguous: true, options: [80, 90] };
+  if (level >= 71) return { maxLevel: 80, isAmbiguous: false, options: [] };
+  if (level === 70) return { maxLevel: 70, isAmbiguous: true, options: [70, 80] };
+  if (level >= 61) return { maxLevel: 70, isAmbiguous: false, options: [] };
+  if (level === 60) return { maxLevel: 60, isAmbiguous: true, options: [60, 70] };
+  if (level >= 51) return { maxLevel: 60, isAmbiguous: false, options: [] };
+  if (level === 50) return { maxLevel: 50, isAmbiguous: true, options: [50, 60] };
+  if (level >= 41) return { maxLevel: 50, isAmbiguous: false, options: [] };
+  if (level === 40) return { maxLevel: 40, isAmbiguous: true, options: [40, 50] };
+  if (level >= 21) return { maxLevel: 40, isAmbiguous: false, options: [] };
+  if (level === 20) return { maxLevel: 20, isAmbiguous: true, options: [20, 40] };
+  return { maxLevel: 20, isAmbiguous: false, options: [] };
+};
+
+/**
  * Apply all overrides to a GCSimScript (script options, character overrides, and artifacts)
  * Returns a new script with overrides applied (does not mutate original)
  */

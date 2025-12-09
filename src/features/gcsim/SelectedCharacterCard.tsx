@@ -119,82 +119,80 @@ const SelectedCharacterCard = ({
             </label>
           </div>
 
-          {/* Level & Max Level */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-1">
-              <span className="text-xs opacity-70">{t("Level")}:</span>
-              <input
-                type="number"
-                className="input input-bordered input-xs w-14"
-                min={1}
-                max={100}
-                placeholder="-"
-                value={override.level ?? ""}
-                onChange={(e) =>
-                  handleLevelChange(e.target.value ? Number(e.target.value) : undefined)
-                }
-                disabled={!override.enabled}
-              />
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="text-xs opacity-70">/</span>
-              {levelInfo.isAmbiguous ? (
-                <select
-                  className="select select-bordered select-xs w-16"
-                  value={override.maxLevel ?? levelInfo.maxLevel ?? ""}
-                  onChange={(e) =>
-                    updateOverride({
-                      maxLevel: e.target.value ? Number(e.target.value) : undefined,
-                    })
-                  }
-                  disabled={!override.enabled}
-                >
-                  {levelInfo.options.map((lvl) => (
-                    <option key={lvl} value={lvl}>
-                      {lvl}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <span className="text-xs font-medium w-8 text-center">
-                  {effectiveMaxLevel ?? "-"}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="text-xs opacity-70">C:</span>
-              <select
-                className="select select-bordered select-xs w-14"
-                value={override.constellation ?? ""}
-                onChange={(e) =>
-                  updateOverride({
-                    constellation: e.target.value
-                      ? Number(e.target.value)
-                      : undefined,
-                  })
-                }
-                disabled={!override.enabled}
-              >
-                <option value="">-</option>
-                {[0, 1, 2, 3, 4, 5, 6].map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* Constellation */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs opacity-70">C:</span>
+            <select
+              className="select select-bordered select-xs w-14"
+              value={override.constellation ?? ""}
+              onChange={(e) =>
+                updateOverride({
+                  constellation: e.target.value
+                    ? Number(e.target.value)
+                    : undefined,
+                })
+              }
+              disabled={!override.enabled}
+            >
+              <option value="">-</option>
+              {[0, 1, 2, 3, 4, 5, 6].map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
 
+      {/* Level & Max Level */}
+      <div className="mt-2 flex items-center gap-2">
+        <span className="text-xs opacity-70">{t("Level")}:</span>
+        <input
+          type="number"
+          className="input input-bordered input-xs w-10"
+          min={1}
+          max={100}
+          placeholder="-"
+          value={override.level ?? ""}
+          onChange={(e) =>
+            handleLevelChange(e.target.value ? Number(e.target.value) : undefined)
+          }
+          disabled={!override.enabled}
+        />
+        <span className="text-xs opacity-70">/</span>
+        {levelInfo.isAmbiguous ? (
+          <select
+            className="select select-bordered select-xs w-16"
+            value={override.maxLevel ?? levelInfo.maxLevel ?? ""}
+            onChange={(e) =>
+              updateOverride({
+                maxLevel: e.target.value ? Number(e.target.value) : undefined,
+              })
+            }
+            disabled={!override.enabled}
+          >
+            {levelInfo.options.map((lvl) => (
+              <option key={lvl} value={lvl}>
+                {lvl}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <span className="text-xs font-medium w-8 text-center">
+            {effectiveMaxLevel ?? "-"}
+          </span>
+        )}
+      </div>
+
       {/* Talents */}
       <div className="mt-2 flex items-center gap-2">
-        <span className="text-xs opacity-70">{t("Talents")}:</span>
+        <span className="text-xs opacity-70 text-nowrap">{t("Talents")}:</span>
         {[0, 1, 2].map((idx) => (
           <input
             key={idx}
             type="number"
-            className="input input-bordered input-xs w-12"
+            className="input input-bordered input-xs w-10"
             min={1}
             max={10}
             placeholder="-"
@@ -214,7 +212,7 @@ const SelectedCharacterCard = ({
             onClick={() => updateOverride({ talents: undefined })}
             disabled={!override.enabled}
           >
-            {t("Clear")}
+            x
           </button>
         )}
       </div>
