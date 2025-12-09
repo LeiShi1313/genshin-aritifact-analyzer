@@ -27,7 +27,7 @@ const DigitInput = ({ value, setValue, step = 1, canEdit = true }) => {
         disabled={!canEdit}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="input input-ghost h-4 w-8 max-w-xs px-0 text-center text-xs leading-4 md:h-8 md:w-12 md:text-sm md:leading-8"
+        className="input-ghost h-4 w-8 max-w-xs px-0 text-center text-xs leading-4 md:h-8 md:w-12 md:text-sm md:leading-8"
       />
       {canEdit && (
         <button

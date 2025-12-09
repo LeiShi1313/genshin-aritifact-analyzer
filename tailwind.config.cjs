@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTailwindTheme = require("tailwindcss/defaultTheme");
-const defaultDaisyuiTheme = require("daisyui/src/theming/themes");
 const characterThemes = require('./src/data/genshin_character_themes.json');
 
 module.exports = {
@@ -16,12 +15,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui"), require("@tailwindcss/typography")],
+  plugins: ["daisyui", "@tailwindcss/typography"],
   daisyui: {
     themes: [
       {
         genshin: {
-          ...defaultDaisyuiTheme["[data-theme=light]"],
           primary: "#424f65",
           "primary-content": "#ece5d8",
           secondary: "#93806a",
@@ -31,11 +29,15 @@ module.exports = {
           "neutral-content": "#ece5d8",
           "base-100": "#ece5d8",
           "base-200": "rgba(242, 242, 242, 0)",
+          "base-300": "#d4d4d4",
+          info: "#3abff8",
+          success: "#36d399",
+          warning: "#fbbd23",
+          error: "#f87272",
         },
       },
       {
         genshin_dark: {
-          ...defaultDaisyuiTheme["[data-theme=dark]"],
           primary: "#d3bc8e",
           "primary-content": "#424f65",
           secondary: "#93806a",
@@ -44,6 +46,12 @@ module.exports = {
           neutral: "#424f65",
           "neutral-content": "#ece5d8",
           "base-100": "#1c1c22",
+          "base-200": "#16161a",
+          "base-300": "#0f0f12",
+          info: "#3abff8",
+          success: "#36d399",
+          warning: "#fbbd23",
+          error: "#f87272",
         },
       },
       ...characterThemes,

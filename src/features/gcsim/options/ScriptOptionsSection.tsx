@@ -29,7 +29,7 @@ const ScriptOptionsSection = ({ options, onChange }: ScriptOptionsSectionProps) 
                 e.target.value ? parseInt(e.target.value) : undefined
               )
             }
-            className='input input-bordered input-sm'
+            className='input input-sm'
           />
         </div>
 
@@ -49,7 +49,7 @@ const ScriptOptionsSection = ({ options, onChange }: ScriptOptionsSectionProps) 
                 e.target.value ? parseInt(e.target.value) : undefined
               )
             }
-            className='input input-bordered input-sm'
+            className='input input-sm'
           />
         </div>
 
@@ -69,7 +69,7 @@ const ScriptOptionsSection = ({ options, onChange }: ScriptOptionsSectionProps) 
                 e.target.value ? parseInt(e.target.value) : undefined
               )
             }
-            className='input input-bordered input-sm'
+            className='input input-sm'
           />
         </div>
 
@@ -92,7 +92,7 @@ const ScriptOptionsSection = ({ options, onChange }: ScriptOptionsSectionProps) 
                 e.target.value === '' ? undefined : e.target.value === 'true'
               )
             }
-            className='select select-bordered select-sm'
+            className='select select-sm'
           >
             <option value=''>{t('Using script defaults')}</option>
             <option value='true'>{t('Yes')}</option>

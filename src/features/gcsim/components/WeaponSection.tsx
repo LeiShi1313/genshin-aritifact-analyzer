@@ -138,7 +138,7 @@ const WeaponSection = memo(({
         <div className="mt-2 flex items-center gap-2 pl-10">
           <input
             type="number"
-            className="input input-bordered input-xs w-14"
+            className="input input-xs w-14"
             min={1}
             max={90}
             placeholder="-"
@@ -151,7 +151,7 @@ const WeaponSection = memo(({
           <span className="text-xs opacity-70">/</span>
           {weaponLevelInfo.isAmbiguous ? (
             <select
-              className="select select-bordered select-xs w-16"
+              className="select select-xs w-16"
               value={weapon.maxLevel ?? weaponLevelInfo.maxLevel ?? ""}
               onChange={(e) =>
                 updateWeapon({
@@ -174,7 +174,7 @@ const WeaponSection = memo(({
           <div className="flex items-center gap-1">
             <span className="text-xs opacity-70">R:</span>
             <select
-              className="select select-bordered select-xs w-14"
+              className="select select-xs w-14"
               value={weapon.refinement ?? ""}
               onChange={(e) =>
                 updateWeapon({

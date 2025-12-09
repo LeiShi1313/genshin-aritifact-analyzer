@@ -82,7 +82,7 @@ const MainAttributeEditor = ({ position, attrs, setFunc, subAttributes }) => {
         ))}
         {isAdding && (
           <select
-            className="text-xs select select-ghost select-md"
+            className="text-xs select-ghost select-md"
             value={""}
             onChange={handleAttrAdd}
           >

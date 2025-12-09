@@ -70,7 +70,7 @@ const SubAttributesEditor = ({ subAttributes, setSubAttributes }) => {
         ))}
         {isAdding && (
           <select
-            className="select select-ghost"
+            className="select-ghost"
             value={""}
             onChange={handleAttrAdd}
           >

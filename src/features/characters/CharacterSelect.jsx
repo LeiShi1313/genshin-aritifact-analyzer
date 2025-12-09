@@ -7,7 +7,7 @@ const CharacterSelect = ({ char, setChar }) => {
   const { t, i18n } = useTranslation();
   return (
     <select
-      className="select select-ghost select-sm"
+      className="select-ghost select-sm"
       value={char}
       onChange={(e) => setChar(Number(e.target.value))}
     >

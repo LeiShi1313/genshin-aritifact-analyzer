@@ -32,7 +32,7 @@ const EnergySettingsSection = ({
                 e.target.value === '' ? undefined : parseInt(e.target.value)
               )
             }
-            className='select select-bordered select-sm'
+            className='select select-sm'
           >
             <option value=''>{t('Using script defaults')}</option>
             <option value={GCSimScriptEnergySettings_EnergyType.ONCE}>
@@ -57,7 +57,7 @@ const EnergySettingsSection = ({
             onChange={e =>
               onChange('start', e.target.value ? parseInt(e.target.value) : undefined)
             }
-            className='input input-bordered input-sm'
+            className='input input-sm'
           />
         </div>
 
@@ -74,7 +74,7 @@ const EnergySettingsSection = ({
             onChange={e =>
               onChange('end', e.target.value ? parseInt(e.target.value) : undefined)
             }
-            className='input input-bordered input-sm'
+            className='input input-sm'
             disabled={
               energySettings?.type !== GCSimScriptEnergySettings_EnergyType.EVERY
             }
@@ -94,7 +94,7 @@ const EnergySettingsSection = ({
             onChange={e =>
               onChange('amount', e.target.value ? parseInt(e.target.value) : undefined)
             }
-            className='input input-bordered input-sm'
+            className='input input-sm'
           />
         </div>
       </div>

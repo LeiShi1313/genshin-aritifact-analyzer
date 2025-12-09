@@ -41,7 +41,7 @@ const Paginator = ({
         </svg>
       </button>
       <select
-        className="select select-secondary select-sm max-w-xs rounded-full bg-secondary text-secondary-content hover:bg-secondary-focus"
+        className="select-secondary select-sm max-w-xs rounded-full bg-secondary text-secondary-content hover:bg-secondary-focus"
         value={page}
         onChange={(e) => setPage(Number(e.target.value))}
       >

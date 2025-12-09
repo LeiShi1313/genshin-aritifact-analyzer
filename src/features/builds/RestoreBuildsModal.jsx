@@ -65,7 +65,7 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
           <div className="form-control w-full max-w-xs">
             <input
               type="file"
-              className="file-input file-input-primary file-input-bordered w-full max-w-xs"
+              className="file-input-primary file-input w-full max-w-xs"
               file={file}
               onChange={handleFile}
             />

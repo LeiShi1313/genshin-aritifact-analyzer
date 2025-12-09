@@ -18,7 +18,7 @@ const NameEditor = ({ name, setName, isPreset=false }) => {
         id="name"
         type="text"
         placeholder={t("Unnamed Build")}
-        className="input input-primary input-ghost input-sm max-w-xs"
+        className="input-primary input-ghost input-sm max-w-xs"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />

@@ -45,7 +45,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
                   })
                 }
               }}
-              className='select select-bordered select-sm'
+              className='select select-sm'
             >
               <option value=''>{t('Using script defaults')}</option>
               {enemyTypes.map(enemy => {
@@ -78,7 +78,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
                     hpMultiplier: e.target.value ? parseFloat(e.target.value) : undefined
                   })
                 }
-                className='input input-bordered input-sm'
+                className='input input-sm'
               />
             </div>
           )}
@@ -105,7 +105,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
                       e.target.value === '' ? undefined : e.target.value === 'true'
                   })
                 }
-                className='select select-bordered select-sm'
+                className='select select-sm'
               >
                 <option value=''>Default</option>
                 <option value='true'>{t('Yes')}</option>
@@ -133,7 +133,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('level', e.target.value ? parseInt(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -149,7 +149,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('hp', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -166,7 +166,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('radius', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -182,7 +182,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('resist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
         </div>
@@ -204,7 +204,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('pyroResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -220,7 +220,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('hydroResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -236,7 +236,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('cryoResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -252,7 +252,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('electroResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -268,7 +268,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('anemoResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -284,7 +284,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('geoResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -300,7 +300,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('dendroResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -316,7 +316,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('physicalResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -332,7 +332,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('freezeResist', e.target.value ? parseFloat(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
         </div>
@@ -354,7 +354,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('particleThreshold', e.target.value ? parseInt(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
 
@@ -370,7 +370,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
               onChange={e =>
                 onChange('particleDropCount', e.target.value ? parseInt(e.target.value) : undefined)
               }
-              className='input input-bordered input-sm'
+              className='input input-sm'
             />
           </div>
         </div>

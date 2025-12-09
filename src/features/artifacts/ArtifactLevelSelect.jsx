@@ -6,7 +6,7 @@ const ArtifactLevelSelect = ({ level, setLevel }) => {
   const { t } = useTranslation();
   return (
       <select
-        className="select select-ghost select-sm"
+        className="select-ghost select-sm"
         value={level}
         onChange={(e) => setLevel(Number(e.target.value))}
       >

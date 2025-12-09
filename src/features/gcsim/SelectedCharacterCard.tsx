@@ -123,7 +123,7 @@ const SelectedCharacterCard = ({
           <div className="flex items-center gap-2">
             <span className="text-xs opacity-70">C:</span>
             <select
-              className="select select-bordered select-xs w-14"
+              className="select select-xs w-14"
               value={override.constellation ?? ""}
               onChange={(e) =>
                 updateOverride({
@@ -150,7 +150,7 @@ const SelectedCharacterCard = ({
         <span className="text-xs opacity-70">{t("Level")}:</span>
         <input
           type="number"
-          className="input input-bordered input-xs w-10"
+          className="input input-xs w-10"
           min={1}
           max={100}
           placeholder="-"
@@ -163,7 +163,7 @@ const SelectedCharacterCard = ({
         <span className="text-xs opacity-70">/</span>
         {levelInfo.isAmbiguous ? (
           <select
-            className="select select-bordered select-xs w-16"
+            className="select select-xs w-16"
             value={override.maxLevel ?? levelInfo.maxLevel ?? ""}
             onChange={(e) =>
               updateOverride({
@@ -192,7 +192,7 @@ const SelectedCharacterCard = ({
           <input
             key={idx}
             type="number"
-            className="input input-bordered input-xs w-10"
+            className="input input-xs w-10"
             min={1}
             max={10}
             placeholder="-"

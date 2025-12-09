@@ -216,7 +216,7 @@ const ArtifactSelectionModal = memo(({
                 placeholder={t("Search artifacts...")}
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                className="input input-bordered input-sm w-full text-neutral"
+                className="input input-sm w-full text-neutral"
               />
             </div>
 
@@ -269,7 +269,7 @@ const ArtifactSelectionModal = memo(({
                   )}
                 </label>
                 <select
-                  className="select select-bordered select-sm w-full text-neutral"
+                  className="select select-sm w-full text-neutral"
                   value={mainStatFilter ?? ""}
                   onChange={(e) => setMainStatFilter(e.target.value ? Number(e.target.value) : null)}
                 >
