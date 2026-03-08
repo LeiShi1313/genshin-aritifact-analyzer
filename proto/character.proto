@@ -119,4 +119,10 @@ enum Character {
     FLINS = 113;
     AINO = 114;
     NEFER = 115;
+    DURIN = 116;
+    JAHODA = 117;
+    COLUMBINA = 118;
+    ZIBAI = 119;
+    ILLUGA = 120;
+    VARKA = 121;
 }
