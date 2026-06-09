@@ -298,6 +298,9 @@ export enum Weapon {
   NOCTURNES_CURTAIN_CALL = 229,
   RAINBOW_SERPENTS_RAIN_BOW = 230,
   THE_DAYBREAK_CHRONICLES = 231,
+  DISASTER_AND_REMORSE = 232,
+  ANGELOS_HEPTADES = 233,
+  GOLDEN_FROSTBOUND_OATH = 234,
   UNRECOGNIZED = -1,
 }
 
@@ -999,6 +1002,15 @@ export function weaponFromJSON(object: any): Weapon {
     case 231:
     case "THE_DAYBREAK_CHRONICLES":
       return Weapon.THE_DAYBREAK_CHRONICLES;
+    case 232:
+    case "DISASTER_AND_REMORSE":
+      return Weapon.DISASTER_AND_REMORSE;
+    case 233:
+    case "ANGELOS_HEPTADES":
+      return Weapon.ANGELOS_HEPTADES;
+    case 234:
+    case "GOLDEN_FROSTBOUND_OATH":
+      return Weapon.GOLDEN_FROSTBOUND_OATH;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1472,6 +1484,12 @@ export function weaponToJSON(object: Weapon): string {
       return "RAINBOW_SERPENTS_RAIN_BOW";
     case Weapon.THE_DAYBREAK_CHRONICLES:
       return "THE_DAYBREAK_CHRONICLES";
+    case Weapon.DISASTER_AND_REMORSE:
+      return "DISASTER_AND_REMORSE";
+    case Weapon.ANGELOS_HEPTADES:
+      return "ANGELOS_HEPTADES";
+    case Weapon.GOLDEN_FROSTBOUND_OATH:
+      return "GOLDEN_FROSTBOUND_OATH";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

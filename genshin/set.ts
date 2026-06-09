@@ -69,6 +69,8 @@ export enum Set {
   SILKEN_MOONS_SERENADE = 57,
   AUBADE_OF_MORNINGSTAR_AND_MOON = 58,
   A_DAY_CARVED_FROM_RISING_WINDS = 59,
+  CELESTIAL_GIFT = 60,
+  DISENCHANTMENT_IN_DEEP_SHADOW = 61,
   UNRECOGNIZED = -1,
 }
 
@@ -254,6 +256,12 @@ export function setFromJSON(object: any): Set {
     case 59:
     case "A_DAY_CARVED_FROM_RISING_WINDS":
       return Set.A_DAY_CARVED_FROM_RISING_WINDS;
+    case 60:
+    case "CELESTIAL_GIFT":
+      return Set.CELESTIAL_GIFT;
+    case 61:
+    case "DISENCHANTMENT_IN_DEEP_SHADOW":
+      return Set.DISENCHANTMENT_IN_DEEP_SHADOW;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -383,6 +391,10 @@ export function setToJSON(object: Set): string {
       return "AUBADE_OF_MORNINGSTAR_AND_MOON";
     case Set.A_DAY_CARVED_FROM_RISING_WINDS:
       return "A_DAY_CARVED_FROM_RISING_WINDS";
+    case Set.CELESTIAL_GIFT:
+      return "CELESTIAL_GIFT";
+    case Set.DISENCHANTMENT_IN_DEEP_SHADOW:
+      return "DISENCHANTMENT_IN_DEEP_SHADOW";
     case Set.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

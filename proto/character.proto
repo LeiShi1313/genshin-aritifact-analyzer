@@ -125,4 +125,8 @@ enum Character {
     ZIBAI = 119;
     ILLUGA = 120;
     VARKA = 121;
+    LOHEN = 122;
+    LINNEA = 123;
+    NICOLE = 124;
+    PRUNE = 125;
 }
