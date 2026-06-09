@@ -1,0 +1,131 @@
+name: Update Genshin data
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Run generation even when genshin-db is already current"
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # genshin-db recent publishes follow the Genshin patch cadence; Thursday UTC catches most Wed/Thu releases quickly.
+    - cron: "23 3 * * 4"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-genshin-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Check latest genshin-db version
+        id: version
+        env:
+          FORCE_UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.force == true }}
+        shell: bash
+        run: |
+          current="$(node -p "require('./package-lock.json').packages['node_modules/genshin-db'].version")"
+          latest="$(npm view genshin-db version)"
+
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+
+          if [ "$FORCE_UPDATE" = "true" ] || [ "$current" != "$latest" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.version.outputs.should_run == 'true'
+        run: npm ci
+
+      - name: Generate data
+        if: steps.version.outputs.should_run == 'true'
+        run: npm run gen
+
+      - name: Build
+        if: steps.version.outputs.should_run == 'true'
+        run: npm run build
+
+      - name: Check PNG assets
+        if: steps.version.outputs.should_run == 'true'
+        run: node check-pngs.js
+
+      - name: Test gcsim round-trip serialization
+        if: steps.version.outputs.should_run == 'true'
+        run: npm run test-roundtrip
+
+      - name: Clean generated test artifacts
+        if: always() && steps.version.outputs.should_run == 'true'
+        run: npm run clean-gen
+
+      - name: Check for data changes
+        if: steps.version.outputs.should_run == 'true'
+        id: diff
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create or update pull request
+        if: steps.version.outputs.should_run == 'true' && steps.diff.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          version="$(node -p "require('./package-lock.json').packages['node_modules/genshin-db'].version")"
+          game_version="$(node -e "const text = require('fs').readFileSync('src/data/version.ts', 'utf8'); console.log(text.match(/GENSHIN_GAME_VERSION = \"([^\"]+)\"/)[1]);")"
+          branch="automation/genshin-data-v${version}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add -A
+          git commit -m "update genshin data to ${version}"
+          git push --force-with-lease origin "$branch"
+
+          body="$(mktemp)"
+          cat > "$body" <<EOF
+          Updates generated Genshin data with \`genshin-db@${version}\`.
+
+          Generated version metadata:
+          - Game: \`${game_version}\`
+          - genshin-db: \`${version}\`
+
+          Validation:
+          - \`npm run build\`
+          - \`node check-pngs.js\`
+          - \`npm run test-roundtrip\`
+          - \`npm run clean-gen\`
+          EOF
+
+          existing_pr="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing_pr" ]; then
+            gh pr edit "$existing_pr" --title "Update Genshin data to ${version}" --body-file "$body"
+          else
+            gh pr create --base main --head "$branch" --title "Update Genshin data to ${version}" --body-file "$body"
+          fi
