@@ -1,0 +1,49 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacjade" refine=1 lvl=90/90;
+neuvillette add set="marechausseehunter" count=5;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.1986 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="sms" count=5;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="pamber" refine=5 lvl=90/90;
+lauma add set="deepwood" count=5;
+lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
+lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.331 cd=0.2648;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9; 
+ineffa add weapon="fjords" refine=1 lvl=90/90;
+ineffa add set="fopl" count=4;
+ineffa add stats hp=4780 atk=311 em=187 em=187 em=187;
+ineffa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=118.92 cr=0.1986 cd=0.7944;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active lauma;
+
+lauma attack;   # for Verdant Dew to use hold E in the first rot
+for let i=0; i<4; i=i+1 {
+  neuvillette skill, attack;
+  furina skill, dash, attack;
+  lauma attack, burst, skill[hold=1], attack;
+  ineffa attack, skill; wait(6);  # hiding swap cd warning
+  furina burst;
+  neuvillette attack, charge, skill, charge, burst;
+  lauma skill[hold=1];
+  neuvillette attack, charge:2;
+}
+wait(173);
+
+# Lauma N1 (1st rot) > 
+# Neuvillette E N1 > Furina E > Lauma N1 Q hE N1 > Ineffa E > Furina Q > Neuvillette N1 C E C Q > Lauma hE > Neuvillette N1 2[C]

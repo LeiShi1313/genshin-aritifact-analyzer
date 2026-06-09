@@ -31,9 +31,7 @@ active arle;
 for let i = 0; i < 6; i = i + 1 {
   arle skill;
   
-  if i {
-    bennett skill, attack;
-  }
+  bennett skill, attack;
   
   citlali skill, burst;
   # if .citlali.skill.ready { citlali skill; }

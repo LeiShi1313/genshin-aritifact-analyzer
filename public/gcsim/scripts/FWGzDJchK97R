@@ -1,0 +1,76 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+skirk char lvl=90/90 cons=0 talent=9,9,9 +params=[start_serpents_subtlety=100]; # default is 100
+skirk add weapon="eshu" refine=5 lvl=90/90;
+skirk add set="finaleofthedeepgalleries" count=4;
+//skirk add set="mh" count=4;
+skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+// skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+// skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=3 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="no" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+layla char lvl=90/90 cons=6 talent=9,9,9; 
+layla add weapon="favsword" refine=3 lvl=90/90;
+layla add set="totm" count=4;
+layla add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311;
+layla add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999 freeze_resist=0; # standard ST target     # freeze_resist=1 for enemies NOT Freezable
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+
+let First_Rot_Nuke = true;  # Change this value between true and false.
+
+active xingqiu;
+
+for let i=0; i<4; i=i+1 {
+  xingqiu skill, burst, attack;
+  yelan skill, attack, burst, attack;
+  layla burst, attack, skill, attack;
+  if i == 0 && First_Rot_Nuke == true {
+    skirk burst;
+    skirk skill,
+          attack:5, dash,
+          
+          attack:2, charge, dash,
+    
+          attack:5, dash,
+          attack:5, dash,
+          
+          attack:2, charge, dash,
+          
+          attack:5, dash,
+          attack;
+  } else {
+    skirk skill,
+          attack:2, burst,
+          
+          attack:5, dash,
+          attack:5, dash,
+          attack:5, dash,
+          
+          attack:2, charge, dash,
+          
+          attack:5, dash,
+          attack:2;
+  }
+}
+
+# First rot only
+# Xingqiu EQ N1 > Yelan E N1 Q N1 > Layla Q N1 E N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
+# Xingqiu EQ N1 > Yelan E N1 Q N1 > Layla Q N1 E N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

@@ -1,0 +1,81 @@
+# Whale LNO Kazuha with Xianyun Citlali Bennett. KQMS, level 10 talents. ~22 second rotation, very precise. 8 melted plunges, 2 of them skills. 100% collisions on skill, 50% on regular plunges. Rotation extention for energy is skipped on last rotation to display higher dps.
+
+kazuha char lvl=90/90 cons=6 talent=10,10,10;
+kazuha add weapon="pjc" refine=5 lvl=90/90;
+kazuha add set="lno" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 cd=0.622; # main
+kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+kazuha add stats cr=0.0331*10 cd=0.0662*8 em=19.82*2;
+
+xianyun char lvl=90/90 cons=2 talent=10,10,10;
+xianyun add weapon="crane" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; # main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+xianyun add stats atk=16.54*8 atk%=0.0496*4 cr=0.0331*8;
+
+citlali char lvl=90/90 cons=6 talent=10,10,10;
+citlali add weapon="starcallerswatch" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+citlali add stats cr=0.0331*10 em=19.82*4 cd=0.0662*6;
+
+bennett char lvl=90/90 cons=6 talent=10,10,10;
+bennett add weapon="fs" refine=5 lvl=90/90;
+bennett add set="ins" count=4;
+bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 cr=0.232 ; #main
+bennett add stats def%=0.062*2*0.84 def=19.68*2*0.84 hp=253.94*2*0.84 hp%=0.0496*2*0.84 atk=16.54*2*0.84 atk%=0.0496*2*0.84 er=0.0551*2*0.84 em=19.82*2*0.84 cr=0.0331*2*0.84 cd=0.0662*2*0.84;
+bennett add stats er=0.0551*8*0.84 cr=0.0331*1*0.84 cd=0.0662*3*0.84;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+fn KazuPlunge(){
+  kazuha jump;
+  if .airborne {
+    kazuha high_plunge[collision=rand()>0.5];
+  }
+}
+
+active bennett;
+
+
+for let i=0; i<4; i=i+1 {
+  bennett skill; # apply pyro for vv
+  
+  xianyun skill, low_plunge, burst;
+  
+  citlali skill, attack;
+  
+  kazuha burst;
+  
+  bennett burst; # his burst must hit before first tick of kazuha burst dot, which is a frame perfect input at kqms for swap delay (12 frames)
+  wait(6); # small wait necessary for fs icd
+  bennett attack; # if bennett burst hit after kazuha burst, this na will apply pyro, so it is unnecessary to na on kazuha
+  
+  kazuha swap;
+  wait(17); # this is a very precise timing to get kazuha c6 buff on last plunge before second skill, but also to minimize time needed to wait for skill to get off cd
+  kazuha attack; # na to apply pyro for a4
+  kazuha skill, high_plunge[collision=1];
+  wait(12); # small wait to line up cryo app
+  KazuPlunge(); kazuha dash;
+  KazuPlunge(); kazuha dash;
+  KazuPlunge(); kazuha dash;
+  KazuPlunge();
+  kazuha skill, high_plunge[collision=1];
+  KazuPlunge(); kazuha dash; # no longer buffed by kazuha c2 and instructor
+  KazuPlunge(); # no longer buffed by kazuha a4
+  
+  if (i!=3) { # energy gathering skipped on last rot to display higher dps
+    bennett skill;
+    wait(54); # at KQMS er he must catch his own particles; can be skipped if he has ~3 more er subs
+    
+    xianyun skill, low_plunge;
+    
+    kazuha skill, high_plunge[collision=1];
+  }
+}
+
+# Bennett E > Xianyun EPQ > Citlali E > Kazuha Q > Bennett Q N1 > Kazuha N1 EP 3(JPD) JP EP JPD JP > Bennett E > Xianyun EP > Kazuha EP

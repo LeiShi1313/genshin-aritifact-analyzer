@@ -1,0 +1,38 @@
+arlecchino char lvl=90/90 cons=1 talent=10,10,10;
+arlecchino add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
+arlecchino add set="fragmentofharmonicwhimsy" count=4;
+arlecchino add stats def%=0.263 def=83 hp=4780 hp%=0.057999999999999996 atk=329 atk%=0.513 er=0.156 em=42 cr=0.649 cd=1.088 pyro%=0.466;
+
+bennett char lvl=90/90 cons=6 talent=1,1,10;
+bennett add weapon="skywardblade" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats def%=0.066 def=44 hp=4780 hp%=0.205 atk=311 atk%=0.053 er=1.082 em=61 cr=0.563 cd=0.8320000000000001 pyro%=0.466;
+
+citlali char lvl=90/90 cons=0 talent=1,9,9;
+citlali add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+citlali add set="scrolloftheheroofcindercity" count=4;
+citlali add stats def%=0.24 def=35 hp=5736 hp%=0.239 atk=399 atk%=0.099 er=1.204 em=554;
+
+kazuha char lvl=90/90 cons=0 talent=1,9,9;
+kazuha add weapon="xiphosmoonlight" refine=5 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats def%=0.182 def=35 hp=5736 hp%=0.040999999999999995 atk=346 atk%=0.419 er=0.674 em=720.5 cr=0.062000000000000006 cd=0.132;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=20000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active arle;
+
+for let i = 0; i<5 ; i = i+1{
+  arle charge, skill;
+  bennett skill, burst;
+  kazuha skill, high_plunge;
+  citlali skill, burst;
+  arle charge[early_cancel=1], dash;
+  arle attack:3;
+  arle dash;
+  arle attack:3;
+  arle dash;
+  arle attack:10;
+}

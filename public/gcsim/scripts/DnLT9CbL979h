@@ -1,17 +1,17 @@
 options swap_delay=12 iteration=1000;
 
 # Build assumptions
-// arle char lvl=90/90 cons=6 talent=10,10,10;
-// arle add weapon="sss" refine=5 lvl=90/90;
-// arle add set="fohw" count=4;
-// arle add stats hp=4780 atk=311 em=187 em=187 cd=0.622; 
-// arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
-
 arle char lvl=90/90 cons=6 talent=10,10,10;
-arle add weapon="crimsonmoon" refine=5 lvl=90/90;
+arle add weapon="sss" refine=5 lvl=90/90;
 arle add set="fohw" count=4;
-arle add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; 
-arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+arle add stats hp=4780 atk=311 em=187 em=187 cd=0.622; 
+arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+
+// arle char lvl=90/90 cons=6 talent=10,10,10;
+// arle add weapon="crimsonmoon" refine=5 lvl=90/90;
+// arle add set="fohw" count=4;
+// arle add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; 
+// arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
 citlali char lvl=90/90 cons=6 talent=10,10,10;
 citlali add weapon="starcallerswatch" refine=5 lvl=90/90;
@@ -47,17 +47,21 @@ fn WaitForCryo() {
   }
 }
 
+let sss = true; # choose "true" if your gameplay is great enough to ensure Arle to come back in 5 seconds to see her E tick damage when Arle is on-field
+
 for let i = 0; i < 4; i = i + 1 {
   if .arle.weapon == .keys.weapon.crimsonmoonssemblance {
     arle charge;
   }
-  arlecchino skill;
+  arlecchino skill;   delay(11);  # for particle uptake timing on bennett 
   bennett skill, burst;
   xilonen skill, attack:2; pick_up_crystallize("pyro");
   citlali skill, attack;
   arle swap;
   if .arle.weapon == .keys.weapon.staffofthescarletsands {
-    wait(2); # wait for Arle E tick damage happens before her CA. # You must come back to Arlecchino in 5 seconds from her E to see this on-field
+    if sss == true {
+      wait(2); # wait for Arle E tick damage happens before her CA. # You must come back to Arlecchino in 5 seconds from her E to see this on-field
+    }
   }
   arle charge[early_cancel=1], dash;
   wait(47); # wait for C2 to hit after CA dash cancel before checking the aura for starting NA chain

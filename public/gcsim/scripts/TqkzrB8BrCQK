@@ -1,0 +1,54 @@
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="slingshot" refine=5 lvl=90/90;
+yoimiya add set="echoes" count=4;
+yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main 
+yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.2979 cd=0.662;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2317 cd=0.7282;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.1986 cd=0.7282;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active escoffier;
+
+for let i=0; i<6; i=i+1 {
+  escoffier skill, attack:2;
+  bennett skill, burst, attack;
+  citlali skill, burst;
+  yoimiya skill, attack:5, attack:5, attack:5;
+  if .yoimiya.burst.ready {
+    yoimiya burst; 
+  } else if .escoffier.burst.ready {
+    escoffier burst;
+  } else {
+    yoimiya attack:3;
+  }
+}
+
+# ~18s rotations
+# Escoffier E N2 > Bennett EQ N1 > Citlali EQ > Yoimiya E 3[N5] > (Yoimiya/Escoffier Q or Yoimiya N3)
+
+# Bennett needs C6 to establish a Pyro aura for Citlali's Scroll using his N1 since Escoffier applies Cryo between his E and Q
+# Without his C6, this exact setup falls appart and changing the rotation for Scroll, changes the timing of Cryo application and Yoimiya misses Melts

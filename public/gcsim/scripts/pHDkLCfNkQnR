@@ -30,20 +30,24 @@ energy every interval=480,720 amount=1;
 
 active neuvillette;
 
+let Xilo_Dash = false; # if you wanna make xilonen use dash for 4AP, change false to true 
+
 for let i=0; i<4; i=i+1 {
   neuvillette skill;
   furina attack, skill, dash, attack;
   xilonen skill, burst, attack:2;
-  if .xilonen.sets.ap >= 4 {
-    xilonen dash; pick_up_crystallize("any");
+  if .xilonen.sets.ap >= 4 && Xilo_Dash {
+    xilonen dash; 
   }
+  pick_up_crystallize("any");
   mavuika burst, charge, skill;  # this 1 CA can be skipped for ~2k
   furina burst;
   neuvillette charge, skill, charge, burst;
   xilonen skill, attack:2;
-  if .xilonen.sets.ap >= 4 {
-    xilonen dash; pick_up_crystallize("any");
+  if .xilonen.sets.ap >= 4 && Xilo_Dash {
+    xilonen dash;
   }
+  pick_up_crystallize("any");
   neuvillette charge, charge;
 }
 wait(173); #for the last CA

@@ -1,0 +1,86 @@
+# Team - Options Listed by DPS
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="crescent" refine=5 lvl=90/90;
+#lyney add weapon="flowerwreathedfeathers" refine=1 lvl=90/90;
+lyney add set="mh" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwoodblade" refine=5 lvl=90/90;
+#bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.1986 cd=0.7282;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+#citlali add weapon="evenstar" refine=1 lvl=90/90; # DPS loss
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 em=187;
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.7282; # TTDS DPS
+#citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187;
+#citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=158.56 cr=0.331 cd=0.2648; # Evenstar, Shielding
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favsword" refine=5 lvl=90/90;
+xilonen add set="ap" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+
+# Options
+options iteration=1000; 
+#options iteration=100; 
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard Energy Assumptions 
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; 
+
+# Protoype Crescent Headshot Conditional
+fn lyneyAim() {
+  if .lyney.weapon == .keys.weapon.crescent { # Attempts headshots (50%) with Crescent
+    lyney aim[hold=2, weakspot=rand()>0.5];
+  } else { # Non weakspot opponents
+    lyney aim[hold=2];
+  }
+}
+
+# Wait for cryo Conditional
+fn WaitForCryo() {
+  let StartFrame = f();
+  if !.element.t0.pyro {      # If the enemy aura is not Pyro, wait for Cryo aura (so if its already Pyro you don't wait)
+    while !.element.t0.cryo && f() - StartFrame < 120 {   # wait but up to 120f(2s), so you don't wait forever
+      wait(1);
+    }
+  }
+}
+
+active bennett;
+
+for let i=0; i<5; i=i+1 { # Team runs an odd amount of rotations for TTDS to inflate DPS
+#for let i=0; i<4; i=i+1 {
+  
+  bennett skill, burst;
+  
+  xilonen skill, attack:2; pick_up_crystallize("pyro");
+  
+  citlali skill, burst;
+  
+  lyneyAim();
+  WaitForCryo();
+  lyneyAim();
+  if .lyney.burst.ready {
+    WaitForCryo();
+    lyney burst; delay(11); # to avoid canceling his burst without dealing damage
+    lyney skill;
+  } else {
+    lyneyAim();
+  }
+  lyneyAim();
+  WaitForCryo();
+  lyneyAim();
+  WaitForCryo();
+  lyney skill;
+  lyneyAim();
+}

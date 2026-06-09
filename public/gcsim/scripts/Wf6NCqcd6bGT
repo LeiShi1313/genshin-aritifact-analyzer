@@ -11,7 +11,7 @@ furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
 
 mavuika char lvl=90/90 cons=0 talent=9,9,9;
-mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=10];
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 mavuika add set="scroll" count=4;
 mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;

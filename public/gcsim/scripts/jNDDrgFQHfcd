@@ -1,0 +1,76 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+skirk char lvl=90/90 cons=0 talent=9,9,9 +params=[start_serpents_subtlety=100]; # default is 100
+skirk add weapon="finale" refine=5 lvl=90/90;
+skirk add set="finaleofthedeepgalleries" count=4;
+//skirk add set="mh" count=4;
+skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+// skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+// skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=3 lvl=90/90;
+yelan add set="scroll" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria add weapon="favlance" refine=3 lvl=90/90;
+rosaria add set="no" count=4;
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte add weapon="ttds" refine=5 lvl=90/90;
+charlotte add set="eosf" count=4;
+charlotte add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
+charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=66.16 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.3972;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999 freeze_resist=0; # standard ST target     # freeze_resist=1 for enemies NOT Freezable
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+
+let First_Rot_Nuke = true;  # Change this value between true and false.
+
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+  yelan skill, attack, burst, attack;
+  rosaria skill, attack, burst;
+  charlotte skill, attack, burst, attack;   #catch her particlese on-field
+  if i == 0 && First_Rot_Nuke == true {
+    skirk burst;
+    skirk skill,
+          attack:5, dash,
+          
+          attack:2, charge, dash,
+    
+          attack:5, dash,
+          attack:5, dash,
+          
+          attack:2, charge, dash,
+          
+          attack:5, dash,
+          attack;
+  } else {
+    skirk skill,
+          attack:2, burst,
+          
+          attack:5, dash,
+          attack:5, dash,
+          attack:5, dash,
+          
+          attack:2, charge, dash,
+          
+          attack:5, dash,
+          attack:2;
+  }
+}
+
+# First rot only
+# Yelan E N1 Q N1 > Rosaria E N1 Q > Charlotte E N1 Q N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
+# Yelan E N1 Q N1 > Rosaria E N1 Q > Charlotte E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

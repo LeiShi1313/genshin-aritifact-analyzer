@@ -1,0 +1,92 @@
+# raidentaser (main 893170212)
+
+#raiden character/weapon/talents, artifacts, and cons/refines
+raiden char lvl=90/90 cons=0 talent=10,10,10 +params=[start_hp%=70]; 
+raiden add weapon="engulfinglightning" refine=1 lvl=90/90;
+raiden add set="eosf" count=5;
+
+#raiden main stats
+raiden add stats hp=4780 atk=311 atk%=0.932 cr=0.311; 
+#raiden flower
+raiden add stats cr=0.07 er=0.052 atk%=0.082 cd=0.28;
+#raiden feather
+raiden add stats cd=0.272 cr=0.070 er=0.117 atk%=0.047;
+#raiden sands
+raiden add stats cr=0.132 cd=0.132 er=0.13 def=19;
+#raiden goblet
+raiden add stats hp%=0.053 cd=0.062 er=0.058 cr=0.175;
+#raiden circlet
+raiden add stats er=0.058 atk=29 atk%=0.053 cd=0.303;
+
+#furina character/weapon/talents, artifacts, and cons/refines
+furina char lvl=90/90 cons=0 talent=10,10,10 +params=[start_hp%=70];
+furina add set="gt" count=5;
+furina add weapon="splendor" refine=1 lvl=90/90;
+
+#furina main stats
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
+#furina flower
+furina add stats def%=0.073 em=23 cr=0.132 cd=0.140; 
+#furina feather
+furina add stats cd=0.218 hp=209 cr=0.070 er=0.175; 
+#furina sands
+furina add stats cr=0.093 cd=0.202 def%=0.073 def=16; 
+#furina goblet
+furina add stats def%=0.058 cr=0.105 cd=0.202 atk=33; 
+#furina circlet
+furina add stats er=0.065 cd=0.21 def=60 hp=269; 
+
+#xilonen character/weapon/talents, artifacts, and cons/refines
+xilonen char lvl=90/90 cons=0 talent=10,10,10 +params=[start_hp%=70];
+xilonen add set="scroll" count=5;
+xilonen add weapon="pps" refine=1 lvl=90/90;
+
+#xilonen main stats
+xilonen add stats hp=4780 atk=311 def%=1.166 heal=0.359;
+#xilonen flower
+xilonen add stats er=0.175 def=42 def%=0.051 atk=31; 
+#xilonen feather
+xilonen add stats def=21 er=0.123 def%=0.241 cr=0.039; 
+#xilonen sands
+xilonen add stats er=0.214 def=23 hp%=0.053 atk=37; 
+#xilonen goblet
+xilonen add stats er=0.11 atk%=0.093 atk=29 cd=0.132; 
+#xilonen circlet
+xilonen add stats er=0.11 em=42 def%=0.211 hp=269; 
+
+#yelan character/weapon/talents, artifacts, and cons/refines
+yelan char lvl=90/90 cons=0 talent=10,10,10 +params=[start_hp%=70] ;
+yelan add set="eosf" count=5;
+yelan add weapon="aqua" refine=1 lvl=90/90;
+
+#yelan main stats
+yelan add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
+#yelan flower
+yelan add stats cr=0.062 cd=0.21 er=0.104 def=19; 
+#yelan feather
+yelan add stats cr=0.105 cd=0.179 er=0.045 hp=269; 
+#yelan sands
+yelan add stats cr=0.062 cd=0.179 er=0.13 em=19; 
+#yelan goblet
+yelan add stats def=23 atk=33 cr=0.097 cd=0.218; 
+#yelan circlet
+yelan add stats atk=35 hp=269 er=0.097 cd=0.218; 
+                                                                                                                                                                                                                                                 
+options swap_delay=6 iteration=500;                                                                        
+target lvl=100 type=dummy radius=2 pos=0,2.4 particle_threshold=5000000 particle_drop_count=1; 
+
+active raiden;
+raiden skill;
+for let i=0; i<6; i=i+1 {
+ furina skill,dash, burst;
+ xilonen skill, burst, attack:2;
+ yelan burst, skill:1, attack:2;
+ furina attack:2;
+ raiden burst, 
+    attack:4, dash, 
+    attack:4, dash, 
+    attack:4, dash, 
+    attack:4, dash,
+    attack:1,
+    skill;
+}

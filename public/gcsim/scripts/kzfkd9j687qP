@@ -77,7 +77,7 @@ for let i = 0; i < 4; i = i + 1 {
   FreminetPlunge(); freminet dash; 
   delay(15); 
   FreminetPlunge(); freminet dash;
-  delay(8);
+  delay(9);
   FreminetPlunge(); freminet skill;
   FreminetLowPlunge(); freminet dash;
   FreminetLowPlunge(); freminet dash;

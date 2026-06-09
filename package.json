@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "scrape-gcsim": "npx tsx scripts/scrape-gcsim.ts",
+    "scrape-gcsim": "node scripts/scrape-gcsim.mjs",
     "gcsim": "npm run clean-gen && npx tsx scripts/gcsim.ts",
     "test-roundtrip": "npx tsx tests/test-roundtrip.ts",
     "analyze-diffs": "node tests/analyze-diffs.mjs",

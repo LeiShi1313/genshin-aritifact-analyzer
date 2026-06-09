@@ -1,0 +1,48 @@
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="chainbreaker" refine=5 lvl=90/90;
+chasca add set="oc" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+chasca add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="no" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*10 cd=0.0662*7;
+
+ororon char lvl=90/90 cons=6 talent=9,9,9;
+ororon add weapon="chainbreaker" refine=5 lvl=90/90;
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+ororon add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+mavuika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*12 cd=0.0662*9;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active yelan;
+
+for let i=0; i<4; i=i+1 {
+  yelan attack, skill, burst, attack;
+  
+  ororon burst, skill, attack;
+  
+  mavuika skill, attack, burst, charge, dash;
+
+  chasca attack, skill, aim:4;
+  if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+    chasca burst;
+  } else {
+    chasca aim[bullets=4];
+  }
+}
+wait(82); # wait for aim[bullets=4] hits the enemy at the last rot
+
+# ~19s rotations
+# Yelan N1 EQ N1 > Ororon Q E N1 > Mavuika tE N1 Q CD > Chasca N1 E 4[C] Q/C_4b

@@ -1,0 +1,63 @@
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+mavuika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*4 cr=0.0331*8 cd=0.0662*10;
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
+rosaria add weapon="deathmatch" refine=1 lvl=90/90;
+rosaria add set="no" count=4;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+rosaria add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*7 em=19.82*2 cr=0.0331*2 cd=0.0662*12;
+
+charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte add weapon="ttds" refine=5 lvl=90/90;
+charlotte add set="ap" count=4;
+charlotte add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+charlotte add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*4 cd=0.0662*12;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9 ; 
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.062*5 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*11;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active mavuika;
+
+for let i=0; i<4; i=i+1 {
+  mavuika skill;
+  xilonen skill, attack:2;
+  rosaria skill, burst;
+  charlotte skill[hold=1]; pick_up_crystallize("pyro");
+  if is_even(i){
+    charlotte attack:3;
+  } else {
+    charlotte burst;
+  }
+  mavuika burst;
+          
+  mavuika charge, dash, attack,
+          charge, dash, attack,
+          charge, dash, attack,
+          charge, dash, attack,
+          charge, dash, attack,
+          charge, dash, attack;
+          
+  
+  
+  if .mavuika.cons == 0 {
+    mavuika charge:3, charge[final=1], dash;
+  } else {
+    mavuika charge:2, dash, charge:2, dash;
+  }
+}
+
+# C0
+# Mavuika E > Bennett E > Diona hE Q > Bennett Q > Citlali EQ N2 > Mavuika Q 6[CD N1] C2FD N1
+
+# C1
+# Mavuika E > Bennett E > Diona hE Q > Bennett Q > Citlali EQ N2 > Mavuika Q 6[CD N1] C2FD CD N1

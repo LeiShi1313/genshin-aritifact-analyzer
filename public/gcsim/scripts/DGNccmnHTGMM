@@ -1,0 +1,55 @@
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="chainbreaker" refine=5 lvl=90/90;
+chasca add set="obsidiancodex" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+chasca add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
+
+ororon char lvl=90/90 cons=6 talent=9,9,9;
+ororon add weapon="favbow" refine=4 lvl=90/90;
+ororon add set="scroll" count=4;
+ororon add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
+ororon add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*12 cr=0.0331*10 cd=0.0662*3;
+
+barbara char lvl=90/90 cons=6 talent=9,9,9;
+barbara add weapon="ttds" refine=5 lvl=90/90;
+barbara add set="ins" count=4;
+barbara add stats hp=3571 atk=232 hp%=0.348 hydro%=0.348 cr=0.311; #main
+barbara add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*2 em=16.6488*2 cr=0.027804*6 cd=0.055608*10;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+mavuika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+
+active mavuika; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  ororon skill, attack, burst;
+  
+  if .barbara.skill.ready { # Leave Hydro for Hydro Scroll
+    barbara skill, attack;
+  } else {
+    barbara attack:2, charge;
+  }
+  
+  set_player_pos(0,-2);  # To simulate that Barbara E ring doesn't apply Hydro to the enemy
+  mavuika burst;
+  set_player_pos(0,0);
+  mavuika charge, skill, dash;
+
+  chasca skill;
+  set_player_pos(0,-2);  # to simulate that Barbara E ring doesn't apply Hydro to the enemy.
+  chasca aim:4, aim[bullets=4];
+  if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+    chasca burst;
+  }
+  set_player_pos(0,0);
+}
+
+# 18s rotations
+# Ororon E N1 Q > Barbara E N1 / N2C > Mavuika Q C tED > Chasca E 4[C] C_4b (Q)

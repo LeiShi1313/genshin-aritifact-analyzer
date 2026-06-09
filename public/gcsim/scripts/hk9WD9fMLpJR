@@ -1,0 +1,66 @@
+#personal build
+arlecchino char lvl=90/90 cons=2 talent=10,8,9;
+arlecchino add weapon="pjws" refine=1 lvl=90/90;
+// arle add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
+arlecchino add set="glad" count=4;
+arlecchino add stats def=19 hp=4780 atk=350 atk%=0.8160000000000001 er=0.09 em=202 cr=0.6099999999999999 cd=0.94 pyro%=0.466;
+
+escoffier char lvl=90/90 cons=0 talent=1,10,9;
+escoffier add weapon="homa" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats def=58 hp=4780 hp%=0.053 atk=311 atk%=0.7809999999999999 er=0.46 cr=0.43600000000000005 cd=1.197 cryo%=0.466;
+
+citlali char lvl=80/90 cons=0 talent=1,8,8;
+citlali add weapon="ttds" refine=5 lvl=40/40;
+citlali add set="scroll" count=4;
+citlali add stats def%=0.248 def=60 hp=4989 hp%=0.053 atk=362 atk%=0.484 er=1.1139999999999999 em=262.5 cr=0.066;
+
+bennett char lvl=90/90 cons=6 talent=1,8,10;
+bennett add weapon="aquilafavonia" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats def=114 hp=5437 hp%=0.6060000000000001 atk=325 er=1.2890000000000001 cr=0.25999999999999995 cd=0.521 pyro%=0.466;
+
+#Options, target and energy
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+#function to wait for cryo
+fn WaitForCryo() {
+  let StartFrame = f();
+  if !.element.t0.pyro {      # If the enemy aura is not Pyro, wait for Cryo aura (so if its already Pyro you don't wait)
+    while !.element.t0.cryo && f() - StartFrame < 120 {   # wait but up to 120f(2s), so you don't wait forever
+      wait(1);
+    }
+  }
+}
+
+active arlecchino;
+
+for let i=0; i<4; i=i+1{
+  arle skill;
+  bennett skill, dash, burst;
+  escoffier skill, attack;
+  citlali skill, burst;
+  arle charge;
+  sleep(30);
+  WaitForCryo();
+  arle attack:2, walk,
+       attack:2;
+  citlali attack:2; #swap in citlali to reapply cryo
+  arle attack:2, walk,
+       attack:2, walk,
+       attack:4;
+  WaitForCryo(); 
+  arle attack:1;
+  WaitForCryo();
+  arle attack:1,
+       attack:1;
+}
+
+
+#Arle E Bennett EdQ Coffee EN Citlali EQ Arle CA (wait) N2W N2 (citlali N2) Arle 2[N2W] N6(wait for cryo apply on last two normals) N1
+#If xilonen instead of escoffier, do Citlali ENQ
+
+

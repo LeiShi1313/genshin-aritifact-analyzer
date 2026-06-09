@@ -43,19 +43,22 @@ for let i=0; i<4; i=i+1 {
   chasca skill;
   chasca aim[bullets=2];  print("this aim is: ", 1);  # Triggers C6
   chasca aim;             print("this aim is: ", 2);  # C6 instant shot + C6 Crit buff
-  chasca aim[bullets=6];  print("this aim is: ", 3);  # Normal
-  chasca aim[bullets=5];  print("this aim is: ", 4);  # Normal
-  chasca aim[bullets=2];  print("this aim is: ", 5);  # Triggers C6
+  chasca aim[bullets=4];  print("this aim is: ", 3);  # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 4);  # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 5);  # Triggers C6
   chasca aim;             print("this aim is: ", 6);  # C6 instant shot + C6 Crit buff
-  chasca aim[bullets=6];  print("this aim is: ", 7);  # Normal
-  chasca aim[bullets=5];  print("this aim is: ", 8);  # Normal
-  chasca aim[bullets=2];  print("this aim is: ", 9);  # Triggers C6
+  chasca aim[bullets=4];  print("this aim is: ", 7);  # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 8);  # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 9);  # Triggers C6
   chasca aim;             print("this aim is: ", 10); # C6 instant shot + C6 Crit buff
   if is_even(i) {
     chasca burst;
+  } else {
+    chasca aim[bullets=4];  print("this aim is: ", 11); # Normal
   }
 
 
 }
-wait(23); # for the last rot C6 instant shot to hit
+//wait(23); # for the last rot C6 instant shot to hit
+wait(66); # for the last rot 4bullet shot to hit
 //wait(59); # for the last rot Burst to hit
