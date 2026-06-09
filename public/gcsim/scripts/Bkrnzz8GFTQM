@@ -1,0 +1,70 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacjade" refine=1 lvl=90/90;
+neuvillette add set="marechausseehunter" count=5;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="deepwood" count=5;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+// 4pc SMS Furina + 4pc Deepwood Lauma is about equal
+// furina char lvl=90/90 cons=0 talent=9,9,9;
+// furina add weapon="wolffang" refine=1 lvl=90/90; // 4pc SMS allows wolffang
+// furina add set="sms" count=5;
+// furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+// furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="pamber" refine=5 lvl=90/90;
+lauma add set="sms" count=5;
+lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
+lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+// 4pc SMS Furina + 4pc Deepwood Lauma is about equal
+// lauma char lvl=90/90 cons=0 talent=9,9,9;
+// lauma add weapon="pamber" refine=5 lvl=90/90;
+// lauma add set="deepwood" count=5;
+// lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
+// lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=79.28 cr=0.3972 cd=0.4634;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9; 
+ineffa add weapon="kitain" refine=5 lvl=90/90;
+ineffa add set="fopl" count=4;
+ineffa add stats hp=4780 atk=311 em=187 em=187 em=187;
+ineffa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.1655 cd=0.331;
+
+
+
+// 4pc GT Festering Desire R5 Furina + 4pc SMS Lauma + 4pc Deepwood Ineffa is ~1k worse
+
+
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active lauma;
+
+lauma attack;   # for Verdant Dew to use hold E in the first rot
+for let i=0; i<4; i=i+1 {
+  neuvillette skill, attack;
+  ineffa burst;
+  furina skill, dash, attack;
+  lauma attack, burst, skill[hold=1];
+  furina burst;
+  ineffa attack, skill; wait(6);  # hiding swap cd warning
+  neuvillette attack, charge, skill, charge, burst;
+  lauma skill[hold=1];
+  neuvillette attack, charge:2;
+}
+wait(173);
+
+# Lauma N1 (1st rot) > 
+# Neuvillette E N1 > Ineffa Q > Furina E > Lauma N1 Q hE > Furina Q > Ineffa E > Neuvillette N1 C E C Q > Lauma hE > Neuvillette N1 2[C]

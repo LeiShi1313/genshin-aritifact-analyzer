@@ -1,0 +1,71 @@
+# Whale Kazuha with Xianyun Citlali Bennett. KQMS, level 10 talents. ~22 second rotation. 2 skill plunges and 5 xianyun plunges are melted, 2 more skills for energy. 100% collisions on skill, 50% on regular plunges. Rotation extention for energy is skipped on last rotation to display higher dps.
+
+kazuha char lvl=90/90 cons=6 talent=10,10,10;
+kazuha add weapon="pjc" refine=5 lvl=90/90;
+kazuha add set="vv" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 cd=0.622; # main
+kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+kazuha add stats cr=0.0331*10 cd=0.0662*8 em=19.82*2;
+
+xianyun char lvl=90/90 cons=2 talent=10,10,10;
+xianyun add weapon="crane" refine=5 lvl=90/90;
+xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; # main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+xianyun add stats atk=16.54*8 atk%=0.0496*4 er=0.0551*8;
+
+citlali char lvl=90/90 cons=6 talent=10,10,10;
+citlali add weapon="starcallerswatch" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 em=187 em=187 em=187; # main
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+citlali add stats cr=0.0331*10 em=19.82*4 cd=0.0662*6;
+
+bennett char lvl=90/90 cons=6 talent=10,10,10;
+bennett add weapon="fs" refine=5 lvl=90/90;
+bennett add set="ins" count=4;
+bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 cr=0.232 ; #main
+bennett add stats def%=0.062*2*0.84 def=19.68*2*0.84 hp=253.94*2*0.84 hp%=0.0496*2*0.84 atk=16.54*2*0.84 atk%=0.0496*2*0.84 er=0.0551*2*0.84 em=19.82*2*0.84 cr=0.0331*2*0.84 cd=0.0662*2*0.84;
+bennett add stats er=0.0551*8*0.84 cr=0.0331*2*0.84 cd=0.0661*2*0.84;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+fn KazuPlunge(){
+  kazuha jump;
+  if .airborne {
+    kazuha high_plunge[collision=rand()>0.5];
+  }
+}
+
+active citlali;
+
+
+for let i=0; i<4; i=i+1 {
+  citlali attack, skill;
+  
+  xianyun skill, low_plunge, burst;
+  
+  kazuha skill, high_plunge[collision=1], burst;
+  
+  bennett skill, burst, attack; # N1 needed for pyro to swirl for vv
+  
+  kazuha skill, high_plunge[collision=1];
+  KazuPlunge();
+  KazuPlunge();
+  KazuPlunge();
+  KazuPlunge();
+  kazuha skill, high_plunge[collision=1];
+  KazuPlunge();
+  
+  if i != 3 {
+    bennett skill;
+    
+    xianyun skill, low_plunge;
+    
+    kazuha skill, high_plunge[collision=1];
+  }
+}
+
+# Citlali E > Xianyun EPQ > Kazuha EPQ > Bennett EQ N1 > Kazuha EP 4(JP) EP JP > Bennett E > Xianyun EP > Kazuha EP

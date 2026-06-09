@@ -1,0 +1,46 @@
+neuv char lvl=90/90 cons=0 talent=9,9,9;
+neuv add weapon="sacrificialjade" refine=1 lvl=90/90;
+neuv add set="mh" count=4;
+neuv add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+neuv add stats def%=0.124 def=39.36 hp=507.88 hp%=10*0.0496 atk=33.08 atk%=2*0.0496 er=2*0.0551 em=19.82*2 cr=6*0.0331 cd=10*0.0662; 
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="kitain" refine=5 lvl=90/90;
+ineffa add set="fopl" count=4;
+ineffa add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+ineffa add stats def%=0.124 def=39.36 hp=507.88 hp%=2*0.0496 atk=33.08 atk%=12*0.0496 er=2*0.0551 em=6*19.82 cr=5*0.0331 cd=5*0.0662;
+
+lauma char lvl=90/90 cons=0 talent=9,9,9; 
+lauma add weapon="prototypeamber" refine=5 lvl=90/90;
+lauma add set="deepwood" count=4;
+lauma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=2*0.0496 atk=33.08 atk%=2*0.0496 er=6*0.0551 em=6*19.82 cr=11*0.0331 cd=5*0.0662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="sms" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=4*0.0496 atk=33.08 atk%=2*0.0496 er=4*0.0551 em=19.82*2 cr=10*0.0331 cd=10*0.0662;
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+active neuv;
+
+for let i=0; i<4; i=i+1 {
+  neuv skill;
+  furina skill, dash, attack;
+  ineffa burst;
+  lauma skill, burst;
+  furina burst;
+  neuv attack, charge, skill, charge, burst;
+  lauma skill[hold=1];
+  ineffa attack, skill;
+  neuv attack, charge, charge;
+}
+wait(173); #for the last CA

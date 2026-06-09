@@ -1,0 +1,57 @@
+ayaka char lvl=90/90 cons=2 talent=9,9,9;
+ayaka add weapon="mistsplitterreforged" refine=1 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
+ayaka add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+xilonen char lvl=90/90 cons=0 talent=2,9,9;  
+xilonen add weapon="favsword" refine=5 lvl=90/90; 
+xilonen add set="scroll" count=4; 
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
+xilonen add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+mona char lvl=90/90 cons=0 talent=1,9,9;
+mona add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+mona add set="tenacityofthemillelith" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*12;
+
+shenhe char lvl=90/90 cons=0 talent=1,9,9;
+shenhe add weapon="favoniuslance" refine=5 lvl=90/90;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+shenhe add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*6;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active ayaka;
+for let x = 0; x < 5; x = x + 1 {
+  ayaka dash, attack:2;
+
+  xilonen skill, attack:2;
+
+  shenhe burst, skill;
+  for let j=0; j<2; j=j+1 {
+    if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
+      shenhe attack;
+    }
+  }
+  
+  mona burst,skill;
+  
+  ayaka dash, attack, skill, burst, dash, attack:2, charge, attack:2, charge;
+  
+  xilonen skill, attack:2;
+
+  shenhe skill, attack:2;
+  
+  ayaka skill, dash, attack:2, charge, attack:2, charge;
+}
+  
+  #Ayaka should have 120+ ER
+  #Step 1: Ayaka D N2, Xilonen E N2, Shenhe Q E, Mona Q E, Ayaka D N1 E Q D N2C N2C
+  #Step 2 (After Ayaka Q): Xilonen ±Q E N2, Shenhe E N2, Ayaka E D N2C N2C Back to Step 1
+  #Use Xilonen Q in step 2 if you need heal. But if you use Xilonen Q you lost ~5k dps.
+

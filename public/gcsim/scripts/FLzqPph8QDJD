@@ -1,0 +1,88 @@
+# Kazuha Xianyun Citlali Bennett. KQMS, pretty optimised. ~23 second rotation. 3 skill plunges and 5 xianyun plunges; wait 0.75 seconds between each plunge to melt all except the last skill plunge. Timing isn't too strict, just make sure there is a cryo aura before plunging. 100% collisions on skill, 50% on regular plunges. No burst kazuha
+
+# Options listed by dps
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+#kazuha add weapon="pjc" refine=1 lvl=90/90; # ~84.5k dps
+kazuha add weapon="harbinger" refine=5 lvl=90/90; # ~79k dps
+#kazuha add weapon="splendor" refine=1 lvl=90/90; # no synergy, just to show performance of a generic 5* stat stick. ~78k dps
+#kazuha add weapon="freedomsworn" refine=1 lvl=90/90; # ~76k dps
+#kazuha add weapon="mistsplitter" refine=1 lvl=90/90; # ~75.5k dps
+#kazuha add weapon="wolffang" refine=1 lvl=90/90; # ~71k dps
+#kazuha add weapon="umbrella" refine=5 lvl=90/90; # ~71k dps
+#kazuha add weapon="ironsting" refine=5 lvl=90/90; # ~70k dps
+#kazuha add weapon="finale" refine=5 lvl=90/90; # ~68.5k dps
+#kazuha add weapon="kagotsurubeisshin" refine=1 lvl=90/90; # ~65.5k dps, but bonus points for drip
+kazuha add set="lno" count=4; # ~79k dps
+#kazuha add set="sr" count=4; # ~69k dps
+#kazuha add set="cwof" count=4; # ~67k dps
+#kazuha add set="cwof" count=2; kazuha add set="glad" count=2; # ~61k dps
+#kazuha add set="vv" count=4; # this rotation isn't set up to swirl pyro with kaz so vv doesnt perform well; ~56.5k dps
+kazuha add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; # em/pyro/cr
+#kazuha add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; # em/pyro/cd
+kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12; # cr circlet
+#kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # cd circlet
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9; # c2 is ~112.5k dps
+#xianyun add weapon="crane" refine=1 lvl=90/90; # ~90.5k dps
+xianyun add weapon="oathsworn" refine=5 lvl=90/90; # ~79k dps
+#xianyun add weapon="favcodex" refine=3 lvl=90/90; # ~74.5k dps; change flat atk subs to cr
+xianyun add set="vv" count=4; # ~79k dps; vv only lasts for first 3 plunges
+#xianyun add set="sodp" count=4; # ~77.5k dps
+#xianyun add set="ohc" count=4; # ~77k dps; bubbles may miss while airborne
+#xianyun add set="glad" count=2; xianyun add set="fohw" count=2; # 2pc atk, ~76.5k dps
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9; # c1 & c2 are ~79.5k and ~98.5k dps, respectively
+#citlali add weapon="starcallerswatch" refine=1 lvl=90/90; # ~83.5k dps
+citlali add weapon="ttds" refine=5 lvl=90/90; # ~79k dps
+#citlali add weapon="evenstar" refine=1 lvl=90/90; # ~76.5k dps
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; # ttds/sig
+#citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; # evenstar/c1+
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*12 cr=0.0331*2 cd=0.0662*6;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+#bennett add weapon="aquila" refine=1 lvl=90/90; # ~80.5k dps
+bennett add weapon="alleyflash" refine=1 lvl=90/90; # ~79k dps
+#bennett add weapon="favsword" refine=3 lvl=90/90; # ~76k dps, attack instead of skill before burst
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*7 cd=0.0662*11;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+fn KazuPlunge(){
+  kazuha jump;
+  if .airborne {
+    kazuha high_plunge[collision=rand()>0.5];
+  }
+  wait(45); # wait for cryo aura
+}
+
+active bennett;
+
+for let i=0; i<4; i=i+1 {
+  bennett skill, attack:2; # needs to catch particles to have enough energy
+  
+  xianyun skill, low_plunge, burst;
+  
+  bennett skill, dash, burst;
+  
+  citlali skill, burst;
+  
+  kazuha skill, high_plunge[collision=1];
+  KazuPlunge();
+  KazuPlunge();
+  KazuPlunge();
+  kazuha skill, high_plunge[collision=1];
+  wait(45); # wait for cryo aura
+  KazuPlunge();
+  KazuPlunge();
+  kazuha attack:2; # fill time for skill to come back
+  kazuha skill, high_plunge[collision=1];
+
+}
+

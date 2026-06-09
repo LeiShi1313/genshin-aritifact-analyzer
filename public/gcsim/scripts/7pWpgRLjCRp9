@@ -5,8 +5,8 @@ skirk char lvl=90/90 cons=0 talent=9,9,9 +params=[start_serpents_subtlety=100]; 
 skirk add weapon="finale" refine=5 lvl=90/90;
 //skirk add set="finaleofthedeepgalleries" count=4;
 skirk add set="mh" count=4;
-// skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
-// skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+//skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
+//skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
@@ -41,10 +41,11 @@ for let i=0; i<4; i=i+1 {
   escoffier skill, burst;
   if .skirk.sets.finaleofthedeepgalleries >= 4 {
     skirk skill[hold=1], burst;  # Use her Q ASAP with 4pc galleries set
-    skirk jump:6;
+    wait(48);                    # Wait until the Burst hits end before doing NAs (for 4pc effect on Q)
+    skirk attack:5, dash;
     chongyun burst;
   } else {
-    skirk skill[hold=1], jump:6;
+    skirk skill[hold=1], attack:5, dash, attack:3;
     chongyun burst;
     skirk burst;
   }
@@ -58,6 +59,6 @@ for let i=0; i<4; i=i+1 {
 }
 
 # Other set
-# Chongyun N2E > Furina ED N1 Q > Escoffier EQ > Skirk hE    wait > Chongyun Q > Skirk Q tE N5D N2CD 2[N5D]
+# Chongyun N2E > Furina ED N1 Q > Escoffier EQ > Skirk hE wait N5D > Chongyun Q > Skirk Q tE N5D N2CD 2[N5D]
 # Skirk Sig set
-# Chongyun N2E > Furina ED N1 Q > Escoffier EQ > Skirk hE Q wait > Chongyun Q > Skirk    tE N5D N2CD 2[N5D]
+# Chongyun N2E > Furina ED N1 Q > Escoffier EQ > Skirk hE Q N5D N3 > Chongyun Q > Skirk   tE N5D N2CD 2[N5D]

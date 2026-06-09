@@ -44,7 +44,7 @@ for let i=0; i<4; i=i+1 {
   if .arle.weapon == .keys.weapon.crimsonmoonssemblance {
     arle charge;
   }
-  arle skill;
+  arle skill; delay(11);
   bennett skill, burst;
   escoffier skill, attack;
   citlali skill, burst;

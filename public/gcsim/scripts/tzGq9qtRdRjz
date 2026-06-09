@@ -1,0 +1,50 @@
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbinger" refine=5 lvl=90/90;
+alhaitham add set="gildeddreams" count=4;
+alhaitham add stats def=65 hp=4780 hp%=0.099 atk=350 atk%=0.040999999999999995 er=0.246 em=321.5 cr=0.563 cd=1.0110000000000001 dendro%=0.466;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favoniussword" refine=3 lvl=90/90;
+furina add set="goldentroupe" count=4;
+furina add stats def%=0.057999999999999996 def=60 hp=5079 hp%=0.81 atk=346 atk%=0.152 er=0.5630000000000001 em=56 cr=0.35400000000000004 cd=1.26;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kuki add set="flowerofparadiselost" count=4;
+kuki add stats def%=0.11699999999999999 def=217 hp=5856 hp%=0.16899999999999998 atk=327 er=0.278 em=717.5 cr=0.101 cd=0.397;
+
+yaoyao char lvl=90/90 cons=6 talent=9,9,9;
+yaoyao add weapon="favoniuslance" refine=3 lvl=90/90;
+yaoyao add set="deepwoodmemories" count=4;
+yaoyao add stats def=79 hp=5348 hp%=0.717 atk=330 atk%=0.524 er=0.453 cr=0.775 cd=0.567;
+
+options swap_delay=12;
+
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=0.1 hp=10000000;
+
+active furina;
+ 
+for let r = 0; r < 5; r = r + 1 {
+  furina burst, skill;
+
+  if .yaoyao.burst.ready {
+    yaoyao burst, dash, attack, dash, attack, skill, dash;
+  } else { 
+    yaoyao skill, attack:2; 
+  }
+
+  alhaitham burst;
+
+  kuki attack, skill;
+
+  alhaitham attack:3, dash,
+            attack:3, dash,
+            skill,
+            attack:3, dash,
+            attack:3, charge, dash,
+            attack:3, dash,
+            attack:3, dash,
+            attack:3;
+}

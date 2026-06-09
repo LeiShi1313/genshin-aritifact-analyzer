@@ -1,0 +1,62 @@
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="hamayumi" refine=5 lvl=90/90;
+chasca add set="obsidiancodex" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+chasca add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+mavuika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+barbara char lvl=90/90 cons=0 talent=9,9,9;
+barbara add weapon="ttds" refine=5 lvl=90/90;
+barbara add set="ins" count=4;
+barbara add stats hp=3571 atk=232 hp%=0.348 hydro%=0.348 cr=0.311;
+barbara add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*2 em=16.6488*2 cr=0.027804*6 cd=0.055608*10;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90;
+bennett add set="scroll" count=2;
+bennett add set="eosf" count=2;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+
+active mavuika; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  if i {
+    bennett attack;
+  }
+  bennett skill, burst;
+  
+  if .barbara.skill.ready {
+    barbara attack:2, skill;
+  } else {
+    barbara attack:4; # Barbara E from last rotation help apply 1 more Hydro for Mavuika to Vape
+  }
+  
+  set_player_pos(0,-2);  # To simulate that Barbara E ring doesn't apply Hydro to the enemy
+  mavuika burst;
+  set_player_pos(0,0);
+  mavuika charge, skill, dash;
+  
+  chasca attack, skill;
+  set_player_pos(0,-2);  # To simulate that Barbara E ring doesn't apply Hydro to the enemy
+  chasca aim:4;
+  if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+    chasca burst;
+  } else {
+    chasca aim[bullets=4];
+  }
+  set_player_pos(0,0);
+}
+wait(82); # wait for aim[bullets=4] hits the enemy at the last rot
+
+# 18s rotations
+# Bennett (N1) EQ > Barbara N2 E / N4 > Mavuika Q C tED > Chasca N1 E 4[C] Q/C_4b

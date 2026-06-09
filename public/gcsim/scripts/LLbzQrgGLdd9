@@ -1,0 +1,45 @@
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="scion" refine=1 lvl=90/90;
+chasca add set="vv" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622; #main
+chasca add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*9;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*3 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+sigewinne char lvl=90/90 cons=0 talent=9,9,9;
+sigewinne add weapon="sequenceofsolitude" refine=5 lvl=90/90;
+sigewinne add set="totm" count=4;
+sigewinne add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+sigewinne add stats def%=0.062*2 def=19.68*2 hp=253.94*10 hp%=0.0496*6 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*3;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="slingshot" refine=5 lvl=90/90;
+yelan add set="eosf" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*3 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  sigewinne skill, dash;
+  yelan burst, attack, skill, attack;
+  chasca skill, attack, aim, attack, aim, attack, aim, attack;
+  if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+    chasca burst;
+  } else {
+    yelan attack:2;
+  }
+  yelan skill, attack:6;
+}
+
+# ~22s rotations
+# Furina ED Q > Sigewinne ED > Yelan Q N1 E N1 > Chasca E 3[N1 C] N1 > Chasca Q / Yelan N2 > Yelan E N6

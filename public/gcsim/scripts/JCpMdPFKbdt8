@@ -1,0 +1,58 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
+ayaka add weapon="azurelight" refine=1 lvl=90/90;
+//ayaka add set="bs" count=4;       # if the enemy is Freezable 4BS is better than 4MH
+ayaka add set="mh" count=4;
+ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.5296;
+
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
+shenhe add weapon="favlance" refine=3 lvl=90/90;
+shenhe add set="no" count=4;
+shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999 freeze_resist=0; # standard ST target     # freeze_resist=1 for enemies NOT Freezable
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash, burst;
+  if !.furina.mods.favonius-cd && .furina.weapon == .keys.weapon.favsword {
+    furina attack;
+  }
+  shenhe burst, skill;
+  for let j=0; j<2; j=j+1 {
+    if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
+      shenhe attack;
+    }
+  }
+  escoffier burst, skill;
+  ayaka skill, dash, attack:2, charge, dash, attack:2, burst, dash;
+  shenhe attack, skill, attack;
+  if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
+    shenhe attack;
+  }
+  ayaka attack:3, charge, 
+        skill, dash, 
+        attack, charge;
+}
+
+# Furina ED Q > Shenhe Q tE > Escoffier Q E > Ayaka ED N2CD N2 Q D > Shenhe N1 tE N1 > Ayaka N3C ED N1C

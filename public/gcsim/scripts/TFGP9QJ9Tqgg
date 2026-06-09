@@ -30,16 +30,15 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
 energy every interval=480,720 amount=1; # standard Energy drops
 
 # Rotation assumptions
-active shenhe;
+active layla;
 
 for let i=0; i<4;i=i+1 {
-
+  escoffier skill, burst;
   shenhe skill[hold=1], attack, burst;
   if !.shenhe.mods.favonius-cd {
     shenhe attack;
   }
   layla burst, skill;
-  escoffier skill, burst;
   wrio skill,
        attack:3, charge, jump,
        attack:3, charge, jump,

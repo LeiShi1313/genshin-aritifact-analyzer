@@ -1,0 +1,41 @@
+# Noelle Furina Albedo Fischl, ~25s rot with Noelle NA and CA. Personal stats, pre Hexerei. Noelle uses booking to extend her CA to 18hits+Final, using up a lot of stamina. The sim is not very optimized
+
+noelle char lvl=90/90 cons=6 talent=10,10,10;
+noelle add weapon="redhornstonethresher" refine=3 lvl=90/90;
+noelle add set="retracingbolide" count=1;
+noelle add set="marechausseehunter" count=4;
+noelle add stats def%=0.8739999999999999 def=19 hp=5348 atk=329 er=0.272 em=39 cr=0.524 cd=1.415 geo%=0.466;
+
+furina char lvl=90/90 cons=0 talent=1,10,10;
+furina add weapon="favoniussword" refine=4 lvl=90/90;
+furina add set="goldentroupe" count=5;
+furina add stats def%=0.139 def=35 hp=4780 hp%=1.236 atk=345 er=0.304 em=46 cr=0.587 cd=1.088;
+
+albedo char lvl=90/90 cons=0 talent=1,10,8;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="goldentroupe" count=4;
+albedo add set="gildeddreams" count=1;
+albedo add stats def%=1.036 def=58 hp=5497 atk=368 atk%=0.11099999999999999 er=0.057999999999999996 em=19 cr=0.696 cd=0.886 geo%=0.466;
+
+fischl char lvl=90/90 cons=6 talent=7,10,9;
+fischl add weapon="fadingtwilight" refine=5 lvl=90/90;
+fischl add set="goldentroupe" count=4;
+fischl add set="marechausseehunter" count=1;
+fischl add stats def=19 hp=5706 atk=311 atk%=0.6240000000000001 er=0.168 em=80 cr=0.591 cd=1.204 electro%=0.466;
+
+options iteration=1000 swap_delay=12;
+target lvl=100 resist=0.1 hp=99999999 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active albedo;
+
+for let i=0; i < 4; i=i+1 {
+  albedo skill, attack;
+  fischl skill, attack;
+  furina skill, attack, burst;
+  noelle skill, burst, attack:3, dash, attack:4;
+  fischl attack, burst;
+  noelle charge[no_limit=1]:18, charge[final=1];
+}
+
+# Albedo EN1 > Fischl EN1 > Furina EN1Q > Noelle EQ N3D N4 > Fischl N1Q > Noelle C18F

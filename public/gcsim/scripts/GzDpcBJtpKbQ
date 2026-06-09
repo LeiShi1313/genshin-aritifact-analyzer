@@ -34,11 +34,11 @@ active wrio;
 wrio attack;
 for let i=0; i<4;i=i+1 {
   kazuha skill, high_plunge, burst;
+  escoffier skill, attack, burst;
   shenhe skill[hold=1], attack, burst;
   if !.shenhe.mods.favonius-cd {
     shenhe attack;
   }
-  escoffier skill, burst;
   kazuha skill, high_plunge;
   wrio skill,
        attack:3, charge, jump,

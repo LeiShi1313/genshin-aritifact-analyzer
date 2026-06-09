@@ -1,14 +1,23 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
 arle char lvl=90/90 cons=0 talent=9,9,9;
 arle add weapon="fjords" refine=1 lvl=90/90;
+//arle add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
 arle add set="fohw" count=5;
 arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; 
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
-        
+
 citlali char lvl=90/90 cons=0 talent=9,9,9;
 citlali add weapon="ttds" refine=5 lvl=90/90;
 citlali add set="scroll" count=4;
-citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
-citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634;
+// Full EM
+citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187;
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=158.56 cr=0.331 cd=0.1986;
+
+// Personal Damage oriented
+// citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+// citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=237.84 cr=0.0993 cd=0.3972;
 
 xilonen char lvl=90/90 cons=0 talent=9,9,9; 
 xilonen add weapon="favsword" refine=3 lvl=90/90;
@@ -18,40 +27,89 @@ xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 // 4instructor
 // xilonen add set="ins" count=4;
-// xilonen add stats hp=3571 atk=232 def%=0.43725 def%=0.43725 cr=0.311 ; #main
+// xilonen add stats hp=3571 atk=232 def%=0.43725 def%=0.43725 cr=0.311;
 // xilonen add stats def=33.0624 def%=0.31248 hp=426.6192 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.111216;
 
 bennett char lvl=90/90 cons=6 talent=9,9,9; 
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=5;
-bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
 
-options swap_delay=12 iteration=1000;
-target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
-energy every interval=480,720 amount=1;
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active arlecchino;
 
 let UseXilonenDash = false;  # change this value between true and false to make Xilonen use dash or not
 
-active arle;
+fn WaitForCryo() {
+  let StartFrame = f();
+  if !.element.t0.pyro {      # If the enemy aura is not Pyro, wait for Cryo aura (so if its already Pyro you don't wait)
+    while !.element.t0.cryo && f() - StartFrame < 120 {   # wait but up to 120f(2s), so you don't wait forever
+      wait(1);
+    }
+  }
+}
+
 
 for let i=0; i<4; i=i+1 {
-  arle skill;
+  if .arle.weapon == .keys.weapon.crimsonmoonssemblance {
+    arle charge;
+  }
+  arle skill;            delay(11);
   bennett skill, burst;
   xilonen skill, attack:2;
   if UseXilonenDash == true {
     xilonen dash;   # dash to pick up the shard
   }
   pick_up_crystallize("pyro");
-  citlali skill, burst;
-  arle charge[early_cancel=1], dash;
-  while !.element.t0.cryo {
-    wait(1);
+  
+  if .arle.cons < 2 {
+    citlali skill, burst;
+  } else {
+    citlali attack, skill, burst;
   }
-  arle attack:6;
-  arle attack:6;
-  if UseXilonenDash == true {
-    delay(10);   # the timing changes so you need to wait to get melt
+  
+  arle charge[early_cancel=1], dash;  # if Arle is C2+, C2 proc will apply pyro
+  // if .arle.cons >= 2 {
+  //   wait(47);
+  // }
+  # Disclaimer
+  # Originally, after CA cancel, you need to see Arle C2 proc remove Cryo first and then you need to wait for Citlali's Cryo app before performing NA combo
+  # but in this sim, Arle perform N1 immediately without waiting, removing Cryo. And Citlali applies Cryo right after that (0.1seconds) and then C2 proc hits.
+  WaitForCryo();
+  arle attack:3, dash;
+  WaitForCryo();
+  arle attack:3, dash;
+  WaitForCryo();
+  arle attack:3, dash;
+  
+  WaitForCryo();
+  arle attack:3, dash;
+  WaitForCryo();
+  arle attack:3, dash;
+  WaitForCryo();
+  arle attack;
+  while .arle.skill.cd > 48 {
+    if .arle.normal == 4 {
+      arle dash;
+    } else {
+      arle attack;
+    }
   }
-  arle attack:3;
+  if .arle.weapon != .keys.weapon.crimsonmoonssemblance && .arle.skill.cd > 15 { # Since you don't do CA, use one more NA to reduce E cd
+    arle attack;
+    print("one more NA");
+  }
 }
+
+# Arle C¹ E > Bennett EQ > Xilonen E N2 > Citlali (N1)² EQ > Arle CD³ 5[wait N3D] N2 >
+
+# ¹ If Arle is holding her Sig weapon, use CA for the passive.
+# ² If Arle is C2+, Use Citlai N1 before or after E to leave Cryo on the enemy before swapping out
+# ³ Dash cancel her CA before it hit the enemy to prevent Pyro app.
+
+# In this sim, Arle performs her first N3D immediately but its timing is very sensitive see the comments above and the sim sample
