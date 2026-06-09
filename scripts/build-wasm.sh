@@ -11,8 +11,22 @@ GCSIM_DIR="$PROJECT_DIR/gcsim"
 OUTPUT_DIR="$PROJECT_DIR/public/gcsim"
 OUTPUT_FILE="$OUTPUT_DIR/main.wasm"
 TEMP_FILE="$OUTPUT_DIR/main.wasm.tmp"
+WASM_EXEC_FILE="$OUTPUT_DIR/wasm_exec.js"
 
 mkdir -p "$OUTPUT_DIR"
+
+GOROOT_DIR="$(go env GOROOT)"
+if [ -f "$GOROOT_DIR/lib/wasm/wasm_exec.js" ]; then
+  WASM_EXEC_SOURCE="$GOROOT_DIR/lib/wasm/wasm_exec.js"
+elif [ -f "$GOROOT_DIR/misc/wasm/wasm_exec.js" ]; then
+  WASM_EXEC_SOURCE="$GOROOT_DIR/misc/wasm/wasm_exec.js"
+else
+  echo "Could not find wasm_exec.js in Go installation at $GOROOT_DIR" >&2
+  exit 1
+fi
+
+cp "$WASM_EXEC_SOURCE" "$WASM_EXEC_FILE"
+echo "Updated wasm_exec.js from $WASM_EXEC_SOURCE"
 
 cd "$GCSIM_DIR/cmd/wasm"
 
