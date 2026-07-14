@@ -486,6 +486,41 @@ export const matchingBuildScores = (
     });
 };
 
+export const matchingCharacterScores = (
+  summary: ArtifactScoreSummary,
+  builds: Readonly<Record<string, { readonly character: number } | undefined>>,
+  level: number,
+  minimum: number
+): readonly BoundBuildScore[] => {
+  const finished = level >= 20;
+  const bestByCharacter = new Map<number, BoundBuildScore>();
+
+  for (const score of matchingBuildScores(summary, level, minimum)) {
+    const character = builds[score.buildId]?.character;
+    if (character === undefined) continue;
+    const current = bestByCharacter.get(character);
+    const scoreIsBetter =
+      current === undefined ||
+      (finished
+        ? greater(score.match, current.match)
+        : greater(score.expectedFinalMatch, current.expectedFinalMatch) ||
+          (equal(score.expectedFinalMatch, current.expectedFinalMatch) &&
+            greater(score.match, current.match)));
+    if (scoreIsBetter) bestByCharacter.set(character, score);
+  }
+
+  return [...bestByCharacter.values()].sort((left, right) => {
+    const leftScore =
+      toPublicArtifactScore(finished ? left.match : left.expectedFinalMatch) ??
+      0;
+    const rightScore =
+      toPublicArtifactScore(
+        finished ? right.match : right.expectedFinalMatch
+      ) ?? 0;
+    return rightScore - leftScore || left.buildIndex - right.buildIndex;
+  });
+};
+
 const sortValue = (
   summary: ArtifactScoreSummary,
   level: number,

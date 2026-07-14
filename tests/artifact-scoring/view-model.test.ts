@@ -5,6 +5,7 @@ import { AttributePosition } from "../../src/genshin/attribute";
 import {
   BATCH_ENTITY_STATUS,
   compareArtifactScores,
+  matchingCharacterScores,
   presentArtifactScore,
   scoreSelectionDecision,
   selectArtifactScoreSummary,
@@ -307,5 +308,29 @@ test("presents and sorts by the same query-eligible Build used for selection", (
   const comparison = selectArtifactScoreSummary(comparisonInput, 1);
   assert.ok(
     compareArtifactScores(summary, comparison, 0, 0, "score-desc", query) > 0
+  );
+});
+
+test("ranks unique characters by their best eligible Build", () => {
+  const input = batch();
+  input.expectedFinalMatch.set([0.8, 0.9, 0.85], 0);
+  const summary = selectArtifactScoreSummary(input, 0);
+  const builds = {
+    "current-build": { character: 1 },
+    "future-build": { character: 1 },
+    "tie-build": { character: 2 },
+  };
+
+  assert.deepEqual(
+    matchingCharacterScores(summary, builds, 0, 75).map((score) =>
+      Object.freeze({
+        buildId: score.buildId,
+        character: builds[score.buildId].character,
+      })
+    ),
+    [
+      { buildId: "future-build", character: 1 },
+      { buildId: "tie-build", character: 2 },
+    ]
   );
 });
