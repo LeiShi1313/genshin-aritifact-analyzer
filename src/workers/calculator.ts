@@ -18,6 +18,7 @@ import {
   publicScoreBins,
   probabilityAtLeast,
   rationalToNumber,
+  SET_ELIGIBILITY_REFERENCES,
   type ArtifactScoringSnapshot,
   type BuildScoringProfile,
   type CanonicalArtifactState,
@@ -257,10 +258,7 @@ const calculateCompactSetPolicy = async (
   );
   expectedFiveStarDrops.fill(Number.NaN);
 
-  for (const [referenceMilestone, baseScore] of [
-    [0, 75],
-    [20, 80],
-  ] as const) {
+  for (const { referenceMilestone, baseScore } of SET_ELIGIBILITY_REFERENCES) {
     const positionBins = [];
     for (const position of SET_POSITIONS) {
       const population = await generateNormalFiveStarPopulationCooperatively(

@@ -3,6 +3,7 @@ import test from "node:test";
 
 import { AttributePosition, AttributeType } from "../../src/genshin/attribute";
 import type { Build } from "../../src/genshin/build";
+import { Set as ArtifactSet } from "../../src/genshin/set";
 import {
   BUILD_SET_PLAN,
   classifyArtifactSetCompatibility,
@@ -15,6 +16,7 @@ import {
   selectConservativePublicScoreCutoff,
   setEligibilityReferenceForLevel,
   SET_COMPATIBILITY,
+  SET_ELIGIBILITY_REFERENCES,
 } from "../../src/utils/artifactScoring/setEligibility";
 import { generateNormalFiveStarPopulation } from "../../src/utils/artifactScoring/population";
 import { createScoreDistribution } from "../../src/utils/artifactScoring/probabilityTypes";
@@ -74,6 +76,27 @@ test("last-arrival probabilities are symmetric and total one", () => {
   });
 });
 
+test("keeps a positive last-arrival budget under highly asymmetric rates", () => {
+  const rates = [1, 1e-7, 1e-7, 1e-7, 1e-7];
+  const lastArrival = lastArrivalProbabilities(rates);
+  assert.ok(lastArrival[0] > 0);
+  assert.ok(Math.abs(lastArrival[0] / 2.3999976e-27 - 1) < 1e-6);
+
+  const certain = distribution([[75, 1]]);
+  const scarce = distribution([
+    [75, 1e-7],
+    [0, 1 - 1e-7],
+  ]);
+  const gate = calculateSetEligibilityGates(
+    [certain, scarce, scarce, scarce, scarce],
+    75
+  )[0];
+  assert.equal(gate.status, "available");
+  if (gate.status !== "available") return;
+  assert.equal(gate.forcedHighestBucket, true);
+  assert.ok(gate.offPieceBudget > 0);
+});
+
 test("converts last-arrival demand to a capped odds supply factor", () => {
   assert.ok(Math.abs(oddsLimitedOffPieceFactor(0.2) - 0.25) < 1e-12);
   assert.equal(oddsLimitedOffPieceFactor(0.5), 1);
@@ -81,6 +104,10 @@ test("converts last-arrival demand to a capped odds supply factor", () => {
 });
 
 test("uses one fixed acquisition reference for every unfinished level", () => {
+  assert.deepEqual(SET_ELIGIBILITY_REFERENCES, [
+    { referenceMilestone: 0, baseScore: 75 },
+    { referenceMilestone: 20, baseScore: 80 },
+  ]);
   for (const level of [0, 4, 8, 12, 16, 19]) {
     assert.deepEqual(setEligibilityReferenceForLevel(level), {
       referenceMilestone: 0,
@@ -305,6 +332,17 @@ test("models only unambiguous four-piece alternatives", () => {
       },
     ],
     [{ setCombos: [{ set: 10, count: 2 }] }],
+    [{ setCombos: [{ set: 999, count: 4 }] }],
+    [
+      {
+        setCombos: [{ set: ArtifactSet.INSTRUCTOR, count: 4 }],
+      },
+    ],
+    [
+      {
+        setCombos: [{ set: ArtifactSet.PRAYERS_FOR_DESTINY, count: 4 }],
+      },
+    ],
   ]) {
     assert.deepEqual(classifyBuildSetPlan({ ...baseBuild, suits }), {
       kind: BUILD_SET_PLAN.NEUTRAL,

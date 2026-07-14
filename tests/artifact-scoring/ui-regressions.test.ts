@@ -27,7 +27,10 @@ test("artifact stat values include real accessible stat names", () => {
 test("the score card leads with one accessible colored integer score and plain-language action", () => {
   const component = readSource("src/features/artifacts/ArtifactScoreCard.jsx");
 
-  assert.match(component, /presentArtifactScore\(summary, artifact\.level\)/);
+  assert.match(
+    component,
+    /presentArtifactScore\(\s*summary,\s*artifact\.level,\s*minimum\s*\)/
+  );
   assert.match(component, /text-(4xl|5xl)/);
   assert.match(component, /font-(bold|black)/);
   assert.match(component, /tabular-nums/);
@@ -68,7 +71,11 @@ test("V2 lock export operates only on successfully scored artifacts", () => {
 });
 
 test("lock exports remain blocked until the complete score selection is ready", () => {
-  for (const status of ["pending-summary", "unavailable"] as const) {
+  for (const status of [
+    "pending-summary",
+    "pending-set-eligibility",
+    "unavailable",
+  ] as const) {
     assert.equal(isArtifactExportReady("GOOD", status), false);
   }
   assert.equal(isArtifactExportReady("MINGYU_LAB", "ready"), false);
@@ -81,6 +88,39 @@ test("lock exports remain blocked until the complete score selection is ready", 
   );
   const upload = readSource("src/features/artifacts/ArtifactsUpload.jsx");
   assert.equal((upload.match(/if \(!exportReady\) return;/g) ?? []).length, 2);
+});
+
+test("set roles expose one simple keyboard and touch friendly farming tooltip", () => {
+  const component = readSource("src/features/artifacts/ArtifactScoreCard.jsx");
+
+  assert.match(component, /useId\(\)/);
+  assert.match(component, /aria-describedby={tooltipId}/);
+  assert.match(component, /role="tooltip"/);
+  assert.match(component, /const tooltipVisible/);
+  assert.match(component, /hidden={!tooltipVisible}/);
+  assert.match(component, /onMouseEnter=/);
+  assert.match(component, /onFocus=/);
+  assert.match(component, /setPinned/);
+  assert.match(component, /event\.key === "Escape"/);
+  assert.match(component, /max-w-\[calc\(100vw-4rem\)\]/);
+  assert.match(component, /right-0/);
+  assert.doesNotMatch(
+    component,
+    /aria-expanded={(open|tooltipVisible|pinned)}/
+  );
+  assert.doesNotMatch(component, /tooltip-open|tooltip-content/);
+  assert.match(component, /t\("Set farming estimate", \{ drops \}\)/);
+  assert.doesNotMatch(component, /lastArrival|offPieceFactor|tailProbability/);
+});
+
+test("set recommendation work has a visible loading state instead of a false empty result", () => {
+  const upload = readSource("src/features/artifacts/ArtifactsUpload.jsx");
+
+  assert.match(upload, /setEligibilityIsPending/);
+  assert.match(
+    upload,
+    /setEligibilityIsPending[\s\S]*?<Calculating[\s\S]*?Calculating set recommendations/
+  );
 });
 
 test("long translated download states can wrap inside the mobile split button", () => {

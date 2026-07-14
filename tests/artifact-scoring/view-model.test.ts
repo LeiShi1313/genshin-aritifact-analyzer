@@ -276,3 +276,36 @@ test("combines the custom minimum with the Build-derived off-piece cutoff", () =
     "unselected"
   );
 });
+
+test("presents and sorts by the same query-eligible Build used for selection", () => {
+  const input = batch();
+  input.buildSetPlan.fill(1);
+  input.expectedFinalMatch.set([0.9, 0.74, 0.7], 0);
+  input.setCompatibility.set(
+    [
+      SET_COMPATIBILITY.MISMATCH,
+      SET_COMPATIBILITY.MATCH,
+      SET_COMPATIBILITY.MISMATCH,
+    ],
+    0
+  );
+  const policy = setPolicy();
+  policy.offPieceCutoff[
+    setEligibilityGateIndex(0, 0, AttributePosition.SANDS)
+  ] = 91;
+  const summary = selectArtifactScoreSummary(input, 0, readySetContext(policy));
+  const query = { minPotential: 70, minScore: 80 };
+
+  assert.equal(scoreSelectionDecision(summary, 0, query), "selected");
+  const presentation = presentArtifactScore(summary, 0, query.minPotential);
+  assert.equal(presentation?.primary.buildId, "future-build");
+  assert.equal(presentation?.primary.score, 74);
+  assert.equal(presentation?.primary.recommendation.role, "set-match");
+
+  const comparisonInput = batch();
+  comparisonInput.expectedFinalMatch.set([0.75, 0.75, 0.75], 3);
+  const comparison = selectArtifactScoreSummary(comparisonInput, 1);
+  assert.ok(
+    compareArtifactScores(summary, comparison, 0, 0, "score-desc", query) > 0
+  );
+});

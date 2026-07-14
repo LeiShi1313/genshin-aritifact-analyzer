@@ -343,12 +343,25 @@ export interface ArtifactScorePresentation {
 
 export const presentArtifactScore = (
   summary: ArtifactScoreSummary,
-  level: number
+  level: number,
+  minimum?: number
 ): ArtifactScorePresentation | undefined => {
   if (summary.status !== "ok") return undefined;
 
   const finished = level >= 20;
-  const bound = finished ? summary.bestCurrent : summary.bestExpected;
+  const queryBest =
+    minimum === undefined
+      ? undefined
+      : bestBuildMeetingMinimum(summary, level, minimum);
+  const bound =
+    minimum === undefined
+      ? finished
+        ? summary.bestCurrent
+        : summary.bestExpected
+      : queryBest ??
+        (finished
+          ? rawBestCurrent(summary.perBuild)
+          : rawBestExpected(summary.perBuild));
   const rawValue = finished ? bound.match : bound.expectedFinalMatch;
   const score = toPublicArtifactScore(rawValue);
   if (score === undefined) return undefined;
@@ -404,9 +417,7 @@ export const scoreSelectionDecision = (
     return "unselected";
   }
   const minimum = level >= 20 ? query.minScore : query.minPotential;
-  return summary.perBuild.some((score) =>
-    buildScoreMeetsMinimum(score, level, minimum)
-  )
+  return bestBuildMeetingMinimum(summary, level, minimum)
     ? "selected"
     : "unselected";
 };
@@ -438,6 +449,19 @@ export const buildScoreMeetsMinimum = (
   );
 };
 
+const bestBuildMeetingMinimum = (
+  summary: Extract<ArtifactScoreSummary, { status: "ok" }>,
+  level: number,
+  minimum: number
+): BoundBuildScore | undefined => {
+  if (summary.recommendationStatus !== "ready") return undefined;
+  const eligible = summary.perBuild.filter((score) =>
+    buildScoreMeetsMinimum(score, level, minimum)
+  );
+  if (eligible.length === 0) return undefined;
+  return level >= 20 ? rawBestCurrent(eligible) : rawBestExpected(eligible);
+};
+
 export const matchingBuildScores = (
   summary: ArtifactScoreSummary,
   level: number,
@@ -464,18 +488,29 @@ export const matchingBuildScores = (
 
 const sortValue = (
   summary: ArtifactScoreSummary,
-  level: number
-): number | undefined => presentArtifactScore(summary, level)?.primary.score;
+  level: number,
+  query?: Pick<ArtifactScoringQuery, "minPotential" | "minScore">
+): number | undefined =>
+  presentArtifactScore(
+    summary,
+    level,
+    query === undefined
+      ? undefined
+      : level >= 20
+      ? query.minScore
+      : query.minPotential
+  )?.primary.score;
 
 export const compareArtifactScores = (
   left: ArtifactScoreSummary,
   right: ArtifactScoreSummary,
   leftLevel: number,
   rightLevel: number,
-  sort: ArtifactScoreSort
+  sort: ArtifactScoreSort,
+  query?: Pick<ArtifactScoringQuery, "minPotential" | "minScore">
 ): number => {
-  const leftValue = sortValue(left, leftLevel);
-  const rightValue = sortValue(right, rightLevel);
+  const leftValue = sortValue(left, leftLevel, query);
+  const rightValue = sortValue(right, rightLevel, query);
   if (leftValue === undefined || rightValue === undefined) {
     if (leftValue === rightValue) {
       return left.artifactIndex - right.artifactIndex;

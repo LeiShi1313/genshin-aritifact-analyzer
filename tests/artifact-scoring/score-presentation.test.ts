@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   getArtifactScoreAction,
   getArtifactScoreBand,
+  roundExpectedFiveStarDrops,
   toPublicArtifactScore,
 } from "../../src/features/artifacts/scorePresentation";
 
@@ -91,4 +92,10 @@ test("does not recommend a high stat score that misses the set gate", () => {
     }),
     { id: "calculating-recommendation", recommended: false }
   );
+});
+
+test("rounds the farming tooltip to two useful digits", () => {
+  assert.equal(roundExpectedFiveStarDrops(40), 40);
+  assert.equal(roundExpectedFiveStarDrops(7_331), 7_300);
+  assert.equal(roundExpectedFiveStarDrops(Number.POSITIVE_INFINITY), undefined);
 });

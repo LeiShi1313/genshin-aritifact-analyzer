@@ -75,6 +75,11 @@ const requested = (phase: PhaseState, requestId: string): PhaseState => ({
   issues: [],
 });
 
+const invalidatedPhase = (phase: PhaseState): PhaseState => ({
+  ...idlePhase(),
+  status: phase.status === "unavailable" ? "unavailable" : "idle",
+});
+
 export const artifactScoringSessionReducer = (
   state: ArtifactScoringSessionState,
   action: SessionAction
@@ -117,9 +122,12 @@ export const artifactScoringSessionReducer = (
     );
     return {
       ...state,
-      prospect: { ...idlePhase(), results: {} },
-      potential: { ...idlePhase(), results: potentialResults },
-      setEligibility: idlePhase(),
+      prospect: { ...invalidatedPhase(state.prospect), results: {} },
+      potential: {
+        ...invalidatedPhase(state.potential),
+        results: potentialResults,
+      },
+      setEligibility: invalidatedPhase(state.setEligibility),
     };
   }
 

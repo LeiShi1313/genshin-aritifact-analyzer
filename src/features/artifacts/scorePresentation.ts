@@ -54,6 +54,15 @@ export const getArtifactScoreBand = (score: number): ArtifactScoreBand => {
   return { id: "ordinary", tone: "neutral", emphasis: "normal" };
 };
 
+export const roundExpectedFiveStarDrops = (
+  value: number
+): number | undefined => {
+  if (!Number.isFinite(value) || value <= 0) return undefined;
+  const digits = Math.floor(Math.log10(value)) + 1;
+  const factor = 10 ** Math.max(0, digits - 2);
+  return Math.round(value / factor) * factor;
+};
+
 export const getArtifactScoreAction = ({
   level,
   score,

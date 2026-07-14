@@ -1,4 +1,5 @@
 import type { Build } from "../../genshin/build";
+import { Set as ArtifactSet } from "../../genshin/set";
 import {
   CompensatedSum,
   compensatedSum,
@@ -28,6 +29,37 @@ export type BuildSetPlan = Readonly<{
   targetSets: readonly number[];
 }>;
 
+const GENERATED_ARTIFACT_SET_IDS = new globalThis.Set<number>(
+  Object.values(ArtifactSet).filter(
+    (value): value is number =>
+      typeof value === "number" && Number.isInteger(value) && value > 0
+  )
+);
+
+const SETS_WITHOUT_FIVE_STAR_FOUR_PIECES = new globalThis.Set<number>([
+  ArtifactSet.BERSERKER,
+  ArtifactSet.BRAVE_HEART,
+  ArtifactSet.DEFENDERS_WILL,
+  ArtifactSet.GAMBLER,
+  ArtifactSet.INSTRUCTOR,
+  ArtifactSet.MARTIAL_ARTIST,
+  ArtifactSet.PRAYERS_FOR_DESTINY,
+  ArtifactSet.PRAYERS_FOR_ILLUMINATION,
+  ArtifactSet.PRAYERS_FOR_WISDOM,
+  ArtifactSet.PRAYERS_TO_SPRINGTIME,
+  ArtifactSet.RESOLUTION_OF_SOJOURNER,
+  ArtifactSet.SCHOLAR,
+  ArtifactSet.THE_EXILE,
+  ArtifactSet.TINY_MIRACLE,
+  ArtifactSet.ADVENTURER,
+  ArtifactSet.LUCKY_DOG,
+  ArtifactSet.TRAVELING_DOCTOR,
+]);
+
+const isFiveStarFourPieceSet = (set: number): boolean =>
+  GENERATED_ARTIFACT_SET_IDS.has(set) &&
+  !SETS_WITHOUT_FIVE_STAR_FOUR_PIECES.has(set);
+
 export const classifyBuildSetPlan = (build: Build): BuildSetPlan => {
   if (
     build.suits.length === 0 ||
@@ -35,8 +67,7 @@ export const classifyBuildSetPlan = (build: Build): BuildSetPlan => {
       (suit) =>
         suit.setCombos.length !== 1 ||
         suit.setCombos[0].count !== 4 ||
-        !Number.isInteger(suit.setCombos[0].set) ||
-        suit.setCombos[0].set <= 0
+        !isFiveStarFourPieceSet(suit.setCombos[0].set)
     )
   ) {
     return Object.freeze({ kind: BUILD_SET_PLAN.NEUTRAL, targetSets: [] });
@@ -71,6 +102,18 @@ export type SetEligibilityReference = Readonly<{
   referenceMilestone: 0 | 20;
   baseScore: number;
 }>;
+
+export const SET_ELIGIBILITY_REFERENCES: readonly SetEligibilityReference[] =
+  Object.freeze([
+    Object.freeze({
+      referenceMilestone: 0,
+      baseScore: PUBLIC_SCORE_DEFAULTS.minPotential,
+    }),
+    Object.freeze({
+      referenceMilestone: 20,
+      baseScore: PUBLIC_SCORE_DEFAULTS.minScore,
+    }),
+  ]);
 
 export type SetEligibilityGate =
   | Readonly<{
@@ -111,14 +154,8 @@ export const setEligibilityReferenceForLevel = (
     throw new RangeError("Artifact level must be in [0, 20]");
   }
   return level < 20
-    ? {
-        referenceMilestone: 0,
-        baseScore: PUBLIC_SCORE_DEFAULTS.minPotential,
-      }
-    : {
-        referenceMilestone: 20,
-        baseScore: PUBLIC_SCORE_DEFAULTS.minScore,
-      };
+    ? SET_ELIGIBILITY_REFERENCES[0]
+    : SET_ELIGIBILITY_REFERENCES[1];
 };
 
 export const publicScoreBins = (
@@ -170,22 +207,32 @@ export const lastArrivalProbabilities = (
   }
 
   const result = arrivalRates.map((positionRate, positionIndex) => {
-    const others = arrivalRates
-      .map((_, index) => index)
-      .filter((index) => index !== positionIndex);
-    let probability = 0;
-    for (let mask = 0; mask < 1 << others.length; mask += 1) {
-      let denominator = positionRate;
-      let selectedCount = 0;
-      for (let bit = 0; bit < others.length; bit += 1) {
-        if ((mask & (1 << bit)) === 0) continue;
-        denominator += arrivalRates[others[bit]];
-        selectedCount += 1;
+    const total = new CompensatedSum();
+    const visitArrivalOrders = (
+      remaining: readonly number[],
+      pathProbability: number
+    ): void => {
+      if (remaining.length === 0) {
+        total.add(pathProbability);
+        return;
       }
-      probability +=
-        (selectedCount % 2 === 0 ? 1 : -1) * (positionRate / denominator);
-    }
-    return Math.max(0, Math.min(1, probability));
+      const denominator =
+        positionRate +
+        compensatedSum(remaining.map((index) => arrivalRates[index]));
+      remaining.forEach((nextPosition, nextIndex) => {
+        visitArrivalOrders(
+          remaining.filter((_, index) => index !== nextIndex),
+          pathProbability * (arrivalRates[nextPosition] / denominator)
+        );
+      });
+    };
+    visitArrivalOrders(
+      arrivalRates
+        .map((_, index) => index)
+        .filter((index) => index !== positionIndex),
+      1
+    );
+    return total.value();
   });
   const total = compensatedSum(result);
   return Object.freeze(result.map((probability) => probability / total));

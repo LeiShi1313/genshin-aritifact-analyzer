@@ -21,6 +21,7 @@ const COMMON_KEYS = [
   "Calculating Build Match",
   "Calculating Prospect Rarity for all artifacts",
   "Calculating artifact scores",
+  "Calculating set recommendations",
   "Chance to finish in the top 10%",
   "Chance to reach Match target",
   "Detailed upgrade forecast unavailable",
@@ -57,6 +58,7 @@ const COMMON_KEYS = [
   "No tie-preserving top 10% cutoff exists",
   "No uploaded artifacts founds",
   "Open artifact details",
+  "Off-piece candidate",
   "Other",
   "Other artifacts",
   "P10",
@@ -77,6 +79,9 @@ const COMMON_KEYS = [
   "Reset Filter",
   "Reset four-line start probability",
   "Score",
+  "Set farming estimate",
+  "Set match",
+  "Set mismatch",
   "Show all",
   "Show less",
   "Showing artifact count",
@@ -164,6 +169,7 @@ const COMMON_PLACEHOLDERS: Readonly<Record<string, readonly string[]>> = {
   "Remove main stat": ["{{stat}}"],
   "Remove substat": ["{{stat}}"],
   "Showing artifact count": ["{{shown}}", "{{total}}"],
+  "Set farming estimate": ["{{drops}}"],
   "Top 10% finished Match cutoff": ["{{value}}"],
 };
 

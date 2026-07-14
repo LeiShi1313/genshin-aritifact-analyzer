@@ -149,6 +149,20 @@ test("marks only lazy phases unavailable when Workers are missing", () => {
   assert.equal(state.setEligibility.status, "unavailable");
 });
 
+test("population invalidation preserves the Worker-unavailable terminal state", () => {
+  const unavailable = artifactScoringSessionReducer(
+    initialArtifactScoringSessionState(),
+    { type: "workerUnavailable" }
+  );
+  const invalidated = artifactScoringSessionReducer(unavailable, {
+    type: "invalidatePopulationResults",
+  });
+
+  assert.equal(invalidated.prospect.status, "unavailable");
+  assert.equal(invalidated.potential.status, "unavailable");
+  assert.equal(invalidated.setEligibility.status, "unavailable");
+});
+
 test("a population assumption change keeps summary but invalidates lazy results", () => {
   let state = artifactScoringSessionReducer(
     initialArtifactScoringSessionState(),

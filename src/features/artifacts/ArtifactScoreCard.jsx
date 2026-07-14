@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import CharacterCard from "../characters/CharacterCard";
 import {
   getArtifactScoreAction,
   getArtifactScoreBand,
+  roundExpectedFiveStarDrops,
   toPublicArtifactScore,
 } from "./scorePresentation";
 import { matchingBuildScores, presentArtifactScore } from "./scoringViewModel";
@@ -34,6 +35,102 @@ const ACTION_LABELS = {
   "worth-keeping": "Worth keeping",
   exceptional: "Exceptional",
   perfect: "Perfect",
+};
+
+const SET_ROLE_LABELS = {
+  "set-match": "Set match",
+  "off-piece-candidate": "Off-piece candidate",
+  "set-mismatch": "Set mismatch",
+};
+
+const SET_ROLE_CLASSES = {
+  "set-match": "badge-success text-success-content",
+  "off-piece-candidate": "badge-info text-info-content",
+  "set-mismatch": "badge-warning text-warning-content",
+};
+
+const SetRoleBadge = ({ recommendation }) => {
+  const { t, i18n } = useTranslation();
+  const tooltipId = useId();
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  if (recommendation.status !== "ready" || recommendation.role === "neutral") {
+    return null;
+  }
+
+  const label = t(SET_ROLE_LABELS[recommendation.role]);
+  const roundedDrops = roundExpectedFiveStarDrops(
+    recommendation.expectedFiveStarDrops
+  );
+  if (roundedDrops === undefined) {
+    return (
+      <span
+        className={classNames(
+          "badge h-auto py-1 text-xs font-bold",
+          SET_ROLE_CLASSES[recommendation.role]
+        )}
+      >
+        {label}
+      </span>
+    );
+  }
+
+  const drops = new Intl.NumberFormat(
+    i18n.resolvedLanguage ?? i18n.language
+  ).format(roundedDrops);
+  const tooltipVisible = pinned || (!dismissed && (hovered || focused));
+  return (
+    <span
+      className="relative inline-flex"
+      onMouseEnter={() => {
+        setHovered(true);
+        setDismissed(false);
+      }}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => {
+        setFocused(true);
+        setDismissed(false);
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setFocused(false);
+          setPinned(false);
+          setDismissed(false);
+        }
+      }}
+    >
+      <button
+        type="button"
+        className={classNames(
+          "badge h-auto cursor-help py-1 text-xs font-bold",
+          SET_ROLE_CLASSES[recommendation.role]
+        )}
+        aria-describedby={tooltipId}
+        onClick={() => {
+          setPinned(!pinned);
+          setDismissed(pinned);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            setPinned(false);
+            setDismissed(true);
+          }
+        }}
+      >
+        {label}
+      </button>
+      <span
+        id={tooltipId}
+        role="tooltip"
+        hidden={!tooltipVisible}
+        className="bg-neutral text-neutral-content sm:max-w-64 pointer-events-none absolute right-0 top-[calc(100%+0.5rem)] z-50 w-max max-w-[calc(100vw-4rem)] rounded px-2 py-1.5 text-left text-xs font-medium shadow-lg sm:right-[calc(100%+0.5rem)] sm:top-1/2 sm:-translate-y-1/2"
+      >
+        {t("Set farming estimate", { drops })}
+      </span>
+    </span>
+  );
 };
 
 const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
@@ -106,6 +203,7 @@ const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
               {t("Current score")} {secondary.score}
             </div>
           )}
+          <SetRoleBadge recommendation={primary.recommendation} />
         </div>
       </div>
 
@@ -161,11 +259,11 @@ const ArtifactScoreCard = ({
     );
   }
 
-  const presentation = presentArtifactScore(summary, artifact.level);
-  if (!presentation) return null;
-
   const finished = artifact.level >= 20;
   const minimum = finished ? minScore : minPotential;
+  const presentation = presentArtifactScore(summary, artifact.level, minimum);
+  if (!presentation) return null;
+
   const publicScoreForBuild = (score) =>
     toPublicArtifactScore(finished ? score.match : score.expectedFinalMatch) ??
     0;

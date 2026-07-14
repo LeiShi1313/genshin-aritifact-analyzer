@@ -164,6 +164,10 @@ const ArtifactsUpload = () => {
       ? "unavailable"
       : "ready";
   const exportReady = isArtifactExportReady(format, downloadEvaluationStatus);
+  const setEligibilityIsPending =
+    scoring.summary.status === "ready" &&
+    (scoring.setEligibility.status === "idle" ||
+      scoring.setEligibility.status === "pending");
 
   const selectionDecision = useCallback(
     (summary) =>
@@ -186,7 +190,8 @@ const ArtifactsUpload = () => {
         right,
         artifacts[left.artifactIndex].level,
         artifacts[right.artifactIndex].level,
-        query.sort
+        query.sort,
+        query
       )
     );
   }, [
@@ -302,6 +307,11 @@ const ArtifactsUpload = () => {
         <div className="alert alert-error" role="alert">
           {t("Artifact scoring failed")}
         </div>
+      ) : setEligibilityIsPending ? (
+        <Calculating
+          label={t("Calculating set recommendations")}
+          phase={scoring.setEligibility}
+        />
       ) : (
         <div className="flex w-full flex-col items-stretch gap-3">
           {query.showSelected && unscoredArtifactCount > 0 && (

@@ -80,3 +80,8 @@ test("empty inputs cancel work and reset the retained UI snapshot", () => {
     /if \(artifacts\.length === 0 \|\| builds\.length === 0\) \{\s*dispatch\(\{ type: "reset" \}\)/
   );
 });
+
+test("the Worker uses the shared calibrated set references", () => {
+  assert.match(workerSource, /SET_ELIGIBILITY_REFERENCES/);
+  assert.doesNotMatch(workerSource, /\[0,\s*75\]|\[20,\s*80\]/);
+});

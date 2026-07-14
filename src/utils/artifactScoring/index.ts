@@ -55,6 +55,7 @@ export {
   selectConservativePublicScoreCutoff,
   setEligibilityReferenceForLevel,
   SET_COMPATIBILITY,
+  SET_ELIGIBILITY_REFERENCES,
 } from "./setEligibility";
 export type { BuildSetPlan, SetEligibilityGate } from "./setEligibility";
 export { rationalFromFiniteDecimal, rationalToNumber } from "./rational";
