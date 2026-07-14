@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pencil, Check } from "phosphor-react";
+import { getBuildName } from "../../utils/build";
 
-const NameEditor = ({ name, setName, isPreset=false }) => {
+const NameEditor = ({ name, setName, isPreset = false }) => {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
+  const displayName = getBuildName(name, t);
 
   return !isEditing ? (
     <h2 className="card-title">
       {isPreset && <span className="badge badge-primary">{t("Presets")}</span>}
-      {name ? t(name) : t("Unnamed Build")}
+      {displayName}
       <Pencil className="cursor-pointer" onClick={() => setIsEditing(true)} />
     </h2>
   ) : (
@@ -19,10 +21,14 @@ const NameEditor = ({ name, setName, isPreset=false }) => {
         type="text"
         placeholder={t("Unnamed Build")}
         className="input-primary input-ghost input-sm max-w-xs"
-        value={name}
+        value={displayName}
         onChange={(e) => setName(e.target.value)}
       />
-      <Check className="cursor-pointer" onClick={() => setIsEditing(false)} weight='bold' />
+      <Check
+        className="cursor-pointer"
+        onClick={() => setIsEditing(false)}
+        weight="bold"
+      />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { Character } from "../../src/genshin/character";
 import { Set as ArtifactSet } from "../../src/genshin/set";
 import { Weapon } from "../../src/genshin/weapon";
 import rawPresets from "../../src/data/presets.js";
+import { getPresetBuildNameKey } from "../../src/data/presetNames";
 import recommendedPresetHashes from "../../src/data/recommendedPresetHashes.js";
 import { recommendedPresetBuilds } from "../../src/data/recommendedPresets";
 import {
@@ -136,9 +137,7 @@ const TARGET_PRESETS = [
   {
     character: Character.VARESA,
     recipe: [{ set: ArtifactSet.LONG_NIGHTS_OATH, count: 4 }],
-    alternativeRecipes: [
-      [{ set: ArtifactSet.OBSIDIAN_CODEX, count: 4 }],
-    ],
+    alternativeRecipes: [[{ set: ArtifactSet.OBSIDIAN_CODEX, count: 4 }]],
     plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
   },
   {
@@ -186,15 +185,159 @@ const TARGET_PRESETS = [
     recipe: [{ set: ArtifactSet.NIGHT_OF_THE_SKYS_UNVEILING, count: 4 }],
     plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
   },
+  {
+    character: Character.DURIN,
+    recipe: [{ set: ArtifactSet.NOBLESSE_OBLIGE, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.JAHODA,
+    recipe: [{ set: ArtifactSet.VIRIDESCENT_VENERER, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.COLUMBINA,
+    recipe: [{ set: ArtifactSet.SILKEN_MOONS_SERENADE, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.ZIBAI,
+    recipe: [{ set: ArtifactSet.NIGHT_OF_THE_SKYS_UNVEILING, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.ILLUGA,
+    recipe: [{ set: ArtifactSet.SILKEN_MOONS_SERENADE, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.VARKA,
+    recipe: [{ set: ArtifactSet.A_DAY_CARVED_FROM_RISING_WINDS, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.LINNEA,
+    recipe: [{ set: ArtifactSet.HUSK_OF_OPULENT_DREAMS, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.LOHEN,
+    recipe: [{ set: ArtifactSet.A_DAY_CARVED_FROM_RISING_WINDS, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.NICOLE,
+    recipe: [{ set: ArtifactSet.CELESTIAL_GIFT, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.PRUNE,
+    recipe: [{ set: ArtifactSet.VIRIDESCENT_VENERER, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
+  {
+    character: Character.SANDRONE,
+    recipe: [{ set: ArtifactSet.DISENCHANTMENT_IN_DEEP_SHADOW, count: 4 }],
+    plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+  },
 ] as const;
+
+const EXPECTED_GENERATED_NAMES = new Map<Character, readonly string[]>([
+  [Character.KIRARA, ["Shield Support"]],
+  [Character.SIGEWINNE, ["Off-Field Healer"]],
+  [Character.ARLECCHINO, ["General On-Field DPS", "Vaporize DPS"]],
+  [Character.SETHOS, ["Charged Attack Quickswap", "Burst Normal Attack DPS"]],
+  [Character.CLORINDE, ["Bond of Life DPS", "Aggravate DPS"]],
+  [Character.EMILIE, ["Burning Off-Field DPS"]],
+  [Character.KACHINA, ["Scroll Support"]],
+  [Character.KINICH, ["Skill Cannon DPS"]],
+  [Character.MUALANI, ["Vaporize DPS"]],
+  [Character.ORORON, ["Electro-Charged DPS", "Overloaded Trigger"]],
+  [Character.XILONEN, ["RES Shred & Healing"]],
+  [Character.CHASCA, ["Multi-Element Charged DPS"]],
+  [Character.MAVUIKA, ["On-Field Burst DPS", "Off-Field Pyro DPS"]],
+  [Character.CITLALI, ["Melt Shield Support"]],
+  [Character.LAN_YAN, ["Shield Support", "Swirl Driver"]],
+  [Character.YUMEMIZUKI_MIZUKI, ["Swirl Driver"]],
+  [Character.IANSAN, ["ATK Support"]],
+  [Character.VARESA, ["Plunging Attack DPS"]],
+  [Character.IFA, ["Swirl Driver", "Anemo DPS"]],
+  [Character.ESCOFFIER, ["Cryo Off-Field DPS & Healer"]],
+  [Character.SKIRK, ["Quickswap Burst DPS", "On-Field Normal Attack DPS"]],
+  [Character.DAHLIA, ["Shield & ATK SPD Support"]],
+  [Character.INEFFA, ["Lunar-Charged DPS", "Hyperbloom Trigger"]],
+  [Character.LAUMA, ["Bloom Support"]],
+  [Character.FLINS, ["Lunar-Charged DPS"]],
+  [Character.AINO, ["Off-Field Hydro Support"]],
+  [Character.NEFER, ["Lunar-Bloom Charged DPS"]],
+  [Character.DURIN, ["White Dragon Support", "Dark Dragon Reaction DPS"]],
+  [Character.JAHODA, ["Off-Field Healer"]],
+  [
+    Character.COLUMBINA,
+    ["Off-Field Lunar Support", "On-Field Lunar-Bloom DPS"],
+  ],
+  [Character.ZIBAI, ["Lunar-Crystallize DPS"]],
+  [Character.ILLUGA, ["Lunar-Crystallize Support", "Geo DPS Support"]],
+  [Character.VARKA, ["Dual-Element DPS"]],
+  [
+    Character.LINNEA,
+    ["Off-Field Lunar-Crystallize DPS", "Quickswap Lunar-Crystallize"],
+  ],
+  [Character.LOHEN, ["Cryo On-Field DPS"]],
+  [Character.NICOLE, ["Shield & ATK Support"]],
+  [Character.PRUNE, ["Elemental RES Shred Support", "Anemo DPS Support"]],
+  [Character.SANDRONE, ["Stellar-Conduct Charged DPS"]],
+]);
 
 const decodedPresets = rawPresets.map((raw) =>
   PortableBuild.decode(Buffer.from(raw, "hex"))
 );
 
+test("generated presets use descriptive names and distinct supported playstyles", () => {
+  assert.equal(recommendedPresetBuilds.length, 52);
+
+  for (const [character, expectedNames] of EXPECTED_GENERATED_NAMES) {
+    const characterBuilds = recommendedPresetBuilds.filter(
+      (build) => build.character === character
+    );
+    assert.deepEqual(
+      characterBuilds.map((build) => getPresetBuildNameKey(build.name)),
+      expectedNames,
+      Character[character]
+    );
+
+    const targetSignatures = characterBuilds.map((build) =>
+      JSON.stringify({
+        character: build.character,
+        weapons: build.weapons,
+        suits: build.suits,
+        flowerAttributes: build.flowerAttributes,
+        plumeAttributes: build.plumeAttributes,
+        sandsAttributes: build.sandsAttributes,
+        gobletAttributes: build.gobletAttributes,
+        circletAttributes: build.circletAttributes,
+        subAttributes: build.subAttributes,
+      })
+    );
+    assert.equal(
+      new Set(targetSignatures).size,
+      characterBuilds.length,
+      `${Character[character]} variants must target different artifacts`
+    );
+  }
+
+  assert.equal(
+    recommendedPresetBuilds.some((build) => build.name === "Recommended build"),
+    false
+  );
+});
+
 const getFocusedPreset = (character: Character) => {
+  const [primaryName] = EXPECTED_GENERATED_NAMES.get(character) ?? [];
   const candidates = decodedPresets.filter(
-    (build) => build.character === character
+    (build) =>
+      build.character === character &&
+      getPresetBuildNameKey(build.name) === primaryName
   );
   assert.equal(candidates.length, 1, `${Character[character]} preset count`);
   return candidates[0];
@@ -217,9 +360,17 @@ test("the preset catalog decodes canonically without invalid or duplicate builds
       rawPresets[index],
       `${id} is not canonical`
     );
-    assert.equal(VALID_CHARACTERS.has(build.character), true, `${id} character`);
+    assert.equal(
+      VALID_CHARACTERS.has(build.character),
+      true,
+      `${id} character`
+    );
     assert.equal(build.suits.length > 0, true, `${id} has no set recipe`);
-    assert.deepEqual(build.flowerAttributes, [AttributeType.HP], `${id} flower`);
+    assert.deepEqual(
+      build.flowerAttributes,
+      [AttributeType.HP],
+      `${id} flower`
+    );
     assert.deepEqual(build.plumeAttributes, [AttributeType.ATK], `${id} plume`);
     assert.equal(build.sandsAttributes.length > 0, true, `${id} sands`);
     assert.equal(build.gobletAttributes.length > 0, true, `${id} goblet`);
@@ -249,24 +400,26 @@ test("the preset catalog decodes canonically without invalid or duplicate builds
 });
 
 test("the current UI-ready release cohort has calibrated preset coverage", () => {
-  assert.equal(rawPresets.length, 104 + TARGET_PRESETS.length);
+  assert.equal(rawPresets.length, 104 + recommendedPresetBuilds.length);
 
   for (const expected of TARGET_PRESETS) {
+    const [primaryName] =
+      EXPECTED_GENERATED_NAMES.get(expected.character) ?? [];
     const candidates = decodedPresets.filter(
-      (build) => build.character === expected.character
+      (build) =>
+        build.character === expected.character &&
+        getPresetBuildNameKey(build.name) === primaryName
     );
     assert.equal(
       candidates.length,
       1,
-      `${Character[expected.character]} should have one focused preset`
+      `${Character[expected.character]} should have one primary preset`
     );
 
     const [build] = candidates;
     const recipes = [
       expected.recipe,
-      ...("alternativeRecipes" in expected
-        ? expected.alternativeRecipes
-        : []),
+      ...("alternativeRecipes" in expected ? expected.alternativeRecipes : []),
     ];
     assert.deepEqual(
       build.suits,
@@ -291,8 +444,10 @@ test("every character with complete list UI assets has preset coverage", () => {
   const coveredCharacters = new Set(
     decodedPresets.map((build) => build.character)
   );
+  const nonCombatCharacters = new Set([Character.MANEKIN, Character.MANEKINA]);
 
   for (const characterId of VALID_CHARACTERS) {
+    if (nonCombatCharacters.has(characterId)) continue;
     const characterKey = Character[characterId].toLowerCase();
     const hasCompleteListAssets = ["icon", "gacha"].every((imageType) =>
       existsSync(
@@ -372,6 +527,94 @@ test("common guide-approved main-stat alternatives are treated as matches", () =
         AttributeType.CRIT_DAMAGE,
         AttributeType.ELEMENTAL_MASTERY,
       ],
+    },
+    {
+      character: Character.DURIN,
+      sands: [
+        AttributeType.ATK_PERCENT,
+        AttributeType.ELEMENTAL_MASTERY,
+        AttributeType.ENERGY_RECHARGE,
+      ],
+      goblet: [AttributeType.PYRO_DAMAGE_BONUS, AttributeType.ATK_PERCENT],
+      circlet: [AttributeType.CRIT_RATE, AttributeType.CRIT_DAMAGE],
+    },
+    {
+      character: Character.JAHODA,
+      sands: [AttributeType.ENERGY_RECHARGE, AttributeType.ATK_PERCENT],
+      goblet: [AttributeType.ATK_PERCENT],
+      circlet: [
+        AttributeType.CRIT_RATE,
+        AttributeType.HEALING_BONUS,
+        AttributeType.ATK_PERCENT,
+      ],
+    },
+    {
+      character: Character.COLUMBINA,
+      sands: [AttributeType.ENERGY_RECHARGE, AttributeType.HP_PERCENT],
+      goblet: [AttributeType.HP_PERCENT],
+      circlet: [
+        AttributeType.CRIT_RATE,
+        AttributeType.CRIT_DAMAGE,
+        AttributeType.HP_PERCENT,
+      ],
+    },
+    {
+      character: Character.ZIBAI,
+      sands: [AttributeType.DEF_PERCENT],
+      goblet: [AttributeType.DEF_PERCENT],
+      circlet: [AttributeType.CRIT_RATE, AttributeType.CRIT_DAMAGE],
+    },
+    {
+      character: Character.ILLUGA,
+      sands: [AttributeType.ELEMENTAL_MASTERY, AttributeType.ENERGY_RECHARGE],
+      goblet: [AttributeType.ELEMENTAL_MASTERY],
+      circlet: [AttributeType.ELEMENTAL_MASTERY, AttributeType.CRIT_RATE],
+    },
+    {
+      character: Character.VARKA,
+      sands: [AttributeType.ATK_PERCENT],
+      goblet: [
+        AttributeType.PYRO_DAMAGE_BONUS,
+        AttributeType.HYDRO_DAMAGE_BONUS,
+        AttributeType.ELECTRO_DAMAGE_BONUS,
+        AttributeType.CRYO_DAMAGE_BONUS,
+        AttributeType.ATK_PERCENT,
+      ],
+      circlet: [AttributeType.CRIT_RATE, AttributeType.CRIT_DAMAGE],
+    },
+    {
+      character: Character.LINNEA,
+      sands: [AttributeType.DEF_PERCENT],
+      goblet: [AttributeType.DEF_PERCENT],
+      circlet: [
+        AttributeType.CRIT_RATE,
+        AttributeType.CRIT_DAMAGE,
+        AttributeType.DEF_PERCENT,
+      ],
+    },
+    {
+      character: Character.LOHEN,
+      sands: [AttributeType.ATK_PERCENT, AttributeType.ELEMENTAL_MASTERY],
+      goblet: [AttributeType.CRYO_DAMAGE_BONUS, AttributeType.ATK_PERCENT],
+      circlet: [AttributeType.CRIT_RATE, AttributeType.CRIT_DAMAGE],
+    },
+    {
+      character: Character.NICOLE,
+      sands: [AttributeType.ATK_PERCENT, AttributeType.ENERGY_RECHARGE],
+      goblet: [AttributeType.ATK_PERCENT],
+      circlet: [AttributeType.ATK_PERCENT],
+    },
+    {
+      character: Character.PRUNE,
+      sands: [AttributeType.ATK_PERCENT, AttributeType.ENERGY_RECHARGE],
+      goblet: [AttributeType.ATK_PERCENT],
+      circlet: [AttributeType.ATK_PERCENT],
+    },
+    {
+      character: Character.SANDRONE,
+      sands: [AttributeType.ATK_PERCENT],
+      goblet: [AttributeType.ATK_PERCENT],
+      circlet: [AttributeType.CRIT_RATE, AttributeType.CRIT_DAMAGE],
     },
   ] as const;
 
