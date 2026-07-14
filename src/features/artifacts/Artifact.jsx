@@ -1,132 +1,159 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
-import { defaultFitness, defaultRarity } from "../../config";
-import ArtifactFitnessCard from "./ArtifactFitnessCard";
-import { getAllFitsAndAllRarity } from "../../utils/fitsAndRarity";
-import { getConfigHash } from "../../utils/hash";
 import { decodeArtifact } from "../../utils/artifact";
+import { pairKey } from "../../workers/artifactScoringProtocol";
 import BackToHome from "../navigation/BackToHome";
+import ArtifactScoreCard from "./ArtifactScoreCard";
+import { selectArtifactScoreSummary } from "./scoringViewModel";
+import { useArtifactScoringSession } from "./useArtifactScoringSession";
 
 const Artifact = () => {
   const { t } = useTranslation();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [fitness, setFitness] = useState(defaultFitness);
-
-  const artifact = useMemo(
-    () => decodeArtifact(searchParams.get("artifact")),
-    [searchParams]
-  );
-
-  if (!artifact.set) {
-    return <BackToHome title={t("No artifact found")} />;
-  }
-
-  const [allFits, setAllFits] = useState({});
-  const [allRarity, setAllRarity] = useState({});
-  const [configHash, setConfigHash] = useState(null);
+  const [searchParams] = useSearchParams();
+  const [match, setMatch] = useState(0.55);
   const { builds, config } = useSelector((state) => state.build);
-  const customConfigs = useSelector((state) => state.configs);
   const presetBuilds = useSelector((state) => state.presets.builds);
+  const fourLineStartProbability = useSelector(
+    (state) => state.configs.fourLineStartProbability ?? 0.2
+  );
+  const lastLazyRequest = useRef("");
+
+  const encodedArtifact = searchParams.get("artifact") ?? "";
+  const artifact = useMemo(() => {
+    try {
+      return encodedArtifact ? decodeArtifact(encodedArtifact) : undefined;
+    } catch {
+      return undefined;
+    }
+  }, [encodedArtifact]);
   const enabledBuilds = useMemo(() => {
-    const enabledBuilds = {};
-    for (const key of Object.keys(builds)) {
-      if (config[key] && config[key].enabled) {
-        enabledBuilds[key] = builds[key];
-      }
-    }
-    for (const key of Object.keys(presetBuilds)) {
-      if (config[key] && config[key].enabled) {
-        enabledBuilds[key] = presetBuilds[key];
-      }
-    }
-    return enabledBuilds;
+    const result = {};
+    Object.entries(builds).forEach(([id, build]) => {
+      if (config[id]?.enabled) result[id] = build;
+    });
+    Object.entries(presetBuilds).forEach(([id, build]) => {
+      if (config[id]?.enabled) result[id] = build;
+    });
+    return result;
   }, [builds, presetBuilds, config]);
-
-  const isLoading = useMemo(
-    () =>
-      Object.keys(allFits).length === 0 ||
-      Object.keys(allRarity).length === 0 ||
-      configHash !== getConfigHash(customConfigs),
-    [allFits, allRarity, configHash, customConfigs]
+  const buildEntries = useMemo(
+    () => Object.entries(enabledBuilds).map(([id, build]) => ({ id, build })),
+    [enabledBuilds]
   );
-
-  const calculator = useMemo(
-    () =>
-      new Worker(new URL("../../workers/calculator.ts", import.meta.url), {
-        type: "module",
-      }),
-    []
+  const artifacts = useMemo(() => (artifact ? [artifact] : []), [artifact]);
+  const sourceProfile = useMemo(
+    () => ({ kind: "normal-five-star", fourLineStartProbability }),
+    [fourLineStartProbability]
   );
+  const {
+    state: scoring,
+    requestProspect,
+    requestPotential,
+  } = useArtifactScoringSession({
+    datasetId: `artifact-detail:${encodedArtifact}`,
+    artifacts,
+    builds: buildEntries,
+    sourceProfile,
+  });
+  const summary = useMemo(
+    () =>
+      scoring.summary.status === "ready" && scoring.summary.batch
+        ? selectArtifactScoreSummary(scoring.summary.batch, 0)
+        : undefined,
+    [scoring.summary.status, scoring.summary.batch]
+  );
+  const target =
+    summary?.status === "ok"
+      ? { artifactIndex: 0, buildIndex: summary.bestExpected.buildIndex }
+      : undefined;
 
   useEffect(() => {
-    if (window.Worker) {
-      calculator.postMessage({
-        artifacts: [artifact],
-        builds: enabledBuilds,
-        config: customConfigs,
-      });
-      calculator.onmessage = (e) => {
-        if (isNaN(Number(e.data))) {
-          console.log(e.data);
-          setAllFits(e.data.allFits);
-          setAllRarity(e.data.allRarity);
-          setConfigHash(e.data.configHash);
-        }
-      };
-    } else {
-      setTimeout(() => {
-        const result = getAllFitsAndAllRarity(
-          [artifact],
-          enabledBuilds,
-          undefined,
-          customConfigs
-        );
-        setAllFits(result.allFits);
-        setAllRarity(result.allRarity);
-        setConfigHash(result.configHash);
-      }, 0);
-    }
-  }, [enabledBuilds, artifact]);
+    if (!target || scoring.summary.status !== "ready") return;
+    const signature = `${scoring.summary.summaryKey}:${pairKey(
+      target
+    )}:${fourLineStartProbability}`;
+    if (lastLazyRequest.current === signature) return;
+    lastLazyRequest.current = signature;
+    requestProspect([target]);
+    requestPotential([target]);
+  }, [
+    target?.artifactIndex,
+    target?.buildIndex,
+    scoring.summary.status,
+    scoring.summary.summaryKey,
+    fourLineStartProbability,
+    requestProspect,
+    requestPotential,
+  ]);
+
+  if (!artifact?.set) {
+    return <BackToHome title={t("No artifact found")} />;
+  }
+  if (buildEntries.length === 0) {
+    return <BackToHome title={t("No enabled builds")} />;
+  }
+
+  const prospect = target
+    ? scoring.prospect.results[pairKey(target)] ?? {
+        status:
+          scoring.prospect.status === "pending" ? "pending" : "unavailable",
+      }
+    : { status: "unavailable" };
+  const potential = target
+    ? scoring.potential.results[pairKey(target)] ?? {
+        status:
+          scoring.potential.status === "pending" ? "pending" : "unavailable",
+      }
+    : { status: "unavailable" };
 
   return (
-    <div className="sapce-y-4 flex h-full w-full flex-col items-center justify-center">
-      <div className="flex w-full flex-col items-center justify-center space-y-2 md:flex-row md:space-y-0 md:space-x-12">
-        <div className="flex w-4/5 flex-row items-center justify-center space-x-2 md:w-1/5">
-          <span className="whitespace-nowrap font-bold">{t("Fitness")}</span>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={fitness}
-            className="range range-primary"
-            onChange={(e) => setFitness(e.target.value)}
-          />
-          <span>{(fitness * 100).toFixed(0)}%</span>
-        </div>
+    <div className="flex h-full w-full flex-col items-center gap-4 px-4">
+      <div className="flex w-full max-w-md items-center gap-3">
+        <label
+          className="whitespace-nowrap font-bold"
+          htmlFor="detail-match-threshold"
+        >
+          {t("Build Match")}
+        </label>
+        <input
+          id="detail-match-threshold"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={match}
+          className="range range-primary"
+          aria-valuetext={`${Math.round(match * 100)}%`}
+          onChange={(event) => setMatch(Number(event.target.value))}
+        />
+        <span className="w-12 text-right">{Math.round(match * 100)}%</span>
       </div>
-      <div className="flex h-full w-full grow flex-col items-center justify-center">
-        {isLoading ? (
+      <div className="flex w-full max-w-screen-lg grow flex-col items-center justify-center">
+        {scoring.summary.status === "error" ? (
+          <div className="alert alert-error" role="alert">
+            {t("Artifact scoring failed")}
+          </div>
+        ) : !summary ? (
           <ReactLoading
             type="bars"
             className="fill-primary"
             style={{ height: 48, width: 48 }}
+            aria-label={t("Calculating Build Match")}
           />
         ) : (
-          <ArtifactFitnessCard
+          <ArtifactScoreCard
             artifact={artifact}
             builds={enabledBuilds}
-            fits={allFits[0]}
-            rarity={allRarity[0]}
-            minFitness={fitness}
-            minRarity={0}
+            summary={summary}
+            prospect={prospect}
+            potential={potential}
+            minMatch={match}
           />
         )}
-        <div className="h-2 w-full"></div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
   --color-primary: #424f65;
   --color-primary-content: #ece5d8;
   --color-secondary: #93806a;
+  --color-secondary-content: #1c1c22;
   --color-accent: #f7ba3f;
   --color-accent-content: #1c1c22;
   --color-neutral: #424f65;
@@ -35,6 +36,7 @@
   --color-primary: #d3bc8e;
   --color-primary-content: #424f65;
   --color-secondary: #93806a;
+  --color-secondary-content: #1c1c22;
   --color-accent: #f7ba3f;
   --color-accent-content: #1c1c22;
   --color-neutral: #424f65;
@@ -694,29 +696,29 @@
 }
 @plugin "daisyui/theme" {
   name: "YUN_JIN";
-  --color-primary: #6F5076;
-  --color-secondary: #451B1D;
-  --color-accent: #7F171A;
-  --color-base-100: #DBCFD6;
+  --color-primary: #6f5076;
+  --color-secondary: #451b1d;
+  --color-accent: #7f171a;
+  --color-base-100: #dbcfd6;
 }
 @plugin "daisyui/theme" {
   name: "KAGOME";
-  --color-primary: #D80000;
-  --color-secondary: #A5412E;
-  --color-accent: #DCAA7E;
+  --color-primary: #d80000;
+  --color-secondary: #a5412e;
+  --color-accent: #dcaa7e;
   --color-base-100: #ed7b7b;
 }
 @plugin "daisyui/theme" {
   name: "RAIDEN_SHOGUN";
-  --color-primary: #8D56C0;
-  --color-secondary: #B498D4;
-  --color-accent: #EADAEC;
+  --color-primary: #8d56c0;
+  --color-secondary: #b498d4;
+  --color-accent: #eadaec;
   --color-base-100: #221256;
 }
 @plugin "daisyui/theme" {
   name: "xingqiu";
-  --color-primary: #CEBBAA;
+  --color-primary: #cebbaa;
   --color-secondary: #305167;
-  --color-accent: #EDE7E6;
+  --color-accent: #ede7e6;
   --color-base-100: #2254a3;
 }

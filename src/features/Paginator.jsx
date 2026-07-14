@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 const Paginator = ({
   page,
   setPage,
@@ -6,32 +8,41 @@ const Paginator = ({
   totalPages,
   scrollToId = null,
 }) => {
+  const { t } = useTranslation();
+  const pageCount = Math.max(1, Math.ceil(totalPages / offset));
+  const lastPage = pageCount - 1;
+
+  const scrollToTop = () => {
+    if (scrollToId) {
+      document.getElementById(scrollToId)?.scrollTo(0, 0);
+    }
+  };
+
   const handlePrePage = () => {
     if (page > 0) {
       setPage(page - 1);
-      if (scrollToId) {
-        document.getElementById(scrollToId).scrollTo(0, 0);
-      }
+      scrollToTop();
     }
   };
   const handleNextPage = () => {
-    if (page < Math.floor(totalPages / offset)) {
+    if (page < lastPage) {
       setPage(page + 1);
-      if (scrollToId) {
-        document.getElementById(scrollToId).scrollTo(0, 0);
-      }
+      scrollToTop();
     }
   };
 
   return (
-    <div className="flex gap-2">
+    <nav className="flex gap-2" aria-label={t("Page navigation")}>
       <button
+        type="button"
         onClick={handlePrePage}
-        className={`btn btn-secondary btn-circle btn-sm ${
-          page === 0 && "btn-disabled cursor-not-allowed"
-        }`}
+        className="btn btn-secondary btn-circle btn-sm disabled:cursor-not-allowed"
+        aria-label={t("Previous page")}
+        disabled={page === 0}
       >
         <svg
+          aria-hidden="true"
+          focusable="false"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -41,24 +52,27 @@ const Paginator = ({
         </svg>
       </button>
       <select
-        className="select-secondary select-sm max-w-xs rounded-full bg-secondary text-secondary-content hover:bg-secondary-focus"
+        className="select-secondary select-sm bg-secondary text-secondary-content hover:bg-secondary-focus max-w-xs rounded-full"
         value={page}
+        aria-label={t("Page selection")}
         onChange={(e) => setPage(Number(e.target.value))}
       >
-        {[...Array(Math.ceil(totalPages / offset)).keys()].map((i) => (
+        {[...Array(pageCount).keys()].map((i) => (
           <option key={i} value={i}>
-            {i}
+            {i + 1}
           </option>
-        ))}{" "}
+        ))}
       </select>
       <button
+        type="button"
         onClick={handleNextPage}
-        className={`btn btn-secondary btn-circle btn-sm ${
-          page === Math.floor(totalPages / offset) &&
-          "btn-disabled cursor-not-allowed"
-        }`}
+        className="btn btn-secondary btn-circle btn-sm disabled:cursor-not-allowed"
+        aria-label={t("Next page")}
+        disabled={page >= lastPage}
       >
         <svg
+          aria-hidden="true"
+          focusable="false"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -67,7 +81,7 @@ const Paginator = ({
           <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
         </svg>
       </button>
-    </div>
+    </nav>
   );
 };
 

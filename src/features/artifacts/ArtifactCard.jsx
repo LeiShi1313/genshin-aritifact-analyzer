@@ -13,51 +13,90 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { themes } from "../../utils/theme";
 import ArtifactPositionIcon from "../../assets/svgs/ArtifactPositionIcon";
 import { starRarityToBgColor } from "../../utils/starRarityToBgColor";
+import Icon_Inventory_Artifacts from "../../assets/pngs/Icon_Inventory_Artifacts.png";
 
 const ArtifactCard = ({ artifact, fitAttributes = [], suitIsFit = false }) => {
   const { theme, _ } = useContext(ThemeContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const artKey = useMemo(
-    () =>
-      `${Set[artifact.set].toLocaleLowerCase()}_${AttributePosition[
-        artifact.position
-      ].toLowerCase()}`,
-    [artifact]
-  );
+  const setName = Set[artifact.set];
+  const positionName = AttributePosition[artifact.position];
+  const mainAttribute = artifact.mainAttribute;
+  const mainTypeName = mainAttribute && AttributeType[mainAttribute.type];
+  const mainStatLabel =
+    typeof mainTypeName === "string"
+      ? t(mainTypeName.toLowerCase(), { ns: "artifacts" })
+      : t("Unavailable");
+  const characterName =
+    artifact.character > 0 ? Character[artifact.character] : undefined;
+  const starCount =
+    Number.isInteger(artifact.star) && artifact.star >= 1 && artifact.star <= 5
+      ? artifact.star
+      : 0;
+  const artKey = useMemo(() => {
+    if (
+      artifact.set <= 0 ||
+      typeof setName !== "string" ||
+      typeof positionName !== "string"
+    ) {
+      return undefined;
+    }
+    return `${setName.toLocaleLowerCase()}_${positionName.toLowerCase()}`;
+  }, [artifact.set, setName, positionName]);
 
   return (
     <div
       className={
-        "flex h-auto shrink-0 flex-row items-stretch rounded-md bg-base-100 shadow-md"
+        "bg-base-100 flex h-auto shrink-0 flex-row items-stretch rounded-md shadow-md"
       }
     >
       {/* Genshin-style Artifact Card */}
       <figure className={"flex flex-col items-center justify-start"}>
         <div
-          className={classNames("relative flex select-none flex-col items-center rounded-tl-md rounded-br-2xl bg-gradient-to-br from-black/25 px-1 py-1")}
+          className={classNames(
+            "relative flex select-none flex-col items-center rounded-tl-md rounded-br-2xl bg-gradient-to-br from-black/25 px-1 py-1"
+          )}
           style={{ backgroundColor: starRarityToBgColor(artifact.star) }}
         >
           <div className="absolute left-2 top-2 h-5 w-5 text-black opacity-25">
             {ArtifactPositionIcon[artifact.position]}
           </div>
-          <img
-            className={classNames("aspect-square w-24 cursor-pointer transition-all z-10", {"scale-110 drop-shadow-xl": suitIsFit})}
-            src={
-              new URL(`../../assets/artifacts/${artKey}.png`, import.meta.url)
-                .href
-            }
-            alt={artKey}
+          <button
+            type="button"
+            className="focus-visible:outline-base-100 z-10 rounded focus-visible:outline focus-visible:outline-2"
+            aria-label={t("Open artifact details")}
             onClick={() =>
               navigate(`/artifact?artifact=${encodeArtifact(artifact)}`)
             }
-          />
+          >
+            <img
+              className={classNames(
+                "aspect-square w-20 transition-all sm:w-24",
+                {
+                  "scale-110 drop-shadow-xl": suitIsFit,
+                }
+              )}
+              src={
+                artKey
+                  ? new URL(
+                      `../../assets/artifacts/${artKey}.png`,
+                      import.meta.url
+                    ).href
+                  : Icon_Inventory_Artifacts
+              }
+              alt={
+                typeof positionName === "string"
+                  ? t(positionName.toLowerCase(), { ns: "artifacts" })
+                  : t("Artifacts")
+              }
+            />
+          </button>
           {/* Equipped-by avatar at the corner */}
-          {artifact.character > 0 ? (
+          {typeof characterName === "string" ? (
             <div
-              className="tooltip absolute -right-1 -top-1 h-8 rounded-full bg-[#424f65] ring-2 ring-base-100 drop-shadow"
+              className="tooltip ring-base-100 absolute -right-1 -top-1 h-8 rounded-full bg-[#424f65] ring-2 drop-shadow"
               data-tip={
-                t(Character[artifact.character].toLowerCase(), {
+                t(characterName.toLowerCase(), {
                   ns: "characters",
                 }) +
                 " " +
@@ -71,7 +110,7 @@ const ArtifactCard = ({ artifact, fitAttributes = [], suitIsFit = false }) => {
           )}
           {/* Stars under the image */}
           <div className="absolute -bottom-1 flex flex-row drop-shadow">
-            {Array.from({ length: artifact.star }, (_, i) => (
+            {Array.from({ length: starCount }, (_, i) => (
               <div key={i}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -94,55 +133,65 @@ const ArtifactCard = ({ artifact, fitAttributes = [], suitIsFit = false }) => {
             ))}
           </div>
         </div>
-        <span className="font-bold text-primary">+{artifact.level}</span>
+        <span className="text-primary font-bold">
+          +{Number.isFinite(artifact.level) ? artifact.level : "?"}
+        </span>
       </figure>
 
       {/* Attribute list on the right */}
-      <div className="flex w-auto grow flex-col gap-1 py-2 px-2 lg:w-56">
+      <div className="flex min-w-0 grow flex-col gap-1 px-2 py-2 lg:w-56">
         <div
-          className="tooltip flex h-10 items-center justify-between rounded bg-secondary/[.15] px-2 py-1 font-bold text-primary-focus"
-          data-tip={t(
-            AttributeType[artifact.mainAttribute.type].toLowerCase(),
-            {
-              ns: "artifacts",
-            }
-          )}
+          className="tooltip bg-secondary/[.15] text-primary-focus flex h-10 items-center justify-between rounded px-2 py-1 font-bold"
+          data-tip={mainStatLabel}
         >
           <div className="w-5 shrink-0">
-            {AttributeIcon(
-              artifact.mainAttribute.type,
-              true,
-              themes[0] != theme
-            )}
+            {mainAttribute && typeof mainTypeName === "string"
+              ? AttributeIcon(mainAttribute.type, true, themes[0] != theme)
+              : null}
           </div>
           <h2 className="max-h-7 text-2xl">
-            {formatAttributeValue(artifact.mainAttribute)}
+            <span className="sr-only">{mainStatLabel}: </span>
+            {mainAttribute && Number.isFinite(mainAttribute.value)
+              ? formatAttributeValue(mainAttribute)
+              : t("Unavailable")}
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-1">
-          {artifact.subAttributes.map((attr, idx) => (
-            <div
-              className={classNames(
-                "tooltip",
-                "flex flex-row items-center gap-2",
-                "h-8",
-                "rounded",
-                "px-2 py-1",
-                fitAttributes.indexOf(attr.type) === -1
-                  ? "text-primary"
-                  : "bg-secondary/[.15] font-bold text-primary-focus"
-              )}
-              key={idx}
-              data-tip={t(AttributeType[attr.type].toLowerCase(), {
-                ns: "artifacts",
-              })}
-            >
-              <div className="w-5 shrink-0">
-                {AttributeIcon(attr.type, true, themes[0] != theme)}
+          {artifact.subAttributes.map((attr, idx) => {
+            const typeName = AttributeType[attr.type];
+            const statLabel =
+              typeof typeName === "string"
+                ? t(typeName.toLowerCase(), { ns: "artifacts" })
+                : t("Unavailable");
+            return (
+              <div
+                className={classNames(
+                  "tooltip",
+                  "flex flex-row items-center gap-2",
+                  "h-8",
+                  "rounded",
+                  "px-2 py-1",
+                  fitAttributes.indexOf(attr.type) === -1
+                    ? "text-primary"
+                    : "bg-secondary/[.15] text-primary-focus font-bold"
+                )}
+                key={idx}
+                data-tip={statLabel}
+              >
+                <div className="w-5 shrink-0">
+                  {typeof typeName === "string"
+                    ? AttributeIcon(attr.type, true, themes[0] != theme)
+                    : null}
+                </div>
+                <p className="max-h-5 text-base">
+                  <span className="sr-only">{statLabel}: </span>+
+                  {Number.isFinite(attr.value)
+                    ? formatAttributeValue(attr)
+                    : t("Unavailable")}
+                </p>
               </div>
-              <p className="max-h-5 text-base">+{formatAttributeValue(attr)}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

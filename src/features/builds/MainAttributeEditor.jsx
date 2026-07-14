@@ -1,35 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { Plus, X } from "phosphor-react";
 import classNames from "classnames";
 import { mainAttributeOptions } from "../../utils/attribute";
-import { useMemo, useState } from "react";
-import { useEffect } from "react";
-import {
-  getRarity,
-  getBestScore,
-} from "../../utils/fitsAndRarity";
-import {
-  getAttributeWeights,
-} from "../../utils/weights"
+import { useEffect, useState } from "react";
 import { AttributePosition, AttributeType } from "../../genshin/attribute";
 
-const MainAttributeEditor = ({ position, attrs, setFunc, subAttributes }) => {
+const MainAttributeEditor = ({ position, attrs, setFunc }) => {
   const { t } = useTranslation();
   const [isAdding, setIsAdding] = useState(false);
-  const configs = useSelector(state => state.configs)
-  const rarity = useMemo(
-    () => getRarity(position, attrs, subAttributes),
-    [attrs, subAttributes]
-  );
-  const bestScore = useMemo(
-    () =>
-      getBestScore(
-        getAttributeWeights(position, attrs, configs),
-        getAttributeWeights(AttributePosition.SUB, subAttributes, configs)
-      ),
-    [attrs, subAttributes]
-  );
 
   useEffect(() => {
     if (attrs.length === 0 && setFunc) setIsAdding(true);
@@ -43,47 +21,57 @@ const MainAttributeEditor = ({ position, attrs, setFunc, subAttributes }) => {
   const handleAttrRemove = (idx) => {
     setFunc((arr) => arr.filter((_, i) => i !== idx));
   };
+  const positionName = t(AttributePosition[position].toLowerCase(), {
+    ns: "artifacts",
+  });
+
   return (
     <>
-      <h1 className="flex flex-row items-center">
-        {t(`${AttributePosition[position].toLowerCase()}`, { ns: "artifacts" })}
+      <h1 className="flex flex-wrap items-center justify-center gap-1">
+        {positionName}
         {setFunc && (
-          <Plus
-            className="cursor-pointer"
-            size={12}
+          <button
+            type="button"
+            className="btn btn-ghost btn-circle btn-xs min-h-8 min-w-8 focus-visible:outline-primary focus-visible:outline focus-visible:outline-2"
+            aria-label={t("Add main stat")}
             onClick={() => setIsAdding(true)}
-          />
+          >
+            <Plus aria-hidden="true" size={12} />
+          </button>
         )}
       </h1>
-      {((setFunc && attrs.length > 0) || subAttributes.length > 0) && (
-        <label className="flex flex-col label">
-          <span key="bestScore" className="label-text-alt">
-            {t("Best Score")}: {bestScore.toFixed(2)}
-          </span>
-          <span key="difficulty" className="label-text-alt">
-            {t("Difficulty")}: {rarity.toFixed(2)}
-          </span>
-        </label>
-      )}
+      <div className="flex w-full min-w-0 flex-col items-center gap-1 px-1">
+        {attrs.map((attr, idx) => {
+          const statName = t(`${AttributeType[attr].toLowerCase()}`, {
+            ns: "artifacts",
+          });
 
-      <div className="flex flex-col items-center">
-        {attrs.map((attr, idx) => (
-          <span
-            className={classNames("badge", "text-xs", "badge-primary")}
-            key={attr}
-          >
-            {t(`${AttributeType[attr].toLowerCase()}`, { ns: "artifacts" })}
-            {setFunc && (
-            <X
-              className="cursor-pointer"
-              onClick={() => handleAttrRemove(idx)}
-            />)}
-          </span>
-        ))}
+          return (
+            <span
+              className={classNames(
+                "badge badge-primary min-h-6 h-auto max-w-full whitespace-normal py-1 text-center text-xs"
+              )}
+              key={attr}
+            >
+              {statName}
+              {setFunc && (
+                <button
+                  type="button"
+                  className="min-h-6 min-w-6 focus-visible:outline-primary-content ml-1 inline-flex shrink-0 items-center justify-center rounded focus-visible:outline focus-visible:outline-2"
+                  aria-label={t("Remove main stat", { stat: statName })}
+                  onClick={() => handleAttrRemove(idx)}
+                >
+                  <X aria-hidden="true" size={14} />
+                </button>
+              )}
+            </span>
+          );
+        })}
         {isAdding && (
           <select
-            className="text-xs select-ghost select-md"
+            className="select-ghost select-md w-full max-w-full text-xs"
             value={""}
+            aria-label={t("Add main stat")}
             onChange={handleAttrAdd}
           >
             <option disabled key={""} value={""}>
@@ -93,7 +81,9 @@ const MainAttributeEditor = ({ position, attrs, setFunc, subAttributes }) => {
               .filter((option) => !attrs.includes(option))
               .map((option) => (
                 <option key={option} value={option}>
-            {t(`${AttributeType[option].toLowerCase()}`, { ns: "artifacts" })}
+                  {t(`${AttributeType[option].toLowerCase()}`, {
+                    ns: "artifacts",
+                  })}
                 </option>
               ))}
           </select>
