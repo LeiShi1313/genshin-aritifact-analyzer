@@ -1,28 +1,87 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import classNames from "classnames";
-import useQueryParams from "../../hooks/useQueryParams";
-import AttributeWeights from "./AttributeWeights";
-import RarityWeights from "./RarityWeights";
-import Others from "./Others";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  DEFAULT_FOUR_LINE_START_PROBABILITY,
+  resetFourLineStartProbability,
+  updateFourLineStartProbability,
+} from "../../store/reducers/configs";
 
 const Config = () => {
-  const { t } = useTranslation();
-  const [tab, setTab] = useQueryParams([{ name: 'tab', defaultValue: 1, isNumeric: true}])
+  const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+  const fourLineStartProbability = useSelector(
+    (state) =>
+      state.configs.fourLineStartProbability ??
+      DEFAULT_FOUR_LINE_START_PROBABILITY
+  );
+  const percentage = useMemo(
+    () =>
+      new Intl.NumberFormat(i18n.resolvedLanguage ?? i18n.language, {
+        style: "percent",
+        maximumFractionDigits: 0,
+      }).format(fourLineStartProbability),
+    [fourLineStartProbability, i18n.language, i18n.resolvedLanguage]
+  );
+  const inputId = "four-line-start-probability";
+
   return (
-    <div className="flex w-full flex-col items-center justify-center">
-      <div className="flex w-full flex-col items-center justify-center">
-        <div className="tabs tabs-boxed rounded-b-none">
-          <a className={classNames('tab', {'tab-active': tab === 1})} onClick={() => setTab(1)}>{t('Stats Weight')}</a>
-          <a className={classNames('tab', {'tab-active': tab === 2})} onClick={() => setTab(2)}>{t('Rarity Weight')}</a>
-          <a className={classNames('tab', {'tab-active': tab === 3})} onClick={() => setTab(3)}>{t('Others')}</a>
+    <main className="flex w-full justify-center px-4 py-6">
+      <section className="bg-base-200 w-full max-w-xl rounded-xl p-4 shadow-md md:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h1 className="text-xl font-bold">
+            {t("Artifact scoring assumptions")}
+          </h1>
+          <span className="badge badge-secondary badge-outline">
+            {t("Model assumption")}
+          </span>
         </div>
-        <div className="flex w-full flex-col items-center justify-center bg-base-200 sm:w-3/4 md:w-1/2 rounded-2xl p-2 md:p-4">
-          {tab === 1 && <AttributeWeights />}
-          {tab === 2 && <RarityWeights />}
-          {tab === 3 && <Others />}
+
+        <div className="bg-base-100 mt-5 rounded-lg p-4">
+          <div className="flex items-baseline justify-between gap-4">
+            <label className="font-bold" htmlFor={inputId}>
+              {t("Four-line start probability")}
+            </label>
+            <output
+              className="text-primary text-lg font-bold"
+              htmlFor={inputId}
+            >
+              {percentage}
+            </output>
+          </div>
+          <p className="mt-1 text-sm opacity-75">
+            {t("Four-line start probability description")}
+          </p>
+          <input
+            id={inputId}
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={fourLineStartProbability}
+            className="range range-primary mt-4"
+            aria-valuetext={t("Four-line start probability value", {
+              value: percentage,
+            })}
+            onChange={(event) =>
+              dispatch(
+                updateFourLineStartProbability(Number(event.target.value))
+              )
+            }
+          />
+          <div className="mt-3 flex justify-end">
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => dispatch(resetFourLineStartProbability())}
+            >
+              {t("Reset four-line start probability")}
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

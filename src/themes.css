@@ -3,6 +3,7 @@
   --color-primary: #424f65;
   --color-primary-content: #ece5d8;
   --color-secondary: #93806a;
+  --color-secondary-content: #1c1c22;
   --color-accent: #f7ba3f;
   --color-accent-content: #1c1c22;
   --color-neutral: #424f65;
@@ -10,10 +11,15 @@
   --color-base-100: #ece5d8;
   --color-base-200: rgba(242, 242, 242, 80%);
   --color-base-300: #d4d4d4;
+  --color-base-content: #1c1c22;
   --color-info: #3abff8;
+  --color-info-content: #1c1c22;
   --color-success: #36d399;
+  --color-success-content: #1c1c22;
   --color-warning: #fbbd23;
+  --color-warning-content: #1c1c22;
   --color-error: #f87272;
+  --color-error-content: #1c1c22;
   /* border radius */
   --radius-selector: 1rem;
   --radius-field: 0.25rem;
@@ -35,6 +41,7 @@
   --color-primary: #d3bc8e;
   --color-primary-content: #424f65;
   --color-secondary: #93806a;
+  --color-secondary-content: #1c1c22;
   --color-accent: #f7ba3f;
   --color-accent-content: #1c1c22;
   --color-neutral: #424f65;
@@ -42,10 +49,15 @@
   --color-base-100: #1c1c22;
   --color-base-200: #16161a;
   --color-base-300: #0f0f12;
+  --color-base-content: #ece5d8;
   --color-info: #3abff8;
+  --color-info-content: #1c1c22;
   --color-success: #36d399;
+  --color-success-content: #1c1c22;
   --color-warning: #fbbd23;
+  --color-warning-content: #1c1c22;
   --color-error: #f87272;
+  --color-error-content: #1c1c22;
   /* border radius */
   --radius-selector: 1rem;
   --radius-field: 0.25rem;
@@ -694,29 +706,29 @@
 }
 @plugin "daisyui/theme" {
   name: "YUN_JIN";
-  --color-primary: #6F5076;
-  --color-secondary: #451B1D;
-  --color-accent: #7F171A;
-  --color-base-100: #DBCFD6;
+  --color-primary: #6f5076;
+  --color-secondary: #451b1d;
+  --color-accent: #7f171a;
+  --color-base-100: #dbcfd6;
 }
 @plugin "daisyui/theme" {
   name: "KAGOME";
-  --color-primary: #D80000;
-  --color-secondary: #A5412E;
-  --color-accent: #DCAA7E;
+  --color-primary: #d80000;
+  --color-secondary: #a5412e;
+  --color-accent: #dcaa7e;
   --color-base-100: #ed7b7b;
 }
 @plugin "daisyui/theme" {
   name: "RAIDEN_SHOGUN";
-  --color-primary: #8D56C0;
-  --color-secondary: #B498D4;
-  --color-accent: #EADAEC;
+  --color-primary: #8d56c0;
+  --color-secondary: #b498d4;
+  --color-accent: #eadaec;
   --color-base-100: #221256;
 }
 @plugin "daisyui/theme" {
   name: "xingqiu";
-  --color-primary: #CEBBAA;
+  --color-primary: #cebbaa;
   --color-secondary: #305167;
-  --color-accent: #EDE7E6;
+  --color-accent: #ede7e6;
   --color-base-100: #2254a3;
 }

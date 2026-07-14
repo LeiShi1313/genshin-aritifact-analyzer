@@ -3,7 +3,6 @@ import {
   AttributeType,
   AttributePosition,
 } from "../genshin/attribute";
-import * as defaultConfig from "../config";
 
 export const monaAttributeToAttributeType = {
   lifeStatic: AttributeType.HP,
@@ -117,12 +116,6 @@ export const subAttributeOptions = [
   AttributeType.CRIT_DAMAGE,
 ];
 
-export const posToIdx = (pos: AttributePosition) => pos - 1;
-export const attrToIdx = (attr: AttributeType) => attr - 1;
-export const attirbuteTypeLength = Object.keys(AttributeType).filter(
-  (key) => !isNaN(Number(key)) && Number(key) > 0
-).length;
-
 export const attributeValueFromStarAndLevel = (
   attr: AttributeType,
   star: number,
@@ -198,11 +191,3 @@ export const formatAttributeValue = (attr: Attribute): string => {
   }
   return (attr.value * 100).toFixed(1) + "%";
 };
-
-export const attributeValueToEffective = (attr: Attribute): number => {
-  const divisor = defaultConfig.effectiveStatDivisor[AttributeType[attr.type]];
-  if (divisor !== undefined) {
-    return attr.value / divisor;
-  }
-  return 0;
-}

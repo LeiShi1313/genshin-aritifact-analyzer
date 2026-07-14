@@ -1,0 +1,97 @@
+{
+  "format": "GOOD",
+  "version": 1,
+  "source": "artifact-scoring-browser-smoke",
+  "artifacts": [
+    {
+      "setKey": "WanderersTroupe",
+      "slotKey": "sands",
+      "rarity": 5,
+      "level": 0,
+      "mainStatKey": "atk_",
+      "substats": [
+        { "key": "critRate_", "value": 2.7 },
+        { "key": "critDMG_", "value": 5.4 },
+        { "key": "hp_", "value": 4.1 },
+        { "key": "def_", "value": 5.1 }
+      ],
+      "location": "",
+      "lock": false
+    },
+    {
+      "setKey": "WanderersTroupe",
+      "slotKey": "sands",
+      "rarity": 5,
+      "level": 0,
+      "mainStatKey": "atk_",
+      "substats": [
+        { "key": "critRate_", "value": 2.7 },
+        { "key": "critDMG_", "value": 5.4 },
+        { "key": "hp_", "value": 4.1 }
+      ],
+      "location": "",
+      "lock": false
+    },
+    {
+      "setKey": "WanderersTroupe",
+      "slotKey": "sands",
+      "rarity": 5,
+      "level": 20,
+      "mainStatKey": "atk_",
+      "substats": [
+        { "key": "critRate_", "value": 23.3 },
+        { "key": "critDMG_", "value": 7.8 },
+        { "key": "enerRech_", "value": 6.5 },
+        { "key": "eleMas", "value": 23 }
+      ],
+      "location": "",
+      "lock": true
+    },
+    {
+      "setKey": "WanderersTroupe",
+      "slotKey": "sands",
+      "rarity": 5,
+      "level": 20,
+      "mainStatKey": "def_",
+      "substats": [
+        { "key": "critRate_", "value": 23.3 },
+        { "key": "critDMG_", "value": 7.8 },
+        { "key": "enerRech_", "value": 6.5 },
+        { "key": "eleMas", "value": 23 }
+      ],
+      "location": "",
+      "lock": false
+    },
+    {
+      "setKey": "WanderersTroupe",
+      "slotKey": "goblet",
+      "rarity": 5,
+      "level": 12,
+      "mainStatKey": "pyro_dmg_",
+      "substats": [
+        { "key": "critRate_", "value": 10.9 },
+        { "key": "critDMG_", "value": 5.4 },
+        { "key": "enerRech_", "value": 4.5 },
+        { "key": "hp_", "value": 4.1 }
+      ],
+      "location": "",
+      "lock": false
+    },
+    {
+      "setKey": "WanderersTroupe",
+      "slotKey": "flower",
+      "rarity": 4,
+      "level": 0,
+      "mainStatKey": "hp",
+      "substats": [
+        { "key": "critRate_", "value": 2.7 },
+        { "key": "critDMG_", "value": 5.4 },
+        { "key": "enerRech_", "value": 4.5 }
+      ],
+      "location": "",
+      "lock": false
+    }
+  ],
+  "characters": [],
+  "weapons": []
+}
