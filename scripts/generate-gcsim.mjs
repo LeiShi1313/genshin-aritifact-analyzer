@@ -6,7 +6,8 @@ import genshindb from "genshin-db";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GCSIM_PATH = path.join(__dirname, "../gcsim");
-const compareASCII = (left, right) => (left < right ? -1 : left > right ? 1 : 0);
+const compareASCII = (left, right) =>
+  left < right ? -1 : left > right ? 1 : 0;
 
 const iterFind = async (dir, pattern, fn) => {
   const stat = await fs.promises.stat(dir);
@@ -85,13 +86,19 @@ const addAppAliases = (records, aliases, appKeysById, resolveAppKey) => {
           `"${existingTarget}" instead of "${record.key}"`
       );
     }
-    if (
-      capabilities[appKey] &&
-      capabilities[appKey] !== serializerName
-    ) {
+    // Alias values are app-facing parser keys and can differ from the names
+    // accepted by GCSIM (for example, lanyan -> lan_yan). Prefer a canonical
+    // config key when the upstream alias resolves to an equivalent record;
+    // otherwise the current record key is the engine-safe spelling.
+    const engineName =
+      existingTarget !== undefined &&
+      appKeyByRecordKey.get(existingTarget) === appKey
+        ? existingTarget
+        : record.key;
+    if (capabilities[appKey] && capabilities[appKey] !== engineName) {
       throw new Error(`conflicting GCSIM serializer names for ${appKey}`);
     }
-    capabilities[appKey] = serializerName;
+    capabilities[appKey] = engineName;
   }
 
   return Object.fromEntries(
@@ -159,11 +166,7 @@ const generateCatalog = async ({
 
   await Promise.all([
     fs.promises.writeFile(keysFile, JSON.stringify(keys), "utf8"),
-    fs.promises.writeFile(
-      aliasesFile,
-      JSON.stringify(sortedAliases),
-      "utf8"
-    ),
+    fs.promises.writeFile(aliasesFile, JSON.stringify(sortedAliases), "utf8"),
   ]);
   return capabilities;
 };
@@ -227,7 +230,8 @@ const generate_gcsim = async () => {
 
 const isMain =
   process.argv[1] &&
-  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+  path.resolve(process.argv[1]) ===
+    path.resolve(fileURLToPath(import.meta.url));
 
 if (isMain) {
   generate_gcsim().catch((error) => {

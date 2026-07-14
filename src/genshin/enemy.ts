@@ -419,6 +419,13 @@ export enum Enemy {
   YUMKASAURUSWARRIORFLOWINGSKYFIRE = 407,
   YUMKASAURUSWARRIORWHIRLINGLEAVES = 408,
   YUMKASAURWHELP = 409,
+  BATTLEHARDENEDGLACIALWOLF = 410,
+  BATTLEHARDENEDGROUNDEDGEOSHROOM = 411,
+  BATTLEHARDENEDSAMACHURL = 412,
+  DOMAINKEEPER = 413,
+  ILDOTTORE = 414,
+  RADIANTMOONGECKO = 415,
+  WATCHERFALLENVIGIL = 416,
   UNRECOGNIZED = -1,
 }
 
@@ -1654,6 +1661,27 @@ export function enemyFromJSON(object: any): Enemy {
     case 409:
     case "YUMKASAURWHELP":
       return Enemy.YUMKASAURWHELP;
+    case 410:
+    case "BATTLEHARDENEDGLACIALWOLF":
+      return Enemy.BATTLEHARDENEDGLACIALWOLF;
+    case 411:
+    case "BATTLEHARDENEDGROUNDEDGEOSHROOM":
+      return Enemy.BATTLEHARDENEDGROUNDEDGEOSHROOM;
+    case 412:
+    case "BATTLEHARDENEDSAMACHURL":
+      return Enemy.BATTLEHARDENEDSAMACHURL;
+    case 413:
+    case "DOMAINKEEPER":
+      return Enemy.DOMAINKEEPER;
+    case 414:
+    case "ILDOTTORE":
+      return Enemy.ILDOTTORE;
+    case 415:
+    case "RADIANTMOONGECKO":
+      return Enemy.RADIANTMOONGECKO;
+    case 416:
+    case "WATCHERFALLENVIGIL":
+      return Enemy.WATCHERFALLENVIGIL;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -2483,6 +2511,20 @@ export function enemyToJSON(object: Enemy): string {
       return "YUMKASAURUSWARRIORWHIRLINGLEAVES";
     case Enemy.YUMKASAURWHELP:
       return "YUMKASAURWHELP";
+    case Enemy.BATTLEHARDENEDGLACIALWOLF:
+      return "BATTLEHARDENEDGLACIALWOLF";
+    case Enemy.BATTLEHARDENEDGROUNDEDGEOSHROOM:
+      return "BATTLEHARDENEDGROUNDEDGEOSHROOM";
+    case Enemy.BATTLEHARDENEDSAMACHURL:
+      return "BATTLEHARDENEDSAMACHURL";
+    case Enemy.DOMAINKEEPER:
+      return "DOMAINKEEPER";
+    case Enemy.ILDOTTORE:
+      return "ILDOTTORE";
+    case Enemy.RADIANTMOONGECKO:
+      return "RADIANTMOONGECKO";
+    case Enemy.WATCHERFALLENVIGIL:
+      return "WATCHERFALLENVIGIL";
     case Enemy.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

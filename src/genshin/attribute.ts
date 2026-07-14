@@ -5,7 +5,7 @@
 // source: attribute.proto
 
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "io.leishi.genshin.proto";
 

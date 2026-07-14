@@ -10,6 +10,7 @@ import { CharacterOverride } from "./types";
 import { getCharacterIconUrl } from "./utils";
 import { WeaponSection, SetSection, ArtifactSlots } from "./components";
 import characterData from "../../data/characters.json";
+import { synchronizeInferredArtifactSets } from "./equipmentOverrides";
 
 interface UploadedWeaponInfo {
   weapon: Weapon;
@@ -93,10 +94,17 @@ const SelectedCharacterCard = ({
           className="relative shrink-0 overflow-hidden rounded-lg"
           style={{ backgroundColor: starRarityToBgColor(charStar) }}
         >
-          <img src={imgUrl} className="h-20 w-20" />
+          <img
+            src={imgUrl}
+            className="h-20 w-20"
+            alt={t(charKey, { ns: "characters" })}
+          />
           <button
             className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-error text-xs font-bold text-error-content hover:bg-error/80"
             onClick={onRemove}
+            aria-label={t("Remove character", {
+              name: t(charKey, { ns: "characters" }),
+            })}
           >
             x
           </button>
@@ -124,6 +132,7 @@ const SelectedCharacterCard = ({
             <span className="text-xs opacity-70">C:</span>
             <select
               className="select select-xs w-14"
+              aria-label={t("Constellation")}
               value={override.constellation ?? ""}
               onChange={(e) =>
                 updateOverride({
@@ -213,6 +222,7 @@ const SelectedCharacterCard = ({
             className="btn btn-ghost btn-xs"
             onClick={() => updateOverride({ talents: undefined })}
             disabled={!override.enabled}
+            aria-label={t("Clear Talents")}
           >
             x
           </button>
@@ -225,15 +235,50 @@ const SelectedCharacterCard = ({
         weaponType={weaponType}
         enabled={override.enabled}
         uploadedWeapons={uploadedWeapons}
-        onChange={(weapon) => updateOverride({ weapon })}
+        onChange={(weapon) =>
+          updateOverride({
+            weapon,
+            unsupportedEquipment: {
+              ...override.unsupportedEquipment,
+              weapon: undefined,
+            },
+          })
+        }
       />
 
       {/* Sets */}
       <SetSection
         sets={override.sets}
         enabled={override.enabled}
-        onChange={(sets) => updateOverride({ sets })}
+        onChange={(sets) => {
+          const updated = {
+            ...override,
+            sets,
+            setsAreInferred: sets === undefined,
+            unsupportedEquipment: {
+              ...override.unsupportedEquipment,
+              sets: undefined,
+            },
+          };
+          onChange(
+            sets === undefined
+              ? synchronizeInferredArtifactSets(updated, override.artifacts)
+              : updated
+          );
+        }}
       />
+
+      {(override.unsupportedEquipment?.weapon ||
+        override.unsupportedEquipment?.sets?.length) && (
+        <div
+          role="status"
+          className="mt-2 rounded-md bg-warning/15 p-2 text-xs"
+        >
+          {t(
+            "Not supported by this GCSim version; not applied to the simulation"
+          )}
+        </div>
+      )}
 
       {/* Artifacts */}
       <ArtifactSlots
@@ -241,7 +286,9 @@ const SelectedCharacterCard = ({
         uploadedArtifacts={uploadedArtifacts}
         characterId={characterId}
         enabled={override.enabled}
-        onChange={(artifacts) => updateOverride({ artifacts })}
+        onChange={(artifacts) =>
+          onChange(synchronizeInferredArtifactSets(override, artifacts))
+        }
       />
     </div>
   );

@@ -14,8 +14,22 @@ const GCSIM_CATALOG_FILES = [
   "capabilities.json",
   "characters-aliases.json",
   "characters.json",
+  "enemies.json",
   "weapons-aliases.json",
   "weapons.json",
+];
+const GCSIM_DERIVED_FILES = [
+  "genshin/enemy.ts",
+  "proto/enemy.proto",
+  "public/locales/de/enemy.json",
+  "public/locales/en/enemy.json",
+  "public/locales/es/enemy.json",
+  "public/locales/fr/enemy.json",
+  "public/locales/ja/enemy.json",
+  "public/locales/ko/enemy.json",
+  "public/locales/zh-Hant/enemy.json",
+  "public/locales/zh/enemy.json",
+  "src/genshin/enemy.ts",
 ];
 
 const sha256File = async (file) => {
@@ -51,6 +65,9 @@ const hashScriptSnapshot = async (directory) => {
 const hashGCSimCatalogSnapshot = (directory) =>
   hashNamedFiles(directory, GCSIM_CATALOG_FILES);
 
+const hashGCSimDerivedSnapshot = (root) =>
+  hashNamedFiles(root, GCSIM_DERIVED_FILES);
+
 const readCleanGitHead = (directory) => {
   const status = execFileSync(
     "git",
@@ -74,6 +91,7 @@ const generateGCSimManifest = async ({ root = projectDirectory } = {}) => {
   const catalogs = await hashGCSimCatalogSnapshot(
     path.join(root, "src/data/gcsim")
   );
+  const derived = await hashGCSimDerivedSnapshot(root);
   const gcsimCommit = readCleanGitHead(gcsimDirectory);
   const goMod = await fs.promises.readFile(
     path.join(gcsimDirectory, "go.mod"),
@@ -90,6 +108,8 @@ const generateGCSimManifest = async ({ root = projectDirectory } = {}) => {
     scriptSnapshotSha256: snapshot.sha256,
     catalogFileCount: catalogs.count,
     catalogSnapshotSha256: catalogs.sha256,
+    derivedFileCount: derived.count,
+    derivedSnapshotSha256: derived.sha256,
     binarySha256: await sha256File(path.join(publicDirectory, "gcsim.bin")),
     wasmSha256: await sha256File(path.join(publicDirectory, "main.wasm")),
     wasmExecSha256: await sha256File(
@@ -107,7 +127,8 @@ const generateGCSimManifest = async ({ root = projectDirectory } = {}) => {
 
 const isMain =
   process.argv[1] &&
-  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+  path.resolve(process.argv[1]) ===
+    path.resolve(fileURLToPath(import.meta.url));
 
 if (isMain) {
   generateGCSimManifest()
@@ -124,8 +145,11 @@ if (isMain) {
 }
 
 export {
+  GCSIM_CATALOG_FILES,
+  GCSIM_DERIVED_FILES,
   generateGCSimManifest,
   hashGCSimCatalogSnapshot,
+  hashGCSimDerivedSnapshot,
   hashScriptSnapshot,
   readCleanGitHead,
   sha256File,

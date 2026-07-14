@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { GCSim, GCSimScript } from "../genshin/gcsim.js";
 import {
   hashGCSimCatalogSnapshot,
+  hashGCSimDerivedSnapshot,
   hashScriptSnapshot,
   sha256File,
 } from "../scripts/generate-gcsim-manifest.mjs";
@@ -47,9 +48,7 @@ const canonicalizeAggregatedStats = (script: GCSimScript): GCSimScript => ({
 });
 
 const protobufCanonicalJSON = (script: GCSimScript) =>
-  GCSimScript.toJSON(
-    GCSimScript.decode(GCSimScript.encode(script).finish())
-  );
+  GCSimScript.toJSON(GCSimScript.decode(GCSimScript.encode(script).finish()));
 
 console.log("Checking the complete GCSIM script snapshot...");
 
@@ -58,6 +57,7 @@ const binary = GCSim.decode(await fs.promises.readFile(binaryPath));
 const manifest = JSON.parse(await fs.promises.readFile(manifestPath, "utf8"));
 const snapshot = await hashScriptSnapshot(scriptsDirectory);
 const catalogs = await hashGCSimCatalogSnapshot(catalogsDirectory);
+const derived = await hashGCSimDerivedSnapshot(projectDirectory);
 const goMod = await fs.promises.readFile(
   path.join(projectDirectory, "gcsim/go.mod"),
   "utf8"
@@ -75,6 +75,8 @@ assert.equal(manifest.scriptCount, files.length);
 assert.equal(manifest.scriptSnapshotSha256, snapshot.sha256);
 assert.equal(manifest.catalogFileCount, catalogs.count);
 assert.equal(manifest.catalogSnapshotSha256, catalogs.sha256);
+assert.equal(manifest.derivedFileCount, derived.count);
+assert.equal(manifest.derivedSnapshotSha256, derived.sha256);
 assert.equal(manifest.binarySha256, await sha256File(binaryPath));
 assert.equal(manifest.wasmSha256, await sha256File(wasmPath));
 assert.equal(manifest.wasmExecSha256, await sha256File(wasmExecPath));

@@ -1,5 +1,4 @@
 import { useMemo, useState, useCallback } from "react";
-import ReactLoading from "react-loading";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -13,7 +12,12 @@ import SelectedCharacterCard from "./SelectedCharacterCard";
 import { CharacterOverride, CharacterOverrides } from "./types";
 import { SimResults } from "../../gcsim/types/sim";
 import { gcsimScriptToScript, generateOverriddenScript, applyAllOverrides } from "../../utils/gcsim";
-import { AttributePosition } from "../../genshin/attribute";
+import { getAvailableGCSimCharacters, isGCSimWeaponSupported } from "../../utils/gcsimCapabilities";
+import {
+  inferGCSimSets,
+  initializeArtifactOverrides,
+  synchronizeInferredArtifactSets,
+} from "./equipmentOverrides";
 
 interface ScriptState {
   isRunning: boolean;
@@ -28,9 +32,10 @@ interface ScriptState {
 const Teams = () => {
   const { t } = useTranslation();
   const { artifactsId } = useParams();
-  const { scripts, isScriptLoading } = useSelector((state: any) => state.gcsim);
+  const { scripts } = useSelector((state: any) => state.gcsim);
   const uploadedData = useSelector(
-    (state: any) => state.uploads.artifacts[artifactsId] ?? {}
+    (state: any) =>
+      (artifactsId ? state.uploads.artifacts[artifactsId] : undefined) ?? {}
   );
   const artifacts = uploadedData.items ?? [];
   const uploadedCharacters = uploadedData.characters ?? [];
@@ -81,32 +86,6 @@ const Teams = () => {
     });
   }, []);
 
-  // Helper to infer sets from artifacts
-  const inferSetsFromArtifacts = (charArtifacts: any[]): { set: number; count: 2 | 4 }[] | undefined => {
-    if (!charArtifacts || charArtifacts.length === 0) return undefined;
-
-    // Count artifacts by set
-    const setCounts: { [key: number]: number } = {};
-    charArtifacts.forEach((art: any) => {
-      if (art.set) {
-        setCounts[art.set] = (setCounts[art.set] || 0) + 1;
-      }
-    });
-
-    // Convert to SetOverride format (only sets with 2+ pieces)
-    const sets: { set: number; count: 2 | 4 }[] = [];
-    Object.entries(setCounts).forEach(([setId, count]) => {
-      if (count >= 2) {
-        sets.push({
-          set: parseInt(setId),
-          count: count >= 4 ? 4 : 2,
-        });
-      }
-    });
-
-    return sets.length > 0 ? sets : undefined;
-  };
-
   // When a character is selected, initialize their override state with GOOD data if available
   const handleSelectedCharactersChange = useCallback((newSelected: number[]) => {
     setSelectedCharacters(newSelected);
@@ -117,13 +96,16 @@ const Teams = () => {
         if (!updated[charId]) {
           // Start with default override
           const override: CharacterOverride = { enabled: true };
+          const unsupportedEquipment: NonNullable<
+            CharacterOverride["unsupportedEquipment"]
+          > = {};
 
           // If GOOD format, try to populate from uploaded character/weapon data
+          const charInfo = isGOODFormat
+            ? uploadedCharacters.find((c: any) => c.character === charId)
+            : undefined;
           if (isGOODFormat) {
             // Find character info from uploaded data
-            const charInfo = uploadedCharacters.find(
-              (c: any) => c.character === charId
-            );
             if (charInfo) {
               override.level = charInfo.level;
               override.maxLevel = charInfo.maxLevel;
@@ -138,37 +120,42 @@ const Teams = () => {
               (w: any) => w.location === charId
             );
             if (weaponInfo && weaponInfo.weapon) {
-              override.weapon = {
-                weapon: weaponInfo.weapon,
-                level: weaponInfo.level,
-                maxLevel: weaponInfo.maxLevel,
-                refinement: weaponInfo.refinement,
-              };
+              if (isGCSimWeaponSupported(weaponInfo.weapon)) {
+                override.weapon = {
+                  weapon: weaponInfo.weapon,
+                  level: weaponInfo.level,
+                  maxLevel: weaponInfo.maxLevel,
+                  refinement: weaponInfo.refinement,
+                };
+              } else {
+                unsupportedEquipment.weapon = weaponInfo.weapon;
+              }
             }
           }
 
           // Infer sets from character's equipped artifacts
-          const charArtifacts = characterToArtifacts[charId];
-          if (charArtifacts) {
-            override.sets = inferSetsFromArtifacts(charArtifacts);
+          const charArtifacts = characterToArtifacts[charId] ?? [];
+          const artifactOverrides = initializeArtifactOverrides(
+            charArtifacts,
+            charInfo !== undefined
+          );
+          if (artifactOverrides) {
+            const inferredSets = inferGCSimSets(charArtifacts);
+            override.sets = inferredSets.sets;
+            override.setsAreInferred = true;
+            unsupportedEquipment.sets = inferredSets.unsupportedSets;
 
-            // Initialize artifact overrides with equipped artifacts for all 5 positions
-            const positions = [
-              AttributePosition.FLOWER,
-              AttributePosition.PLUME,
-              AttributePosition.SANDS,
-              AttributePosition.GOBLET,
-              AttributePosition.CIRCLET,
-            ];
-            override.artifacts = positions.map(position => {
-              const equippedArtifact = charArtifacts.find(
-                (a: any) => a.position === position
-              );
-              return {
-                position,
-                artifact: equippedArtifact || undefined,
-              };
-            });
+            Object.assign(
+              override,
+              synchronizeInferredArtifactSets(override, artifactOverrides)
+            );
+          }
+
+          if (
+            unsupportedEquipment.weapon ||
+            unsupportedEquipment.sets?.length
+          ) {
+            override.unsupportedEquipment = unsupportedEquipment;
           }
 
           updated[charId] = override;
@@ -201,13 +188,13 @@ const Teams = () => {
           updated[Number(key)] = {
             ...updated[Number(key)],
             isRunning: false,
-            error: "Simulation cancelled",
+            error: t("Simulation cancelled"),
           };
         }
       });
       return updated;
     });
-  }, [cancel]);
+  }, [cancel, t]);
 
   // Handle copying a script with all overrides applied
   const handleCopyScript = useCallback(async (script: any) => {
@@ -280,41 +267,7 @@ const Teams = () => {
         characterToArtifacts
       );
 
-      // Debug logging for applied overrides
-      if (scriptWithOverrides.characterInfos) {
-        scriptWithOverrides.characterInfos.forEach(charInfo => {
-          const charId = charInfo.character;
-          const override = characterOverrides[charId];
-
-          if (override?.enabled) {
-            console.log(`Applied overrides to character ${charId}:`, {
-              level: charInfo.level,
-              maxLevel: charInfo.maxLevel,
-              constellation: charInfo.constellation,
-              talents: charInfo.talents,
-              weapon: charInfo.weaponInfo,
-              sets: charInfo.setInfos,
-            });
-          }
-
-          // Log artifact application
-          const hasArtifactOverrides = override?.enabled && override.artifacts;
-          const artifactCount = hasArtifactOverrides
-            ? override.artifacts?.filter(ao => ao.artifact).length || 0
-            : (characterToArtifacts[charId] || []).length;
-
-          if (artifactCount > 0) {
-            console.log(`Applied ${artifactCount} artifacts to character ${charId}:`, {
-              stats: charInfo.stats.length,
-              sets: charInfo.setInfos,
-              fromOverride: !!hasArtifactOverrides
-            });
-          }
-        });
-      }
-
       const config = gcsimScriptToScript(scriptWithOverrides);
-      console.log(`Running simulation ${index} with config:`, config);
 
       const runResult = await run(config, (simResult: SimResults, hash: string) => {
         // Update progress and result
@@ -331,8 +284,6 @@ const Teams = () => {
         }));
       });
 
-      console.log(`Simulation ${index} completed with result:`, runResult);
-
       // Handle completion
       if (runResult === false) {
         setScriptStates(prev => ({
@@ -340,7 +291,7 @@ const Teams = () => {
           [index]: {
             ...prev[index],
             isRunning: false,
-            error: "Simulation was skipped - another simulation may be running"
+            error: t("Another simulation is already running")
           }
         }));
       } else {
@@ -359,16 +310,15 @@ const Teams = () => {
         [index]: {
           ...prev[index],
           isRunning: false,
-          error: `Simulation error: ${err}`
+          error: t("Simulation failed", { reason: String(err) })
         }
       }));
     }
   };
 
-  // Allow all characters to be selected (MultiCharacterSelect will use enumToIdx(Character))
   const availableCharacters = useMemo(() => {
-    return null;
-  }, []);
+    return getAvailableGCSimCharacters(scripts ?? []);
+  }, [scripts]);
 
   // Track which characters have uploaded data (GOOD format or artifacts)
   const charactersWithData = useMemo(() => {
@@ -415,19 +365,6 @@ const Teams = () => {
     });
   }, [scripts, selectedCharacters]);
 
-  // Show loading state if scripts are loading
-  if (isScriptLoading) {
-    return (
-      <div className="flex h-screen w-full flex-col items-center justify-center">
-        <ReactLoading
-          type="bars"
-          className="fill-primary"
-        />
-        <p className="mt-4 text-lg">Loading scripts...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="flex min-h-screen w-full max-w-screen-lg flex-col px-4 lg:px-0">
       <div className="my-8 flex w-full flex-col gap-4">
@@ -444,6 +381,9 @@ const Teams = () => {
           <label className="text-sm font-medium">
             {t("Filter by Character")}
           </label>
+          <p className="text-xs opacity-60">
+            {t("Only characters with available GCSim scripts are shown")}
+          </p>
           <MultiCharacterSelect
             selectedCharacters={selectedCharacters}
             setSelectedCharacters={handleSelectedCharactersChange}
@@ -480,7 +420,7 @@ const Teams = () => {
             {t("Loaded X gcsim scripts", { num: filteredScripts.length })}
             {selectedCharacters.length > 0 && (
               <span className="ml-2 text-xs opacity-70">
-                ({scripts?.length || 0} total)
+                ({t("X total GCSim scripts", { num: scripts?.length || 0 })})
               </span>
             )}
           </div>
@@ -561,6 +501,7 @@ const Teams = () => {
               <button
                 onClick={() => setViewScriptModal({ isOpen: false, scriptText: '', scriptIndex: -1 })}
                 className="btn btn-ghost btn-sm btn-circle"
+                aria-label={t("Close")}
               >
                 ✕
               </button>

@@ -48,18 +48,24 @@ test("app enum names become serializer aliases through stable game ids", () => {
     yumemizukimizuki: "mizuki",
   });
   assert.deepEqual(capabilities, {
-    yumemizuki_mizuki: "yumemizukimizuki",
+    yumemizuki_mizuki: "mizuki",
   });
+});
+
+test("engine names do not leak app-only enum spelling", () => {
+  const aliases = { lanyan: "lan_yan" };
+  const capabilities = addAppAliases(
+    [{ key: "lanyan", gameId: 10000108 }],
+    aliases,
+    new Map([[10000108, "lan_yan"]])
+  );
+
+  assert.deepEqual(capabilities, { lan_yan: "lanyan" });
 });
 
 test("app alias generation fails when a supported id has no app enum", () => {
   assert.throws(
-    () =>
-      addAppAliases(
-        [{ key: "future", gameId: 99999999 }],
-        {},
-        new Map()
-      ),
+    () => addAppAliases([{ key: "future", gameId: 99999999 }], {}, new Map()),
     /GCSIM key "future" with game id 99999999 has no app enum/
   );
 });
@@ -96,6 +102,6 @@ test("app alias generation allows aliases shared by equivalent traveler configs"
 
   assert.equal(aliases.traveleranemo, "lumineanemo");
   assert.deepEqual(capabilities, {
-    traveler_anemo: "traveleranemo",
+    traveler_anemo: "lumineanemo",
   });
 });

@@ -17,7 +17,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: update-genshin-data
+  group: generated-data-updates
   cancel-in-progress: false
 
 jobs:
@@ -66,13 +66,34 @@ jobs:
         if: steps.version.outputs.should_run == 'true'
         run: npm run build
 
+      - name: Test generated game data
+        if: steps.version.outputs.should_run == 'true'
+        run: npm run test:artifact-scoring
+
       - name: Check PNG assets
         if: steps.version.outputs.should_run == 'true'
         run: node check-pngs.js
 
-      - name: Test gcsim round-trip serialization
+      - name: Enforce game-data ownership boundary
         if: steps.version.outputs.should_run == 'true'
-        run: npm run test-roundtrip
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          unexpected=()
+          while IFS= read -r path; do
+            case "$path" in
+              gcsim|public/gcsim/*|src/data/gcsim/*|proto/enemy.proto|src/genshin/enemy.ts|genshin/enemy.ts|src/genshin/gcsim.ts|genshin/gcsim.ts|public/locales/*/enemy.json)
+                unexpected+=("$path")
+                ;;
+            esac
+          done < <(git status --porcelain=v1 --untracked-files=all | sed -E 's/^.. //; s/.* -> //')
+
+          if [ "${#unexpected[@]}" -gt 0 ]; then
+            printf 'Game-data generation changed GCSIM-owned files:\n' >&2
+            printf '  %s\n' "${unexpected[@]}" >&2
+            exit 1
+          fi
 
       - name: Clean generated test artifacts
         if: always() && steps.version.outputs.should_run == 'true'
@@ -118,8 +139,8 @@ jobs:
 
           Validation:
           - \`npm run build\`
+          - \`npm run test:artifact-scoring\`
           - \`node check-pngs.js\`
-          - \`npm run test-roundtrip\`
           - \`npm run clean-gen\`
           EOF
 

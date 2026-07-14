@@ -33,8 +33,9 @@ export const characterFromMonaName = (name: string): Character => {
 export const characterFromGoodName = (name: string): Character => {
     if (name === '') return Character.CHARACTER_UNSPECIFIED;
     const characters = {};
-    enumToStringKey(Character).forEach((key) => characters[key.replace('_', '').toUpperCase()] = Character[key]);
-    return characters[name.toUpperCase()];
+    enumToStringKey(Character).forEach((key) => characters[key.replace(/_/g, "").toUpperCase()] = Character[key]);
+    const normalizedName = name.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+    return characters[normalizedName] ?? Character.CHARACTER_UNSPECIFIED;
 }
 
 export const characterToTheme = (character: Character): string => {

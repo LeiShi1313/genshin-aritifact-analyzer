@@ -267,9 +267,10 @@ const parseOptions = (script: string, parsedScript: GCSimScript) => {
 const parseCharacters = (script: string, parsedScript: GCSimScript, sourceId: string) => {
     const characters: { [key: string]: GCSimScriptCharacterInfo } = {};
     for (let match of script.matchAll(gcsimCharRegx)) {
+        const sourceCharacterName = match.groups?.char ?? "";
         const char = resolveAlias(
             "character",
-            match.groups?.char,
+            sourceCharacterName,
             GCSIM_CHARACTER_ALIASES,
             sourceId,
         );
@@ -286,9 +287,11 @@ const parseCharacters = (script: string, parsedScript: GCSimScript, sourceId: st
                 params: [],
                 startHp: 0,
                 randomSubstats: undefined,
+                gcsimName: sourceCharacterName,
             };
         }
         if (match.groups.ch) {
+            characters[char].gcsimName = sourceCharacterName;
             let attrs = match.groups.attrs;
             characters[char].params = parseParams(attrs);
             attrs = attrs.replace(gcsimParamsRegx, "");
@@ -391,6 +394,9 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
             physicalResist: 0,
             anemoResist: 0,
             geoResist: 0,
+            type: undefined,
+            particleElement: 0,
+            hpMult: 0,
         };
 
         let attrs = match.groups?.attrs ?? "";

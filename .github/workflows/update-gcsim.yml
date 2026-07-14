@@ -1,0 +1,132 @@
+name: Update GCSIM
+
+on:
+  workflow_dispatch:
+    inputs:
+      gcsim_ref:
+        description: "Exact GCSIM commit, tag, or branch to update from"
+        required: true
+        type: string
+        default: main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: generated-data-updates
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository and pinned GCSIM
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Resolve requested GCSIM revision
+        env:
+          GCSIM_REF: ${{ inputs.gcsim_ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -C gcsim fetch --tags origin "$GCSIM_REF"
+          git -C gcsim checkout --detach FETCH_HEAD
+          git -C gcsim status --short --branch
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Set up pinned Go toolchain
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: gcsim/go.mod
+          cache-dependency-path: gcsim/go.sum
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate and validate all GCSIM assets
+        run: npm run update:gcsim
+
+      - name: Enforce GCSIM ownership boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          unexpected=()
+          while IFS= read -r path; do
+            case "$path" in
+              gcsim|public/gcsim/*|src/data/gcsim/*|proto/enemy.proto|src/genshin/enemy.ts|genshin/enemy.ts|public/locales/*/enemy.json)
+                ;;
+              *)
+                unexpected+=("$path")
+                ;;
+            esac
+          done < <(git status --porcelain=v1 --untracked-files=all | sed -E 's/^.. //; s/.* -> //')
+
+          if [ "${#unexpected[@]}" -gt 0 ]; then
+            printf 'GCSIM generation changed files outside its ownership boundary:\n' >&2
+            printf '  %s\n' "${unexpected[@]}" >&2
+            exit 1
+          fi
+
+      - name: Check for data changes
+        id: diff
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create or update pull request
+        if: steps.diff.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          commit="$(git -C gcsim rev-parse HEAD)"
+          short_commit="${commit:0:12}"
+          script_count="$(node -p "require('./public/gcsim/manifest.json').scriptCount")"
+          branch="automation/update-gcsim"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add -A
+          git commit -m "update GCSIM to ${short_commit}"
+          git push --force-with-lease origin "$branch"
+
+          body="$(mktemp)"
+          cat > "$body" <<EOF
+          Updates the pinned GCSIM engine and all derived assets to \`${commit}\`.
+
+          Generated assets:
+          - \`${script_count}\` validated script configs
+          - pinned Go WASM runtime and executable
+          - supported character, weapon, artifact, and enemy catalogs
+          - provenance manifest with content hashes
+
+          Validation:
+          - \`npm run test:gcsim\`
+          - \`npm run test-roundtrip\`
+          - \`npm run build\`
+          EOF
+
+          existing_pr="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing_pr" ]; then
+            gh pr edit "$existing_pr" --title "Update GCSIM to ${short_commit}" --body-file "$body"
+          else
+            gh pr create --base main --head "$branch" --title "Update GCSIM to ${short_commit}" --body-file "$body"
+          fi

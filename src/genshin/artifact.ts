@@ -5,7 +5,7 @@
 // source: artifact.proto
 
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 import { Attribute, AttributePosition, attributePositionFromJSON, attributePositionToJSON } from "./attribute";
 import { Character, characterFromJSON, characterToJSON } from "./character";
 import { Set, setFromJSON, setToJSON } from "./set";

@@ -91,6 +91,11 @@ test("capabilities only expose app data that the pinned GCSIM can serialize", ()
     artifacts: readRecord("artifacts-aliases"),
     weapons: readRecord("weapons-aliases"),
   };
+  const catalogs = {
+    characters: new globalThis.Set(readCatalog("characters")),
+    artifacts: new globalThis.Set(readCatalog("artifacts")),
+    weapons: new globalThis.Set(readCatalog("weapons")),
+  };
 
   for (const category of Object.keys(capabilities) as Array<
     keyof typeof capabilities
@@ -102,6 +107,10 @@ test("capabilities only expose app data that the pinned GCSIM can serialize", ()
       assert.ok(
         serializerName in aliases[category],
         `${category}:${appKey} has no serializer alias ${serializerName}`
+      );
+      assert.ok(
+        catalogs[category].has(serializerName),
+        `${category}:${appKey} does not use a canonical engine name: ${serializerName}`
       );
     }
   }
@@ -124,9 +133,7 @@ test("capabilities only expose app data that the pinned GCSIM can serialize", ()
     );
   }
 
-  for (const [appKey, serializerName] of Object.entries(
-    capabilities.weapons
-  )) {
+  for (const [appKey, serializerName] of Object.entries(capabilities.weapons)) {
     const parsed = parseScript(
       `${baseCharacter}\nfurina add weapon="${serializerName}" lvl=90/90 refine=1;`,
       `capability:weapon:${appKey}`

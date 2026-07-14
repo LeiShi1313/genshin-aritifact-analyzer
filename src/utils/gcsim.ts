@@ -5,6 +5,13 @@ import { Set, setToJSON } from "../genshin/set";
 import { AttributeType, attributeTypeToJSON, AttributePosition, attributePositionToJSON } from "../genshin/attribute";
 import { elementToJSON } from "../genshin/element";
 import { Artifact } from "../genshin/artifact";
+import {
+  getGCSimCharacterName,
+  getGCSimSetName,
+  getGCSimWeaponName,
+  isGCSimSetSupported,
+  isGCSimWeaponSupported,
+} from "./gcsimCapabilities";
 
 /**
  * Artifact override for a single position
@@ -123,16 +130,29 @@ export const aggregateArtifactSets = (artifacts: Artifact[]): GCSimScriptSetInfo
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 
-const characterToGCSimCharacter = (character: Character) => {
-    return characterToJSON(character).replace(/_/g, "").toLowerCase();
-}
-const weaponToGCSimWeapon = (weapon: Weapon) => {
-    return weaponToJSON(weapon).replace(/_/g, "").toLowerCase();
-}
+const requireGCSimName = (
+  kind: "character" | "weapon" | "artifact set",
+  appName: string,
+  engineName: string | undefined
+): string => {
+  if (!engineName) {
+    throw new Error(`${kind} ${appName} is not supported by this GCSIM version`);
+  }
+  return engineName;
+};
 
-const setToGCSimSet = (set: Set) => {
-    return setToJSON(set).replace(/_/g, "").toLowerCase();
-}
+const characterToGCSimCharacter = (character: Character) =>
+  requireGCSimName(
+    "character",
+    characterToJSON(character),
+    getGCSimCharacterName(character)
+  );
+
+const weaponToGCSimWeapon = (weapon: Weapon) =>
+  requireGCSimName("weapon", weaponToJSON(weapon), getGCSimWeaponName(weapon));
+
+const setToGCSimSet = (set: Set) =>
+  requireGCSimName("artifact set", setToJSON(set), getGCSimSetName(set));
 
 const attributeTypeToGCSimStat = (at: AttributeType) => {
     const type = attributeTypeToJSON(at);
@@ -197,7 +217,7 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
 
     // Then characters
     script.characterInfos.map(characterInfo => {
-        const char = characterToGCSimCharacter(characterInfo.character);
+        const char = characterInfo.gcsimName || characterToGCSimCharacter(characterInfo.character);
         let charLine = `${char} char `
             + `lvl=${characterInfo.level}/${characterInfo.maxLevel} `
             + `cons=${characterInfo.constellation} `
@@ -432,6 +452,9 @@ export const applyAllOverrides = (
     scriptWithOverrides.characterInfos.forEach(charInfo => {
       const charId = charInfo.character;
       const override = characterOverrides[charId];
+      const supportedSetOverrides = override?.sets?.filter(({ set }) =>
+        isGCSimSetSupported(set)
+      );
 
       // Apply character overrides if enabled
       if (override?.enabled) {
@@ -456,7 +479,7 @@ export const applyAllOverrides = (
         }
 
         // Apply weapon override
-        if (override.weapon?.weapon) {
+        if (override.weapon?.weapon && isGCSimWeaponSupported(override.weapon.weapon)) {
           charInfo.weaponInfo = {
             weapon: override.weapon.weapon,
             level: override.weapon.level ?? charInfo.weaponInfo?.level ?? 90,
@@ -467,8 +490,8 @@ export const applyAllOverrides = (
         }
 
         // Apply set overrides
-        if (override.sets && override.sets.length > 0) {
-          charInfo.setInfos = override.sets.map(setOverride => ({
+        if (supportedSetOverrides && supportedSetOverrides.length > 0) {
+          charInfo.setInfos = supportedSetOverrides.map(setOverride => ({
             set: setOverride.set,
             count: setOverride.count,
             params: [],
@@ -480,11 +503,13 @@ export const applyAllOverrides = (
       // If artifact overrides exist, use them (empty/undefined positions = no artifact)
       // Otherwise, fall back to character's equipped artifacts
       let artifactsToUse: Artifact[] = [];
+      const hasExplicitArtifactOverrides =
+        override?.enabled && override.artifacts !== undefined;
 
-      if (override?.enabled && override.artifacts) {
+      if (hasExplicitArtifactOverrides) {
         // Use artifact overrides - only include positions with actual artifacts
         // Positions without artifacts are intentionally empty
-        artifactsToUse = override.artifacts
+        artifactsToUse = (override?.artifacts ?? [])
           .filter(ao => ao.artifact)
           .map(ao => ao.artifact!);
       } else {
@@ -492,13 +517,15 @@ export const applyAllOverrides = (
         artifactsToUse = characterToArtifacts[charId] || [];
       }
 
-      if (artifactsToUse.length > 0) {
+      if (hasExplicitArtifactOverrides || artifactsToUse.length > 0) {
         // Replace character stats with artifact stats
         charInfo.stats = artifactsToStats(artifactsToUse);
 
         // Only replace set infos if not already overridden by explicit set selection
-        if (!override?.enabled || !override.sets || override.sets.length === 0) {
-          charInfo.setInfos = aggregateArtifactSets(artifactsToUse);
+        if (!override?.enabled || !supportedSetOverrides || supportedSetOverrides.length === 0) {
+          charInfo.setInfos = aggregateArtifactSets(artifactsToUse).filter(
+            ({ set }) => isGCSimSetSupported(set)
+          );
         }
       }
     });
