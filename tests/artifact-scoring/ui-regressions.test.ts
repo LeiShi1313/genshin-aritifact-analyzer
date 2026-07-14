@@ -24,6 +24,34 @@ test("artifact stat values include real accessible stat names", () => {
   assert.ok(accessibleNames.length >= 2);
 });
 
+test("the score card leads with one accessible colored integer score and plain-language action", () => {
+  const component = readSource("src/features/artifacts/ArtifactScoreCard.jsx");
+
+  assert.match(component, /presentArtifactScore\(summary, artifact\.level\)/);
+  assert.match(component, /text-(4xl|5xl)/);
+  assert.match(component, /font-(bold|black)/);
+  assert.match(component, /tabular-nums/);
+  assert.match(component, /bg-base-100 text-base-content/);
+  assert.match(component, /border-l-8 border-info/);
+  assert.match(component, /border-l-8 border-success/);
+  assert.match(component, /border-l-8 border-accent/);
+  assert.doesNotMatch(component, /bg-info text-info-content/);
+  assert.doesNotMatch(component, /bg-success text-success-content/);
+  assert.doesNotMatch(component, /bg-accent text-accent-content/);
+  assert.doesNotMatch(component, /style:\s*"percent"/);
+  assert.doesNotMatch(component, /t\("Prospect Rarity"\)/);
+  assert.doesNotMatch(component, /t\("P10"\)/);
+  assert.doesNotMatch(component, /t\("P90"\)/);
+  assert.doesNotMatch(component, /t\("Upgrade forecast"\)/);
+});
+
+test("artifact score loading uses the public score terminology", () => {
+  const filter = readSource("src/features/artifacts/ArtifactsFilter.jsx");
+
+  assert.match(filter, /t\("Calculating artifact scores"\)/);
+  assert.doesNotMatch(filter, /t\("Calculating Build Match"\)/);
+});
+
 test("invalid artifact enums use fallbacks instead of crashing the warning card", () => {
   const component = readSource("src/features/artifacts/ArtifactCard.jsx");
   assert.match(component, /typeof setName !== "string"/);
@@ -40,11 +68,7 @@ test("V2 lock export operates only on successfully scored artifacts", () => {
 });
 
 test("lock exports remain blocked until the complete score selection is ready", () => {
-  for (const status of [
-    "pending-summary",
-    "pending-prospect",
-    "unavailable",
-  ] as const) {
+  for (const status of ["pending-summary", "unavailable"] as const) {
     assert.equal(isArtifactExportReady("GOOD", status), false);
   }
   assert.equal(isArtifactExportReady("MINGYU_LAB", "ready"), false);
@@ -76,6 +100,32 @@ test("long translated download states can wrap inside the mobile split button", 
     assert.ok(splitButtonClass.split(/\s+/).includes(className));
   }
   assert.match(filter, /dropdown dropdown-end flex shrink-0 self-stretch/);
+});
+
+test("mobile score filters collapse behind a compact accessible summary", () => {
+  const filter = readSource("src/features/artifacts/ArtifactsFilter.jsx");
+
+  assert.match(filter, /aria-controls="artifact-score-filter-controls"/);
+  assert.match(filter, /aria-expanded={filtersOpen}/);
+  assert.match(filter, /filtersOpen \? "grid" : "hidden"/);
+  assert.match(filter, /md:grid/);
+});
+
+test("expected unscored rows do not visually compete with artifact scores", () => {
+  const upload = readSource("src/features/artifacts/ArtifactsUpload.jsx");
+
+  assert.doesNotMatch(upload, /alert alert-warning/);
+  assert.match(upload, /bg-base-200 text-base-content/);
+});
+
+test("mobile score controls keep short views and sorting on one compact row", () => {
+  const sort = readSource("src/features/artifacts/ArtifactSortSelect.jsx");
+
+  assert.match(sort, /{t\("Recommended"\)}/);
+  assert.match(sort, /{t\("Other"\)}/);
+  assert.match(sort, /{t\("Sort by"\)}/);
+  assert.match(sort, /w-full/);
+  assert.match(sort, /md:w-auto/);
 });
 
 test("the add-substat selector has an accessible name", () => {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { useSelector } from "react-redux";
@@ -17,7 +17,6 @@ import {
   scoreSelectionDecision,
   selectArtifactScoreSummary,
 } from "./scoringViewModel";
-import { pairKey } from "../../workers/artifactScoringProtocol";
 
 const progressValue = (phase) =>
   phase.progress.total > 0
@@ -74,8 +73,6 @@ const ArtifactsUpload = () => {
   const [query, updateQuery] = useArtifactScoringQuery();
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(20);
-  const lastProspectRequest = useRef("");
-  const lastPotentialRequest = useRef("");
 
   const enabledBuilds = useMemo(() => {
     const result = {};
@@ -95,11 +92,7 @@ const ArtifactsUpload = () => {
     () => ({ kind: "normal-five-star", fourLineStartProbability }),
     [fourLineStartProbability]
   );
-  const {
-    state: scoring,
-    requestProspect,
-    requestPotential,
-  } = useArtifactScoringSession({
+  const { state: scoring } = useArtifactScoringSession({
     datasetId: artifactsId ?? "unknown-artifact-dataset",
     artifacts,
     builds: buildEntries,
@@ -109,9 +102,8 @@ const ArtifactsUpload = () => {
   useEffect(() => {
     setPage(0);
   }, [
-    query.match,
-    query.prospectEnabled,
-    query.prospect,
+    query.minPotential,
+    query.minScore,
     query.sort,
     query.set,
     query.position,
@@ -140,68 +132,13 @@ const ArtifactsUpload = () => {
     [artifacts, query.set, query.position, query.minLevel, query.maxLevel]
   );
 
-  const toProspectState = useCallback(
-    (summary) => {
-      if (summary.status !== "ok") return { status: "unavailable" };
-      const delta =
-        scoring.prospect.results[
-          pairKey({
-            artifactIndex: summary.artifactIndex,
-            buildIndex: summary.bestExpected.buildIndex,
-          })
-        ];
-      if (delta?.status === "ok") {
-        return { status: "ready", percentile: delta.result.percentile };
-      }
-      if (delta) return { status: "unavailable" };
-      return scoring.prospect.status === "pending"
-        ? { status: "pending" }
-        : { status: "idle" };
-    },
-    [scoring.prospect.results, scoring.prospect.status]
-  );
-
-  const fullProspectRequired =
-    query.prospectEnabled || query.sort.startsWith("prospect-");
-  const allProspectTargets = useMemo(
-    () =>
-      summaries.flatMap((summary) =>
-        summary.status === "ok"
-          ? [
-              {
-                artifactIndex: summary.artifactIndex,
-                buildIndex: summary.bestExpected.buildIndex,
-              },
-            ]
-          : []
-      ),
-    [summaries]
-  );
-  const fullProspectReady =
-    !fullProspectRequired ||
-    allProspectTargets.length === 0 ||
-    (allProspectTargets.every(
-      (target) => scoring.prospect.results[pairKey(target)] !== undefined
-    ) &&
-      scoring.prospect.status === "ready");
-  const prospectSelectionUnavailable =
-    fullProspectRequired &&
-    (scoring.prospect.status === "error" ||
-      scoring.prospect.status === "unavailable");
-  const prospectSelectionPending =
-    scoring.summary.status === "ready" &&
-    fullProspectRequired &&
-    !fullProspectReady &&
-    !prospectSelectionUnavailable;
   const downloadEvaluationStatus =
-    scoring.summary.status === "error" || prospectSelectionUnavailable
+    scoring.summary.status === "error"
       ? "unavailable"
       : scoring.summary.status !== "ready"
       ? "pending-summary"
       : !summaries.some((summary) => summary.status === "ok")
       ? "unavailable"
-      : prospectSelectionPending
-      ? "pending-prospect"
       : "ready";
   const exportReady = isArtifactExportReady(format, downloadEvaluationStatus);
 
@@ -209,10 +146,10 @@ const ArtifactsUpload = () => {
     (summary) =>
       scoreSelectionDecision(
         summary,
-        fullProspectReady ? query : { ...query, prospectEnabled: false },
-        toProspectState(summary)
+        artifacts[summary.artifactIndex].level,
+        query
       ),
-    [query, fullProspectReady, toProspectState]
+    [artifacts, query]
   );
 
   const displayingSummaries = useMemo(() => {
@@ -220,17 +157,13 @@ const ArtifactsUpload = () => {
       const selected = selectionDecision(summary) === "selected";
       return query.showSelected ? selected : !selected;
     });
-    const effectiveSort =
-      query.sort.startsWith("prospect-") && !fullProspectReady
-        ? "expectedFinalMatch-desc"
-        : query.sort;
     return filtered.sort((left, right) =>
       compareArtifactScores(
         left,
         right,
-        toProspectState(left),
-        toProspectState(right),
-        effectiveSort
+        artifacts[left.artifactIndex].level,
+        artifacts[right.artifactIndex].level,
+        query.sort
       )
     );
   }, [
@@ -239,8 +172,7 @@ const ArtifactsUpload = () => {
     selectionDecision,
     query.showSelected,
     query.sort,
-    fullProspectReady,
-    toProspectState,
+    artifacts,
   ]);
 
   const currentPage = useMemo(
@@ -254,99 +186,6 @@ const ArtifactsUpload = () => {
     );
     setPage((current) => Math.min(current, lastPage));
   }, [displayingSummaries.length, offset]);
-  const visibleTargets = useMemo(
-    () =>
-      currentPage.flatMap((summary) =>
-        summary.status === "ok"
-          ? [
-              {
-                artifactIndex: summary.artifactIndex,
-                buildIndex: summary.bestExpected.buildIndex,
-              },
-            ]
-          : []
-      ),
-    [currentPage]
-  );
-  const requestedProspectTargets = fullProspectRequired
-    ? allProspectTargets
-    : visibleTargets;
-
-  useEffect(() => {
-    if (scoring.summary.status !== "ready") return;
-    if (
-      scoring.prospect.status === "error" ||
-      scoring.prospect.status === "unavailable"
-    ) {
-      return;
-    }
-    const signature = `${
-      scoring.summary.summaryKey
-    }:${fourLineStartProbability}:${requestedProspectTargets
-      .map(pairKey)
-      .join(",")}`;
-    if (
-      scoring.prospect.status === "pending" &&
-      lastProspectRequest.current === signature
-    ) {
-      return;
-    }
-    const missing = requestedProspectTargets.filter(
-      (target) => scoring.prospect.results[pairKey(target)] === undefined
-    );
-    if (missing.length === 0) return;
-    if (lastProspectRequest.current === signature) return;
-    lastProspectRequest.current = signature;
-    requestProspect(missing);
-  }, [
-    scoring.summary.status,
-    scoring.summary.summaryKey,
-    scoring.prospect.results,
-    scoring.prospect.status,
-    requestedProspectTargets,
-    fourLineStartProbability,
-    requestProspect,
-  ]);
-
-  useEffect(() => {
-    if (scoring.summary.status !== "ready") return;
-    if (
-      scoring.potential.status === "error" ||
-      scoring.potential.status === "unavailable"
-    ) {
-      return;
-    }
-    const signature = `${
-      scoring.summary.summaryKey
-    }:${fourLineStartProbability}:${visibleTargets.map(pairKey).join(",")}`;
-    if (
-      scoring.potential.status === "pending" &&
-      lastPotentialRequest.current === signature
-    ) {
-      return;
-    }
-    const missing = visibleTargets.filter((target) => {
-      const result = scoring.potential.results[pairKey(target)];
-      return (
-        result === undefined ||
-        (result.status === "ok" &&
-          result.finishChance.kind !== "conservative-top-ten")
-      );
-    });
-    if (missing.length === 0) return;
-    if (lastPotentialRequest.current === signature) return;
-    lastPotentialRequest.current = signature;
-    requestPotential(missing);
-  }, [
-    scoring.summary.status,
-    scoring.summary.summaryKey,
-    scoring.potential.results,
-    scoring.potential.status,
-    visibleTargets,
-    fourLineStartProbability,
-    requestPotential,
-  ]);
-
   const selectedArtifactIndices = useMemo(
     () =>
       summaries
@@ -413,14 +252,10 @@ const ArtifactsUpload = () => {
   return (
     <div className="flex w-full max-w-screen-lg flex-col items-center gap-4 px-4 lg:px-0">
       <ArtifactsFilter
-        match={query.match}
-        setMatch={(match) => setQueryAndReset({ match })}
-        prospectEnabled={query.prospectEnabled}
-        setProspectEnabled={(prospectEnabled) =>
-          setQueryAndReset({ prospectEnabled })
-        }
-        prospect={query.prospect}
-        setProspect={(prospect) => setQueryAndReset({ prospect })}
+        minPotential={query.minPotential}
+        setMinPotential={(minPotential) => setQueryAndReset({ minPotential })}
+        minScore={query.minScore}
+        setMinScore={(minScore) => setQueryAndReset({ minScore })}
         set={query.set}
         setSet={(set) => setQueryAndReset({ set: Number(set) })}
         pos={query.position}
@@ -437,7 +272,7 @@ const ArtifactsUpload = () => {
       {scoring.summary.status === "pending" ||
       scoring.summary.status === "idle" ? (
         <Calculating
-          label={t("Calculating Build Match")}
+          label={t("Calculating artifact scores")}
           phase={scoring.summary}
         />
       ) : scoring.summary.status === "error" ? (
@@ -446,54 +281,34 @@ const ArtifactsUpload = () => {
         </div>
       ) : (
         <div className="flex w-full flex-col items-stretch gap-3">
-          {prospectSelectionPending && (
-            <div className="alert alert-info" aria-live="polite">
-              <span>{t("Calculating Prospect Rarity for all artifacts")}</span>
-              <progress
-                className="progress progress-secondary w-40"
-                value={progressValue(scoring.prospect)}
-                max="1"
-                aria-label={t("Calculating Prospect Rarity for all artifacts")}
-              />
-            </div>
-          )}
-          {prospectSelectionUnavailable && (
-            <div className="alert alert-warning" role="alert">
-              <span>
-                {t(
-                  "Prospect Rarity unavailable; score filtering and lock export are disabled"
-                )}
-              </span>
-            </div>
-          )}
           {query.showSelected && unscoredArtifactCount > 0 && (
-            <div className="alert alert-warning" role="status">
+            <div
+              className="bg-base-200 text-base-content flex flex-wrap items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm"
+              role="status"
+            >
               <span>
-                {t("Unscored artifacts are shown under Unselected")} (
+                {t("Unscored artifacts are shown under Other artifacts")} (
                 {unscoredArtifactCount})
               </span>
               <button
                 type="button"
-                className="btn btn-sm"
+                className="btn btn-ghost btn-xs"
                 onClick={() => setQueryAndReset({ showSelected: false })}
               >
-                {t("artifacts:show_unselected")}
+                {t("Other artifacts")}
               </button>
             </div>
           )}
 
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <div className="mb-1 text-xs opacity-70">{t("Sort by")}</div>
-              <ArtifactSortSelect
-                sortKey={query.sort}
-                setSortKey={(sort) => setQueryAndReset({ sort })}
-                showSelected={query.showSelected}
-                setShowSelected={(showSelected) =>
-                  setQueryAndReset({ showSelected })
-                }
-              />
-            </div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <ArtifactSortSelect
+              sortKey={query.sort}
+              setSortKey={(sort) => setQueryAndReset({ sort })}
+              showSelected={query.showSelected}
+              setShowSelected={(showSelected) =>
+                setQueryAndReset({ showSelected })
+              }
+            />
             <div className="text-sm opacity-70">
               {t("Showing artifact count", {
                 shown: displayingSummaries.length,
@@ -511,45 +326,18 @@ const ArtifactsUpload = () => {
             )}
           </div>
 
-          {currentPage.map((summary) => {
-            const target =
-              summary.status === "ok"
-                ? {
-                    artifactIndex: summary.artifactIndex,
-                    buildIndex: summary.bestExpected.buildIndex,
-                  }
-                : undefined;
-            const prospectDelta = target
-              ? scoring.prospect.results[pairKey(target)] ?? {
-                  status:
-                    scoring.prospect.status === "pending"
-                      ? "pending"
-                      : "unavailable",
-                }
-              : { status: "unavailable" };
-            const potentialDelta = target
-              ? scoring.potential.results[pairKey(target)] ?? {
-                  status:
-                    scoring.potential.status === "pending"
-                      ? "pending"
-                      : "unavailable",
-                }
-              : { status: "unavailable" };
-            return (
-              <ArtifactScoreCard
-                key={summary.artifactIndex}
-                artifact={artifacts[summary.artifactIndex]}
-                builds={enabledBuilds}
-                summary={summary}
-                prospect={prospectDelta}
-                potential={potentialDelta}
-                minMatch={query.match}
-                showUnselected={!query.showSelected}
-              />
-            );
-          })}
+          {currentPage.map((summary) => (
+            <ArtifactScoreCard
+              key={summary.artifactIndex}
+              artifact={artifacts[summary.artifactIndex]}
+              builds={enabledBuilds}
+              summary={summary}
+              minPotential={query.minPotential}
+              minScore={query.minScore}
+            />
+          ))}
 
-          {displayingSummaries.length === 0 && !prospectSelectionPending && (
+          {displayingSummaries.length === 0 && (
             <div className="alert" role="status">
               {t("No artifacts match the score filters")}
             </div>

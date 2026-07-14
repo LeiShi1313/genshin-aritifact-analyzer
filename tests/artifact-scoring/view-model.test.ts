@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   BATCH_ENTITY_STATUS,
   compareArtifactScores,
+  presentArtifactScore,
   scoreSelectionDecision,
   selectArtifactScoreSummary,
   type ScoreBatchView,
@@ -34,6 +35,43 @@ test("binds current and expected metrics to their independently best builds", ()
   assert.equal(summary.bestExpected.buildId, "future-build");
 });
 
+test("binds unfinished Potential and current context to one best-Expected build", () => {
+  const summary = selectArtifactScoreSummary(batch(), 0);
+  assert.equal(summary.status, "ok");
+  if (summary.status !== "ok") return;
+
+  const presentation = presentArtifactScore(summary, 0);
+  assert.deepEqual(presentation?.primary, {
+    kind: "potential",
+    score: 90,
+    rawValue: 0.9,
+    buildId: "future-build",
+    buildIndex: 1,
+    isPreferredMain: true,
+  });
+  assert.deepEqual(presentation?.secondary, {
+    kind: "current",
+    score: 70,
+    rawValue: 0.7,
+    buildId: "future-build",
+    buildIndex: 1,
+  });
+});
+
+test("shows one finished Score and no redundant Potential at +20", () => {
+  const input = batch();
+  input.expectedFinalMatch.set(input.match);
+  const summary = selectArtifactScoreSummary(input, 0);
+  assert.equal(summary.status, "ok");
+  if (summary.status !== "ok") return;
+
+  const presentation = presentArtifactScore(summary, 20);
+  assert.equal(presentation?.primary.kind, "score");
+  assert.equal(presentation?.primary.score, 80);
+  assert.equal(presentation?.primary.buildId, "current-build");
+  assert.equal(presentation?.secondary, undefined);
+});
+
 test("reports valid artifacts as unavailable when every build is invalid", () => {
   const input = batch();
   input.buildStatus.fill(BATCH_ENTITY_STATUS.INVALID);
@@ -62,39 +100,33 @@ test("breaks expected ties by current match and then enabled-build order", () =>
   );
 });
 
-test("uses Match AND optional Prospect as the selection gate", () => {
+test("uses calibrated level-aware public scores and the main-stat gate", () => {
   const summary = selectArtifactScoreSummary(batch(), 0);
-  const query = { match: 0.75, prospectEnabled: true, prospect: 0.9 };
+  const query = { minPotential: 90, minScore: 80 };
 
+  assert.equal(scoreSelectionDecision(summary, 0, query), "selected");
   assert.equal(
-    scoreSelectionDecision(summary, query, {
-      status: "ready",
-      percentile: 0.89,
+    scoreSelectionDecision(summary, 0, { ...query, minPotential: 91 }),
+    "unselected"
+  );
+
+  const finished = batch();
+  finished.expectedFinalMatch.set(finished.match);
+  const finishedSummary = selectArtifactScoreSummary(finished, 0);
+  assert.equal(scoreSelectionDecision(finishedSummary, 20, query), "selected");
+
+  const wrongMain = batch();
+  wrongMain.isPreferredMain.fill(0);
+  assert.equal(
+    scoreSelectionDecision(selectArtifactScoreSummary(wrongMain, 0), 0, {
+      minPotential: 0,
+      minScore: 0,
     }),
     "unselected"
   );
-  assert.equal(
-    scoreSelectionDecision(summary, query, {
-      status: "ready",
-      percentile: 0.9,
-    }),
-    "selected"
-  );
-  assert.equal(
-    scoreSelectionDecision(summary, query, { status: "pending" }),
-    "pending"
-  );
-  assert.equal(
-    scoreSelectionDecision(
-      summary,
-      { ...query, prospectEnabled: false },
-      { status: "error" }
-    ),
-    "selected"
-  );
 });
 
-test("sorts by Expected +20 by default and leaves unsupported rows last", () => {
+test("sorts by the level-aware public score and leaves unsupported rows last", () => {
   const input = batch();
   const first = selectArtifactScoreSummary(input, 0);
   const second = selectArtifactScoreSummary(input, 1);
@@ -102,9 +134,9 @@ test("sorts by Expected +20 by default and leaves unsupported rows last", () => 
     compareArtifactScores(
       left,
       right,
-      { status: "idle" },
-      { status: "idle" },
-      "expectedFinalMatch-desc"
+      left.artifactIndex === 0 ? 0 : 20,
+      right.artifactIndex === 0 ? 0 : 20,
+      "score-desc"
     )
   );
   assert.equal(sorted[0].artifactIndex, 0);
@@ -112,12 +144,7 @@ test("sorts by Expected +20 by default and leaves unsupported rows last", () => 
   input.artifactStatus[0] = BATCH_ENTITY_STATUS.UNSUPPORTED;
   const unsupported = selectArtifactScoreSummary(input, 0);
   assert.ok(
-    compareArtifactScores(
-      unsupported,
-      second,
-      { status: "unavailable" },
-      { status: "ready", percentile: 0.5 },
-      "currentMatch-desc"
-    ) > 0
+    compareArtifactScores(unsupported, second, 0, 20, "score-desc") > 0
   );
+  assert.ok(compareArtifactScores(unsupported, second, 0, 20, "score-asc") > 0);
 });

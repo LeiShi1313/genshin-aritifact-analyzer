@@ -1,8 +1,10 @@
+import { Set } from "../../genshin/set";
+import { PUBLIC_SCORE_DEFAULTS } from "./scorePresentation";
+
 export const ARTIFACT_SCORING_QUERY_DEFAULTS = {
-  match: 0.55,
-  prospectEnabled: false,
-  prospect: 0.9,
-  sort: "expectedFinalMatch-desc",
+  minPotential: PUBLIC_SCORE_DEFAULTS.minPotential,
+  minScore: PUBLIC_SCORE_DEFAULTS.minScore,
+  sort: "score-desc",
   set: 0,
   position: 0,
   minLevel: 0,
@@ -10,21 +12,13 @@ export const ARTIFACT_SCORING_QUERY_DEFAULTS = {
   showSelected: true,
 } as const;
 
-export const ARTIFACT_SCORE_SORTS = [
-  "expectedFinalMatch-desc",
-  "expectedFinalMatch-asc",
-  "currentMatch-desc",
-  "currentMatch-asc",
-  "prospect-desc",
-  "prospect-asc",
-] as const;
+export const ARTIFACT_SCORE_SORTS = ["score-desc", "score-asc"] as const;
 
 export type ArtifactScoreSort = (typeof ARTIFACT_SCORE_SORTS)[number];
 
 export interface ArtifactScoringQuery {
-  match: number;
-  prospectEnabled: boolean;
-  prospect: number;
+  minPotential: number;
+  minScore: number;
   sort: ArtifactScoreSort;
   set: number;
   position: number;
@@ -32,14 +26,6 @@ export interface ArtifactScoringQuery {
   maxLevel: number;
   showSelected: boolean;
 }
-
-const finiteUnitInterval = (value: string | null, fallback: number): number => {
-  if (value === null || value.trim() === "") return fallback;
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 && parsed <= 1
-    ? parsed
-    : fallback;
-};
 
 const explicitBoolean = (value: string | null, fallback: boolean): boolean => {
   if (value === "true") return true;
@@ -94,17 +80,17 @@ export const parseArtifactScoringQuery = (
   );
 
   return {
-    match: finiteUnitInterval(
-      params.get("match"),
-      ARTIFACT_SCORING_QUERY_DEFAULTS.match
+    minPotential: boundedInteger(
+      params.get("minPotential"),
+      ARTIFACT_SCORING_QUERY_DEFAULTS.minPotential,
+      0,
+      100
     ),
-    prospectEnabled: explicitBoolean(
-      params.get("prospectEnabled"),
-      ARTIFACT_SCORING_QUERY_DEFAULTS.prospectEnabled
-    ),
-    prospect: finiteUnitInterval(
-      params.get("prospect"),
-      ARTIFACT_SCORING_QUERY_DEFAULTS.prospect
+    minScore: boundedInteger(
+      params.get("minScore"),
+      ARTIFACT_SCORING_QUERY_DEFAULTS.minScore,
+      0,
+      100
     ),
     sort: scoreSort(params.get("sort")),
     set: artifactSet(params.get("set")),
@@ -139,4 +125,3 @@ export const serializeArtifactScoringQuery = (
   ).forEach((key) => setIfNonDefault(params, key, query[key]));
   return params;
 };
-import { Set } from "../../genshin/set";

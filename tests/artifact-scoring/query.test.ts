@@ -14,28 +14,18 @@ test("uses the mechanics-calibrated scoring defaults", () => {
   );
 });
 
-test("parses only explicit booleans and finite unit-interval thresholds", () => {
-  assert.equal(
-    parseArtifactScoringQuery("prospectEnabled=false").prospectEnabled,
-    false
-  );
-  assert.equal(
-    parseArtifactScoringQuery("prospectEnabled=true").prospectEnabled,
-    true
-  );
-  assert.equal(
-    parseArtifactScoringQuery("prospectEnabled=1").prospectEnabled,
-    false
-  );
-  assert.equal(parseArtifactScoringQuery("match=NaN").match, 0.55);
-  assert.equal(parseArtifactScoringQuery("match=1.01").match, 0.55);
-  assert.equal(parseArtifactScoringQuery("prospect=-0.1").prospect, 0.9);
+test("parses only integer public-score thresholds", () => {
+  assert.equal(parseArtifactScoringQuery("minPotential=70").minPotential, 70);
+  assert.equal(parseArtifactScoringQuery("minScore=85").minScore, 85);
+  assert.equal(parseArtifactScoringQuery("minPotential=74.5").minPotential, 75);
+  assert.equal(parseArtifactScoringQuery("minScore=101").minScore, 80);
+  assert.equal(parseArtifactScoringQuery("minScore=NaN").minScore, 80);
 });
 
 test("does not reinterpret removed fitness, rarity, or sort parameters", () => {
   assert.deepEqual(
     parseArtifactScoringQuery(
-      "fitness=.65&rarity=8.5&sort=rarity-desc&potential-desc=true"
+      "fitness=.65&match=.65&rarity=8.5&prospect=.9&prospectEnabled=true&sort=rarity-desc&potential-desc=true"
     ),
     ARTIFACT_SCORING_QUERY_DEFAULTS
   );
@@ -56,10 +46,9 @@ test("normalizes a reversed level range", () => {
 test("serializes non-default values and round-trips explicit false", () => {
   const query = {
     ...ARTIFACT_SCORING_QUERY_DEFAULTS,
-    match: 0.7,
-    prospectEnabled: true,
-    prospect: 0.95,
-    sort: "currentMatch-asc" as const,
+    minPotential: 70,
+    minScore: 85,
+    sort: "score-asc" as const,
     showSelected: false,
   };
   const params = serializeArtifactScoringQuery(query);

@@ -1,4 +1,5 @@
 import type { ArtifactScoreSort, ArtifactScoringQuery } from "./scoringQuery";
+import { toPublicArtifactScore } from "./scorePresentation";
 
 export const BATCH_ENTITY_STATUS = {
   OK: 0,
@@ -41,11 +42,6 @@ export type ArtifactScoreSummary =
       readonly artifactIndex: number;
       readonly issueFlags: number;
     };
-
-export type ProspectState =
-  | { readonly status: "idle" | "pending" }
-  | { readonly status: "ready"; readonly percentile: number }
-  | { readonly status: "error" | "unavailable" };
 
 const SCORE_EPSILON = 1e-12;
 
@@ -118,11 +114,66 @@ export const selectArtifactScoreSummary = (
   };
 };
 
-export type SelectionDecision = "selected" | "unselected" | "pending";
+export interface ArtifactScorePresentation {
+  readonly primary: {
+    readonly kind: "potential" | "score";
+    readonly score: number;
+    readonly rawValue: number;
+    readonly buildId: string;
+    readonly buildIndex: number;
+    readonly isPreferredMain: boolean;
+  };
+  readonly secondary?: {
+    readonly kind: "current";
+    readonly score: number;
+    readonly rawValue: number;
+    readonly buildId: string;
+    readonly buildIndex: number;
+  };
+}
+
+export const presentArtifactScore = (
+  summary: ArtifactScoreSummary,
+  level: number
+): ArtifactScorePresentation | undefined => {
+  if (summary.status !== "ok") return undefined;
+
+  const finished = level >= 20;
+  const bound = finished ? summary.bestCurrent : summary.bestExpected;
+  const rawValue = finished ? bound.match : bound.expectedFinalMatch;
+  const score = toPublicArtifactScore(rawValue);
+  if (score === undefined) return undefined;
+
+  const secondaryScore = finished
+    ? undefined
+    : toPublicArtifactScore(bound.match);
+  return {
+    primary: {
+      kind: finished ? "score" : "potential",
+      score,
+      rawValue,
+      buildId: bound.buildId,
+      buildIndex: bound.buildIndex,
+      isPreferredMain: bound.isPreferredMain,
+    },
+    ...(secondaryScore === undefined
+      ? {}
+      : {
+          secondary: {
+            kind: "current" as const,
+            score: secondaryScore,
+            rawValue: bound.match,
+            buildId: bound.buildId,
+            buildIndex: bound.buildIndex,
+          },
+        }),
+  };
+};
+
+export type SelectionDecision = "selected" | "unselected";
 
 export type ArtifactExportEvaluationStatus =
   | "pending-summary"
-  | "pending-prospect"
   | "unavailable"
   | "ready";
 
@@ -133,44 +184,35 @@ export const isArtifactExportReady = (
 
 export const scoreSelectionDecision = (
   summary: ArtifactScoreSummary,
-  query: Pick<ArtifactScoringQuery, "match" | "prospectEnabled" | "prospect">,
-  prospect: ProspectState
+  level: number,
+  query: Pick<ArtifactScoringQuery, "minPotential" | "minScore">
 ): SelectionDecision => {
-  if (summary.status !== "ok" || summary.bestCurrent.match < query.match) {
-    return "unselected";
-  }
-  if (!query.prospectEnabled) return "selected";
-  if (prospect.status === "idle" || prospect.status === "pending") {
-    return "pending";
-  }
-  if (prospect.status !== "ready") return "unselected";
-  return prospect.percentile >= query.prospect ? "selected" : "unselected";
+  const presentation = presentArtifactScore(summary, level);
+  if (!presentation?.primary.isPreferredMain) return "unselected";
+  const minimum = level >= 20 ? query.minScore : query.minPotential;
+  return presentation.primary.score >= minimum ? "selected" : "unselected";
 };
 
 const sortValue = (
   summary: ArtifactScoreSummary,
-  prospect: ProspectState,
-  sort: ArtifactScoreSort
-): number => {
-  if (summary.status !== "ok") return Number.NEGATIVE_INFINITY;
-  if (sort.startsWith("currentMatch")) return summary.bestCurrent.match;
-  if (sort.startsWith("expectedFinalMatch")) {
-    return summary.bestExpected.expectedFinalMatch;
-  }
-  return prospect.status === "ready"
-    ? prospect.percentile
-    : Number.NEGATIVE_INFINITY;
-};
+  level: number
+): number | undefined => presentArtifactScore(summary, level)?.primary.score;
 
 export const compareArtifactScores = (
   left: ArtifactScoreSummary,
   right: ArtifactScoreSummary,
-  leftProspect: ProspectState,
-  rightProspect: ProspectState,
+  leftLevel: number,
+  rightLevel: number,
   sort: ArtifactScoreSort
 ): number => {
-  const leftValue = sortValue(left, leftProspect, sort);
-  const rightValue = sortValue(right, rightProspect, sort);
+  const leftValue = sortValue(left, leftLevel);
+  const rightValue = sortValue(right, rightLevel);
+  if (leftValue === undefined || rightValue === undefined) {
+    if (leftValue === rightValue) {
+      return left.artifactIndex - right.artifactIndex;
+    }
+    return leftValue === undefined ? 1 : -1;
+  }
   const direction = sort.endsWith("-asc") ? 1 : -1;
   const delta = (leftValue - rightValue) * direction;
   return Math.abs(delta) > SCORE_EPSILON

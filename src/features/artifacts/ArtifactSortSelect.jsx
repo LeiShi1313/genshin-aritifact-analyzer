@@ -1,17 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { SortAscending, SortDescending } from "phosphor-react";
 
-const SORT_LABELS = {
-  expectedFinalMatch: "Expected +20 Match",
-  currentMatch: "Build Match",
-  prospect: "Prospect Rarity",
-};
-
-const splitSort = (sortKey) => {
-  const separator = sortKey.lastIndexOf("-");
-  return [sortKey.slice(0, separator), sortKey.slice(separator + 1)];
-};
-
 const ArtifactSortSelect = ({
   sortKey,
   setSortKey,
@@ -19,43 +8,10 @@ const ArtifactSortSelect = ({
   setShowSelected,
 }) => {
   const { t } = useTranslation();
-  const [metric, direction] = splitSort(sortKey);
+  const direction = sortKey.endsWith("-asc") ? "asc" : "desc";
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <label className="sr-only" htmlFor="artifact-score-sort">
-        {t("Sort by")}
-      </label>
-      <select
-        id="artifact-score-sort"
-        className="select select-sm select-primary rounded-full"
-        value={metric}
-        onChange={(event) => setSortKey(`${event.target.value}-${direction}`)}
-      >
-        {Object.entries(SORT_LABELS).map(([value, label]) => (
-          <option key={value} value={value}>
-            {t(label)}
-          </option>
-        ))}
-      </select>
-
-      <button
-        type="button"
-        className="btn btn-circle btn-primary btn-sm"
-        aria-label={
-          direction === "asc" ? t("Sort descending") : t("Sort ascending")
-        }
-        onClick={() =>
-          setSortKey(`${metric}-${direction === "asc" ? "desc" : "asc"}`)
-        }
-      >
-        {direction === "asc" ? (
-          <SortAscending aria-hidden="true" size={20} />
-        ) : (
-          <SortDescending aria-hidden="true" size={20} />
-        )}
-      </button>
-
+    <div className="flex w-full flex-wrap items-center justify-between gap-2 md:w-auto">
       <div
         className="join"
         role="group"
@@ -66,20 +22,43 @@ const ArtifactSortSelect = ({
           className={`join-item btn btn-sm ${
             showSelected ? "btn-primary" : "btn-ghost"
           }`}
+          aria-label={t("Recommended artifacts")}
           aria-pressed={showSelected}
           onClick={() => setShowSelected(true)}
         >
-          {t("show_selected", { ns: "artifacts" })}
+          {t("Recommended")}
         </button>
         <button
           type="button"
           className={`join-item btn btn-sm ${
             !showSelected ? "btn-primary" : "btn-ghost"
           }`}
+          aria-label={t("Other artifacts")}
           aria-pressed={!showSelected}
           onClick={() => setShowSelected(false)}
         >
-          {t("show_unselected", { ns: "artifacts" })}
+          {t("Other")}
+        </button>
+      </div>
+
+      <div className="flex items-center gap-1 text-sm">
+        <span className="opacity-70">{t("Sort by")}</span>
+        <span className="font-semibold">{t("Score")}</span>
+        <button
+          type="button"
+          className="btn btn-circle btn-primary btn-sm"
+          aria-label={
+            direction === "asc" ? t("Sort descending") : t("Sort ascending")
+          }
+          onClick={() =>
+            setSortKey(`score-${direction === "asc" ? "desc" : "asc"}`)
+          }
+        >
+          {direction === "asc" ? (
+            <SortAscending aria-hidden="true" size={20} />
+          ) : (
+            <SortDescending aria-hidden="true" size={20} />
+          )}
         </button>
       </div>
     </div>
