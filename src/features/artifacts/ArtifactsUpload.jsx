@@ -98,6 +98,16 @@ const ArtifactsUpload = () => {
     builds: buildEntries,
     sourceProfile,
   });
+  const setEligibilityView = useMemo(
+    () =>
+      scoring.setEligibility.status === "ready" && scoring.setEligibility.policy
+        ? { status: "ready", policy: scoring.setEligibility.policy }
+        : scoring.setEligibility.status === "error" ||
+          scoring.setEligibility.status === "unavailable"
+        ? { status: "unavailable" }
+        : { status: "pending" },
+    [scoring.setEligibility.status, scoring.setEligibility.policy]
+  );
 
   useEffect(() => {
     setPage(0);
@@ -115,9 +125,17 @@ const ArtifactsUpload = () => {
   const summaries = useMemo(() => {
     if (scoring.summary.status !== "ready" || !scoring.summary.batch) return [];
     return Array.from({ length: artifacts.length }, (_, artifactIndex) =>
-      selectArtifactScoreSummary(scoring.summary.batch, artifactIndex)
+      selectArtifactScoreSummary(scoring.summary.batch, artifactIndex, {
+        position: artifacts[artifactIndex].position,
+        setEligibility: setEligibilityView,
+      })
     );
-  }, [scoring.summary.status, scoring.summary.batch, artifacts.length]);
+  }, [
+    scoring.summary.status,
+    scoring.summary.batch,
+    artifacts,
+    setEligibilityView,
+  ]);
 
   const physicalFilter = useCallback(
     (summary) => {
@@ -137,6 +155,11 @@ const ArtifactsUpload = () => {
       ? "unavailable"
       : scoring.summary.status !== "ready"
       ? "pending-summary"
+      : scoring.setEligibility.status === "error" ||
+        scoring.setEligibility.status === "unavailable"
+      ? "unavailable"
+      : scoring.setEligibility.status !== "ready"
+      ? "pending-set-eligibility"
       : !summaries.some((summary) => summary.status === "ok")
       ? "unavailable"
       : "ready";

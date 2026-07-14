@@ -71,3 +71,24 @@ test("never recommends an artifact with a mismatched main stat", () => {
     );
   }
 });
+
+test("does not recommend a high stat score that misses the set gate", () => {
+  assert.deepEqual(
+    getArtifactScoreAction({
+      level: 20,
+      score: 95,
+      isPreferredMain: true,
+      recommendation: { status: "ready", failure: "set" },
+    }),
+    { id: "below-recommendation", recommended: false }
+  );
+  assert.deepEqual(
+    getArtifactScoreAction({
+      level: 0,
+      score: 90,
+      isPreferredMain: true,
+      recommendation: { status: "pending", failure: "pending" },
+    }),
+    { id: "calculating-recommendation", recommended: false }
+  );
+});

@@ -53,12 +53,30 @@ const Artifact = () => {
     builds: buildEntries,
     sourceProfile,
   });
+  const setEligibilityView = useMemo(
+    () =>
+      scoring.setEligibility.status === "ready" && scoring.setEligibility.policy
+        ? { status: "ready", policy: scoring.setEligibility.policy }
+        : scoring.setEligibility.status === "error" ||
+          scoring.setEligibility.status === "unavailable"
+        ? { status: "unavailable" }
+        : { status: "pending" },
+    [scoring.setEligibility.status, scoring.setEligibility.policy]
+  );
   const summary = useMemo(
     () =>
       scoring.summary.status === "ready" && scoring.summary.batch
-        ? selectArtifactScoreSummary(scoring.summary.batch, 0)
+        ? selectArtifactScoreSummary(scoring.summary.batch, 0, {
+            position: artifact?.position ?? 0,
+            setEligibility: setEligibilityView,
+          })
         : undefined,
-    [scoring.summary.status, scoring.summary.batch]
+    [
+      scoring.summary.status,
+      scoring.summary.batch,
+      artifact?.position,
+      setEligibilityView,
+    ]
   );
   if (!artifact?.set) {
     return <BackToHome title={t("No artifact found")} />;

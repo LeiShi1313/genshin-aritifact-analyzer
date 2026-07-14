@@ -59,6 +59,8 @@ const ArtifactsFilter = ({
   const downloadLabel =
     downloadEvaluationStatus === "pending-summary"
       ? t("Calculating artifact scores")
+      : downloadEvaluationStatus === "pending-set-eligibility"
+      ? t("Calculating set recommendations")
       : downloadEvaluationStatus === "unavailable"
       ? t("Artifact scoring unavailable")
       : t("Generate lock file");

@@ -22,6 +22,7 @@ export interface ArtifactScoreBand {
 
 export type ArtifactScoreActionId =
   | "main-stat-mismatch"
+  | "calculating-recommendation"
   | "low-potential"
   | "try-upgrading"
   | "worth-upgrading"
@@ -57,13 +58,27 @@ export const getArtifactScoreAction = ({
   level,
   score,
   isPreferredMain,
+  recommendation,
 }: {
   readonly level: number;
   readonly score: number;
   readonly isPreferredMain: boolean;
+  readonly recommendation?: {
+    readonly status: "ready" | "pending" | "unavailable";
+    readonly failure: "none" | "main-stat" | "score" | "set" | "pending";
+  };
 }): ArtifactScoreAction => {
   if (!isPreferredMain) {
     return { id: "main-stat-mismatch", recommended: false };
+  }
+  if (recommendation?.status === "pending") {
+    return { id: "calculating-recommendation", recommended: false };
+  }
+  if (
+    recommendation?.status === "unavailable" ||
+    recommendation?.failure === "set"
+  ) {
+    return { id: "below-recommendation", recommended: false };
   }
   if (score === 100) return { id: "perfect", recommended: true };
   if (score >= 90) return { id: "exceptional", recommended: true };

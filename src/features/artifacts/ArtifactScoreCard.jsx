@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { Star, WarningCircle } from "phosphor-react";
 
-import {
-  encodeBuild,
-  getBuildSets,
-  getBuildShortName,
-} from "../../utils/build";
+import { encodeBuild, getBuildShortName } from "../../utils/build";
 import ArtifactCard from "./ArtifactCard";
 import CharacterCard from "../characters/CharacterCard";
 import {
@@ -17,7 +13,7 @@ import {
   getArtifactScoreBand,
   toPublicArtifactScore,
 } from "./scorePresentation";
-import { presentArtifactScore } from "./scoringViewModel";
+import { matchingBuildScores, presentArtifactScore } from "./scoringViewModel";
 
 const SCORE_TONE_CLASSES = {
   neutral: "border-l-8 border-base-300 bg-base-100 text-base-content",
@@ -28,6 +24,7 @@ const SCORE_TONE_CLASSES = {
 
 const ACTION_LABELS = {
   "main-stat-mismatch": "Main stat mismatch",
+  "calculating-recommendation": "Calculating",
   "low-potential": "Low potential",
   "try-upgrading": "Try upgrading",
   "worth-upgrading": "Worth upgrading",
@@ -47,6 +44,7 @@ const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
     level,
     score: primary.score,
     isPreferredMain: primary.isPreferredMain,
+    recommendation: primary.recommendation,
   });
   const label = primary.kind === "potential" ? t("Potential") : t("Score");
   const actionLabel = t(ACTION_LABELS[action.id]);
@@ -171,22 +169,19 @@ const ArtifactScoreCard = ({
   const publicScoreForBuild = (score) =>
     toPublicArtifactScore(finished ? score.match : score.expectedFinalMatch) ??
     0;
-  const matchingBuilds = [...summary.perBuild]
-    .filter(
-      (score) => score.isPreferredMain && publicScoreForBuild(score) >= minimum
-    )
-    .sort((left, right) => {
-      const scoreDelta = publicScoreForBuild(right) - publicScoreForBuild(left);
-      return scoreDelta || left.buildIndex - right.buildIndex;
-    });
+  const matchingBuilds = matchingBuildScores(summary, artifact.level, minimum);
   const displayedBuilds = matchingBuilds.slice(0, showAll ? undefined : 8);
   const activeBuildId = hoveredBuild ?? presentation.primary.buildId;
   const activeBuild = builds[activeBuildId];
   const fitAttributes =
     activeBuild?.subAttributes.map((attribute) => attribute.type) ?? [];
-  const suitIsFit = activeBuild
-    ? getBuildSets(activeBuild).some((set) => set === artifact.set)
-    : false;
+  const activeScore = summary.perBuild.find(
+    (score) => score.buildId === activeBuildId
+  );
+  const activeRecommendation = finished
+    ? activeScore?.currentRecommendation
+    : activeScore?.expectedRecommendation;
+  const suitIsFit = activeRecommendation?.role === "set-match";
   const bestBuild = builds[presentation.primary.buildId];
   const bestBuildName = getBuildShortName(bestBuild, t);
 

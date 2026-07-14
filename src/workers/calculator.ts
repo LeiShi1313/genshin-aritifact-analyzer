@@ -12,6 +12,7 @@ import {
   evaluateProspect,
   evaluateArtifactBatchCooperatively,
   estimateScoreDistributionBytes,
+  expectedFiveStarDrops as calculateExpectedFiveStarDrops,
   expectedFinalQualityRational,
   generateNormalFiveStarPopulationCooperatively,
   publicScoreBins,
@@ -278,6 +279,9 @@ const calculateCompactSetPolicy = async (
         expectedFiveStarDrops[index] = gate.expectedFiveStarDrops;
       } else {
         gateStatus[index] = SET_ELIGIBILITY_GATE_STATUS.UNAVAILABLE;
+        expectedFiveStarDrops[index] =
+          calculateExpectedFiveStarDrops(gate.baseTailProbability) ??
+          Number.NaN;
       }
     });
   }

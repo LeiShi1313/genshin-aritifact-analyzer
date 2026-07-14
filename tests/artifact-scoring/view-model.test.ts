@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { AttributePosition } from "../../src/genshin/attribute";
 import {
   BATCH_ENTITY_STATUS,
   compareArtifactScores,
@@ -9,6 +10,12 @@ import {
   selectArtifactScoreSummary,
   type ScoreBatchView,
 } from "../../src/features/artifacts/scoringViewModel";
+import { SET_COMPATIBILITY } from "../../src/utils/artifactScoring";
+import {
+  SET_ELIGIBILITY_GATE_STATUS,
+  setEligibilityGateIndex,
+  type SetEligibilityPolicyBatch,
+} from "../../src/workers/artifactScoringProtocol";
 
 const batch = (): ScoreBatchView => ({
   buildIds: ["current-build", "future-build", "tie-build"],
@@ -27,6 +34,18 @@ const batch = (): ScoreBatchView => ({
   isPreferredMain: new Uint8Array([1, 1, 1, 1, 1, 1]),
   setCompatibility: new Uint8Array(6),
   pairIssueFlags: new Uint32Array(6),
+});
+
+const setPolicy = (): SetEligibilityPolicyBatch => ({
+  buildCount: 3,
+  gateStatus: new Uint8Array(30).fill(SET_ELIGIBILITY_GATE_STATUS.AVAILABLE),
+  offPieceCutoff: new Uint8Array(30).fill(84),
+  expectedFiveStarDrops: new Float64Array(30).fill(100),
+});
+
+const readySetContext = (policy = setPolicy()) => ({
+  position: AttributePosition.SANDS,
+  setEligibility: { status: "ready" as const, policy },
 });
 
 test("binds current and expected metrics to their independently best builds", () => {
@@ -50,6 +69,13 @@ test("binds unfinished Potential and current context to one best-Expected build"
     buildId: "future-build",
     buildIndex: 1,
     isPreferredMain: true,
+    recommendation: {
+      status: "ready",
+      recommended: true,
+      role: "neutral",
+      requiredScore: 75,
+      failure: "none",
+    },
   });
   assert.deepEqual(presentation?.secondary, {
     kind: "current",
@@ -149,4 +175,104 @@ test("sorts by the level-aware public score and leaves unsupported rows last", (
     compareArtifactScores(unsupported, second, 0, 20, "score-desc") > 0
   );
   assert.ok(compareArtifactScores(unsupported, second, 0, 20, "score-asc") > 0);
+});
+
+test("selects the highest raw score only after applying the set gate", () => {
+  const input = batch();
+  input.buildSetPlan.fill(1);
+  input.expectedFinalMatch.set([0.9, 0.85, 0.8], 0);
+  input.setCompatibility.set(
+    [
+      SET_COMPATIBILITY.MISMATCH,
+      SET_COMPATIBILITY.MATCH,
+      SET_COMPATIBILITY.MISMATCH,
+    ],
+    0
+  );
+  const policy = setPolicy();
+  policy.offPieceCutoff[
+    setEligibilityGateIndex(0, 0, AttributePosition.SANDS)
+  ] = 91;
+  policy.offPieceCutoff[
+    setEligibilityGateIndex(2, 0, AttributePosition.SANDS)
+  ] = 95;
+
+  let summary = selectArtifactScoreSummary(input, 0, readySetContext(policy));
+  assert.equal(
+    summary.status === "ok" && summary.bestExpected.buildId,
+    "future-build"
+  );
+  let presentation = presentArtifactScore(summary, 0);
+  assert.equal(presentation?.primary.score, 85);
+  assert.equal(presentation?.primary.recommendation.role, "set-match");
+
+  input.expectedFinalMatch[0] = 0.91;
+  summary = selectArtifactScoreSummary(input, 0, readySetContext(policy));
+  presentation = presentArtifactScore(summary, 0);
+  assert.equal(presentation?.primary.buildId, "current-build");
+  assert.deepEqual(presentation?.primary.recommendation, {
+    status: "ready",
+    recommended: true,
+    role: "off-piece-candidate",
+    requiredScore: 91,
+    expectedFiveStarDrops: 100,
+    failure: "none",
+  });
+});
+
+test("falls back to the raw best score when no Build passes the set gate", () => {
+  const input = batch();
+  input.buildSetPlan.fill(1);
+  input.expectedFinalMatch.set([0.9, 0.85, 0.8], 0);
+  input.setCompatibility.fill(SET_COMPATIBILITY.MISMATCH);
+  const policy = setPolicy();
+  policy.offPieceCutoff.fill(95);
+
+  const summary = selectArtifactScoreSummary(input, 0, readySetContext(policy));
+  const presentation = presentArtifactScore(summary, 0);
+  assert.equal(presentation?.primary.buildId, "current-build");
+  assert.equal(presentation?.primary.score, 90);
+  assert.deepEqual(presentation?.primary.recommendation, {
+    status: "ready",
+    recommended: false,
+    role: "set-mismatch",
+    requiredScore: 95,
+    expectedFiveStarDrops: 100,
+    failure: "set",
+  });
+  assert.equal(
+    scoreSelectionDecision(summary, 0, { minPotential: 75, minScore: 80 }),
+    "unselected"
+  );
+});
+
+test("combines the custom minimum with the Build-derived off-piece cutoff", () => {
+  const input = batch();
+  input.buildSetPlan.fill(1);
+  input.expectedFinalMatch.set([0.9, 0.85, 0.8], 0);
+  input.setCompatibility.set(
+    [
+      SET_COMPATIBILITY.MISMATCH,
+      SET_COMPATIBILITY.MATCH,
+      SET_COMPATIBILITY.MISMATCH,
+    ],
+    0
+  );
+  const policy = setPolicy();
+  policy.offPieceCutoff[
+    setEligibilityGateIndex(0, 0, AttributePosition.SANDS)
+  ] = 91;
+  policy.offPieceCutoff[
+    setEligibilityGateIndex(2, 0, AttributePosition.SANDS)
+  ] = 95;
+  const summary = selectArtifactScoreSummary(input, 0, readySetContext(policy));
+
+  assert.equal(
+    scoreSelectionDecision(summary, 0, { minPotential: 85, minScore: 80 }),
+    "selected"
+  );
+  assert.equal(
+    scoreSelectionDecision(summary, 0, { minPotential: 86, minScore: 80 }),
+    "unselected"
+  );
 });
