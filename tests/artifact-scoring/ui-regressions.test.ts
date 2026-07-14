@@ -31,7 +31,11 @@ test("the score card leads with one accessible colored integer score and plain-l
     component,
     /presentArtifactScore\(\s*summary,\s*artifact\.level,\s*minimum\s*\)/
   );
-  assert.match(component, /text-(4xl|5xl)/);
+  assert.match(component, /text-6xl/);
+  assert.match(component, /md:grid-cols-\[auto_minmax\(0,1fr\)_auto\]/);
+  assert.match(component, /flex min-w-0 max-w-full items-stretch gap-2 py-1/);
+  assert.match(component, /flex min-w-0 flex-1 items-start/);
+  assert.match(component, /!showAll && "md:flex-none"/);
   assert.match(component, /font-(bold|black)/);
   assert.match(component, /tabular-nums/);
   assert.match(component, /bg-base-100 text-base-content/);
@@ -46,6 +50,31 @@ test("the score card leads with one accessible colored integer score and plain-l
   assert.doesNotMatch(component, /t\("P10"\)/);
   assert.doesNotMatch(component, /t\("P90"\)/);
   assert.doesNotMatch(component, /t\("Upgrade forecast"\)/);
+});
+
+test("the score card embeds an unhighlighted ranked character rail", () => {
+  const component = readSource("src/features/artifacts/ArtifactScoreCard.jsx");
+
+  assert.match(component, /matchingCharacterScores/);
+  assert.match(component, /t\("Matching characters"/);
+  assert.match(component, /if \(!bestBuild\) return null/);
+  assert.match(component, /DEFAULT_VISIBLE_CHARACTERS = 5/);
+  assert.match(component, /slice\(0, DEFAULT_VISIBLE_CHARACTERS\)/);
+  assert.match(component, /text-6xl/);
+  assert.match(component, /overflow-x-auto/);
+  assert.match(component, /const railId = useId\(\)/);
+  assert.match(component, /id={railId}/);
+  assert.match(component, /aria-controls={railId}/);
+  assert.match(component, /aria-expanded={showAll}/);
+  assert.equal((component.match(/aria-expanded={showAll}/g) ?? []).length, 1);
+  assert.match(component, /onShowAllChange\(!showAll\)/);
+  assert.match(component, /scores\.length - DEFAULT_VISIBLE_CHARACTERS/);
+  assert.doesNotMatch(component, /<details/);
+  assert.doesNotMatch(component, /t\("Matching builds"/);
+  assert.doesNotMatch(
+    component,
+    /score\.buildId === presentation\.primary\.buildId/
+  );
 });
 
 test("artifact score loading uses the public score terminology", () => {

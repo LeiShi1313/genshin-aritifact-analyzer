@@ -136,6 +136,7 @@
     "Unavailable": "사용할 수 없음",
     "Top 10%": "상위 10%",
     "Matching builds": "매칭 빌드: {{count}}",
+    "Matching characters": "매칭 캐릭터: {{count}}",
     "Upgrade forecast": "강화 예측",
     "P10": "P10",
     "Median": "중앙값",

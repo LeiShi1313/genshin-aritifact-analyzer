@@ -14,7 +14,10 @@ import {
   roundExpectedFiveStarDrops,
   toPublicArtifactScore,
 } from "./scorePresentation";
-import { matchingBuildScores, presentArtifactScore } from "./scoringViewModel";
+import {
+  matchingCharacterScores,
+  presentArtifactScore,
+} from "./scoringViewModel";
 
 const SCORE_TONE_CLASSES = {
   neutral: "border-l-8 border-base-300 bg-base-100 text-base-content",
@@ -48,6 +51,8 @@ const SET_ROLE_CLASSES = {
   "off-piece-candidate": "badge-info text-info-content",
   "set-mismatch": "badge-warning text-warning-content",
 };
+
+const DEFAULT_VISIBLE_CHARACTERS = 5;
 
 const SetRoleBadge = ({ recommendation }) => {
   const { t, i18n } = useTranslation();
@@ -133,7 +138,89 @@ const SetRoleBadge = ({ recommendation }) => {
   );
 };
 
-const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
+const MatchingCharacterRail = ({
+  scores,
+  builds,
+  finished,
+  showAll,
+  onShowAllChange,
+  onBuildClick,
+  onBuildFocus,
+}) => {
+  const { t } = useTranslation();
+  const railId = useId();
+  if (scores.length === 0) return null;
+
+  const displayedScores = showAll
+    ? scores
+    : scores.slice(0, DEFAULT_VISIBLE_CHARACTERS);
+  const hiddenCount = Math.max(0, scores.length - DEFAULT_VISIBLE_CHARACTERS);
+
+  return (
+    <div className="flex min-w-0 max-w-full items-stretch gap-2 py-1">
+      <ul
+        id={railId}
+        className={classNames(
+          "flex min-w-0 flex-1 items-start gap-2 overflow-x-auto",
+          !showAll && "md:flex-none"
+        )}
+        aria-label={t("Matching characters", { count: scores.length })}
+      >
+        {displayedScores.map((score) => {
+          const build = builds[score.buildId];
+          if (!build) return null;
+          const publicScore =
+            toPublicArtifactScore(
+              finished ? score.match : score.expectedFinalMatch
+            ) ?? 0;
+          const buildName = getBuildShortName(build, t);
+          return (
+            <li key={score.buildId} className="shrink-0">
+              <button
+                type="button"
+                className="focus-visible:outline-primary rounded p-0.5 focus-visible:outline focus-visible:outline-2"
+                aria-label={t("Matching build score", {
+                  build: buildName,
+                  label: finished ? t("Score") : t("Potential"),
+                  score: publicScore,
+                })}
+                title={buildName}
+                onClick={() => onBuildClick(score.buildId)}
+                onFocus={() => onBuildFocus(score.buildId)}
+                onBlur={() => onBuildFocus(null)}
+                onMouseEnter={() => onBuildFocus(score.buildId)}
+                onMouseLeave={() => onBuildFocus(null)}
+              >
+                <CharacterCard
+                  character={build.character}
+                  text={String(publicScore)}
+                  width={11}
+                />
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      {scores.length > DEFAULT_VISIBLE_CHARACTERS && (
+        <button
+          type="button"
+          className={classNames(
+            "btn btn-ghost min-h-14 h-full shrink-0 px-2",
+            !showAll && "min-w-12 text-base"
+          )}
+          aria-label={showAll ? t("Show less") : t("Show all")}
+          aria-controls={railId}
+          aria-expanded={showAll}
+          onClick={() => onShowAllChange(!showAll)}
+        >
+          {showAll ? t("Show less") : `+${hiddenCount}`}
+        </button>
+      )}
+    </div>
+  );
+};
+
+const ScoreHero = ({ presentation, level, buildName, children }) => {
   const { t } = useTranslation();
   const { primary, secondary } = presentation;
   const band = getArtifactScoreBand(primary.score);
@@ -149,7 +236,7 @@ const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
   return (
     <section
       className={classNames(
-        "min-w-0 rounded-xl p-4",
+        "min-w-0 rounded-xl p-3 sm:p-4",
         SCORE_TONE_CLASSES[band.tone],
         band.emphasis === "strong" && "shadow-sm",
         band.emphasis === "maximum" &&
@@ -163,17 +250,21 @@ const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
         build: buildName,
       })}
     >
-      <div className="flex min-w-0 items-start justify-between gap-4">
-        <div className="shrink-0">
+      <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-2 md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center">
+        <div className="col-start-1 row-start-1 shrink-0 self-center">
           <div className="text-xs font-bold uppercase tracking-wider opacity-80">
             {label}
           </div>
-          <div className="text-5xl font-black tabular-nums leading-none sm:text-6xl">
+          <div className="text-6xl font-black tabular-nums leading-none md:text-7xl">
             {primary.score}
           </div>
         </div>
 
-        <div className="flex min-w-0 flex-col items-end gap-1 text-right">
+        <div className="col-span-2 row-start-2 min-w-0 md:col-span-1 md:col-start-2 md:row-start-1">
+          {children}
+        </div>
+
+        <div className="col-start-2 row-start-1 flex min-w-0 flex-col items-end gap-1 self-start text-right md:col-start-3 md:self-center">
           <div
             className={classNames(
               "flex max-w-full items-center justify-end gap-1 text-sm font-bold leading-tight",
@@ -206,14 +297,6 @@ const ScoreHero = ({ presentation, level, buildName, onBuildClick }) => {
           <SetRoleBadge recommendation={primary.recommendation} />
         </div>
       </div>
-
-      <button
-        type="button"
-        className="focus-visible:outline-base-content decoration-current/50 mt-3 max-w-full truncate text-left text-sm font-semibold underline underline-offset-2 hover:decoration-current focus-visible:outline focus-visible:outline-2"
-        onClick={onBuildClick}
-      >
-        {t("Best matching build", { build: buildName })}
-      </button>
     </section>
   );
 };
@@ -264,11 +347,12 @@ const ArtifactScoreCard = ({
   const presentation = presentArtifactScore(summary, artifact.level, minimum);
   if (!presentation) return null;
 
-  const publicScoreForBuild = (score) =>
-    toPublicArtifactScore(finished ? score.match : score.expectedFinalMatch) ??
-    0;
-  const matchingBuilds = matchingBuildScores(summary, artifact.level, minimum);
-  const displayedBuilds = matchingBuilds.slice(0, showAll ? undefined : 8);
+  const matchingCharacters = matchingCharacterScores(
+    summary,
+    builds,
+    artifact.level,
+    minimum
+  );
   const activeBuildId = hoveredBuild ?? presentation.primary.buildId;
   const activeBuild = builds[activeBuildId];
   const fitAttributes =
@@ -281,6 +365,7 @@ const ArtifactScoreCard = ({
     : activeScore?.expectedRecommendation;
   const suitIsFit = activeRecommendation?.role === "set-match";
   const bestBuild = builds[presentation.primary.buildId];
+  if (!bestBuild) return null;
   const bestBuildName = getBuildShortName(bestBuild, t);
 
   return (
@@ -291,69 +376,22 @@ const ArtifactScoreCard = ({
         suitIsFit={suitIsFit}
       />
 
-      <div className="min-w-0 grow space-y-2">
+      <div className="min-w-0 grow">
         <ScoreHero
           presentation={presentation}
           level={artifact.level}
           buildName={bestBuildName}
-          onBuildClick={() => handleBuildClick(presentation.primary.buildId)}
-        />
-
-        {matchingBuilds.length > 1 && (
-          <details className="collapse-arrow collapse bg-base-100 rounded-lg">
-            <summary className="collapse-title min-h-0 py-2 text-sm font-semibold">
-              {t("Matching builds", { count: matchingBuilds.length })}
-            </summary>
-            <div className="collapse-content">
-              <div className="flex max-w-full gap-2 overflow-x-auto pb-1">
-                {displayedBuilds.map((score) => {
-                  const publicScore = publicScoreForBuild(score);
-                  const buildName = getBuildShortName(builds[score.buildId], t);
-                  return (
-                    <button
-                      type="button"
-                      key={score.buildId}
-                      className={classNames(
-                        "focus-visible:outline-primary shrink-0 rounded focus-visible:outline focus-visible:outline-2",
-                        score.buildId === presentation.primary.buildId &&
-                          "ring-primary ring-2"
-                      )}
-                      aria-label={t("Matching build score", {
-                        build: buildName,
-                        label: finished ? t("Score") : t("Potential"),
-                        score: publicScore,
-                      })}
-                      onClick={() => handleBuildClick(score.buildId)}
-                      onFocus={() => setHoveredBuild(score.buildId)}
-                      onBlur={() => setHoveredBuild(null)}
-                      onMouseEnter={() => setHoveredBuild(score.buildId)}
-                      onMouseLeave={() => setHoveredBuild(null)}
-                    >
-                      <CharacterCard
-                        character={builds[score.buildId].character}
-                        text={String(publicScore)}
-                        width={14}
-                        isBestFit={
-                          score.buildId === presentation.primary.buildId
-                        }
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-              {matchingBuilds.length > 8 && (
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-xs mt-2"
-                  aria-expanded={showAll}
-                  onClick={() => setShowAll((value) => !value)}
-                >
-                  {showAll ? t("Show less") : t("Show all")}
-                </button>
-              )}
-            </div>
-          </details>
-        )}
+        >
+          <MatchingCharacterRail
+            scores={matchingCharacters}
+            builds={builds}
+            finished={finished}
+            showAll={showAll}
+            onShowAllChange={setShowAll}
+            onBuildClick={handleBuildClick}
+            onBuildFocus={setHoveredBuild}
+          />
+        </ScoreHero>
       </div>
     </article>
   );

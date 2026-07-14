@@ -250,6 +250,7 @@
     "Unavailable": "Unavailable",
     "Top 10%": "Top 10%",
     "Matching builds": "Matching builds: {{count}}",
+    "Matching characters": "Matching characters: {{count}}",
     "Upgrade forecast": "Upgrade forecast",
     "P10": "P10",
     "Median": "Median",
