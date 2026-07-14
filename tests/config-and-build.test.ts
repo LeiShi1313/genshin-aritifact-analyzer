@@ -10,17 +10,20 @@ const vite = await createServer({
   appType: "custom",
   logLevel: "silent",
 });
-const [buildModule, configsModule, hashModule] = await Promise.all([
-  vite.ssrLoadModule("/src/store/reducers/build.js"),
-  vite.ssrLoadModule("/src/store/reducers/configs.js"),
-  vite.ssrLoadModule("/src/utils/hash.ts"),
-]);
+const [buildModule, configsModule, hashModule, buildUtilsModule] =
+  await Promise.all([
+    vite.ssrLoadModule("/src/store/reducers/build.js"),
+    vite.ssrLoadModule("/src/store/reducers/configs.js"),
+    vite.ssrLoadModule("/src/utils/hash.ts"),
+    vite.ssrLoadModule("/src/utils/build.ts"),
+  ]);
 const buildReducer = buildModule.default;
 const { addBuild, editBuild, importBuilds, toggleBuild } = buildModule;
 const configsReducer = configsModule.default;
 const { resetFourLineStartProbability, updateFourLineStartProbability } =
   configsModule;
 const { hashBuild } = hashModule;
+const { getBuildDisplayName, getBuildShortName } = buildUtilsModule;
 
 after(() => vite.close());
 
@@ -35,6 +38,34 @@ const makeBuild = (name: string) => ({
   gobletAttributes: [],
   circletAttributes: [],
   subAttributes: [],
+});
+
+test("only reserved preset names are translated", () => {
+  // `Good` is both an existing UI translation key and a valid user-entered
+  // build name; custom names must remain verbatim rather than become UI copy.
+  const translations: Record<string, string> = {
+    traveler_anemo: "旅行者",
+    Good: "良好",
+    "Recommended build": "推荐配装",
+  };
+  const t = ((key: string) =>
+    translations[key] ?? key) as unknown as Parameters<
+    typeof getBuildShortName
+  >[1];
+
+  const englishCustom = makeBuild("Good");
+  const chineseCustom = makeBuild("良好");
+  const exportedNames = [englishCustom, chineseCustom].map((build) =>
+    getBuildShortName(build, t)
+  );
+
+  assert.deepEqual(exportedNames, ["旅行者 - Good", "旅行者 - 良好"]);
+  assert.equal(new Set(exportedNames).size, 2);
+  assert.equal(getBuildDisplayName(englishCustom, t), "Good");
+  assert.equal(
+    getBuildDisplayName(makeBuild("Recommended build"), t),
+    "推荐配装"
+  );
 });
 
 test("editing a build preserves its disabled state under the new hash", () => {
@@ -208,6 +239,7 @@ test("every supported locale translates the complete artifact scoring UI", () =>
     "Prospect Rarity unavailable; score filtering and lock export are disabled",
     "Minimum artifact level",
     "Maximum artifact level",
+    "Recommended build",
   ];
   const requiredPlaceholders = {
     "Artifact score summary": [

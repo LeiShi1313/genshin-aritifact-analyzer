@@ -182,5 +182,6 @@
     "Page selection": "ページ選択",
     "No valid enabled builds can score this artifact": "この聖遺物を評価できる有効なビルドがありません",
     "This browser cannot read build backup files": "このブラウザではビルドのバックアップファイルを読み込めません",
-    "Build backup file is invalid": "ビルドのバックアップファイルが無効です"
+    "Build backup file is invalid": "ビルドのバックアップファイルが無効です",
+    "Recommended build": "おすすめビルド"
 }

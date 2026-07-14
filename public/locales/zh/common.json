@@ -280,5 +280,6 @@
     "Page selection": "选择页面",
     "No valid enabled builds can score this artifact": "没有有效的已启用配装可以为此圣遗物评分",
     "This browser cannot read build backup files": "此浏览器无法读取配装备份文件",
-    "Build backup file is invalid": "配装备份文件无效"
+    "Build backup file is invalid": "配装备份文件无效",
+    "Recommended build": "推荐配装"
 }

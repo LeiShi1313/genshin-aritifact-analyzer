@@ -126,9 +126,9 @@ test("binds strict four-piece compatibility and keys set changes", () => {
   );
 });
 
-test("keeps the specified 2,112 by 104 transferable summary below 6 MiB", () => {
+test("keeps the specified 2,112 by 131 transferable summary below 6 MiB", () => {
   const artifactCount = 2_112;
-  const buildCount = 104;
+  const buildCount = 131;
   const pairCount = artifactCount * buildCount;
   const batch = {
     datasetId: "benchmark",

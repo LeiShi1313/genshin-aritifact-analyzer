@@ -10,6 +10,7 @@ import { toHex, fromHex } from "./hex";
 import data from "../data/sets.json";
 import data2pc from "../data/set2pcEffect.json";
 import { TFunction } from "react-i18next";
+import { RECOMMENDED_BUILD_NAME } from "../data/presetNames";
 
 const setTo2pcSets = {};
 Object.keys(data).map((key) => {
@@ -23,10 +24,17 @@ export const encodeBuild = (build: Build): string =>
 export const decodeBuild = (encoded: string): Build =>
   Build.decode(fromHex(encoded));
 
+export const getBuildDisplayName = (build: Build, t: TFunction): string => {
+  if (!build.name) return t("Unnamed Build");
+  return build.name === RECOMMENDED_BUILD_NAME
+    ? t(RECOMMENDED_BUILD_NAME)
+    : build.name;
+};
+
 export const getBuildShortName = (build: Build, t: TFunction): string => {
   let shortName = t(Character[build.character].toLowerCase(), { ns: "characters" });
   if (build.name) {
-    shortName += ` - ${build.name}`;
+    shortName += ` - ${getBuildDisplayName(build, t)}`;
   } else {
     if (build.weapons.length > 0) {
       shortName += ` - ${build.weapons.map((w) => t(`${Weapon[w].toLowerCase()}`, { ns: "weapons" })).join("-")}`

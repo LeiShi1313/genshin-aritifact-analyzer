@@ -182,5 +182,6 @@
     "Page selection": "選擇頁面",
     "No valid enabled builds can score this artifact": "沒有有效的已啟用配裝可以為此聖遺物評分",
     "This browser cannot read build backup files": "此瀏覽器無法讀取配裝備份檔案",
-    "Build backup file is invalid": "配裝備份檔案無效"
+    "Build backup file is invalid": "配裝備份檔案無效",
+    "Recommended build": "推薦配裝"
 }

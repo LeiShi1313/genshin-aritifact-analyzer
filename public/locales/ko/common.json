@@ -182,5 +182,6 @@
     "Page selection": "페이지 선택",
     "No valid enabled builds can score this artifact": "이 성유물을 평가할 수 있는 유효한 활성 빌드가 없습니다",
     "This browser cannot read build backup files": "이 브라우저에서는 빌드 백업 파일을 읽을 수 없습니다",
-    "Build backup file is invalid": "빌드 백업 파일이 올바르지 않습니다"
+    "Build backup file is invalid": "빌드 백업 파일이 올바르지 않습니다",
+    "Recommended build": "추천 빌드"
 }

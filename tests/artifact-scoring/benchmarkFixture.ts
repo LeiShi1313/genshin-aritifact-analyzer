@@ -11,7 +11,7 @@ import {
 } from "../../src/utils/artifactScoring/rollData";
 
 export const BENCHMARK_ARTIFACT_COUNT = 2_112;
-export const BENCHMARK_BUILD_COUNT = 104;
+export const BENCHMARK_BUILD_COUNT = 131;
 export const BENCHMARK_SEED = 0x5a17c0de;
 
 const MILESTONES = [0, 4, 8, 12, 16, 20] as const;

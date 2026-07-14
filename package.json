@@ -6,6 +6,8 @@
   "scripts": {
     "test": "npm run test:artifact-scoring",
     "test:artifact-scoring": "tsx --test tests/artifact-scoring/*.test.ts tests/config-and-build.test.ts",
+    "generate:presets": "tsx scripts/generate-presets.ts",
+    "check:presets": "tsx scripts/generate-presets.ts --check",
     "benchmark:artifact-scoring": "tsx tests/artifact-scoring/benchmark.ts",
     "typecheck:artifact-scoring": "tsc -p tsconfig.artifact-scoring.json --noEmit",
     "dev": "vite --host",

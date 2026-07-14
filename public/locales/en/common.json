@@ -280,5 +280,6 @@
     "Page selection": "Page selection",
     "No valid enabled builds can score this artifact": "No valid enabled builds can score this artifact",
     "This browser cannot read build backup files": "This browser cannot read build backup files",
-    "Build backup file is invalid": "Build backup file is invalid"
+    "Build backup file is invalid": "Build backup file is invalid",
+    "Recommended build": "Recommended build"
 }

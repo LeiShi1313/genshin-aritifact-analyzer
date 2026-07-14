@@ -182,5 +182,6 @@
     "Page selection": "Selección de página",
     "No valid enabled builds can score this artifact": "Ninguna build habilitada válida puede puntuar este artefacto.",
     "This browser cannot read build backup files": "Este navegador no puede leer archivos de copia de seguridad de builds.",
-    "Build backup file is invalid": "El archivo de copia de seguridad de builds no es válido."
+    "Build backup file is invalid": "El archivo de copia de seguridad de builds no es válido.",
+    "Recommended build": "Configuración recomendada"
 }
