@@ -26,7 +26,7 @@ options swap_delay=12 debug=true iteration=1000 duration=90 workers=30 mode=sl;
 
 active zhongli;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=1;
 
 while 1 {

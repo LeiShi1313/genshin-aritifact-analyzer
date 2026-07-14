@@ -41,13 +41,13 @@ active mavuika; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   mavuika skill;
-  
+
   bennett attack:2, skill, burst;
-  
+
   citlali skill, burst;
-  
+
   ayaka skill, attack, burst;
-  
+
   mavuika burst,
           charge, dash, attack,
           charge, dash, attack,

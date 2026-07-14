@@ -1,10 +1,10 @@
 arle char lvl=90/90 cons=0 talent=9,9,9;
 arle add weapon="deathmatch" refine=1 lvl=90/90;
 arle add set="fohw" count=5;
-arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; 
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ;
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favoniussword" refine=3 lvl=90/90;
 furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
@@ -16,7 +16,7 @@ sucrose add set="viridescentvenerer" count=4;
 sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
@@ -37,7 +37,7 @@ for let i = 0; i < 4; i = i + 1 {
   }
   sucrose attack, skill, attack:3; # use N1 right after swap to swirl pyro and the last N3 hit swirls hydro
   arle charge[early_cancel=1], dash,
-       attack:5, dash, 
+       attack:5, dash,
        attack:5, dash,
        attack:5, dash,
        attack:2;

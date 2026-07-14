@@ -34,7 +34,7 @@ for let i=0; i<2; i=i+1 {
   escoffier skill, burst;
   mavuika burst;
   chasca skill, aim:4, skill, burst;
-  
+
   mavuika skill, attack;
   bennett skill, burst;
   escoffier skill, attack;

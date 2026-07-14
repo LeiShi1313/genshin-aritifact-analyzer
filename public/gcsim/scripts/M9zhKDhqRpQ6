@@ -28,7 +28,7 @@ dori add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,17 +47,16 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida charge;
   }
-  
+
   furina skill, dash, burst;
-  
+
   sayu burst;
-  
+
   dori skill; wait(5); # for no errors
-  
+
   sayu skill[hold=600];
-  
+
   dori skill, attack:2, burst;
 
   print("done");
 }
-

@@ -28,7 +28,7 @@ energy every interval=480,720 amount=1;
 target lvl=100 resist=0.1 hp=10000000 radius=2 pos=2.4,0;
 active yaoyao;
 
- 
+
   for let r = 0; r < 5; r = r + 1 {
   yaoyao skill;
   if .kuki.burst.ready {kuki burst;}
@@ -41,9 +41,8 @@ active yaoyao;
             attack:2;
   yelan attack, skill, attack;
   if .yaoyao.burst.ready {yaoyao burst, attack, dash;}
-  alhaitham skill[hold=1], low_plunge[short=1], 
-            attack:2, charge, dash, 
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:2, charge, dash,
             attack:3, charge, dash;
-  
-            }
 
+            }

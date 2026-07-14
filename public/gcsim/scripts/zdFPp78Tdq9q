@@ -57,7 +57,7 @@ let rot = 5; #Number of rotations, you can adjust this.
 let i=rot; for rot > 0; rot = rot - 1 {
   if rot < i {
     while .kazuha.weapon == .keys.weapon.favsword && !.kazuha.mods.favonius-cd {
-      kazuha attack; # NAs until fav proc 
+      kazuha attack; # NAs until fav proc
     }
   }
   furina skill, dash, burst; # Furina EdQ
@@ -75,4 +75,4 @@ let i=rot; for rot > 0; rot = rot - 1 {
 }
 
 
-# This sim was made combining the efforts of Rueben, EnigWa and CPM. 
+# This sim was made combining the efforts of Rueben, EnigWa and CPM.

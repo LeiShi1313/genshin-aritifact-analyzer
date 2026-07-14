@@ -27,7 +27,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*10 cd=0.0662*6;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 freeze_resist=0 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 freeze_resist=0 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active furina;
@@ -43,9 +43,9 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     escoffier skill, attack;
   }
-  
+
   bennett skill, burst, attack;
-  
+
   chasca skill;
   if is_even(i){
     chasca aim:4;#, aim[bullets=4];

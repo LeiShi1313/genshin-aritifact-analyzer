@@ -38,10 +38,10 @@ for let i=0; i<4; i=i+1 {
   chev skill[hold=1];
   bennett attack:2, skill, burst;
   mavuika burst;
-  mavuika charge:2, dash, 
-          charge:2, dash, 
-          charge:2, dash,  
-          charge:2, dash, 
+  mavuika charge:2, dash,
+          charge:2, dash,
+          charge:2, dash,
+          charge:2, dash,
           charge:2, dash,
           charge:2, dash,
           charge:2, dash;
@@ -57,10 +57,10 @@ for let i=0; i<4; i=i+1 {
 //   chev skill[hold=1];
 //   bennett attack:2, skill, burst;
 //   mavuika burst;
-//   mavuika charge:1, dash, 
-//           charge:2, charge[final=1], dash, 
-//           charge:1, dash,  
-//           charge:2, charge[final=1], dash, 
+//   mavuika charge:1, dash,
+//           charge:2, charge[final=1], dash,
+//           charge:1, dash,
+//           charge:2, charge[final=1], dash,
 //           charge:1, dash,
 //           charge:2, charge[final=1], dash,
 //           charge:2, dash;

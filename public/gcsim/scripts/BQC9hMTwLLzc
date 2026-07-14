@@ -30,20 +30,20 @@ active arlecchino;
 
 for let i=0; i<4; i=i+1 {
   arlecchino skill;
-  
+
   bennett skill, burst;
-  
+
   sucrose attack, skill, dash;
   if .sucrose.burst.ready {
     sucrose burst;
   }
-  
+
   if .xingqiu.burst.ready {
     xingqiu burst, attack;
   } else {
     xingqiu skill, dash, attack;
   }
-  
+
   arlecchino attack, charge, attack:16;
 }
 

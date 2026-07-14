@@ -39,7 +39,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active yelan;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   yelan skill, attack, burst, attack;
   shenhe skill[hold=1], attack, burst, attack;
   dahlia skill, attack, burst;
@@ -47,30 +47,30 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack, charge, dash,
-          
+
           attack:5, dash,
           attack:5;
   } else {
     skirk skill,
           attack, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:5;
   }
 }
 
-# First rot only 
+# First rot only
 # Yelan E N1 Q N1 > Shenhe hE N1 Q N1 > Dahlia E N1 Q > Skirk Q tE N2CD 3[N5D] N1CD N5D N5
 # Yelan E N1 Q N1 > Shenhe hE N1 Q N1 > Dahlia E N1 Q > Skirk   tE N1Q  3[N5D] N2CD N5D N5

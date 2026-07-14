@@ -26,12 +26,12 @@ thoma add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=158.56 cr=0.2648 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
-target lvl=100 resist=0.1 radius=2 pos=-2.1,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=-2.1,2.4 hp=999999999;
 target lvl=100 resist=0.1 radius=2 pos=2.1,2.4 hp=999999999;
 
 # Rotation
@@ -44,14 +44,14 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida charge;
   }
-  
+
   xq skill, dash, burst, attack;
-  
+
   thoma skill, attack, burst, attack;
 
   razor skill, dash, attack, burst, attack, skill, dash;
   while .xq.mods.xingqiuburst {
-  #while .razor.mods.razor-q > 240 { 
+  #while .razor.mods.razor-q > 240 {
     if .razor.normal > 3 && .razor.skill.ready {
       razor skill, dash;
     } else if .razor.normal > 3 {
@@ -60,6 +60,5 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
-}
 
+}

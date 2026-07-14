@@ -1,9 +1,9 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -40,8 +40,8 @@ active yae;
 for let x=0; x<4; x=x+1 {
   yae skill:3;
   zhongli skill[hold=1], dash;
-  while !.zhongli.mods.favonius-cd { 
-    zhongli attack; 
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
   }
   navia burst;
   if .fischl.skill.ready {

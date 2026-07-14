@@ -16,10 +16,10 @@ varesa add set="scroll" count=4;
 varesa add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
 varesa add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9 ; 
+bennett char lvl=90/90 cons=6 talent=9,9,9 ;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="noblesse" count=4;
-bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; 
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 options swap_delay=12 iteration=1000;
@@ -32,11 +32,11 @@ for let i=0; i<4; i=i+1 {
   bennett skill, burst;
   varesa skill, attack, high_plunge[collision=1];
   citlali skill, burst, attack;
-  
+
   mavuika burst;
   delay(18); # to wait for Cryo app
   mavuika charge:3, charge[hold=6], charge[final=1], dash;
-  mavuika charge:3, charge[hold=6], charge[final=1], dash; 
+  mavuika charge:3, charge[hold=6], charge[final=1], dash;
   mavuika charge:2;
   mavuika dash;
   delay(10);

@@ -4,13 +4,13 @@ options swap_delay=12 iteration=1000;
 arle char lvl=90/90 cons=6 talent=10,10,10;
 arle add weapon="sss" refine=5 lvl=90/90;
 arle add set="fohw" count=4;
-arle add stats hp=4780 atk=311 em=187 em=187 cd=0.622; 
+arle add stats hp=4780 atk=311 em=187 em=187 cd=0.622;
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
 // arle char lvl=90/90 cons=6 talent=10,10,10;
 // arle add weapon="crimsonmoon" refine=5 lvl=90/90;
 // arle add set="fohw" count=4;
-// arle add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; 
+// arle add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
 // arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
 citlali char lvl=90/90 cons=6 talent=10,10,10;
@@ -19,13 +19,13 @@ citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 em=187 em=187 em=187;
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="ap" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583;
 xilonen add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
 
-bennett char lvl=90/90 cons=6 talent=10,10,10; 
+bennett char lvl=90/90 cons=6 talent=10,10,10;
 bennett add weapon="aquilafavonia" refine=5 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
@@ -53,7 +53,7 @@ for let i = 0; i < 4; i = i + 1 {
   if .arle.weapon == .keys.weapon.crimsonmoonssemblance {
     arle charge;
   }
-  arlecchino skill;   delay(11);  # for particle uptake timing on bennett 
+  arlecchino skill;   delay(11);  # for particle uptake timing on bennett
   bennett skill, burst;
   xilonen skill, attack:2; pick_up_crystallize("pyro");
   citlali skill, attack;
@@ -65,7 +65,7 @@ for let i = 0; i < 4; i = i + 1 {
   }
   arle charge[early_cancel=1], dash;
   wait(47); # wait for C2 to hit after CA dash cancel before checking the aura for starting NA chain
-  
+
   WaitForCryo();
   arle attack:3, dash;
   WaitForCryo();
@@ -102,7 +102,7 @@ for let i = 0; i < 4; i = i + 1 {
 # ² Dash cancel her CA before it hit the enemy to prevent Pyro app.
 # at the last rot 2[N3D] is replaced with her Q.
 
-# Non-Sig rotation (such as SoSS) 
+# Non-Sig rotation (such as SoSS)
 # Bascially the CA part is replaced with N3
 # Arle E > Bennett EQ > Xilonen E N2 > Citlali E N1 > Arle CD 6[wait N3D] N3 >
 # Arle E > Bennett EQ > Xilonen E N2 > Citlali E N1 > Arle CD 5[wait N3D] Q (last rot)

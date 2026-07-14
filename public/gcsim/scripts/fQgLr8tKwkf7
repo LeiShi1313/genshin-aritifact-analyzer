@@ -33,52 +33,52 @@ while true {
   let a = rand() * 4;
   switch {
     case a < 1:
-      print("raiden"); 
-      if .raiden.skill.ready { 
-        raiden skill; 
+      print("raiden");
+      if .raiden.skill.ready {
+        raiden skill;
       }
-      if .raiden.burst.ready { 
-        raiden burst; 
+      if .raiden.burst.ready {
+        raiden burst;
       }
       raiden attack;
-    
+
     case a < 2:
-      print("furina"); 
-      if .furina.skill.ready { 
-        furina skill; 
+      print("furina");
+      if .furina.skill.ready {
+        furina skill;
       }
-      if .furina.burst.ready { 
-        furina burst; 
+      if .furina.burst.ready {
+        furina burst;
       }
       furina attack;
-    
+
     case a < 3:
-      print("zhongli"); 
-      if .zhongli.skill.ready { 
+      print("zhongli");
+      if .zhongli.skill.ready {
         let z = rand();
         if z < 0.25 {
-          zhongli skill; 
+          zhongli skill;
         } else if z < 0.5 {
           zhongli skill[hold=1];
         } else if z < 0.75 {
           zhongli skill[hold_nostele=1];
         } #leaves a 25% chance to do nothing (closest u can get to tap without pillar)
       }
-      if .zhongli.burst.ready { 
-        zhongli burst; 
+      if .zhongli.burst.ready {
+        zhongli burst;
       }
       zhongli attack;
-    
+
     case a < 4:
-      print("nahida"); 
-      if .nahida.skill.ready { 
-        nahida skill; 
+      print("nahida");
+      if .nahida.skill.ready {
+        nahida skill;
       }
-      if .nahida.burst.ready { 
-        nahida burst; 
+      if .nahida.burst.ready {
+        nahida burst;
       }
       nahida attack;
   }
-  
+
   wait(rand()*30+30);
 }

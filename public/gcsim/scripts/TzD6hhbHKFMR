@@ -33,7 +33,7 @@ dori add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.3972 cd=0.1986;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,12 +47,12 @@ fischl skill, attack;
 
 for let r = 0; r < 4; r = r + 1 {
   furina skill, dash, burst;
-  
+
   dori skill, burst;
   #dori skill, attack:2, burst; # More Healing
-  
+
   alhaitham burst;
-  
+
   # Use burst over skill
   amy attack;
   if .amy.burst.ready {
@@ -61,7 +61,7 @@ for let r = 0; r < 4; r = r + 1 {
     amy skill;
   }
 
-  alhaitham attack:3, dash, 
+  alhaitham attack:3, dash,
             attack:3, charge, dash,
             attack:3, charge, dash,
             attack:1, skill[hold=1], low_plunge[short=1];

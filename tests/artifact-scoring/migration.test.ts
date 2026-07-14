@@ -67,7 +67,9 @@ test("derived artifact scoring state is structurally excluded from persistence",
     "utf8"
   );
 
-  assert.match(storeSource, /blacklist:\s*\["artifacts"\]/);
+  const blacklist = storeSource.match(/blacklist:\s*\[([^\]]*)\]/)?.[1] ?? "";
+  assert.match(blacklist, /"artifacts"/);
+  assert.match(blacklist, /"gcsim"/);
   assert.match(artifactReducerSource, /initialState:\s*\{\}/);
   assert.doesNotMatch(
     artifactReducerSource,

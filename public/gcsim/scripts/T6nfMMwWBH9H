@@ -31,7 +31,7 @@ xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0
 options swap_delay=12 iteration=1000;
 active raiden;
 
-#action list 
+#action list
 raiden skill;
 for let r = 0; r < 5; r = r + 1 {
   nahida skill, burst;

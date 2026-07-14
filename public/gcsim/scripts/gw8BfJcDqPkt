@@ -28,7 +28,7 @@ active lisa;
 
 
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 lisa attack;
 for let i=0; i<4; i=i+1 {
@@ -44,7 +44,7 @@ for let i=0; i<4; i=i+1 {
   fischl attack, skill;
   tighnari skill, aim[weakspot=1], aim:2;
   lisa attack, burst, attack:3, skill[hold=1], attack, dash, attack:3;
-  
+
   zhongli skill[hold=1], dash;
   let startFrame2 = f();
   while !pick_up_crystallize("electro") && f() - startFrame2 < 45 {

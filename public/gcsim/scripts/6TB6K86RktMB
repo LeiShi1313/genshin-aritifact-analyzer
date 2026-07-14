@@ -12,7 +12,7 @@ kazuha add set="vv" count=4;
 kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
 kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.2976 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
 
-yelan char lvl=90/90 cons=0 talent=9,9,9; 
+yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=3 lvl=90/90;
 yelan add set="eosf" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311;
@@ -47,4 +47,3 @@ for let x=0; x<4; x=x+1 {
   yelan skill, attack;
   noelle attack:3;
 }
-

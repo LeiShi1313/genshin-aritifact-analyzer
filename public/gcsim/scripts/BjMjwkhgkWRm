@@ -63,7 +63,7 @@ target lvl=100 resist=0.1 hp=999999999999 radius=2 pos=3,0;
 active raiden;
 
 raiden skill;
-  
+
 for let r = 0; r < 5; r = r + 1 { # End sim after 5 rotations
 
   while !.nahida.burst.ready {
@@ -71,27 +71,27 @@ for let r = 0; r < 5; r = r + 1 { # End sim after 5 rotations
   }
   nahida burst, skill;
   xingqiu skill, dash;
-  
+
   while !.xingqiu.burst.ready {
     xingqiu attack;
   }
-  
+
   xingqiu burst, attack;
-  alhaitham skill[hold=1], low_plunge[short=1], 
-            attack:2, charge, dash, 
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:2, charge, dash,
             attack:3, charge, dash;
-  raiden attack, skill, attack; 
-  
+  raiden attack, skill, attack;
+
   while !.alhaitham.burst.ready { # These burst conditionals just improve some unlucky iterations
     alhaitham attack;
   }
-  
+
   alhaitham burst;
   nahida attack, skill; # Beware that Hold E is risky here
   alhaitham attack:3, jump,
-            attack:3, jump, 
+            attack:3, jump,
             attack:2, charge, jump,
-            attack:3, dash, 
+            attack:3, dash,
             attack:2;
 }
 

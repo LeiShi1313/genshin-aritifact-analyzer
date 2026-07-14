@@ -33,15 +33,15 @@ for let i = 0; i < 5; i = i + 1 {
   furina skill, dash, burst;
   xianyun attack, skill, low_plunge, burst;
   fischl attack, burst;
-  yelan burst, attack, skill, attack:4; 
+  yelan burst, attack, skill, attack:4;
   xianyun attack:2, walk, attack:2;
-  yelan 
+  yelan
     attack:4, dash,
     attack:4, dash,
     attack:3;
   fischl attack, skill;
   yelan attack, skill, attack:4;
-  xianyun 
+  xianyun
     attack:2, walk,
     attack:2, walk,
     attack:2, walk,

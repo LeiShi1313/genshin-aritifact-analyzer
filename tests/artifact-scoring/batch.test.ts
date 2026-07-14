@@ -56,12 +56,14 @@ test("evaluates a columnar summary and leaves unsupported rows as NaN", () => {
     (completed) => progress.push(completed)
   );
 
-  assert.equal(snapshot.batch.match[0], 47 / 85);
-  assert.equal(snapshot.batch.expectedFinalMatch[0], 461 / 680);
+  assert.equal(snapshot.batch.match[0], Math.fround(47 / 85));
+  assert.equal(snapshot.batch.expectedFinalMatch[0], Math.fround(461 / 680));
+  assert.equal(snapshot.batch.match instanceof Float32Array, true);
+  assert.equal(snapshot.batch.expectedFinalMatch instanceof Float32Array, true);
   assert.equal(snapshot.batch.artifactStatus[1], ENTITY_STATUS.UNSUPPORTED);
   assert.equal(Number.isNaN(snapshot.batch.match[1]), true);
   assert.deepEqual(progress, [1, 2]);
-  assert.match(snapshot.summaryKey, /^artifact-scoring-v2:dataset:/);
+  assert.match(snapshot.summaryKey, /^artifact-scoring-v3:dataset:/);
 });
 
 test("marks invalid builds without allocating nested pair objects", () => {
@@ -126,9 +128,9 @@ test("binds strict four-piece compatibility and keys set changes", () => {
   );
 });
 
-test("keeps the specified 2,112 by 104 transferable summary below 6 MiB", () => {
+test("keeps the specified 2,112 by 156 transferable summary below 6 MiB", () => {
   const artifactCount = 2_112;
-  const buildCount = 104;
+  const buildCount = 156;
   const pairCount = artifactCount * buildCount;
   const batch = {
     datasetId: "benchmark",
@@ -141,8 +143,8 @@ test("keeps the specified 2,112 by 104 transferable summary below 6 MiB", () => 
     buildStatus: new Uint8Array(buildCount),
     buildIssueFlags: new Uint32Array(buildCount),
     buildSetPlan: new Uint8Array(buildCount),
-    match: new Float64Array(pairCount),
-    expectedFinalMatch: new Float64Array(pairCount),
+    match: new Float32Array(pairCount),
+    expectedFinalMatch: new Float32Array(pairCount),
     isPreferredMain: new Uint8Array(pairCount),
     setCompatibility: new Uint8Array(pairCount),
     pairIssueFlags: new Uint32Array(pairCount),

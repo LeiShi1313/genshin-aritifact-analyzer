@@ -27,7 +27,7 @@ options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
 
 # --- Targets
-target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999;
 
 # --- Rotation
 active fischl;
@@ -37,18 +37,18 @@ for let i=0; i<4; i=i+1 { # End sim after 4 rotations
   nahida skill, burst;
   kokomi skill, attack;
   keqing skill, burst, skill,
-    attack, charge, 
-    attack, charge, 
+    attack, charge,
+    attack, charge,
     attack, skill,
     attack, charge,
     attack, charge;
-    
-  fischl skill;  
+
+  fischl skill;
   kokomi burst, attack;
   nahida skill, attack;
   keqing skill, burst, skill,
-    attack, charge, 
-    attack, charge, 
+    attack, charge,
+    attack, charge,
     attack, skill,
     attack, charge,
     attack, charge;

@@ -34,7 +34,7 @@ hurt every interval=120,360 amount=3000,5000 element=physical; # get hit every 2
 active eula; # prestack serpent spine
 
 raiden skill;
-for let i = 0; i < 4; i = i + 1 { 
+for let i = 0; i < 4; i = i + 1 {
   rosaria skill;
   while !.rosaria.mods.favonius-cd {
     rosaria attack;
@@ -51,4 +51,3 @@ for let i = 0; i < 4; i = i + 1 {
 }
 
 # (Raiden E) > Rosaria E > Eula E > Bennett E Q > Rosaria Q > Eula Q N4 hE N4 > Rosaria E > Raiden Q N4 E N4dN2
-

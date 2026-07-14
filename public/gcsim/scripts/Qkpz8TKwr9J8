@@ -1,4 +1,4 @@
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
@@ -7,7 +7,7 @@ xilonen add stats def=39.36 def%=0.248 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 arle char lvl=90/90 cons=0 talent=9,9,9;
 arle add weapon="fjords" refine=1 lvl=90/90;
 arle add set="fohw" count=5;
-arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; 
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.24 cr=0.331 cd=0.7944;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
@@ -24,7 +24,7 @@ bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="ap" count=4;
 #bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;											
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
 
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
@@ -40,20 +40,20 @@ for let i = 0; i < 4; i = i + 1 {
   if i {
     bennett skill;#catch arle particles + more pyro app to get a pyro crystal
   }
-  
+
   xilonen skill, attack:2;
-  
+
   yelan skill, burst, attack;
   while !.yelan.mods.favonius-cd {
     yelan attack;
   }
-  
-  # NO Bennett, EoSF Yelan is -1K DPS 
+
+  # NO Bennett, EoSF Yelan is -1K DPS
   if .bennett.sets.ap >= 4 {
     bennett dash; pick_up_crystallize("pyro");
   }
-  bennett burst, attack; 
-  
+  bennett burst, attack;
+
   if i {
     arle attack:2;
   }
@@ -62,4 +62,4 @@ for let i = 0; i < 4; i = i + 1 {
   if !i {
     arle attack:2;
   }
-} 
+}

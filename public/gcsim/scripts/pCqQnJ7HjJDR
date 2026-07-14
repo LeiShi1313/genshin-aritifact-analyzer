@@ -11,7 +11,7 @@ ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 
 #ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 #ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3641 cd=0.662; # Finale
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4; # GT is just worse, even with Hydro Goblet
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
@@ -33,7 +33,7 @@ xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.396
 #xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324; # Oathsworn
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -58,11 +58,11 @@ for let i = 0; i < 4; i = i + 1 {
     furina attack;
   }
   furina burst;
-  
+
   shenhe burst, skill;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   ayaka skill, dash;
   if .ayaka.burst.ready {
     ayaka attack;
@@ -70,9 +70,9 @@ for let i = 0; i < 4; i = i + 1 {
   ayaka burst; # It isn't worth waiting for Finale BOL to clear
   AyakaPlunge(); ayaka attack;
   AyakaPlunge(); ayaka attack;
-  
+
   shenhe attack, skill;
-  
+
   ayaka dash;
   AyakaPlunge(); ayaka attack;
   AyakaPlunge(); ayaka attack; # Optional, E is faster than NA into E

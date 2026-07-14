@@ -5,9 +5,9 @@ diluc char lvl=90/90 cons=0 talent=9,9,9;
 diluc add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 #diluc add weapon="mailedflower" refine=5 lvl=90/90;
 diluc add set="cw" count=4;
-diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main 
+diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662; # SS
-#diluc add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main 
+#diluc add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
 #diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662; # MF
 
 citlali char lvl=90/90 cons=0 talent=9,9,9;
@@ -19,20 +19,20 @@ citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 #citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=59.46 cr=0.3972 cd=0.5296; # Evenstar
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1; # KQM Standard
 
@@ -44,17 +44,17 @@ active diluc; # SS Stacks
 
 for let i = 0; i < 4; i = i + 1 {
   esco skill, attack;
-  
+
   bennett skill, burst;
-  
+
   citlali skill, burst;
-  
+
   diluc skill,
         attack, skill,
         attack, skill, burst;
-  
+
   bennett skill;
-  
+
   diluc attack:3, skill,
         attack:1, skill, # Bennett burst expiry before the skill lands
         attack:1, skill;

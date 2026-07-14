@@ -1,15 +1,15 @@
 yoimiya char lvl=90/90 cons=0 talent=9,9,9;
 yoimiya add weapon="rust" refine=3 lvl=90/90;
 yoimiya add set="marechausseehunter" count=4;
-yoimiya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main 
+yoimiya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
 yoimiya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
 furina add set="goldentroupe" count=5;
-furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622 ; #main 		
-furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;											
-										
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622 ; #main
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
+
 zhongli char lvl=90/90 cons=0 talent=9,9,9;
 zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
 zhongli add set="totm" count=4;
@@ -20,40 +20,40 @@ bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 heal=0.368 ; #main
-bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;	
-					
-																
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
+
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=1000;
-#-------------------------------------------- 
+#--------------------------------------------
 #action list:
 active furina;
 
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, attack;
-  
+
   zhongli skill[hold=1], dash, attack;
-  
+
   while !.zhongli.mods.favonius-cd {
     zhongli attack;
   }
-  
+
   furina burst;
-  
+
   bennett burst, attack, skill;
-  
+
   if .yoimiya.burst.ready {
-  yoimiya dash, skill, 
-          attack:5, dash, 
-          attack:5, dash, 
+  yoimiya dash, skill,
+          attack:5, dash,
+          attack:5, dash,
           attack:5, dash, attack, burst;
   } else {
   yoimiya attack:3, dash, skill,
-          attack:5, dash, 
-          attack:5, dash, 
+          attack:5, dash,
+          attack:5, dash,
           attack:5, dash, attack;
   }
-  
+
   bennett skill, dash;
 }

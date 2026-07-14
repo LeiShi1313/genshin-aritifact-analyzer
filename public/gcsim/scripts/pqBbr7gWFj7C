@@ -13,7 +13,7 @@ skirk add set="deepgalleries" count=4;
 skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
 skirk add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="tom" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
@@ -37,36 +37,36 @@ for let i=0; i<4; i=i+1 {
   escoffier skill, attack, burst;
   while !.escoffier.mods.favonius-cd {
     escoffier attack;
-	}
-	
+  }
+
   mona skill, burst;
-  
+
   mualani skill, attack;
-  
+
   if i == 0 && First_Rot_Nuke == true {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }

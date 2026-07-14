@@ -4,23 +4,31 @@ import { fileURLToPath } from "node:url";
 import test, { after } from "node:test";
 import { createServer } from "vite";
 
+import {
+  PRESET_BUILD_IDS,
+  PRESET_BUILD_NAME_KEYS,
+} from "../src/data/presetNames";
+
 const vite = await createServer({
   root: fileURLToPath(new URL("..", import.meta.url)),
   server: { middlewareMode: true },
   appType: "custom",
   logLevel: "silent",
 });
-const [buildModule, configsModule, hashModule] = await Promise.all([
-  vite.ssrLoadModule("/src/store/reducers/build.js"),
-  vite.ssrLoadModule("/src/store/reducers/configs.js"),
-  vite.ssrLoadModule("/src/utils/hash.ts"),
-]);
+const [buildModule, configsModule, hashModule, buildUtilsModule] =
+  await Promise.all([
+    vite.ssrLoadModule("/src/store/reducers/build.js"),
+    vite.ssrLoadModule("/src/store/reducers/configs.js"),
+    vite.ssrLoadModule("/src/utils/hash.ts"),
+    vite.ssrLoadModule("/src/utils/build.ts"),
+  ]);
 const buildReducer = buildModule.default;
 const { addBuild, editBuild, importBuilds, toggleBuild } = buildModule;
 const configsReducer = configsModule.default;
 const { resetFourLineStartProbability, updateFourLineStartProbability } =
   configsModule;
 const { hashBuild } = hashModule;
+const { getBuildDisplayName, getBuildShortName } = buildUtilsModule;
 
 after(() => vite.close());
 
@@ -35,6 +43,38 @@ const makeBuild = (name: string) => ({
   gobletAttributes: [],
   circletAttributes: [],
   subAttributes: [],
+});
+
+test("only reserved preset names are translated", () => {
+  // `Good` is both an existing UI translation key and a valid user-entered
+  // build name; custom names must remain verbatim rather than become UI copy.
+  const translations: Record<string, string> = {
+    traveler_anemo: "旅行者",
+    Good: "良好",
+    "Shield Support": "护盾辅助",
+  };
+  const t = ((key: string) =>
+    translations[key] ?? key) as unknown as Parameters<
+    typeof getBuildShortName
+  >[1];
+
+  const englishCustom = makeBuild("Good");
+  const chineseCustom = makeBuild("良好");
+  const exportedNames = [englishCustom, chineseCustom].map((build) =>
+    getBuildShortName(build, t)
+  );
+
+  assert.deepEqual(exportedNames, ["旅行者 - Good", "旅行者 - 良好"]);
+  assert.equal(new Set(exportedNames).size, 2);
+  assert.equal(getBuildDisplayName(englishCustom, t), "Good");
+  assert.equal(
+    getBuildDisplayName(makeBuild("Shield Support"), t),
+    "Shield Support"
+  );
+  assert.equal(
+    getBuildDisplayName(makeBuild(PRESET_BUILD_IDS.SHIELD_SUPPORT), t),
+    "护盾辅助"
+  );
 });
 
 test("editing a build preserves its disabled state under the new hash", () => {
@@ -208,6 +248,7 @@ test("every supported locale translates the complete artifact scoring UI", () =>
     "Prospect Rarity unavailable; score filtering and lock export are disabled",
     "Minimum artifact level",
     "Maximum artifact level",
+    ...Object.values(PRESET_BUILD_NAME_KEYS),
   ];
   const requiredPlaceholders = {
     "Artifact score summary": [
@@ -270,4 +311,26 @@ test("main stat controls import their position enum and expose translated names"
   );
   assert.match(source, /aria-label={t\("Add main stat"\)}/);
   assert.match(source, /aria-label={t\("Remove main stat",\s*{\s*stat:/s);
+});
+
+test("weapon selector uses the translated common key", () => {
+  const path = new URL(
+    "../src/features/weapons/WeaponSelect.jsx",
+    import.meta.url
+  );
+  const source = readFileSync(path, "utf8");
+
+  assert.match(source, /t\("Weapon"\)/);
+  assert.doesNotMatch(source, /t\("weapon"\)/);
+});
+
+test("preset name editing keeps the localized display name after target changes", () => {
+  const path = new URL(
+    "../src/features/builds/NameEditor.jsx",
+    import.meta.url
+  );
+  const source = readFileSync(path, "utf8");
+
+  assert.match(source, /value={displayName}/);
+  assert.doesNotMatch(source, /value={isPreset\s*\?/);
 });

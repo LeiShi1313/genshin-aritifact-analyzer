@@ -31,7 +31,7 @@ energy every interval=480,720 amount=1;
 active neuvillette;
 
 for let x=0; x<4; x=x+1 {
-  
+
   neuvillette skill, attack:2;
   lynette burst;
   lisa burst, dash;

@@ -25,7 +25,7 @@ yelan add set="blizzardstrayer" count=1;
 yelan add stats def%=0.051 def=37 hp=5258 hp%=0.7640000000000001 atk=391 er=0.22 em=16 cr=0.443 cd=1.0419999999999998 hydro%=0.466;
 
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=1000;
 
@@ -49,16 +49,16 @@ hutao skill,
     attack:2, charge, dash,
     attack:2, charge, dash,
     attack:2, charge, dash;
-        
+
 yelan skill, attack:2;
 
 xilonen skill, attack:2;
 
 for let i = 0; i < 4; i = i + 1 {
   xilonen burst;
-  
+
   furina burst, skill, attack;
-  
+
   yelan burst;
 
   xilonen attack, skill, attack:2;
@@ -79,7 +79,7 @@ for let i = 0; i < 4; i = i + 1 {
     attack:2, charge, dash;
 
   yelan skill, attack:2;
-  
+
   xilonen skill, attack:2;
- 
+
 }

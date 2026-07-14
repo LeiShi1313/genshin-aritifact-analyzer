@@ -30,7 +30,7 @@ active nahida;
 for let x=0; x< 4; x=x+1 {
   nahida skill, burst;
   xingqiu skill,dash, burst, attack;
-  yelan skill,attack, burst, attack;  
+  yelan skill,attack, burst, attack;
   yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack:5, burst;
 
 }

@@ -1,0 +1,70 @@
+# C6 Mona + Nicole Sucrose Mavuika. Onfield Mona. 18s rotation. Mavuika does not Q. Fav on Mavuika to help with energy. Mona does 3[CJ] C2 / N2 C3 J C depending on if Sucrose Q is up or not.
+
+# Build assumptions
+mona char lvl=90/90 cons=6 talent=9,9,9;
+mona add weapon="widsith" refine=5 lvl=90/90;
+mona add set="risingwinds" count=4;
+mona add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*9 cd=0.0662*12;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="favcodex" refine=5 lvl=90/90;
+nicole add set="gift" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*6 em=19.82*2 cr=0.0331*10 cd=0.0662*4;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="ttds" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*6 cr=0.0331*8 cd=0.0662*4;
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="favgs" refine=5 lvl=90/90;
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+mavuika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=9999999999999;
+energy every interval=480,720 amount=1;
+active mona;
+
+for let i = 0; i < 5; i = i + 1 {
+  mona skill, attack:2, burst;
+  mavuika swap;
+  sleep(36);
+  mavuika skill;
+  if .sucrose.burst.ready {
+    sucrose skill, dash, burst, attack;
+  } else {
+    sucrose skill, jump, attack;
+  }
+  mona swap;
+  sleep(49);
+  mona attack;
+  nicole skill,attack;
+  if .sucrose.burst.cd {
+    mona charge, jump,
+         charge, jump,
+         charge, jump,
+         charge:2;
+  } else {
+    mona attack:2,
+         charge:3, jump,
+         charge;
+  }
+  sleep(1);
+  while .mona.energy < 50 && !.mavuika.mods.favonius-cd {
+    mavuika attack;
+  }
+  nicole burst;
+  while .mona.energy < 60 && !.nicole.mods.favonius-cd {
+    nicole attack;
+  }
+}
+
+// Mona EN2 Q > Mav E ¹ > Sucrose ED Q N1 / EJ N1 > Mona N1 > Nicole EN1 > Mona  3[CJ] C2 / N2 C3 J C² > Mav NX³ > Nicole Q NX²
+// ¹ Wait for 0.5s~ / 36 frames
+// ² Mona does 3[CJ] C2  if Sucrose Q is up else, N2 C3 J C.
+// ³ Normal attack for Fav proc if Mona needs the energy.

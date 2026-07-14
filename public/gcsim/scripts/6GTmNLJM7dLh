@@ -102,7 +102,7 @@ for let r = 0; r < 5; r = r + 1 { # 5 rotations
   for let x = 0; x < 5; x = x + 1 { # 5N1C
     klee attack[travel=6], charge;
     rand_delay();
-  }  
+  }
   klee attack;
   rand_delay();
 

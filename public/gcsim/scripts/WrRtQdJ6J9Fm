@@ -24,28 +24,27 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 
 
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=21370000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=21370000000;
 
 active fischl;
 
 for let i=0; i<4; i=i+1 {
-	fischl attack, skill;
-	furina skill, dash, burst;
-	nahida skill, burst;
-	keqing skill, burst, skill,
-			attack, charge, 
-			attack, charge, 
-			skill,
-			attack, charge,
-			attack, charge;
-	fischl attack:2, burst;
-	nahida skill, attack:2, charge, jump, attack:2, charge, jump;
-	keqing skill, burst, skill,
-			attack, charge, 
-			attack, charge, 
-			skill,
-			attack, charge,
-			attack, charge;
+  fischl attack, skill;
+  furina skill, dash, burst;
+  nahida skill, burst;
+  keqing skill, burst, skill,
+      attack, charge,
+      attack, charge,
+      skill,
+      attack, charge,
+      attack, charge;
+  fischl attack:2, burst;
+  nahida skill, attack:2, charge, jump, attack:2, charge, jump;
+  keqing skill, burst, skill,
+      attack, charge,
+      attack, charge,
+      skill,
+      attack, charge,
+      attack, charge;
     print("rotation end");
 }
-

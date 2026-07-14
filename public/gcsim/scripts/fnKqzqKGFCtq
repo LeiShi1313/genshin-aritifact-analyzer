@@ -41,8 +41,8 @@ for let i=0; i<4; i=i+1 {
         attack:2, charge;
   skirk skill[hold=1], burst;
   ayaka dash, attack,
-        skill, dash, 
-        attack:2, charge, 
+        skill, dash,
+        attack:2, charge,
         attack:2, charge;
 }
 

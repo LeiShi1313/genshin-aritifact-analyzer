@@ -25,11 +25,11 @@ mavuika char lvl=90/90 cons=2 talent=9,9,9;
 mavuika add weapon="tbs" refine=1 lvl=90/90;
 mavuika add set="oc" count=4;
 mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
-mavuika add stats def%=0.0619*2 def=19.7*2 hp=254*2 hp%=0.0495*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.81*4 cr=0.033*12 cd=0.0662*10; 
+mavuika add stats def%=0.0619*2 def=19.7*2 hp=254*2 hp%=0.0495*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.81*4 cr=0.033*12 cd=0.0662*10;
 
 #Default options/target/energy
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #Chiori C6 combo
@@ -37,8 +37,8 @@ fn chiori_combo(){
   for let i = 0; i < 3; i = i + 1 {
     chiori skill, attack;
     while !.chiori.skill.ready {
-      if .chiori.burst.ready { 
-        chiori burst; 
+      if .chiori.burst.ready {
+        chiori burst;
       }
       if .chiori.normal == 4 {
         chiori dash;
@@ -54,22 +54,22 @@ active chiori;
 chiori skill:2;
 for let i = 0; i < 4; i = i + 1 {
   mavuika skill, attack;
-  
-  xilonen skill, attack:2; 
-  
+
+  xilonen skill, attack:2;
+
   citlali skill;
   if .citlali.burst.ready && is_even(i){
     citlali burst;
   }
   citlali attack;
-  
+
   mavuika burst;
-  
+
   #wait appl
   if !.citlali.burst.ready && is_even(i){
     wait(17);
   }
   mavuika charge:2, dash;
-  
+
   chiori_combo();
 }

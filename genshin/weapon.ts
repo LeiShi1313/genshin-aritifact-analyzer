@@ -301,6 +301,7 @@ export enum Weapon {
   DISASTER_AND_REMORSE = 232,
   ANGELOS_HEPTADES = 233,
   GOLDEN_FROSTBOUND_OATH = 234,
+  A_TEASPOON_OF_TRANSCENDENCE = 235,
   UNRECOGNIZED = -1,
 }
 
@@ -1011,6 +1012,9 @@ export function weaponFromJSON(object: any): Weapon {
     case 234:
     case "GOLDEN_FROSTBOUND_OATH":
       return Weapon.GOLDEN_FROSTBOUND_OATH;
+    case 235:
+    case "A_TEASPOON_OF_TRANSCENDENCE":
+      return Weapon.A_TEASPOON_OF_TRANSCENDENCE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1490,6 +1494,8 @@ export function weaponToJSON(object: Weapon): string {
       return "ANGELOS_HEPTADES";
     case Weapon.GOLDEN_FROSTBOUND_OATH:
       return "GOLDEN_FROSTBOUND_OATH";
+    case Weapon.A_TEASPOON_OF_TRANSCENDENCE:
+      return "A_TEASPOON_OF_TRANSCENDENCE";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

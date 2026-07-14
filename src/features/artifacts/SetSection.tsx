@@ -6,6 +6,7 @@ import { SetOverride } from "../gcsim/types";
 import { getSetIconUrl } from "../gcsim/utils";
 import { enumToIdx } from "../../utils/enum";
 import SelectionModal from "../gcsim/components/SelectionModal";
+import { isGCSimSetSupported } from "../../utils/gcsimCapabilities";
 
 interface SetSectionProps {
   sets?: SetOverride[];
@@ -13,22 +14,20 @@ interface SetSectionProps {
   onChange: (sets: SetOverride[] | undefined) => void;
 }
 
-const SetSection = memo(({
-  sets,
-  enabled,
-  onChange,
-}: SetSectionProps) => {
+const SetSection = memo(({ sets, enabled, onChange }: SetSectionProps) => {
   const { t, i18n } = useTranslation();
   const [showModal, setShowModal] = useState<number | null>(null);
 
   // Get all available sets
   const availableSets = useMemo(() => {
-    return [...enumToIdx(Set)].sort((a, b) =>
-      t(Set[a].toLowerCase(), { ns: "sets" }).localeCompare(
-        t(Set[b].toLowerCase(), { ns: "sets" }),
-        i18n.language
-      )
-    );
+    return [...enumToIdx(Set)]
+      .filter(isGCSimSetSupported)
+      .sort((a, b) =>
+        t(Set[a].toLowerCase(), { ns: "sets" }).localeCompare(
+          t(Set[b].toLowerCase(), { ns: "sets" }),
+          i18n.language
+        )
+      );
   }, [t, i18n.language]);
 
   const handleSetChange = (setIndex: number, setId: number | null) => {
@@ -71,28 +70,25 @@ const SetSection = memo(({
   };
 
   return (
-    <div className="mt-2 grid grid-cols-[auto_1fr] gap-2 items-start">
-      <span className="text-xs opacity-70 mt-2">{t("Sets")}:</span>
+    <div className="mt-2 grid grid-cols-[auto_1fr] items-start gap-2">
+      <span className="mt-2 text-xs opacity-70">{t("Sets")}:</span>
       <div className="flex flex-col gap-1">
         {/* Render existing sets */}
         {sets?.map((setOverride, idx) => (
           <div key={idx} className="flex items-center gap-2">
             <button
-              className="btn btn-ghost btn-sm flex-1 justify-start gap-0 text-left normal-case p-[0.25rem]"
+              className="btn btn-ghost btn-sm flex-1 justify-start gap-0 p-[0.25rem] text-left normal-case"
               onClick={() => setShowModal(idx)}
               disabled={!enabled}
             >
-              <img
-                className="h-6 w-6"
-                src={getSetIconUrl(setOverride.set)}
-              />
+              <img className="h-6 w-6" src={getSetIconUrl(setOverride.set)} />
               <span className="truncate text-xs">
                 {t(Set[setOverride.set].toLowerCase(), { ns: "sets" })}
               </span>
             </button>
             <label
               className="toggle text-base-content cursor-pointer"
-              title={setOverride.count === 4 ? "4-piece" : "2-piece"}
+              title={t(setOverride.count === 4 ? "4-piece set" : "2-piece set")}
             >
               <input
                 type="checkbox"
@@ -100,13 +96,14 @@ const SetSection = memo(({
                 onChange={() => handleSetCountToggle(idx)}
                 disabled={!enabled || (sets?.length || 0) > 1}
               />
-              <NumberTwo aria-label="2-piece" weight="bold" />
-              <NumberFour aria-label="4-piece" weight="bold" />
+              <NumberTwo aria-label={t("2-piece set")} weight="bold" />
+              <NumberFour aria-label={t("4-piece set")} weight="bold" />
             </label>
             <button
               className="btn btn-ghost btn-xs"
               onClick={() => handleSetChange(idx, null)}
               disabled={!enabled}
+              aria-label={t("Clear Set")}
             >
               x
             </button>
@@ -114,7 +111,8 @@ const SetSection = memo(({
         ))}
 
         {/* Add set button - show when: no sets, or 1 set with 2pc */}
-        {(!sets || sets.length === 0 ||
+        {(!sets ||
+          sets.length === 0 ||
           (sets.length === 1 && sets[0].count === 2)) && (
           <button
             className="btn btn-outline btn-sm justify-start gap-2 text-left normal-case"
@@ -131,19 +129,28 @@ const SetSection = memo(({
       {showModal !== null && (
         <SelectionModal
           title={t("Select Set")}
+          description={t(
+            "Only items supported by this GCSim version are shown"
+          )}
           onClose={() => setShowModal(null)}
         >
+          {availableSets.length === 0 && (
+            <li className="p-3 text-center text-sm opacity-70">
+              {t("No supported items available")}
+            </li>
+          )}
           {availableSets.map((id) => (
             <li key={id}>
-              <a
-                className="flex items-center gap-2 rounded-lg p-1"
+              <button
+                type="button"
+                className="flex w-full items-center gap-2 rounded-lg p-1 text-left"
                 onClick={() => handleSetChange(showModal, id)}
               >
-                <img className="h-8 w-8" src={getSetIconUrl(id)} />
+                <img className="h-8 w-8" src={getSetIconUrl(id)} alt="" />
                 <span className="text-sm">
                   {t(Set[id].toLowerCase(), { ns: "sets" })}
                 </span>
-              </a>
+              </button>
             </li>
           ))}
         </SelectionModal>
@@ -152,6 +159,6 @@ const SetSection = memo(({
   );
 });
 
-SetSection.displayName = 'SetSection';
+SetSection.displayName = "SetSection";
 
 export default SetSection;

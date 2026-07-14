@@ -43,17 +43,16 @@ for let i = 0; i < 5; i = i + 1 {
   kokomi attack, burst,
     attack:2, charge, jump,
     attack:2, charge, jump,
-	  attack:2, charge, jump,
-	  attack:2, charge, jump,
-	  attack:2;
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2;
   aetherdendro skill, attack:3;
-  
+
   while f() < t + 19 * 60 { # Until 18s total rotation time
-    kokomi attack:2, charge, jump; 
-	}
-	
-  print("done"); 
+    kokomi attack:2, charge, jump;
+  }
+
+  print("done");
   kokomi skill;
   raiden skill;
 }
-

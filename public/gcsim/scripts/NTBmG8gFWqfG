@@ -6,10 +6,10 @@ wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
-bennett add set="noblesse" count=5;        
+bennett add set="noblesse" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
-                                
+
 mavuika char lvl=90/90 cons=0 talent=9,9,9;
 mavuika add weapon="serpentspine" refine=1 lvl=90/90; #+params=[stacks=5]; if wrio not using widsith mav can be changed to active character
 mavuika add set="scroll" count=4;
@@ -20,10 +20,10 @@ xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="favlance" refine=5 lvl=90/90;
 xiangling add set="emblem" count=4;
 xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5282;									
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5282;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000;
 energy every interval=480,720 amount=1;
 
 active wrio;
@@ -31,23 +31,23 @@ active wrio;
 #active mavuika; use if mavuika on Serpent Spine and Wrio not on Widsith
 
 for let r=0; r<3; r=r+1 {
-  
+
   wrio attack; #apply cryo to melt Mavuika's Burst and trigger Cryo Scroll
   mavuika burst, skill;
   bennett burst, skill;
   xiangling burst, skill;
   wrio skill,
        attack:3, charge, jump,
-       attack:3, charge, jump, 
+       attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,
        attack:4;
-       
+
   if .wrio.burst.ready {
     wrio burst;
   } else {
     wrio attack, charge, attack;
   }
 }
-wait(35);#wrio burst do dmg 
+wait(35);#wrio burst do dmg

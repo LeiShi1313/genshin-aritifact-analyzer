@@ -10,6 +10,7 @@ import { toHex, fromHex } from "./hex";
 import data from "../data/sets.json";
 import data2pc from "../data/set2pcEffect.json";
 import { TFunction } from "react-i18next";
+import { getPresetBuildNameKey } from "../data/presetNames";
 
 const setTo2pcSets = {};
 Object.keys(data).map((key) => {
@@ -23,21 +24,39 @@ export const encodeBuild = (build: Build): string =>
 export const decodeBuild = (encoded: string): Build =>
   Build.decode(fromHex(encoded));
 
+export const getBuildName = (
+  name: string | undefined,
+  t: TFunction
+): string => {
+  if (!name) return t("Unnamed Build");
+  const presetNameKey = getPresetBuildNameKey(name);
+  return presetNameKey ? t(presetNameKey) : name;
+};
+
+export const getBuildDisplayName = (build: Build, t: TFunction): string =>
+  getBuildName(build.name, t);
+
 export const getBuildShortName = (build: Build, t: TFunction): string => {
-  let shortName = t(Character[build.character].toLowerCase(), { ns: "characters" });
+  let shortName = t(Character[build.character].toLowerCase(), {
+    ns: "characters",
+  });
   if (build.name) {
-    shortName += ` - ${build.name}`;
+    shortName += ` - ${getBuildDisplayName(build, t)}`;
   } else {
     if (build.weapons.length > 0) {
-      shortName += ` - ${build.weapons.map((w) => t(`${Weapon[w].toLowerCase()}`, { ns: "weapons" })).join("-")}`
+      shortName += ` - ${build.weapons
+        .map((w) => t(`${Weapon[w].toLowerCase()}`, { ns: "weapons" }))
+        .join("-")}`;
     }
     const sets = getBuildSets(build);
     if (sets.length > 0) {
-      shortName += ` - ${sets.map((set) => t(`${GenshinSet[set].toLowerCase()}`, { ns: "sets" })).join("-")}`;
+      shortName += ` - ${sets
+        .map((set) => t(`${GenshinSet[set].toLowerCase()}`, { ns: "sets" }))
+        .join("-")}`;
     }
   }
   return shortName;
-}
+};
 
 export interface BuildWeights {
   hash: string;

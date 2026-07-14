@@ -32,9 +32,9 @@ export interface ArtifactOverride {
  */
 export interface WeaponOverride {
   weapon: Weapon;
-  level?: number;       // 1-90
-  maxLevel?: number;    // 20, 40, 50, 60, 70, 80, 90
-  refinement?: number;  // 1-5
+  level?: number; // 1-90
+  maxLevel?: number; // 20, 40, 50, 60, 70, 80, 90
+  refinement?: number; // 1-5
 }
 
 /**
@@ -63,8 +63,17 @@ export interface CharacterOverride {
   /** Set overrides (max 2 sets) */
   sets?: SetOverride[];
 
+  /** Whether set bonuses should stay synchronized with artifact overrides. */
+  setsAreInferred?: boolean;
+
   /** Artifact overrides by position */
   artifacts?: ArtifactOverride[];
+
+  /** Uploaded equipment omitted because the pinned GCSIM cannot simulate it. */
+  unsupportedEquipment?: {
+    weapon?: Weapon;
+    sets?: Set[];
+  };
 }
 
 /**

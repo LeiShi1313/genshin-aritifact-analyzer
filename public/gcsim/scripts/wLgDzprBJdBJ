@@ -29,13 +29,13 @@ dori add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
 dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.331 cd=0.2648; # Scroll
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active fischl;
@@ -43,20 +43,20 @@ fischl skill;
 
 for let i=0; i<4; i=i+1 {
   dori skill, burst;
-  
+
   bennett skill, burst;
-  
+
   haitham burst;
-  
+
   amy attack;
   if .amy.burst.ready {
     amy attack, burst;
   } else {
     amy skill;
   }
-  
+
   # Optimized-ish combo for 20s rot
-  alhaitham attack:3, dash, 
+  alhaitham attack:3, dash,
             attack:3, charge, dash,
             attack:3, charge, dash,
             attack:1, skill[hold=1], low_plunge[short=1];

@@ -1,5 +1,5 @@
-#Educational. Lots of self damage between Burning and Burgeon combined with limited Bennett uptime for Alhaitham makes this team risky. 
-#~21s rotation; fav Alhaitham is important for team's and his own energy. 
+#Educational. Lots of self damage between Burning and Burgeon combined with limited Bennett uptime for Alhaitham makes this team risky.
+#~21s rotation; fav Alhaitham is important for team's and his own energy.
 #Optimized sim with many build options in config.
 #KurtC, customized random delays, 12-3 Icewind Suite energy drops.
 
@@ -96,10 +96,10 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.swap {
     delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
                                                      #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
-    
+
   } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
     delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
-    
+
   } else if prev_action_id != .action.attack {
     delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
   }
@@ -152,7 +152,7 @@ for let r=0; r<4; r=r+1 {
   while !.xingqiu.mods.favonius-cd && (.xingqiu.normal < 4) && (.xingqiu.weapon == .keys.weapon.favsword) {
     xingqiu attack;
   }
-  
+
   bennett swap;
   while !.bennett.burst.ready {
     if .bennett.skill.ready {
@@ -165,7 +165,7 @@ for let r=0; r<4; r=r+1 {
   if .bennett.skill.ready {
     bennett skill;
   }
-  
+
   xiangling attack;
   while !.xiangling.burst.ready {
     if .bennett.skill.ready {
@@ -184,7 +184,7 @@ for let r=0; r<4; r=r+1 {
   while !.xiangling.mods.favonius-cd && (.xiangling.normal < 3) && (.xiangling.weapon == .keys.weapon.favlance) {
     xiangling attack;
   }
-  
+
   alhaitham attack;
   while !.alhaitham.burst.ready {
     alhaitham attack;
@@ -205,7 +205,7 @@ for let r=0; r<4; r=r+1 {
             attack:3, dash,
             attack:3, charge, dash,
             attack:3, charge;
-  
+
   if LeaveCircleImpact {
     set_player_pos(0, 0);
     set_target_pos(0, 1.5);

@@ -5,7 +5,7 @@
 // source: build.proto
 
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 import { Attribute, AttributeType, attributeTypeFromJSON, attributeTypeToJSON } from "./attribute";
 import { Character, characterFromJSON, characterToJSON } from "./character";
 import { Suit } from "./suit";

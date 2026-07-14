@@ -1,7 +1,7 @@
 beidou char lvl=90/90 cons=6 talent=9,9,9;
 beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 beidou add set="emblemofseveredfate" count=4;
-beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main										
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
 beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3641 cd=0.4634;
 
 kokomi char lvl=90/90 cons=0 talent=9,9,9;
@@ -32,7 +32,7 @@ energy every interval=480,720 amount=1;
   kokomi skill;
   raiden attack, skill;
   nahida skill, burst;
-  
+
   beidou skill[counter=1],burst;
   kokomi attack, burst;
   let kokomi_n2w_sequences = 14;
@@ -40,11 +40,11 @@ energy every interval=480,720 amount=1;
     kokomi attack:2, walk;
     kokomi_n2w_sequences = kokomi_n2w_sequences - 1;
   }
-  
+
   beidou skill[counter=1];
-  
+
 for let i=0; i<4; i=i+1 {
-  
+
   kokomi skill, attack;
   raiden attack, skill;
   nahida attack, skill, attack:2, burst;

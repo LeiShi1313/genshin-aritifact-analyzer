@@ -1,9 +1,9 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	  pick_up_crystallize("any"); # Pick up crystallize before every dash
+    pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -39,12 +39,12 @@ energy every interval=480,720 amount=1;
 active zhongli;
 for let x=0; x<4; x=x+1 {
   zhongli skill[hold_nostele=1], dash;
-  while !.zhongli.mods.favonius-cd { 
-    zhongli attack; 
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
   }
   for let n=0; n<3; n=n+1 { # during waiting for zhongli fav particles, do NAs up to 3times
-    if !(.navia.burst.ready && .navia.energy == .navia.energymax) {        
-      navia attack;      
+    if !(.navia.burst.ready && .navia.energy == .navia.energymax) {
+      navia attack;
     }
   }
   if x==0 {
@@ -53,7 +53,7 @@ for let x=0; x<4; x=x+1 {
   navia   burst;
   bennett skill, burst;
   if .fischl.burst.ready {
-    fischl attack:2, burst; pick_up_crystallize("any"); 
+    fischl attack:2, burst; pick_up_crystallize("any");
   } else {
     fischl attack, skill;
   }
@@ -61,4 +61,3 @@ for let x=0; x<4; x=x+1 {
   bennett skill, attack:2; # catches his own particles
   navia   dash, skill[hold=1], attack:3, dash; # cutting N2 to reduce rot length for a few hundred increase
 }
-

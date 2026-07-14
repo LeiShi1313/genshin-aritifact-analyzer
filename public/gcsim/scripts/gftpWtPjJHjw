@@ -1,9 +1,9 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -39,21 +39,21 @@ energy every interval=480,720 amount=1;
 active zhongli;
 for let x=0; x<3; x=x+1 {
   zhongli skill[hold=1], dash, attack;
-  while !.zhongli.mods.favonius-cd { 
-    zhongli attack; 
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
   }
   fischl attack:2, burst;      pick_up_crystallize("any");
   navia burst;
-  tighnari skill, aim, burst, aim:2; 
+  tighnari skill, aim, burst, aim:2;
   print(.navia.shrapnel);
   navia skill[hold=1], attack:3, dash, attack:2;
-  
+
   zhongli skill[hold=1], dash, attack;
-  while !.zhongli.mods.favonius-cd { 
-    zhongli attack; 
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
   }
   fischl attack, skill;
-  tighnari dash, skill, aim:3; 
+  tighnari dash, skill, aim:3;
   print(.navia.shrapnel);
   navia skill[hold=1], attack:3, dash, attack:2, dash, skill, attack:2;
 }

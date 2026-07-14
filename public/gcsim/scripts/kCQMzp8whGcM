@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -102,7 +102,7 @@ for let x = 5; x; x = x - 1 {
   ayato skill, attack:13;
   if .nilou.burst.ready {
     nilou burst;
-  } 
+  }
 }
 
 #Dolphin Nilou Bloom with Ayato Baizhu Nahida with 2 large targets either side of the character. KQMS with random delays. Rotation: Nahida Q E -> Nilou E N2 E -> Baizhu Q E -> Ayato Q -> Baizhu N1 E N1 -> Nahida E N1 C -> Ayato E N13 -> Nilou Q

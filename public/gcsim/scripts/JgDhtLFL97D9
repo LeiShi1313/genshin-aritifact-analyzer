@@ -29,9 +29,9 @@ energy every interval=480,720 amount=1;
 active nahida;
 
 for let x = 0; x < 4; x = x + 1{
-	zhongli skill[hold=1];
-	xingqiu skill, burst;
-	raiden skill;
-	nahida skill,
-		   attack:24;
+  zhongli skill[hold=1];
+  xingqiu skill, burst;
+  raiden skill;
+  nahida skill,
+       attack:24;
 }

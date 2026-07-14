@@ -25,7 +25,7 @@ options swap_delay=12 iteration=1000;
 active fischl;
 
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
   fischl aim;
 for let i=0; i<4; i=i+1 {
@@ -34,17 +34,17 @@ for let i=0; i<4; i=i+1 {
   fischl attack:2, burst;
   yaoyao skill, burst,attack:2, dash,attack:2;
   keqing skill, burst, skill,
-    attack, charge, 
-    attack, charge, 
+    attack, charge,
+    attack, charge,
     attack, skill;
     keqing attack, charge, attack:1;
-    
+
   nahida attack, skill, attack:2;
   fischl skill, attack:2;
   yaoyao skill, attack:2;
   keqing skill, burst, skill,
-    attack, charge, 
-    attack, charge, 
+    attack, charge,
+    attack, charge,
     attack, skill;
     keqing attack, charge;
     keqing attack:2;

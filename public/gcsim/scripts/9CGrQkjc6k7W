@@ -1,6 +1,6 @@
 alhaitham char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
 alhaitham add set="mh" count=4;
-                   
+
 #Wolf-Fang Build ----------------------------------------------------------------
 alhaitham add weapon="wolffang" refine=1 lvl=90/90; #almost exactly equal to iron sting build (without changing kuki refine; see comment there)
 alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #55.695 [91.695 / 99.695] / 178.25 | 111.01 er
@@ -14,7 +14,7 @@ alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.
 #alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3966 cd=0.6605;
                    #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 4[2]  er 2[0]   cr 12[10] cd 10[8]
                    #sub; total[distributed] rolls
-                   
+
 #HoD Build ----------------------------------------------------------------------
 #alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90; #better but somewhat reliant on not getting hit
 #alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #62.745 [98.745] / 225.11 | 111.01 er
@@ -35,7 +35,7 @@ furina add weapon="fleuve" refine=5 lvl=90/90;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #63.86 [79.86] / 178.25 | 156.95 [188.95] er
 furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
                 #hp 2[0]   atk 2[0]  def 2[0]  hp% 4[2]   atk% 2[0]   def% 2[0]   em 2[0]  er 2[0]   cr 12[10] cd 10[8]
-                      
+
 sucrose char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=70];
 sucrose add weapon="ttds" refine=5 lvl=90/90;
 #sucrose add weapon="sacfrags" refine=3 lvl=90/90; #very VERY similar to ttds
@@ -131,13 +131,13 @@ for let r=0; r<3; r=r+1 {
   if !.furina.swap.ready {
     kuki attack;
   }
-  
+
   furina skill, dash;
   while !.furina.burst.ready {
     furina attack;
   }
   furina burst;
-  
+
   sucrose attack;
   if .sucrose.skill.ready {
     sucrose skill, dash;
@@ -147,14 +147,14 @@ for let r=0; r<3; r=r+1 {
   #if .sucrose.burst.ready {
     #sucrose burst; #worse than the later timing for her burst
   #}
-  
+
   alhaitham skill[hold=1], low_plunge[short=1],
             attack:4, charge, dash,
             attack:4, charge, dash,
             attack:3, charge;
-            
+
   kuki skill, dash, attack;
-  
+
   sucrose attack;
   if .sucrose.skill.ready {
     sucrose skill, dash;
@@ -164,20 +164,20 @@ for let r=0; r<3; r=r+1 {
   #if .sucrose.burst.ready {
     #sucrose burst; #slight DPS loss (and, ingame, risks launching enemies)
   #}
-  
+
   alhaitham swap;
   while !.alhaitham.burst.ready {
     alhaitham attack;
   }
   alhaitham burst;
-  
+
   kuki swap;
   if .kuki.burst.ready {
     kuki burst;
   } else {
     kuki attack:2;
   }
-  
+
   alhaitham attack:3, dash,
             attack:3, charge, dash,
             attack:4, charge, dash,

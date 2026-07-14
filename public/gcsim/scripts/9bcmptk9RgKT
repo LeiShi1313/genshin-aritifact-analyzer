@@ -1,14 +1,14 @@
 arle char lvl=90/90 cons=0 talent=9,9,9;
 arle add weapon="deathmatch" refine=1 lvl=90/90;
 arle add set="fohw" count=4;
-arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; # main 
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; # main
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.2979 cd=0.662;
 
 citlali char lvl=90/90 cons=0 talent=9,9,9;
 # citlali add weapon="sacrificialfragments" refine=5 lvl=90/90;
 citlali add weapon="evenstar" refine=1 lvl=90/90;
 citlali add set="sothocc" count=4;
-citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; # main 
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; # main
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=237.84 cr=0.0993 cd=0.5296;
 
 rosaria char lvl=90/90 cons=6 talent=9,9,9;
@@ -30,16 +30,16 @@ target lvl=100 resist=.1 radius=2 pos=0,2.4 hp=999999999;
 active arle;
 for let i = 0; i < 6; i = i + 1 {
   arle skill;
-  
+
   bennett skill, attack;
-  
+
   citlali skill, burst;
   # if .citlali.skill.ready { citlali skill; }
-  
+
   bennett attack, burst;
-  
+
   rosaria skill, burst;
-  
+
   arle attack:2, charge,
       attack:3, dash,
       attack:3, dash,

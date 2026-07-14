@@ -39,8 +39,8 @@ fn mualani_combo1() {
     }
     break;
   }
-}  
-  
+}
+
 fn mualani_combo2() {
   # Doing 2[3-stacked bite]
   while .mualani.nightsoul.state {
@@ -71,16 +71,16 @@ fn mualani_combo3() {
 for let i=0; i<3; i=i+1 {
 
   mualani attack;
-  
+
   xilonen skill, attack:2;
-  
+
   if .luminepyro.burst.ready {
-    
+
     sucrose skill, dash, burst;
-    
+
     luminepyro dash, burst;
     pick_up_crystallize("hydro");
-    
+
     mualani skill;
     mualani_combo2();
     if .mualani.burst.ready > 0 {
@@ -89,23 +89,23 @@ for let i=0; i<3; i=i+1 {
       mualani_combo1();
       mualani skill;
     }
-   
+
   } else {
-    
+
     sucrose skill, dash;
-    
+
     luminepyro dash, skill;
     pick_up_crystallize("hydro");
-    
+
     mualani skill;
     mualani_combo3();
     mualani skill;
     if i == 1 {
       mualani charge;
     }
-    
+
   }
-  
+
 }
 
 # ~13-14s rotations

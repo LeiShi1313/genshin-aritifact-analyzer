@@ -1,0 +1,51 @@
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="fjords" refine=1 lvl=90/90;
+arle add set="fohw" count=5;
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+arle add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+citlali add set="scrolloftheheroofcindercity" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 em=186.5 em=186.5;
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*14 em=19.82*8 cr=0.0331*4 cd=0.0662*2;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*7 cd=0.0662*11;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=20000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active arle;
+
+for let i=0; i<5 ; i=i+1 {
+  arle skill; delay(9);
+  bennett skill, burst;
+  sucrose skill;
+  if .sucrose.burst.ready {
+    sucrose dash, burst, attack;
+  } else {
+    sucrose dash, attack;
+  }
+  citlali skill, burst;
+  arle charge,
+       attack:2, walk,
+       attack:2, walk,
+       attack:3, dash,
+       attack:3;
+  citlali attack;
+  arle attack:2, walk,
+       attack:2, walk,
+       attack:3;
+}
+
+# 2233 223

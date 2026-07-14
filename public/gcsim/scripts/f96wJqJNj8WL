@@ -10,7 +10,7 @@ skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 
 //skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 //skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
@@ -22,7 +22,7 @@ mona add set="no" count=4;
 mona add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
 mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.1655 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="scroll" count=4;
 escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
@@ -45,9 +45,9 @@ skirk burst;                    # Battery Escoffier
 escoffier attack:3;
 mona attack:3, dash, attack:3;  # Need to wait for Mona Q cd and Furina E cd
 skirk skill[hold=1];  wait(18); # Hiding swap cd warning
-      
+
 furina swap;
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
   escoffier skill, burst;
   mona skill, burst;
@@ -55,7 +55,7 @@ for let i=0; i<4; i=i+1 {
   if !i {
     skirk burst;
   }
-  
+
   skirk skill,
         attack:2;
   if !i {
@@ -66,15 +66,15 @@ for let i=0; i<4; i=i+1 {
   skirk attack:5, dash,
         attack:5, dash,
         attack:5, dash,
-        
+
         attack:2, charge, dash,
-      
+
         attack:5, dash,
         attack:2;
 }
 
 # Skirk hE > Furina N1 ED > Escoffier E N2 > Mona E 2[N3D] N1 > Skirk hE > Mona N3 Q > Skirk Q > Escoffier N3 > Mona N3D N3 > Skirk hE >
-# Furina ED Q > Escoffier EQ > Mona E Q > Skirk Q tE N2CD 3[N5D] N2CD N5D N2 > 
+# Furina ED Q > Escoffier EQ > Mona E Q > Skirk Q tE N2CD 3[N5D] N2CD N5D N2 >
 # Furina ED Q > Escoffier EQ > Mona E Q > Skirk   tE N2Q  3[N5D] N2CD N5D N2 > (repeat)
 
 # Sim made by caxia5(discord)

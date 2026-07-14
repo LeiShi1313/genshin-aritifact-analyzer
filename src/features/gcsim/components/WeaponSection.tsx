@@ -8,6 +8,7 @@ import { enumToIdx } from "../../../utils/enum";
 import { inferWeaponMaxLevel } from "../../../utils/gcsim";
 import SelectionModal from "./SelectionModal";
 import weaponData from "../../../data/weapons.json";
+import { isGCSimWeaponSupported } from "../../../utils/gcsimCapabilities";
 
 interface UploadedWeaponInfo {
   weapon: Weapon;
@@ -39,6 +40,7 @@ const WeaponSection = memo(({
   const availableWeapons = useMemo(() => {
     return [...enumToIdx(Weapon)]
       .filter((id) => {
+        if (!isGCSimWeaponSupported(id)) return false;
         const weaponKey = Weapon[id]?.toLowerCase();
         const meta = (weaponData as Record<string, { weapontype?: string }>)[weaponKey];
         return meta && meta.weapontype === weaponType;
@@ -113,6 +115,7 @@ const WeaponSection = memo(({
               <img
                 className="h-6 w-6"
                 src={getWeaponIconUrl(weapon.weapon)}
+                alt=""
               />
               <span className="truncate text-xs">
                 {t(Weapon[weapon.weapon].toLowerCase(), { ns: "weapons" })}
@@ -127,6 +130,7 @@ const WeaponSection = memo(({
             className="btn btn-ghost btn-xs"
             onClick={() => onChange(undefined)}
             disabled={!enabled}
+            aria-label={t("Clear Weapon")}
           >
             x
           </button>
@@ -175,6 +179,7 @@ const WeaponSection = memo(({
             <span className="text-xs opacity-70">R:</span>
             <select
               className="select select-xs w-12"
+              aria-label={t("Refinement")}
               value={weapon.refinement ?? ""}
               onChange={(e) =>
                 updateWeapon({
@@ -198,19 +203,26 @@ const WeaponSection = memo(({
       {showModal && (
         <SelectionModal
           title={t("Select Weapon")}
+          description={t("Only items supported by this GCSim version are shown")}
           onClose={() => setShowModal(false)}
         >
+          {availableWeapons.length === 0 && (
+            <li className="p-3 text-center text-sm opacity-70">
+              {t("No supported items available")}
+            </li>
+          )}
           {availableWeapons.map((id) => (
             <li key={id}>
-              <a
-                className="flex items-center gap-2 rounded-lg p-1"
+              <button
+                type="button"
+                className="flex w-full items-center gap-2 rounded-lg p-1 text-left"
                 onClick={() => handleSelectWeapon(id)}
               >
-                <img className="h-8 w-8" src={getWeaponIconUrl(id)} />
+                <img className="h-8 w-8" src={getWeaponIconUrl(id)} alt="" />
                 <span className="text-sm">
                   {t(Weapon[id].toLowerCase(), { ns: "weapons" })}
                 </span>
-              </a>
+              </button>
             </li>
           ))}
         </SelectionModal>

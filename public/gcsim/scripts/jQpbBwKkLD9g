@@ -1,8 +1,8 @@
-# Razor Furina Nahida Bennett. ~25s. Razor Hyperburgeon with C6 Bennett infusion. Nahida runs P-Amber to counteract Furina's HP drain, fanfare decreases in later rotations. 2E Bennett builds EM.  Self overloads not implemented. 
+# Razor Furina Nahida Bennett. ~25s. Razor Hyperburgeon with C6 Bennett infusion. Nahida runs P-Amber to counteract Furina's HP drain, fanfare decreases in later rotations. 2E Bennett builds EM.  Self overloads not implemented.
 
 # Team
 razor char lvl=90/90 cons=6 talent=9,9,9;
-razor add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5]; 
+razor add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 #razor add weapon="talkingstick" refine=1 lvl=90/90; # Passive not implemented
 #razor add weapon="mailedflower" refine=5 lvl=90/90;
 #razor add weapon="aquamarine" refine=1 lvl=90/90;
@@ -19,7 +19,7 @@ razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 
 #razor add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # Em/Em/Em
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="festering" refine=5 lvl=90/90;
 #furina add weapon="pipe" refine=5 lvl=90/90;
 furina add set="gt" count=4;
@@ -45,24 +45,24 @@ bennett add stats hp=3571 atk=232 em=140.25 em=140.25 cr=0.311; #main
 bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.26448 em=126.848 cr=0.31776 cd=0.10592; # Optimistic substats
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 active razor;
 razor skill, dash; # Max Sigils for first rotation
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   nahida skill, burst, charge;
-  
+
   bennett skill, burst;
-  
+
   # Razor out of burst actions; account for CD
   while !.razor.mods.razor-q {
     if .razor.burst.ready && .razor.skill.ready {
@@ -77,8 +77,8 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  # Razor Main DPS window 
-  while .razor.infusion.bennett-fire-weapon { 
+  # Razor Main DPS window
+  while .razor.infusion.bennett-fire-weapon {
     if .razor.normal > 3 && .razor.skill.ready {
        razor skill, dash;
     } else if .razor.normal > 3 {
@@ -91,8 +91,8 @@ for let i=0; i<4; i=i+1 {
   if .razor.normal < 3 {
     razor attack;
   }
-  
+
   bennett skill, attack;
-  
+
   razor skill, dash;
 }

@@ -22,7 +22,7 @@ bennett add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.0
 options swap_delay=12 debug=true iteration=1000 duration=105.73 workers=50 mode=sl;
 
 
-										
+
 
 target lvl=100 resist=0.1;
 energy every interval=480,720 amount=1;
@@ -48,7 +48,7 @@ hutao skill,
              attack:1, charge, jump,
              attack:1, charge, jump,
              attack:1, charge, jump;
-             
+
              yelan skill,attack:4;
 
 

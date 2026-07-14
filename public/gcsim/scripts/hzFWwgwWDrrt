@@ -1,10 +1,10 @@
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=5;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favoniussword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
@@ -32,39 +32,39 @@ active gaming;
 let rotations = 3;
 
 for let r = rotations; r > 0; r = r - 1 {
-  
+
   furina skill, dash;
   while !.furina.burst.ready {
     furina attack;
   }
   furina burst;
-  
-  
+
+
   while !.bennett.burst.ready {
     bennett attack;
   }
   bennett burst, skill;
-  
+
   sucrose skill, burst, attack:2;
-  
+
   while !.gaming.burst.ready {
     gaming attack;
   }
   gaming burst;
-  
+
   gaming skill;
   sleep(45);
-  gaming high_plunge;  
-  
+  gaming high_plunge;
+
   for let j = 0; j < 7; j = j + 1 {
 
     gaming skill;
     sleep(20);
     gaming high_plunge;
-  
-    
+
+
   }
-  
+
   gaming dash;
-  
+
 }

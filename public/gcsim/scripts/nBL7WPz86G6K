@@ -24,15 +24,15 @@ beidou add set="emblemofseveredfate" count=4;
 beidou add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=1.0139 em=39.64 cr=0.4965 cd=0.622 electro%=0.466;
 
 #enemy config
-target lvl=100 resist=0.1 radius=1 pos=0,2.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=1.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,2.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=1.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
 options swap_delay=12 debug=true iteration=1000 workers=30 mode=sl;
 active gorou;
 
-#action list 
+#action list
 
   gorou skill, burst;
   beidou skill[counter=1], burst;
@@ -54,9 +54,8 @@ for let i=0; i<4; i=i+1 {
   itto attack, burst[prestack=1],
     attack, skill[travel=0], charge:4,
     attack:3, charge:4,
-    attack:3, skill[travel=0], charge:4; 
+    attack:3, skill[travel=0], charge:4;
   #"C0 2PS" combo: N1 Q N1 E C3F N3 C3F N3 E C3F
 
 
 }
-

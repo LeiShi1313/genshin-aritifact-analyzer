@@ -32,38 +32,37 @@ active ayato;
 
 
 for let i = 0; i < 5; i = i + 1 {
-	ayato burst, attack;
-	set_player_pos (-3.2, 3.1);
-	thoma burst, attack; set_player_pos (3.2, 3.1); thoma skill, attack:3;
-	set_player_pos (-3.2, 3.1);
-	yaoyao attack, skill, attack;
-	set_player_pos (3.2, 3.1);
-	if .fischl.skill.ready {
-		fischl attack:2, skill;
-		set_player_pos (-3.2, 3.1);
-	} else {
-		fischl attack:2, burst;
-		set_player_pos (-3.2, 3.1);
-	}
-	ayato skill, attack:3;
-	set_player_pos (3.2, 3.1);
-	ayato attack:3;
-	set_player_pos (-3.2, 3.1);
-	ayato attack:3;
-	set_player_pos (3.2, 3.1);
-	ayato attack:3;
-	set_player_pos (-3.2, 3.1);
-	yaoyao burst;
-		set_player_pos (3.2, 3.1);
-		yaoyao attack:2, dash;
-		set_player_pos (-3.2, 3.1);
-		yaoyao attack:2, dash;
-		set_player_pos (3.2, 3.1);
-		yaoyao attack:2, dash;
-		set_player_pos (-3.2, 3.1);
-		yaoyao attack:2, dash;
-		set_player_pos (3.2, 3.1);
-		yaoyao attack;
+  ayato burst, attack;
+  set_player_pos (-3.2, 3.1);
+  thoma burst, attack; set_player_pos (3.2, 3.1); thoma skill, attack:3;
+  set_player_pos (-3.2, 3.1);
+  yaoyao attack, skill, attack;
+  set_player_pos (3.2, 3.1);
+  if .fischl.skill.ready {
+    fischl attack:2, skill;
+    set_player_pos (-3.2, 3.1);
+  } else {
+    fischl attack:2, burst;
+    set_player_pos (-3.2, 3.1);
+  }
+  ayato skill, attack:3;
+  set_player_pos (3.2, 3.1);
+  ayato attack:3;
+  set_player_pos (-3.2, 3.1);
+  ayato attack:3;
+  set_player_pos (3.2, 3.1);
+  ayato attack:3;
+  set_player_pos (-3.2, 3.1);
+  yaoyao burst;
+    set_player_pos (3.2, 3.1);
+    yaoyao attack:2, dash;
+    set_player_pos (-3.2, 3.1);
+    yaoyao attack:2, dash;
+    set_player_pos (3.2, 3.1);
+    yaoyao attack:2, dash;
+    set_player_pos (-3.2, 3.1);
+    yaoyao attack:2, dash;
+    set_player_pos (3.2, 3.1);
+    yaoyao attack;
     print("done");
 }
-

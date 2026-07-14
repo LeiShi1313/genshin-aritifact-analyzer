@@ -16,11 +16,11 @@ sucrose add set="viridescentvenerer" count=5;
 sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324 ;
 
-nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="totm" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; # main
-nahida add stats hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 def=39.36 def%=0.124 em=118.92 er=0.2755 cr=0.2648 cd=0.5958;		
+nahida add stats hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 def=39.36 def%=0.124 em=118.92 er=0.2755 cr=0.2648 cd=0.5958;
 
 options iteration=1000 swap_delay=12;
 
@@ -38,9 +38,9 @@ fn clorinde_combo() {
   }
 }
 
-active fischl; 
+active fischl;
 
-for let r=0; r<3; r=r+1 { # 3 rotations 
+for let r=0; r<3; r=r+1 { # 3 rotations
 
   if r>0 {
   sucrose attack, charge; # swap in sucrose to refresh VV and hakushin ring buff

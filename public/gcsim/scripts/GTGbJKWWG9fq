@@ -31,7 +31,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,14 +43,14 @@ active chongyun; # SS Stacks
 #chongyun burst;
 
 for let i = 0; i < 4; i = i + 1 {
-  xianyun skill, low_plunge, burst; 
-  
+  xianyun skill, low_plunge, burst;
+
   bennett burst, skill;
-  
+
   xl burst, skill, dash;
-  
+
   bennett skill;
- 
+
   if .chongyun.burst.ready {
     chongyun burst;
   }
@@ -68,7 +68,7 @@ for let i = 0; i < 4; i = i + 1 {
   if .chongyun.burst.ready {
     chongyun burst;
   }
-  
+
   bennett skill;
 
   xl attack:2;

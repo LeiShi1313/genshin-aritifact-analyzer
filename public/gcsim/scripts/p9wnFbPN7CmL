@@ -31,7 +31,7 @@ for {
     case .lyney.propSurplusStacks == 5 &&.lyney.skill.ready: # only use skill with 5 prop surplus stacks
       lyney skill;
     default: # lyney ca for the majority of the time
-      lyney aim; 
+      lyney aim;
   }
 }
-# APL Lyney + Yaoyao duo: "Solo" Lyney with skill bot Yaoyao to enable his A1 and MH. 
+# APL Lyney + Yaoyao duo: "Solo" Lyney with skill bot Yaoyao to enable his A1 and MH.

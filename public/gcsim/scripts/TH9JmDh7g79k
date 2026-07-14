@@ -28,13 +28,13 @@ bennett add stats hp=3571 atk=232 er=0.518 em=139 em=139; #main
 bennett add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.249984 er=0.185136 em=133.19 cr=0.055608 cd=0.111216;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 #Rotation
 active aetherelectro;
@@ -47,12 +47,12 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida attack, charge;
   }
-  
+
   xingqiu skill, dash, burst, attack;
-  
+
   bennett skill, attack, burst;
-  
-  while .aetherelectro.mods.bennett-field || .status.bennettburst { 
+
+  while .aetherelectro.mods.bennett-field || .status.bennettburst {
     switch {
       case .aetherelectro.skill.ready:
         aetherelectro skill[hits=3, amulet_delay=107];
@@ -66,6 +66,6 @@ for let i=0; i<4; i=i+1 {
         aetherelectro attack;
     }
   }
-  
+
   print("done");
 }

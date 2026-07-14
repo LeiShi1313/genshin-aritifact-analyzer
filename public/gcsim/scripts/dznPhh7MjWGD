@@ -61,4 +61,3 @@ for let i=0; i<3; i=i+1 {
   mualani_combo();
   mualani burst, attack;
 }
-

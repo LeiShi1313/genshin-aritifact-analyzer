@@ -23,19 +23,19 @@ gorou add set="tenacityofthemillelith" count=1;
 gorou add stats def%=0.124 def=102 hp=6095 hp%=0.466 atk=435 atk%=0.43100000000000005 er=0.9520000000000001 cr=0.462;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active zhongli;
 
-#action list 
+#action list
 
   zhongli skill[hold=1], dash;
   gorou attack, skill;
-  
+
   if .chiori.burst.ready {
     chiori burst;
   }
-  
+
   chiori skill:2;
   gorou burst;
 
@@ -50,24 +50,22 @@ active zhongli;
 for let i = 0; i < 3; i = i + 1 {
 
   zhongli attack, skill; #refreshing pillar
-  
+
   gorou attack, skill;
-  
+
   if .chiori.burst.ready {
     chiori burst;
   }
-  
+
   chiori skill:2;
   gorou burst;
   zhongli skill[hold=1], dash;
-  
+
   itto attack, burst[prestack=1],
        attack, skill, charge:4,
        attack:3, charge:4,
-       attack:3, skill, charge:4; 
+       attack:3, skill, charge:4;
 
        #"C0 2PS" combo
 
 }
-
-

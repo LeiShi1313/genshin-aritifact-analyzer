@@ -8,7 +8,7 @@ lauma char lvl=90/90 cons=0 talent=9,9,9;
 #lauma add weapon="evenstar" refine=1 lvl=90/90;
 lauma add weapon="widsith" refine=5 lvl=90/90;
 lauma add set="ins" count=4;
-lauma add stats hp=3571 atk=232 em=139.3 em=139.3 cr=0.311; #main 
+lauma add stats hp=3571 atk=232 em=139.3 em=139.3 cr=0.311; #main
 lauma add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*2 em=16.6488*2 cr=0.027804*10 cd=0.055608*6;
 
 escoffier char lvl=90/90 cons=0 talent=9,9,9;
@@ -70,9 +70,9 @@ for let i=0; i<6; i=i+1 {
   } else {
     lauma skill, attack;
   }
-  
+
   esco skill;
-  
+
   mualani skill;
   if .mualani.burst.ready {
     mualani_combo1();
@@ -83,4 +83,3 @@ for let i=0; i<6; i=i+1 {
   }
 
 }
-

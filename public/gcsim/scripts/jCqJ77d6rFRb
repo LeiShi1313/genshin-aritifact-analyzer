@@ -33,7 +33,7 @@ for let i=0; i<2; i=i+1 {
   escoffier skill, burst;
   ororon burst, skill;
   chasca skill, aim:4, aim[bullets=4], burst;
-  
+
   escoffier skill, attack;
   ororon attack, skill, burst;
   chasca skill, aim:4, aim[bullets=4];

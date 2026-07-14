@@ -25,7 +25,7 @@ mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2648 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 

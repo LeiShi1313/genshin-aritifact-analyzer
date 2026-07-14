@@ -42,10 +42,10 @@ for let x=0; x<4; x=x+1 {
   bennett skill, burst;
   yunjin attack, skill, burst; # N1 to get hydro aura to trigger crystallize for YunJin C4's DEF increase
   yoimiya attack, # N1 to get hydro aura on the enemy to vape first N1 hit
-          skill, 
-          attack:5, dash, 
-          attack:5, dash, 
-          attack:5, dash, 
+          skill,
+          attack:5, dash,
+          attack:5, dash,
+          attack:5, dash,
           attack:3;
   yunjin skill, attack:2; # catch her own particles, also to make next rot E is not on cooldown
 }

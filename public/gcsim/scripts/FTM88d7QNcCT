@@ -23,8 +23,8 @@ sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 options swap_delay=12 iteration=1000;
 
 active diona;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -43,5 +43,5 @@ for let i=0; i<4; i=i+1 {
   amber skill, aim[bunny=1], dash;
   chongyun attack:4;
   amber aim[weakspot=1];
-  
+
 }

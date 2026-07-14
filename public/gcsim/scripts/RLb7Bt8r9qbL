@@ -24,11 +24,11 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992
 
 options swap_delay=12 iteration=500;
 
-									
+
 
 #yelan add set="no" count=4;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active furina;
@@ -53,5 +53,5 @@ for let i = 0; i < 4; i = i + 1 {
   xianyun attack:3;
   if !i {
     furina attack;
-  } 
+  }
 }

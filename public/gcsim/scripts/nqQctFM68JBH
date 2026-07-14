@@ -24,8 +24,8 @@ thoma add stats def=39.36 def%=0.124 em=118.92 atk=33.08 hp=507.88 hp%= 0.0992 a
 
 
 options swap_delay=12 debug=true iteration=100 workers=30 mode=sl;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=1.5,0 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=1.5,0 hp=999999999;
 target lvl=100 resist=0.1 radius=1 pos=-1,-1.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
@@ -37,6 +37,5 @@ for let r = 0; r < 5; r = r + 1 {
   thoma attack, skill, attack, burst, attack;
   kaveh skill, burst, attack:3, dash, attack:3, walk, attack:3, skill, attack:5;
 
-  
-}
 
+}

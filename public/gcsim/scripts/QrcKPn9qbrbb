@@ -38,7 +38,7 @@ raiden skill;
 for let i=0; i<4; i=i+1 {
   fischl attack, skill;
   baizhu skill, burst, attack;
-  alhaitham skill[hold=1], low_plunge, 
+  alhaitham skill[hold=1], low_plunge,
             attack:3, charge, dash,
             attack:3, charge, burst;
   fischl attack:2, burst;

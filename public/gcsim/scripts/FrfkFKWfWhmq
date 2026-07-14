@@ -1,13 +1,13 @@
 # Gaming Diona Rosaria Chevreuse. ~20s Rot. Melt Gaming with a Cryo Venn diagram and C6 Chevreuse. 6 buffed skill plunges melted + 1 unbuffed plunge melted. Mind your Cryo aura, 4 delayed plunges (waiting on the ground) + 2 immediate plunges. Double SoDP is ideal.
 
 # Team - Options listed by DPS
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=4;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
 
-diona char lvl=90/90 cons=6 talent=9,9,9; 
+diona char lvl=90/90 cons=6 talent=9,9,9;
 diona add weapon="favbow" refine=4 lvl=90/90;
 diona add set="sodp" count=4;
 diona add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
@@ -22,28 +22,28 @@ rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favlance" refine=3 lvl=90/90;
 chevreuse add set="sodp" count=4;
-chevreuse add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; 
+chevreuse add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
 chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active gaming; #SS Stacks
 
 for let i=0; i<4; i=i+1 {
   chev burst, skill[hold=1]:2;
-  
+
   diona skill[hold=1], burst;
-  
+
   rosaria skill, burst;
-  
+
   gaming burst, attack:2;
   for let p=1; p<5; p=p+1 { # 4 plunges
     gaming skill, low_plunge; print(p);
@@ -51,9 +51,8 @@ for let i=0; i<4; i=i+1 {
   }
   gaming skill, low_plunge; print("5");
   gaming skill, low_plunge; print("6");
-  
+
   rosaria skill;
-  
+
   gaming skill, low_plunge, dash; print("7");
 }
-

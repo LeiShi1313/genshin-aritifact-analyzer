@@ -16,9 +16,9 @@ raiden add stats def%=0.139 hp=4780 hp%=0.053 atk=392 atk%=0.192 er=0.6659999999
 xingqiu char lvl=80/90 cons=0 talent=6,6,6;
 xingqiu add weapon="dullblade" refine=1 lvl=1/20;
 
- 
+
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=2000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=2000000;
 energy every interval=480,720 amount=1;
 
 
@@ -28,16 +28,13 @@ ganyu aim[weakspot=1];
 while 1 {
   if .zhongli.tags.shielded==0 {
     zhongli skill[hold=1], dash;pick_up_crystallize("cryo");
-  } 
+  }
   else if .ganyu.burst.ready {
     ganyu burst;
-  } 
+  }
   else if .ganyu.skill.ready {
     ganyu skill;
   } else {
     ganyu aim[weakspot=1];
   }
 }
-
-
-

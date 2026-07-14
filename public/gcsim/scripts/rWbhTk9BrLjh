@@ -51,7 +51,7 @@ active kirara;
 let shieldEarlier = true; #set to false for different rotation order around kirara shield (see notes below)
 
 fn doActionList() {
-  
+
   #Base: Kirara [E/short hE] > Sara E CA > Fischl N1 E > Sara Q > Alhaitham hE LP N2CD N3C > Kirara E Q > Sara E > Fischl N2 Q > Alhaitham Q > Sara CA > Alhaitham N4CD N4CD N3
   for let r=0; r<3; r=r+1 {
     kirara skill[short_hold=r>0]; #tap on 1st rotation, short hold later
@@ -110,7 +110,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
   }
-  
+
   if action_id == .action.burst {
     while .alhaitham.onfield && !.alhaitham.burst.ready {
       alhaitham attack;
@@ -129,10 +129,10 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.swap {
     delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
                                                      #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
-    
+
   } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
     delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
-    
+
   } else if prev_action_id != .action.attack {
     delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
   }

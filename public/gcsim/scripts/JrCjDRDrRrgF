@@ -23,8 +23,8 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=0.5 pos=0,1 hp=999999999; 
-#target lvl=100 resist=0.1 radius=0.5 pos=1.1,1 hp=999999999; 
+target lvl=100 resist=0.1 radius=0.5 pos=0,1 hp=999999999;
+#target lvl=100 resist=0.1 radius=0.5 pos=1.1,1 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active arlecchino;
@@ -35,42 +35,42 @@ active arlecchino;
   bennett burst;
 
   xiangling burst, skill, dash;
-  
+
   kazuha burst;
-  
+
   arlecchino charge,
              attack:3, dash,
              attack:3, dash,
-             attack:3, dash, 
              attack:3, dash,
-             attack:3, dash, 
+             attack:3, dash,
+             attack:3, dash,
              attack:3;
  for let i=0; i<4; i=i+1 {
-  
+
   arlecchino skill;
-  
+
   bennett burst;
-  
+
   if .xiangling.burst.ready{
     xiangling burst, skill, dash;
   } else {
     xiangling attack, skill, dash, attack;
   }
-  
+
   if .kazuha.burst.ready{
     kazuha burst;
   } else {
     kazuha skill, high_plunge;
   }
-  
-  
+
+
   arlecchino charge,
              attack:3, dash,
              attack:3, dash,
-             attack:3, dash, 
              attack:3, dash,
-             attack:3, dash, 
+             attack:3, dash,
+             attack:3, dash,
              attack:3;
-  
-    
+
+
 }

@@ -32,7 +32,7 @@ active nahida;
 let rotations = 6;
 
 while rotations {
-   
+
    nahida skill, burst, attack:2;
    yelan skill, burst, attack:1;
    yaoyao attack:1, skill;
@@ -42,5 +42,5 @@ while rotations {
    lisa attack:3, dash, attack:3, dash, attack:3, dash, attack:3, dash, attack:1;
 
 
-   rotations= rotations - 1; 
+   rotations= rotations - 1;
 }

@@ -1,0 +1,103 @@
+fn rand_delay(mean, stddev) {
+  let del = randnorm() * stddev + mean;
+  if del > (mean + mean) {
+    del = mean + mean;
+  }
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    rand_delay(12, 3);
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    rand_delay(3, 1);
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    rand_delay(3, 1);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+#-----------------------------------------------------
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="thewidsith" refine=5 lvl=90/90;
+neuvillette add set="marechausseehunter" count=4;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.1324 cd=0.662;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="thewidsith" refine=3 lvl=90/90;
+yae add set="goldentroupe" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=99.1 cr=0.1655 cd=0.7944;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.6612 em=99.1 cr=0.2648 cd=0.1324;
+
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
+zhongli add weapon="favlance" refine=1 lvl=90/90;
+zhongli add set="archaicpetra" count=4;
+zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
+zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.5958;
+
+options iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+ active neuvillette;
+
+ for let x=0; x<4; x=x+1 {
+neuvillette attack;
+
+ kazuha burst;
+ zhongli skill[hold=1], dash, dash, attack;
+ // wait for up to 10 frames to pick up hydro or electro crystallize
+ for let k=0; k<10; k=k+1 {
+   if .gadgets.crystallizeshard.hydro > 0 { pick_up_crystallize("hydro"); break; }
+   else if .gadgets.crystallizeshard.electro > 0 { pick_up_crystallize("electro"); break; }
+   wait(1);
+ }
+ yae skill:3;
+ kazuha skill, high_plunge;
+
+ neuvillette skill, charge, burst, charge;
+
+ zhongli skill[hold=1], dash, dash, attack;
+ // wait for up to 10 frames to pick up hydro or electro crystallize
+ for let k=0; k<10; k=k+1 {
+   if .gadgets.crystallizeshard.hydro > 0 { pick_up_crystallize("hydro"); break; }
+   else if .gadgets.crystallizeshard.electro > 0 { pick_up_crystallize("electro"); break; }
+   wait(1);
+ }
+ kazuha skill, high_plunge;
+ yae skill:3;
+
+ neuvillette charge, skill, charge;
+
+}
+wait(173);

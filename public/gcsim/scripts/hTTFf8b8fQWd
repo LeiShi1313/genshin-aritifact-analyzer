@@ -17,16 +17,16 @@ sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311 ; #main
 sara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
 sucrose char lvl=90/90 cons=6 talent=9,9,9;
-sucrose add weapon="hakushinring" refine=5 lvl=90/90; 
+sucrose add weapon="hakushinring" refine=5 lvl=90/90;
 #sucrose add weapon="prototypeamber" refine=5 lvl=90/90; #~53k DPS
 sucrose add set="viridescentvenerer" count=4;
 sucrose add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.3964 er=0.6612 em=679.92 cr=0.0662 cd=0.1324;
-																											
-																																	
+
+
 options swap_delay=12 iteration=1000;
 active raiden;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 raiden skill;
@@ -51,9 +51,9 @@ for let i=0; i<4; i=i+1 {
   sara burst;
   if .raiden.burst.ready {
     raiden burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
-  } else 
+  } else
     raiden attack, skill, attack, burst, attack:4, dash, attack:4, dash, attack:4, dash, attack:4;
-  } 
-  
+  }
+
 # Raiden e > Sucrose n1ed > DMC q e n1 > Sara e aim n1 > Sucrose ed q n2 > Raiden q n4e 3n4d
 # Has backup funneling logic to improve stddev

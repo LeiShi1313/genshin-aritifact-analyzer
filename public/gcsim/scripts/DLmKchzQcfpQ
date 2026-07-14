@@ -30,13 +30,13 @@ for let i=0; i<3; i=i+1 {
  nahida skill, burst, attack;
  kuki skill, attack;
  fischl skill, attack;
- mona skill, burst, attack:4, charge, dash, attack:4, charge, dash;
+ mona skill, burst, attack:5, charge, dash, attack:3, charge, dash;
  mona attack:4, skill, dash, attack:4;
- 
+
  nahida skill, burst, attack;
  kuki skill, attack;
  fischl attack, burst;
- mona skill, burst, attack:4, charge, dash, attack:4, charge, dash;
+ mona skill, burst, attack:5, charge, dash, attack:3, charge, dash;
  mona attack:4, skill, dash, attack:4;
  print("Rotation Done");
 

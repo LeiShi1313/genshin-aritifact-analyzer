@@ -2,7 +2,7 @@ mualani char lvl=90/90 cons=0 talent=9,9,9;
 mualani add weapon="sacjade" refine=1 lvl=90/90;
 mualani add set="obsidiancodex" count=4;
 mualani add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
-mualani add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.0662 cd=0.662 ;                                                                                                                                                                                                                                                                                    
+mualani add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.0662 cd=0.662 ;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
@@ -14,19 +14,19 @@ baizhu char lvl=90/90 cons=0 talent=9,9,9;
 baizhu add weapon="favcodex" refine=5 lvl=90/90;
 baizhu add set="scroll" count=5;
 baizhu add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
-baizhu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.1324 ;											                                                                                     
+baizhu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.1324 ;
 
 xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="favlance" refine=5 lvl=90/90;
 xiangling add set="ins" count=5;
 xiangling add stats hp=3571 atk=232 er=0.518 em=140.25 em=140.25 ; #main
-xiangling add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.4408 em=126.848 cr=0.21184 cd=0.10592 ;    
+xiangling add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.4408 em=126.848 cr=0.21184 cd=0.10592 ;
 options swap_delay=12 iteration=1000;
 
 active furina;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 type=dummy particle_threshold=520000 particle_drop_count=3; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 type=dummy particle_threshold=520000 particle_drop_count=3;
 
-for let i=0; i<3; i=i+1 { 
+for let i=0; i<3; i=i+1 {
   if i {
     xl attack:3;
   }

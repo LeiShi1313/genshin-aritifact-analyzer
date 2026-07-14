@@ -8,14 +8,14 @@ klee add set="fopl" count=4;
 klee add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 klee add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=118.92 cr=0.3641 cd=0.2648;
 
-xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
 xingqiu add weapon="favsword" refine=3 lvl=90/90;
 xingqiu add set="eosf" count=4;
 xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
-nahida add weapon="evenstar" refine=1 lvl=90/90;  
+nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="deepwood" count=4;
 #nahida add set="scroll" count=4;
 #nahida add set="tom" count=4;
@@ -35,18 +35,18 @@ energy every interval=480,720 amount=1;
 
 active nahida;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   nahida skill;
   if i > 0 && .nahida.burst.ready  && .nahida.energy == .nahida.energymax {
     nahida burst;
   } else {
     nahida attack:2;
   }
-  
+
   xingqiu skill, dash, burst, attack;
-  
+
   baizhu skill, attack, burst;
-  
+
   while .xingqiu.mods.xingqiuburst {
     switch {
       case (.previous-action == .action.charge || .previous-action == .action.skill) && .stam > 18:
@@ -61,5 +61,5 @@ for let i=0; i<4; i=i+1 {
         klee attack;
     }
   }
-  
+
 }

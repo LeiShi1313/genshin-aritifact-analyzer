@@ -10,7 +10,7 @@ faruzan add set="vv" count=5;
 faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
 faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
 kokomi add weapon="ttds" refine=5 lvl=90/90;
 kokomi add set="clam" count=4;
 kokomi add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359 ; #main
@@ -32,13 +32,13 @@ for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
   faruzan skill, burst;
   kokomi skill, attack;
-  lynette burst, skill, 
+  lynette burst, skill,
           attack:2, charge,
           attack:2, charge,
           attack;
   faruzan skill, aim;
   kokomi burst, attack:2;
-  lynette skill, attack:2, charge, 
+  lynette skill, attack:2, charge,
           attack, charge,
           attack, charge;
 

@@ -1,10 +1,10 @@
-neuvillette char lvl=90/90 cons=0 talent=9,9,9; 
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
 neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90 +params=[stacks=1];
 neuvillette add set="mh" count=4;
 neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
 neuvillette add stats def=39.36 def%=0.124 hp=1015.76 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
 
-xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="thecatch" refine=5 lvl=90/90;
 xiangling add set="eosf" count=5;
 xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
@@ -25,9 +25,9 @@ diona add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.27776 atk=26.464 atk%=0.
 # Noblesse Diona
 #diona add set="noblesseoblige" count=4;
 #diona add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
-#diona add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.1324;								
-																						
-							
+#diona add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.1324;
+
+
 # ----  Default Enemy
 options swap_delay=12 debug=true iteration=1000;
 target lvl=100 resist=0.1 hp=100000000 pos=0,2.4 radius=2;
@@ -48,6 +48,6 @@ for let i = 0; i < 3; i = i + 1 {
 }
 wait(173);
 
-#Neuv E N3 > 
+#Neuv E N3 >
 #Kazuha tEP Q > Diona Q hE > Xiangling QE dash > Neuv C Q E C >
 #Kazuha tEP > XL E dash N1 > Diona N2 tE > Neuv 2C

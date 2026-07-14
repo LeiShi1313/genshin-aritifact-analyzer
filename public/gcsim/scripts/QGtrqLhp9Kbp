@@ -42,20 +42,20 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=138.74 cr=0.1324 cd=0.4634; # DMG
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -63,11 +63,11 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   # Keqing DMG vs Yelan DMG
   #bennett skill, burst, attack;
   bennett skill, burst;
-  
+
   # CW might be decent with EE & TBS, but out of scope
   while !.yelan.skill.ready {
     if .status.keqingstiletto && .keq.normal > 1 {
@@ -82,11 +82,11 @@ for let i=0; i<4; i=i+1 {
       keq attack;
     }
   }
-  
+
   # Keqing DMG vs Yelan DMG
   #yelan attack, skill, attack;
   yelan skill, attack;
-  
+
   while .yelan.mods.yelanburst {
     if .status.keqingstiletto && .keq.normal > 1 {
       keq charge;

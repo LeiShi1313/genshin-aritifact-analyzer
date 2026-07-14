@@ -1,0 +1,79 @@
+# Kazuha Xianyun Citlali Bennett. Dolphin C2R1 team with C6 Kazuha. Only required cons are Xianyun C1 and Bennett C6 for this rotation to work; rest are just dps increases. Rotation is extremely precise, but with a less precise variation only being ~12k dps behind
+
+kazuha char lvl=90/90 cons=6 talent=10,10,10;
+kazuha add weapon="pjc" refine=1 lvl=90/90;
+kazuha add set="lno" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 cd=0.622; # main
+kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+kazuha add stats cr=0.0331*10 cd=0.0662*8 em=19.82*2;
+
+xianyun char lvl=90/90 cons=2 talent=10,10,10;
+xianyun add weapon="crane" refine=1 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; # main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+xianyun add stats atk=16.54*8 atk%=0.0496*4 er=0.0551*8;
+
+citlali char lvl=90/90 cons=2 talent=10,10,10;
+citlali add weapon="starcallerswatch" refine=1 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; # main
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+citlali add stats er=0.0551*8 em=19.82*4 cr=0.0331*8;
+
+bennett char lvl=90/90 cons=6 talent=10,10,10;
+bennett add weapon="fs" refine=1 lvl=90/90;
+bennett add set="ins" count=4;
+bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 cr=0.232 ; #main
+bennett add stats def%=0.062*2*0.84 def=19.68*2*0.84 hp=253.94*2*0.84 hp%=0.0496*2*0.84 atk=16.54*2*0.84 atk%=0.0496*2*0.84 er=0.0551*2*0.84 em=19.82*2*0.84 cr=0.0331*2*0.84 cd=0.0662*2*0.84;
+bennett add stats er=0.0551*8*0.84 cr=0.0331*4*0.84;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+fn KazuPlunge(){
+  kazuha jump;
+  if .airborne {
+    kazuha high_plunge[collision=rand()>0.5];
+  }
+}
+
+active bennett;
+
+for let i=0; i<4; i=i+1 {
+  bennett skill; # apply pyro for vv
+
+  xianyun skill, low_plunge, burst;
+
+  citlali skill, burst;
+
+  kazuha burst;
+
+  bennett burst;
+  wait(6); # small wait necessary for fs icd
+  bennett attack;
+
+  kazuha swap;
+  wait(11); # this is a very precise timing to get kazuha c6 buff on last plunge before second skill, but also to minimize time needed to wait for skill to get off cd
+  kazuha skill, high_plunge[collision=1]; # kazuha get no pyro a4; it is possible to get it, but it will allow one less melt
+  wait(12); # small wait to line up cryo app
+  KazuPlunge(); kazuha dash;
+  KazuPlunge(); kazuha dash;
+  KazuPlunge(); kazuha dash;
+  KazuPlunge();
+  kazuha skill, high_plunge[collision=1], dash;
+  KazuPlunge();
+  KazuPlunge(); # no longer buffed by kazuha c2 or instructor
+  # in order for the last plunge to melt, every single plunge before it must be frame perfect. it is extremely unlikely to get this in actual gameplay, which will be a ~30k dps loss
+  # if you cant get the last plunge to melt, it is better to skip it, which will be only ~12k dps loss
+
+  if i != 3 { # energy gathering skipped on last rot to display higher dps
+    bennett skill;
+    wait(54); # at KQMS er he must catch his own particles; can be skipped if he has ~3 more er subs
+
+    xianyun skill, low_plunge;
+
+    kazuha skill, high_plunge[collision=1];
+  }
+}

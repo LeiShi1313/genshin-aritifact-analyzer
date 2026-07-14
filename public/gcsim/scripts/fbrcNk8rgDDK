@@ -78,18 +78,17 @@ for let i = 0; i < 4; i = i + 1 {
   kuki skill, attack;
   fischl attack, burst;
   kokomi attack, burst,
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
-    attack:2, walk, 
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
     attack:2;
   print("done");
 }
-

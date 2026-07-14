@@ -5,7 +5,7 @@
 // source: suit.proto
 
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 import { Set, setFromJSON, setToJSON } from "./set";
 
 export const protobufPackage = "io.leishi.genshin.proto";

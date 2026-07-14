@@ -34,16 +34,15 @@ active chongyun;
 chongyun burst, skill;
 yaoyao skill;
 for let i = 0; i < 5; i = i + 1 {
-	xingqiu attack, skill[orbital=1], attack, burst[orbital=1], attack;
-	thoma burst, attack, skill, attack:2;
-	yaoyao burst, 
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack;
-	chongyun attack, burst, attack, skill, attack;
-	yaoyao skill, attack;
+  xingqiu attack, skill[orbital=1], attack, burst[orbital=1], attack;
+  thoma burst, attack, skill, attack:2;
+  yaoyao burst,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack;
+  chongyun attack, burst, attack, skill, attack;
+  yaoyao skill, attack;
     print("done");
 }
-

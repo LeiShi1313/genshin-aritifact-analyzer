@@ -37,7 +37,7 @@ fn clorinde_combo() {
   }
 }
 
-active fischl; 
+active fischl;
 
 fischl burst;
 xilonen skill, attack:2;
@@ -45,7 +45,7 @@ nahida skill, dash; pick_up_crystallize("electro");
 clorinde attack;
 clorinde_combo();
 clorinde burst;
-  
+
 for let r=0; r<5; r=r+1 { # 5 rotations (in addition to modified opening rotation)
   if .nahida.burst.ready {
     xilonen skill, attack:2;

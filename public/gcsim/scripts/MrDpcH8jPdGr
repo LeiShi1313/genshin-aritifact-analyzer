@@ -1,4 +1,4 @@
-# Yae Furina Kazuha Xianyun. ~22s Rot. Yae Taser plunge with grouping. Kazuha takes one Starwicker plunge. Xianyun refeshes VV/Hakushin mid rotation. Yae bursts every other rotation immediately after all plunges are spent, otherwise she fills time for the next rotation. 50% Collisons. 
+# Yae Furina Kazuha Xianyun. ~22s Rot. Yae Taser plunge with grouping. Kazuha takes one Starwicker plunge. Xianyun refeshes VV/Hakushin mid rotation. Yae bursts every other rotation immediately after all plunges are spent, otherwise she fills time for the next rotation. 50% Collisons.
 
 # Team - Options listed by DPS
 yae char lvl=90/90 cons=0 talent=9,9,9;
@@ -36,7 +36,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.3306 em=118.92 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,19 +48,19 @@ active yae;
 
 for let i=0; i<4; i=i+1 {
   yae skill:3;
-  
+
   furina skill, dash;
   # Attack with fav if off CD or burst deficient
   if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
     furina attack;
   }
   furina burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   # Kazuha wastes one buffed plunge
   kazuha skill, high_plunge, burst;
-  
+
   # 3 High plunges into totem refresh
   for let i=0;i<3;i=i+1 {
     if .xianyun.status.xianyun-airborne-buff {
@@ -75,10 +75,10 @@ for let i=0; i<4; i=i+1 {
     }
   }
   yae skill:3;
-  
+
   # VV + Hakushin, Kazuha here wastes another plunge
   xianyun attack:2; sleep(20); # for CD warning
-  
+
   # Spend remaining plunges
   while .xianyun.status.xianyun-airborne-buff || .status.yae_oldest_totem_expiry > 330 {
     if .xianyun.status.xianyun-airborne-buff {
@@ -93,7 +93,7 @@ for let i=0; i<4; i=i+1 {
     # When burst is available, skill cd refresh allows you to start the next rot immediately
     } else if .yae.burst.ready && .yae.energy == .yae.energymax {
       yae burst;
-	        kazuha skill, high_plunge;
+          kazuha skill, high_plunge;
       break;
     # More energy and A4 refesh
     } else if .kazuha.skill.ready {
@@ -107,5 +107,5 @@ for let i=0; i<4; i=i+1 {
       yae attack;
     }
   }
-  
+
 }

@@ -31,7 +31,7 @@ energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
 
-  
+
   kirara skill[hold=5], burst;
   kokomi skill, attack, charge, walk;
   collei skill, burst;
@@ -41,7 +41,7 @@ for let i=0; i<4; i=i+1 {
         attack:3,
         attack:3,
         attack:3,
-        attack:1;                
-if.nilou.burst.ready { nilou burst;} 
+        attack:1;
+if.nilou.burst.ready { nilou burst;}
 else { kokomi attack, burst, attack;}
 }

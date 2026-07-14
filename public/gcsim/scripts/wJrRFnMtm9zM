@@ -38,15 +38,15 @@ raiden skill;
 for let r = 0; r < 5; r = r + 1 { # End sim after 5 rotations
   kirara skill, burst;
   xingqiu skill, dash, burst, attack;
-  alhaitham skill[hold=1], low_plunge[short=1], 
-            attack:2, charge, dash, 
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:2, charge, dash,
             attack:3, charge, dash;
   kirara attack, skill, attack;
   alhaitham burst, attack;
   raiden skill, attack;
   alhaitham attack:3, jump,
-            attack:3, jump, 
+            attack:3, jump,
             attack:2, charge, jump,
-            attack:3, dash, 
+            attack:3, dash,
             attack:2;
 }

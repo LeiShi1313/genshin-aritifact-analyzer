@@ -6,7 +6,7 @@ wrio add set="mh" count=4;
 wrio add stats hp=4780 atk=311 em=187 atk%=0.466 cd=0.622;
 wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
 
-emilie char lvl=90/90 cons=6 talent=9,9,9; 
+emilie char lvl=90/90 cons=6 talent=9,9,9;
 emilie add weapon="lumidouceelegy" refine=5 lvl=90/90;
 emilie add set="totm" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; #main
@@ -18,7 +18,7 @@ mavuika add set="scroll" count=4;
 mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="instructor" count=4;
 xilonen add stats hp=3571 atk=232 def%=0.583 def%=0.43725 def%=0.43725 ; #main
@@ -32,7 +32,7 @@ wrio attack;
 for let i=0; i<4; i=i+1 {
   //if !i {
     emilie skill, attack;
-  //} else {  
+  //} else {
   //  emilie burst, attack;
   //}
   mavuika burst, charge, skill;

@@ -26,16 +26,16 @@ options swap_delay=12 iteration=1000;
 #--------------------------------------------
 
 active yelan;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
   yelan skill, attack:2, burst;
   bennett attack, burst, attack, skill;
   if .fischl.burst.ready {
-    fischl attack, burst; 
+    fischl attack, burst;
   } else {
-    fischl attack, skill; 
+    fischl attack, skill;
   }
   hutao skill,
     attack:2, charge, dash,

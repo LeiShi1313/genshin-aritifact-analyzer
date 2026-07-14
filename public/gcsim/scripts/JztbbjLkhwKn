@@ -36,7 +36,7 @@ for let i = 0; i < 4; i = i + 1 {
   if !i {
     mavuika skill;    # First rotation only
   }
-  ororon skill, burst;  
+  ororon skill, burst;
   chevreuse skill[hold=1], attack;
   if i {
     mavuika skill;
@@ -58,5 +58,5 @@ for let i = 0; i < 4; i = i + 1 {
   if .clorinde.burst.ready {
     clorinde burst;
   }
- 
+
 }

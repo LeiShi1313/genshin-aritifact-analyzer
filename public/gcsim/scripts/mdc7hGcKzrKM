@@ -28,23 +28,22 @@ active nahida;
 
 nahida skill;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	xingqiu burst, attack;
+  xingqiu burst, attack;
     xiangling skill, attack, burst;
-	layla skill, attack, burst;
-	nahida attack:3, skill, 
-		attack:3, charge;
-	xingqiu skill, dash, attack:2;
-	nahida attack:3, skill, 
-		attack, charge;
+  layla skill, attack, burst;
+  nahida attack:3, skill,
+    attack:3, charge;
+  xingqiu skill, dash, attack:2;
+  nahida attack:3, skill,
+    attack, charge;
     xiangling skill, attack;
-	layla skill, attack, burst;
-	nahida attack:3, dash, 
-		attack:3, skill, 
-		attack:3, charge;
-	print("done");
+  layla skill, attack, burst;
+  nahida attack:3, dash,
+    attack:3, skill,
+    attack:3, charge;
+  print("done");
 }
-

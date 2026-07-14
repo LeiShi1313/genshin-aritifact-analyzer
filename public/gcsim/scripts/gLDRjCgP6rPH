@@ -25,8 +25,8 @@ kazuha add stats hp=4780 atk=311 em=561;
 kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=118.92 cr=0.3641 cd=0.1324;
 
 options swap_delay=12 iteration=1000 duration=120;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 ; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 ; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 ;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 ;
 energy every interval=480,720 amount=1;
 
 
@@ -54,4 +54,3 @@ for {
       faruzan attack;
   }
 }
-

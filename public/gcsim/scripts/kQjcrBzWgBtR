@@ -23,7 +23,7 @@ kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
 kazuha add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=118.89 er=0.2202 cr=0.3966 cd=0.3963;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active neuvillette;
 
@@ -32,7 +32,7 @@ active neuvillette;
  childe attack:2, burst;
  xilonen skill, burst, attack:2;
  kazuha skill[hold=1], high_plunge, burst;
- 
+
  neuvillette charge, skill, charge, burst;
  xilonen skill, attack:2;
  kazuha skill, high_plunge;

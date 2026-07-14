@@ -28,38 +28,38 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=9999999;
 
 active nahida;
 for {
-	switch {
-		case !.debuff.res.t0.nahida-e && .nahida.skill.ready && .nahida.swap.ready:
-			nahida skill, attack, charge;
+  switch {
+    case !.debuff.res.t0.nahida-e && .nahida.skill.ready && .nahida.swap.ready:
+      nahida skill, attack, charge;
 
-		case .yaemiko.skill.ready && .yaemiko.swap.ready && .yaemiko.tags.totems < 3:
-			yaemiko skill;
-		case .yaemiko.burst.ready && .yaemiko.swap.ready && .yaemiko.tags.totems == 3:
-			yaemiko burst;
+    case .yaemiko.skill.ready && .yaemiko.swap.ready && .yaemiko.tags.totems < 3:
+      yaemiko skill;
+    case .yaemiko.burst.ready && .yaemiko.swap.ready && .yaemiko.tags.totems == 3:
+      yaemiko burst;
 
-		case .yunjin.burst.ready && .yunjin.swap.ready:
-			yunjin burst;
-		case .yunjin.skill.ready && .yunjin.swap.ready:
-			yunjin skill;
+    case .yunjin.burst.ready && .yunjin.swap.ready:
+      yunjin burst;
+    case .yunjin.skill.ready && .yunjin.swap.ready:
+      yunjin skill;
 
-		case .noelle.burst.ready && .noelle.swap.ready && !.noelle.status.noelle-burst:
-			noelle burst;
-		case .noelle.skill.ready && .noelle.swap.ready:
-			noelle skill;
+    case .noelle.burst.ready && .noelle.swap.ready && !.noelle.status.noelle-burst:
+      noelle burst;
+    case .noelle.skill.ready && .noelle.swap.ready:
+      noelle skill;
 
-		case .noelle.normal == 4:
-			noelle dash;
-		case .noelle.status.noelle-burst:
-			noelle attack;
+    case .noelle.normal == 4:
+      noelle dash;
+    case .noelle.status.noelle-burst:
+      noelle attack;
 
-		// defaults
-		case .nahida.onfield:
-			nahida attack;
-		case .noelle.onfield:
-			noelle attack;
-		case .yunjin.onfield:
-			yunjin attack;
-		case .yaemiko.onfield:
-			yaemiko attack;
-	}
+    // defaults
+    case .nahida.onfield:
+      nahida attack;
+    case .noelle.onfield:
+      noelle attack;
+    case .yunjin.onfield:
+      yunjin attack;
+    case .yaemiko.onfield:
+      yaemiko attack;
+  }
 }

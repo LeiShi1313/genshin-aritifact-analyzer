@@ -1,4 +1,4 @@
-# Diluc Furina Kazuha Xianyun. ~24s Rot. Diluc Vape plunge. Kazuha feeds particles to Xianyun, then bursts after Xianyun, absorbing Hydro. No Pyro VV. 3 skill uses bookend Diluc's field time, needed for energy. 50% Collisions. 
+# Diluc Furina Kazuha Xianyun. ~24s Rot. Diluc Vape plunge. Kazuha feeds particles to Xianyun, then bursts after Xianyun, absorbing Hydro. No Pyro VV. 3 skill uses bookend Diluc's field time, needed for energy. 50% Collisions.
 
 # Team - Options Listed by DPS
 diluc char lvl=90/90 cons=0 talent=9,9,9;
@@ -11,7 +11,7 @@ diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 
 #diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 #diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # RS
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 #furina add set="gt" count=4;
@@ -34,7 +34,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.4959 em=59.46 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -44,15 +44,15 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
 # Rotation
 active diluc; # SS stacks
 
-for let r = 0; r < 4; r = r + 1 { 
+for let r = 0; r < 4; r = r + 1 {
   furina skill, dash, attack, burst;
 
   kazuha skill, high_plunge;
 
   xianyun skill, high_plunge, burst;
 
-  kazuha burst;  
-  
+  kazuha burst;
+
   diluc skill:3, burst;
   for let h=0; h<8; h=h+1 {
     diluc jump;

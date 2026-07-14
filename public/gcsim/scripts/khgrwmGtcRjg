@@ -34,21 +34,21 @@ fn clorinde_combo() {
 
 }
 
-active nahida; 
+active nahida;
 
 nahida skill;
 
 while 1 {
-  
+
   clorinde_combo();
-  
+
   if .clorinde.burst.ready {
-    
+
     clorinde burst;
 
   }
 
   nahida skill, attack, charge;
 
-  
+
 }

@@ -39,6 +39,6 @@ for let x=0; x<3; x=x+1 {
  while !.jean.mods.favonius-cd {
   jean attack;}
  yelan attack:8,skill,attack;
- 
+
 }
 wait(25);

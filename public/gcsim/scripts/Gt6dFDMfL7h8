@@ -1,4 +1,4 @@
-wanderer char lvl=90/90 cons=0 talent=9,9,9; 
+wanderer char lvl=90/90 cons=0 talent=9,9,9;
 wanderer add weapon="thewidsith" refine=3 lvl=90/90;
 wanderer add set="dpc" count=4;
 wanderer add stats hp=4780 atk=311 atk%=0.466 cr=0.311 anemo%=0.466 ; #main
@@ -15,7 +15,7 @@ dehya add weapon="aquamarine" refine=1 lvl=90/90;
 dehya add set="wt" count=2;
 dehya add set="gd" count=2;
 dehya add stats hp=4780 atk=311 em=561;
-dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;	
+dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
@@ -35,9 +35,9 @@ for let i = 0; i < 5; i = i + 1 {
   bennett skill, burst;
   dehya skill,attack;
 if .wanderer.burst.ready {
-    wanderer attack, burst;}  
+    wanderer attack, burst;}
   wanderer attack:2, skill, attack, charge;
-  	
+
   while .wanderer.skydweller-points > 3 {
     if .wanderer.normal < 3 {
       wanderer attack;
@@ -48,9 +48,9 @@ if .wanderer.burst.ready {
     } else {
       break;
     }
- 
- } 
+
+ }
   wanderer skill,low_plunge;
-  
+
 
 }

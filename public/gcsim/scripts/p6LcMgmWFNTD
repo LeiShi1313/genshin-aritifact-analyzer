@@ -25,7 +25,7 @@ amy add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er
 #amy add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 #amy add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # FT
 
-diona char lvl=90/90 cons=6 talent=9,9,9; 
+diona char lvl=90/90 cons=6 talent=9,9,9;
 diona add weapon="favbow" refine=4 lvl=90/90;
 diona add set="deepwood" count=4;
 #diona add set="no" count=4;
@@ -34,7 +34,7 @@ diona add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
 diona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1653 em=39.64 cr=0.331 cd=0.5958;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,18 +46,18 @@ active amy;
 
 for let i=0; i<4; i=i+1 {
   amy attack, skill;
-  
+
   diona skill[hold=1], burst;
-  
+
   nahida skill, attack, burst;
-  
+
   haitham skill[hold=1], low_plunge[short=1], attack:3, dash, attack:3, dash, attack:2;
-  
+
   amy attack:2, burst;
-  
+
   haitham burst;
-  
+
   nahida attack, skill, charge;
-  
+
   haitham attack:3, dash, attack:3, charge, attack:3, dash, attack:3, dash, attack:3, charge;
 }

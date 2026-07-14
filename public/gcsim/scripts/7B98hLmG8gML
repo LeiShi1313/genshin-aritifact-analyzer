@@ -34,7 +34,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=158.56 cr=0.2648 cd=0.1324; # EM
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 #hurt every interval=50, 70 amount=1000,3000 element=physical; # Aggressive
@@ -42,14 +42,14 @@ hurt every interval=300, 450 amount=1000,3000 element=physical;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000;
 
 # Rotation
 active bennett;
 
 for let i=0; i<4; i=i+1 {
   bennett skill, burst;
-  
+
   # Prioritize burst
   amy attack;
   if !.amy.skill.ready {
@@ -57,16 +57,16 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
+
   # Burst+C4 Combo every other rotation
   if .chev.burst.ready {
     chev burst, skill[hold=1]:2;
   } else {
     chev skill[hold=1], attack:1;
   }
-  
+
   # Beidou
-  while .thoma.mods.bennett-field || .status.bennettburst { 
+  while .thoma.mods.bennett-field || .status.bennettburst {
     switch {
       case .thoma.skill.ready:
         thoma skill;
@@ -78,6 +78,6 @@ for let i=0; i<4; i=i+1 {
         thoma attack;
     }
   }
-  
+
   print("done");
 }

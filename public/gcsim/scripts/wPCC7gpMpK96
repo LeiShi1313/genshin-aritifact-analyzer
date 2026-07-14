@@ -1,4 +1,4 @@
-keqing char lvl=90/90 cons=0 talent=9,9,9; 
+keqing char lvl=90/90 cons=0 talent=9,9,9;
 keqing add weapon="kagotsurubeisshin" refine=1 lvl=90/90;
 keqing add set="thunderingfury" count=2;
 keqing add set="gladiatorsfinale" count=2;
@@ -18,8 +18,8 @@ thoma add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 thoma add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
-yelan add weapon="favoniuswarbow" lvl=90/90 refine=3;	
-yelan add set="emblemofseveredfate" count=4;										
+yelan add weapon="favoniuswarbow" lvl=90/90 refine=3;
+yelan add set="emblemofseveredfate" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
 yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 
@@ -32,21 +32,19 @@ for let x=0; x<4; x=x+1 {
   xingqiu skill,burst,attack;
   yelan burst,attack,skill,attack;
   thoma skill,attack,burst;
-  
+
   keqing skill,skill;
   keqing attack,charge;
   keqing attack,charge;
   keqing attack,charge;
   keqing attack,charge;
   keqing attack,charge;
-  
+
   yelan attack,skill,attack;
-  
+
   keqing skill,skill;
   keqing attack,charge;
-  keqing attack,charge;  
-  keqing attack,charge;  
-  keqing attack,charge;  
+  keqing attack,charge;
+  keqing attack,charge;
+  keqing attack,charge;
 }
-
-

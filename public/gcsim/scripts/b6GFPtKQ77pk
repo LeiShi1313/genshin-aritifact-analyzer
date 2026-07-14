@@ -8,7 +8,7 @@ kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359; #kokomi | 14
 kokomi add stats hp=1015.76 hp%=0.4955 atk=33.07 atk%=0.5946 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.0661 cd=0.1321;
                 #hp 4[2]    hp% 10[8]  atk 2[0]  atk% 12[10] def 2[0]  def% 2[0]   er 2[0]   em 2[0]  cr 2[0]   cd 2[0]
                 #sub; total[distributed] rolls
-                
+
 sayu char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=90];
 sayu add weapon="favgs" refine=3 lvl=90/90;
 sayu add set="vv" count=4;
@@ -23,7 +23,7 @@ fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #69.15 / 129.26 | 111.01 er
 fischl add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 er=0.1101 em=39.63 cr=0.3305 cd=0.7926;
                 #hp 2[0]   hp% 2[0]   atk 2[0]  atk% 4[2]   def 2[0]  def% 2[0]   er 2[0]   em 2[0]  cr 10[8]  cd 12[10]
-                
+
 furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
 furina add weapon="harbingerofdawn" refine=5 lvl=90/90;
 #furina add weapon="wolffang" refine=1 lvl=90/90;
@@ -109,7 +109,7 @@ for let i=0; i<3; i=i+1 {
     fischl attack;
   }
   fischl burst;
-  
+
   kokomi burst;
   while .status.kokomiburst {
     switch {
@@ -123,6 +123,6 @@ for let i=0; i<3; i=i+1 {
         kokomi walk;
     }
   }
-  
+
   sayu skill[hold=30];
 }

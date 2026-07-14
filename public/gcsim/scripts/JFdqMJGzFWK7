@@ -21,7 +21,7 @@ thoma add set="flowerofparadiselost" count=4;
 thoma add stats def%=0.124 def=39 hp=5288 hp%=0.0992 atk=344 atk%=0.0992 er=0.6612 em=680 cr=0.2648 cd=0.1324;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=-2.1,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=-2.1,2.4 hp=999999999;
 target lvl=100 resist=0.1 radius=2 pos=2.1,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
@@ -32,25 +32,25 @@ active albedo;
 for let i=0; i<5; i=i+1 {
 
     albedo skill, attack;
-  
+
     if .nahida.burst.ready {
       nahida skill, burst, attack;
     } else {
       nahida skill, attack, charge;
     }
-    
+
     if .xingqiu.skill.ready {
       xingqiu skill, burst, attack, charge;
     } else {
       xingqiu attack, skill, burst, attack, charge;
     }
-    
+
     thoma skill, attack:2, burst, attack;
-    nahida attack:3, dash, 
-      attack:3, dash, 
-      attack:6, dash, 
-      attack:3, dash, 
+    nahida attack:3, dash,
+      attack:3, dash,
+      attack:6, dash,
+      attack:3, dash,
       attack:3;
 }
-	
-	#Creado por Canelita el 7 de sept del 2023
+
+  #Creado por Canelita el 7 de sept del 2023

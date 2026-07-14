@@ -34,11 +34,11 @@ for let i = 0; i < 5; i = i + 1 {
   lisa skill[hold=1], attack:3;
   alhaitham burst;
   lisa burst;
-  alhaitham attack:3, dash, 
-            attack:3, charge, 
-            attack:3, dash, 
-            attack:3, skill[hold=1], low_plunge, 
-            attack:3, dash, 
+  alhaitham attack:3, dash,
+            attack:3, charge,
+            attack:3, dash,
+            attack:3, skill[hold=1], low_plunge,
+            attack:3, dash,
             attack:3;
   print("rotation done");
 }

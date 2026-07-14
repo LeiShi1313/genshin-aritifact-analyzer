@@ -26,7 +26,7 @@ options swap_delay=12 iteration=1000;
 
 active mavuika;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn mualani_combo2() {
@@ -56,17 +56,17 @@ fn mualani_combo3() {
 }
 
 for let i=0; i<5; i=i+1 {
-  
+
   mona skill;
-  
+
   if .mavuika.burst.ready {
     mavuika burst, skill, dash;
   } else {
     mavuika charge, skill[hold=1];
   }
-  
+
   mona burst;
-  
+
   sucrose attack, skill, dash;
   if .sucrose.burst.ready {
     sucrose burst;
@@ -79,5 +79,5 @@ for let i=0; i<5; i=i+1 {
   } else {
     mualani_combo3();
   }
-  
+
 }

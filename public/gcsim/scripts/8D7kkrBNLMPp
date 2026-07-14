@@ -35,10 +35,10 @@ for let i=0; i<4; i=i+1 {
   if i != 0 { kuki attack; }
   kuki skill; print("kuki_skill_1");
   nahida skill, burst;
-  furina skill, burst; 
-  alhaitham skill[hold=1], low_plunge[short=1], 
-            attack:2, charge, dash, 
-            attack:3, charge; 
+  furina skill, burst;
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:2, charge, dash,
+            attack:3, charge;
   kuki burst;
   alhaitham burst;
   kuki skill; print("kuki_skill_2");
@@ -47,7 +47,7 @@ for let i=0; i<4; i=i+1 {
             attack:2, charge,
             attack:3, jump,
             attack:3, charge,
-            attack:3, jump, 
-            attack:3, dash, attack:2; 
-            
+            attack:3, jump,
+            attack:3, dash, attack:2;
+
 }

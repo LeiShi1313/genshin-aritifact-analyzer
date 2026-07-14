@@ -27,7 +27,7 @@ citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.3972 cd=0.331;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,11 +46,11 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   bennett skill, burst, attack;
-  
+
   citlali skill, attack, burst;
-  
+
   aetherpyro skill[hold=1], attack;
   while .yelan.mods.yelanburst {
     switch {
@@ -64,6 +64,6 @@ for let i=0; i<4; i=i+1 {
         aetherpyro attack;
     }
   }
-  
+
   bennett skill;
 }

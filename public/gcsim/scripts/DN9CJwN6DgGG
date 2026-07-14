@@ -1,5 +1,5 @@
 
-raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden char lvl=90/90 cons=0 talent=9,9,9;
 raiden add weapon="deathmatch" refine=1 lvl=90/90;
 raiden add set="eosf" count=5;
 raiden add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
@@ -36,7 +36,7 @@ active mavuika;
 for let i = 0; i < 4; i = i + 1 {
   ororon skill, burst;
   chev burst, skill[hold=1];
-  mavuika burst, charge:2, dash, charge:2, dash, charge:2, dash, charge:2, dash, charge, dash, skill; 
+  mavuika burst, charge:2, dash, charge:2, dash, charge:2, dash, charge:2, dash, charge, dash, skill;
   if !i {
     raiden skill;
   }

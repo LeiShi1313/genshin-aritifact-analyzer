@@ -25,8 +25,8 @@ kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
 kazuha add stats atk=33.08 atk%=0.0992 hp=507.88 hp%=0.0992 def=39.36 def%=0.124 cr=0.3972 cd=0.3972 er=0.2204 em=118.92;
 
 active nahida;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=2 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=2 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {

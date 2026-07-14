@@ -1,0 +1,106 @@
+# use truncated normal distribution for random delay
+fn rand_delay(mean, stddev, min, max) {
+  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
+  let del = randnorm() * stddev + mean;
+
+  # truncate random value according to min and max
+  if del < min {
+    del = min;
+  } else if del > max {
+    del = max;
+  }
+
+  # execute delay
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.swap {
+    # add delay before swap
+      # ~3% chance at 6
+      # ~7% chance at 20
+    rand_delay(14, 4, 6, 20);
+  } else if prev_action_id == .action.attack && action_id == .action.attack {
+    // no delay
+  } else if prev_action_id == .action.attack && action_id == .action.charge {
+    // no delay
+  } else if prev_action_id == .action.swap && action_id == .action.burst {
+    // no delay
+  } else if prev_action_id != .action.swap  {
+    # add delay before every non-swap
+      # ~30% chance at 0
+      # 5% chance at 8
+    rand_delay(2, 4, 0, 8);
+  } else if prev_action_id == .action.swap {
+    # add delay after swap to account for repositioning
+      # ~16% chance at 6
+      # ~16% chance at 18
+    rand_delay(12, 6, 6, 18);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="rust" refine=3 lvl=90/90;
+yoimiya add set="gd" count=4;
+yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
+xingqiu add set="emblemofseveredfate" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.331 cd=0.7944;
+
+options swap_delay=1 iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active xingqiu;
+for let x=0; x<6; x=x+1 {
+  xingqiu attack, skill, dash, burst, attack;
+  bennett attack, skill, burst, attack;
+  if .fischl.skill.ready {
+    fischl skill, attack;
+  } else {
+    fischl attack, burst;
+  }
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  if .yoimiya.burst.ready && .yoimiya.energy == .yoimiya.energymax {
+    yoimiya burst;
+    bennett attack:2, skill;
+  } else {
+    fischl attack:3;
+    bennett attack:2, skill;
+  }
+}
+
+# XQ N1 E dash Q N1 > Bennett N1 E Q N1 > Fischl E N1 > Yoimiya E 3[N5D] N1 > Yoimiya Q > Bennett N2E >
+# XQ N1 E dash Q N1 > Bennett N1 E Q N1 > Fischl N1 Q > Yoimiya E 3[N5D] N1 > Fischl N3 > Bennett N2E >

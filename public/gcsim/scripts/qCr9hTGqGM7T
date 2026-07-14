@@ -26,25 +26,23 @@ luminedendro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=
 
 # ----  Default Enemy
 active yaemiko;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	if !i {
-		yae attack, skill:3;
-	} else {
-		yae attack, skill:2, attack, skill, attack;
-	}
-	sucrose burst, attack;
-	fischl attack:2, burst;
-	luminedendro skill, burst, attack;
-	sucrose attack, charge;
-	yae attack, burst, attack, skill, attack, skill, attack, skill;
-	sucrose attack, charge, attack, skill, dash, attack;
-	fischl attack:2, skill;
-	luminedendro attack,skill;
-	yae attack:2, dash, attack:2;
-	sucrose skill, dash, attack:2, charge, attack:2, charge;
+  if !i {
+    yae attack, skill:3;
+  } else {
+    yae attack, skill:2, attack, skill, attack;
+  }
+  sucrose burst, attack;
+  fischl attack:2, burst;
+  luminedendro skill, burst, attack;
+  sucrose attack, charge;
+  yae attack, burst, attack, skill, attack, skill, attack, skill;
+  sucrose attack, charge, attack, skill, dash, attack;
+  fischl attack:2, skill;
+  luminedendro attack,skill;
+  yae attack:2, dash, attack:2;
+  sucrose skill, dash, attack:2, charge, attack:2, charge;
 }
-
-

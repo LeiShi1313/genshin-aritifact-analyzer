@@ -10,7 +10,7 @@ import { Set } from "../../genshin/set";
 import { AttributeType } from "../../genshin/attribute";
 import { hashBuild } from "../../utils/hash";
 import { toggleBuild  } from "../../store/reducers/build";
-import { encodeBuild } from "../../utils/build";
+import { encodeBuild, getBuildDisplayName } from "../../utils/build";
 
 const badgeByIdx = (idx) =>
   idx === 0
@@ -103,7 +103,7 @@ const BuildRow = ({ build, setPendingDelete, isPreset = false }) => {
             </div>
             <div>
               <div className="font-bold">
-                {build.name ? t(build.name) : t("Unnamed Build")}
+                {getBuildDisplayName(build, t)}
               </div>
               <div className="text-sm opacity-50">
                 {t(Character[build.character].toLowerCase(), {

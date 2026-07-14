@@ -42,7 +42,7 @@ while 1 {
     bennett burst, attack:2;
   } else if .venti.skill.ready {
     venti skill;
-  } else if .venti.burst.ready { 
+  } else if .venti.burst.ready {
     set_player_pos(0,-4);
     venti burst;
     set_player_pos(0,-1.5);

@@ -37,7 +37,7 @@ nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.1655 cd=0.7282; # EDC/MagicGuide
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -57,15 +57,15 @@ for let i=0; i<4; i=i+1 {
   if i > 0 {
     nahida attack, charge;
   }
-  
+
   furina skill, dash, burst;
-  
+
   dori skill, attack:2, dash, attack:2, burst;
-  
+
   lisa burst, skill[hold=1];
   lisa attack:1;
   #wait(20);
-  
+
   while .furina.mods.furina-burst {
     if .dori.skill.ready && .dori.swap.ready {
       dori skill;

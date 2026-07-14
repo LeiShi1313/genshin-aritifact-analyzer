@@ -1,5 +1,5 @@
 target lvl=100 resist=0.1 radius=1 pos=0,1.1 hp=100000000;
-options iteration=1000 duration=81.5 swap_delay=6; 
+options iteration=1000 duration=81.5 swap_delay=6;
 
 raidenshogun char lvl=90/90 cons=0 talent=3,10,9;
 raidenshogun add weapon="thecatch" refine=5 lvl=90/90;
@@ -34,7 +34,7 @@ for let i=0; i<4; i=i+1 {
   yelan burst, attack;
   kazuha burst, attack;
   if .fischl.burst.ready {
-    fischl burst;  
+    fischl burst;
   }else {
     fischl skill;
   }
@@ -44,12 +44,12 @@ for let i=0; i<4; i=i+1 {
   # kazuha skill, high_plunge;
 }
 
-# Rotation : 
+# Rotation :
 # Raiden E Dash NA
 # Yelan Q NA
-# Kazuha Q NA 
-# Fischl Q/E 
+# Kazuha Q NA
+# Fischl Q/E
 # Kazuha NA E P
 # Yelan NA > E > NA > E > NA
-# Raiden Q 3N3C N1C 
+# Raiden Q 3N3C N1C
 # repeat

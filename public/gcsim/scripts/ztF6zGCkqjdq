@@ -1,7 +1,7 @@
 # Raiden Chevreuse Mavuika Lisa. ~18 Rot. Raiden Mavuika Overload, Raiden bursts every rotation, Mavuika every other with 2[C2D] ED. Lisa burst every rotation before raiden and covers cooldown with electro Aura for Mavuika overload.
 
 # Team - Options listed by DPS
-raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden char lvl=90/90 cons=0 talent=9,9,9;
 raiden add weapon="deathmatch" refine=1 lvl=90/90;
 raiden add set="emblem" count=4;
 raiden add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
@@ -29,7 +29,7 @@ lisa add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.2317 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -49,7 +49,7 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     mav attack, skill;
   }
-  
+
   chevreuse burst, skill[hold=1]:3;
 
   lisa skill[hold=1];
@@ -57,6 +57,6 @@ for let i = 0; i < 4; i = i + 1 {
     lisa attack;
   }
   lisa burst;
-  
+
   raiden burst, attack:4, dash, attack:4, skill, attack:4, dash, attack:4;
 }

@@ -31,11 +31,9 @@ energy every interval=480,720 amount=1;
 
 
 for let x =0 ; x<5; x=x+1 {
-	yelan attack, skill, burst, attack;
+  yelan attack, skill, burst, attack;
     layla burst, attack, skill;
-	bennett attack, burst, attack, skill, attack;
-	yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
-	bennett skill, attack;
+  bennett attack, burst, attack, skill, attack;
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  bennett skill, attack;
 }
-
-

@@ -33,7 +33,7 @@ for let i=0; i<2; i=i+1 {
   sigewinne skill, dash;
   mona skill, burst;
   chasca skill, aim:4, skill, burst;
-  
+
   sigewinne skill, dash;
   mona skill, burst;
   chasca skill, aim:4, aim[bullets=4];

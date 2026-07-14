@@ -30,19 +30,18 @@ energy every interval=480,720 amount=1;
 active kokomi;
 
 for let i = 0; i < 5; i = i + 1 {
-	kokomi attack, skill;
-	if .fischl.skill.ready {
-		fischl attack:2, skill;
-	} else {
-		fischl attack:2, burst;
-	}
-	thoma burst, attack, skill, attack:3;
-	luminedendro skill, burst; wait (30); luminedendro attack;
-	kokomi burst, attack:2, charge, jump,
-		attack:2, charge, jump,
-		attack:2, charge, jump,
-		attack:2, charge;
-	luminedendro skill, attack:3;
+  kokomi attack, skill;
+  if .fischl.skill.ready {
+    fischl attack:2, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  thoma burst, attack, skill, attack:3;
+  luminedendro skill, burst; wait (30); luminedendro attack;
+  kokomi burst, attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge;
+  luminedendro skill, attack:3;
     print("done");
 }
-

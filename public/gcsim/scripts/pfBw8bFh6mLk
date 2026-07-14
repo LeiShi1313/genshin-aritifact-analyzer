@@ -32,8 +32,8 @@ energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=1000 ;
 active xq;
 
-#action list 
- 
+#action list
+
 for let r = 0; r < 5; r = r + 1 {
   xingqiu skill, dash, burst, attack;
   if r == 0 {
@@ -49,11 +49,11 @@ for let r = 0; r < 5; r = r + 1 {
   alhaitham attack:3, dash,
             attack:3, dash,
             attack:3, dash,
-            attack:3;         
+            attack:3;
   kirara skill, attack;
-  alhaitham skill[hold=1], low_plunge, 
+  alhaitham skill[hold=1], low_plunge,
            attack:3,dash,
            attack:3,dash,
            attack:3;
-   
+
 }

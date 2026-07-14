@@ -22,8 +22,8 @@ rosaria add set="eosf" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-						
-																			
+
+
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=10;
@@ -38,7 +38,7 @@ for let i=0; i<4; i=i+1 {
   chongyun burst, skill;
   rosaria skill, burst;
   amber aim[bunny=1], skill, dash, aim[bunny=1], attack:2;
-  
+
   for let x = 0; x< 3; x=x+1 {
     let weak = rand();
     if weak > 0.3 {
@@ -47,8 +47,7 @@ for let i=0; i<4; i=i+1 {
     }
     else {
       amber aim, dash;
-      
+
     }
   }
 }
-

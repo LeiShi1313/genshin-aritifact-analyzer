@@ -5,7 +5,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) || ( char_id == .keys.char.bennett && action_id == .action.burst ) {
     pick_up_crystallize("any"); # Pick up crystallize before every dash and Yelan E
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -57,4 +57,3 @@ for let x=0; x<4; x=x+1 {
   bennett skill, attack;
   navia   skill[hold=1], attack:3, dash, attack:2;
 }
-

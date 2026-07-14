@@ -32,26 +32,26 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.6612 em=158.56 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active fischl;
 
 for let i=0; i<4; i=i+1 {
   fischl skill, attack;
-  
+
   furina skill, dash, attack, burst;
-  
+
   xianyun attack, skill, low_plunge, attack, burst, attack;
-  
+
   fischl attack:2, burst;
-  
+
   let plunges = 0;
   cyno skill, burst, attack; # More comfy
   #cyno burst, skill;
@@ -70,5 +70,5 @@ for let i=0; i<4; i=i+1 {
       cyno attack;
     }
   }
-  
+
 }

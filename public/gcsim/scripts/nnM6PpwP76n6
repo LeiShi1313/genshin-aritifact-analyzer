@@ -30,7 +30,7 @@ kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk
 
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=0.1 radius=3 pos=0,3.3 hp=100000000;
-//target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+//target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active furina;
@@ -45,4 +45,3 @@ for let i=0; i<5; i=i+1 {
   kuki burst, attack;
   nahida attack, charge;
 }
-

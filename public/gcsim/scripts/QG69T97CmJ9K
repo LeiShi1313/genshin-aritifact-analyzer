@@ -8,7 +8,7 @@ yelan add set="eosf" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.4660 cr=0.311;
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
-dehya char lvl=90/90 cons=0 talent=9,9,9; 
+dehya char lvl=90/90 cons=0 talent=9,9,9;
 dehya add weapon="rainslasher" refine=5 lvl=90/90;
 dehya add set="shimenawa" count=4;
 dehya add stats hp=4780 atk=311 em=187 pyro%=0.4660 cr=0.311;
@@ -45,4 +45,3 @@ for let x=0; x<5; x=x+1 {
   kazuha skill, high_plunge;
   bennett skill;
 }
-

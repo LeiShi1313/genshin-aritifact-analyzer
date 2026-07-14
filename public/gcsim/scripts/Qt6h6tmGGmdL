@@ -1,4 +1,4 @@
-# Razor Furina Fischl Bennett. ~20s Rot. Overvape Razor using C6 Bennett. ATK > Pyro Goblet. Fischl Q/E in Bennett Q. Self-Overloads not implemented.  
+# Razor Furina Fischl Bennett. ~20s Rot. Overvape Razor using C6 Bennett. ATK > Pyro Goblet. Fischl Q/E in Bennett Q. Self-Overloads not implemented.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
@@ -42,7 +42,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -56,16 +56,16 @@ fischl skill, attack;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
-  
+
   bennett skill, burst;
-  
+
   amy attack;
   if !.amy.skill.ready {
     amy attack, burst;
   } else {
     amy skill;
   }
-  
+
   # Razor out of burst actions; account for energy / CD
   while !.razor.mods.razor-q {
     if .razor.burst.ready && .razor.skill.ready {
@@ -80,8 +80,8 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  # Razor Main DPS window 
-  while .razor.infusion.bennett-fire-weapon { 
+  # Razor Main DPS window
+  while .razor.infusion.bennett-fire-weapon {
   #while .furina.skill.cd {
     if .razor.normal > 3  && .razor.skill.ready {
        razor skill, dash;
@@ -91,8 +91,7 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
-  bennett skill, dash;
-  
-}
 
+  bennett skill, dash;
+
+}

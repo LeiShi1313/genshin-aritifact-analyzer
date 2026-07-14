@@ -28,7 +28,7 @@ bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 
 
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 
 active aino;
@@ -41,7 +41,7 @@ for let r = 0; r < 4; r = r + 1 {
   }
   ineffa skill;
   if .ineffa.burst.ready && .ineffa.energy == .ineffa.energymax {
-	  ineffa burst;
+    ineffa burst;
   } else {
     ineffa attack:2;
   }
@@ -51,4 +51,3 @@ for let r = 0; r < 4; r = r + 1 {
 wait(82); #wait for chasca dmg before sim ends
 
 #Aino EQ -> Bennett EQ (N1 for Fav) -> Ineffa E Q(if ready) -> Chasca 4C[6 bullets] C[4 bullets]
-

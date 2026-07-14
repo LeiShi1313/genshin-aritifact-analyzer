@@ -14,7 +14,7 @@ razor char lvl=90/90 cons=6 talent=9,9,9;
 #razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; # main
 #razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK Gob
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="emblem" count=4;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; # main
@@ -38,7 +38,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.4634;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -50,19 +50,19 @@ active razor; # SS Stacks
 #razor skill, dash; # Optional
 
 fischl skill, attack;
-  
+
 for let i=0; i<4; i=i+1 {
   bennett skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   fischl attack;
   if .fischl.burst.ready && .fischl.energy == .fischl.energymax {
     fischl attack, burst;
   } else {
     fischl skill;
   }
-  
+
   # Razor out of burst actions; account for energy deficiency
   while !.razor.mods.razor-q {
     if .razor.burst.ready && .razor.skill.ready {
@@ -88,4 +88,3 @@ for let i=0; i<4; i=i+1 {
     }
   }
 }
-

@@ -18,7 +18,7 @@ kirara add weapon="favoniussword" refine=3 lvl=90/90;
 kirara add set="instructor" count=4;
 kirara add stats hp=3571 atk=232 hp%=0.3495 dendro%=0.466 cr=0.23325 ; #main
 kirara add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.63916 em=31.712 cr=0.05296 cd=0.10592;
-			
+
 options swap_delay=1 iteration=500;
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
@@ -36,11 +36,11 @@ active fischl;
 
 for let r = 0; r < 4; r = r + 1 { # End sim after 4 rotations.
   fischl attack:2, burst;
-  
+
   rand_delay(); # Random delay before swap helps prevent volatile results based on fixed frame timings.
   kirara swap;
   kirara skill, attack, burst;
-  
+
   rand_delay();
   sucrose swap;
   sucrose attack;
@@ -48,40 +48,40 @@ for let r = 0; r < 4; r = r + 1 { # End sim after 4 rotations.
     sucrose attack;
   }
   sucrose skill, dash, burst;
-  
+
   rand_delay();
   keqing swap;
-  keqing skill, burst, skill, 
-    attack, charge, 
-    attack, charge, 
+  keqing skill, burst, skill,
+    attack, charge,
+    attack, charge,
     attack, skill,
     attack, charge,
     attack, charge;
-  
+
   rand_delay();
   fischl swap;
   fischl skill, attack;
-  
+
   rand_delay();
   kirara swap;
   kirara skill, attack;
-  
+
   rand_delay();
   sucrose swap;
   while !.element.t0.electro {
     sucrose attack;
   }
   sucrose skill, dash, attack:3; # Normal attacks are filler, doesn't really matter.
-  
+
   rand_delay();
   keqing swap;
-  keqing skill, burst, skill, 
-    attack, charge, 
-    attack, charge, 
+  keqing skill, burst, skill,
+    attack, charge,
+    attack, charge,
     attack, skill,
     attack, charge,
     attack, charge;
-  
+
   if r < 3 { # Last rotation doesn't need to swap back to Fischl.
     rand_delay();
     fischl swap;

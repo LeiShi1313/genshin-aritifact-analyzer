@@ -49,13 +49,13 @@ fn mualani_combo() {
       last_burst = true;
       break;
     }
-    
+
     while .mualani.momentum < 3 {
       mualani walk[f=1];
     }
     mualani attack;
   }
-  
+
   if .mualani.nightsoul.state {
     mualani skill;
   }
@@ -65,7 +65,7 @@ for let i = 0; i < 4; i = i + 1 {
   chiori skill:2;
   mualani attack:3;
   xilonen skill, attack:2;
-  
+
   # up to 3 attacks to use burst
   for let k = 0; k < 3; k = k + 1 {
     if .xiangling.burst.ready {
@@ -75,7 +75,7 @@ for let i = 0; i < 4; i = i + 1 {
     xiangling attack;
   }
   xiangling skill, dash;
-  
+
   if .chiori.skill.ready { # if chiori c6
     chiori skill:2;
   }

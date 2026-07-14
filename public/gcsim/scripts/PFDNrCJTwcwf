@@ -37,15 +37,14 @@ for let i = 0; i < 4; i = i + 1 {
   kokomi attack, burst,
     attack:2, charge, jump,
     attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2;
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2;
   fischl attack:2, skill;
   collei skill;
   kuki burst;
   while (f() < t + 25*60){
-	kokomi attack:2, charge, jump;
+  kokomi attack:2, charge, jump;
   }
   print("done");
 }
-

@@ -36,7 +36,7 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # TW
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -63,24 +63,23 @@ active fischl;
 
 for let i=0; i<4; i=i+1 {
   fischl skill, attack;
-  
+
   furina skill, dash, burst;
-  
-  yelan skill, burst, attack; 
-  
+
+  yelan skill, burst, attack;
+
   while .fischl.oz {
     declensionCombo();
   }
-  
+
   fischl attack:2, burst;
-  
+
   # Yelan lingers to catch her particles
   yelan attack:2, skill, attack:4;
-  
+
   while .fischl.skill.cd {
     declensionCombo();
   }
-  
+
   print("done");
 }
-

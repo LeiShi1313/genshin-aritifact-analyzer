@@ -23,7 +23,7 @@ bennett add stats def=39.36 def%=0.124 em=39.64 atk=33.08 hp=507.88 hp%= 0.0992 
 
 options swap_delay=12 iteration=1000;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active bennett;
 for let i=0; i<2; i=i+1 {
@@ -31,12 +31,11 @@ for let i=0; i<2; i=i+1 {
 bennett skill, burst;
 faruzan burst, skill;
 xiangling attack, skill, burst;
-scara skill, attack:3, charge, attack:3, charge, attack:3, charge, attack:3, charge, skill, burst, attack:2;  
+scara skill, attack:3, charge, attack:3, charge, attack:3, charge, attack:3, charge, skill, burst, attack:2;
 
 
 bennett skill, burst;
 faruzan burst, skill;
 xiangling attack, skill, burst;
-scara skill, attack:3, charge, attack:3, charge, attack:3, charge, attack:3, charge, skill, burst, attack:2; 
+scara skill, attack:3, charge, attack:3, charge, attack:3, charge, attack:3, charge, skill, burst, attack:2;
 }
-

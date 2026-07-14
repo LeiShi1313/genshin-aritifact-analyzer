@@ -15,7 +15,7 @@ razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 
 #razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/El
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
-#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
 #razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
@@ -41,17 +41,17 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 #fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; #ATK/Cr
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140]; # Leaf to Fischl
 #bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=220]; # Leaf to Razor
 bennett add set="no" count=4;
-bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main 
+bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.3641 cd=0.331; #Er/Em/Em; Highest Risk
 #bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359 ; #main
 #bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.1324 ; #Er/Hp/Hp; Healer
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -67,8 +67,8 @@ for let i=0; i<4; i=i+1 {
   if .amy.skill.ready && .amy.burst.ready {
     amy skill;
   }
-  
-  # Skip Q on  first rotation, then use as available 
+
+  # Skip Q on  first rotation, then use as available
   nahida skill;
   if i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
     nahida burst;
@@ -78,19 +78,19 @@ for let i=0; i<4; i=i+1 {
   if .bennett.skill.cd {
     nahida attack, charge;
   }
-  
+
   bennett skill, burst;
-  
+
   amy attack;
   if .amy.burst.ready {
     amy attack:1, burst;
   } else {
     amy skill;
   }
-  
+
   razor skill, dash, attack, burst;
-  # Razor Main DPS window 
-  while .razor.infusion.bennett-fire-weapon { 
+  # Razor Main DPS window
+  while .razor.infusion.bennett-fire-weapon {
     if .razor.normal > 3 && .razor.skill.ready {
         razor skill, dash;
     } else if .razor.normal > 3 {
@@ -99,7 +99,7 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
+
   bennett skill;
 
   print("done");

@@ -8,7 +8,7 @@ ayaka add set="mh" count=4;
 ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
@@ -20,7 +20,7 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -50,8 +50,8 @@ for let i=0; i<4; i=i+1 {
   if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
     shenhe attack;
   }
-  ayaka attack:3, charge, 
-        skill, dash, 
+  ayaka attack:3, charge,
+        skill, dash,
         attack, charge;
 }
 

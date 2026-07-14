@@ -16,13 +16,13 @@ yelan add set="scroll" count=4;
 yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622;
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.2648;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="no" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="totm" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -38,7 +38,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active escoffier;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   escoffier skill, burst;
   yelan skill, attack, burst, attack;
   rosaria skill, burst;
@@ -46,31 +46,31 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
 }
 
-# First rot only 
+# First rot only
 # Escoffier EQ > Yelan E N1 Q N1 > Rosaria EQ > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Escoffier EQ > Yelan E N1 Q N1 > Rosaria EQ > Skirk   tE N2Q      3[N5D] N2CD N5D N2

@@ -33,14 +33,14 @@ let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
 
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
   return _execute_action(char_id, action_id, p);
 
-  
+
 }
 active zhongli;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -68,14 +68,13 @@ for let i=0; i<4; i=i+1 {
     case .state == normal_attack_state:
       switch .ningguang.prevAttack {
       case c_right:
-	ningguang walk;
+  ningguang walk;
       default:
-	ningguang charge;
+  ningguang charge;
       }
     default:
       ningguang attack;
     }
-  } 
+  }
   print("end");
 }
-

@@ -34,20 +34,19 @@ set_particle_delay("beidou", 150);
 energy every interval=480,720 amount=1;
 
 for let i = 0; i < 4; i = i + 1 {
-	beidou skill[counter=1], burst, attack;
-	kokomi skill, attack;
-	kazuha skill[hold=1], high_plunge, attack, burst, attack;
-	luminedendro skill, burst, attack: 2;
-	kokomi burst,
-		attack:2, walk,
-		attack:2, walk,
-		attack:2, walk,
-		attack:2, walk,
-		attack:2, walk,
-		attack:2, walk,
-		attack:2;
-	kazuha skill, high_plunge, attack:2;
-	luminedendro skill, attack:3;
+  beidou skill[counter=1], burst, attack;
+  kokomi skill, attack;
+  kazuha skill[hold=1], high_plunge, attack, burst, attack;
+  luminedendro skill, burst, attack: 2;
+  kokomi burst,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2, walk,
+    attack:2;
+  kazuha skill, high_plunge, attack:2;
+  luminedendro skill, attack:3;
     print("done");
 }
-

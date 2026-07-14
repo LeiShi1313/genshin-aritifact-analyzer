@@ -1,6 +1,6 @@
 options swap_delay=12 iteration=1000;
 
-kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
 kokomi add weapon="sacfrags" refine=3 lvl=90/90;
 kokomi add set="deepwood" count=4;
 kokomi add stats hp=4780 atk=311 em=187 em=187 em=187; #main
@@ -21,7 +21,7 @@ alhaitham add stats hp=4780 atk=311 em=561;  # main
 alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
 
 xingqiu char lvl=90/90 cons=6 talent=9,9,9;
-xingqiu add weapon="xiphos" refine=1 lvl=90/90;  
+xingqiu add weapon="xiphos" refine=1 lvl=90/90;
 xingqiu add set="fopl" count=4;
 xingqiu add stats hp=4780 atk=311 em=561; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
@@ -29,8 +29,8 @@ xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 # ----  Default Enemy
 
 active nilou;
-target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,1.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -38,14 +38,13 @@ for let i=0; i<4; i=i+1 {
   xingqiu skill, burst, attack;
   alhaitham burst;
   kokomi skill;
-  alhaitham attack:3, dash, 
-    attack:3, dash, 
-    attack:2, charge, 
-    attack:3, charge, 
+  alhaitham attack:3, dash,
+    attack:3, dash,
+    attack:2, charge,
+    attack:3, charge,
     attack:3;
   if .kokomi.burst.ready {
     kokomi burst;
   }
   alhaitham skill, attack, charge, attack:3, dash, attack:3;
 }
-

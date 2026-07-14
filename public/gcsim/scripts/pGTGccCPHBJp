@@ -45,7 +45,7 @@ fn doActionList() {
     } else {
       nahida attack:2, charge;
     }
-    alhaitham attack:3, dash, 
+    alhaitham attack:3, dash,
               attack:3, charge, dash,
               attack:3, charge, dash,
               skill[hold=1]; alhaithamLowPlunge();
@@ -98,7 +98,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
   }
-  
+
   if action_id == .action.dash {
     pick_up_crystallize("any");
   } #pick up a crystallize if available when dashing
@@ -121,10 +121,10 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.swap {
     delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
                                                      #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
-    
+
   } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
     delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
-    
+
   } else if prev_action_id != .action.attack {
     delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
   }

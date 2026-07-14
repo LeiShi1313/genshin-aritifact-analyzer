@@ -7,7 +7,7 @@ aetherpyro add set="oc" count=4;
 aetherpyro add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 aetherpyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="gt" count=4;
 #furina add set="tom" count=4;
@@ -28,7 +28,7 @@ citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.3972 cd=0.4634;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,13 +45,13 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   bennett skill, burst;
-  
+
   citlali skill, burst;
-  
+
   aetherpyro skill[hold=1], attack, charge;
-  while .aetherpyro.mods.bennett-field || .status.bennettburst { 
+  while .aetherpyro.mods.bennett-field || .status.bennettburst {
     switch {
       case .aetherpyro.burst.ready: # && .aetherpyro.normal > 1:
         aetherpyro burst;
@@ -63,6 +63,6 @@ for let i=0; i<4; i=i+1 {
         aetherpyro attack;
     }
   }
-  
+
   bennett skill;
 }

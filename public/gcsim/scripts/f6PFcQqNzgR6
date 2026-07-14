@@ -1,5 +1,5 @@
 # Keqing Furina Ororon Xianyun. ~21s Rot. Keqing Taser Plunge. Xianyun refreshes VV mid rotation. 4 plunges in each half. Ororon before Furina. Hold skill aerial plunge not implemented. 50% Collisons.
- 
+
 # Team
 keqing char lvl=90/90 cons=0 talent=9,9,9;
 keqing add weapon="harbinger" refine=5 lvl=90/90;
@@ -37,7 +37,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3306 em=79.28 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -57,22 +57,22 @@ active ororon;
 
 for let i = 0; i < 4; i = i + 1 {
   ororon skill, burst;
-  
+
   furina skill, dash, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
-  keq skill:2; 
-  KeqingPlunge(); keq dash; 
-  KeqingPlunge(); keq dash;
-  KeqingPlunge(); keq dash;
-  KeqingPlunge(); keq burst;
-  
-  xianyun attack:2; sleep(20);
-  
+
   keq skill:2;
   KeqingPlunge(); keq dash;
   KeqingPlunge(); keq dash;
   KeqingPlunge(); keq dash;
-  KeqingPlunge(); 
+  KeqingPlunge(); keq burst;
+
+  xianyun attack:2; sleep(20);
+
+  keq skill:2;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge(); keq dash;
+  KeqingPlunge();
 }

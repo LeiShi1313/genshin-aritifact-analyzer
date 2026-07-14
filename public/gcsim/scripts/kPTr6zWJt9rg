@@ -38,11 +38,10 @@ for let x=0; x<4; x=x+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   bennett skill, burst, attack;
-  
+
   rosaria skill, attack, burst, attack;
-  
+
   yoimiya attack, skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
 }
-

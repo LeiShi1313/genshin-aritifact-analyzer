@@ -1,4 +1,4 @@
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=5;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
@@ -6,7 +6,7 @@ gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
-furina add set="goldentroupe" count=5;							
+furina add set="goldentroupe" count=5;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.2648;
 
@@ -15,7 +15,7 @@ zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
 zhongli add set="totm" count=4;
 zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311; # main
 zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
-	
+
 chiori char lvl=90/90 cons=0 talent=9,9,9;
 chiori add weapon="cinnabar" refine=5 lvl=90/90;
 chiori add set="gt" count=4;
@@ -50,7 +50,7 @@ for let x=0; x<4; x=x+1 {
    gaming skill, low_plunge,
    skill, low_plunge,
    skill, low_plunge;
-   
+
 
   if .chiori.burst.ready {
     chiori burst;

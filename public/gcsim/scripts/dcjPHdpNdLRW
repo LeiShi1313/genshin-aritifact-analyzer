@@ -24,8 +24,8 @@ bennett add set="instructor" count=4;
 bennett add stats hp=3571 atk=232 em=187 em=139 cr=0.232; # main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.1324;
 
-target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.4,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.4,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 active razor;
 

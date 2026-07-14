@@ -7,7 +7,7 @@ kinich add set="obsidiancodex" count=4;
 kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622;
 kinich add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-emilie char lvl=90/90 cons=6 talent=10,10,10; 
+emilie char lvl=90/90 cons=6 talent=10,10,10;
 emilie add weapon="lumidouceelegy" refine=5 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311;
@@ -19,7 +19,7 @@ mavuika add set="deepwood" count=4;
 mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-bennett char lvl=90/90 cons=6 talent=10,10,10; 
+bennett char lvl=90/90 cons=6 talent=10,10,10;
 bennett add weapon="aquila" refine=5 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
@@ -33,8 +33,8 @@ energy every interval=480,720 amount=1; # standard Energy drops
 
 fn kinich_combo() {
   kinich skill;
-  
-  for let c=0; c<5; c=c+1 { 
+
+  for let c=0; c<5; c=c+1 {
     kinich attack[direction=1]:2;
     while .kinich.nightsoul.points < 20 && .kinich.nightsoul.state {
       wait(1);

@@ -23,7 +23,7 @@ baizhu add set="ohc" count=4;
 baizhu add stats hp=4780 atk=311 em=187 em=187 em=187;
 baizhu add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*6 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
 
-options swap_delay=12 iteration=1000; 
+options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
 target lvl=100 resist=0.1 hp=1000000000 radius=1 pos=0,2.5;
 target lvl=100 resist=0.1 hp=1000000000 radius=1 pos=1.5,0.5;
@@ -46,4 +46,3 @@ for let x = 5; x; x = x - 1 {
   mona attack:2, charge;
   mona attack:2, charge;
 }
-

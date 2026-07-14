@@ -46,13 +46,13 @@ lisa add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active lisa;
@@ -60,19 +60,19 @@ lisa attack; # Chev A1
 
 for let i=0; i<4; i=i+1 {
   bennett burst, skill;
-  
+
   chevreuse burst, skill[hold=1]:3; # 3 is always ideal
-  
+
   if .lisa.burst.ready {
     lisa burst;
   }
-  
+
   if .fischl.skill.ready {
     fischl attack:1, skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   bennett skill, attack;
   while !.bennett.burst.ready {
     if .bennett.skill.ready {
@@ -81,8 +81,6 @@ for let i=0; i<4; i=i+1 {
       bennett attack;
     }
   }
-  
+
   print("done");
 }
-
-

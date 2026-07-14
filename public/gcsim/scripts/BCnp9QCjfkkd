@@ -7,13 +7,13 @@ alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=4 lvl=90/90;
 yelan add set="eosf" count=4;
-yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; 
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
 yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="deepwood" count=4;
-nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main 
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*11 cd=0.0662*11;
 
 dori char lvl=90/90 cons=6 talent=9,9,9;
@@ -23,7 +23,7 @@ dori add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 dori add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 

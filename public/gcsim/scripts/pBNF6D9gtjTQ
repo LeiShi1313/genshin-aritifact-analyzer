@@ -5,7 +5,7 @@ xiao add set="longnightsoath" count=4;
 xiao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 xiao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662 ;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favoniussword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
@@ -35,16 +35,16 @@ let rotations = 4;
 for let r = rotations; r > 0; r = r - 1 {
 
   furina skill, dash, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, burst, attack;
 
-  // attack[travel=0] to minimize the time during which Furina pets could 
+  // attack[travel=0] to minimize the time during which Furina pets could
   // apply hydro and prevent Pyro VV.
-  // Also more closely mimics in game, because after Bennett N1 connects, 
+  // Also more closely mimics in game, because after Bennett N1 connects,
   // we should be basically melee and the projectile does not travel much
-  xianyun attack[travel=0], attack; 
+  xianyun attack[travel=0], attack;
 
   xiao skill;
   for let h = 8; h > 0; h = h - 1 {
@@ -55,9 +55,9 @@ for let r = rotations; r > 0; r = r - 1 {
       xiao jump, high_plunge;
     }
   }
-  
+
   xiao skill;
-  
+
   bennett skill, dash;
-  
+
 }

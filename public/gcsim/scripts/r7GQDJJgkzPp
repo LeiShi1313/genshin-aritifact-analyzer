@@ -27,7 +27,7 @@ zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 
 #enemy config
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
@@ -35,39 +35,39 @@ energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=100;
 active zhongli;
 
-#action list 
-      
+#action list
+
    for let i=0; i<5; i=i+1 {
-   
-     if i == 0 { 
+
+     if i == 0 {
        zhongli skill[hold=1], dash;
        gorou swap; wait(5); gorou burst;
        albedo attack, skill;
-       } 
+       }
        #rotation 1 setup
-   
-     else { 
+
+     else {
        zhongli skill;
        gorou skill, burst;
        albedo attack, skill;
        zhongli skill[hold=1], dash;
-       } 
+       }
        #rotation 2+ setup
-   
+
    itto attack, burst, skill[travel=0];
-  
+
        while !.itto.skill.ready {
        if .itto.tags.strStack > 0 { itto charge; }
        else { itto dash, attack; }
-       } 
+       }
        #manage itto C6 until second ushi
-       
+
        itto skill[travel=0];
-        
+
        while .itto.mods.itto-q {
        if .itto.tags.strStack > 0 { itto charge; }
        else { itto dash, attack; }
-       } 
+       }
        #manage itto C6 until Q expires
-       
+
    }

@@ -1,4 +1,4 @@
-# Kazuha Yaoyao Fischl Faruzan. APL. TF Kazuha Aggravate with a VV Faruzan Swirling in in 2 Target. 
+# Kazuha Yaoyao Fischl Faruzan. APL. TF Kazuha Aggravate with a VV Faruzan Swirling in in 2 Target.
 
 # Team
 kazuha char lvl=90/90 cons=0 talent=9,9,9;
@@ -6,7 +6,7 @@ kazuha add weapon="ironsting" refine=5 lvl=90/90;
 #kazuha add weapon="xiphos" refine=1 lvl=90/90;
 #kazuha add weapon="sacsword" refine=5 lvl=90/90;
 kazuha add set="tf" count=4;
-kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; 
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;
 kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=118.92 cr=0.3641 cd=0.1324;
 
 yaoyao char lvl=90/90 cons=6 talent=9,9,9;
@@ -29,7 +29,7 @@ faruzan add stats hp=4780 atk=311 em=187 em=187 em=187;
 faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=118.92 cr=0.3972 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 options duration=90;
 energy every interval=480,720 amount=1;
@@ -68,4 +68,3 @@ for {
       kazuha attack;
   }
 }
-

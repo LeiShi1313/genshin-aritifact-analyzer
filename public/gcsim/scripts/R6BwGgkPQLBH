@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -58,7 +58,7 @@ fn execute_action(char_id number, action_id number, p map) {
 options iteration=1000;
 
 # Build assumptions
-dehya char lvl=90/90 cons=1 talent=9,9,9; 
+dehya char lvl=90/90 cons=1 talent=9,9,9;
 dehya add weapon="uomms" refine=5 lvl=90/90;
 dehya add set="eosf" count=4;
 dehya add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; # Main stats: ER% Pyro% CR
@@ -70,7 +70,7 @@ bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;  # Main stats: ER% Pyro% CR
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
-mona char lvl=90/90 cons=0 talent=9,9,9; 
+mona char lvl=90/90 cons=0 talent=9,9,9;
 mona add weapon="prototypeamber" refine=5 lvl=90/90;
 mona add set="scroll" count=4;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; # Main stats: ER% Hydro% CR
@@ -81,7 +81,7 @@ mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; # Main stats: ER% Hydro% CR
 #mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
-kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="favsword" refine=3 lvl=90/90;
 kazuha add set="vv" count=4;
 kazuha add stats hp=4780 atk=311 em=187 em=187 em=187;  # Main stats: EM EM EM
@@ -96,14 +96,14 @@ hurt every interval=180,300 amount=3500,5500 element=physical; # damage taken as
 active dehya;
 
 for let i=0; i<5; i=i+1 {
-	dehya skill;
-	bennett burst, skill;
-	kazuha skill, high_plunge;
-	mona burst, skill;
-	dehya burst, attack:10;
-	kazuha skill, high_plunge, burst;
-	bennett skill;
-	dehya skill, attack;
+  dehya skill;
+  bennett burst, skill;
+  kazuha skill, high_plunge;
+  mona burst, skill;
+  dehya burst, attack:10;
+  kazuha skill, high_plunge, burst;
+  bennett skill;
+  dehya skill, attack;
 }
 
 # 21s rotation

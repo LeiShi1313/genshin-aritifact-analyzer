@@ -1,0 +1,46 @@
+arlecchino char lvl=90/90 cons=2 talent=9,9,9;
+arlecchino add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
+arlecchino add set="fragmentofharmonicwhimsy" count=4;
+arlecchino add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+arlecchino add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
+
+mona char lvl=90/90 cons=6 talent=9,9,9;
+mona add weapon="favcodex" refine=5 lvl=90/90;
+mona add set="cg" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5;
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="aquila" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active arle;
+
+for let i = 0; i < 6; i = i + 1 {
+
+  arle skill; delay(11);
+  bennett skill, burst;
+  sucrose attack, skill, dash;
+  mona burst, attack;
+  arle charge,
+       attack:3;
+  mona skill, attack;
+  arle attack:2, walk,
+       attack:3, dash,
+       attack:3, charge,
+       attack:3;
+  mona attack:2;
+  arle attack:2;
+
+}

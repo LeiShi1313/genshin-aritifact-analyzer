@@ -63,8 +63,8 @@ for let i = 0; i < 5; i = i + 1{
   rand_delay();
   ayaka swap;
   rand_delay();
-  ayaka skill, dash;  
-  rand_delay(); 
+  ayaka skill, dash;
+  rand_delay();
   ayaka attack;
   rand_delay();
   ayaka burst;
@@ -93,5 +93,3 @@ for let i = 0; i < 5; i = i + 1{
   rand_delay();
   print("rotation done");
 }
-
-

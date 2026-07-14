@@ -1,5 +1,5 @@
 charlotte char lvl=90/90 cons=0 talent=9,9,9;
-charlotte add weapon="widsith" refine=5 lvl=90/90; 
+charlotte add weapon="widsith" refine=5 lvl=90/90;
 charlotte add set="shime" count=4;
 charlotte add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311;
 charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
@@ -25,7 +25,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.595
 options swap_delay=12 iteration=5000;
 energy every interval=480,720 amount=1;
 target lvl=100 radius=2 pos=2.1,2.4 type=ruingrader;
-target lvl=100 radius=2 pos=-2.1,2.4 type=ruingrader; 
+target lvl=100 radius=2 pos=-2.1,2.4 type=ruingrader;
 
 active bennett;
 
@@ -42,4 +42,3 @@ for let i=0; i<2; i=i+1 {
   }
   charlotte attack:2, charge, attack:2, charge, attack:2, charge;
 }
-

@@ -17,7 +17,7 @@ mona add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="xiphosmoonlight" refine=1 lvl=90/90;
 kazuha add set="viridescentvenerer" count=4;
-kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main 
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 #kazuha add stats roll=avg def%=2 def=2 hp=2 hp%=2 atk=2 atk%=2 er=2 em=2 cr=2 cd=2;
 #kazuha add stats roll=avg atk%=6 er=10 em=4;
 kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
@@ -46,4 +46,3 @@ for let i = 0; i < 5; i = i + 1 {
   ayaka dash, attack:2, charge, skill, attack:2, charge;
   print("Rotation Done");
 }
-

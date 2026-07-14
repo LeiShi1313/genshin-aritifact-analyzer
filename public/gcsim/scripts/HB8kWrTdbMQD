@@ -45,4 +45,3 @@ while rotations {
   ayato skill, attack:15;
   rotations = rotations - 1;
 }
-

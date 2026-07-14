@@ -36,18 +36,18 @@ for let i = 0; i < 6; i = i + 1 {
   zhongli skill[hold=1], dash; pick_up_crystallize("pyro");
   zhongli attack:2;
 
-  
+
   bennett skill, burst, attack;
-  
+
   if .chiori.burst.ready {
     chiori burst;
-  } 
+  }
 
   chiori skill:2;
 
   arlecchino charge, # be careful not to use CA before the 5s of E mark
-             attack:3, dash, 
-             attack:3, dash, 
+             attack:3, dash,
+             attack:3, dash,
              attack:3, dash,
              attack:3, dash,
              attack:3, dash,

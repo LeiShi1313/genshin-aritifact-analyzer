@@ -29,13 +29,13 @@ energy every interval=480,720 amount=1;
 
 active mavuika; # SS Stacks
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   mualani attack;
   citlali skill, burst;
   nahida skill, burst;
   mavuika burst, skill, dash;
   mualani skill, walk[f=91], attack,
-                 walk[f=91], attack;        
+                 walk[f=91], attack;
   if .mualani.burst.ready {
     mualani walk[f=1], burst,
             walk[f=46], attack;
@@ -45,5 +45,5 @@ for let i=0; i<4; i=i+1 {
 }
 
 # ~19s rotations
-# Mualani N1 > Citlali EQ > Nahida E Q > Mavuika Q ED > Mualani E 2[3-stacked bite] Q 1[3-stacked bite] > 
+# Mualani N1 > Citlali EQ > Nahida E Q > Mavuika Q ED > Mualani E 2[3-stacked bite] Q 1[3-stacked bite] >
 # Mualani N1 > Citlali EQ > Nahida E Q > Mavuika Q ED > Mualani E 3[3-stacked bite]                     >

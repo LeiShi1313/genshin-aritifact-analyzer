@@ -1,8 +1,8 @@
-chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favoniuslance" refine=3 lvl=90/90;
 chevreuse add set="eosf" count=4;
 chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
-chevreuse add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ; #subs								
+chevreuse add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ; #subs
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
@@ -10,7 +10,7 @@ fischl add set="gt" count=5;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
 fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
@@ -38,9 +38,9 @@ for let r = 0; r < 4; r = r + 1 {
   } else if .fischl.burst.ready {
     fischl attack:2, burst;
   }
-  
+
   chevreuse skill[hold=1],attack,burst;
-  
+
   yanfei skill,charge,attack:2;
   if .yanfei.burst.ready {
     yanfei burst;

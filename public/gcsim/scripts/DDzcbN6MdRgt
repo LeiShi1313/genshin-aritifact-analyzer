@@ -1,13 +1,13 @@
 options swap_delay=12 iteration=1000;
 
-neuvillette char lvl=90/90 cons=0 talent=9,9,9 ; 
+neuvillette char lvl=90/90 cons=0 talent=9,9,9 ;
 neuvillette add weapon="prototypeamber" refine=5 lvl=90/90 ;
 neuvillette add set="mh" count=4;
 neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
 neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.7944;
 #rolls: 3 hp%, 7 cr, 10 cd
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="wolffang" refine=1 lvl=90/90;
 furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622 ; #main
@@ -21,7 +21,7 @@ kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.331 cd=0.1324;
 #rolls: 4 em, 8 er, 8 cr
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
@@ -30,7 +30,7 @@ xilonen add stats def%=0.434 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 
 active furina;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -42,7 +42,7 @@ for let i=0; i<4; i=i+1 {
   kazuha skill, high_plunge, burst;
   while !.kazuha.mods.favonius-cd {
     kazuha attack;
-  } 
+  }
   neuvillette skill, burst, charge, charge, charge;
 }
 wait(173); #for the last CA

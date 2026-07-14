@@ -10,7 +10,11 @@ export const toPublicArtifactScore = (value: number): number | undefined => {
   if (value === 1) return 100;
   const scaled = value * 100;
   const nearestInteger = Math.round(scaled);
-  const roundingTolerance = 4 * Number.EPSILON * Math.max(1, Math.abs(scaled));
+  const magnitude = Math.max(1, Math.abs(scaled));
+  const roundingTolerance = Math.max(
+    4 * Number.EPSILON * magnitude,
+    2 ** -23 * magnitude
+  );
   const stableScaled =
     Math.abs(scaled - nearestInteger) <= roundingTolerance
       ? nearestInteger

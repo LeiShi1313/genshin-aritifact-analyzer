@@ -1,4 +1,4 @@
-# Clorinde Furina Yelan Ororon. ~26s Rot. Thundering Fury Clorinde Taser. Emblem < NO Yelan. Clorinde bursts following her first skill to catch relevant buffs; Burst with Clorinde is slightly better than filling skill cd downtime with Yelan Normal attacks. 
+# Clorinde Furina Yelan Ororon. ~26s Rot. Thundering Fury Clorinde Taser. Emblem < NO Yelan. Clorinde bursts following her first skill to catch relevant buffs; Burst with Clorinde is slightly better than filling skill cd downtime with Yelan Normal attacks.
 
 # Team
 clorinde char lvl=90/90 cons=0 talent=9,9,9;
@@ -27,13 +27,13 @@ ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Combo
 fn clorinde_combo() {
@@ -54,16 +54,16 @@ for let r=0; r<3; r=r+1 {
   furina skill, dash, burst;
 
   ororon burst, skill;
-  
+
   yelan skill, burst, attack;
-  
+
   clorinde_combo();
-  clorinde burst; # Similar to 
-  
+  clorinde burst; # Similar to
+
   yelan attack, skill, attack;
   #while .clorinde.skill.cd { # Similar to no burst
   #  yelan attack;
   #}
-  
+
   clorinde_combo();
 }

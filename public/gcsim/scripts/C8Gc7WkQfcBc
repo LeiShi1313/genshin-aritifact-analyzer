@@ -22,8 +22,8 @@ energy every interval=480,720 amount=1;
 active zhongli;
 
 for {
-  if !.zhongli.tags.shielded { 
-    zhongli skill[hold=1],dash,attack; 
+  if !.zhongli.tags.shielded {
+    zhongli skill[hold=1],dash,attack;
     } else if .luminedendro.skill.ready {
     luminedendro skill,attack;
     } else if .luminedendro.burst.ready {

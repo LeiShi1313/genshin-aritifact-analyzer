@@ -30,16 +30,16 @@ energy every interval=480,720 amount=100;
 active kokomi;
 for let i = 0; i < 4; i = i + 1 {
   kokomi skill;
-  
+
   furina skill, dash, attack, burst;
-  
+
   xilonen skill, attack:2;
-  
+
   kazuha skill, high_plunge;
   if .kazuha.burst.ready {
     kazuha burst;
   }
-  
+
   kokomi attack, burst,
         attack:2, dash,
         attack:2, dash,

@@ -12,7 +12,7 @@ xiao add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 e
 
 options debug=true swap_delay=12;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 hp=9999999999999 radius=2 pos=0,2.4;												
+target lvl=100 resist=0.1 hp=9999999999999 radius=2 pos=0,2.4;
 active zhongli;
 for let x = 0; x < 6; x = x + 1  {
 
@@ -36,4 +36,3 @@ for let x = 0; x < 6; x = x + 1  {
   }
 
 }
-

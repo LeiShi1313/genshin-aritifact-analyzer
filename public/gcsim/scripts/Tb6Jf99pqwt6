@@ -3,20 +3,20 @@ arlecchino add weapon="deathmatch" refine=1 lvl=90/90;
 arlecchino add set="fohw" count=4;
 arlecchino add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
 arlecchino add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662 ;
-        
+
 candace char lvl=90/90 cons=6 talent=9,9,9;
 candace add weapon="favlance" refine=3 lvl=90/90;
 candace add set="eosf" count=4;
 candace add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
 candace add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.1324;
-                                                                                                        
+
 sucrose char lvl=90/90 cons=6 talent=9,9,9;
 sucrose add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
 sucrose add set="viridescentvenerer" count=5;
 sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwood" refine=5 lvl=90/90;
 bennett add set="noblesseoblige" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
@@ -28,7 +28,7 @@ energy every interval=480,720 amount=1;
 
 active arle;
 
-for let i = 0; i < 4; i = i + 1 { 
+for let i = 0; i < 4; i = i + 1 {
   arle skill;
   bennett  burst,skill;
   sucrose skill, dash;
@@ -37,13 +37,13 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     sucrose attack;
   }
-  candace skill, burst; 
-  arle charge, 
+  candace skill, burst;
+  arle charge,
        attack:3, dash,
-       attack:3, dash, 
+       attack:3, dash,
        attack:3, dash,
        attack:3, dash,
        attack:3, dash,
        attack:2;
-  candace skill, attack:2, dash; 
+  candace skill, attack:2, dash;
 }

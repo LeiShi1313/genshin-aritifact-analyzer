@@ -1,4 +1,4 @@
-# Freminet Furina Bennett Xianyun. ~21s Rot. Freminet Vape plunge without VV. Freminet uses skill and Pers damage between plunges to maintain his passives. -3K DPS vs Freeze Immunity. 50% Collisions. 
+# Freminet Furina Bennett Xianyun. ~21s Rot. Freminet Vape plunge without VV. Freminet uses skill and Pers damage between plunges to maintain his passives. -3K DPS vs Freeze Immunity. 50% Collisions.
 
 # Team  Options listed by DPS
 freminet char lvl=90/90 cons=6 talent=9,9,9;
@@ -37,7 +37,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -58,12 +58,12 @@ active freminet; # SS stacks
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, burst;
-  
-  freminet skill, attack; 
+
+  freminet skill, attack;
   FreminetPlunge(); freminet attack;
   FreminetPlunge(); freminet attack;
   FreminetPlunge(); freminet attack;
@@ -72,6 +72,6 @@ for let i=0; i<4; i=i+1 {
   FreminetPlunge(); freminet dash;
   FreminetPlunge(); freminet skill;
   FreminetPlunge(); #freminet attack;
-  
+
   bennett skill;
 }

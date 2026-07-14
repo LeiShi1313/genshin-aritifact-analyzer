@@ -29,20 +29,20 @@ energy every interval=480,720 amount=1;
 active furina;
 
 for let x=0; x<4; x=x+1 {
-  
+
   furina skill, dash, burst;
-  
+
   shenhe skill, burst;
-  
-  escoffier skill, burst; 
-  
+
+  escoffier skill, burst;
+
   kaeya skill, burst,
         attack, charge,
         attack:2, charge;
-        
+
   shenhe skill, attack;
-  
-  kaeya skill, 
+
+  kaeya skill,
         attack, charge,
         attack, charge,
         attack:2, charge,

@@ -4,24 +4,24 @@ neuvillette add set="marechausseehunter" count=5;
 neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
 neuvillette add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.1986 cd=0.662 ;
 
-fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=5];
 fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
-fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.2648 cd=0.3972 ;	
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.2648 cd=0.3972 ;
 
-xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="thecatch" refine=5 lvl=90/90;
 xiangling add set="eosf" count=5;
 xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
-xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.2648 cd=0.3972 ;										
+xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.2648 cd=0.3972 ;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="ins" count=5;
 bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
-bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296 ;										
-											
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296 ;
+
 
 fn rand_delay(mean, stddev) {
   let del = randnorm() * stddev + mean;

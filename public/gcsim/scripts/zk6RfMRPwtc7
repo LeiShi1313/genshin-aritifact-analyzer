@@ -31,7 +31,7 @@ active ayaka;
 
 let rotations = 1;
 while rotations {
-  ayaka dash; 
+  ayaka dash;
   kazuha burst;
   shenhe burst, skill;
   ganyu  skill, burst, aim;

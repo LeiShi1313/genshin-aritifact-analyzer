@@ -74,7 +74,11 @@ export interface GCSimScriptCharacterInfo {
   params: GCSimScriptParam[];
   startHp: number;
   /** Random substat config */
-  randomSubstats: GCSimScriptRandomSubstats | undefined;
+  randomSubstats:
+    | GCSimScriptRandomSubstats
+    | undefined;
+  /** Preserve the engine identity (for example Aether vs Lumine) */
+  gcsimName: string;
 }
 
 /** Simulation options */
@@ -257,6 +261,8 @@ export interface GCSimScriptTarget {
     | undefined;
   /** Element of dropped particles */
   particleElement: Element;
+  /** Global target HP multiplier */
+  hpMult: number;
 }
 
 /** Complete GCSim script configuration */
@@ -769,6 +775,7 @@ function createBaseGCSimScriptCharacterInfo(): GCSimScriptCharacterInfo {
     params: [],
     startHp: 0,
     randomSubstats: undefined,
+    gcsimName: "",
   };
 }
 
@@ -808,6 +815,9 @@ export const GCSimScriptCharacterInfo = {
     }
     if (message.randomSubstats !== undefined) {
       GCSimScriptRandomSubstats.encode(message.randomSubstats, writer.uint32(90).fork()).ldelim();
+    }
+    if (message.gcsimName !== "") {
+      writer.uint32(98).string(message.gcsimName);
     }
     return writer;
   },
@@ -906,6 +916,13 @@ export const GCSimScriptCharacterInfo = {
 
           message.randomSubstats = GCSimScriptRandomSubstats.decode(reader, reader.uint32());
           continue;
+        case 12:
+          if (tag !== 98) {
+            break;
+          }
+
+          message.gcsimName = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -936,6 +953,7 @@ export const GCSimScriptCharacterInfo = {
       randomSubstats: isSet(object.randomSubstats)
         ? GCSimScriptRandomSubstats.fromJSON(object.randomSubstats)
         : undefined,
+      gcsimName: isSet(object.gcsimName) ? globalThis.String(object.gcsimName) : "",
     };
   },
 
@@ -974,6 +992,9 @@ export const GCSimScriptCharacterInfo = {
     if (message.randomSubstats !== undefined) {
       obj.randomSubstats = GCSimScriptRandomSubstats.toJSON(message.randomSubstats);
     }
+    if (message.gcsimName !== "") {
+      obj.gcsimName = message.gcsimName;
+    }
     return obj;
   },
 
@@ -997,6 +1018,7 @@ export const GCSimScriptCharacterInfo = {
     message.randomSubstats = (object.randomSubstats !== undefined && object.randomSubstats !== null)
       ? GCSimScriptRandomSubstats.fromPartial(object.randomSubstats)
       : undefined;
+    message.gcsimName = object.gcsimName ?? "";
     return message;
   },
 };
@@ -1698,6 +1720,7 @@ function createBaseGCSimScriptTarget(): GCSimScriptTarget {
     geoResist: 0,
     type: undefined,
     particleElement: 0,
+    hpMult: 0,
   };
 }
 
@@ -1758,6 +1781,9 @@ export const GCSimScriptTarget = {
     }
     if (message.particleElement !== 0) {
       writer.uint32(144).int32(message.particleElement);
+    }
+    if (message.hpMult !== 0) {
+      writer.uint32(157).float(message.hpMult);
     }
     return writer;
   },
@@ -1905,6 +1931,13 @@ export const GCSimScriptTarget = {
 
           message.particleElement = reader.int32() as any;
           continue;
+        case 19:
+          if (tag !== 157) {
+            break;
+          }
+
+          message.hpMult = reader.float();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1934,6 +1967,7 @@ export const GCSimScriptTarget = {
       geoResist: isSet(object.geoResist) ? globalThis.Number(object.geoResist) : 0,
       type: isSet(object.type) ? GCSimScriptTargetType.fromJSON(object.type) : undefined,
       particleElement: isSet(object.particleElement) ? elementFromJSON(object.particleElement) : 0,
+      hpMult: isSet(object.hpMult) ? globalThis.Number(object.hpMult) : 0,
     };
   },
 
@@ -1993,6 +2027,9 @@ export const GCSimScriptTarget = {
     if (message.particleElement !== 0) {
       obj.particleElement = elementToJSON(message.particleElement);
     }
+    if (message.hpMult !== 0) {
+      obj.hpMult = message.hpMult;
+    }
     return obj;
   },
 
@@ -2021,6 +2058,7 @@ export const GCSimScriptTarget = {
       ? GCSimScriptTargetType.fromPartial(object.type)
       : undefined;
     message.particleElement = object.particleElement ?? 0;
+    message.hpMult = object.hpMult ?? 0;
     return message;
   },
 };

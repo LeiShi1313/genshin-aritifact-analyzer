@@ -25,7 +25,7 @@ kirara add stats hp=2539.40 hp%=0.2973 atk=33.07 atk%=0.0991 def=39.35 def%=0.12
 
 options iteration=1000 swap_delay=12;
 
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
 target lvl=100 resist=0.1 radius=1 pos=1.5,0 hp=999999999;
 
 energy every interval=480,720 amount=1;
@@ -33,7 +33,7 @@ energy every interval=480,720 amount=1;
 active nilou;
 
 for let i = 0; i < 5; i = i + 1 { # 5 rotations
-  
+
   nilou skill, attack:2, skill;
   kirara skill[short_hold=1], burst;
   xingqiu skill, dash, burst, attack;
@@ -52,6 +52,6 @@ for let i = 0; i < 5; i = i + 1 { # 5 rotations
   print(.stam);
 }
 
-# Nilou E N2 E > Kirara shE Q > Xingqiu E d Q N1 > Alhaitham E N3d N1C N3 > 
+# Nilou E N2 E > Kirara shE Q > Xingqiu E d Q N1 > Alhaitham E N3d N1C N3 >
 # Kirara N1 shE N1 > Alhaitham Q N1 > Xingqiu N2 >
 # Alhaitham N3d N3d N1C N3d

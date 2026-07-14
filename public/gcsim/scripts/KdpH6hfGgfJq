@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -77,27 +77,27 @@ options iteration=1000;
 
 # Target and Energy assumptions
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
-energy every interval=480,720 amount=1; # standard Energy drops 
+energy every interval=480,720 amount=1; # standard Energy drops
 
 # Rotation assumptions
 active furina;
 
 for let i=0; i<4; i=i+1 {
-	furina skill, dash, burst;
-	fischl attack, skill;
-	nahida skill, burst;
-	keqing skill, burst, skill,
-			attack, charge, 
-			attack, charge, 
-			attack, charge,
-			attack, charge,
-			attack, charge,
-			skill;
-	fischl attack:2, burst;
-	nahida skill, attack;
-	keqing skill, attack, burst,
-			attack, charge,
-			attack, skill,
-			attack, charge;
-		print("rotation end");
+  furina skill, dash, burst;
+  fischl attack, skill;
+  nahida skill, burst;
+  keqing skill, burst, skill,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      skill;
+  fischl attack:2, burst;
+  nahida skill, attack;
+  keqing skill, attack, burst,
+      attack, charge,
+      attack, skill,
+      attack, charge;
+    print("rotation end");
 }

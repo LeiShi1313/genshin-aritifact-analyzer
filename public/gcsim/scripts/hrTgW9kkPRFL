@@ -27,7 +27,7 @@ mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
 #mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.1986 cd=0.7944; # EDC OC
 
-ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon char lvl=90/90 cons=6 talent=9,9,9;
 ororon add weapon="chainbreaker" refine=5 lvl=90/90;
 #ororon add set="scroll" count=4;
 ororon add set="tf" count=2;ororon add set="glad" count=2;
@@ -35,7 +35,7 @@ ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -57,15 +57,15 @@ for let i=0; i<4; i=i+1 {
       chev attack:1, skill[hold=1];
     }
   }
-  
+
   ororon skill, burst;
-  
+
   if .mav.burst.ready {
     mav burst, skill, dash;
   } else {
     mav dash, skill;
   }
-  
+
   cyno skill, burst;
   while .cyno.mods.cyno-q > 240 {
     if .cyno.skill.ready { # && .cyno.mods.cyno-a1 {

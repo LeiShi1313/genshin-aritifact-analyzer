@@ -41,13 +41,13 @@ nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # Evenstar
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active sethos;
@@ -62,13 +62,13 @@ for let i=0; i<6; i=i+1 {
   } else if .stam > 50 {
     nahida charge;
   }
-	
-	tighnari skill, aim;
-	if .tighnari.burst.ready {
-	  tighnari burst, aim:2;
-	} else {
-	  tighnari aim:2;
-	}
+
+  tighnari skill, aim;
+  if .tighnari.burst.ready {
+    tighnari burst, aim:2;
+  } else {
+    tighnari aim:2;
+  }
 
   amy attack;
   if .amy.burst.ready {
@@ -85,7 +85,7 @@ for let i=0; i<6; i=i+1 {
       sethos skill;
     }
   }
-  
+
   while .tighnari.skill.cd {
     switch {
       case .nahida.skill.ready:

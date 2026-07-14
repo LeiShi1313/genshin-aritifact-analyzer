@@ -25,13 +25,13 @@ bennett add stats hp=3571 atk=232 er=0.3885 em=140.25 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.331 cd=0.2648;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 #Rotation
 active razor;
@@ -39,11 +39,11 @@ razor skill, dash;
 
 for let i=0; i<4; i=i+1 {
   xingqiu skill, dash, burst, attack;
-  
+
   aetherdendro skill, attack, burst, attack;
-  
+
   bennett skill, attack, burst;
-  
+
   razor skill, dash, attack, burst,
     attack, skill, dash,
     attack:3, dash,
@@ -52,7 +52,6 @@ for let i=0; i<4; i=i+1 {
     attack:3, dash,
     attack:3, dash,
     attack:2, skill, dash;
-    
+
   print("done");
 }
-

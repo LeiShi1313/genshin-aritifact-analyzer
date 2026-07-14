@@ -26,25 +26,25 @@ options swap_delay=12 iteration=1000;
 
 active yaemiko;
 
-target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	yae skill:3;
-	nahida skill, attack, burst;
-	kokomi attack, skill;
-	fischl attack:2;
-	fischl skill, attack;
-	yae attack:3;
-	if .yae.burst.ready { 
-	  yae burst; 
-	}
-	yae skill:3;
-	nahida attack:2, skill;
-	fischl attack:2, burst;
-	kokomi attack, burst;
-    for let x = 10; x; x = x - 1 { 
-      kokomi attack:2, dash, walk[f=2]; 
+  yae skill:3;
+  nahida skill, attack, burst;
+  kokomi attack, skill;
+  fischl attack:2;
+  fischl skill, attack;
+  yae attack:3;
+  if .yae.burst.ready {
+    yae burst;
+  }
+  yae skill:3;
+  nahida attack:2, skill;
+  fischl attack:2, burst;
+  kokomi attack, burst;
+    for let x = 10; x; x = x - 1 {
+      kokomi attack:2, dash, walk[f=2];
     }
     print("rotation done");
 }

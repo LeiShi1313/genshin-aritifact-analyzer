@@ -1,0 +1,54 @@
+
+skirk char lvl=90/90 cons=0 talent=1,10,10;
+skirk add weapon="finaleofthedeep" refine=5 lvl=90/90;
+skirk add set="marechausseehunter" count=4;
+skirk add set="silkenmoonsserenade" count=1;
+skirk add stats def=21 hp=5288 hp%=0.128 atk=329 atk%=0.8740000000000001 er=0.045 em=19 cr=0.392 cd=1.516 cryo%=0.466;
+
+furina char lvl=90/90 cons=0 talent=1,10,10;
+furina add weapon="favoniussword" refine=5 lvl=90/90;
+furina add set="tenacityofthemillelith" count=4;
+furina add set="goldentroupe" count=1;
+furina add stats hp=5049 hp%=0.675 atk=380 atk%=0.18 er=0.9060000000000001 em=98 cr=0.606 cd=0.6759999999999999;
+
+citlali char lvl=70/70 cons=0 talent=1,6,1;
+citlali add weapon="thrillingtalesofdragonslayers" refine=5 lvl=20/20;
+citlali add set="scrolloftheheroofcindercity" count=4;
+citlali add set="goldentroupe" count=1;
+citlali add stats def%=0.051 hp=6752 hp%=0.057999999999999996 atk=362 atk%=0.15100000000000002 er=1.01 em=452.5 cr=0.105 cd=0.6839999999999999;
+
+escoffier char lvl=90/90 cons=0 talent=1,8,8;
+escoffier add weapon="staffofhoma" refine=1 lvl=90/90;
+escoffier add set="noblesseoblige" count=4;
+escoffier add set="goldentroupe" count=1;
+escoffier add stats def%=0.051 def=21 hp=5318 hp%=0.128 atk=365 atk%=0.583 er=0.7 cr=0.6100000000000001 cd=0.948 cryo%=0.466;
+
+options iteration=1000  swap_delay=12;
+target lvl=100 resist=0.1 hp=999999999 pos=0,2.4 freeze_resist=1;
+energy every interval=480,720 amount=1;
+
+active skirk;
+
+furina attack, skill, dash, burst, attack;
+citlali skill, attack;
+esco skill, burst, attack;
+skirk burst, skill;
+skirk attack:5, dash;
+skirk attack:5, charge;
+skirk attack:5, dash;
+skirk attack:5;
+
+for let a=0; a<5; a=a+1 {
+
+  furina attack, skill, dash, burst;
+  citlali skill,attack;
+  esco skill, burst, attack:3;
+  skirk skill;
+  skirk attack:2, dash, attack:2, dash;
+  skirk attack:2, burst;
+  skirk attack:2, dash, attack:2, dash;
+  skirk attack:5, dash, attack:2, dash;
+  skirk attack:2, charge;
+  skirk attack:2, dash, attack:2, dash;
+  skirk attack:5, dash;
+}

@@ -31,19 +31,18 @@ active nahida;
 nahida skill;
 
 for let x = 0; x < 5; x = x + 1 {
-	kokomi attack, skill;
-	xingqiu burst, attack;
+  kokomi attack, skill;
+  xingqiu burst, attack;
     xiangling burst, attack, skill, attack;
-	nahida attack:3, skill, 
-		attack:3, charge;
-	kokomi attack, burst;
-	nahida attack:3, skill, 
-		attack, charge;
-	xingqiu skill, dash, attack:2;
+  nahida attack:3, skill,
+    attack:3, charge;
+  kokomi attack, burst;
+  nahida attack:3, skill,
+    attack, charge;
+  xingqiu skill, dash, attack:2;
     xiangling attack:3, skill;
-	nahida attack:3, dash, 
-		attack:3, skill, 
-		attack:3, charge;
-	print("done");
+  nahida attack:3, dash,
+    attack:3, skill,
+    attack:3, charge;
+  print("done");
 }
-

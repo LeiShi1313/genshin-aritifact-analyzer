@@ -10,7 +10,7 @@ fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; # main
 fischl add stats hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 def=39.36 def%=0.124 em=79.28 er=0.1102 cr=0.331 cd=0.7944;
 
-kazuha char lvl=90/90 cons=0 talent=9,9,9; 
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="xiphos" refine=1 lvl=90/90;
 kazuha add set="vv" count=4;
 kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; # main
@@ -38,18 +38,18 @@ fn clorinde_combo() {
   }
 }
 
-active fischl; 
+active fischl;
 
 # opening rotation skips clorinde burst
 fischl burst;
 kazuha burst;
 collei burst;
 clorinde_combo();
-  
+
 for let r=0; r<5; r=r+1 { # 5 rotations (in addition to modified opening rotation)
 
   kazuha skill, high_plunge; # swirl between clorinde skill combo and burst to refresh VV and kazuha A4
-  clorinde burst; 
+  clorinde burst;
   if .collei.burst.ready { # collei burst every other rotation
     collei burst;
   } else {
@@ -61,11 +61,10 @@ for let r=0; r<5; r=r+1 { # 5 rotations (in addition to modified opening rotatio
     fischl attack, skill, attack;
   }
   if .kazuha.burst.ready { # kazuha burst every other rotation
-    kazuha burst; 
+    kazuha burst;
   } else {
     kazuha skill, high_plunge;
   }
   clorinde_combo();
-  
+
 }
-  

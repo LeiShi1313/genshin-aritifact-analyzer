@@ -29,7 +29,7 @@ fn rand_counter() {
   } else {
     counter = 0;
   }
-  
+
   return counter;
 }
 
@@ -52,4 +52,3 @@ for let r=0; r<4; r=r+1 {
   ayato skill, attack:15;
   beidou skill[counter=rand_counter()], attack;
 }
-

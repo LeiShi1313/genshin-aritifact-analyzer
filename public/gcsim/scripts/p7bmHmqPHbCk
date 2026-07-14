@@ -27,8 +27,8 @@ nahida add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0
 
 active venti;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<5; i=i+1 {
@@ -41,7 +41,7 @@ for let i=0; i<5; i=i+1 {
     venti skill, attack;
     nahida skill;
     kaedeharakazuha skill, high_plunge, burst;
-    
+
     # kaedeharakazuha skill, high_plunge;
     wait(10); # optimizing kazuha's swirl icd
     kaedeharakazuha skill;
@@ -55,4 +55,3 @@ for let i=0; i<5; i=i+1 {
 
     print("done");
 }
-

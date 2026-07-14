@@ -32,7 +32,7 @@ energy every interval=480,720 amount=1;
 # Rotation
 active arle;
 for let i = 0; i < 4; i = i + 1 {
-  
+
   arlecchino skill;
   bennett skill, burst;
   chiori skill:2;
@@ -42,9 +42,9 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     chiori burst;
   }
-  arlecchino attack, charge, 
-             attack:3, dash, 
-             attack:3, dash, 
+  arlecchino attack, charge,
+             attack:3, dash,
+             attack:3, dash,
              attack:3, dash,
              attack:3, dash,
              attack:3, dash,

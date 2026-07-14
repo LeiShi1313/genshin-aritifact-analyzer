@@ -10,7 +10,7 @@ haitham add set="ur" count=4;
 haitham add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311;
 haitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 #emilie add set="deepwood" count=4;
@@ -40,13 +40,13 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active mav; # SS Stacks
@@ -58,7 +58,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     emilie skill, attack;
   }
-  
+
   if .mavuika.burst.ready && .mavuika.skill.ready {
     mavuika burst, skill, dash;
   } else if .mavuika.burst.ready {
@@ -66,9 +66,9 @@ for let i=0; i<4; i=i+1 {
   } else if .mavuika.skill.ready {
     mavuika attack, skill;
   }
-  
+
   xianyun attack, skill, low_plunge, burst, attack; # N1s needed for more Scroll
-  
+
   haitham skill[hold=1], low_plunge[short=1], attack;
   # Plunge Combo w/ skill as available
   while .haitham.status.xianyun-airborne-buff {
@@ -85,6 +85,6 @@ for let i=0; i<4; i=i+1 {
   if .haitham.burst.ready {
     haitham burst;
   }
-  
+
   print("done");
 }

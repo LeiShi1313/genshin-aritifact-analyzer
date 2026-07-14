@@ -1,6 +1,6 @@
 
-        
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=5;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
@@ -48,7 +48,6 @@ for let i = 0; i < 5; i = i + 1 {
   emilie attack:2,charge;
   emilie attack:2,charge;
   emilie attack;
-  
+
   bennett skill,attack:2;
 }
-

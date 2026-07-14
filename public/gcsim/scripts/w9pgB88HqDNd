@@ -3,7 +3,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
     pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -39,8 +39,8 @@ active navia; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  if !i { 
-    navia skill; 
+  if !i {
+    navia skill;
   }
   if .navia.burst.ready {
     navia burst;
@@ -51,7 +51,7 @@ for let i=0; i<4; i=i+1 {
          attack:3, dash,
          attack:3;
   navia skill, attack;
-  yelan skill, attack:2; pick_up_crystallize("any");  
+  yelan skill, attack:2; pick_up_crystallize("any");
   noelle attack:3, dash, attack;
   if i == 3 {
     navia skill[hold=1];

@@ -1,6 +1,6 @@
 options iteration=1000 duration=200 workers=4 ;
 
-ganyu char lvl=90/90 cons=6 talent=9,9,9; 
+ganyu char lvl=90/90 cons=6 talent=9,9,9;
 ganyu add weapon="polarstar" refine=5 lvl=90/90;
 ganyu add set="blizzardstrayer" count=5;
 ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
@@ -15,16 +15,9 @@ ganyu aim;
 while 1 {
   if .status.ganyuc6<1 && .ganyu.skill.ready {
     ganyu attack, skill;
-  } 
+  }
   if .ganyu.burst.ready {
     ganyu burst[radius=2];
   }
   ganyu aim;
 }
-
-
-
-
-
-
-

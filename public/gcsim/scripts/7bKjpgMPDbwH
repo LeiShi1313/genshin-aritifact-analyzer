@@ -1,4 +1,4 @@
-# Kazuha Furina Fischl Xianyun. ~25s Rot. APL. (TF) Kazuha Aggravate in 2T. Kazuha uses burst off CD after skill, Xianyun uses burst once per rotation, Nahida does not burst. Xianyun plunges when Kazuha's Anemo plunges are not available. Note that in situations in which this team is ideal, Sac Sword and Vhunt offer additional value. Accomodates Kazuha constellations. 80% Collisions from Kazuha Skill, 50% From Starwicker plunges. 
+# Kazuha Furina Fischl Xianyun. ~25s Rot. APL. (TF) Kazuha Aggravate in 2T. Kazuha uses burst off CD after skill, Xianyun uses burst once per rotation, Nahida does not burst. Xianyun plunges when Kazuha's Anemo plunges are not available. Note that in situations in which this team is ideal, Sac Sword and Vhunt offer additional value. Accomodates Kazuha constellations. 80% Collisions from Kazuha Skill, 50% From Starwicker plunges.
 
 # Team - Option Listed by DPS
 kazuha char lvl=90/90 cons=0 talent=9,9,9;
@@ -49,7 +49,7 @@ xianyun add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.2317 cd=0.1986; # 3EM
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -66,7 +66,7 @@ for let i=0; i<4; i=i+1 {
   if .fischl.skill.cd <= 30 {
     fischl attack, skill;
   }
-  
+
   # Q Consumes too much FT
   nahida skill;
   #if .nahida.burst.ready {
@@ -74,12 +74,12 @@ for let i=0; i<4; i=i+1 {
   #} else {
     nahida attack;
   #}
-  
+
   while .xianyun.skill.ready {
     xianyun skill, low_plunge;
   }
   xianyun attack, burst; # N1 wanted for (Fischl C6)
-  
+
   while .fischl.skill.cd >= 30 {
     switch {
       # Fischl Oz uptime

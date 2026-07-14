@@ -22,7 +22,7 @@ kazuha add stats def%=0.11699999999999999 def=39 hp=5288 hp%=0.16299999999999998
 
 options iteration=1000 swap_delay=12;
 
-target lvl=100 resist=0.1 radius=2 pos=0,3.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,3.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active raiden;
@@ -37,4 +37,4 @@ for let x = 0; x < 5; x = x + 1 {
   bennett skill;
 }
 
-# (Wanted to sim a hyperRaiden comp that is somewhere inbetween C0 and C6, so here's my own high investment hyperRaiden team. I use a very simple rotation. A more highly optimised rotation yields around 109k DPS) 
+# (Wanted to sim a hyperRaiden comp that is somewhere inbetween C0 and C6, so here's my own high investment hyperRaiden team. I use a very simple rotation. A more highly optimised rotation yields around 109k DPS)

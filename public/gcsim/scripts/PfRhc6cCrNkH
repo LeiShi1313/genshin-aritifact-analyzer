@@ -33,7 +33,7 @@ options swap_delay=12 iteration=1000;
 
 active mona;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn mualani_combo() {
@@ -63,7 +63,7 @@ for let i=0; i<2; i=i+1 {
   while !.element.t0.hydro {
     mualani attack;
   }
-  
+
   kazuha skill, high_plunge;
   xiangling attack:3;
   if !.xiangling.mods.favonius-cd {
@@ -79,4 +79,3 @@ for let i=0; i<2; i=i+1 {
 # Mona E >
 # Kazuha tEP > Xiangling QED >             Mona Q > Mualani Q E 3[3-stacked bite] E(cancel) N1(NA till the enemy has hydro arua) >
 # Kazuha tEP > Xiangling N3ED > Kazuha Q > Mona Q > Mualani   E 3[3-stacked bite] >
-

@@ -6,13 +6,13 @@ mualani add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.099
 #widsith
 #mualani add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=178.38 cr=0.2317 cd=0.1324;
 
-dehya char lvl=90/90 cons=0 talent=9,9,9; 
+dehya char lvl=90/90 cons=0 talent=9,9,9;
 dehya add weapon="sacgs" refine=5 lvl=90/90;
 dehya add set="deepwood" count=4;
 dehya add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=118.92 cr=0.3641 cd=0.2648;
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=5;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
@@ -28,7 +28,7 @@ options swap_delay=12 iteration=1000;
 
 active emilie;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn mualani_combo() {
@@ -67,6 +67,5 @@ for let i=0; i<2; i=i+1 {
   mualani burst;
 }
 
-# Emilie E > Zhongli hED N1 > Dehya 2[E]    > Mualani E 3[3-stacked bite] E(cancel) > 
+# Emilie E > Zhongli hED N1 > Dehya 2[E]    > Mualani E 3[3-stacked bite] E(cancel) >
 # Emilie Q > Zhongli hED N1 > Dehya N2 2[E] > Mualani E 3[3-stacked bite] Q >
-

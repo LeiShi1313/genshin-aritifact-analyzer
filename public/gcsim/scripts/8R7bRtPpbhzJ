@@ -1,4 +1,4 @@
-# Eula Citlali Bennett Xianyun. ~19s Rot. Easy Eula Melt Plunge with Citlali & VV Xianyun. 7/8 melted plunges with delays. You can expect to execute this reliably. After the first rotation, refreshing VV with Xianyun incurs a small DPS loss. Fav Bennett is Preferred. 50% Collisions. 
+# Eula Citlali Bennett Xianyun. ~19s Rot. Easy Eula Melt Plunge with Citlali & VV Xianyun. 7/8 melted plunges with delays. You can expect to execute this reliably. After the first rotation, refreshing VV with Xianyun incurs a small DPS loss. Fav Bennett is Preferred. 50% Collisions.
 
 # Team - Options listed by DPS
 eula char lvl=90/90 cons=0 talent=9,9,9;
@@ -17,7 +17,7 @@ citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 
 #citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 #citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*8 cr=0.0331*10 cd=0.0662*4; # Evenstar
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="favsword" refine=3 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -32,7 +32,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*8 er=0.0551*8 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -52,20 +52,20 @@ active eula; # Sepent spine stacks
 
 for let i = 0; i < 4; i = i + 1 {
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, burst;
-  
+
   # VV Action only
   # Action is a ~1K DPS loss past the 1st rot
   # ~2.5K DPS loss with 7 plunges
   if .xianyun.sets.vv >= 4 && i == 0 {
     xianyun attack:2;
   }
-  
+
   citlali skill, burst;
-  
+
   eula swap; wait(10);
-  EulaPlunge(); eula dash; 
+  EulaPlunge(); eula dash;
   EulaPlunge(); eula dash; wait(10); # Slight delay for Q Tick
   EulaPlunge(); eula skill;
   EulaPlunge(); eula dash;
@@ -74,7 +74,7 @@ for let i = 0; i < 4; i = i + 1 {
   EulaPlunge(); eula dash; # The next plunge is unmelted
   EulaPlunge(); eula skill;
   EulaPlunge();
-  
+
   bennett skill;
   while !.bennett.mods.favonius-cd { # Mandatory
     bennett attack;

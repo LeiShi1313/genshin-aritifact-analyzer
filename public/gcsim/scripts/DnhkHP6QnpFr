@@ -27,14 +27,14 @@ furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992
 #enemy config
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active furina;
 
-#action list 
+#action list
 
 for let i = 0; i < 4; i = i + 1 {
-  
+
   furina skill, dash, burst;
 
   while !.furina.mods.favonius-cd {
@@ -43,21 +43,21 @@ for let i = 0; i < 4; i = i + 1 {
 
   chiori skill, dash, skill; #dash to justify crystallize pickup during xianyun uptime
   xianyun skill, low_plunge, burst;
-  
-  pick_up_crystallize("any");  
+
+  pick_up_crystallize("any");
 
   while !.xianyun.mods.favonius-cd {
     xianyun attack;
   }
-  
+
   itto attack, burst, skill;
-  
+
   for let p = 8; p > 0; p = p - 1 {
     itto jump;
     if .airborne {
     itto high_plunge[collision=rand()>0.5], dash;
     }
   }
-  
+
   itto charge:3, skill, charge;
 }

@@ -3,7 +3,7 @@
 # Team - Options ordered by DPS
 freminet char lvl=90/90 cons=6 talent=9,9,9;
 freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-freminet add set="pf" count=4; 
+freminet add set="pf" count=4;
 freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
 freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
@@ -33,7 +33,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # Fav
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,16 +47,16 @@ fischl skill, attack;
 
 for let i = 0; i < 4; i = i + 1 {
   bennett skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   amy attack;
-  if .amy.burst.ready && .amy.energy == .amy.energymax { 
-    amy attack:1, burst; 
-  } else { 
-    amy skill; 
+  if .amy.burst.ready && .amy.energy == .amy.energymax {
+    amy attack:1, burst;
+  } else {
+    amy skill;
   }
-  
+
   freminet skill, attack, burst,
          attack:2, skill, skill,
          attack:2, skill, attack, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time

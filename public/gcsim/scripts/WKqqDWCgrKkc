@@ -26,22 +26,20 @@ yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 
 
 
 active zhongli;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	zhongli attack, skill[hold=1], dash;
-	while !.zhongli.mods.favonius-cd {
-		zhongli attack;
-	}
-	yelan attack, skill;
-	while !.yelan.burst.ready {
-		yelan attack;
-	}
-	yelan burst, attack;
-	bennett skill, attack, burst, attack;
-	yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
-	bennett skill;
+  zhongli attack, skill[hold=1], dash;
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
+  }
+  yelan attack, skill;
+  while !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+  bennett skill, attack, burst, attack;
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  bennett skill;
 }
- 
-

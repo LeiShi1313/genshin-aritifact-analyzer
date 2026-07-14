@@ -28,7 +28,7 @@ energy every interval=480,720 amount=1;
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
   rosaria skill;
   while !.rosaria.mods.favonius-cd {
@@ -45,4 +45,3 @@ for let i=0; i<4; i=i+1 {
   }
   eula attack:2, dash, attack:2;
 }
-

@@ -6,7 +6,7 @@ fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #mainstats
 fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; #kqms - distributed rolls: 2 atk%, 8 cr, 10 cd
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
@@ -47,12 +47,12 @@ for let x = 0; x < 3; x = x + 1 {
   } #should burst every rotation, just here for unlucky energy generation
   yae skill:3,
       attack:1, charge, dash,
-      attack:2; 
+      attack:2;
   baizhu attack:2, skill, attack:2;
   fischl attack:2, burst;
   yae attack:1, charge, jump,
       attack:1, charge, jump;
   baizhu  attack:2, charge, attack:2; #4 na to get 2 dendro apps
-  
+
   print("Rotation Done");
 }

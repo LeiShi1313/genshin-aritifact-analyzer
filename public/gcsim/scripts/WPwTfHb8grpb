@@ -10,7 +10,7 @@ sucrose add set="vv" count=4;
 sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
@@ -26,7 +26,7 @@ options swap_delay=12 iteration=1000;
 
 active mualani;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 
@@ -60,32 +60,32 @@ fn mualani_combo3() {
 for let i=0; i<4; i=i+1 {
 
   mualani attack;
-  
+
   if .xiangling.burst.ready {
-    
+
    xilonen skill, attack:2;
-    
+
    sucrose skill, dash, burst;
-   
+
    xiangling burst, attack, skill, dash, attack;
-  
+
    pick_up_crystallize("hydro");
-   
+
    mualani skill;
    mualani_combo2();
    mualani skill, burst[travel=10];
-   
+
   }
 
   else {
 
    xilonen skill, attack:2;
-   
+
    sucrose attack, skill, dash;
-   
+
    xiangling attack, skill, dash;
    pick_up_crystallize("hydro");
-   
+
    mualani skill;
    mualani_combo3();
    mualani skill;

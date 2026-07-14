@@ -48,7 +48,7 @@ for let r = 4; r > 0; r = r - 1 {
   xiangling burst, skill, dash;
   tartaglia walk, burst, walk, skill,
             attack:2, charge, dash,
-            attack:2, charge, dash,        
+            attack:2, charge, dash,
             attack:2, charge, dash,
             attack:2, charge, dash,
             attack:2, charge, dash,

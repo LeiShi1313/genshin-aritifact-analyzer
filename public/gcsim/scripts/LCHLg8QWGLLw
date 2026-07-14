@@ -29,7 +29,7 @@ energy every interval=480,720 amount=1;
 active nahida;
 
 for let i = 0; i < 5; i = i + 1 {
- 
+
   nahida skill,burst, attack;
   xingqiu burst, attack, skill, attack:2;
   kuki skill, attack;

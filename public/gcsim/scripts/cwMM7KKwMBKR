@@ -10,7 +10,7 @@ candace add set="ins" count=4;
 candace add stats hp=3571 atk=232 er=0.3885 hp%=0.3495 cr=0.311 ; #main
 candace add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.138852 em=33.2976 cr=0.27804 cd=0.27804;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
@@ -27,7 +27,7 @@ options swap_delay=12 iteration=1000;
 
 active candace;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn mualani_combo() {
@@ -51,7 +51,7 @@ for let i=0; i<4; i=i+1 {
     wait(8); #catch her own hydro particles on-field
   }
   xilonen skill, attack, burst, attack;
-  xiangling burst, skill, dash; 
+  xiangling burst, skill, dash;
   candace skill, attack;    # if burst is used here, mualani Q can't be vaped unless you make xiangling apply more pyro
   mualani skill;
   mualani_combo();

@@ -13,19 +13,19 @@ freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.19
 #freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
 #freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=49.62 atk%=0.496 er=0.1102 em=39.64 cr=0.1655 cd=0.662; # MH+SS
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.5456 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.1324;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add set="ohc" count=4;
 #xianyun add set="vv" count=4;
@@ -34,7 +34,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -59,15 +59,15 @@ for let i = 0; i < 4; i = i + 1 {
     furina attack;
   }
   furina burst;
-  
+
   esco skill;
   if i > 0 && .esco.burst.ready {
     esco burst;
   }
-  
+
   xianyun skill, low_plunge, burst;
-  
-  freminet skill, attack; 
+
+  freminet skill, attack;
     FreminetPlunge(); freminet attack;
     FreminetPlunge(); freminet attack;
     FreminetPlunge(); freminet attack;
@@ -76,6 +76,6 @@ for let i = 0; i < 4; i = i + 1 {
     FreminetPlunge(); freminet dash;
     FreminetPlunge(); freminet skill;
     FreminetPlunge(); #freminet dash;
-  
+
   print("done");
 }

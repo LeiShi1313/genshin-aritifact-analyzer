@@ -51,7 +51,7 @@ varesa_combo(1);
 for let i=0; i<4; i=i+1 {
   if .chevreuse.burst.ready && .chevreuse.energy == .chevreuse.energymax {
     chevreuse burst;
-  } 
+  }
   chevreuse skill[hold=1];
   if .fischl.skill.ready {
     fischl attack, skill;

@@ -30,18 +30,18 @@ active mavuika; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   mavuika skill;
-  
+
   bennett skill, burst;
-  
+
   escoffier skill;
   if is_even(i) {
     escoffier burst;
   } else {
     escoffier attack;
   }
-  
+
   mavuika burst;
-  
+
   chasca skill, aim:4, aim[bullets=4];
   if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
     chasca burst;

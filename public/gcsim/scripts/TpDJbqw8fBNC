@@ -51,7 +51,7 @@ fn clorinde_combo() {
 }
 
 active nahida;
-for let i=0; i<4; i=i+1 { # 4 rotations 
+for let i=0; i<4; i=i+1 { # 4 rotations
   if ( i / 2 ) * 2 == i {
     nahida skill, burst;
   } else {

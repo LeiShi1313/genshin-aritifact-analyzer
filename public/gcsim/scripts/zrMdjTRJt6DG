@@ -25,24 +25,23 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.1986 cd=0.5296;
 
 active xingqiu;
-target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.2,1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.2,1.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	xingqiu burst, attack;
-	bennett skill, attack, burst, attack;
-	kazuha burst, attack, skill, high_plunge;
-	jean burst,attack, skill;
-	bennett attack, skill, attack;
-	xingqiu attack, skill, dash, attack:2;
-	kazuha attack, skill, high_plunge, attack;
-	xingqiu attack:2;
-	bennett attack, skill, attack;
-	jean attack, skill;
-	xingqiu attack;
-	
-	
-	
-}
+  xingqiu burst, attack;
+  bennett skill, attack, burst, attack;
+  kazuha burst, attack, skill, high_plunge;
+  jean burst,attack, skill;
+  bennett attack, skill, attack;
+  xingqiu attack, skill, dash, attack:2;
+  kazuha attack, skill, high_plunge, attack;
+  xingqiu attack:2;
+  bennett attack, skill, attack;
+  jean attack, skill;
+  xingqiu attack;
 
+
+
+}

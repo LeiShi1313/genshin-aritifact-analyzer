@@ -42,7 +42,7 @@ for {
     default:
       kokomi attack, dash;
     }
-  
+
   case .nilou.skill.ready && .nilou.swap.ready && !.nilou.status.tranquilityaura:
     nilou skill, attack:2, skill;
   case !.element.t0.dendro && .collei.skill.ready && .collei.swap.ready

@@ -38,7 +38,7 @@ for let r = 4; r > 0; r = r - 1 {
   kazuha skill, high_plunge;
   klee attack, skill, dash;
   lyney aim[weakspot=1], aim;
-  
+
   if .lyney.burst.ready {
     lyney burst;
     delay(11); # Long enough for burst initial hit
@@ -46,7 +46,7 @@ for let r = 4; r > 0; r = r - 1 {
   } else {
     lyney aim;
   }
-  
+
   lyney aim, skill, aim;
 }
 sleep(9);

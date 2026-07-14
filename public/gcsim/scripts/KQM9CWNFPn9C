@@ -33,18 +33,14 @@ active raiden;
 
 raiden skill;
 for let i = 0; i < 5; i = i + 1 {
-	nahida skill, burst;
-	yelan burst, attack, skill;
-	baizhu skill, burst;
-	raiden attack, burst,
-		attack:4, dash,
-		attack:4, skill,
-		attack:4, dash,
-	       	attack:4;
-	baizhu attack, skill, dash;
-	yelan attack, skill, attack:3;
+  nahida skill, burst;
+  yelan burst, attack, skill;
+  baizhu skill, burst;
+  raiden attack, burst,
+    attack:4, dash,
+    attack:4, skill,
+    attack:4, dash,
+           attack:4;
+  baizhu attack, skill, dash;
+  yelan attack, skill, attack:3;
 }
-
-
-
-

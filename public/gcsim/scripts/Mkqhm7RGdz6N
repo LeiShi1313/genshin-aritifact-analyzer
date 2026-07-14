@@ -29,14 +29,14 @@ zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cd=0.622 ; #main
 zhongli add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
 
 #enemy config
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=5300000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=5300000;
 energy every interval=480,720 amount=1;
 
 #sim config
 options swap_delay=12 iteration=1000;
 active zhongli;
 
-#action list 
+#action list
   aethergeo skill[short_hold=1],burst;
   zhongli skill[hold=1],dash;
   albedo attack,skill;
@@ -55,10 +55,7 @@ for let i=0; i<4; i=i+1 {
   itto attack,burst[prestack=1],
     attack,skill[travel=0],charge:4,
     attack:3,charge:4,
-    attack:3,skill[travel=0],charge:4; 
+    attack:3,skill[travel=0],charge:4;
   #"C0 2PS" combo: N1 Q N1 E C3F N3 C3F N3 E C3F
-  
+
 }
-
-
-

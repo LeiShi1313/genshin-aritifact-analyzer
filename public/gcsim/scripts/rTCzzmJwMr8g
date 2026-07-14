@@ -2,7 +2,7 @@
 
 # Team
 charlotte char lvl=90/90 cons=6 talent=9,9,9;
-charlotte add weapon="widsith" refine=3 lvl=90/90; 
+charlotte add weapon="widsith" refine=3 lvl=90/90;
 charlotte add set="longnightsoath" count=4;
 #charlotte add set="sr" count=4;
 charlotte add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311;
@@ -28,7 +28,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3857 em=59.46 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -40,11 +40,11 @@ active xianyun;
 
 for let i=0; i<4; i=i+1 {
   xianyun skill, low_plunge, attack, burst;
-  
+
   bennett burst, skill;
-  
+
   xl burst, skill, dash;
-  
+
   charlotte skill[hold=1];
   #if .charlotte.burst.ready && .charlotte.energy == .charlotte.energymax {
   #  charlotte burst;
@@ -70,8 +70,8 @@ for let i=0; i<4; i=i+1 {
   if .charlotte.burst.ready && .charlotte.energy == .charlotte.energymax {
     charlotte burst;
   }
-  
+
   bennett attack, skill;
-  
+
   xiangling attack:3;
 }

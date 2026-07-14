@@ -28,7 +28,7 @@ options swap_delay=12 iteration=1000;
 
 active zhongli;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -45,7 +45,7 @@ for let i=0; i<4; i=i+1 {
     zhongli attack;
   }
   fischl attack, skill;
-  nahida attack:3, skill, 
+  nahida attack:3, skill,
          attack:2, charge, dash,
          attack:2, charge;
   tighnari skill, aim;
@@ -53,10 +53,10 @@ for let i=0; i<4; i=i+1 {
     tighnari burst, aim:2, dash;
   } else {
     tighnari aim:2;
-    nahida attack:2, dash, 
+    nahida attack:2, dash,
            attack:2, charge, dash;
   }
 }
 
-#Zhongli hED N2 > Fischl N2Q > Nahida N2CD E Q N2C > Tighnari E CA Q 2CA > 
+#Zhongli hED N2 > Fischl N2Q > Nahida N2CD E Q N2C > Tighnari E CA Q 2CA >
 #Zhongli hED N2 > Fischl N1E > Nahida N3E N2CD N2C > Tighnari E CA [ Q 2CA ] or [ Nahida N2D N2CD ] (if Q not available) >

@@ -25,7 +25,7 @@ nahida add stats hp=4780 atk=311 em=187 cr=0.311 dendro%=0.466;
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=79.28 cr=0.331 cd=0.662;
 
 active raiden;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -39,4 +39,3 @@ for let i=0; i<4; i=i+1 {
 
     print("done");
 }
-

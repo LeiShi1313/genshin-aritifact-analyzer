@@ -34,13 +34,13 @@ active nahida;
 
 for let x = 0; x < 5; x = x + 1 {
     let first = f();
-	zhongli skill[hold=1], dash;
-	nahida skill;
-	if .nahida.burst.ready { nahida burst; }
-	raiden skill, dash;
-	barbara skill;
-	let second = f();
-	
-	raiden swap;
-	wait(.barbara.skill.cd - (second - first));
+  zhongli skill[hold=1], dash;
+  nahida skill;
+  if .nahida.burst.ready { nahida burst; }
+  raiden skill, dash;
+  barbara skill;
+  let second = f();
+
+  raiden swap;
+  wait(.barbara.skill.cd - (second - first));
 }

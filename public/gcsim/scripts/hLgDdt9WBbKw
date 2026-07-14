@@ -1,17 +1,17 @@
 arlecchino char lvl=90/90 cons=0 talent=9,9,9;
 arlecchino add weapon="fjords" refine=1 lvl=90/90;
 arlecchino add set="fohw" count=5;
-arlecchino add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; 
+arlecchino add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ;
 arlecchino add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=5 lvl=90/90;
-yelan add set="ap" count=4; 
+yelan add set="ap" count=4;
 #yelan add set="no" count=4;
 yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
 yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=5 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
@@ -22,7 +22,7 @@ bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 #bennett add set="ins" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
-bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282 ;														
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282 ;
 
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=.1 hp=100000000 radius=2 pos=0,2.4;
@@ -32,19 +32,19 @@ active arle;
 
 for let i = 0; i < 4; i = i + 1 {
   arlecchino skill;
-  
+
   if i {
     bennett skill; #catch arlecchino particles + more pyro app to get a pyro crystal
   }
-  
+
   xilonen skill, attack:2;
-  
+
   yelan skill;
   pick_up_crystallize("pyro");
-  yelan burst; 
-  
-  bennett burst, attack; 
-  
+  yelan burst;
+
+  bennett burst, attack;
+
   if !i { #first rot only
     arlecchino charge;
   }

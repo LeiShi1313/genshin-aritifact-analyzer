@@ -26,7 +26,7 @@ skirk add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 at
 
 # Options
 
-options iteration=1000; 
+options iteration=1000;
 
 options swap_delay=12;
 
@@ -53,4 +53,3 @@ for let i=0; i<4; i=i+1 {
        attack:3, charge, jump,
        attack:2;
 }
-

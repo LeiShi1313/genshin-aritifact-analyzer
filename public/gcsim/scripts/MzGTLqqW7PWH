@@ -3,7 +3,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) {
     pick_up_crystallize("any"); # Pick up crystallize before every dash and Yelan E
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 

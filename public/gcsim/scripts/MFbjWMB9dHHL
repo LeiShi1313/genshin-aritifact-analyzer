@@ -40,11 +40,10 @@ while rotations {
   ayato skill, attack:17;
   if .sucrose.burst.ready {
   sucrose attack, burst;
-  } 
+  }
   sucrose skill, dash, attack:2;
   bennett attack, skill;
   xiangling attack, skill, dash;
   ayato skill, attack:16;
   rotations = rotations - 1;
 }
-

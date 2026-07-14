@@ -29,7 +29,7 @@ energy every interval=480,720 amount=1;
 active fischl;
 
 for let i = 0; i < 4; i = i + 1 {
-    
+
 fischl attack, skill;
 furina skill, dash, burst;
 baizhu skill, burst;
@@ -47,4 +47,3 @@ lynette skill,
 baizhu attack:3;
 
 }
-

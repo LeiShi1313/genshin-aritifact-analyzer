@@ -10,7 +10,7 @@ chongyun add set="lno" count=4;
 chongyun add stats hp=4780 atk=311 em=187 cryo%=0.466 cd=0.622; #main
 chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-jean char lvl=90/90 cons=0 talent=9,9,9; 
+jean char lvl=90/90 cons=0 talent=9,9,9;
 jean add weapon="favsword" refine=3 lvl=90/90;
 jean add set="vv" count=4;
 jean add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
@@ -31,7 +31,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,12 +43,12 @@ active chongyun; # SS Stacks
 #chongyun burst;
 
 for let i = 0; i < 4; i = i + 1 {
-  xianyun skill, low_plunge, burst; 
-  
+  xianyun skill, low_plunge, burst;
+
   bennett skill, burst;
-  
+
   jean skill, burst;
- 
+
   if .chongyun.burst.ready {
     chongyun burst;
   }
@@ -66,9 +66,8 @@ for let i = 0; i < 4; i = i + 1 {
   if .chongyun.burst.ready {
     chongyun burst;
   }
-  
+
   bennett skill;
 
   jean skill;
 }
-

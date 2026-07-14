@@ -42,40 +42,40 @@ candace add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992
 #candace add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.6061 em=39.64 cr=0.331 cd=0.1324; # Hp Goblet
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active fischl;
 fischl skill, attack;
 
 for let i=0; i<4; i=i+1 {
-	furina skill, dash, burst;
-	
-	candace attack, skill, burst;
-	
-	bennett burst, attack, skill;
-	
-	if .fischl.burst.ready {
-	  fischl attack:2, burst;
-	} else {
-	  fischl attack, skill;
-	}
-	
-	bennett attack;
-	while .status.bennettburst {
+  furina skill, dash, burst;
+
+  candace attack, skill, burst;
+
+  bennett burst, attack, skill;
+
+  if .fischl.burst.ready {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+
+  bennett attack;
+  while .status.bennettburst {
       if .bennett.skill.ready {
         bennett skill;
       } else {
         bennett attack;
       }
-	}
-	bennett attack:3, skill;
-	
-	print("done");
+  }
+  bennett attack:3, skill;
+
+  print("done");
 }

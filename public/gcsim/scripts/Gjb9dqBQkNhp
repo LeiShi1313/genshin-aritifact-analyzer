@@ -28,7 +28,7 @@ aino add set="silkenmoonsserenade" count=4;
 aino add stats hp=4780 atk=311 er=0.518 em=187 em=187;
 aino add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=158.56 cr=0.2648 cd=0.1324;
 
-sucrose char lvl=90/90 cons=6 talent=9,9,9;         
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
 sucrose add weapon="evenstar" refine=1 lvl=90/90;
 sucrose add set="vv" count=4;
 sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
@@ -55,7 +55,7 @@ for let i=0; i<6; i=i+1 {
   }
   sucrose skill, dash, attack;
   flins skill, attack, skill, burst, attack:4, dash, attack:2, skill, attack, burst, attack:4, dash, attack:2, skill, attack, burst, attack;
-  # Go back to Sucrose to Refresh 4pc VV 
+  # Go back to Sucrose to Refresh 4pc VV
   if i==1 {
     sucrose skill, dash, attack;
   } else {

@@ -24,15 +24,15 @@ bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 
 
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 active mavuika; # SS Stacks
 
 for let i=0; i<3; i=i+1 {
   mavuika skill;
-  
+
   bennett skill, burst;
-  
+
   shenhe attack;
   if .shenhe.burst.ready && .shenhe.energy == .shenhe.energymax { # Shenhe Bursts every ~3 rotations
     shenhe burst, skill[hold=1];
@@ -40,9 +40,9 @@ for let i=0; i<3; i=i+1 {
   } else {
     shenhe skill[hold=1];
   }
-  
+
   mavuika burst;
-  
+
   chasca skill, aim:4, aim[bullets=4];
   if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
     chasca burst;

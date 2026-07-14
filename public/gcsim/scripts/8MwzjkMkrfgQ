@@ -12,7 +12,7 @@ eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er
 #eula add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
 #eula add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662; # MH
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
@@ -33,7 +33,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3857 em=39.64 cr=0.0662 cd=0.1986;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,11 +51,11 @@ for let x = 0; x < 4; x = x + 1 {
   furina burst;
 
   xianyun skill, low_plunge, burst;
-  
+
   eula skill, attack;
-  
+
   rosaria skill, burst;
-  
+
   # Minor burst stacking when available
   if .eula.burst.ready && .eula.energy == .eula.energymax  {
     eula burst, walk, attack, skill[hold=1];
@@ -72,6 +72,5 @@ for let x = 0; x < 4; x = x + 1 {
       eula dash;
     }
   }
-  
-}
 
+}

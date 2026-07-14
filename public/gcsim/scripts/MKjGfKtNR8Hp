@@ -13,7 +13,7 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.6061 em=39.64 cr=0.3972 cd=0.1324;
 
-furina char lvl=90/90 cons=6 talent=10,10,10; 
+furina char lvl=90/90 cons=6 talent=10,10,10;
 furina add weapon="fs" refine=5 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
@@ -33,7 +33,7 @@ energy every interval=480,720 amount=1; # standard Energy drops
 active furina;
 
 for let i=0; i<4; i=i+1 {
-  furina skill, dash, burst; 
+  furina skill, dash, burst;
   escoffier skill, burst;
   shenhe burst, skill;
   ayaka skill, dash, attack, burst,
@@ -42,5 +42,5 @@ for let i=0; i<4; i=i+1 {
         attack:2, charge;
   shenhe attack, skill;
   ayaka skill, dash, attack:2, charge;
-        
+
 }

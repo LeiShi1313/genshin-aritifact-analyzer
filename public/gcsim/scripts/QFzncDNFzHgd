@@ -38,7 +38,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina attack, skill, dash, burst;
   yelan skill, burst, attack;
    mika attack, burst, skill;
@@ -46,26 +46,26 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:3, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:4;
   }

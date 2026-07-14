@@ -1,11 +1,11 @@
 # - Characters
-kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
 kokomi add weapon="ttds" refine=5 lvl=90/90;
 kokomi add set="clam" count=4;
 kokomi add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359 ; #main
 kokomi add stats def=39.36 def%=0.124 hp=1523.64 hp%=0.496 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
 furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622 ; #main
@@ -29,9 +29,9 @@ energy every interval=480,720 amount=1;
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -50,7 +50,7 @@ for let x=0; x<4; x=x+1 {
   attack:2, dash,
   attack:2, walk,
   attack:2;
-  ningguang burst, skill, charge, 
+  ningguang burst, skill, charge,
   attack, charge,
   attack, charge;
   if .chiori.burst.ready {

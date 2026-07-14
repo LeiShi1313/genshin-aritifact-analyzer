@@ -1,0 +1,46 @@
+neuv char lvl=90/90 cons=0 talent=9,9,9;
+neuv add weapon="ttds" refine=5 lvl=90/90;
+neuv add set="scroll" count=5;
+neuv add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
+neuv add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*3 em=19.82*2 cr=0.0331*9 cd=0.0662*10;
+
+mona char lvl=90/90 cons=6 talent=9,9,9;
+mona add weapon="widsith" refine=5 lvl=90/90;
+mona add set="risingwinds" count=4;
+mona add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*9 cd=0.0662*12;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="favcodex" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
+
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=.1 radius=3 pos=0,3.4 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+active mona;
+
+mona skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  nicole attack, skill, attack;
+  durin skill:2, burst;
+  neuv skill, charge[ticks=2], jump;
+  mona burst, attack;
+  nicole burst, attack;
+  mona charge;
+  mona charge; delay(13);
+  mona charge; delay(15);
+  mona charge; delay(15);
+  mona charge, skill, attack;
+
+}

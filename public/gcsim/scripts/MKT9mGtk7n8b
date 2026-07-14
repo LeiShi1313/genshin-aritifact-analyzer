@@ -3,10 +3,10 @@ xiao add weapon="deathmatch" refine=1 lvl=90/90;
 //xiao add set="mh" count=4;
 //xiao add set="vermillionhereafter" count=4;
 xiao add set="longnightsoath" count=4;
-xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main 
+xiao add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; #main
 xiao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
 
-faruzan char lvl=90/90 cons=6 talent=9,9,9; 
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
 faruzan add weapon="favbow" refine=3 lvl=90/90 ;
 faruzan add set="totm" count=4;
 faruzan add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311 ; #main
@@ -21,11 +21,11 @@ lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="flowingpurity" refine=5 lvl=90/90;
 xianyun add set="clam" count=4;
-xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main 
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.4408 em=39.64 cr=0.1324 cd=0.1324;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active faruzan;
@@ -34,16 +34,16 @@ for let i=0; i<4; i=i+1 {
   while !.faruzan.mods.favonius-cd {
     faruzan attack;
   }
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   lynette burst, skill;
   //if i && .lynette.skill.ready {    # with Lynette C4, use DMG oriented weapon + ER sands (at the cost of lower Xiao Personal DPS)
   //  lynette skill;
   //} else {
     lynette attack;
   //}
-  
+
   xiao skill:2, burst;
   for let h = 12; h > 0; h = h - 1 {
     xiao jump, high_plunge[collision=rand()>0.5];

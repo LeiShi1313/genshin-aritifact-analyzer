@@ -27,16 +27,16 @@ options swap_delay=12 iteration=1000 ;
 #--------------------------------------------
 
 active xingqiu;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
   xingqiu skill, burst, attack;
   bennett skill, attack, burst;
   if .fischl.burst.ready {
-    fischl attack:2, burst; 
+    fischl attack:2, burst;
   } else {
-    fischl attack:1, skill; 
+    fischl attack:1, skill;
   }
   hutao attack:1 ,skill,
      attack:2, charge, jump,
@@ -49,4 +49,3 @@ for let i=0; i<4; i=i+1 {
      attack:2, charge;
   bennett attack, skill, attack:4;
 }
-

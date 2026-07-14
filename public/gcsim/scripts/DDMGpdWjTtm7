@@ -3,10 +3,10 @@ yoimiya add weapon="favoniuswarbow" refine=4 lvl=90/90;
 yoimiya add set="flowerofparadiselost" count=4;
 yoimiya add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.0992 er=0.1102 em=679.92 cr=0.3972 cd=0.5296;
 
-beidou char lvl=90/90 cons=6 talent=9,9,9; 
+beidou char lvl=90/90 cons=6 talent=9,9,9;
 beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 beidou add set="eosf" count=5;
-beidou add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622 ; #main										
+beidou add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622 ; #main
 beidou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662 ;
 
 xingqiu char lvl=90/90 cons=6 talent=9,9,9;
@@ -37,8 +37,8 @@ while rotations {
    xingqiu skill, dash, burst, attack;
    beidou burst, attack, skill[counter=2];
    yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack:5;
-  
-   rotations= rotations - 1; 
+
+   rotations= rotations - 1;
 }
 
 # Note-- by end of 2nd rotation, Yoimiya HP reaches 0

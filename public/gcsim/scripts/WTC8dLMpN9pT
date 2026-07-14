@@ -1,9 +1,9 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -40,26 +40,26 @@ active fischl;
 for let x=0; x<3; x=x+1 {
   fischl attack:2, burst;      pick_up_crystallize("any");
   kirara skill[short_hold=1];  pick_up_crystallize("any");
-  while !.kirara.mods.favonius-cd { 
-    kirara attack; 
+  while !.kirara.mods.favonius-cd {
+    kirara attack;
   }
   navia burst;
-  tighnari skill, aim, burst, aim:2; 
+  tighnari skill, aim, burst, aim:2;
   print(.navia.shrapnel);
   navia skill[hold=1], attack:3, dash, attack:2;
-  
-       
+
+
   fischl attack, skill;
   kirara skill[short_hold=1];  pick_up_crystallize("any");
-  while !.kirara.mods.favonius-cd { 
-    kirara attack; 
+  while !.kirara.mods.favonius-cd {
+    kirara attack;
   }
   tighnari dash, skill, aim;
   if .tighnari.burst.ready && .tighnari.energy == .tighnari.energymax {
     tighnari burst, aim:2;
   } else {
     tighnari aim:2, dash;
-  } 
+  }
   print(.navia.shrapnel);
   navia skill[hold=1], attack:3, dash, attack:2, dash, skill;
 }

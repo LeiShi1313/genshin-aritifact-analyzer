@@ -31,17 +31,17 @@ energy every interval=480,720 amount=1;
 
 active sayu; # SS Stacks
 
-for let i = 5; i > 0; i = i - 1 { 
+for let i = 5; i > 0; i = i - 1 {
   if .fischl.skill.ready {
     fischl skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   kazuha skill[hold=1], high_plunge, burst;
-  
+
   nahida skill, burst;
-  
+
   sayu skill[hold=300];
   if .sayu.burst.ready {
     sayu burst;

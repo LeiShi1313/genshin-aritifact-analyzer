@@ -7,12 +7,12 @@ razor add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 #razor add weapon="rainslasher" refine=3 lvl=90/90;
 razor add set="mh" count=4; # Talent damage
 #razor add set="gd" count=4; # Reaction damage
-razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Talent Damage
-#razor add stats hp=4780 atk=311 em=187 em=187 em=187; # main 
+#razor add stats hp=4780 atk=311 em=187 em=187 em=187; # main
 #razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.2979 cd=0.4634; # Reaction Damage
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 #furina add weapon="festering" refine=5 lvl=90/90;
 furina add set="gt" count=4;
@@ -33,13 +33,13 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.1986 cd=0.5296;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 active razor;
 razor skill, dash; # Max Sigils for first rotation
@@ -49,7 +49,7 @@ for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
   jean skill, burst;
   bennett skill, burst;
-  
+
   # Razor out of burst actions; account for energy deficiency
   while !.razor.mods.razor-q {
     # When burst is ready
@@ -77,8 +77,8 @@ for let i=0; i<4; i=i+1 {
       }
     }
   }
-# Razor Main DPS window 
-  while .razor.infusion.bennett-fire-weapon { 
+# Razor Main DPS window
+  while .razor.infusion.bennett-fire-weapon {
     if .razor.normal > 3 {
       if .razor.skill.ready {
         razor skill, dash;
@@ -93,15 +93,15 @@ for let i=0; i<4; i=i+1 {
   if .razor.normal < 3 {
     razor attack;
   }
-  
+
   # Battery phase
   jean skill, attack;
   bennett skill, attack;
   razor skill, dash;
-  
+
   # Notation
-  # Razor ED (1st Rot) > 
-  # Furina EDQ > Jean EQ > Bennett EQ > 
+  # Razor ED (1st Rot) >
+  # Furina EDQ > Jean EQ > Bennett EQ >
   # Razor EDN1Q N3ED 2N3D N3ED N3D >
   # Jean EN1 > Bennett EN1 > Razor ED
 }

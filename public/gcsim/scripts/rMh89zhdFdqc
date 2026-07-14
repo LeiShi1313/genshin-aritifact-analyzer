@@ -16,7 +16,7 @@ kazuha char lvl=90/90 cons=1 talent=9,9,9;
 kazuha add weapon="wolffang" refine=1 lvl=90/90;
 kazuha add set="vv" count=4;
 kazuha add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cd=0.622 ; # main
-kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.311 cd=0.662;	
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.311 cd=0.662;
 
 zhongli char lvl=90/90 cons=0 talent=9,9,9;
 zhongli add weapon="favlance" lvl=90/90 refine=3;

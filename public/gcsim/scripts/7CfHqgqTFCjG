@@ -25,44 +25,44 @@ bennett add stats def=62 hp=6155 hp%=0.5940000000000001 atk=358 atk%=0.163999999
 
 #Options
 options swap_delay=12 iteration=500;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active arlecchino;
 
 #Actions
 for let i = 0; i < 4; i = i + 1 {
-  
+
   if.arlecchino.skill.ready {
     arlecchino skill;
   }
 
   furina skill, attack:3, burst;
   bennett skill, burst, attack:1;
-  
+
   if .xilonen.burst.ready {
     xilonen skill, burst, attack:2;
   } else {
     xilonen skill, attack:2;
   }
-  
+
   if .arlecchino.skill.ready {
     arlecchino skill;
   }
-  
+
   if .arlecchino.burst.ready {
     arlecchino burst, skill, charge;
   } else {
     arlecchino charge;
   }
-  
+
   while .furina.fanfare {
     arlecchino attack:3, dash;
   }
 
 }
 
-#Single Target C6 Arle Vape with C6 Furina. 
-#N3D Combo during Buff Uptime. 
-#C6 Benny Required for Pyro Scrolls Proc  
+#Single Target C6 Arle Vape with C6 Furina.
+#N3D Combo during Buff Uptime.
+#C6 Benny Required for Pyro Scrolls Proc
 #~24s rotation

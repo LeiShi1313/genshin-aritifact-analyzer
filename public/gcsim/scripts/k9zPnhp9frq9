@@ -2,7 +2,7 @@ xingqiu char lvl=90/90 cons=6 talent=9,9,9;
 xingqiu add weapon="favoniussword" refine=5 lvl=90/90;
 xingqiu add set="emblemofseveredfate" count=5;
 xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
-xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;																																																												
+xingqiu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="favoniuscodex" refine=5 lvl=90/90;
@@ -20,15 +20,15 @@ ayaka char lvl=90/90 cons=0 talent=9,9,9;
 ayaka add weapon="favoniussword" refine=5 lvl=90/90;
 ayaka add set="emblem" count=4;
 ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ; #main
-ayaka add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;																																								
+ayaka add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 
 
 options swap_delay=12 iteration=1000 workers=64;
-target lvl=100 resist=0.1 radius=1 pos=0, 1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0, 1.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 
-active xingqiu; 
+active xingqiu;
 
 for let i = 0; i < 4; i = i + 1 {
     xingqiu skill, dash, burst, attack;
@@ -40,4 +40,3 @@ for let i = 0; i < 4; i = i + 1 {
         attack:3, charge, skill, dash, attack;
     print("done");
 }
-

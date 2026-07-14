@@ -31,11 +31,11 @@ active mualani;
 mualani attack;
 
 for let i=0; i<5; i=i+1 {
-  
+
   xilonen skill, attack:2;
-  
+
   if is_even(i) {
-    
+
     # BURST PHASE
     sucrose skill, dash, burst;
     travelerpyro dash, skill;
@@ -45,18 +45,18 @@ for let i=0; i<5; i=i+1 {
             walk[f=46], attack,
             walk[f=90], attack,
             skill; # Exit nightsoul
-            
+
     if i == 4 {
       break; # No need to do stall phase at last rotation
     }
-  
+
     # Stall phase - Xilonen Burst
     mualani attack:2;
     xilonen attack, burst;
     mualani attack:2, charge;
-    
+
   } else {
-    
+
     # 3 BITE PHASE
     sucrose skill, dash;
     if .sucrose.skill.ready {
@@ -64,7 +64,7 @@ for let i=0; i<5; i=i+1 {
     } else {
       sucrose attack;
     }
-    
+
     travelerpyro dash, skill;
     pick_up_crystallize("hydro");
     mualani skill,
@@ -78,9 +78,9 @@ for let i=0; i<5; i=i+1 {
     travelerpyro burst, attack:2;
     sucrose attack:3;
     mualani attack, charge;
-    
+
   }
-  
+
 }
 
 # ~18s rotations

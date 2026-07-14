@@ -38,4 +38,3 @@ for let i = 0; i < 5; i = i + 1 {
   jean skill, attack:3;
   yelan skill, attack:10;
 }
-

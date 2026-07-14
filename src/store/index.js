@@ -31,7 +31,7 @@ const persistConfig = {
   migrate: createMigrate(artifactScoringMigrations, {
     debug: import.meta.env.DEV,
   }),
-  blacklist: ["artifacts"],
+  blacklist: ["artifacts", "gcsim"],
   serialize: false, // Data serialization is not required and disabling it allows you to inspect storage value in DevTools; Available since redux-persist@5.4.0
   deserialize: false, // Required to bear same value as `serialize` since redux-persist@6.0
 };

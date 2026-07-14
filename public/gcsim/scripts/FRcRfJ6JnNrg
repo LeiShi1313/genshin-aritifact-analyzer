@@ -3,7 +3,7 @@ kinich add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 kinich add set="obsidiancodex" count=4;
 kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
 kinich add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*10;
- 
+
 emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;

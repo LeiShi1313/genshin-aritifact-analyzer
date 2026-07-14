@@ -22,6 +22,27 @@ import { characterToTheme } from "../../utils/character";
 import characterData from "../../data/characters.json";
 import weaponData from "../../data/weapons.json";
 
+const gachaImages = import.meta.glob("../../assets/characters/*_gacha.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const coverImages = import.meta.glob("../../assets/characters/*_cover2.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const iconImages = import.meta.glob("../../assets/characters/*_icon.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+const characterBackground = (key) =>
+  gachaImages[`../../assets/characters/${key}_gacha.png`] ??
+  coverImages[`../../assets/characters/${key}_cover2.png`] ??
+  iconImages[`../../assets/characters/${key}_icon.png`];
+
 const BuildEditor = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -59,18 +80,9 @@ const BuildEditor = () => {
   const [goblet, setGoblet] = useState(build.gobletAttributes);
   const [circlet, setCirclet] = useState(build.circletAttributes);
   const [subAttributes, setSubAttributes] = useState(build.subAttributes);
-  const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  );
   const imgUrl = useMemo(
-    () =>
-      new URL(
-        `../../assets/characters/${Character[char].toLocaleLowerCase()}_${
-          matches ? "gacha" : "cover2"
-        }.png`,
-        import.meta.url
-      ).href,
-    [char, matches]
+    () => characterBackground(Character[char].toLocaleLowerCase()),
+    [char]
   );
   const hash = useMemo(() => hashBuild(build), [build]);
 
@@ -86,12 +98,6 @@ const BuildEditor = () => {
     }
     navigate(-1);
   };
-
-  useEffect(() => {
-    window
-      .matchMedia("(min-width: 420px)")
-      .addEventListener("change", (e) => setMatches(e.matches));
-  }, []);
 
   useEffect(() => {
     const theme = characterToTheme(char);
@@ -131,10 +137,10 @@ const BuildEditor = () => {
 
   return (
     <div
-      className={`my-auto flex w-full rounded-box bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
+      className={`rounded-box my-auto flex w-full bg-contain bg-center bg-no-repeat shadow-2xl sm:w-3/5 sm:bg-cover`}
       style={{ backgroundImage: `url(${imgUrl})` }}
     >
-      <div className="items-enter flex w-full justify-center rounded-box bg-base-200 bg-opacity-70 py-10">
+      <div className="items-enter rounded-box bg-base-200 flex w-full justify-center bg-opacity-70 py-10">
         <div className="flex w-full flex-col space-y-2 px-2 xl:w-3/5">
           <NameEditor name={name} setName={setName} isPreset={presets[hash]} />
           <div className="flex flex-row items-center justify-between">
@@ -146,18 +152,18 @@ const BuildEditor = () => {
             </button>
           </div>
           <div className="flex flex-row items-center justify-between space-x-2">
-            <div className="h-full w-1/2 justify-between rounded-box border-2 border-solid border-primary-focus">
+            <div className="rounded-box border-primary-focus h-full w-1/2 justify-between border-2 border-solid">
               <WeaponEditor
                 weapons={weapons}
                 setWeapons={setWeapons}
                 filterFn={weaponFilterFn}
               />
             </div>
-            <div className="h-full w-1/2 justify-between rounded-box border-2 border-solid border-primary-focus">
+            <div className="rounded-box border-primary-focus h-full w-1/2 justify-between border-2 border-solid">
               <SuitsEditor suits={suits} setSuits={setSuits} />
             </div>
           </div>
-          <div className="w-full rounded-box border-2 border-solid border-primary-focus pb-2">
+          <div className="rounded-box border-primary-focus w-full border-2 border-solid pb-2">
             <label className="label flex flex-row justify-between">
               <span className="label-text">{t("Main Stats")}</span>
             </label>
@@ -173,7 +179,7 @@ const BuildEditor = () => {
               subAttributes={subAttributes}
             />
           </div>
-          <div className="w-full rounded-box border-2 border-solid border-primary-focus pb-2">
+          <div className="rounded-box border-primary-focus w-full border-2 border-solid pb-2">
             <SubAttributesEditor
               subAttributes={subAttributes}
               setSubAttributes={setSubAttributes}

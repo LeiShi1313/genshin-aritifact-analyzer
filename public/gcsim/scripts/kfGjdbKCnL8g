@@ -44,7 +44,7 @@ for let i=0; i<2; i=i+1 {
   bennett skill, burst;
   skirk_burst();
   chasca skill, aim:4, burst;
-  
+
   furina attack:2;
   while !.furina.mods.favonius-cd {
     furina attack;

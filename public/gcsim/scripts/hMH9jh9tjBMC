@@ -38,4 +38,3 @@ for let x = 4; x; x = x - 1 {
   tighnari skill, aim, burst, aim:2, attack;
   mona dash, attack;
 }
-

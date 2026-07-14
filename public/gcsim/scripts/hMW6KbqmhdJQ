@@ -4,11 +4,11 @@ sucrose add set="vv" count=5;
 sucrose add stats hp=4780 atk=311 em=560; #main
 sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3303 em=118.92 cr=0.1324 cd=0.1324 ;
 
-beidou char lvl=90/90 cons=6 talent=9,9,9; 
+beidou char lvl=90/90 cons=6 talent=9,9,9;
 beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 beidou add set="eosf" count=5;
-beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main                                        
-beidou add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1984 def=39.35 def%=0.1239 em=39.63 er=0.1102 cr=0.3972 cd=0.662;                                        
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+beidou add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1984 def=39.35 def%=0.1239 em=39.63 er=0.1102 cr=0.3972 cd=0.662;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="alleyhunter" refine=1 +params=[stacks=10] lvl=90/90;
@@ -22,8 +22,8 @@ xingqiu add set="no" count=4;
 xingqiu add stats hp=4780 atk=311 er=0.518 cr=0.311 hydro%=0.466; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282 ;
 
-options swap_delay=12 iteration=100;            
-target lvl=100 resist=0.1 radius=2 pos=2.1,1.5 hp=2000000; 
+options swap_delay=12 iteration=100;
+target lvl=100 resist=0.1 radius=2 pos=2.1,1.5 hp=2000000;
 energy every interval=480,720 amount=1;
 
 active beidou; #ss stacks
@@ -40,15 +40,15 @@ while 1 {
      if .beidou.burst.ready {
          if r > 0.7 {
            beidou skill[counter=1];
-         } else { 
-           beidou skill; 
+         } else {
+           beidou skill;
          }
          beidou burst;
      } else {
        if r > 0.7 {
          beidou skill[counter=1], attack;
-       } else { 
-         beidou skill, attack; 
+       } else {
+         beidou skill, attack;
        }
      }
     case .beidou.burst.ready:
@@ -56,7 +56,7 @@ while 1 {
     case .sucrose.burst.ready:
       if .sucrose.skill.ready {
         sucrose skill, dash, burst, attack;
-      } else { 
+      } else {
         sucrose burst, attack;
       }
     case .sucrose.skill.ready:

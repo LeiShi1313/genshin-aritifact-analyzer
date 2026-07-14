@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { GCSimScriptTarget } from '../../../genshin/gcsim'
 import { Enemy, enemyToJSON } from '../../../genshin/enemy'
+import enemies from '../../../data/gcsim/enemies.json'
 
 interface TargetSettingsSectionProps {
   target: Partial<GCSimScriptTarget> | undefined
@@ -17,7 +18,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
 
   // Get all available enemy types
   const enemyTypes = Object.values(Enemy).filter(
-    v => typeof v === 'number' && v !== Enemy.ENEMY_UNSPECIFIED
+    v => typeof v === 'number' && v !== Enemy.ENEMY_UNSPECIFIED && enemies.includes(getEnemyKey(v))
   ) as Enemy[]
 
   return (
@@ -26,7 +27,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
 
       {/* Enemy Type Section */}
       <div className='rounded-lg bg-base-300 p-3'>
-        <div className='mb-2 text-xs font-semibold opacity-70'>Enemy Configuration</div>
+        <div className='mb-2 text-xs font-semibold opacity-70'>{t('Enemy Configuration')}</div>
         <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
           {/* Enemy Type */}
           <div className='form-control'>
@@ -107,7 +108,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
                 }
                 className='select select-sm'
               >
-                <option value=''>Default</option>
+                <option value=''>{t('Default')}</option>
                 <option value='true'>{t('Yes')}</option>
                 <option value='false'>{t('No')}</option>
               </select>
@@ -118,7 +119,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
 
       {/* Basic Properties */}
       <div className='rounded-lg bg-base-300 p-3'>
-        <div className='mb-2 text-xs font-semibold opacity-70'>Basic Properties</div>
+        <div className='mb-2 text-xs font-semibold opacity-70'>{t('Basic Properties')}</div>
         <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4'>
           <div className='form-control'>
             <label className='label py-1'>
@@ -144,7 +145,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
             <input
               type='number'
               min='0'
-              placeholder='Auto'
+              placeholder={t('Auto')}
               value={target?.hp ?? ''}
               onChange={e =>
                 onChange('hp', e.target.value ? parseFloat(e.target.value) : undefined)
@@ -190,7 +191,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
 
       {/* Elemental Resistances */}
       <div className='rounded-lg bg-base-300 p-3'>
-        <div className='mb-2 text-xs font-semibold opacity-70'>Elemental Resistances</div>
+        <div className='mb-2 text-xs font-semibold opacity-70'>{t('Elemental Resistances')}</div>
         <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5'>
           <div className='form-control'>
             <label className='label py-1'>
@@ -340,7 +341,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
 
       {/* Particle Settings */}
       <div className='rounded-lg bg-base-300 p-3'>
-        <div className='mb-2 text-xs font-semibold opacity-70'>Particle Settings</div>
+        <div className='mb-2 text-xs font-semibold opacity-70'>{t('Particle Settings')}</div>
         <div className='grid grid-cols-2 gap-3 sm:grid-cols-2'>
           <div className='form-control'>
             <label className='label py-1'>
@@ -349,7 +350,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
             <input
               type='number'
               min='0'
-              placeholder='Auto'
+              placeholder={t('Auto')}
               value={target?.particleThreshold ?? ''}
               onChange={e =>
                 onChange('particleThreshold', e.target.value ? parseInt(e.target.value) : undefined)
@@ -365,7 +366,7 @@ const TargetSettingsSection = ({ target, onChange }: TargetSettingsSectionProps)
             <input
               type='number'
               min='0'
-              placeholder='Auto'
+              placeholder={t('Auto')}
               value={target?.particleDropCount ?? ''}
               onChange={e =>
                 onChange('particleDropCount', e.target.value ? parseInt(e.target.value) : undefined)

@@ -27,17 +27,17 @@ nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 
 active amy;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	let a1=0;
-	let state = 1;
-	amy attack, skill;
-	furina skill, dash, burst, attack:3;
-	nahida skill, burst, attack:2, charge;
-	amy attack:2, burst;
-	cyno attack, burst, attack, skill;
+  let a1=0;
+  let state = 1;
+  amy attack, skill;
+  furina skill, dash, burst, attack:3;
+  nahida skill, burst, attack:2, charge;
+  amy attack:2, burst;
+  cyno attack, burst, attack, skill;
   while !.fischl.skill.ready {
     if .cyno.mods.cyno-a1 && .cyno.skill.ready {
       cyno skill;
@@ -49,5 +49,3 @@ for let i=0; i<4; i=i+1 {
   }
 
 }
-
-

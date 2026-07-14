@@ -43,7 +43,7 @@ active nahida;
 nahida skill;
 
 for let i=0; i<2; i=i+1 { # 2 rotations
-  
+
   if i {
     nahida skill, attack, charge;
   }

@@ -59,6 +59,7 @@ message GCSimScriptCharacterInfo {
     repeated GCSimScriptParam params = 9;
     int32 start_hp = 10;
     GCSimScriptRandomSubstats random_substats = 11;  // Random substat config
+    string gcsim_name = 12;  // Preserve the engine identity (for example Aether vs Lumine)
 }
 
 // Simulation options
@@ -141,6 +142,7 @@ message GCSimScriptTarget {
     float geo_resist = 16;        // Geo resistance
     GCSimScriptTargetType type = 17;  // Predefined enemy type
     Element particle_element = 18;    // Element of dropped particles
+    float hp_mult = 19;               // Global target HP multiplier
 }
 
 // Complete GCSim script configuration

@@ -26,7 +26,7 @@ zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #mainstats
 zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 #enemy config
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
@@ -45,7 +45,7 @@ fn rand_delay() {
   print(del);
 }
 
-#action list 
+#action list
 
   rand_delay(); zhongli skill[hold=1]; rand_delay(); zhongli dash;
   rand_delay(); gorou burst;
@@ -53,22 +53,22 @@ fn rand_delay() {
 
   rand_delay(); itto attack, burst[prestack=1];
                      rand_delay(); itto attack, skill, attack:2, charge:5;
-                     rand_delay(); itto attack:4, charge:5; 
+                     rand_delay(); itto attack:4, charge:5;
                      rand_delay(); itto skill[travel=0], charge;
                      #"C0 1PS" combo
                      sleep(21); #catch ushi particles
-       
+
 for let i = 0; i < 4; i = i + 1 {
 
   rand_delay(); zhongli skill; #refreshing pillar
   rand_delay(); gorou skill; rand_delay(); gorou burst;
   rand_delay(); albedo attack; rand_delay(); albedo skill;
   rand_delay(); zhongli skill[hold=1]; rand_delay(); zhongli dash;
-  
+
   rand_delay(); itto attack; rand_delay(); itto burst[prestack=1];
                      rand_delay(); itto attack, skill, charge:4;
                      rand_delay(); itto attack:3, charge:4;
-                     rand_delay(); itto attack:3, skill, charge:4; 
+                     rand_delay(); itto attack:3, skill, charge:4;
                      #"C0 2PS" combo
 
 }

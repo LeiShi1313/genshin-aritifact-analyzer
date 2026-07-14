@@ -1,4 +1,4 @@
-# Gaming Citlali Bennett Xianyun. ~20s Rot. Gaming Melt Plunge with 7 plunges, 6 melted. Gaming juggles Man Chai, using burst into skill + plunge and waiting on the ground before catching Man Chai mid descent. The final plunge is not melted, but is delayed for Gaming's particle ICD. Missing Bennett buff on the 6th plunge is -4K DPS. 
+# Gaming Citlali Bennett Xianyun. ~20s Rot. Gaming Melt Plunge with 7 plunges, 6 melted. Gaming juggles Man Chai, using burst into skill + plunge and waiting on the ground before catching Man Chai mid descent. The final plunge is not melted, but is delayed for Gaming's particle ICD. Missing Bennett buff on the 6th plunge is -4K DPS.
 
 # Team - Options listed by DPS
 gaming char lvl=90/90 cons=6 talent=9,9,9;
@@ -20,7 +20,7 @@ bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
 
-chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favlance" refine=3 lvl=90/90;
 chevreuse add set="scroll" count=4;
 #chevreuse add set="sodp" count=4;
@@ -28,7 +28,7 @@ chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
 chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1; # Standard
 
@@ -41,11 +41,11 @@ gaming skill, low_plunge, dash; # Pyro VV 1st Rot
 
 for let i=0; i<4; i=i+1 {
   chev burst, skill[hold=1]:3; # Just to take the rotation over 20s for TTDS
-  
+
   bennett skill, burst;
-  
+
   citlali skill, burst;
-  
+
   gaming burst;
   let plungeCount = 0;
   for let j = 0; j < 6; j = j + 1 {

@@ -37,11 +37,11 @@ for let x = 5; x; x = x - 1 {
   fischl skill, attack;
   dori skill, burst;
   ayato skill, attack:15;
-  
+
   nahida skill, attack:2;
   fischl attack:2, burst;
   dori skill, attack:2, dash, attack;
   ayato skill, attack:10;
-  
+
   print("rotation done");
 }

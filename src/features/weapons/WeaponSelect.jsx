@@ -45,7 +45,7 @@ const WeaponSelect = ({ weapon, setWeapon, awaken = true, filterFn = null }) => 
           </>
         ) : (
           <>
-            {t("Pick one")} {t("weapon")}
+            {t("Pick one")} {t("Weapon")}
           </>
         )}
       </button>
@@ -73,7 +73,7 @@ const WeaponSelect = ({ weapon, setWeapon, awaken = true, filterFn = null }) => 
           {/* Dialog card header */}
           <div className="flex h-12 w-full shrink-0 items-center gap-2 border-b-2 border-neutral-content/10 pl-6 pr-2">
             <div className="text-md">
-              {t("Pick one")} {t("weapon")}
+              {t("Pick one")} {t("Weapon")}
             </div>
             <div className="grow" />
             <button

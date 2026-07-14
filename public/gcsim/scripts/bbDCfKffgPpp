@@ -34,27 +34,26 @@ active kuki;
 set_particle_delay("sucrose", 30);
 
 for let i = 1; i <=6; i = i + 1 {
-	let t = f();
-	kuki skill, burst;
-	sucrose attack, burst, attack;
-	nahida skill, burst;
-	beidou skill, burst;
-	nahida attack:4;
-	sucrose attack, skill, dash, attack,  charge;
-	nahida attack:4;
-	beidou skill, attack;
-	if .sucrose.skill.ready {
-		sucrose attack, skill, dash, attack, charge;
-	}
-	while f() - t < 19.5*60 {
-		if .nahida.skill.ready && .nahida.normal == 3 {
-			nahida skill;
-		} else if .nahida.normal == 3 {
-			nahida dash;
-		} else {
-			nahida attack;
-		}
-	}
-	
-}
+  let t = f();
+  kuki skill, burst;
+  sucrose attack, burst, attack;
+  nahida skill, burst;
+  beidou skill, burst;
+  nahida attack:4;
+  sucrose attack, skill, dash, attack,  charge;
+  nahida attack:4;
+  beidou skill, attack;
+  if .sucrose.skill.ready {
+    sucrose attack, skill, dash, attack, charge;
+  }
+  while f() - t < 19.5*60 {
+    if .nahida.skill.ready && .nahida.normal == 3 {
+      nahida skill;
+    } else if .nahida.normal == 3 {
+      nahida dash;
+    } else {
+      nahida attack;
+    }
+  }
 
+}

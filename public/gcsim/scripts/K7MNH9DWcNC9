@@ -31,11 +31,10 @@ for let i=0; i<4; i=i+1 {
   lisa attack, burst;
   zhongli attack:5, dash, attack:5;
   fischl attack:2, burst;
-  zhongli attack:5, dash,  
+  zhongli attack:5, dash,
           attack:5, dash,
           attack:5, dash,
           attack:5, skill;
   lisa skill[hold=1], attack:3;
   print("Rotation done");
 }
- 

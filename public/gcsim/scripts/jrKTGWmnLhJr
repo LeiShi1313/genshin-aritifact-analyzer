@@ -27,14 +27,14 @@ bennett add stats def%=0.0992 def=31.488 hp=406.304 hp%=0.07936 atk=26.464 atk%=
 #enemy config
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active furina;
 
-#action list 
+#action list
 
   for let i=0; i<4; i=i+1 {
-  
+
   furina skill, dash, burst;
   bennett burst, skill;
   fischl aim[hold=0], skill;
@@ -44,12 +44,9 @@ active furina;
   lynette skill, attack, charge, attack, charge;
   bennett skill;
   fischl attack:5, dash, attack:3;
-  
-  
-  
-  
-  
+
+
+
+
+
   }
-
-
-

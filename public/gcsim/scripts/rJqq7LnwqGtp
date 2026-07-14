@@ -31,7 +31,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,13 +45,13 @@ active mavuika;
 
 for let i=0; i<4; i=i+1 {
   mavuika skill;
-  
+
   bennett skill, burst;
-  
+
   citlali skill, burst;
-  
+
   kaeya skill, attack, burst;
-  
+
   mavuika burst;
   if Mav6C2D == true {
     mavuika charge:2, dash;

@@ -69,10 +69,10 @@ active navia;
 #-------------------------------------------
 for let x = 0; x < 5; x = x + 1 {
     navia burst;pick_up_crystallize("any");
-	charlotte skill[hold=1], burst, attack:2 ;pick_up_crystallize("any");
-	rosaria skill,burst, attack:2; pick_up_crystallize("any");
-	travelergeo burst, skill[short_hold=1]; pick_up_crystallize("any");
-	navia skill, attack:3, dash, attack:2, skill, attack:3, dash, attack:2; pick_up_crystallize("any");
+  charlotte skill[hold=1], burst, attack:2 ;pick_up_crystallize("any");
+  rosaria skill,burst, attack:2; pick_up_crystallize("any");
+  travelergeo burst, skill[short_hold=1]; pick_up_crystallize("any");
+  navia skill, attack:3, dash, attack:2, skill, attack:3, dash, attack:2; pick_up_crystallize("any");
 }
 
 # Navia Q -> Charlotte HoldE Q -> Rosaria EQ -> GeoTraveler QE -> Navia E N3D N2 N3D N2

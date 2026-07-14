@@ -22,7 +22,7 @@ shenhe add set="noblesseoblige" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 shenhe add stats def%=0.1240 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.6612 em=39.64 cr=0.1986 cd=0.2648; # sub
 
-# The swap delay is 6 because there is a delay which averages 4 frames before and after the swap. 
+# The swap delay is 6 because there is a delay which averages 4 frames before and after the swap.
 # swap delay 6 is equivalent 3f of ingame swap animation, and 50ms worth of ping.
 options swap_delay=6 iteration=1000;
 energy every interval=480,720 amount=1;
@@ -44,7 +44,7 @@ active ayaka;
 ayaka dash;
 rand_delay();
 for let i = 0; i < 5; i = i + 1 {
-  venti swap; 
+  venti swap;
   rand_delay();
   venti skill;
   rand_delay();
@@ -56,7 +56,7 @@ for let i = 0; i < 5; i = i + 1 {
   rand_delay();
   shenhe burst;
   rand_delay();
-  kokomi swap; 
+  kokomi swap;
   rand_delay();
   kokomi skill;
   rand_delay();
@@ -97,4 +97,3 @@ for let i = 0; i < 5; i = i + 1 {
   ayaka attack:2, charge, attack:2, charge;
   print("rotation done");
 }
-

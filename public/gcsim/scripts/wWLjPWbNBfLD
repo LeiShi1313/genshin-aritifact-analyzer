@@ -36,7 +36,7 @@ mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 #mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662; # OC ADC
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -58,19 +58,19 @@ for let i = 0; i < 4; i = i + 1 {
       chev attack:1, skill[hold=1];
     }
   }
-  
+
   if .fischl.skill.ready {
     fischl attack, skill;
   } else {
-    fischl attack:2, burst; 
+    fischl attack:2, burst;
   }
-  
+
   if .mav.burst.ready {
     mav burst, skill;
   } else {
     mav skill, attack;
   }
-  
+
   razor skill, dash, attack, burst;
   # Razor Main DPS window
   while .razor.mods.razor-q > 240 { # Fixed Rot

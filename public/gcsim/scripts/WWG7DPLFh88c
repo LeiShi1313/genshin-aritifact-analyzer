@@ -44,13 +44,13 @@ mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er
 #mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.1324 cd=0.662; # ADC; Other
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active dori; # SS Stacks
@@ -63,23 +63,23 @@ for let i=0; i<4; i=i+1 {
   } else if i > 0 {
     nahida skill, attack, charge;
   }
-  
+
   if .mav.burst.ready {
     mav skill, burst;
   } else {
     mav skill, attack;
   }
-  
+
   if .fischl.skill.ready {
     fischl attack, skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   dori skill, attack:2, dash, attack:2, burst;
   dori skill, attack:2, dash, attack:2;
-  
+
   nahida skill, attack, charge;
-  
+
   dori skill, attack:2, dash, attack:2;
 }

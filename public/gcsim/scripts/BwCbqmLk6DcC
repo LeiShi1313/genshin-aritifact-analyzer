@@ -24,7 +24,7 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992
 
 options swap_delay=12 iteration=100;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=21370000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=21370000000;
 
 active furina;
 
@@ -45,4 +45,3 @@ for let i=0; i<4; i=i+1 {
   dori skill, attack;
   sethos aim[hold=2]:2;
 }
-

@@ -38,14 +38,13 @@ for let i = 0; i < 4; i = i + 1 {
   kokomi attack, burst,
     attack:2, charge, jump,
     attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2;
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2;
   beidou skill[counter=1], attack;
   collei skill, attack;
   while (f() < t + 24*60){
-	kokomi attack:2, charge, jump;
+  kokomi attack:2, charge, jump;
   }
   print("done");
 }
-

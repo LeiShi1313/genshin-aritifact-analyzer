@@ -22,8 +22,8 @@ chevreuse add set="no" count=4;
 chevreuse add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
 chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.1324;
 
-options iteration=1000 swap_delay=12;                                                                       
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+options iteration=1000 swap_delay=12;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn clorinde_combo() {
@@ -46,11 +46,11 @@ mav skill, burst, charge:4, dash; # mav empowered CAs to fill rotation time
 clorinde_combo();
 
 for let i = 0; i < 4; i = i + 1 { # 18s rotation
-  
+
   chevreuse skill[hold=1], burst;
   clorinde burst;
   ororon skill, burst;
   mav skill, burst, charge:2, dash; # mav empowered CAs to fill rotation time
   clorinde_combo();
-  
+
 }

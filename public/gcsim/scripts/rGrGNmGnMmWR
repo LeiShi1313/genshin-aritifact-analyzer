@@ -32,7 +32,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -44,20 +44,20 @@ active chongyun; # SS Stacks
 chongyun burst;
 
 for let i = 0; i < 4; i = i + 1 {
-  xianyun skill, low_plunge, burst; 
-  
+  xianyun skill, low_plunge, burst;
+
   if .chongyun.burst.ready {
     chongyun burst;
   }
-  
+
   if .mav.burst.ready && i > 0 {
     mav burst, skill, dash;
   } else if .mav.skill.ready {
     mav skill, dash;
   }
-  
+
   xl burst, skill, dash;
- 
+
   chongyun skill;
   # Plunge until expiry
   while .chongyun.status.xianyun-airborne-buff {
@@ -72,4 +72,3 @@ for let i = 0; i < 4; i = i + 1 {
 
   xl attack:4, dash, attack:2;
 }
-

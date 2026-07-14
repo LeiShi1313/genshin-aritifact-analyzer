@@ -1,9 +1,9 @@
-# Freminet Rosaria Bennett Xianyun. ~19s Rot. Freminet Melt Plunge. 
+# Freminet Rosaria Bennett Xianyun. ~19s Rot. Freminet Melt Plunge.
 # Hyperoptimized by using 2 Freminet Skills to melt 2 extra Plunges for a total of 8 melted Plunges, very tight margin to achieve this
-# ER needs makes Favonius Bennett a must. LNO is a 12% upgrade over CW and SR. 50% Collisions. 
+# ER needs makes Favonius Bennett a must. LNO is a 12% upgrade over CW and SR. 50% Collisions.
 # ▶The last rotation skips ~1-2s of funneling time to display higher DPS◀
 
-# Team 
+# Team
 freminet char lvl=90/90 cons=6 talent=9,9,9;
 freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 freminet add set="longnightsoath" count=4;
@@ -16,7 +16,7 @@ rosaria add set="scroll" count=4;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
 rosaria add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.4634;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="favoniussword" refine=3 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -29,7 +29,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,26 +48,26 @@ fn FreminetPlunge() {
 active freminet; # SS Stacks
 
 for let i = 0; i < 5; i = i + 1 {
-  
+
   if i {
     bennett skill;
     while !.bennett.mods.favonius-cd {
       bennett attack;
     }
   }
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, dash, burst;
-  
+
   if !i {
     xianyun attack:2;
   }
-  
+
   rosaria skill, burst;
-  
+
   freminet swap;
- 
+
   FreminetPlunge(); freminet dash;
   FreminetPlunge(); freminet skill; # Fill time without Rosa Q tick
   FreminetPlunge(); freminet dash;

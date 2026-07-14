@@ -1,4 +1,4 @@
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=5;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
@@ -39,7 +39,6 @@ for let i = 0; i<3; i=i+1 {
     gaming skill, high_plunge, attack;
   }
   gaming skill, high_plunge, dash;
-  
+
   print ("done");
 }
-

@@ -25,22 +25,22 @@ jean add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;
 jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active zhongli;
 
 for let i=0; i<4; i=i+1 {
   zhongli skill[hold=1], dash;
-  
+
   faruzan attack, burst;
-  
+
   if i == 0 {
     jean skill, burst;
   } else {
     jean burst, attack, skill;
   }
-  
+
   xiao skill:2, burst;
   for let h = 11; h > 0; h = h - 1 {
     xiao jump, high_plunge[collision=rand()>0.5];
@@ -48,7 +48,6 @@ for let i=0; i<4; i=i+1 {
   for let h = 2; h > 0; h = h - 1 {
     xiao jump, low_plunge[collision=rand()>0.5];
   }
-  
-  jean skill;     
-}
 
+  jean skill;
+}

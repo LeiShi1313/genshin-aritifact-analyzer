@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -58,22 +58,22 @@ fn execute_action(char_id number, action_id number, p map) {
 arle char lvl=90/90 cons=0 talent=9,9,9;
 arle add weapon="deathmatch" refine=1 lvl=90/90;
 arle add set="fohw" count=5;
-arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; 
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
-        
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favoniuslance" refine=3 lvl=90/90;
 rosaria add set="eosf" count=5;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311 ;
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-diona char lvl=90/90 cons=6 talent=9,9,9; 
+diona char lvl=90/90 cons=6 talent=9,9,9;
 diona add weapon="favoniuswarbow" refine=3 lvl=90/90;
 diona add set="no" count=4;
 diona add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
 diona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.3972 cd=0.3972;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="ins" count=5;
 bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.3495 cr=0.23325 ; #main
@@ -93,7 +93,7 @@ for let i = 0; i < 6; i = i + 1 {
   while !.rosaria.mods.favonius-cd {
     rosaria attack;
   }
-  arle charge[early_cancel=1], dash, 
+  arle charge[early_cancel=1], dash,
        attack:3, dash,
        attack:3, dash,
        attack;

@@ -37,10 +37,9 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     emilie skill, attack:2;
   }
-  arle charge, 
-      attack:5, dash, 
+  arle charge,
+      attack:5, dash,
       attack:5, dash,
       attack:5, dash,
       attack;
 }
-

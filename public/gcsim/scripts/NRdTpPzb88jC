@@ -44,13 +44,13 @@ kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #kirara add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648;# Ins
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Combos
 fn sethosCombo() {
@@ -73,22 +73,22 @@ for let i=0; i<4; i=i+1 {
   if i > 0 && .kirara.burst.ready {
     kirara burst;
   }
-	
-  if .amy.skill.ready { 
+
+  if .amy.skill.ready {
     amy attack, skill;
   } else {
     amy attack:2, burst;
   }
-  
+
   sethos skill; #aim[hold=2] # High ping only; dodges energy drain
   sethosCombo();
   sethos aim[hold=2]:1;
-  
+
   # Fading Twlight rarely bursts 3 times
-	tighnari skill, aim;
-	if .tighnari.burst.ready {
-	  tighnari burst, aim:2;
-	} else {
-	  tighnari aim:2;
-	}
+  tighnari skill, aim;
+  if .tighnari.burst.ready {
+    tighnari burst, aim:2;
+  } else {
+    tighnari aim:2;
+  }
 }

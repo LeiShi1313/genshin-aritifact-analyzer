@@ -27,29 +27,29 @@ energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=1000;
 active tighnari;
 
-    
+
       keqing skill;
 for let i=0; i<4; i=i+1 {
-      
+
       zhongli skill[hold=1], dash;
-     
+
        while !pick_up_crystallize("electro") {
       wait(1);
     }
-    
+
       fischl attack, skill;
       tighnari skill, aim, burst, aim:2;
       keqing skill, burst, skill,
              attack, charge,
              attack, charge,
              attack, charge;
-     
+
       zhongli skill[hold=1], dash;
-       
+
        while !pick_up_crystallize("electro") {
       wait(1);
     }
-    
+
       fischl burst, attack:2;
       tighnari skill, aim:3;
       keqing skill, burst, skill,
@@ -57,7 +57,7 @@ for let i=0; i<4; i=i+1 {
              attack, charge,
              attack, charge,
              attack, charge;
-              
+
 }
 
 #(Keqing E) > Zhong hEd > Fischl N1E > Tighnari E CA Q 2CA > Keqing EQE 3N1C > Zhong hEd > Fischl Q N2 > Tighnari E 3CA > Keqing EQE 4N1C

@@ -2,14 +2,14 @@
 
 # Team
 razor char lvl=90/90 cons=6 talent=9,9,9;
-razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5]; 
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 razor add set="mh" count=4;
 razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
 razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2648 cd=0.662; # EM
 #razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
 #razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2648 cd=0.662; # ATK
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
@@ -21,20 +21,20 @@ nahida add set="deepwoodmemories" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.2317 cd=0.5296;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
 xilonen add stats def%=0.62 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.3972;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active razor;
@@ -42,13 +42,13 @@ razor skill, dash;
 
 for let i=0; i<4; i=i+1 {
   xilonen skill, attack:2, burst;
-  
+
   nahida skill, attack, burst;
-  
+
   furina skill, dash, burst;
-  
+
   xilonen skill, attack:2;
-  
+
   razor skill, dash, attack, burst;
   while .razor.mods.razor-q > 240 {
     if .razor.normal > 3 && .razor.skill.ready {
@@ -60,4 +60,3 @@ for let i=0; i<4; i=i+1 {
     }
   }
 }
-

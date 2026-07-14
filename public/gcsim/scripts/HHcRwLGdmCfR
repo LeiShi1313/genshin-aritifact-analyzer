@@ -12,7 +12,7 @@ beidou add set="emblem" count=4;
 beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
 beidou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
 
-fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
 fischl add set="tenacity" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
@@ -26,8 +26,8 @@ xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 
 
 active xingqiu;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -59,4 +59,3 @@ for let i=0; i<4; i=i+1 {
 }
 
 # Xingqiu Q N1 ED N2 > Fischl E N1 > Sucrose N2 EDQ N2 > Beidou E N1 Q > Fischl N2 Q > Sucrose N2E / N2C / N2J depending on stamina/charges until 23s > Beidou E N2 > Loop
-

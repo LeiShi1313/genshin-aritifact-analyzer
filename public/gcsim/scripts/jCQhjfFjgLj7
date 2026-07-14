@@ -34,7 +34,7 @@ lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 e
 #lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -54,25 +54,24 @@ for let i=0; i<4; i=i+1 {
   } else {
     chev skill[hold=1], attack:2;
   }
-  
+
   if .lisa.burst.ready {
     lisa burst, skill[hold=1], attack:3;
   } else {
     lisa skill[hold=1], burst; sleep(20);
   }
-  
+
   if .fischl.skill.ready {
     fischl attack:1, skill;
   } else {
     fischl attack:2, burst;
   }
-  
-  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack:1; 
+
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack:1;
   if .yoimiya.burst.ready {
-    yoimiya burst; 
+    yoimiya burst;
   } else {
     yoimiya attack:3;
   }
-  
-}
 
+}

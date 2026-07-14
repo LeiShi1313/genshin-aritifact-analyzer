@@ -42,32 +42,32 @@ mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er
 #mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.1324 cd=0.662; # ADC; Other
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 # Rotation
 active fischl;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   fischl skill, attack;
-  
+
   if .mav.burst.ready {
     mav burst, skill, attack;
   } else {
     mav skill, attack;
   }
-  
+
   if .kirara.burst.ready {
     kirara burst;
   }
   kirara skill[short_hold=1];
-  
+
   fischl attack:2, burst;
-  
+
   cyno skill, burst;
   while .fischl.skill.cd > 30 {
     if .cyno.mods.cyno-a1 && .cyno.skill.ready {

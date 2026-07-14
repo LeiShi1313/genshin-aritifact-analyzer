@@ -23,7 +23,7 @@ nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
 nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*10 cd=0.0662*10;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active nahida;
@@ -33,15 +33,15 @@ for let i = 0; i < 4; i = i + 1 {
   if .nahida.burst.ready {
     nahida burst;
   }
-  
+
   if is_even(i) {
     fischl attack:2, burst;
   } else {
     fischl skill, attack;
-  } 
-  
-  ororon skill, burst; 
-  
+  }
+
+  ororon skill, burst;
+
   chasca skill, aim:4, aim[bullets=4];
   if .chasca.burst.ready{
     chasca burst;

@@ -62,7 +62,7 @@ aetherdendro add set="deepwoodmemories" count=2;
 aetherdendro add set="gildeddreams" count=2;
 aetherdendro add stats def=53.230007 hp=5586.6301 hp%=0.15150002 atk=408.270009 atk%=0.21580001999999998 er=0.42110000999999997 em=636.43001 cr=0.264400025 cd=0.310800022;
 
-		
+
 options swap_delay=12 iteration=300 duration=90 workers=20;
 target lvl=100 resist=.1 pos=0,1.5;
 target lvl=100 resist=.1 pos=2.5, 0.5;
@@ -72,29 +72,29 @@ active kokomi;
 
 while 1 {
     switch 1 {
-		case .kokomi.skill.ready && .kokomi.swap.ready:
-			kokomi skill;
+    case .kokomi.skill.ready && .kokomi.swap.ready:
+      kokomi skill;
         case .nahida.burst.ready && .nahida.swap.ready:
             nahida skill[hold=30];
             nahida burst;
-		case .nilou.skill.ready && .nilou.swap.ready:
-			nilou skill:4;
-		case .aetherdendro.skill.ready && .aetherdendro.swap.ready:
-			aetherdendro skill;
-			if .aetherdendro.burst.ready {
-				aetherdendro burst;
-			}
-			kokomi swap;
-		# use autos if otherwise afk
-		case .status.kokomiburst > 0:
-			kokomi attack;
+    case .nilou.skill.ready && .nilou.swap.ready:
+      nilou skill:4;
+    case .aetherdendro.skill.ready && .aetherdendro.swap.ready:
+      aetherdendro skill;
+      if .aetherdendro.burst.ready {
+        aetherdendro burst;
+      }
+      kokomi swap;
+    # use autos if otherwise afk
+    case .status.kokomiburst > 0:
+      kokomi attack;
         case .kokomi.onfield:
-			kokomi attack;
-			if .kokomi.burst.ready {
-				kokomi burst;
-			}
-		case .kokomi.swap.ready && !.kokomi.onfield:
-			kokomi swap;
+      kokomi attack;
+      if .kokomi.burst.ready {
+        kokomi burst;
+      }
+    case .kokomi.swap.ready && !.kokomi.onfield:
+      kokomi swap;
         case .aetherdendro.onfield:
             aetherdendro attack;
         case .nilou.onfield:
@@ -102,9 +102,9 @@ while 1 {
         case .nahida.onfield:
             nahida attack;
         default:
-			#we want to be on kokomi attacking as much as possible to proc
-			#dendro cores
-			wait(1);
+      #we want to be on kokomi attacking as much as possible to proc
+      #dendro cores
+      wait(1);
     }
 
 }

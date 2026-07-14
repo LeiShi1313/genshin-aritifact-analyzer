@@ -22,14 +22,14 @@ layla add set="totm" count=4;
 layla add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
 layla add stats def%=0.124 def=39.36 hp=507.88 hp%=0.5456 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.1986;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
 xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1; # Standard
 
@@ -43,13 +43,13 @@ active mavuika; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   mav skill;
-  
+
   xilonen skill, attack:2;
-  
+
   layla skill, burst;
-  
+
   rosa skill, burst;
-  
+
   if .mavuika.burst.cd {
     mavuika attack:2;
   }
@@ -64,4 +64,4 @@ for let i=0; i<4; i=i+1 {
   } else {
     mavuika charge:11, dash;
   }
-}  
+}

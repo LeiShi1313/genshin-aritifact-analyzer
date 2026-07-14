@@ -20,15 +20,15 @@ furina add stats def=77 hp=5019 hp%=1.258 atk=311 atk%=0.11099999999999999 er=0.
 furina add weapon="favoniussword" refine=5 lvl=90/90;
 
 options swap_delay=12 iteration=500 ;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=10000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=10000000;
 energy every interval=480,720 amount=1;
 
-active furina;	
-for let i = 0; i<4; i=i+1 { 
- furina skill, dash, burst; 
- faruzan skill, dash, burst; 
+active furina;
+for let i = 0; i<4; i=i+1 {
+ furina skill, dash, burst;
+ faruzan skill, dash, burst;
  mona skill, dash, burst;  #skill burst gang
- 
+
  xianyun skill:1, high_plunge, burst,
        jump, high_plunge, dash,
        jump, high_plunge, dash,
@@ -38,8 +38,7 @@ for let i = 0; i<4; i=i+1 {
        jump, high_plunge, dash,
        jump, high_plunge, dash,
        jump, high_plunge;
-       
- faruzan attack:3;    #fav procs
-       
-}
 
+ faruzan attack:3;    #fav procs
+
+}

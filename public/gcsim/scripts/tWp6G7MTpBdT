@@ -48,19 +48,19 @@ active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   baizhu skill, burst, attack;
-  
+
   yelan burst, attack;
   if !.yelan.skill.ready && .yelan.breakthrough {
     yelan aim;
   }
   yelan skill, attack;
-  
+
   kinich_combo(); # 3[N4 shE] N1
-  
+
   yelan skill, attack:2;
-  
+
   if .kinich.burst.ready {
     kinich burst;
   } else {

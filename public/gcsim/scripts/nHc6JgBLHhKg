@@ -9,7 +9,7 @@ yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
 yelan add set="emblemofseveredfate" count=4;
 yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.642 cd=0.7944 hydro%=0.466;
 
-xingqiu char lvl=90/90 cons=6 talent=9,9,9; 
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
 xingqiu add weapon="harbingerofdawn" refine=5 lvl=90/90;
 xingqiu add set="esf" count=4;
 xingqiu add stats hp=4780 hp%=0 atk%=0.466 atk=311 cr=0.311 hydro%=0.466;
@@ -27,10 +27,10 @@ options swap_delay=12 debug=true iteration=1000 duration=108.87 workers=50 mode=
 target lvl=100 resist=0.1;
 energy every interval=480,720 amount=1;
 
-# End simulation after 3 rotations 
+# End simulation after 3 rotations
 active xingqiu;
 while 1{
-xingqiu burst,attack, skill, dash, attack:2; 
+xingqiu burst,attack, skill, dash, attack:2;
 yelan attack:2, burst;
 kazuha attack, skill, high_plunge, attack, burst;
 yelan attack, skill;
@@ -48,4 +48,3 @@ yelan attack:1, skill;
 kazuha skill, high_plunge;
 print ("done");
 }
-

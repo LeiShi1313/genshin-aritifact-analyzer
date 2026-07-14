@@ -22,7 +22,7 @@ kaveh add stats def%=0.066 def=83 hp=5318 atk=329 atk%=0.134 er=0.305 em=186.5 c
 
 options swap_delay=12 iteration=1000;
 
-target lvl=100 resist=0.1 radius=2 pos=0,1 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,1 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active kaveh;

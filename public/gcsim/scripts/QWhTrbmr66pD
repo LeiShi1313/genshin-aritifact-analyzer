@@ -24,7 +24,7 @@ sucrose add stats def=51.168 def%=0.1612 hp=660.244 hp%=0.12896 atk=43.004 atk%=
 
 # All KQMC & Kurtc
 
-options swap_delay=12 iteration=1000; 
+options swap_delay=12 iteration=1000;
 
 # single target
 target lvl=100 resist=0.1 radius=2 pos=2.4,1 hp=999999999;
@@ -40,13 +40,13 @@ active nahida;
 for let i = 1; i <=4; i = i + 1 {
   nahida skill[hold=1], burst;
   fischl attack:2, skill;
-  
+
   kazuha attack, skill[hold=1], high_plunge, burst;
   sucrose attack:2, skill, dash, burst, charge, attack;
-  
+
   nahida attack:2, skill, attack:2, charge;
   fischl attack:2, burst;
-    
+
   kazuha skill, high_plunge;
   sucrose attack:4, charge, attack:4, skill, dash, attack;
   kazuha skill, high_plunge;

@@ -23,7 +23,7 @@ chiori add set="fragmentofharmonicwhimsy" count=1;
 chiori add stats def%=0.583 def=118 hp=4989 hp%=0.099 atk=385 er=0.15499999999999997 em=38 cr=0.354 cd=1.3679999999999999 geo%=0.466;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active arlecchino;

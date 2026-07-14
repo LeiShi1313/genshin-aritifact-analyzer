@@ -32,7 +32,7 @@ fn clorinde_combo() {
   clorinde skill;
 
   while .clorinde.status.clorinde-night-watch {
-    
+
     if .clorinde.bolratio >= 1 {
 
       clorinde skill;
@@ -47,13 +47,13 @@ fn clorinde_combo() {
 
 }
 
-active fischl; 
+active fischl;
 
-for let r=0; r<4; r=r+1 { # 4 rotations 
+for let r=0; r<4; r=r+1 { # 4 rotations
 
   if r>0 {
 
-    kazuha skill, high_plunge; # swirl to refresh VV and kazuha A4 for fischl/oz snapshot  
+    kazuha skill, high_plunge; # swirl to refresh VV and kazuha A4 for fischl/oz snapshot
 
     fischl attack;
 

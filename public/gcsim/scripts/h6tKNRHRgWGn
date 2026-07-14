@@ -34,7 +34,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=66.16 atk%=0.2976 er=0.6612 em=118.92 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -57,35 +57,35 @@ for let i = 0; i < 4; i = i + 1 {
   if i > 0 {
     sara attack:2;
   }
-  
+
   if i == 0 {
     yae skill:3;
   } else {
     yae skill:2, attack:2, skill;
   }
-  
+
   furina skill, dash, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   sara aim;
-  
+
   YaePlunge(); yae dash;
   YaePlunge(); yae dash; # Hakushin Expires
   YaePlunge(); yae dash;
   YaePlunge(); yae dash;
   YaePlunge(); yae attack;
   yae skill:3; # VV/Sara C6 expire
-  
+
   xianyun attack:2; sleep(20); # Refresh VV
-  
+
   sara burst; # Q needed, E cant reliably be retrived when jumping
-  
+
   YaePlunge(); yae dash;
   YaePlunge(); yae attack;
   YaePlunge(); yae attack; # Furina Q Expires
   if .yae.burst.ready {
     yae burst;
   }
-  
+
 }

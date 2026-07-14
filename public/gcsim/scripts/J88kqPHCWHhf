@@ -37,9 +37,9 @@ for let x = 5; x; x = x - 1 {
   baizhu attack, skill, attack, burst, attack;
   nahida skill, attack, charge;
   ayato skill, attack:14;
-  baizhu attack, skill, attack; 
+  baizhu attack, skill, attack;
   if .nilou.burst.ready {
     nilou burst;
-  } 
+  }
   print("rotation done");
 }

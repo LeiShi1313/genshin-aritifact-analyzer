@@ -20,14 +20,14 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 
 active fischl;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
     fischl skill, attack;
     xingqiu burst, attack, skill, dash, attack:2;
     sucrose attack:2, skill, dash,
-            attack:3, dash, 
+            attack:3, dash,
             attack:2, burst;
     while .fischl.oz-duration > 30 {
         if .sucrose.skill.charge > 1 && .sucrose.normal > 3 {

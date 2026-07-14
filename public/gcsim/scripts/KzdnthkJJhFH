@@ -2,7 +2,7 @@ ayaka char lvl=90/90 cons=2 talent=9,9,9;
 ayaka add weapon="mistsplitterreforged" refine=1 lvl=90/90;
 ayaka add set="blizzardstrayer" count=4;
 ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
-ayaka add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958;		
+ayaka add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958;
 
 kokomi char lvl=90/90 cons=0 talent=9,9,9;
 kokomi add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
@@ -38,7 +38,3 @@ for let i = 0; i < 5; i = i + 1{
   ayaka dash, attack:2, charge, attack:2, skill, attack:2, charge;
   print("rotation done");
 }
-
-
-
-

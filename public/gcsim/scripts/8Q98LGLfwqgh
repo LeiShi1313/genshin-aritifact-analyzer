@@ -62,30 +62,30 @@ fischl attack:2, skill;
 varesa_combo(2);
 varesa attack;
 varesa_combo(2);
-  
+
 for let i=0; i<3; i=i+1 {
-  
+
   xilonen skill, attack:2;
-  
+
   nahida skill, attack, dash; pick_up_crystallize("any");
-  
+
   fischl attack:2, burst;
-  
+
   varesa_combo(2);
   varesa attack;
   varesa_combo(2);
   varesa attack;
-  
+
   xilonen skill, attack:2;
-  
+
   nahida skill, attack, dash; pick_up_crystallize("any");
-  
+
   fischl attack, skill;
-  
+
   varesa_combo(2);
   varesa attack;
   varesa_combo(2);
-  
+
 }
 
 # ~13s rotations

@@ -18,7 +18,7 @@ yelan add set="eosf" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-citlali char lvl=90/90 cons=0 talent=9,9,9; 
+citlali char lvl=90/90 cons=0 talent=9,9,9;
 citlali add weapon="ttds" refine=5 lvl=90/90;
 citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 em=187 em=187 em=187;
@@ -40,7 +40,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active dahlia;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   dahlia attack:2, skill, attack;
   if !.dahlia.mods.favonius-cd {
     dahlia attack;
@@ -52,30 +52,30 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:5;
   }
 }
 
-# First rot only 
+# First rot only
 # Dahlia N2 E N1 > Yelan N1 E N1 Q N1 > Dahlia Q N1 > Citlali E N1 > Skirk Q tE N2CD 3[N5D] N1CD N5D N2
 # Dahlia N2 E N1 > Yelan N1 E N1 Q N1 > Dahlia Q N1 > Citlali E N1 > Skirk   tE N2Q  3[N5D] N2CD N5D N5

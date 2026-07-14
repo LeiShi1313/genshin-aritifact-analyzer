@@ -30,11 +30,11 @@ active mavuika;
 
 for let i=0; i<4; i=i+1 {
   mavuika attack, skill;
-  
+
   yelan attack, skill, burst, attack;
-  
+
   ororon burst, skill, attack;
-  
+
   mavuika burst, charge, dash;
 
   chasca attack, skill, aim:4;

@@ -55,8 +55,7 @@ for let i=0; i<4; i=i+1 {
     faruzan burst, aim;
   } else {
     faruzan skill, aim;
-  }  
+  }
   kirara skill, burst;
   varesa_combo(3);
 }
-

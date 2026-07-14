@@ -33,13 +33,13 @@ kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944; # Heals
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,3.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 fn kinich_combo() {
   kinich skill;
@@ -63,22 +63,22 @@ active kuki;
 for let i=0; i<4; i=i+1 {
   kuki skill, attack;
   #kuki skill;
-  
-  # Skip Q on  first rotation, then use as available 
+
+  # Skip Q on  first rotation, then use as available
   nahida skill, attack;
   if  i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
     nahida burst, charge;
   } else {
     nahida charge;
   }
-  
+
   amy attack;
   if .amy.burst.ready {
     amy attack:1, burst;
   } else {
     amy skill;
   }
-  
+
   if .previous-action == .action.skill {
     fischl attack;
   }
@@ -89,4 +89,3 @@ for let i=0; i<4; i=i+1 {
     kinich burst;
   }
 }
-

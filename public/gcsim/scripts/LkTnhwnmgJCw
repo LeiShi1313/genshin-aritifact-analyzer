@@ -31,7 +31,7 @@ active tartaglia;
 let bomb_planted = 0;
 
   tartaglia skill, attack;
-  
+
 for let r = 5; r > 0; r = r - 1 {
 
   if .tartaglia.energy > 50 {
@@ -42,28 +42,28 @@ for let r = 5; r > 0; r = r - 1 {
   } else {
     bomb_planted = 0; # Hydro VV setup not ready
   }
-  
+
   if .element.t0.pyro {
     lyney aim[weakspot=1], aim;
     bennett skill;
   }
-  
+
   if .kazuha.burst.ready && .element.t0.pyro {
     kazuha burst;
   }
-  
+
   bennett burst;
-  
+
   if .kazuha.burst.ready {
     kazuha skill, high_plunge, burst;
   } else {
     kazuha skill, high_plunge;
   }
-  
+
   if .tartaglia.burst.ready && bomb_planted == 1 {
     tartaglia burst;
   }
-  
+
   lyney aim[weakspot=1], aim;
   if .lyney.burst.ready {
     lyney burst;

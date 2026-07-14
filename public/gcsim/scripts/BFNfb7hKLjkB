@@ -28,7 +28,7 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
 
 active chong;
 
-for let i = 0; i<4; i=i+1 { 
+for let i = 0; i<4; i=i+1 {
 
   shenhe skill, attack, burst;
   furina skill, dash, burst;
@@ -42,6 +42,6 @@ for let i = 0; i<4; i=i+1 {
         attack:2, dash,
         attack:2;
 
-  
+
 
 }

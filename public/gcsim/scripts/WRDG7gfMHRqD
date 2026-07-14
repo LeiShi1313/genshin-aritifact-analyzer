@@ -25,7 +25,7 @@ energy every interval=480,720 amount=1;
 options swap_delay=12 debug=true iteration=1000 workers=30 mode=sl;
 active raiden;
 
-#action list 
+#action list
 for let r = 0; r < 5; r = r + 1 {
   raiden attack, skill;
   xingqiu burst,attack;
@@ -33,4 +33,3 @@ for let r = 0; r < 5; r = r + 1 {
   xingqiu skill, dash;
   alhaitham attack:8, charge, attack:6, skill, attack:11;
 }
-

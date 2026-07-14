@@ -33,7 +33,7 @@ baizhu add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp%=0.466; #main
 baizhu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.551 em=39.64 cr=0.0662 cd=0.2648;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,15 +48,15 @@ raiden skill;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   baizhu skill, burst;
-  
+
   freminet skill, burst,
            attack:2, skill, skill,
            attack:2, skill, attack:1, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time
            attack:2, skill, attack:2, skill,
            attack:3, skill;
-           
+
   raiden skill;
   if .raiden.energy == 90 {
     raiden burst;
@@ -64,4 +64,3 @@ for let i=0; i<4; i=i+1 {
     raiden attack;
   }
 }
-

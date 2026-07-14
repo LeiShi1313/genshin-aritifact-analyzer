@@ -28,40 +28,37 @@ yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 
 #enemy config
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active yelan;
 
-#action list 
+#action list
 
   yelan skill, burst, attack;
   gorou skill, burst;
   albedo attack, skill;
-  
-  itto attack, burst[prestack=1], 
-       attack, skill, attack:2, charge:5, 
-       attack:4, charge:5, 
+
+  itto attack, burst[prestack=1],
+       attack, skill, attack:2, charge:5,
+       attack:4, charge:5,
        skill[travel=0], charge;
        sleep(21); #catch ushi particles
-       
+
        #"C0 1PS" combo
 
   for let i=0; i<4; i=i+1 {
-  
+
   while !.yelan.burst.ready { yelan attack; }
   yelan skill, burst, attack;
   gorou attack, skill, attack, burst;
   albedo attack, skill, attack;
   sleep(15);
-  
-  itto burst, attack:3, skill, charge:5, 
-       attack:4, charge:5, 
+
+  itto burst, attack:3, skill, charge:5,
+       attack:4, charge:5,
        skill[travel=0], charge;
        sleep(21);
-       
+
        #"C0 1PS (N3)" combo
 
   }
-
-
-

@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -96,23 +96,23 @@ for let i=0; i<4; i=i+1 {
   if .klee.skill.ready {
     klee attack, skill[bounce=3, mine=8, mine_delay=550], jump;
   }
-  
+
   kazuha burst;
-  
+
   kirara skill[short_hold=1], burst[hits=10, mine_delay=250];
-  
+
   aloy skill[bomblets=6, bomb_delay=50], attack;
   if .aloy.skill.ready {
     aloy skill[bomblets=6, bomb_delay=20];
   }
-  
+
   # approximately when bombs/mines would explode
   kazuha skill, high_plunge;
-  
+
   aloy burst;
-  
+
   kirara skill, attack;
-  
+
   if .klee.burst.ready {
     klee burst;
   } else {

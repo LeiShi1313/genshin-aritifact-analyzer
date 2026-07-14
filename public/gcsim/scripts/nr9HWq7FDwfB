@@ -1,4 +1,4 @@
-# Razor Xingqiu Fischl Bennett. ~21s Rot. Overvape Razor with C6 Bennett. Pyro > ATK Goblet Razor. > 80% Hydro Aura Uptime. Self-Overloads not implemented. 
+# Razor Xingqiu Fischl Bennett. ~21s Rot. Overvape Razor with C6 Bennett. Pyro > ATK Goblet Razor. > 80% Hydro Aura Uptime. Self-Overloads not implemented.
 
 # Team - Options roughly listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
@@ -44,13 +44,13 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active razor; # SS Stacks
@@ -60,21 +60,21 @@ fischl skill, attack;
 
 for let i=0; i<4; i=i+1 {
   xingqiu skill, dash, burst, attack;
-  
+
   razor skill, dash, attack;
-  
+
   bennett skill, attack, burst;
-  
+
   if !.amy.skill.ready {
     amy attack:2, burst;
   } else {
     amy attack, skill;
   }
-  
+
   razor attack, burst;
   while .xingqiu.mods.xingqiuburst {
-  #while .razor.infusion.bennett-fire-weapon { 
-  #while .xingqiu.skill.cd > 70 { 
+  #while .razor.infusion.bennett-fire-weapon {
+  #while .xingqiu.skill.cd > 70 {
     if .razor.normal > 3 && .razor.skill.ready {
       razor skill, dash;
     } else if .razor.normal > 3 {
@@ -83,7 +83,6 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
+
   bennett skill;
 }
-

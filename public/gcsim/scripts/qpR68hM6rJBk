@@ -45,4 +45,3 @@ while rotations {
   rotations = rotations - 1;
 }
 wait(33);
-

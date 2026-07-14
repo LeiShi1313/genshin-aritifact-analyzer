@@ -10,7 +10,7 @@ furina add set="goldentroupe" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
 
-nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="gt" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
@@ -18,10 +18,10 @@ nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 baizhu char lvl=90/90 cons=0 talent=9,9,9;
 baizhu add weapon="ttds" refine=5 lvl=90/90;
-baizhu add set="deepwood" count=4;																
+baizhu add set="deepwood" count=4;
 baizhu add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp%=0.466 ; #main
 baizhu add stats def%=0.124 def=39.36 hp=1777.58 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.0662 cd=0.1986;
-						
+
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=0.1 hp=100000000 pos=0,2.4 radius=2;
 energy every interval=480,720 amount=1;
@@ -44,5 +44,5 @@ for let i=0; i<4; i=i+1 {
   } else {
     baizhu attack:3;
   }
-  baizhu skill, attack:3;                       
+  baizhu skill, attack:3;
 }

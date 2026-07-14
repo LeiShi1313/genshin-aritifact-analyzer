@@ -22,7 +22,7 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.3972 cd=0.1324;
 
-charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte char lvl=90/90 cons=6 talent=9,9,9;
 charlotte add weapon="ttds" refine=5 lvl=90/90;
 charlotte add set="totm" count=4;
 charlotte add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
@@ -46,26 +46,26 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }

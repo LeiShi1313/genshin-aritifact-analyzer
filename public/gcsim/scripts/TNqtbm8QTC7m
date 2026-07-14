@@ -1,7 +1,7 @@
 beidou char lvl=90/90 cons=6 talent=9,9,9;
 beidou add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 beidou add set="emblemofseveredfate" count=4;
-beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main										
+beidou add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
 beidou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296 ;
 
 ayato char lvl=90/90 cons=0 talent=9,9,9;

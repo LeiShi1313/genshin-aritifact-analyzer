@@ -22,7 +22,7 @@ shenhe add set="noblesse" count=4;
 shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.4959 em=39.64 cr=0.3972 cd=0.1324;
 
-qiqi char lvl=90/90 cons=0 talent=9,9,9; 
+qiqi char lvl=90/90 cons=0 talent=9,9,9;
 qiqi add weapon="favsword" refine=3 lvl=90/90;
 qiqi add set="scroll" count=4;
 qiqi add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
@@ -38,7 +38,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
   if !.furina.mods.favonius-cd && .furina.weapon == .keys.weapon.favsword {
     furina attack;
@@ -59,31 +59,31 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
 }
 
-# First rot only 
+# First rot only
 # Furina ED N1 Q > Qiqi ( E N2 / Q ) > Shenhe hE N1 Q > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Furina ED N1 Q > Qiqi ( E N2 / Q ) > Shenhe hE N1 Q > Skirk   tE N2Q      3[N5D] N2CD N5D N2

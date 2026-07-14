@@ -44,17 +44,17 @@ active bennett;
 
 for let i=0; i<4; i=i+1 {
   bennett skill; # apply pyro for vv
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   citlali skill, attack;
-  
+
   kazuha burst;
-  
+
   bennett burst; # his burst must hit before first tick of kazuha burst dot, which is a frame perfect input at kqms for swap delay (12 frames)
   wait(6); # small wait necessary for fs icd
   bennett attack; # if bennett burst hit after kazuha burst, this na will apply pyro, so it is unnecessary to na on kazuha
-  
+
   kazuha swap;
   wait(17); # this is a very precise timing to get kazuha c6 buff on last plunge before second skill, but also to minimize time needed to wait for skill to get off cd
   kazuha attack; # na to apply pyro for a4
@@ -67,13 +67,13 @@ for let i=0; i<4; i=i+1 {
   kazuha skill, high_plunge[collision=1];
   KazuPlunge(); kazuha dash; # no longer buffed by kazuha c2 and instructor
   KazuPlunge(); # no longer buffed by kazuha a4
-  
+
   if (i!=3) { # energy gathering skipped on last rot to display higher dps
     bennett skill;
     wait(54); # at KQMS er he must catch his own particles; can be skipped if he has ~3 more er subs
-    
+
     xianyun skill, low_plunge;
-    
+
     kazuha skill, high_plunge[collision=1];
   }
 }

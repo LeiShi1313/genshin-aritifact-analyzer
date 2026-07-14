@@ -1,9 +1,9 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -41,7 +41,7 @@ for let x=0; x<3; x=x+1 {
   navia burst;
   bennett skill, burst;
   fischl attack:2, burst;      pick_up_crystallize("any"); #with fischl Q
-  tighnari skill, aim:3; 
+  tighnari skill, aim:3;
   print(.navia.shrapnel);
   navia skill[hold=1], attack:3, dash, attack:2;
   navia skill[hold=1], attack:3, dash, attack:2;
@@ -51,6 +51,6 @@ for let x=0; x<3; x=x+1 {
   navia skill[hold=1], attack:2, dash;
 }
 
-# Navia Q > Bennett EQ > 
-# Fischl N2Q > Tighnari E 3[C] > Navia hE N3D N2 hE N3D N2 > 
+# Navia Q > Bennett EQ >
+# Fischl N2Q > Tighnari E 3[C] > Navia hE N3D N2 hE N3D N2 >
 # Fischl N1E > Tighnari E C Q 2[C] > Navia hE N2D >

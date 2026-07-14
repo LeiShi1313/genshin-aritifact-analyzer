@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -89,11 +89,11 @@ energy every interval=480,720 amount=1;
 
 
 for let x =0 ; x<6; x=x+1 {
-	xingqiu attack, skill, dash, burst, attack;
-	bennett attack, skill, burst, attack;
-	layla burst, attack, skill;
-	yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
-	bennett attack:3, dash, skill;
+  xingqiu attack, skill, dash, burst, attack;
+  bennett attack, skill, burst, attack;
+  layla burst, attack, skill;
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  bennett attack:3, dash, skill;
 }
 
 # Xingiqu N1 E dash Q N1 > Bennett N1 E Q N1 > Layla Q N1 E > Yoimiya E 3[N5D] N1 > Bennett N3D E > repeat

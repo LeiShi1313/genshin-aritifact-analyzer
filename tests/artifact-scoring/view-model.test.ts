@@ -30,8 +30,8 @@ const batch = (): ScoreBatchView => ({
   buildStatus: new Uint8Array(3),
   buildIssueFlags: new Uint32Array(3),
   buildSetPlan: new Uint8Array(3),
-  match: new Float64Array([0.8, 0.7, 0.7, 0.6, 0.6, 0.6]),
-  expectedFinalMatch: new Float64Array([0.81, 0.9, 0.9, 0.75, 0.75, 0.75]),
+  match: new Float32Array([0.8, 0.7, 0.7, 0.6, 0.6, 0.6]),
+  expectedFinalMatch: new Float32Array([0.81, 0.9, 0.9, 0.75, 0.75, 0.75]),
   isPreferredMain: new Uint8Array([1, 1, 1, 1, 1, 1]),
   setCompatibility: new Uint8Array(6),
   pairIssueFlags: new Uint32Array(6),
@@ -66,7 +66,7 @@ test("binds unfinished Potential and current context to one best-Expected build"
   assert.deepEqual(presentation?.primary, {
     kind: "potential",
     score: 90,
-    rawValue: 0.9,
+    rawValue: Math.fround(0.9),
     buildId: "future-build",
     buildIndex: 1,
     isPreferredMain: true,
@@ -81,7 +81,7 @@ test("binds unfinished Potential and current context to one best-Expected build"
   assert.deepEqual(presentation?.secondary, {
     kind: "current",
     score: 70,
-    rawValue: 0.7,
+    rawValue: Math.fround(0.7),
     buildId: "future-build",
     buildIndex: 1,
   });

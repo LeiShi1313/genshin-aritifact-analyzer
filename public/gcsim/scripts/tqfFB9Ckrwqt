@@ -28,22 +28,22 @@ options swap_delay=12 iteration=1000;
 
 active fischl;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
 
   fischl attack:2, burst;
   kirara burst, skill[short_hold=1];
-  nahida attack, skill, burst, 
-         attack:2, charge, dash, 
+  nahida attack, skill, burst,
+         attack:2, charge, dash,
          attack:2, charge;
   tighnari skill, aim, burst, aim:2;
-  
+
   fischl attack, skill;
   kirara skill[short_hold=1];
-  nahida attack:2, skill, 
-         attack:2, charge, dash, 
+  nahida attack:2, skill,
+         attack:2, charge, dash,
          attack:2, charge, dash,
          attack:2, charge;
   tighnari skill, aim;
@@ -55,5 +55,5 @@ for let i=0; i<4; i=i+1 {
   }
 }
 
-#Fischl N2Q > Kirara Q shE > Nahida N1EQ N2CD N2C > Tighnari E CA Q 2CA > 
+#Fischl N2Q > Kirara Q shE > Nahida N1EQ N2CD N2C > Tighnari E CA Q 2CA >
 #Fischl N1E > kirara shE > Nahida N2E N2CD N2CD N2C > Tighnari E CA [ Q 2CA ] or [ Nahida N2C ] (if Q not available)

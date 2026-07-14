@@ -5,9 +5,9 @@ rosaria add weapon="cpike" refine=5 lvl=90/90;
 #rosaria add weapon="wavebreakersfin" refine=1 lvl=90/90;
 rosaria add set="bs" count=4;
 #rosaria add set="mh" count=4;
-rosaria add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+rosaria add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662; # Cpike; ATK > Cryo > Phys
-#rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+#rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 #rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3641 cd=0.662; # WB Fin
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
@@ -22,7 +22,7 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 er=.518 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.3972 cd=0.3972;
 
-dori char lvl=90/90 cons=6 talent=9,9,9; 
+dori char lvl=90/90 cons=6 talent=9,9,9;
 dori add weapon="favgs" refine=3 lvl=90/90;
 dori add set="ohc" count=4;
 #dori add set="sodp" count=4;
@@ -33,7 +33,7 @@ dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=118.92 cr=0.331 cd=0.1324; # HP Gob
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,13 +46,13 @@ active furina;
 
 for let i=0; i<4; i=i+1 {
   dori skill, burst;
-  
+
   furina skill, dash, burst;
-  
+
   shenhe skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   while !.shenhe.skill.ready {
     if .rosaria.skill.ready {
       rosaria skill;
@@ -62,9 +62,9 @@ for let i=0; i<4; i=i+1 {
       rosaria attack;
     }
   }
-  
+
   shenhe skill, attack;
-  
+
   while .dori.burst.cd {
     if .rosaria.skill.ready {
       rosaria skill;
@@ -74,5 +74,5 @@ for let i=0; i<4; i=i+1 {
       rosaria attack;
     }
   }
-  
+
 }

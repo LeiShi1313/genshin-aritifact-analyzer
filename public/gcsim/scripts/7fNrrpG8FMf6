@@ -42,8 +42,8 @@ for let i = 0; i < 5; i = i + 1 {
   faruzan burst;
   if .wanderer.burst.ready {
     wanderer attack, burst;
-  }  
-  wanderer attack, skill, attack, charge;	
+  }
+  wanderer attack, skill, attack, charge;
   while .wanderer.skydweller-points > 3 {
     if .wanderer.normal < 3 {
       wanderer attack;
@@ -54,6 +54,6 @@ for let i = 0; i < 5; i = i + 1 {
     } else {
       wanderer attack;
     }
- } 
+ }
   wanderer skill;
 }

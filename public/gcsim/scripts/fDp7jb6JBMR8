@@ -29,19 +29,19 @@ nahida skill;
 
 for let x = 0; x < 5; x = x + 1 {
     lisa skill[hold=1], burst;
-	xingqiu burst, attack:2;
+  xingqiu burst, attack:2;
     thoma skill, attack, burst, attack;
-	nahida 
-		attack:2, skill,
-		attack:3, dash,
-		attack:3, dash,
-		attack:3, skill,
-		attack:3, charge;
-	xingqiu skill, dash, attack:2;
-	nahida
-		attack:3, skill,
-		attack:3, dash,
-		attack:3, dash,
-		attack:3, charge;
-	print("Rotation Done");
+  nahida
+    attack:2, skill,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, skill,
+    attack:3, charge;
+  xingqiu skill, dash, attack:2;
+  nahida
+    attack:3, skill,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, charge;
+  print("Rotation Done");
 }

@@ -1,112 +1,99 @@
+import fs from "node:fs";
+
 import genshindb from "genshin-db";
-import fs from "fs";
-import stream from "stream";
-import util from 'util';
+
 import * as utils from "./utils.mjs";
-
-const finished = util.promisify(stream.finished);
-
-await utils.update_artifact_data('scripts/sets');
-const names = utils.readNamesFromFile('scripts/sets');
 
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 
+const setKey = (name) =>
+  name
+    .replace(/'/g, "")
+    .replace(/[^0-9a-z]/gi, "_")
+    .toLowerCase();
+
 const portSets = async () => {
-  let trans = {
-    en: {},
-  };
-  let setsData = {};
-  let setEff = {};
+  const remoteNames = genshindb.artifacts("names", { matchCategories: true });
+  const names = utils.syncNamesFile("scripts/sets", remoteNames);
+  const translations = { en: {} };
+  const setsData = {};
+  const setEffects = {};
+  const protoLines = [
+    'syntax = "proto3";',
+    "",
+    "package io.leishi.genshin.proto;",
+    "",
+    "enum Set {",
+    "    SET_UNSPECIFIED = 0;",
+  ];
 
-  let idx = 0;
-  let proto_file = fs.createWriteStream("./proto/set.proto", { flags: "w" });
-  proto_file.write('syntax = "proto3";\n\n');
-  proto_file.write("package io.leishi.genshin.proto;\n\n");
-  proto_file.write("enum Set {\n");
-  proto_file.write(`    SET_UNSPECIFIED = ${idx++};\n`);
+  let index = 1;
+  for (const name of names) {
+    const english = genshindb.artifacts(name);
+    if (!english)
+      throw new Error(`Artifact set ${name} was not found in genshin-db`);
 
-  // Debugging console.log
-  console.log("Start processing set...");
-
-  await Promise.all(names.map(async (e) => {
-    const eng = genshindb.artifacts(e);
-    if (!eng) {
-      console.warn(`No set found for ${e}!`);
-      return;
-    }
-
-    let key = eng.name
-      .replace(/'/gi, "")
-      .replace(/[^0-9a-z]/gi, "_")
-      .toLowerCase();
-    proto_file.write(`    ${key.toUpperCase()} = ${idx++};\n`);
-
-    trans["en"][key] = eng.name;
+    const key = setKey(english.name);
+    protoLines.push(`    ${key.toUpperCase()} = ${index++};`);
+    translations.en[key] = english.name;
     setsData[key] = {
-      "2pc": eng.effect2Pc,
-      "4pc": eng.effect4Pc,
+      "2pc": english.effect2Pc,
+      "4pc": english.effect4Pc,
     };
-    if (eng.effect2Pc) {
-      if (setEff[eng.effect2Pc] === undefined) {
-        setEff[eng.effect2Pc] = [];
-      }
-      setEff[eng.effect2Pc].push(key);
-    }
-    for (let lng of Object.keys(utils.lngToRegion)) {
-      const data = genshindb.artifacts(e, { resultLanguage: lng });
-      if (!!!trans[utils.lngToRegion[lng]]) {
-        trans[utils.lngToRegion[lng]] = {};
-      }
-      trans[utils.lngToRegion[lng]][key] = data.name;
+    if (english.effect2Pc) {
+      setEffects[english.effect2Pc] ??= [];
+      setEffects[english.effect2Pc].push(key);
     }
 
-    await Promise.all(positions.map(async (pos) => {
-      if (eng.images[`filename_${pos}`]) {
-        const imagePath = `./src/assets/artifacts/${key}_${pos}.png`;
-        if (!utils.isValidImage(imagePath)) {
-          try {
-            await utils.download_from_yuheng(
-              eng.images[`filename_${pos}`],
-              "artifact",
-              imagePath
-            );
-          } catch (e) {
-            console.error(e)
-          }
-
-        }
+    for (const [language, locale] of Object.entries(utils.lngToRegion)) {
+      const localized = genshindb.artifacts(name, { resultLanguage: language });
+      if (!localized) {
+        throw new Error(`${name} is missing the ${language} translation`);
       }
+      translations[locale] ??= {};
+      translations[locale][key] = localized.name;
+    }
 
-    }));
-  }));
-  proto_file.write("}\n");
-  proto_file.end();
-  await finished(proto_file);
-
-  // Debugging console.log
-  console.log("Writing locales files...");
-
-  for (let lng of Object.keys(trans)) {
-    fs.writeFileSync(
-      `./public/locales/${lng}/sets.json`,
-      JSON.stringify(trans[lng]),
-      "utf-8"
+    const images = english.images ?? {};
+    const availablePositions = positions.filter(
+      (position) => images[`filename_${position}`]
     );
+    if (![1, positions.length].includes(availablePositions.length)) {
+      throw new Error(
+        `${name} has an incomplete artifact image manifest (${availablePositions.length}/${positions.length})`
+      );
+    }
+    for (const position of availablePositions) {
+      const filename = images[`filename_${position}`];
+      const imagePath = `src/assets/artifacts/${key}_${position}.png`;
+      if (utils.isValidImage(imagePath)) continue;
+      await utils.downloadFirstAvailable(
+        [
+          utils.yattaImageUrl(filename, "artifact"),
+          utils.enkaImageUrl(filename),
+          images[`mihoyo_${position}`],
+        ],
+        imagePath,
+        `${name} ${position}`
+      );
+    }
   }
 
-  // Debugging console.log
-  console.log("Writing sets data file...");
-
-  fs.writeFileSync("./src/data/sets.json", JSON.stringify(setsData), "utf-8");
-
-  // Debugging console.log
-  console.log("Writing set2pcEffect file...");
-
+  protoLines.push("}", "");
+  fs.writeFileSync("proto/set.proto", protoLines.join("\n"), "utf8");
+  for (const [locale, values] of Object.entries(translations)) {
+    fs.writeFileSync(
+      `public/locales/${locale}/sets.json`,
+      JSON.stringify(values),
+      "utf8"
+    );
+  }
+  fs.writeFileSync("src/data/sets.json", JSON.stringify(setsData), "utf8");
   fs.writeFileSync(
-    "./src/data/set2pcEffect.json",
-    JSON.stringify(setEff),
-    "utf-8"
+    "src/data/set2pcEffect.json",
+    JSON.stringify(setEffects),
+    "utf8"
   );
 };
-portSets();
+
 export { portSets };

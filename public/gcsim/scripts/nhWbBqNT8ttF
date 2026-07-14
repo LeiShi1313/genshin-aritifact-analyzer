@@ -19,7 +19,7 @@ aino add set="silkenmoonsserenade" count=4;
 aino add stats hp=4780 atk=311 em=187 em=187 cr=0.311;
 aino add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
-sucrose char lvl=90/90 cons=6 talent=9,9,9;         
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
 sucrose add weapon="ttds" refine=5 lvl=90/90;
 sucrose add set="vv" count=4;
 sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;

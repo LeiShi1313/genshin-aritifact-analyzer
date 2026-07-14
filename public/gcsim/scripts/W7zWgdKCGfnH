@@ -1,9 +1,9 @@
-# Razor Furina Ororon Escoffier. ~24s Rot. Hybrid Razor dealing ~45/55% Electro/Phys damage. Ororon should go before Furina for her energy Recharge. Razor stays on field until 3 skill are used, with C4 Def shred lingering over the next rotation setup. 
+# Razor Furina Ororon Escoffier. ~24s Rot. Hybrid Razor dealing ~45/55% Electro/Phys damage. Ororon should go before Furina for her energy Recharge. Razor stays on field until 3 skill are used, with C4 Def shred lingering over the next rotation setup.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-#razor add weapon="tidalshadow" refine=5 lvl=90/90; 
+#razor add weapon="tidalshadow" refine=5 lvl=90/90;
 razor add set="mh" count=4;
 razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # SS
@@ -13,7 +13,7 @@ razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
-#furina add set="gt" count=4; 
+#furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # ToM
 #furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
@@ -25,14 +25,14 @@ ororon add set="scroll" count=4;
 ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 er=0.518 atk%=0.466 cd=0.622; # main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1; # Standard
 
@@ -43,22 +43,22 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
 # Rotation
 active razor; # SS Stacks
 #razor skill, dash; # Not optimal
-  
+
 for let i=0; i<4; i=i+1 {
   ororon burst, skill;
-  
+
   furina skill, dash;
   if !.furina.burst.ready && !.furina.mods.favonius-cd {
     furina attack;
   }
   furina burst;
-  
+
   escoffier skill, burst;
-  
+
   # Intuitive combo, Razor EDN1Q N3ED 2N3D N3ED 2N3D N3ED
   razor skill, dash, attack, burst;
   let razorSkills = 0;
-  while razorSkills < 3 { 
+  while razorSkills < 3 {
     # N3ED
     if .razor.normal > 3 && .razor.skill.ready {
       razor skill, dash;

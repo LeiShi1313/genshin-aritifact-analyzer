@@ -26,17 +26,17 @@ options swap_delay=12 iteration=1000;
 
 active neuvillette;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
 
   neuv skill, attack;
   raiden attack, skill;
-  nahida skill, burst, attack:2, charge; 
+  nahida skill, burst, attack:2, charge;
   dehya attack, skill:2;
   neuv charge;
-  neuv burst, skill, charge; 
+  neuv burst, skill, charge;
   nahida skill, attack:2;
   neuv charge, charge;
 }

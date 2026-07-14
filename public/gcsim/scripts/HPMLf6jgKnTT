@@ -93,7 +93,7 @@ fn execute_action(char_id number, action_id number, p map) {
   return _execute_action(char_id, action_id, p);
 }
 
-options swap_delay=1 iteration=1000 ignore_burst_energy=false; 
+options swap_delay=1 iteration=1000 ignore_burst_energy=false;
 target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
 hurt every interval=480,720 amount=6000,10000 element=physical;
 

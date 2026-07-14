@@ -26,21 +26,20 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 
 active xingqiu;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
     candace attack,skill;
     xingqiu burst,attack;
-	kazuha attack,skill,high_plunge,burst;
-	bennett attack,skill,burst;
-	candace attack,skill,burst;
-	xingqiu attack, skill, dash, attack:2;
-	xingqiu attack:2,dash,attack:2;
-	candace attack,skill;
-	kazuha attack,skill,high_plunge,attack:2;
-	xingqiu attack:2,dash,attack:2;
-	xingqiu attack:2,jump;
-	
-}
+  kazuha attack,skill,high_plunge,burst;
+  bennett attack,skill,burst;
+  candace attack,skill,burst;
+  xingqiu attack, skill, dash, attack:2;
+  xingqiu attack:2,dash,attack:2;
+  candace attack,skill;
+  kazuha attack,skill,high_plunge,attack:2;
+  xingqiu attack:2,dash,attack:2;
+  xingqiu attack:2,jump;
 
+}

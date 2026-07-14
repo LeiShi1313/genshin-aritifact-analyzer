@@ -66,12 +66,12 @@ nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 options iteration=1000;
 
-target lvl=100 resist=0.1 radius=3 pos=0,3.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active nahida;
 nahida skill;
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   fischl skill;
   furina skill, burst;
   nahida skill, burst;
@@ -88,4 +88,3 @@ for let i=0; i<4; i=i+1 {
     }
 
 }
-

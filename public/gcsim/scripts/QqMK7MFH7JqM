@@ -1,14 +1,14 @@
-options swap_delay=12 iteration=1000;	
+options swap_delay=12 iteration=1000;
 
-yae char lvl=90/90 cons=0 talent=9,9,9; 
+yae char lvl=90/90 cons=0 talent=9,9,9;
 yae add weapon="widsith" refine=3 lvl=90/90;
 yae add set="gt"count=4;
 #yae add set="tom"count=4;
 #yae add set="tf"count=2;
 #yae add set="vh"count=2;
 yae add stats hp=4780 atk=311 atk%=.466 electro%=0.466 cr=0.311 ; #main
-yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;																																																																																																	
-																																																														
+yae add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
+
 sara char lvl=90/90 cons=6 talent=9,9,9;
 #sara add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
 sara add weapon="mouunsmoon" refine=1 lvl=90/90;
@@ -16,25 +16,25 @@ sara add weapon="mouunsmoon" refine=1 lvl=90/90;
 sara add set="tom" count=5;
 #sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311 ; #main
 sara add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
-sara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;																																																
+sara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944 ;
 
 chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favlance" refine=3 lvl=90/90;
 chevreuse add set="no" count=4;
 chevreuse add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp%=0.466 ; #main
-chevreuse add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.1324 ;																																																																																		
-																							
-xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.3972 cd=0.1324 ;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="deathmatch" refine=1 lvl=90/90;
 #xiangling add weapon="wavebreaker" refine=1 lvl=90/90;
 xiangling add set="esf" count=4;
 #xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
-#xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;			
+#xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 xl add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
-xl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;																																																																																																																					
+xl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
 active yae;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 for let i = 0; i < 5; i = i + 1 {
   yae skill:3;
@@ -53,7 +53,7 @@ for let i = 0; i < 5; i = i + 1 {
   if i==1 || i==3 || i==5 { #sara burst every other rotation and use skill to buff yae on rotations when xiangling doesn't burst
     sara skill;
   } else {
-    sara burst; 
+    sara burst;
   }
   yae attack, charge, dash,
       attack, charge, jump,

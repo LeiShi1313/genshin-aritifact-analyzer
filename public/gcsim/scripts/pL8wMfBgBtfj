@@ -6,9 +6,9 @@ rosaria add weapon="prospectorsdrill" refine=1 lvl=90/90;
 #rosaria add weapon="wavebreaker" refine=1 lvl=90/90;
 #rosaria add weapon="cpike" refine=5 lvl=90/90; # Best F2P Option, lol
 rosaria add set="mh" count=4; # BS isn't nessarility better in Freeze.
-rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662; # Cryo
-#rosaria add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+#rosaria add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 #rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662; # ATK
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
@@ -23,14 +23,14 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.3972 cd=0.1324;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.2755 em=39.64 cr=0.1324 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,13 +47,13 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   esco skill, burst;
-  
+
   shenhe skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   rosaria attack;
   while .shenhe.skill.cd {
     if .rosaria.skill.ready {
@@ -64,9 +64,9 @@ for let i=0; i<4; i=i+1 {
       rosaria attack;
     }
   }
-  
+
   shenhe skill, attack;
-  
+
   while .furina.skill.cd {
     if .rosaria.skill.ready {
       rosaria skill;

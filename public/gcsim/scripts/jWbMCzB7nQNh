@@ -15,16 +15,16 @@ razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 
 #razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/EL
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
-#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
 #razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; #Em/El/Cr; MF
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
-#emilie add set="deepwood" count=4; 
+#emilie add set="deepwood" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
 emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
@@ -38,20 +38,20 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
 #fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Vhunt
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140]; # Leaf to Fischl
 #bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=220]; # Leaf to Razor
 bennett add set="deepwood" count=4; # Emilie DPS
 #bennett add set="no" count=4; # General
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662; # ATK
-#bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main 
+#bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 #bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.331 cd=0.2648; # EM
 #bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
 #bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.1324; # Heals
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -70,13 +70,13 @@ for let i=0; i<4; i=i+1 {
   } else {
     emilie skill, attack; # Fischl C6
   }
-  
+
   # Fill time
   if i > 0 {
     bennett attack, charge;
   }
   bennett skill, burst;
-  
+
   # Use burst over skill
   amy attack;
   if .amy.burst.ready {
@@ -84,10 +84,10 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
+
   razor skill, dash, attack, burst, attack:1, skill, dash; # Pick up Sapwood leaf during dash if missed
-  # Razor main DPS window 
-  while .razor.infusion.bennett-fire-weapon { 
+  # Razor main DPS window
+  while .razor.infusion.bennett-fire-weapon {
     if .razor.normal > 3 {
       if .razor.skill.ready {
         razor skill, dash;
@@ -98,7 +98,7 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
+
   bennett skill;
   print("done");
 }

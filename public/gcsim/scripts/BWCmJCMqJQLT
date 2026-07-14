@@ -47,9 +47,9 @@ for let x = 0; x< 5; x=x+1 {
     if .yelan.tags.yelan_breakthrough {
         yelan aim:1, attack:2, skill, attack;
     } else {
-        yelan attack:2, skill, attack; 
-    } 
+        yelan attack:2, skill, attack;
+    }
     baizhu attack:2, walk[f=3], attack:4, dash;
     print("Done");
-  
+
 }

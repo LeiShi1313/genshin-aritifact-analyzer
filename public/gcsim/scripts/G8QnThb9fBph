@@ -36,7 +36,7 @@ diona add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp%=0.466 ; #main
 diona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=138.74 cr=0.3972 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -49,11 +49,11 @@ razor skill, dash;
 
 for let i=0; i<4; i=i+1 {
   xingqiu skill, dash, burst, attack;
-  
+
   diona skill[hold=1], attack, burst, attack;
-  
+
   ororon skill, attack, burst, attack;
-  
+
   # Razor out of burst actions; account for energy deficiency
   razor skill, dash, attack, burst;
   # Razor Main DPS window
@@ -67,6 +67,5 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
-}
 
+}

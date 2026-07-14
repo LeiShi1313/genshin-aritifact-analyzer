@@ -8,8 +8,8 @@ yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favoniuswarbow" refine=5 lvl=90/90;
 yelan add set="emblemofseveredfate" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
-yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.7944 ;																																																																																			
-													
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2979 cd=0.7944 ;
+
 kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="favoniussword" refine=5 lvl=90/90;
 kazuha add set="viridescentvenerer" count=4;
@@ -22,7 +22,7 @@ bennett add stats def%=0.10416 def=33.0624 hp=3997.6192 hp%=0.083328 atk=259.787
 
 
 
-													
+
 
 # 0.84x scalar (8 er, 6 cr, 6 cd) to account for one 5* artifact
 
@@ -31,7 +31,7 @@ options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
 
 # --- Targets
-target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999;
 
 # --- Rotation
 active yelan;
@@ -54,9 +54,9 @@ while !.yelan.mods.favonius-cd && !.yelan.burst.ready {
         attack:1, charge, jump,
         attack:1, charge, jump,
         attack:1, charge, jump,
-        attack:2, charge, dash; 
+        attack:2, charge, dash;
   kazuha skill, high_plunge;
-  while !.kazuha.mods.favonius-cd {  
+  while !.kazuha.mods.favonius-cd {
     kazuha attack;
   }
 }

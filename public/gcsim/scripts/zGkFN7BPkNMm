@@ -13,7 +13,7 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 sucrose char lvl=90/90 cons=6 talent=9,9,9;
 sucrose add weapon="hakushinring" refine=5 lvl=90/90;
 sucrose add set="viridescentvenerer" count=4;
-sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; # main 
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; # main
 sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.3641 cd=0.2648;
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;

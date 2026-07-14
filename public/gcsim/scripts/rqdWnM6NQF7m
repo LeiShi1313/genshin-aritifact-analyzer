@@ -23,7 +23,7 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
 #furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.2648; # Lisa Skill
 
-lisa char lvl=90/90 cons=6 talent=9,9,9; 
+lisa char lvl=90/90 cons=6 talent=9,9,9;
 lisa add weapon="pamber" refine=5 lvl=90/90;
 lisa add set="fopl" count=4;
 #lisa add set="no" count=4;
@@ -34,7 +34,7 @@ lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.331 cd=0.2648; # Lisa Skill
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -58,21 +58,21 @@ fn clorinde_combo() {
 active nahida;
 
 for let i=0; i<4; i=i+1 {
-  nahida skill; 
+  nahida skill;
   if .nahida.burst.ready {
     nahida burst;
   } else {
     nahida charge;
   }
-  
+
   lisa burst;
-  
+
   furina skill, dash, burst;
-  
+
   clorinde_combo();
 
   #lisa skill[hold=1];
-  
+
   clorinde burst; # Over lisa skill;
   clorinde_combo();
 }

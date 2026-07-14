@@ -23,12 +23,12 @@ emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622;
 emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active rosaria;
 
 # Furina ED Q > Bennett EQ / QE N1* > Emilie E/Q > Rosaria E N1 Q N2CD 2[N1CD] N2E N2CD N2 > Bennett E N1
-# *do EQ first rotation, then QE N1 to heal himself 
+# *do EQ first rotation, then QE N1 to heal himself
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
   if i { # bennett doesn't heal himself first rotation
@@ -49,4 +49,3 @@ for let i=0; i<4; i=i+1 {
       attack:2, charge, dash, attack:2;
   bennett skill, attack;
 }
-

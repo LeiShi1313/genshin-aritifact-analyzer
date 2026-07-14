@@ -33,37 +33,37 @@ for let i=0; i<3; i=i+1 {
   # BURST PHASE
 
   mona skill, attack;
- 
+
   xilonen skill, attack:2;
-  
+
   xiangling burst, skill, dash;
   pick_up_crystallize("hydro");
-  
+
   mona burst;
-  
+
   mualani skill,
           walk[f=2], burst,
           walk[f=46], attack,
           walk[f=90], attack,
           skill;
-  
+
   # BITE PHASE
-  
+
   xilonen burst;
-  
+
   mona attack, charge; # Mona must be the one to remove Pyro for 4p Instructor
-  
+
   xilonen skill, attack:2;
-  
+
   xiangling skill, dash, attack;
   pick_up_crystallize("hydro");
-  
+
   mualani skill,
           walk[f=90], attack,
           walk[f=90], attack,
           walk[f=90], attack,
           skill;
-  
+
 }
 
 # 15-16s rotations

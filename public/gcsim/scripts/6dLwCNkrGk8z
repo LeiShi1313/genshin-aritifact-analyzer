@@ -26,23 +26,23 @@ for let x = 5; x || f() < last + 11*60 {
       kokomi attack;
     case .status.kokomiburst && .kokomi.normal == 3 && third:
       kokomi attack;
-      if .kokomi.dash.ready { 
-        kokomi dash; 
+      if .kokomi.dash.ready {
+        kokomi dash;
       }
     case .status.kokomiburst && .kokomi.normal == 3:
       kokomi walk;
     case .kokomi.skill.ready && !.status.kokomiskill:
-      #if .yelan.status.yelanburst { 
+      #if .yelan.status.yelanburst {
         #kokomi attack;
       #}
       kokomi skill;
     case .yelan.skill.ready:
-      #if .yelan.status.yelanburst { 
-        #yelan attack; 
+      #if .yelan.status.yelanburst {
+        #yelan attack;
       #}
       yelan skill;
-      if .yelan.energy < 70 - 4*2 { 
-        yelan attack:4; 
+      if .yelan.energy < 70 - 4*2 {
+        yelan attack:4;
       }
     case .yelan.burst.ready && .status.kokomiskill:
       yelan burst, attack;
@@ -50,7 +50,7 @@ for let x = 5; x || f() < last + 11*60 {
       yelan attack;
     case .kokomi.burst.ready && .status.kokomiskill > 0 && .status.kokomiskill < 180 && .yelan.status.yelanburst:
       if .yelan.status.yelanburst {
-        kokomi attack; 
+        kokomi attack;
       }
       kokomi burst;
       last = f();

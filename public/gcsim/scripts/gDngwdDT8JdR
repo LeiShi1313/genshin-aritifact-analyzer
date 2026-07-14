@@ -32,13 +32,12 @@ for let x=0; x< 4; x=x+1 {
   xingqiu burst, attack, skill, dash, attack:2;
   kokomi skill, attack;
   xinyan skill, attack, burst;
-  nahida 
-		attack:2, skill,
-		attack:3, dash,
-		attack:3, dash,
-		attack:3, skill,
-		attack:3, dash,
-		attack:3, dash, skill;
+  nahida
+    attack:2, skill,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, skill,
+    attack:3, dash,
+    attack:3, dash, skill;
     print("done");
 }
-

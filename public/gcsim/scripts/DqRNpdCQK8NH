@@ -1,4 +1,4 @@
-# Clorinde Nahida Ororon Mavuika. ~16s Rot. Whimsy Clorinde Quickburn. Nahida bursts every other rot after the first. Mavuika bursts every other rotation, with 1 CA after the first rotation. Everyone but Clorinde builds full EM. 
+# Clorinde Nahida Ororon Mavuika. ~16s Rot. Whimsy Clorinde Quickburn. Nahida bursts every other rot after the first. Mavuika bursts every other rotation, with 1 CA after the first rotation. Everyone but Clorinde builds full EM.
 # Team - Options listed by DPS
 clorinde char lvl=90/90 cons=0 talent=9,9,9;
 clorinde add weapon="finale" refine=5 lvl=90/90;
@@ -29,7 +29,7 @@ mav add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 mav add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=118.92 cr=0.3972 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -42,13 +42,13 @@ active nahida;
 nahida skill;
 
 for let i=0; i<4; i=i+1 {
-  # Skip Q on  first rotation, then use as available 
+  # Skip Q on  first rotation, then use as available
   if !is_even(i) {
     nahida skill, attack, burst;
   } else if i > 0 {
     nahida skill, attack, charge;
   }
-  
+
   # Mavuika after Ororon
   if i == 0 {
     mav skill, burst;
@@ -57,9 +57,9 @@ for let i=0; i<4; i=i+1 {
   } else {
     mav skill, attack;
   }
-  
+
   ororon burst, skill;
-  
+
   if .clorinde.skill.cd {
     clorinde attack:2;
   }
@@ -73,4 +73,3 @@ for let i=0; i<4; i=i+1 {
   }
   clorinde burst;
 }
-

@@ -26,8 +26,8 @@ sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 
 options swap_delay=12 iteration=1000;
 
-energy every interval=480,720 amount=1; 
-target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4; 
+energy every interval=480,720 amount=1;
+target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
 active keqing;
 
 keqing skill;
@@ -42,11 +42,11 @@ for let i=0; i<4; i=i+1 {
   keqing skill, burst, skill, dash,
     attack, charge,
     attack, skill, dash,
-    attack, charge, 
-    attack, charge, 
+    attack, charge,
+    attack, charge,
     attack, charge;
   sara skill, aim;
   keqing skill:2, dash, attack;
 }
-  
+
 # Keq e > Kazuha ep q > Nahida n1e q > Sara e aim (wait) > Kazuha ep > Sara q > Keqing eq ed n1c n1ed n1c n1c n1c > Sara e aim > Keqing eed n1

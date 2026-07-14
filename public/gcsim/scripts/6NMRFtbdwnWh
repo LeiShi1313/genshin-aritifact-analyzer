@@ -38,7 +38,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662; # Sapwood; Xihpos Kazuha
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -66,9 +66,9 @@ for let i=0; i<4; i=i+1 {
   } else {
     yae attack, skill:3;
   }
-  
+
   bennett skill, burst;
-  
+
   # burst over skill
   amy attack;
   if .amy.burst.ready && .amy.energy == .amy.energymax {
@@ -76,7 +76,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
+
   # While OZ is on field
   while .status.bennettburst {
   #while .fischl.oz {

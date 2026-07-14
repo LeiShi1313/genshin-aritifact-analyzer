@@ -11,7 +11,7 @@ bennett add set="ap" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
@@ -31,14 +31,14 @@ target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
 active mavuika; # Spine stacks
 
 for let i=0; i<3; i=i+1 {
-  
-  if i == 0 { 
+
+  if i == 0 {
     bennett skill, attack;
     xilonen skill, attack:2;
     bennett burst, dash;
     pick_up_crystallize("pyro");
-  } 
-  
+  }
+
   else {
     xilonen skill, attack:2;
     while !.xilonen.mods.favonius-cd {
@@ -47,10 +47,10 @@ for let i=0; i<3; i=i+1 {
     bennett skill, burst, dash;
     pick_up_crystallize("pyro");
   }
-    
+
   mavuika skill, burst, charge:2, dash, charge:2;
-  
-  lyney aim, aim; 
+
+  lyney aim, aim;
   if .lyney.burst.ready {
     lyney burst;
     delay(13); # Avoid canceling his burst before it hits
@@ -62,7 +62,7 @@ for let i=0; i<3; i=i+1 {
   if i<2 {
     lyney aim; #last rot ends in skill only
   }
-  
+
 }
 
 # Lyney rot: CA Q CA CA E CA. Replace Q with CA if no energy. Last rot: CA Q CA CA E

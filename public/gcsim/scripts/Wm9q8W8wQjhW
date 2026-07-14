@@ -1,7 +1,7 @@
 # Navia Mavuika Bennett Xilonen. ~18s Rot. SubDPS Navia with on field Mavuika. Mavuika Q 4C2D. Navia uses an extra skill every 3rd rotation. Xilonen uses burst every rotation. Xilonen uses skill twice per rotation, particles funneled to Navia. AP Navia isn't recommended because of the time loss from hold skill/picking up shards.
 
 # Team  Options listed by DPS
-navia char lvl=90/90 cons=0 talent=9,9,9; 
+navia char lvl=90/90 cons=0 talent=9,9,9;
 navia add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 navia add set="nighttime" count=4;
 #navia add set="gt" count=4;
@@ -24,14 +24,14 @@ bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
 xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,7 +51,7 @@ fn execute_action(char_id number, action_id number, p map) {
 # Navia Skill Hold Conditional
 fn naviaSkill() {
   if .navia.shrapnel < 3 || .navia.sets.ap >= 4 { # check current shrapnel stacks. if 3-6 stakcs, use tap E, otherwise hold E
-    navia skill[hold=1]; pick_up_crystallize("any"); 
+    navia skill[hold=1]; pick_up_crystallize("any");
   } else {
     navia skill;
   }
@@ -63,24 +63,24 @@ navia burst;
 
 for let i=0; i<4; i=i+1 {
   mavuika skill, dash;
-  
+
   bennett skill, burst;
-  
+
   xilonen skill, attack:2;
-  
-  naviaSkill(); 
+
+  naviaSkill();
   if .navia.swap.cd {
     navia attack;
   }
-  
+
   mav burst,
     charge:2, dash,
     charge:2, dash,
     charge:2, dash,
     charge:2, dash;
-  
+
   xilonen skill, attack:2;
-  
+
   naviaSkill(); navia attack:2;
   navia burst;
   if .navia.skill.ready && i == 3 {

@@ -8,7 +8,7 @@ ayaka add set="blizzardstrayer" count=4;
 ayaka add stats hp=4780 atk=311 atk%=0.4660 cryo%=0.4660 cd=0.6220;
 ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-ganyu char lvl=90/90 cons=0 talent=9,9,9; 
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
 ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
 ganyu add set="blizzardstrayer" count=4;
 ganyu add stats hp=4780 atk=311 atk%=0.4660 cryo%=0.4660 cd=0.6220;
@@ -32,7 +32,7 @@ active ayaka;
 
 
 for let x=0; x<4; x=x+1 {
-  ayaka dash, attack, skill; 
+  ayaka dash, attack, skill;
   kazuha skill, high_plunge, burst;
   shenhe burst, skill;
   ganyu burst, skill;
@@ -41,4 +41,3 @@ for let x=0; x<4; x=x+1 {
   shenhe skill, attack;
   ganyu aim[weakspot=1], skill;
 }
-

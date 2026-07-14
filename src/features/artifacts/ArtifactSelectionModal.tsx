@@ -384,7 +384,7 @@ const ArtifactSelectionModal = memo(({
                               {t(ArtifactSet[artifact.set]?.toLowerCase(), { ns: "sets" })}
                             </span>
                             {isSelected && (
-                              <span className="badge badge-primary badge-xs">Selected</span>
+                              <span className="badge badge-primary badge-xs">{t("Selected")}</span>
                             )}
                           </div>
                           <span className="text-sm">

@@ -1,0 +1,13 @@
+{
+  "gcsimCommit": "6d373678e949d30e91d390f418d930de09eeb547",
+  "goToolchain": "go1.25.0",
+  "scriptCount": 5562,
+  "scriptSnapshotSha256": "fcbbdff57c24c25b00c7b45d9eafc38d08229a138746c749424e071c1e6bef60",
+  "catalogFileCount": 8,
+  "catalogSnapshotSha256": "a5a065bc40411e6b004dfbff35cd4b89dee413014fdd166d959863b7121e859c",
+  "derivedFileCount": 11,
+  "derivedSnapshotSha256": "834145c11a9fe8f3f6b3885b09e36b155bb7bbd11bc7e9c433455fb5a8ae3963",
+  "binarySha256": "c1876596d199ee67d3ee78ae95bc201202f6c27529e874361f6a548ff085f077",
+  "wasmSha256": "64592f93ca9241a22a53ba6473c15d8741a67ad88e5d4103a031977a2370f244",
+  "wasmExecSha256": "0c949f4996f9a89698e4b5c586de32249c3b69b7baadb64d220073cc04acba14"
+}

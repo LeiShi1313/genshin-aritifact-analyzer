@@ -9,28 +9,26 @@ itto add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #enemy config
 
 options swap_delay=12 iteration=1000 duration=150;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=1;
 active itto;
 
-#action list 
+#action list
 
 while 1 {
 
   if !.itto.mods.itto-q && .itto.burst.ready {
   itto burst;
   }
-  
+
   if .itto.skill.ready {
   itto skill[ushihit=1];
   }
-  
+
   if .itto.tags.strStack > 0 {
   itto charge;
   }
-  
+
   else itto dash, attack:3;
-  
+
 }
-
-

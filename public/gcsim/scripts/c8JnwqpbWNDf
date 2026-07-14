@@ -29,31 +29,30 @@ energy every interval=480,720 amount=1;
 active kazuha;
 
 for let r = 4; r > 0; r = r - 1 {
- 
+
   if .kazuha.burst.ready {
     kazuha burst;
   }
-  
+
   if r < 4 {
     lyney aim[weakspot=1], aim;
-  } 
+  }
   bennett skill, burst;
-  
+
   if .tartaglia.burst.ready {
   tartaglia burst;
   }
   kazuha skill, high_plunge;
-  
+
   lyney aim[weakspot=1], aim;
-  
+
   if .lyney.burst.ready {
     lyney burst;
     delay(11); # Long enough for burst initial hit
     lyney skill;
   } else {
     lyney aim;
-  }  
+  }
   lyney aim, skill;
   bennett skill;
 }
- 

@@ -1,4 +1,4 @@
-# Kinich Dehya Rosaria Bennett. ~20s Rot. Kinich with Rosaria Melting off of Burning. Kinich does not intentionally seek blindspots. N2 (wait) E Kinich. No Kinich short hold is -10K DPS (missed cannon). Kinich uses burst if available at the end of the rotation after Rosaria and bennett use skill again. 
+# Kinich Dehya Rosaria Bennett. ~20s Rot. Kinich with Rosaria Melting off of Burning. Kinich does not intentionally seek blindspots. N2 (wait) E Kinich. No Kinich short hold is -10K DPS (missed cannon). Kinich uses burst if available at the end of the rotation after Rosaria and bennett use skill again.
 
 # Team
 kinich char lvl=90/90 cons=0 talent=9,9,9;
@@ -16,7 +16,7 @@ dehya add set="deepwood" count=4;
 dehya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
 dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="deathmatch" refine=1 lvl=90/90;
 rosaria add set="emblem" count=4;
 #rosaria add set="scroll" count=4;
@@ -32,7 +32,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -57,19 +57,18 @@ active kinich; # SS stacks
 
 for let i=0; i<4; i=i+1{
   dehya skill:2;
-  
+
   bennett burst, skill;
-  
+
   rosa skill, burst;
- 
+
   kinich_combo();
-  
-  rosa skill; 
-  
+
+  rosa skill;
+
   bennett skill;
-  
+
   if .kinich.burst.ready && .kinich.energy == .kinich.energymax {
     kinich burst;
   }
 }
-

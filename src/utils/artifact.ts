@@ -7,8 +7,9 @@ import {
   monaPositionToAttributePosition,
 } from "./attribute";
 import { Artifact } from "../genshin/artifact";
+import { Character } from "../genshin/character";
 import { attributePositionFromJSON } from "../genshin/attribute";
-import { toHex, fromHex } from "./hex"
+import { toHex, fromHex } from "./hex";
 
 export const encodeArtifact = (art: Artifact): string =>
   toHex(Artifact.encode(art).finish());
@@ -33,7 +34,10 @@ export const deserializeFromMona = (input: string | Object): Artifact => {
   };
 };
 
-export const deserializeFromGood = (input: string | Object): Artifact => {
+export const deserializeFromGood = (
+  input: string | Object,
+  resolveCharacter: (name: string) => Character = characterFromGoodName
+): Artifact => {
   if (typeof input === "string" || input instanceof String)
     input = JSON.parse(input as string);
 
@@ -42,14 +46,18 @@ export const deserializeFromGood = (input: string | Object): Artifact => {
     position: attributePositionFromJSON(input["slotKey"].toUpperCase()),
     star: input["rarity"],
     level: input["level"],
-    mainAttribute: attributeFromGood(input["mainStatKey"], input["level"], input["rarity"]),
+    mainAttribute: attributeFromGood(
+      input["mainStatKey"],
+      input["level"],
+      input["rarity"]
+    ),
     subAttributes: input["substats"]
       .filter((stat: Object) => stat["key"] !== null && stat["value"] !== 0)
       .map((stat: Object) => ({
         type: goodAttributeToAttributeType[stat["key"]],
-        value: stat["key"].endsWith('_') ? stat["value"] / 100 : stat["value"],
+        value: stat["key"].endsWith("_") ? stat["value"] / 100 : stat["value"],
       })),
-    character: characterFromGoodName(input["location"]),
+    character: resolveCharacter(input["location"] ?? ""),
     locked: input["lock"],
   };
 };

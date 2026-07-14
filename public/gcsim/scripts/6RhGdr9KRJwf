@@ -10,7 +10,7 @@ skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 
 //skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 //skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
@@ -22,7 +22,7 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.3306 em=39.64 cr=0.3972 cd=0.1324;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -40,17 +40,17 @@ escoffier skill, attack:2;  # E N1 hits swap cooldown anyway. N2 is not a big lo
 shenhe skill, attack:2;
 skirk skill,
       attack:5, dash,
-      
+
       attack:2, burst,
-      
+
       attack:5, dash,
       attack:5, dash;
-      
+
 shenhe swap;
 print("Skirk E cd (60 FPS) is ", .skirk.skill.cd);
 print("Skirk Q cd (60 FPS) is ", .skirk.burst.cd);
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   shenhe skill, attack:2;
   if i {
     furina skill, dash;
@@ -65,13 +65,13 @@ for let i=0; i<4; i=i+1 {
   shenhe burst, skill[hold=1];
   skirk skill,
         attack:2, burst,
-        
+
         attack:5, dash,
         attack:5, dash,
         attack:5, dash,
-      
+
         attack:2, charge, dash,
-        
+
         attack:5, dash,
         attack:2;
 }

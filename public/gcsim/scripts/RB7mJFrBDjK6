@@ -10,7 +10,7 @@ kazuha add set="viridescentvenerer" count=4;
 kazuha add stats hp=4780 atk=311 er=0.518 em=187 em=187 ; #main
 kazuha add stats def=109 def%=0.124  hp=239 hp%=0.093 atk=35 atk%=0.234 er=0.457 em=176 cr=0.058 cd=0.357 ;
 
-xilonen char lvl=90/90 cons=0 talent=1,10,10; 
+xilonen char lvl=90/90 cons=0 talent=1,10,10;
 xilonen add weapon="peakpatrolsong" refine=1 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 er=0.518 def%=0.583 heal=0.359;
@@ -31,7 +31,7 @@ options swap_delay=12 iteration=50;
 
 active neuvillette;
 
-target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let x=0; x<4; x=x+1 {

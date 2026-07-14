@@ -27,13 +27,13 @@ ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=1 pos=0,3.8 hp=100000000; 
+#target lvl=100 resist=0.1 radius=1 pos=0,3.8 hp=100000000;
 
 # Combo
 fn clorinde_combo() {
@@ -50,26 +50,26 @@ fn clorinde_combo() {
 # Rotation
 active yelan;
 
-for let r=0; r<4; r=r+1 { # 4 rotations 
+for let r=0; r<4; r=r+1 { # 4 rotations
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
-  } 
+  }
   if !.yelan.burst.ready {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   ororon burst, attack, skill;
-  
-  if .fischl.skill.ready { # fischl burst every other rotation 
+
+  if .fischl.skill.ready { # fischl burst every other rotation
     fischl attack:1, skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   yelan attack:2, dash, attack:2; # Catch Ororon energy regen
-  
+
   clorinde_combo();
   clorinde burst;
 }

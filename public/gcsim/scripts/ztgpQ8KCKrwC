@@ -7,7 +7,7 @@ chasca add set="obsidiancodex" count=4;
 chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
 chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="ap" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583;
@@ -34,7 +34,7 @@ active mavuika;
 
 for let i=0; i<4; i=i+1 {
   mavuika swap;         wait(9); # hiding swap cd warning
-  
+
   mavuika skill[hold=1], dash;
   xilonen skill, attack:2;  pick_up_crystallize("pyro");
   citlali skill, attack;

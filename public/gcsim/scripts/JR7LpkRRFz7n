@@ -22,14 +22,14 @@ baizhu char lvl=90/90 cons=0 talent=9,9,9;
 baizhu add weapon="favcodex" refine=3 lvl=90/90;
 baizhu add set="deepwood" count=4;
 baizhu add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
-baizhu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.1986 cd=0.1324 ;																	
+baizhu add stats def=39.36 def%=0.124 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=237.84 cr=0.1986 cd=0.1324 ;
 
 # --- Options
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
 
 # --- Targets
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
 target lvl=100 resist=0.1 radius=1 pos=1.5,0 hp=999999999;
 
 # --- Rotation
@@ -40,7 +40,7 @@ for let r = 0; r < 6; r = r + 1 {
   baizhu skill, burst, attack;
   yelan skill, burst, attack;
   alhaitham skill, attack:3, charge, attack:4;
-  
+
   baizhu attack, skill, attack;
   alhaitham burst;
   yelan skill, attack:2;

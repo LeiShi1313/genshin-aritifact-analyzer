@@ -13,13 +13,13 @@ yelan add set="no" count=4;
 yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
 yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*3 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*11;
 
-charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte char lvl=90/90 cons=6 talent=9,9,9;
 charlotte add weapon="ttds" refine=5 lvl=90/90;
 charlotte add set="tom" count=4;
 charlotte add stats hp=4780 atk=311 er=0.518 cryo%=0.466 atk%=0.466;
 charlotte add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*7;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="scroll" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -35,7 +35,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active escoffier;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   if is_even(i) {
     escoffier skill, attack, burst;
     yelan skill, burst, attack;
@@ -49,26 +49,26 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
@@ -79,4 +79,3 @@ for let i=0; i<4; i=i+1 {
 
 # First Rot Nuke Skirk Rotation: Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Otherwise:                     Skirk   tE N2Q      3[N5D] N2CD N5D N2
-

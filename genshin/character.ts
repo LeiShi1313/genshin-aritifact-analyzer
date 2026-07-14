@@ -135,6 +135,7 @@ export enum Character {
   LINNEA = 123,
   NICOLE = 124,
   PRUNE = 125,
+  SANDRONE = 126,
   UNRECOGNIZED = -1,
 }
 
@@ -518,6 +519,9 @@ export function characterFromJSON(object: any): Character {
     case 125:
     case "PRUNE":
       return Character.PRUNE;
+    case 126:
+    case "SANDRONE":
+      return Character.SANDRONE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -779,6 +783,8 @@ export function characterToJSON(object: Character): string {
       return "NICOLE";
     case Character.PRUNE:
       return "PRUNE";
+    case Character.SANDRONE:
+      return "SANDRONE";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

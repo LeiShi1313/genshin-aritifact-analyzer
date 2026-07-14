@@ -3,7 +3,7 @@ options swap_delay=12 iteration=1000;
 kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="xiphos" refine=1 lvl=90/90;
 kazuha add set="viridescentvenerer" count=5;
-kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; # main 
+kazuha add stats hp=4780 atk=311 em=186.5 em=186.5 em=186.5; # main
 kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.3972 cd=0.3972;
 
 keqing char lvl=90/90 cons=0 talent=9,9,9;
@@ -25,28 +25,28 @@ kirara add set="instructor" count=4;
 kirara add stats hp=3571 atk=232 hp%=0.3495 hp%=0.466 hp%=0.3495; #main
 kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active keqing;
 keqing skill:2;
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   kazuha skill, high_plunge, burst;
   fischl attack:2, burst;
   kirara burst, skill;
   keqing skill, burst, skill,
-         attack, charge, 
-         attack, charge, 
+         attack, charge,
+         attack, charge,
          attack, skill,
          attack, charge,
          attack, charge,
          attack;
-  kazuha attack, skill, high_plunge;  
+  kazuha attack, skill, high_plunge;
   fischl attack, skill;
   kirara skill[short_hold=1];
   keqing skill, burst, skill,
-         attack, charge, 
-         attack, charge, 
+         attack, charge,
+         attack, charge,
          attack, skill,
          attack, charge;
 }
