@@ -28,6 +28,11 @@ test("a new summary atomically invalidates every lazy phase", () => {
   let state = initialArtifactScoringSessionState();
   state = artifactScoringSessionReducer(state, {
     type: "request",
+    phase: "setEligibility",
+    requestId: "old-set",
+  });
+  state = artifactScoringSessionReducer(state, {
+    type: "request",
     phase: "prospect",
     requestId: "old-prospect",
   });
@@ -40,6 +45,7 @@ test("a new summary atomically invalidates every lazy phase", () => {
   assert.equal(state.summary.status, "pending");
   assert.equal(state.prospect.status, "idle");
   assert.equal(state.potential.status, "idle");
+  assert.equal(state.setEligibility.status, "idle");
   assert.deepEqual(state.prospect.results, {});
 });
 
@@ -140,6 +146,7 @@ test("marks only lazy phases unavailable when Workers are missing", () => {
   assert.equal(state.summary.status, "idle");
   assert.equal(state.prospect.status, "unavailable");
   assert.equal(state.potential.status, "unavailable");
+  assert.equal(state.setEligibility.status, "unavailable");
 });
 
 test("a population assumption change keeps summary but invalidates lazy results", () => {
@@ -231,6 +238,7 @@ test("a population assumption change keeps summary but invalidates lazy results"
   assert.equal(next.summary.status, "ready");
   assert.equal(next.prospect.status, "idle");
   assert.equal(next.potential.status, "idle");
+  assert.equal(next.setEligibility.status, "idle");
   assert.deepEqual(next.prospect.results, {});
   assert.deepEqual(next.potential.results["0:0"], {
     pair: { artifactIndex: 0, buildIndex: 0 },
@@ -244,4 +252,41 @@ test("a population assumption change keeps summary but invalidates lazy results"
     },
     finishChance: { kind: "none" },
   });
+});
+
+test("stores the complete set policy only for the active request", () => {
+  const policy = {
+    buildCount: 1,
+    gateStatus: new Uint8Array(10).fill(1),
+    offPieceCutoff: new Uint8Array(10).fill(84),
+    expectedFiveStarDrops: new Float64Array(10).fill(100),
+  };
+  let state = artifactScoringSessionReducer(
+    initialArtifactScoringSessionState(),
+    {
+      type: "request",
+      phase: "setEligibility",
+      requestId: "current-set",
+    }
+  );
+  const stale = artifactScoringSessionReducer(state, {
+    type: "response",
+    response: {
+      type: "setEligibilityComplete",
+      requestId: "stale-set",
+      policy,
+    },
+  });
+  assert.strictEqual(stale, state);
+
+  state = artifactScoringSessionReducer(state, {
+    type: "response",
+    response: {
+      type: "setEligibilityComplete",
+      requestId: "current-set",
+      policy,
+    },
+  });
+  assert.equal(state.setEligibility.status, "ready");
+  assert.strictEqual(state.setEligibility.policy, policy);
 });

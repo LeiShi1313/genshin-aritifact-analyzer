@@ -19,6 +19,44 @@ export interface ArtifactEvaluationBatch extends ScoreBatchView {
   readonly algorithmVersion: string;
 }
 
+export const SET_ELIGIBILITY_GATE_STATUS = {
+  NOT_APPLICABLE: 0,
+  AVAILABLE: 1,
+  UNAVAILABLE: 2,
+} as const;
+
+export interface SetEligibilityPolicyBatch {
+  readonly buildCount: number;
+  /** Two stages (+0 reference, +20) by five positions for every Build. */
+  readonly gateStatus: Uint8Array;
+  readonly offPieceCutoff: Uint8Array;
+  readonly expectedFiveStarDrops: Float64Array;
+}
+
+export const SET_ELIGIBILITY_GATES_PER_BUILD = 10;
+
+export const setEligibilityGateIndex = (
+  buildIndex: number,
+  referenceMilestone: 0 | 20,
+  position: number
+): number => {
+  if (!Number.isInteger(buildIndex) || buildIndex < 0) {
+    throw new RangeError("Build index must be a nonnegative integer");
+  }
+  if (!Number.isInteger(position) || position < 1 || position > 5) {
+    throw new RangeError(
+      "Set eligibility requires a standard artifact position"
+    );
+  }
+  if (referenceMilestone !== 0 && referenceMilestone !== 20) {
+    throw new RangeError("Set eligibility reference must be +0 or +20");
+  }
+  const stageOffset = referenceMilestone === 20 ? 5 : 0;
+  return (
+    buildIndex * SET_ELIGIBILITY_GATES_PER_BUILD + stageOffset + position - 1
+  );
+};
+
 export interface WorkerIssue {
   readonly code: string;
   readonly severity: "warning" | "error";
@@ -94,6 +132,13 @@ export type ScoringWorkerRequest =
       }[];
     }
   | {
+      readonly type: "setEligibility";
+      readonly requestId: string;
+      readonly datasetId: string;
+      readonly summaryKey: string;
+      readonly sourceProfile: NormalSourceFiveStarProfile;
+    }
+  | {
       readonly type: "prospect";
       readonly requestId: string;
       readonly datasetId: string;
@@ -119,7 +164,7 @@ export const scoringRequestIdOrUnknown = (value: unknown): string =>
 
 export const hasValidLazyRequestIdentity = (
   value: unknown,
-  phase: "prospect" | "potential"
+  phase: "setEligibility" | "prospect" | "potential"
 ): boolean => {
   if (!value || typeof value !== "object") return false;
   const request = value as Record<string, unknown>;
@@ -156,7 +201,11 @@ export type PotentialDelta =
       readonly issues: readonly WorkerIssue[];
     };
 
-export type ScoringPhase = "summary" | "prospect" | "potential";
+export type ScoringPhase =
+  | "summary"
+  | "setEligibility"
+  | "prospect"
+  | "potential";
 
 export type ScoringWorkerResponse =
   | {
@@ -172,6 +221,11 @@ export type ScoringWorkerResponse =
       readonly batch: ArtifactEvaluationBatch;
       readonly summaryKey: string;
       readonly issues: readonly WorkerIssue[];
+    }
+  | {
+      readonly type: "setEligibilityComplete";
+      readonly requestId: string;
+      readonly policy: SetEligibilityPolicyBatch;
     }
   | {
       readonly type: "prospectChunk";

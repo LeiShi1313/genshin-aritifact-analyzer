@@ -46,6 +46,13 @@ test("validates lazy request identity before snapshot lookup", () => {
   };
   assert.equal(hasValidLazyRequestIdentity(valid, "prospect"), true);
   assert.equal(
+    hasValidLazyRequestIdentity(
+      { ...valid, type: "setEligibility" },
+      "setEligibility"
+    ),
+    true
+  );
+  assert.equal(
     hasValidLazyRequestIdentity({ ...valid, requestId: {} }, "prospect"),
     false
   );

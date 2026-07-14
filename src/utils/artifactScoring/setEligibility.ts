@@ -276,13 +276,21 @@ export const selectConservativePublicScoreCutoff = (
 export const calculateSetEligibilityGates = (
   distributions: readonly DiscreteScoreDistribution[],
   baseScore: number
+): readonly SetEligibilityGate[] =>
+  calculateSetEligibilityGatesFromBins(
+    distributions.map(publicScoreBins),
+    baseScore
+  );
+
+export const calculateSetEligibilityGatesFromBins = (
+  bins: readonly (readonly PublicScoreBin[])[],
+  baseScore: number
 ): readonly SetEligibilityGate[] => {
-  if (distributions.length !== SET_ELIGIBILITY_POSITION_COUNT) {
+  if (bins.length !== SET_ELIGIBILITY_POSITION_COUNT) {
     throw new RangeError("Exactly five position distributions are required");
   }
   assertPublicScore(baseScore);
 
-  const bins = distributions.map(publicScoreBins);
   const baseTailProbabilities = bins.map((positionBins) =>
     compensatedSum(
       positionBins

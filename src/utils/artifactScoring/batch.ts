@@ -114,6 +114,7 @@ export interface ArtifactScoringSnapshot {
   readonly batch: ArtifactEvaluationBatch;
   readonly canonicalArtifacts: readonly (CanonicalArtifactState | undefined)[];
   readonly buildProfiles: readonly (BuildScoringProfile | undefined)[];
+  readonly buildSetPlans: readonly BuildSetPlan[];
   readonly issues: readonly EvaluationIssue[];
 }
 
@@ -256,6 +257,7 @@ const finishArtifactBatch = (
     batch: prepared.batch,
     canonicalArtifacts: Object.freeze(prepared.canonicalArtifacts),
     buildProfiles: Object.freeze(prepared.buildProfiles),
+    buildSetPlans: Object.freeze(prepared.buildSetPlans),
     issues: Object.freeze(prepared.issues),
   });
 

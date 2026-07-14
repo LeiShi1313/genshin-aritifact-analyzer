@@ -45,6 +45,7 @@ export {
 export {
   BUILD_SET_PLAN,
   calculateSetEligibilityGates,
+  calculateSetEligibilityGatesFromBins,
   classifyArtifactSetCompatibility,
   classifyBuildSetPlan,
   expectedFiveStarDrops,

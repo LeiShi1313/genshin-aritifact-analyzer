@@ -4,6 +4,7 @@ import type {
   ProspectDelta,
   ScoringPhase,
   ScoringWorkerResponse,
+  SetEligibilityPolicyBatch,
   WorkerIssue,
 } from "../../workers/artifactScoringProtocol";
 import { pairKey } from "../../workers/artifactScoringProtocol";
@@ -27,6 +28,9 @@ export interface ArtifactScoringSessionState {
     readonly batch?: ArtifactEvaluationBatch;
     readonly summaryKey?: string;
   };
+  readonly setEligibility: PhaseState & {
+    readonly policy?: SetEligibilityPolicyBatch;
+  };
   readonly prospect: PhaseState & {
     readonly results: Readonly<Record<string, ProspectDelta>>;
   };
@@ -44,6 +48,7 @@ const idlePhase = (): PhaseState => ({
 export const initialArtifactScoringSessionState =
   (): ArtifactScoringSessionState => ({
     summary: idlePhase(),
+    setEligibility: idlePhase(),
     prospect: { ...idlePhase(), results: {} },
     potential: { ...idlePhase(), results: {} },
   });
@@ -91,6 +96,12 @@ export const artifactScoringSessionReducer = (
         status: "unavailable",
         requestId: undefined,
       },
+      setEligibility: {
+        ...state.setEligibility,
+        status: "unavailable",
+        requestId: undefined,
+        policy: undefined,
+      },
     };
   }
 
@@ -108,6 +119,7 @@ export const artifactScoringSessionReducer = (
       ...state,
       prospect: { ...idlePhase(), results: {} },
       potential: { ...idlePhase(), results: potentialResults },
+      setEligibility: idlePhase(),
     };
   }
 
@@ -117,6 +129,7 @@ export const artifactScoringSessionReducer = (
         summary: requested(idlePhase(), action.requestId),
         prospect: { ...idlePhase(), results: {} },
         potential: { ...idlePhase(), results: {} },
+        setEligibility: idlePhase(),
       };
     }
     return {
@@ -163,6 +176,22 @@ export const artifactScoringSessionReducer = (
       results[pairKey(result.pair)] = result;
     });
     return { ...state, prospect: { ...state.prospect, results } };
+  }
+
+  if (response.type === "setEligibilityComplete") {
+    if (!isCurrent(state.setEligibility, response.requestId)) return state;
+    return {
+      ...state,
+      setEligibility: {
+        ...state.setEligibility,
+        status: "ready",
+        policy: response.policy,
+        progress: {
+          completed: response.policy.buildCount,
+          total: response.policy.buildCount,
+        },
+      },
+    };
   }
 
   if (response.type === "potentialChunk") {

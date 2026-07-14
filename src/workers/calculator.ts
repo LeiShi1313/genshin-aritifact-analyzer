@@ -2,7 +2,9 @@
 
 import {
   artifactBatchTransferList,
+  BUILD_SET_PLAN,
   ByteBudgetLruCache,
+  calculateSetEligibilityGatesFromBins,
   calculateArtifactPotentialCooperatively,
   calculateConservativeTopTenFinish,
   CooperativeComputation,
@@ -12,6 +14,7 @@ import {
   estimateScoreDistributionBytes,
   expectedFinalQualityRational,
   generateNormalFiveStarPopulationCooperatively,
+  publicScoreBins,
   probabilityAtLeast,
   rationalToNumber,
   type ArtifactScoringSnapshot,
@@ -19,6 +22,7 @@ import {
   type CanonicalArtifactState,
   type DiscreteScoreDistribution,
 } from "../utils/artifactScoring";
+import { AttributePosition } from "../genshin/attribute";
 import type {
   PairRef,
   FinishChanceResult,
@@ -28,10 +32,15 @@ import type {
   ScoringPhase,
   ScoringWorkerRequest,
   ScoringWorkerResponse,
+  SetEligibilityPolicyBatch,
 } from "./artifactScoringProtocol";
 import {
+  ARTIFACT_SCORING_ALGORITHM_VERSION,
   hasValidLazyRequestIdentity,
   scoringRequestIdOrUnknown,
+  SET_ELIGIBILITY_GATES_PER_BUILD,
+  SET_ELIGIBILITY_GATE_STATUS,
+  setEligibilityGateIndex,
 } from "./artifactScoringProtocol";
 
 const scope: DedicatedWorkerGlobalScope =
@@ -43,6 +52,20 @@ let retainedSnapshot: ArtifactScoringSnapshot | undefined;
 const populationCache = new ByteBudgetLruCache<DiscreteScoreDistribution>(
   32 * 1024 * 1024
 );
+interface CompactSetPolicy {
+  readonly gateStatus: Uint8Array;
+  readonly offPieceCutoff: Uint8Array;
+  readonly expectedFiveStarDrops: Float64Array;
+}
+const setPolicyCache = new ByteBudgetLruCache<CompactSetPolicy>(256 * 1024);
+const SET_POLICY_CACHE_ENTRY_BYTES = 512;
+const SET_POSITIONS = [
+  AttributePosition.FLOWER,
+  AttributePosition.PLUME,
+  AttributePosition.SANDS,
+  AttributePosition.GOBLET,
+  AttributePosition.CIRCLET,
+] as const;
 
 const respond = (
   response: ScoringWorkerResponse,
@@ -65,7 +88,10 @@ const error = (
 };
 
 const snapshotMatches = (
-  request: Extract<ScoringWorkerRequest, { type: "prospect" | "potential" }>
+  request: Extract<
+    ScoringWorkerRequest,
+    { type: "setEligibility" | "prospect" | "potential" }
+  >
 ): boolean =>
   retainedSnapshot?.datasetId === request.datasetId &&
   retainedSnapshot.summaryKey === request.summaryKey;
@@ -201,6 +227,162 @@ const wasCancelled = (requestId: string, phase: ScoringPhase): boolean => {
   activeLazyRequests.delete(requestId);
   respond({ type: "cancelled", requestId, phase });
   return true;
+};
+
+const compactSetPolicyCacheKey = (
+  profile: BuildScoringProfile,
+  sourceProfile: NormalSourceFiveStarProfile
+): string =>
+  `${ARTIFACT_SCORING_ALGORITHM_VERSION}:set-policy:${createPopulationCacheKey({
+    profile,
+    position: AttributePosition.FLOWER,
+    milestone: 0,
+    sourceProfile,
+  })}`;
+
+const calculateCompactSetPolicy = async (
+  profile: BuildScoringProfile,
+  sourceProfile: NormalSourceFiveStarProfile,
+  computation: CooperativeComputation
+): Promise<CompactSetPolicy | undefined> => {
+  const cacheKey = compactSetPolicyCacheKey(profile, sourceProfile);
+  const cached = setPolicyCache.get(cacheKey);
+  if (cached) return cached;
+
+  const gateStatus = new Uint8Array(SET_ELIGIBILITY_GATES_PER_BUILD);
+  const offPieceCutoff = new Uint8Array(SET_ELIGIBILITY_GATES_PER_BUILD);
+  const expectedFiveStarDrops = new Float64Array(
+    SET_ELIGIBILITY_GATES_PER_BUILD
+  );
+  expectedFiveStarDrops.fill(Number.NaN);
+
+  for (const [referenceMilestone, baseScore] of [
+    [0, 75],
+    [20, 80],
+  ] as const) {
+    const positionBins = [];
+    for (const position of SET_POSITIONS) {
+      const population = await generateNormalFiveStarPopulationCooperatively(
+        { profile, position, milestone: referenceMilestone, sourceProfile },
+        computation
+      );
+      if (!population) return undefined;
+      positionBins.push(publicScoreBins(population.distribution));
+    }
+    const gates = calculateSetEligibilityGatesFromBins(positionBins, baseScore);
+    gates.forEach((gate, positionIndex) => {
+      const index = (referenceMilestone === 20 ? 5 : 0) + positionIndex;
+      if (gate.status === "available") {
+        gateStatus[index] = SET_ELIGIBILITY_GATE_STATUS.AVAILABLE;
+        offPieceCutoff[index] = gate.offPieceCutoff;
+        expectedFiveStarDrops[index] = gate.expectedFiveStarDrops;
+      } else {
+        gateStatus[index] = SET_ELIGIBILITY_GATE_STATUS.UNAVAILABLE;
+      }
+    });
+  }
+
+  const policy = { gateStatus, offPieceCutoff, expectedFiveStarDrops };
+  setPolicyCache.set(cacheKey, policy, SET_POLICY_CACHE_ENTRY_BYTES);
+  return policy;
+};
+
+const handleSetEligibility = async (
+  request: Extract<ScoringWorkerRequest, { type: "setEligibility" }>
+) => {
+  const safeRequestId = scoringRequestIdOrUnknown(request.requestId);
+  if (
+    !hasValidLazyRequestIdentity(request, "setEligibility") ||
+    !validSourceProfile(request.sourceProfile)
+  ) {
+    error(safeRequestId, "setEligibility", "INVALID_WORKER_REQUEST");
+    return;
+  }
+  if (!snapshotMatches(request)) {
+    error(request.requestId, "setEligibility", "STALE_SCORING_SNAPSHOT");
+    return;
+  }
+
+  const snapshot = retainedSnapshot;
+  if (!snapshot) {
+    error(request.requestId, "setEligibility", "STALE_SCORING_SNAPSHOT");
+    return;
+  }
+  activeLazyRequests.add(request.requestId);
+  const computation = new CooperativeComputation({
+    maxSliceMs: 8,
+    shouldCancel: () => cancelled.has(request.requestId),
+    yieldControl: yieldToMessageQueue,
+  });
+  const gateCount =
+    snapshot.buildProfiles.length * SET_ELIGIBILITY_GATES_PER_BUILD;
+  const policy: SetEligibilityPolicyBatch = {
+    buildCount: snapshot.buildProfiles.length,
+    gateStatus: new Uint8Array(gateCount),
+    offPieceCutoff: new Uint8Array(gateCount),
+    expectedFiveStarDrops: new Float64Array(gateCount),
+  };
+  policy.expectedFiveStarDrops.fill(Number.NaN);
+
+  try {
+    for (
+      let buildIndex = 0;
+      buildIndex < snapshot.buildProfiles.length;
+      buildIndex += 1
+    ) {
+      if (wasCancelled(request.requestId, "setEligibility")) return;
+      if (!snapshotMatches(request)) {
+        error(request.requestId, "setEligibility", "STALE_SCORING_SNAPSHOT");
+        return;
+      }
+      const profile = snapshot.buildProfiles[buildIndex];
+      const plan = snapshot.buildSetPlans[buildIndex];
+      if (profile && plan.kind === BUILD_SET_PLAN.STRICT_FOUR_PIECE) {
+        const compact = await calculateCompactSetPolicy(
+          profile,
+          request.sourceProfile,
+          computation
+        );
+        if (!compact) {
+          wasCancelled(request.requestId, "setEligibility");
+          return;
+        }
+        const offset = setEligibilityGateIndex(
+          buildIndex,
+          0,
+          AttributePosition.FLOWER
+        );
+        policy.gateStatus.set(compact.gateStatus, offset);
+        policy.offPieceCutoff.set(compact.offPieceCutoff, offset);
+        policy.expectedFiveStarDrops.set(compact.expectedFiveStarDrops, offset);
+      }
+      respond({
+        type: "progress",
+        requestId: request.requestId,
+        phase: "setEligibility",
+        completed: buildIndex + 1,
+        total: snapshot.buildProfiles.length,
+      });
+      await yieldToMessageQueue();
+    }
+    if (wasCancelled(request.requestId, "setEligibility")) return;
+    respond(
+      {
+        type: "setEligibilityComplete",
+        requestId: request.requestId,
+        policy,
+      },
+      [
+        policy.gateStatus.buffer,
+        policy.offPieceCutoff.buffer,
+        policy.expectedFiveStarDrops.buffer,
+      ]
+    );
+  } catch {
+    error(request.requestId, "setEligibility", "INVALID_WORKER_REQUEST");
+  } finally {
+    activeLazyRequests.delete(request.requestId);
+  }
 };
 
 const handleProspect = async (
@@ -507,8 +689,13 @@ scope.onmessage = (event: MessageEvent<ScoringWorkerRequest>) => {
     void handleSummary(request);
     return;
   }
-  if (request.type === "prospect" || request.type === "potential") {
-    if (request.type === "prospect") void handleProspect(request);
+  if (
+    request.type === "setEligibility" ||
+    request.type === "prospect" ||
+    request.type === "potential"
+  ) {
+    if (request.type === "setEligibility") void handleSetEligibility(request);
+    else if (request.type === "prospect") void handleProspect(request);
     else void handlePotential(request);
     return;
   }

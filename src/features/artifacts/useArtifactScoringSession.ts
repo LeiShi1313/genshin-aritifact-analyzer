@@ -94,6 +94,8 @@ export const useArtifactScoringSession = ({
       const terminalPhase =
         response.type === "summaryComplete"
           ? "summary"
+          : response.type === "setEligibilityComplete"
+          ? "setEligibility"
           : response.type === "prospectComplete"
           ? "prospect"
           : response.type === "potentialComplete"
@@ -137,6 +139,7 @@ export const useArtifactScoringSession = ({
   useEffect(() => {
     if (worker === undefined) return;
     cancel("summary");
+    cancel("setEligibility");
     cancel("prospect");
     cancel("potential");
     if (artifacts.length === 0 || builds.length === 0) {
@@ -168,8 +171,39 @@ export const useArtifactScoringSession = ({
     }
     cancel("prospect");
     cancel("potential");
+    cancel("setEligibility");
     dispatch({ type: "invalidatePopulationResults" });
   }, [sourceProfile, cancel]);
+
+  useEffect(() => {
+    if (
+      !worker ||
+      state.summary.status !== "ready" ||
+      !state.summary.summaryKey
+    ) {
+      return;
+    }
+    cancel("setEligibility");
+    const id = requestId("setEligibility");
+    activeRequests.current.setEligibility = id;
+    dispatch({ type: "request", phase: "setEligibility", requestId: id });
+    worker.postMessage({
+      type: "setEligibility",
+      requestId: id,
+      datasetId,
+      summaryKey: state.summary.summaryKey,
+      sourceProfile,
+    } satisfies ScoringWorkerRequest);
+
+    return () => cancel("setEligibility");
+  }, [
+    worker,
+    datasetId,
+    state.summary.status,
+    state.summary.summaryKey,
+    sourceProfile,
+    cancel,
+  ]);
 
   useEffect(() => {
     if (worker !== null || artifacts.length === 0 || builds.length === 0)
