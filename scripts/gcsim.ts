@@ -48,53 +48,72 @@ const statMap: { [key: string]: string } = {
     "pyro%": "PYRO_DAMAGE_BONUS",
 }
 
+const weaponNameOverrides: Record<string, string> = {
+    rainbowserpentbow: "rainbow_serpents_rain_bow",
+};
 
-const gcsimCharacterToCharacter = (char: string): Character => {
-    if (char === "yaemiko") {
-        return characterFromJSON("YAE_MIKO")
-    } else if (char === "raiden") {
-        return characterFromJSON("RAIDEN_SHOGUN")
-    } else if (char === "hutao") {
-        return characterFromJSON("HU_TAO")
-    } else if (char === "yunjin") {
-        return characterFromJSON("YUN_JIN")
-    } else if (char === "kuki") {
-        return characterFromJSON("KUKI_SHINOBU")
-    } else if (char.includes("lumine")) {
-        char = char.replace("lumine", "traveler_");
-        return characterFromJSON(char.toUpperCase());
+const characterNameOverrides: Record<string, string> = {
+    yaemiko: "yae_miko",
+    raiden: "raiden_shogun",
+    hutao: "hu_tao",
+    yunjin: "yun_jin",
+    kuki: "kuki_shinobu",
+};
+
+const resolveAlias = (
+    kind: string,
+    alias: string | undefined,
+    aliases: Record<string, string>,
+    sourceId: string,
+): string => {
+    if (!alias || !(alias in aliases)) {
+        throw new Error(`${sourceId}: unknown ${kind} alias "${alias ?? ""}"`);
+    }
+    return aliases[alias];
+};
+
+
+const gcsimCharacterToCharacter = (char: string, sourceId: string): Character => {
+    let appKey = characterNameOverrides[char];
+    if (char.includes("lumine")) {
+        appKey = char.replace("lumine", "traveler_");
     } else if (char.includes("aether")) {
-        char = char.replace("aether", "traveler_");
-        return characterFromJSON(char.toUpperCase());
+        appKey = char.replace("aether", "traveler_");
+    } else if (!appKey) {
+        appKey = Object.keys(CHARACTERS).find(
+            key => key.toLowerCase() === char.toLowerCase(),
+        ) ?? Object.keys(CHARACTERS).find(
+            key => key.toLowerCase().includes(char.toLowerCase()),
+        );
     }
-    for (let key of Object.keys(CHARACTERS)) {
-        if (key.toLowerCase() === char.toLowerCase()) {
-            return characterFromJSON(key.toUpperCase());
-        } else if (key.toLowerCase().includes(char.toLowerCase())) {
-            return characterFromJSON(key.toUpperCase());
-        }
 
+    const character = characterFromJSON((appKey ?? char).toUpperCase());
+    if (character === Character.UNRECOGNIZED) {
+        throw new Error(
+            `${sourceId}: GCSIM character "${char}" is not available in app data`,
+        );
     }
-    console.log(`Unknown character ${char}`);
-    return characterFromJSON(char.toUpperCase());
+    return character;
 }
-const gcsimWeaponToWeapon = (weapon: string): Weapon => {
+const gcsimWeaponToWeapon = (weapon: string, sourceId: string): Weapon => {
+    const override = weaponNameOverrides[weapon];
+    if (override) {
+        return weaponFromJSON(override.toUpperCase());
+    }
     for (let key of Object.keys(WEAPONS) as string[]) {
         if (key.replaceAll("_", "") === weapon) {
             return weaponFromJSON(key.toUpperCase());
         }
     }
-    console.log(`Unknown weapon ${weapon}`);
-    return weaponFromJSON(weapon.toUpperCase());
+    throw new Error(`${sourceId}: GCSIM weapon "${weapon}" is not available in app data`);
 }
-const gcsimSetToSet = (set: string): Set => {
+const gcsimSetToSet = (set: string, sourceId: string): Set => {
     for (let key of Object.keys(SETS)) {
         if (key.replaceAll("_", "") === set) {
             return setFromJSON(key.toUpperCase());
         }
     }
-    console.log(`Unknown set ${set}`);
-    return setFromJSON(set.toUpperCase());
+    throw new Error(`${sourceId}: GCSIM artifact set "${set}" is not available in app data`);
 }
 
 const parseParams = (line: string): GCSimScriptParam[] => {
@@ -166,10 +185,10 @@ const parseRandomSubstats = (line: string) => {
     return randomSubstats;
 }
 
-const parseSetInfo = (wsname: string, line: string): GCSimScriptSetInfo => {
+const parseSetInfo = (wsname: string, line: string, sourceId: string): GCSimScriptSetInfo => {
     const setInfo: GCSimScriptSetInfo = {
         count: 0,
-        set: gcsimSetToSet(wsname),
+        set: gcsimSetToSet(wsname, sourceId),
         params: parseParams(line),
     }
     line = line.replace(gcsimParamsRegx, "");
@@ -183,9 +202,9 @@ const parseSetInfo = (wsname: string, line: string): GCSimScriptSetInfo => {
     return setInfo;
 }
 
-const parseWeaponInfo = (wsname: string, line: string) => {
+const parseWeaponInfo = (wsname: string, line: string, sourceId: string) => {
     const weaponInfo: GCSimScriptWeaponInfo = {
-        weapon: gcsimWeaponToWeapon(wsname),
+        weapon: gcsimWeaponToWeapon(wsname, sourceId),
         level: 0,
         maxLevel: 0,
         refinement: 0,
@@ -243,17 +262,18 @@ const parseOptions = (script: string, parsedScript: GCSimScript) => {
     script = script.replace(gcsimOptionsRegx, "");
     return script;
 }
-const parseCharacters = (script: string, parsedScript: GCSimScript) => {
+const parseCharacters = (script: string, parsedScript: GCSimScript, sourceId: string) => {
     const characters: { [key: string]: GCSimScriptCharacterInfo } = {};
     for (let match of script.matchAll(gcsimCharRegx)) {
-        if (!match.groups?.char || !(match.groups?.char in GCSIM_CHARACTER_ALIASES)) {
-            console.log(`Unknown character: ${match.groups?.char}`);
-            continue;
-        }
-        const char: string = (GCSIM_CHARACTER_ALIASES as any)[match.groups.char];
+        const char = resolveAlias(
+            "character",
+            match.groups?.char,
+            GCSIM_CHARACTER_ALIASES,
+            sourceId,
+        );
         if (!(char in characters)) {
             characters[char] = {
-                character: gcsimCharacterToCharacter(char),
+                character: gcsimCharacterToCharacter(char, sourceId),
                 level: 0,
                 maxLevel: 0,
                 constellation: 0,
@@ -301,9 +321,21 @@ const parseCharacters = (script: string, parsedScript: GCSimScript) => {
                 })
             }
         } else if (match.groups.ws === "weapon") {
-            characters[char].weaponInfo = parseWeaponInfo((GCSIM_WEAPON_ALIASES as any)[match.groups.wsname], match.groups.attrs);
+            const weapon = resolveAlias(
+                "weapon",
+                match.groups.wsname,
+                GCSIM_WEAPON_ALIASES,
+                sourceId,
+            );
+            characters[char].weaponInfo = parseWeaponInfo(weapon, match.groups.attrs, sourceId);
         } else if (match.groups.ws === "set") {
-            characters[char].setInfos.push(parseSetInfo((GCSIM_SET_ALIASES as any)[match.groups.wsname], match.groups.attrs));
+            const set = resolveAlias(
+                "artifact set",
+                match.groups.wsname,
+                GCSIM_SET_ALIASES,
+                sourceId,
+            );
+            characters[char].setInfos.push(parseSetInfo(set, match.groups.attrs, sourceId));
         } else {
             console.log(`Unknown character type: ${match.groups.type}`);
         }
@@ -463,7 +495,7 @@ const parseHurt = (script: string, parsedScript: GCSimScript) => {
 }
 
 
-const parseScript = (script: string): GCSimScript => {
+const parseScript = (script: string, sourceId = "<inline>"): GCSimScript => {
     const parsedScript: GCSimScript = {
         options: undefined,
         characterInfos: [],
@@ -476,7 +508,7 @@ const parseScript = (script: string): GCSimScript => {
     script = script.replace(/\s*#.*$/gm, "");
     script = script.replace(/\/\/.*$/gm, "");
     script = parseOptions(script, parsedScript);
-    script = parseCharacters(script, parsedScript);
+    script = parseCharacters(script, parsedScript, sourceId);
     script = parseEnergy(script, parsedScript);
     script = parseTarget(script, parsedScript);
     script = parseHurt(script, parsedScript);
@@ -485,18 +517,32 @@ const parseScript = (script: string): GCSimScript => {
     return parsedScript;
 }
 
+const listScriptFiles = async (directory: string): Promise<string[]> => {
+    const entries = await fs.promises.readdir(directory, { withFileTypes: true });
+    for (const entry of entries) {
+        if (!entry.isFile()) {
+            throw new Error(`unexpected entry in GCSIM script snapshot: "${entry.name}"`);
+        }
+        if (entry.name.endsWith(".txt") || entry.name.endsWith(".gen")) {
+            throw new Error(`legacy GCSIM script file "${entry.name}"`);
+        }
+    }
+    return entries.map(entry => entry.name).sort();
+};
+
 const parseScripts = async (): Promise<GCSim> => {
     const scripts: Array<GCSimScript> = [];
-    const files = await fs.promises.readdir(path.join(__dirname, "../public/gcsim/scripts"))
+    const directory = path.join(__dirname, "../public/gcsim/scripts");
+    const files = await listScriptFiles(directory);
     for (const file of files) {
-        const script = await fs.promises.readFile(path.join(__dirname, "../public/gcsim/scripts", file), "utf-8");
-        scripts.push(parseScript(script));
+        const script = await fs.promises.readFile(path.join(directory, file), "utf-8");
+        scripts.push(parseScript(script, file));
     }
     return { scripts };
 }
 
 // Export parseScript for testing
-export { parseScript };
+export { gcsimCharacterToCharacter, listScriptFiles, parseScript };
 
 // Only run if this is the main module
 if (import.meta.url === `file://${process.argv[1]}`) {
