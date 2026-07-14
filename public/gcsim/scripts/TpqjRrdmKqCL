@@ -28,28 +28,27 @@ let t = 0;
 #--------------------------------------------
 
 active zhongli;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	let t = f();
-	zhongli skill[hold=1], jump;
-	xingqiu burst, attack, skill, dash, attack:2;
-	kazuha skill, high_plunge, attack, burst, attack;
-	hutao skill;
-	for let x=1; x<=8; x=x+1 {
-		hutao attack:2, charge;
-		if x != 8 {
-		  hutao jump;
-		} else if .hutao.burst.ready {
-		  hutao burst;
-		} else {
-		  hutao jump;
-		}
-	}
-	kazuha skill, high_plunge, attack:3;
-	while f() - t < 21*60 {
-		zhongli attack;
-	}
+  let t = f();
+  zhongli skill[hold=1], jump;
+  xingqiu burst, attack, skill, dash, attack:2;
+  kazuha skill, high_plunge, attack, burst, attack;
+  hutao skill;
+  for let x=1; x<=8; x=x+1 {
+    hutao attack:2, charge;
+    if x != 8 {
+      hutao jump;
+    } else if .hutao.burst.ready {
+      hutao burst;
+    } else {
+      hutao jump;
+    }
+  }
+  kazuha skill, high_plunge, attack:3;
+  while f() - t < 21*60 {
+    zhongli attack;
+  }
 }
-

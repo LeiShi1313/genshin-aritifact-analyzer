@@ -17,8 +17,8 @@ xingqiu add weapon="wolffang" refine=1 lvl=90/90;
 xingqiu add set="eosf" count=4;
 xingqiu add stats hp=4780 atk=311 er=0.518 cr=0.311 hydro%=0.466; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.2204 em=39.64 cr=0.1655 cd=0.7944;
-                                
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
@@ -47,4 +47,3 @@ for let i=0; i<4; i=i+1 {
        attack:5, dash,
        attack:5;
 }
-

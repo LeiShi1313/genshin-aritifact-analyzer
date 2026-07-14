@@ -32,11 +32,11 @@ active yae;
 # ----  Actions List
 
 for let i = 1; i <= 4; i = i + 1 {
-	if i == 1 {
-		yae attack, skill:3;
-	} else {
-		yae skill, attack, skill, attack, skill, attack:2;
-	}
+  if i == 1 {
+    yae attack, skill:3;
+  } else {
+    yae skill, attack, skill, attack, skill, attack:2;
+  }
     kazuha skill, high_plunge;
     fischl attack:2, burst;
     nahida attack, skill, burst, attack;
@@ -47,4 +47,3 @@ for let i = 1; i <= 4; i = i + 1 {
     kazuha skill, high_plunge, burst;
     yae attack, charge, dash, attack, charge, dash, attack:2;
 }
-

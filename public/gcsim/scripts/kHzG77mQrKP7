@@ -23,12 +23,12 @@ alhaitham add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0
 options swap_delay=12 iteration=1000;
 
 active zhongli;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-  zhongli skill[hold=1], burst; 
+  zhongli skill[hold=1], burst;
   fischl attack;
   if .fischl.skill.ready {
     fischl skill;
@@ -40,5 +40,5 @@ for let i=0; i<4; i=i+1 {
   alhaitham attack:3, dash, attack:3, charge, attack:3, dash, attack:3, skill[hold=1], low_plunge, attack:3, dash, attack:2;
   beidou skill[counter=1];
 
-  
+
 }

@@ -40,7 +40,7 @@ for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
   bennett burst, skill;
   faruzan skill, burst, aim;
-  if .kazuha.burst.ready { 
+  if .kazuha.burst.ready {
     kazuha burst;
   }
   kazuha skill, high_plunge;

@@ -22,7 +22,7 @@ options swap_delay=8 #Haitham Q swap Kuki N1Q doesn't work if not.
 iteration=1000;
 active fischl;
 
-target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999;
 energy every interval=480,720 amount=1;
 for let i=0; i<3; i=i+1 {
   fischl attack,skill;
@@ -30,15 +30,15 @@ for let i=0; i<3; i=i+1 {
   kuki skill,attack;
   alhaitham skill[hold=1], low_plunge[short=1],
             attack:3, dash,
-            attack:3, charge, 
+            attack:3, charge,
             attack:4;
   fischl attack,burst;
-  yelan skill,attack;   
+  yelan skill,attack;
   alhaitham burst;
   kuki attack,burst;
   alhaitham attack:3, dash,
-            attack:3, charge, dash, 
+            attack:3, charge, dash,
             attack:2, dash,
             attack:2, charge,dash,
-            attack:3;  
+            attack:3;
 }

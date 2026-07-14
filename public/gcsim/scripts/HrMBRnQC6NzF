@@ -33,7 +33,7 @@ for let i=0; i<2; i=i+1 {
   escoffier skill, attack;
   chevreuse skill[hold=1], burst;
   chasca skill, aim:4, aim[bullets=4], burst;
-  
+
   escoffier attack, skill, attack;
   chevreuse attack, skill[hold=1], attack;
   chasca attack, skill, aim:4, aim[bullets=4];

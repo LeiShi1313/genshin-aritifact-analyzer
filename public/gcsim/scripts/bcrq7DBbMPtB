@@ -1,7 +1,7 @@
 options iteration=1000 swap_delay=12;
 
 # Build assumptions
-dehya char lvl=90/90 cons=6 talent=10,10,10; 
+dehya char lvl=90/90 cons=6 talent=10,10,10;
 dehya add weapon="beaconofthereedsea" refine=5 lvl=90/90;
 dehya add set="vg" count=4;
 dehya add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; # Main stats: ER% Pyro% CD
@@ -19,7 +19,7 @@ citlali add set="scroll" count=5;
 citlali add stats hp=4780 atk=311 em=187 em=187 cr=0.311; # Main stats: EM EM CR
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="ap" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; # Main stats: DEF DEF CR
@@ -36,22 +36,21 @@ active dehya;
 
 for let i=0; i<5; i=i+1 {
   dehya skill;
-  
+
   xilonen skill, attack:2, dash;
   pick_up_crystallize("pyro");
   bennett skill, burst;
-	citlali skill, burst, attack;
+  citlali skill, burst, attack;
   dehya burst, attack:7;
-  if !i {  
+  if !i {
     wait(17);
   } else {
     dehya attack;
   }
   dehya attack:7;
-	bennett skill, dash;
+  bennett skill, dash;
   dehya skill;
 }
 
 # ~20s rotation
 # Dehya E > Xilonen E N2 D > Bennett EQ > Citlali E Q N1 > Dehya Q N15 > Bennett E D > Dehya E
-

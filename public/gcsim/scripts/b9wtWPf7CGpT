@@ -29,18 +29,18 @@ for let i=0; i<4; i=i+1 {
 
   furina skill, dash, burst;
   mika skill, burst;
-   if .amy.skill.ready { 
-    amy skill, attack; 
-  } else { 
-    amy attack:2, burst; 
+   if .amy.skill.ready {
+    amy skill, attack;
+  } else {
+    amy attack:2, burst;
   }
   freminet skill, burst,
            attack:2, skill, skill,
            attack:2, skill, attack:2, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time
            attack:2, skill, attack:2, skill,
            attack:3, skill;
-           
-  
+
+
 }
 
 # Furina EdQ > Mika EQ > Fischl E N1 / N2 Q > Frem EQ N2 EE 4N2E N3 E

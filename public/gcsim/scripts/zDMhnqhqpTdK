@@ -29,7 +29,7 @@ active keqing;
 
 fn zhongli_sequence() {
   zhongli skill[hold=1];
-  
+
   while !pick_up_crystallize("electro") {
     wait(1);
   }
@@ -39,9 +39,9 @@ fn nahida_sequence() {
   if .nahida.burst.ready {
     nahida burst;
   }
-  
+
   nahida skill;
-  
+
   if !.zhongli.swap.ready {
     nahida attack;
   }
@@ -52,18 +52,18 @@ for let r = 0; r < 4; r = r + 1 { # 4 rotations
   if .keqing.skill.ready {
     keqing skill, skill;
   }
-  
+
 
     zhongli_sequence(); # First rotation use Zhongli before Nahida
     nahida_sequence();
 
-  
+
   if .fischl.burst.ready {
     fischl attack:2, burst;
   } else {
     fischl skill, attack;
   }
-  
+
   while .fischl.oz {
     if .keqing.skill.ready {
       keqing skill, skill;

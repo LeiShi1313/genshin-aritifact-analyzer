@@ -38,18 +38,18 @@ fn clorinde_combo() {
   }
 }
 
-active fischl; 
+active fischl;
 
 # opening rotation skips clorinde burst
 fischl burst;
 kirara skill, attack;
 sucrose skill, dash, burst, attack;
 clorinde_combo();
-  
+
 for let r=0; r<4; r=r+1 { # 4 rotations (in addition to modified opening rotation)
 
   sucrose attack, charge; # swap in sucrose to refresh VV and hakushin ring buff
-  clorinde burst; 
+  clorinde burst;
   if .kirara.burst.ready { # kirara burst every other rotation
     kirara skill, burst;
   } else {
@@ -66,6 +66,5 @@ for let r=0; r<4; r=r+1 { # 4 rotations (in addition to modified opening rotatio
     sucrose skill, dash, attack;
   }
   clorinde_combo();
-  
+
 }
-  

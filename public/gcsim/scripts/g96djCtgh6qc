@@ -3,7 +3,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
     pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -41,8 +41,8 @@ for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
   yelan burst, attack, skill, attack;
   gorou burst, attack, skill, attack;
-  if !i { 
-    navia skill, attack; 
+  if !i {
+    navia skill, attack;
   }
   navia burst, skill, attack:3, dash, attack:2;
   yelan attack, skill, attack;

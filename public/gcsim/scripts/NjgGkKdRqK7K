@@ -14,11 +14,11 @@ yaemiko add set="gildeddreams" count=4;
 yaemiko add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.5652 er=0.22039999999999998 em=39.64 cr=0.642 cd=0.7944 electro%=0.466;
 
 kirara char lvl=90/90 cons=6 talent=9,9,9;
-kirara add weapon="sapwoodblade" refine=5 lvl=90/90+params=[pickup_delay=310]; 
+kirara add weapon="sapwoodblade" refine=5 lvl=90/90+params=[pickup_delay=310];
 kirara add set="instructor" count=4;
 kirara add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.0992 er=0.49520000000000003 em=39.64 cr=0.49805 cd=0.5296 dendro%=0.466;
 
-																						
+
 # ----  Default Enemy
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
@@ -38,4 +38,3 @@ sara  attack:2,skill, aim;
 yae attack,charge,dash,attack:2,charge,dash;
 yae skill,skill,attack,skill;
 }
-

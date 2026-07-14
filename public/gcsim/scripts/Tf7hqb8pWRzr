@@ -28,39 +28,39 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=9999999;
 
 active fischl;
 for {
-	switch {
-		case .fischl.skill.ready && .fischl.swap.ready && !.fischl.oz:
-			fischl skill, attack;
-		case .fischl.burst.ready && .fischl.swap.ready && !.fischl.oz:
-			fischl attack:2, burst;
-		case .furina.burst.ready && .furina.swap.ready:
-			if .furina.skill.ready { furina skill; }
-			furina burst;
-		case .furina.skill.ready && .furina.swap.ready && !.furina.status.furina-skill:
-			furina skill;
+  switch {
+    case .fischl.skill.ready && .fischl.swap.ready && !.fischl.oz:
+      fischl skill, attack;
+    case .fischl.burst.ready && .fischl.swap.ready && !.fischl.oz:
+      fischl attack:2, burst;
+    case .furina.burst.ready && .furina.swap.ready:
+      if .furina.skill.ready { furina skill; }
+      furina burst;
+    case .furina.skill.ready && .furina.swap.ready && !.furina.status.furina-skill:
+      furina skill;
 
-		case .faruzan.skill.ready && .faruzan.swap.ready:
-			faruzan skill;
-		case .faruzan.burst.ready && .faruzan.swap.ready:
-			faruzan burst;
+    case .faruzan.skill.ready && .faruzan.swap.ready:
+      faruzan skill;
+    case .faruzan.burst.ready && .faruzan.swap.ready:
+      faruzan burst;
 
-		case .xianyun.burst.ready && .xianyun.swap.ready:
-			xianyun burst;
-		case .xianyun.skill.ready && .xianyun.swap.ready:
-			xianyun skill:3, high_plunge;
+    case .xianyun.burst.ready && .xianyun.swap.ready:
+      xianyun burst;
+    case .xianyun.skill.ready && .xianyun.swap.ready:
+      xianyun skill:3, high_plunge;
 
-		case .xianyun.swap.ready && .xianyun.mods.xianyun-airborne-buff > 120:
-			xianyun dash, jump;
-			if .airborne { xianyun high_plunge; }
+    case .xianyun.swap.ready && .xianyun.mods.xianyun-airborne-buff > 120:
+      xianyun dash, jump;
+      if .airborne { xianyun high_plunge; }
 
-		// defaults
-		case .faruzan.onfield:
-			faruzan attack;
-		case .xianyun.onfield:
-			xianyun attack;
-		case .fischl.onfield:
-			fischl attack;
-		case .furina.onfield:
-			furina attack;
-	}
+    // defaults
+    case .faruzan.onfield:
+      faruzan attack;
+    case .xianyun.onfield:
+      xianyun attack;
+    case .fischl.onfield:
+      fischl attack;
+    case .furina.onfield:
+      furina attack;
+  }
 }

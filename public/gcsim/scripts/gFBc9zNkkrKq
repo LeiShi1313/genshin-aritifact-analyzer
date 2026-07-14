@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -60,13 +60,13 @@ neuvillette add set="mh" count=5;
 neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
 neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
 
-zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
 zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
 zhongli add set="deepwood" count=4;
 zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311 ; #main
 zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=5;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
@@ -82,18 +82,18 @@ options iteration=100;
 
 active neuvillette;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   neuv skill;
   if i > 0 {
     neuv attack:2, dash, attack:2;
   }
-  zl skill[hold=1], dash, attack:2; 
+  zl skill[hold=1], dash, attack:2;
   emilie skill;
-  xiangling burst, skill, dash; 
+  xiangling burst, skill, dash;
   pick_up_crystallize("hydro");
   neuv charge, burst, skill, charge;
   zhongli skill, attack;
@@ -102,4 +102,3 @@ for let i=0; i<4; i=i+1 {
 }
 
 wait(173);
-

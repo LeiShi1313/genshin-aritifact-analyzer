@@ -3,7 +3,7 @@ arlecchino add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
 arlecchino add set="fragmentofharmonicwhimsy" count=4;
 arlecchino add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
 arlecchino add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
-      
+
 citlali char lvl=90/90 cons=0 talent=9,9,9;
 citlali add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
 citlali add set="scrolloftheheroofcindercity" count=4;
@@ -45,4 +45,3 @@ for let i=0; i<4; i=i+1 {
 
 
 # 1333 133
-

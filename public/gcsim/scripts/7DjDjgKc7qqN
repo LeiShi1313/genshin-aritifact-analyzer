@@ -18,7 +18,7 @@ fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
 fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 #fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2648 cd=0.662;
 
-kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
 #kokomi add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
 kokomi add weapon="prototypeamber" refine=5 lvl=90/90;
 kokomi add set="oceanhuedclam" count=5;
@@ -54,10 +54,10 @@ for let x = 10; x; x = x - 1 {
   #else { collei attack; }
   collei skill;
   if .collei.burst.ready { collei burst; }
-  
+
   while .fischl.oz {
     if .status.kokomiskill >= 120 && .kokomi.burst.ready { kokomi burst; }
-  
+
     if .kokomi.normal == 3 { kokomi walk; }
     kokomi attack;
   }

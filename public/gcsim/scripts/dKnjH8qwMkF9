@@ -5,7 +5,7 @@ let prev_action_id = -1;
 let _execute_action = execute_action;
 
 fn execute_action(char_id number, action_id number, p map) {
-  if action_id == .action.dash || ( prev_char_id == .keys.char.rosaria && prev_action_id == .action.skill ) { 
+  if action_id == .action.dash || ( prev_char_id == .keys.char.rosaria && prev_action_id == .action.skill ) {
 
     let rngVal = rand();      # 60/30/10 odds of picking up 1/2/3 shards laying on ground
     let shards = 0;
@@ -19,21 +19,21 @@ fn execute_action(char_id number, action_id number, p map) {
     for let i = 0; i < shards; i = i+1 {
       pick_up_crystallize("any"); # Pick up crystallize before every dash and rosaria E
     }
-  }   
+  }
   # this here tracks the previous character id so that it can be used above
   prev_char_id = char_id;
   prev_action_id = action_id;
   return _execute_action(char_id, action_id, p);
 }
 
-navia char lvl=90/90 cons=0 talent=9,9,9; 
+navia char lvl=90/90 cons=0 talent=9,9,9;
 #navia add weapon="verdict" refine=1 lvl=90/90;
 navia add weapon= "serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 navia add set="nighttime" count=5;
 navia add stats hp=4780 atk=311 er=0.518 geo%=0.466 cd=0.622 ; #main
 navia add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="no" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
@@ -52,18 +52,18 @@ layla add stats hp=4780 atk=311 hp%=0.466 cryo%=0.466 cr=0.311;
 layla add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 options swap_delay=12 iteration=100 hitlag=true;
-target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active rosaria;
 
 for let i=0; i<4; i=i+1 {
-	rosaria skill;
-	navia burst;
-	layla burst, skill;
-	yunjin skill, burst;
-	rosaria skill, burst;
-	navia skill, attack:3, dash, attack:3;
-	navia skill[hold=1], attack:3;
+  rosaria skill;
+  navia burst;
+  layla burst, skill;
+  yunjin skill, burst;
+  rosaria skill, burst;
+  navia skill, attack:3, dash, attack:3;
+  navia skill[hold=1], attack:3;
 }
 wait(20); #waiting for N3 to finish the chamber :3

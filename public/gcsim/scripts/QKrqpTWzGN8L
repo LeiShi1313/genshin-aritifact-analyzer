@@ -39,7 +39,7 @@ ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; # main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -52,21 +52,21 @@ active ororon;
 
 for let i=0; i<4; i=i+1 {
   ororon skill, burst;
-  
+
   # Every other Rotation, Every rotation with NO
   if .chev.burst.ready || .chev.sets.no >= 4 {
     chev burst, skill[hold=1]:2;
   } else {
     chev skill[hold=1], attack;
   }
-  
+
   if !.amy.skill.ready {
     amy attack:2, burst;
   } else {
     amy attack, skill;
   }
-  
-  while .fischl.oz { 
+
+  while .fischl.oz {
     switch {
       case .aetherpyro.skill.ready:
         aetherpyro skill[hold=1], attack:1;
@@ -80,6 +80,6 @@ for let i=0; i<4; i=i+1 {
         aetherpyro attack;
     }
   }
-  
+
   print("done");
 }

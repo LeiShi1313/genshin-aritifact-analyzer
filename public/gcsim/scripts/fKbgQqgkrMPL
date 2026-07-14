@@ -14,7 +14,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
   }
-  
+
   # --- Edit delays here
   if action_id == .action.swap { # Delay before swap
     rand_delay(12, 3);
@@ -60,12 +60,12 @@ options iteration=1000;
 energy every interval=480,720 amount=1;
 
 # --- Targets
-target lvl=100 resist=0.1 radius=2 pos=0,3 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,3 hp=999999999;
 
 # --- Rotation
 active kuki;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   kuki skill;
   furina skill, burst;
   luminedendro attack, skill, burst, attack;

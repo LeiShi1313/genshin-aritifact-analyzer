@@ -38,17 +38,17 @@ for let x=0; x<5; x=x+1 {
     nahida attack:2, skill;
 
     xingqiu skill, burst;
-    
+
     thoma skill, attack:2;
     wait(2);
     thoma burst;
-    
+
     heizou attack, charge;
     heizou attack:4, skill;
-    
-    heizou attack:4, charge;    
-    heizou attack:4, charge;   
-     
+
+    heizou attack:4, charge;
+    heizou attack:4, charge;
+
     heizou attack, burst;
     heizou attack:4, skill;
 

@@ -2,7 +2,7 @@
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
 fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main										
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
 fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
 kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=5000;
@@ -49,4 +49,3 @@ for let i = 1; i <=5; i = i + 1 {
   kuki attack,charge;
   kuki attack;
 }
-

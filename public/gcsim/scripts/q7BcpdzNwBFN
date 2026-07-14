@@ -35,7 +35,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,17 +48,17 @@ active ororon;
 
 for let i=0; i<4; i=i+1 {
   ororon skill, burst;
-  
+
   bennett skill, burst;
-  
+
   # Every other Rotation
   if .chev.burst.ready {
     chev burst, skill[hold=1]:2;
   } else {
     chev skill[hold=1], attack;
   }
-  
-  while .aetherpyro.mods.bennett-field || .status.bennettburst { 
+
+  while .aetherpyro.mods.bennett-field || .status.bennettburst {
     switch {
       case .aetherpyro.skill.ready:
         aetherpyro skill[hold=0], attack, charge;
@@ -72,7 +72,6 @@ for let i=0; i<4; i=i+1 {
         aetherpyro attack;
     }
   }
-  
+
   print("done");
 }
-

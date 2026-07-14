@@ -7,7 +7,7 @@ wrio add set="mh" count=4;
 wrio add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
 furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
@@ -19,7 +19,7 @@ xingqiu add set="eosf" count=4;
 xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -35,7 +35,7 @@ for let i=0; i<4; i=i+1 {
   xingqiu burst, skill, attack;
   furina skill, attack, burst;
   escoffier skill, attack, burst, attack;
-  wrio skill, 
+  wrio skill,
        attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,

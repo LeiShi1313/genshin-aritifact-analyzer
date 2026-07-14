@@ -9,6 +9,8 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 
+const compareASCII = (left, right) => (left < right ? -1 : left > right ? 1 : 0);
+
 const pathExists = async (filePath) => {
   try {
     await access(filePath);
@@ -38,6 +40,14 @@ const validateScript = (script) => {
   }
 };
 
+const normalizeConfig = (config) => {
+  const normalized = config
+    .replace(/\r\n?/g, "\n")
+    .replace(/[ \t]+$/gm, "")
+    .replace(/^[ \t]+/gm, (indent) => indent.replace(/\t/g, "  "));
+  return `${normalized.replace(/\n*$/, "")}\n`;
+};
+
 const fetchSnapshot = async (fetchPage, pageSize) => {
   const scripts = new Map();
   let fetched = 0;
@@ -59,7 +69,7 @@ const fetchSnapshot = async (fetchPage, pageSize) => {
       if (scripts.has(script._id)) {
         throw new Error(`duplicate script id "${script._id}"`);
       }
-      scripts.set(script._id, script.config);
+      scripts.set(script._id, normalizeConfig(script.config));
     }
 
     if (page.length < pageSize) {
@@ -112,7 +122,7 @@ export const syncGCSimScripts = async ({
 
   try {
     for (const [id, config] of [...scripts.entries()].sort(([a], [b]) =>
-      a.localeCompare(b)
+      compareASCII(a, b)
     )) {
       await writeFile(path.join(stagingDir, id), config, "utf8");
     }

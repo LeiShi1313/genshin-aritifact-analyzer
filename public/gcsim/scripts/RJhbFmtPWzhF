@@ -4,7 +4,7 @@ arlecchino add set="fohw" count=4;
 arlecchino add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
 arlecchino add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662 ;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festeringdesire" refine=5 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
@@ -33,28 +33,28 @@ let rotations = 4;
 arle skill;
 
 for let r = rotations; r > 0; r = r - 1 {
-  
+
   if .furina.skill.ready { #furina uses skill and burst every other rotation
     furina skill, dash, burst;
   }
 
-  if !.bennett.burst.ready { 
+  if !.bennett.burst.ready {
     arlecchino attack:3;
     bennett attack;
   }
-  
+
   bennett burst, skill;
-  
+
   kazuha skill, high_plunge;
-  
+
   if r < rotations { #not in the first rotation
     arlecchino attack;
   }
-  
-  arle charge, 
+
+  arle charge,
        attack:3, dash,
        attack:3, dash,
-       attack:3, dash, 
+       attack:3, dash,
        attack:3, dash,
        attack:3, dash,
        attack:3, skill;

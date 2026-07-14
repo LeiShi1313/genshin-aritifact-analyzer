@@ -41,7 +41,7 @@ navia burst; pick_up_crystallize("any");
 bennett skill, burst, attack:2; pick_up_crystallize("any");
 zhongli burst, skill, attack:2; pick_up_crystallize("any");
 mona skill, burst, attack:2; pick_up_crystallize("any");
-navia skill, attack:3, dash, attack:2, skill, attack:2; pick_up_crystallize("any"); 
+navia skill, attack:3, dash, attack:2, skill, attack:2; pick_up_crystallize("any");
 }
 
 # ER Requirement unfortunately has to be this high... The exile set and fav weapons as well as Navia's absurd ER all serve a purpose ↓
@@ -50,5 +50,5 @@ navia skill, attack:3, dash, attack:2, skill, attack:2; pick_up_crystallize("any
 # Navia Q -> Bennett EQ 2A -> Zhongli QE 2A-> Mona EQ 2A -> Navia E 3A dash 2A E 2A
 # Zhongli could be C0, change skill to skill[hold = 1]
 # C4 Mona (15% crit rate) is essential since I want Navia to crit her every single E
-# Fav weapon will NOT create particles if the wearer could not deal damage. 
+# Fav weapon will NOT create particles if the wearer could not deal damage.
 # For example, Hydro Tulpa is immune to hydro aka Mona's skill, so fav codex will produce no particles.

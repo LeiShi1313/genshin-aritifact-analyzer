@@ -24,9 +24,9 @@ options swap_delay=12 iteration=1000;
 
 #--------------------------------------------
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
-																
+
 active faruzan;
 
 for let x = 0; x < 5; x = x + 1  {
@@ -41,8 +41,8 @@ for let x = 0; x < 5; x = x + 1  {
     fischl attack:2, burst;
   }
   if .wanderer.burst.ready {
-    wanderer attack, burst;}  
-  wanderer attack, skill, attack, charge;	
+    wanderer attack, burst;}
+  wanderer attack, skill, attack, charge;
   while .wanderer.skydweller-points > 3 {
     if .wanderer.normal < 3 {
       wanderer attack;
@@ -53,7 +53,7 @@ for let x = 0; x < 5; x = x + 1  {
     } else {
       wanderer attack;
     }
- } 
+ }
   wanderer skill;
   bennett skill, attack:2;
 }

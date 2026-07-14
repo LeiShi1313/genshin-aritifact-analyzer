@@ -1,4 +1,4 @@
-# Raiden Emilie Mavuika Bennett. ~17/19s Rot. Raiden Emilie with Mavuika, who prefers Scroll to Deepwood. Bennett refeshes deepwood with skill just before Raiden burst, beating out NO. Emilie only uses burst. 
+# Raiden Emilie Mavuika Bennett. ~17/19s Rot. Raiden Emilie with Mavuika, who prefers Scroll to Deepwood. Bennett refeshes deepwood with skill just before Raiden burst, beating out NO. Emilie only uses burst.
 
 # Team - Options listed by DPS
 raiden char lvl=90/90 cons=0 talent=9,9,9;
@@ -7,7 +7,7 @@ raiden add set="emblem" count=4;
 raiden add stats hp=4780 atk=311 er=0.518 cr=0.311 electro%=0.466; #main
 raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=99.1 cr=0.2648 cd=0.7944;
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
@@ -20,7 +20,7 @@ mavuika add set="scroll" count=4;
 mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="deepwood" count=4;
 #bennett add set="no" count=4;
@@ -28,7 +28,7 @@ bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -42,7 +42,7 @@ raiden skill, attack;
 
 for let i=0; i<4; i=i+1 {
   bennett skill, burst;
-  
+
   if i > 0 && .mav.burst.ready {
     mav burst, charge:2, dash,
                charge:2, dash,
@@ -50,11 +50,11 @@ for let i=0; i<4; i=i+1 {
   } else {
     mav skill, attack;
   }
-  
+
   emilie burst;
-  
+
   bennett skill;
-  
+
   if .raiden.burst.cd {
     emilie attack, skill;
   }
@@ -67,4 +67,3 @@ for let i=0; i<4; i=i+1 {
     raiden attack:2;
   }
 }
-

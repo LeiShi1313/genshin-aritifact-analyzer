@@ -21,7 +21,7 @@ bennett add set="no" count=4;
 bennett add stats def=114 hp=5437 hp%=0.6060000000000001 atk=325 er=1.2890000000000001 cr=0.25999999999999995 cd=0.521 pyro%=0.466;
 
 #Options, target and energy
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
@@ -52,7 +52,7 @@ for let i=0; i<4; i=i+1{
   arle attack:2, walk,
        attack:2, walk,
        attack:4;
-  WaitForCryo(); 
+  WaitForCryo();
   arle attack:1;
   WaitForCryo();
   arle attack:1,
@@ -62,5 +62,3 @@ for let i=0; i<4; i=i+1{
 
 #Arle E Bennett EdQ Coffee EN Citlali EQ Arle CA (wait) N2W N2 (citlali N2) Arle 2[N2W] N6(wait for cryo apply on last two normals) N1
 #If xilonen instead of escoffier, do Citlali ENQ
-
-

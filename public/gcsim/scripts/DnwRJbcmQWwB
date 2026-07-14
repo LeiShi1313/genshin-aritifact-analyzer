@@ -38,9 +38,9 @@ for let r = 4; r > 0; r = r - 1 {
   bennett burst, skill;
   xiangling burst, skill, dash;
   lyney aim, aim[weakspot=1], aim, burst;
-  
+
   delay(11); # So Lyney doesn't cancel his burst before it deals damage
-  
+
   lyney skill, aim, skill, aim;
   bennett skill;
 }

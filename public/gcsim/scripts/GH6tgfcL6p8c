@@ -31,39 +31,39 @@ energy every interval=480,720 amount=1;
 active yae;
 
 while true {
-  
+
   if .yae.tags.totems == 0 { # Create 3 totems if there are none
     yae skill, skill, skill;
-    
+
   } else if !.fischl.oz && .fischl.skill.ready { # Create Oz with either skill or burst if he is absent
     fischl skill, attack;
-    
+
   } else if !.fischl.oz && .fischl.burst.ready {
     fischl attack:2, burst;
-    
+
   } else if .sucrose.skill.ready && !.yae.status.sucrose-a4 && .element.t0.electro { # Sucrose skill if it is ready, her A4 isn't active, and target has electro aura
     sucrose attack, skill, dash;
-    
+
   } else if .sucrose.burst.ready { # Sucrose burst if ready
     sucrose burst;
-    
+
   } else if !.element.t0.quicken { # Nahida hold skill to initiate quicken
     nahida skill[hold=1];
-    
+
   } else if .nahida.burst.ready { # Nahida burst if ready
     nahida burst;
-    
+
   } else if .status.yae_oldest_totem_expiry < 4 * 60 && .yae.burst.ready && .yae.tags.totems == 3 { # If Yae's oldest totem will expire within 4 seconds and her burst is ready, then burst
     yae burst;
-      
+
   } else if !.nahida.mods.instructor-4pc && .nahida.skill.ready { # If Nahida's instructors has expired, bring her in to refresh it
     nahida skill, attack;
-      
+
   } else if .yae.tags.totems < 3 && .yae.skill.ready { # If a totem expires, refresh it
     yae skill, attack;
-      
+
   } else { # If none of the above, then Yae NA spam like a chad
     yae attack;
   }
-  
+
 }

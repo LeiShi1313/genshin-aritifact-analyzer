@@ -39,5 +39,3 @@ for let i = 0; i < 4; i = i + 1 {
   yelan attack, skill, attack;
   baizhu attack:3, dash, attack:2, skill, attack;
 }
-
-

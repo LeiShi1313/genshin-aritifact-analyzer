@@ -43,5 +43,3 @@ for let i = 0; i < 6; i = i + 1 {
   ayaka dash, attack, skill, attack:3, charge;
   print("end");
 }
-
-

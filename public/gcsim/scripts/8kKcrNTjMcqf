@@ -26,22 +26,21 @@ energy every interval=480,720 amount=1;
 
 active yelan;
 for let x=0; x<4; x=x+1 {
-	yelan burst,attack;
-	dehya attack,skill;
-	kazuha burst,skill,high_plunge;
-	yelan skill,attack;
-	hutao skill,
-	attack:1,charge,dash,
-	attack:1,charge,jump,
-	attack:1,charge,jump,
-	attack:1,charge,jump,
-	attack:1,charge,jump,
-	attack:1,charge,jump,
-	attack:1,charge,jump,
-	attack:1,charge,jump,
-	attack:1,charge,jump;
-	yelan skill,attack:4;
-	kazuha skill,high_plunge,attack;
-	wait (13); #(catch his own particles)
+  yelan burst,attack;
+  dehya attack,skill;
+  kazuha burst,skill,high_plunge;
+  yelan skill,attack;
+  hutao skill,
+  attack:1,charge,dash,
+  attack:1,charge,jump,
+  attack:1,charge,jump,
+  attack:1,charge,jump,
+  attack:1,charge,jump,
+  attack:1,charge,jump,
+  attack:1,charge,jump,
+  attack:1,charge,jump,
+  attack:1,charge,jump;
+  yelan skill,attack:4;
+  kazuha skill,high_plunge,attack;
+  wait (13); #(catch his own particles)
 }
-

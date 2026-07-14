@@ -29,7 +29,7 @@ nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=79.28 cr=0.3641 cd=0.5958;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,7 +47,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida skill, attack, burst;
   }
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -55,8 +55,8 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
-  sethos attack, skill, attack:2; #aim[hold=2]; # High ping only 
+
+  sethos attack, skill, attack:2; #aim[hold=2]; # High ping only
   sethos burst;
   sethos attack:2, dash,
          attack:2, dash,
@@ -68,7 +68,6 @@ for let i=0; i<4; i=i+1 {
          attack:2, dash,
          skill;
   sethos attack, aim[hold=2]:2, attack;
-  
+
   raiden skill, attack;
 }
-

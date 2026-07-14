@@ -25,7 +25,7 @@ kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 options swap_delay=12 iteration=1000;
 
 active xingqiu;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<2; i=i+1 {
@@ -36,13 +36,13 @@ for let i=0; i<2; i=i+1 {
   kazuha attack, burst;
   bennett attack, skill, burst, attack;
   kazuha attack, skill, high_plunge, attack;
-  yanfei skill, attack, burst, attack, charge, 
+  yanfei skill, attack, burst, attack, charge,
                                attack:2, charge,
                                attack:2, charge,
                                attack:3, charge,
                                attack:2, skill;
   kazuha skill, high_plunge;
-  
+
   # Rotation B w/o burst
   # xingqiu Q N1 ED N2 > kazuha N1 Q > bennett N1 EQ N1 > kazuha N1 tEP N1 > yanfei E N1C 2[N2C] N3C N2C E > kazuha tEP
   xingqiu burst, attack, skill, dash, attack:2;

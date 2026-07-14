@@ -30,12 +30,12 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 active zhongli;
 for let r = 0; r < 4; r = r + 1 {
   zhongli skill[hold=1];
-  
+
   yelan skill;
   if .yelan.burst.ready {
     yelan burst, attack;
   }
-  
+
   if .xingqiu.burst.ready {
     xingqiu burst;
   }
@@ -49,11 +49,11 @@ for let r = 0; r < 4; r = r + 1 {
   if .xingqiu.burst.ready {
     xingqiu burst;
   }
-  
+
   if .yelan.burst.ready {
     yelan burst, attack;
   }
-  
+
   # wait(2);
   hutao skill,
     attack, charge, dash,
@@ -66,7 +66,7 @@ for let r = 0; r < 4; r = r + 1 {
     attack:2, charge, dash,
     attack:2, charge, dash,
     attack:2, charge, dash;
-  
+
   if .hutao.burst.ready {
     hutao burst;
   }

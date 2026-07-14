@@ -1,12 +1,12 @@
-options swap_delay=12 iteration=100; 
+options swap_delay=12 iteration=100;
 
-layla char lvl=90/90 cons=6 talent=9,9,9; 
+layla char lvl=90/90 cons=6 talent=9,9,9;
 layla add weapon="harbingerofdawn" refine=5 lvl=90/90;
 layla add set="totm" count=5;
 layla add stats hp=4780 atk=311 hp%=0.466 cryo%=0.466 cd=0.622 ; #main
 layla add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-mona char lvl=90/90 cons=0 talent=9,9,9; 
+mona char lvl=90/90 cons=0 talent=9,9,9;
 mona add weapon="favcodex" refine=3 lvl=90/90;
 mona add set="noblesseoblige" count=5;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311 ; #main
@@ -18,7 +18,7 @@ venti add set="viridescentvenerer" count=4;
 venti add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 venti add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
 
-ganyu char lvl=90/90 cons=0 talent=9,9,9; 
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
 ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
 ganyu add set="blizzardstrayer" count=5;
 ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
@@ -31,12 +31,12 @@ active ganyu;
 #-------------------------------------------
 
 for let x=0; x<6;x=x+1 {
-	ganyu skill, burst;
-	venti skill, burst;
-	layla burst, skill;
-	mona attack, skill, burst;
-	ganyu aim[weakspot=1];
-	venti skill,  attack;
-	ganyu aim[weakspot=1, travel=0]:2;
+  ganyu skill, burst;
+  venti skill, burst;
+  layla burst, skill;
+  mona attack, skill, burst;
+  ganyu aim[weakspot=1];
+  venti skill,  attack;
+  ganyu aim[weakspot=1, travel=0]:2;
 }
 wait(33);

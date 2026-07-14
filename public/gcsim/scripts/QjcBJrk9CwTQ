@@ -41,7 +41,7 @@ raiden skill;
 for let i=0; i<4; i=i+1 {
   kirara skill[short_hold=1], attack;
   fischl attack, skill;
-  alhaitham skill[hold=1], low_plunge, 
+  alhaitham skill[hold=1], low_plunge,
             attack:1, charge, dash,
             attack:3, charge, dash,
             attack:3, charge, burst;

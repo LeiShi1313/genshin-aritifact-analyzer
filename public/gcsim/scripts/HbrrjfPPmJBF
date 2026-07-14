@@ -21,7 +21,7 @@ xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
 nahida add set="deepwood" count=5;
-nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 em=187; #mainstats 
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 em=187; #mainstats
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=158.56 cr=0.1986 cd=0.3972;
 #substats
 
@@ -33,7 +33,7 @@ energy every interval=480,720 amount=1;
 options swap_delay=12 debug=true iteration=1000 workers=30 mode=sl;
 active nahida;
 
-#action list 
+#action list
 
 for let r = 0; r < 5; r = r + 1 {
 
@@ -45,13 +45,12 @@ for let r = 0; r < 5; r = r + 1 {
             attack:3, dash,
             attack:3, dash,
             attack:3;
-            
+
   xingqiu attack, skill, dash, attack;
-  
-  alhaitham skill[hold=1], low_plunge[short=1], 
+
+  alhaitham skill[hold=1], low_plunge[short=1],
             attack:3,dash,
             attack:3,dash,
             attack:3,dash;
-    
-}
 
+}

@@ -19,7 +19,7 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992
 aloy char lvl=90/90 cons=0 talent=9,9,9;
 aloy add weapon="favwarbow" refine=4 lvl=90/90;
 aloy add set="noblesseoblige" count=4;
-aloy add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main										
+aloy add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
 aloy add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
 
 escoffier char lvl=90/90 cons=0 talent=9,9,9;
@@ -38,7 +38,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
   escoffier skill, burst;
   aloy skill, burst;
@@ -46,26 +46,26 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
@@ -74,4 +74,3 @@ for let i=0; i<4; i=i+1 {
 # First rot only
 # Furina ED Q > Escoffier EQ > Aloy EQ > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Furina ED Q > Escoffier EQ > Aloy EQ > Skirk   tE N2Q      3[N5D] N2CD N5D N2
-

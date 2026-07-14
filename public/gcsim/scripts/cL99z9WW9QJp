@@ -20,14 +20,14 @@ yelan add set="emblem" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -40,18 +40,18 @@ active furina;
 
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
-  
+
   escoffier skill, burst;
-  
+
   yelan burst, attack;
   if !.yelan.skill.ready && .yelan.breakthrough {
     yelan aim;
   }
   yelan skill;
-  
+
   eula skill, attack, burst, walk, attack:4, skill[hold=1], walk[f=11], attack:4, dash, attack;
-  
+
   yelan skill, attack:2;
-  
+
   eula attack:2;
 }

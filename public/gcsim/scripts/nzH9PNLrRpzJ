@@ -1,14 +1,14 @@
-# Raiden Furina Sara Xilonen. ~20s Rot. Whale Raiden hypercarry but modernized; Raiden Q 5N1CD N3E N1. Raiden skill into Furina business, but at c6 does a N1 to start fanfare early. Xilonen bursts skill-state for better double scrolling. Sara aims her skill and burst to better proc Elegy here. Personal stats & talents. 
+# Raiden Furina Sara Xilonen. ~20s Rot. Whale Raiden hypercarry but modernized; Raiden Q 5N1CD N3E N1. Raiden skill into Furina business, but at c6 does a N1 to start fanfare early. Xilonen bursts skill-state for better double scrolling. Sara aims her skill and burst to better proc Elegy here. Personal stats & talents.
 
-# builds: raiden furina tasercarry 
+# builds: raiden furina tasercarry
 
 #raiden
-raiden char lvl=90/90 cons=3 talent=9,10,10; 
+raiden char lvl=90/90 cons=3 talent=9,10,10;
 raiden add weapon="engulfinglightning" refine=5 lvl=90/90;
 raiden add set="eosf" count=5;
 
 #raiden main stats
-raiden add stats hp=4780 atk=311 atk%=0.932 cr=0.311; 
+raiden add stats hp=4780 atk=311 atk%=0.932 cr=0.311;
 
 #raiden flower
 raiden add stats cr=0.07 er=0.052 atk%=0.082 cd=0.28;
@@ -31,15 +31,15 @@ furina add weapon="splendor" refine=1 lvl=90/90;
 furina add stats hp=4780 atk=311 hp%=0.932 cd=0.622;
 
 #furina flower
-furina add stats def%=0.073 em=23 cr=0.132 cd=0.140; 
+furina add stats def%=0.073 em=23 cr=0.132 cd=0.140;
 #furina feather
-furina add stats cd=0.218 hp=209 cr=0.070 er=0.175; 
+furina add stats cd=0.218 hp=209 cr=0.070 er=0.175;
 #furina sands
-furina add stats er=0.045 atk=18 cr=0.144 cd=0.132; 
+furina add stats er=0.045 atk=18 cr=0.144 cd=0.132;
 #furina goblet
-furina add stats em=44 er=0.175 cr=0.097 atk=18; 
+furina add stats em=44 er=0.175 cr=0.097 atk=18;
 #furina circlet
-furina add stats em=40 def=19 cr=0.105 er=0.104; 
+furina add stats em=40 def=19 cr=0.105 er=0.104;
 
 
 #sara
@@ -51,15 +51,15 @@ sara add weapon="elegy" refine=5 lvl=90/90;
 sara add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
 
 #sara flower
-sara add stats def%=0.124 cr=0.074 cd=0.28 def=16; 
+sara add stats def%=0.124 cr=0.074 cd=0.28 def=16;
 #sara feather
-sara add stats hp=269 cd=0.179 er=0.045 cr=0.105; 
+sara add stats hp=269 cd=0.179 er=0.045 cr=0.105;
 #sara sands
-sara add stats cr=0.144 atk%=0.105 cd=0.054 hp=508; 
+sara add stats cr=0.144 atk%=0.105 cd=0.054 hp=508;
 #sara goblet
-sara add stats cd=0.14 def=19 cr=0.093 hp=777; 
+sara add stats cd=0.14 def=19 cr=0.093 hp=777;
 #sara circlet
-sara add stats atk=35 hp=269 er=0.097 cd=0.218; 
+sara add stats atk=35 hp=269 er=0.097 cd=0.218;
 
 
 #xilonen
@@ -71,18 +71,18 @@ xilonen add weapon="pps" refine=5 lvl=90/90;
 xilonen add stats hp=4780 atk=311 er=0.518 def%=0.466 heal=0.359;
 
 #xilonen flower
-xilonen add stats def%=0.204 er=0.065 def=44 cd=0.148; 
+xilonen add stats def%=0.204 er=0.065 def=44 cd=0.148;
 #xilonen feather
-xilonen add stats def=21 er=0.123 def%=0.241 cr=0.039; 
+xilonen add stats def=21 er=0.123 def%=0.241 cr=0.039;
 #xilonen sands
-xilonen add stats def=19 def%=0.146 atk%=0.093 hp=837; 
+xilonen add stats def=19 def%=0.146 atk%=0.093 hp=837;
 #xilonen goblet
-xilonen add stats atk%=0.099 er=0.117 cr=0.101 cd=0.054; 
+xilonen add stats atk%=0.099 er=0.117 cr=0.101 cd=0.054;
 #xilonen circlet
-xilonen add stats cr=0.039 hp%=0.146 er=0.065 def%=0.204; 
+xilonen add stats cr=0.039 hp%=0.146 er=0.065 def%=0.204;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -95,14 +95,14 @@ raiden skill;
 
 for let i=0; i<4; i=i+1 {
  furina skill, dash, attack, burst, attack;
- 
+
  xilonen skill, burst, attack:2;
- 
+
  sara skill, aim, burst;
- 
- raiden burst, attack, charge, dash, 
-    attack, charge, dash, 
-    attack, charge, dash, 
+
+ raiden burst, attack, charge, dash,
+    attack, charge, dash,
+    attack, charge, dash,
     attack, charge, dash,
     attack, charge, dash,
     attack:3,

@@ -1,6 +1,6 @@
-# Wanderer Layla Bennett Faruzan, 3 rotations only, setups can consistently allow wanderer to infuse both cryo and pyro from his A1 passive. R5 Favs are critical to performance; Another rotation sheds ~2K avg DPS from Bennett ER issues. If you run into ER issues, 1 Bennett E is needed after Wanderer's fieldtime ends. The final rotation omits Faruzan battery actions to display higher DPS. 
+# Wanderer Layla Bennett Faruzan, 3 rotations only, setups can consistently allow wanderer to infuse both cryo and pyro from his A1 passive. R5 Favs are critical to performance; Another rotation sheds ~2K avg DPS from Bennett ER issues. If you run into ER issues, 1 Bennett E is needed after Wanderer's fieldtime ends. The final rotation omits Faruzan battery actions to display higher DPS.
 
-wanderer char lvl=90/90 cons=0 talent=9,9,9; 
+wanderer char lvl=90/90 cons=0 talent=9,9,9;
 wanderer add weapon="thewidsith" refine=3 lvl=90/90;
 wanderer add set="dpc" count=4;
 wanderer add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
@@ -25,7 +25,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2648 cd=0.5296;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active layla;
@@ -34,13 +34,13 @@ for let i = 0; i < 3; i = i + 1 {
   if i {
    faruzan skill, aim, attack;
   }
-  
+
   layla skill, burst;
-  
+
   bennett skill, burst;
 
   faruzan burst;
-  
+
   wanderer attack:2, skill, charge, attack;
   while .wanderer.skydweller-points > 3 {
     if .wanderer.normal < 3 {
@@ -52,7 +52,7 @@ for let i = 0; i < 3; i = i + 1 {
     } else {
       wanderer attack;
     }
-  } 
+  }
   if .wanderer.status.windfavored-state && .wanderer.burst.ready {
     wanderer burst, attack;
   } else {

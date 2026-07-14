@@ -50,7 +50,7 @@ for let i = 0; i < 5; i = i + 1 {
       case c_right:
         ningguang walk;
       default:
-  	    ningguang charge;
+        ningguang charge;
       }
     default:
       ningguang attack;
@@ -60,4 +60,3 @@ for let i = 0; i < 5; i = i + 1 {
   bennett skill, attack:3;
   print("end");
 }
-

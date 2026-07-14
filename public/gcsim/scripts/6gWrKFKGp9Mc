@@ -40,7 +40,7 @@ for let i=0; i<6; i=i+1 {
   } else {
     ineffa burst;
   }
-  
+
   if .furina.skill.ready {
     furina skill, dash, attack;
     furina_e = true;
@@ -51,7 +51,7 @@ for let i=0; i<6; i=i+1 {
       furina attack:2;
     }
   }
-  
+
   sucrose attack;
   if !.furina.skill.ready && furina_e == true {
     sucrose burst;
@@ -77,7 +77,7 @@ for let i=0; i<6; i=i+1 {
     // prevent really shitty RNG
     flins attack:4, dash, attack:4, burst;
   }
-  
+
   sucrose attack;
   if .sucrose.skill.ready {
     sucrose skill, dash, attack;

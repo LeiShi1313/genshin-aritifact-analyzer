@@ -34,7 +34,7 @@ let i=rot;
 for rot > 0; rot = rot - 1 {
   if rot < i {
     while !.kazuha.mods.favonius-cd {
-      kazuha attack; # NAs until fav proc 
+      kazuha attack; # NAs until fav proc
     }
   }
   furina skill, dash, burst; # Furina EdQ
@@ -56,11 +56,11 @@ for rot > 0; rot = rot - 1 {
          attack[travel=6], charge; # Klee N1C. Only first rot.
   }
   for let x = 4; x > 0; x = x - 1 {
-  
+
     klee attack[travel=6], charge; # Klee 4N1C
-  }  
+  }
   klee attack[travel=6]; # Klee N1
-  
+
   kazuha skill, high_plunge; # Kazuha EhP
 }
 

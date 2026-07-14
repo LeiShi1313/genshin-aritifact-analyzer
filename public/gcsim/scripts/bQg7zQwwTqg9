@@ -1,0 +1,46 @@
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add weapon="favsword" refine=5 lvl=90/90 +params=[pickup_delay=180];
+kirara add set="ins" count=4;
+kirara add stats hp=3571 atk=232 hp%=0.348 hp%=0.348 cr=0.311; #main
+kirara add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*2 em=16.6488*2 cr=0.027804*10 cd=0.055608*6;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*10;
+
+mona char lvl=90/90 cons=6 talent=9,9,9;
+mona add weapon="favcodex" refine=5 lvl=90/90;
+mona add set="risingwinds" count=4;
+mona add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*4;
+
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=.1 radius=3 pos=0,3.4 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+active mona;
+
+mona skill;
+
+for let i = 0; i < 4; i = i + 1 {
+
+  nicole skill, burst;
+  durin skill:2, burst;
+  mona burst, attack;
+  kirara skill[short_hold=1];
+  mona charge; delay(22);
+  mona charge; delay(13);
+  mona charge;delay(24);
+  mona charge; delay(1);
+  mona charge, skill;
+
+}

@@ -1,4 +1,4 @@
-# Yae Furina Lisa Xianyun. ~24s Rot. Yae Taser Plunge. Xianyun refeshes VV mid rotation. Yae uses bust every other rotation immediately after all plunges spent. Lisa uses hold skill for Team ER, but could theoretically do no skill with a gargantuan ER investment. 50% Collisons. 
+# Yae Furina Lisa Xianyun. ~24s Rot. Yae Taser Plunge. Xianyun refeshes VV mid rotation. Yae uses bust every other rotation immediately after all plunges spent. Lisa uses hold skill for Team ER, but could theoretically do no skill with a gargantuan ER investment. 50% Collisons.
 
 # Team - Options Listed by DPS
 yae char lvl=90/90 cons=0 talent=9,9,9;
@@ -37,7 +37,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -49,18 +49,18 @@ active yae;
 
 for let x=0; x<4; x=x+1 {
   yae skill:3;
-  
+
   lisa skill[hold=1], burst;
   # This is for furina, Lisa doesn't need to catch this
   if !.lisa.mods.favonius-cd {
     lisa attack;
   }
-  
+
   furina skill, dash, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
-  # 3 High plunges into skill refresh 
+
+  # 3 High plunges into skill refresh
   for let i=0;i<2;i=i+1 {
     if .xianyun.status.xianyun-airborne-buff {
       yae jump;
@@ -74,9 +74,9 @@ for let x=0; x<4; x=x+1 {
     }
   }
   yae skill:3;
-  
+
   xianyun attack:2; sleep(20); # for CD warning
-  
+
   # Spend Remaining High Plunges
   while .status.yae_oldest_totem_expiry > 390 {
     if .xianyun.status.xianyun-airborne-buff {

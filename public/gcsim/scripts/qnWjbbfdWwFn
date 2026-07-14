@@ -35,14 +35,14 @@ fn doActionList() {
     nahida skill[hold=12], burst;
     fischl attack, skill;
     alhaitham skill[hold=1]; alhaithamLowPlunge();
-    alhaitham attack:2, charge, dash, 
+    alhaitham attack:2, charge, dash,
               attack:3, charge;
     yae burst; #very minor dps decrease, definitely worth using as a finisher or in aoe
     yae skill:3;
     fischl attack:2, burst;
     alhaitham burst,
               attack:3, dash,
-              attack:4, charge, dash, 
+              attack:4, charge, dash,
               attack:3, charge, dash,
               attack:3;
   }
@@ -111,10 +111,10 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.swap {
     delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
                                                      #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
-    
+
   } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
     delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
-    
+
   } else if prev_action_id != .action.attack {
     delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
   }

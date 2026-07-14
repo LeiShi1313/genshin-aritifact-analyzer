@@ -27,17 +27,17 @@ active ganyu;
 #-------------------------------------------
 
 while 1 {
-	ganyu skill;
-	if .ganyu.burst.ready {
-		ganyu burst[radius=2];
-	} else {
-		ganyu aim[weakspot=1];
-	}
-	diona burst, skill[hold=1];
-	bennett skill, burst;
-	jean skill, burst, attack;
-	ganyu aim[weakspot=1], skill, aim:2, aim[weakspot=1];
-	diona skill[hold=0];
-	jean skill, attack:2;
-	
+  ganyu skill;
+  if .ganyu.burst.ready {
+    ganyu burst[radius=2];
+  } else {
+    ganyu aim[weakspot=1];
+  }
+  diona burst, skill[hold=1];
+  bennett skill, burst;
+  jean skill, burst, attack;
+  ganyu aim[weakspot=1], skill, aim:2, aim[weakspot=1];
+  diona skill[hold=0];
+  jean skill, attack:2;
+
 }

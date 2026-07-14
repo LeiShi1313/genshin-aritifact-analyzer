@@ -137,14 +137,14 @@ for let r=0; r<4; r=r+1 {
     }
   }
   nahida burst;
-  
+
   fischl swap;
   if .fischl.burst.ready {
     fischl attack:2, burst;
   } else {
     fischl attack, skill;
   }
-  
+
   if (.xianyun.weapon == .keys.weapon.favcodex) {
     xianyun attack;
   }
@@ -156,7 +156,7 @@ for let r=0; r<4; r=r+1 {
   if !.xianyun.mods.favonius-cd && (.xianyun.weapon == .keys.weapon.favcodex) {
     xianyun attack;
   }
-  
+
   alhaitham swap;
   while !.alhaitham.burst.ready {
     alhaitham attack;
@@ -168,7 +168,7 @@ for let r=0; r<4; r=r+1 {
   alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
   alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
   alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
-  alhaitham skill, 
+  alhaitham skill,
             attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
   alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);
   alhaitham attack:2; try_alhaitham_jump_plunge(highPlunge, collisionRate);

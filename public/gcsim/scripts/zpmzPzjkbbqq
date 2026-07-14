@@ -42,4 +42,3 @@ for let x=0; x<4; x=x+1 {
  noelle  attack:3, dash;
  noelle  attack:2;
 }
-

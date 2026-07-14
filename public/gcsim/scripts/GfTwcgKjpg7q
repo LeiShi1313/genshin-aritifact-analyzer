@@ -39,4 +39,3 @@ for let x=0; x<5; x=x+1 {
     xingqiu attack, skill, dash, attack:2;
     yelan attack:4, dash, attack:2;
 }
-

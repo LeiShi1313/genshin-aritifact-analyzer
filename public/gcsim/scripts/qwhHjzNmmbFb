@@ -35,7 +35,7 @@ xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.297
 #xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324; # TTDS
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,14 +51,14 @@ for let i = 0; i < 4; i = i + 1 {
     furina attack;
   }
   furina burst;
-  
+
   faruzan burst, skill;
   if .faruzan.weapon == .keys.weapon.favbow && !.faruzan.mods.favonius-cd {
     furina attack;
   }
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   # Not woth building ER
   if .lanyan.burst.ready {
     lanyan burst;
@@ -85,4 +85,3 @@ for let i = 0; i < 4; i = i + 1 {
     lanyan burst;
   }
 }
-

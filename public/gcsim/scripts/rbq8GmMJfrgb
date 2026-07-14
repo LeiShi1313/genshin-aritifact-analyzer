@@ -14,7 +14,7 @@ fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="vhunt" refine=1 lvl=90/90; #+params=[stacks=10];
 fischl add set="gt" count=5;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; 
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958;
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;

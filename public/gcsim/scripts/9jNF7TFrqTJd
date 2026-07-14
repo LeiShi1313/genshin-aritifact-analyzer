@@ -25,18 +25,18 @@ options swap_delay=12 iteration=1000;
 active zhongli;
 # ----  Actions List
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
   zhongli attack, skill[hold=1], dash, attack;
   nahida skill, burst,attack;
-  xingqiu skill, dash, burst, attack;  
+  xingqiu skill, dash, burst, attack;
   yanfei skill, attack:3, charge,
-    attack:3, charge, 
-    attack:3, charge, 
-    attack:3, charge, 
-    skill, charge, 
+    attack:3, charge,
+    attack:3, charge,
+    attack:3, charge,
+    skill, charge,
     attack:3, charge;
 
 }

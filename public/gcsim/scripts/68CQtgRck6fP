@@ -46,25 +46,25 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:5;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack, charge, dash,
-          
+
           attack:5, dash,
           attack:5, dash;
   }

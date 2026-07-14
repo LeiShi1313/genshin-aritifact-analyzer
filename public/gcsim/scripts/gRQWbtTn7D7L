@@ -1,7 +1,7 @@
 # Bennett Furina Xiangling Xianyun. ~20s Rot. Xianyun Furinational. Furina -> XL -> Bennett -> Xianyun -> Bennett; No Hydro VV. Pyro Application is overwhleming with XL EQ + Bennett's special fast plunge spam & skills off CD for XL energy. Few Bennett plunge Vapes. CW > MH Bennett. 50% Collsions.
 
 # Team
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="harbinger" refine=5 lvl=90/90;
 bennett add set="longnightsoath" count=4;
 #bennett add set="cw" count=4;
@@ -38,7 +38,7 @@ xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.396
 #xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324; # TTDS
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,13 +51,13 @@ active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
-  
+
   xl burst, skill, dash;
-  
+
   bennett skill, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   # Plunge
   while .bennett.status.xianyun-airborne-buff {
     bennett jump;
@@ -80,5 +80,5 @@ for let i=0; i<4; i=i+1 {
       bennett attack;
     }
   }
-  
+
 }

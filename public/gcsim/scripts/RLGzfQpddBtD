@@ -15,13 +15,13 @@ chongyun add set="no" count=4;
 chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
 chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 #xianyun add weapon="ttds" refine=5 lvl=90/90;
 xianyun add set="vv" count=4;
@@ -32,7 +32,7 @@ xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.297
 #xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.2204 em=118.92 cr=0.0662 cd=0.1324; # TTDS
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,11 +47,11 @@ for let x = 0; x < 4; x = x + 1 {
   if x > 0 && .esco.burst.ready {
     esco burst;
   }
-  
+
   chongyun burst, skill;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   kazuha skill[hold=1], high_plunge[collision=1];
   # Plunge combo
   while .kazuha.status.xianyun-airborne-buff {
@@ -75,6 +75,6 @@ for let x = 0; x < 4; x = x + 1 {
   }
   kazuha skill[hold=0], high_plunge[collision=1];
 
-  
+
   print("done");
 }

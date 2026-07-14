@@ -1,4 +1,4 @@
-# Hutao Chevreuse Fischl Kuki. ~17s Rot. Overload Hutao doing 7N3CJ. Hutao & Chevreuse burst every other rotation. EM build options for Hutao in config. 
+# Hutao Chevreuse Fischl Kuki. ~17s Rot. Overload Hutao doing 7N3CJ. Hutao & Chevreuse burst every other rotation. EM build options for Hutao in config.
 
 # Team
 hutao char lvl=90/90 cons=0 talent=9,9,9;
@@ -36,7 +36,7 @@ kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -54,14 +54,14 @@ for let i=0; i<4; i=i+1 {
   } else {
     chev skill[hold=1];
   }
-  
+
   fischl attack;
   if .fischl.skill.ready {
     fischl attack, skill;
   } else {
     fischl attack, burst;
   }
-  
+
   hutao skill,
         attack:3, charge, jump,
         attack:3, charge, jump,
@@ -73,8 +73,8 @@ for let i=0; i<4; i=i+1 {
 
   if .hutao.burst.ready && .hutao.energy == .hutao.energymax {
     hutao burst;
-  } else { 
+  } else {
     hutao charge, jump;
   }
-  
+
 }

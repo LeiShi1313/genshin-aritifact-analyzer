@@ -3,23 +3,23 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.mavuika && action_id == .action.charge ) || ( char_id == .keys.char.xilonen && action_id == .action.skill ) {
     pick_up_crystallize("any");
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583; #main
 xilonen add stats def%=0.062*6 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
 
-furina char lvl=90/90 cons=6 talent=10,10,10; 
+furina char lvl=90/90 cons=6 talent=10,10,10;
 furina add weapon="key" refine=5 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
 furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
 
-chiori char lvl=90/90 cons=6 talent=10,10,10; 
+chiori char lvl=90/90 cons=6 talent=10,10,10;
 chiori add weapon="uraku" refine=5 lvl=90/90;
 chiori add set="mh" count=4;
 chiori add stats hp=4780 atk=311 def%=0.583 def%=0.583 cd=0.622;
@@ -32,7 +32,7 @@ mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
 mavuika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,23 +45,21 @@ active chiori;
 chiori skill:2;
 
 for let i=0; i<5; i=i+1 {
-  
+
   mavuika skill, attack;
-  
+
   xilonen skill, attack:2; pick_up_crystallize("any");
-    
+
   furina skill, dash, attack, burst, attack;
-    
+
   chiori skill:2;
-  
+
   mavuika burst, charge:2;
-  
+
   chiori attack, skill, attack, burst, attack;
-  
+
   xilonen skill, attack:2; pick_up_crystallize("any");
-  
-  chiori skill, attack:3, dash, attack:3, dash, attack, skill:2; 
+
+  chiori skill, attack:3, dash, attack:3, dash, attack, skill:2;
 
 }
-
-

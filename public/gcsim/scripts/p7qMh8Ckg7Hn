@@ -33,31 +33,30 @@ energy every interval=480,720 amount=1;
 active luminedendro;
 
 for let i=0; i<2; i=i+1 {
-	luminedendro skill;
-	yaemiko skill:3;
-	xingqiu skill[orbital=1], burst[orbital=1], attack;
-	beidou skill, attack, burst, attack;
-	luminedendro skill, attack, burst;
-	yaemiko attack, burst, attack, skill,
-		attack, skill,
-		attack, skill,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack;
-	beidou skill[counter=1], attack:3;
-		
-	luminedendro skill;
-	yaemiko skill:3;
-	xingqiu skill[orbital=1], burst[orbital=1], attack;
-	beidou skill, attack, burst, attack;
-	luminedendro skill, attack, burst;
-	yaemiko attack:2, skill,
-		attack:2, skill,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash;
-	beidou skill[counter=1], attack:3;
-}
+  luminedendro skill;
+  yaemiko skill:3;
+  xingqiu skill[orbital=1], burst[orbital=1], attack;
+  beidou skill, attack, burst, attack;
+  luminedendro skill, attack, burst;
+  yaemiko attack, burst, attack, skill,
+    attack, skill,
+    attack, skill,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack;
+  beidou skill[counter=1], attack:3;
 
+  luminedendro skill;
+  yaemiko skill:3;
+  xingqiu skill[orbital=1], burst[orbital=1], attack;
+  beidou skill, attack, burst, attack;
+  luminedendro skill, attack, burst;
+  yaemiko attack:2, skill,
+    attack:2, skill,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash;
+  beidou skill[counter=1], attack:3;
+}

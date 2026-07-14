@@ -27,16 +27,16 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 active furina;
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   yelan burst, attack, skill, attack;
-  
+
   xianyun skill, low_plunge, attack, burst, attack;
-  
+
   bennett skill, burst, attack;
   for let p=0; p<3; p=p+1 {
     furina jump;
@@ -47,9 +47,9 @@ for let i=0; i<4; i=i+1 {
       }
     }
   }
-  
+
   yelan attack, skill, attack;
-  
+
   for let p=0; p<5; p=p+1 {
     if .furina.status.xianyun-airborne-buff {
       furina jump;

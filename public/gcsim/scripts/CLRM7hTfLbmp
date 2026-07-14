@@ -30,7 +30,7 @@ active mavuika;
 mav skill;
 
 for let i=0;i<5;i=i+1{
-  
+
   if .layla.burst.ready{
     layla burst;
   }
@@ -38,12 +38,12 @@ for let i=0;i<5;i=i+1{
   if .layla.burst.ready{
     layla burst;
   }
-  
+
   xilonen skill, attack:2;
   if .xilonen.burst.ready{
     xilonen burst;
   }
-  
+
   if .rosa.burst.ready{
     rosa burst;
   }
@@ -56,4 +56,4 @@ for let i=0;i<5;i=i+1{
   sleep(60);
   mavuika charge:2, dash, charge:2, dash, charge:7, charge[final=1],  skill;
 
-}  
+}

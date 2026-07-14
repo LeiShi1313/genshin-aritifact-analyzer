@@ -26,26 +26,26 @@ bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=99.1 cr=0.1986 cd=0.662;
 
 # Options
-options iteration=500; 
+options iteration=500;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 #Rotation
 active fischl;
 
 for let i=0; i<5; i=i+1 {
   fischl attack, skill;
-  
+
   xingqiu skill, dash, burst, attack;
-  
+
   bennett skill, attack, burst, attack;
-  
+
   fischl attack:2, burst;
-  
+
   yanfei skill, attack, burst;
   while .yanfei.mods.yanfei-q {
     if .yanfei.skill.ready && .yanfei.mods.yanfei-a1 && .previous-action == .action.attack {
@@ -56,7 +56,6 @@ for let i=0; i<5; i=i+1 {
       yanfei attack;
     }
   }
-  
+
   bennett skill, attack;
 }
-

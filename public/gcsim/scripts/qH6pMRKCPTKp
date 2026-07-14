@@ -1,0 +1,43 @@
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favsword" refine=5 lvl=90/90;
+xilonen add set="scrolloftheheroofcindercity" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+xilonen add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+mona char lvl=90/90 cons=6 talent=9,9,9;
+mona add weapon="widsith" refine=5 lvl=90/90;
+mona add set="risingwinds" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="gift" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*4;
+
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=.1 radius=3 pos=0,3.4 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+active mona;
+mona skill;
+for let i = 0; i < 5; i = i + 1 {
+
+  nicole skill, burst;
+  xilonen skill, attack:2;
+  mona attack, burst, attack;
+  durin skill, attack, burst;
+  mona charge;
+  xilonen skill, attack:2;
+  mona charge:4, skill, attack;
+
+
+}

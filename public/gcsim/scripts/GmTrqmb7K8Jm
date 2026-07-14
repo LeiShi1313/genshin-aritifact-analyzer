@@ -27,7 +27,7 @@ kirara add stats hp=3571 atk=232 atk%=0.348 dendro%=0.466 cr=0.23325; # main
 kirara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=26.5 atk%=0.0794 er=0.0882 em=31.71 cr=0.2648 cd=0.6355;
 
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 let rotations = 5;
@@ -48,7 +48,7 @@ while rotations {
         sucrose attack, skill, jump;
       }
       sucrose burst, attack;
-      
+
     case .sucrose.skill.ready:
       sucrose attack, skill, jump;
     case .kirara.burst.ready:
@@ -77,4 +77,3 @@ while rotations {
       sucrose swap;
   }
 }
-

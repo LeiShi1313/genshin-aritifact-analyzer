@@ -15,7 +15,7 @@ fischl add set="tom" count=4;
 fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.331 cd=0.3972;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -30,7 +30,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,17 +45,17 @@ for let i = 0; i < 4; i = i + 1 {
     esco burst;
   }
   escoffier skill;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   eula skill, attack;
-  
-  if .amy.skill.ready { 
+
+  if .amy.skill.ready {
     amy attack:1, skill;
-  } else { 
-    amy attack:2, burst; 
+  } else {
+    amy attack:2, burst;
   }
-  
+
   # Minor burst stacking when available
   if .eula.burst.ready && .eula.energy == .eula.energymax {
     eula burst, walk, attack, skill[hold=1];
@@ -72,5 +72,5 @@ for let i = 0; i < 4; i = i + 1 {
       eula dash;
     }
   }
-  
+
 }

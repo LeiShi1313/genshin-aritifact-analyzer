@@ -29,17 +29,17 @@ collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 active razor;
 
 for let i=0; i<4; i=i+1 {
   collei burst, skill;
-  
+
   amy attack, skill;
-  
+
   razor skill, dash, attack, burst, attack, skill, dash;
-  while .collei.skill.cd { 
+  while .collei.skill.cd {
     if .razor.normal > 3 && .razor.skill.ready {
       razor skill, dash;
     } else if .razor.normal > 3 {
@@ -48,11 +48,11 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
+
   collei skill;
-  
+
   amy attack:2, burst;
-  
+
   cyno skill, burst;
   while .collei.skill.cd > 60 {
     if .cyno.skill.ready {
@@ -64,4 +64,3 @@ for let i=0; i<4; i=i+1 {
     }
   }
 }
-

@@ -31,22 +31,21 @@ energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
     xingqiu skill, burst, attack;
-	fischl skill, attack;
-	collei burst, attack, skill;
-	kuki attack, skill, attack:2, burst,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2;
-	fischl attack:2, burst;
-	collei attack, skill;
-	kuki attack, skill, attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2, dash,
-		attack:2;
+  fischl skill, attack;
+  collei burst, attack, skill;
+  kuki attack, skill, attack:2, burst,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2;
+  fischl attack:2, burst;
+  collei attack, skill;
+  kuki attack, skill, attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2, dash,
+    attack:2;
     print("done");
 }
-

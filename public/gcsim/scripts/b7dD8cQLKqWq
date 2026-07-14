@@ -37,10 +37,10 @@ for let i = 0; i < 4; i = i + 1 {
   baizhu attack, skill, burst;
   thoma skill, attack, burst;
   yelan burst, attack, skill;
-  baizhu attack:3, dash, 
-         attack:3, skill, 
-         attack:3, dash, 
-         attack:3, dash, 
+  baizhu attack:3, dash,
+         attack:3, skill,
+         attack:3, dash,
+         attack:3, dash,
          attack:3, dash;
 
 }

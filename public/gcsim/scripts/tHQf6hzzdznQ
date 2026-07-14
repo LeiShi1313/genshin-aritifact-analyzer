@@ -22,7 +22,7 @@ options swap_delay=12 iteration=1000;
 
 active raiden;
 
-target lvl=100 resist=0.1 radius=3 pos=0,3.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
     raiden skill;
@@ -30,7 +30,7 @@ for let i=0; i<4; i=i+1 {
     nahida skill, burst;
     fischl skill, attack;
      yelan skill, burst, attack;
-    
+
     nahida attack:2, skill, attack,
            attack:3, dash,
            attack:2, charge;
@@ -44,4 +44,3 @@ for let i=0; i<4; i=i+1 {
            attack:3, dash,
            attack:3, charge;
 }
-

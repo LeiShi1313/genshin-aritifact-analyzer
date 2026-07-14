@@ -1,4 +1,4 @@
-# (C5)Dori Furina Rosaria Xianyun. ~20s Rot. Dori Phys Plunge. Dori uses burst as available at the end of the rotation. OHC > SoDP Xianyun, but bubbles may miss. C6 Dori is -6K DPS. 50% Collisions. 
+# (C5)Dori Furina Rosaria Xianyun. ~20s Rot. Dori Phys Plunge. Dori uses burst as available at the end of the rotation. OHC > SoDP Xianyun, but bubbles may miss. C6 Dori is -6K DPS. 50% Collisions.
 
 # Team
 dori char lvl=90/90 cons=5 talent=9,9,9;
@@ -15,7 +15,7 @@ dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 e
 #dori add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
 #dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # STSS/TS + MH
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 #furina add set="gt" count=4;
@@ -27,11 +27,11 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992
 rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="no" count=4;
-#rosaria add set="emblem" count=4; 
+#rosaria add set="emblem" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add set="ohc" count=4; # Bubbles may miss
 #xianyun add set="sodp" count=4;
@@ -40,13 +40,13 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Dori Plunge Combo
 fn DoriPlunge() {
@@ -65,15 +65,15 @@ for let x = 0; x < 4; x = x + 1 {
     furina attack;
   }
   furina burst;
-  
+
   xianyun skill, low_plunge;
   if !.xianyun.burst.ready {
     xianyun attack;
   }
   xianyun burst;
-  
+
   rosaria skill, burst;
-  
+
   dori skill;
   while .dori.status.xianyun-airborne-buff {
     DoriPlunge();
@@ -85,10 +85,10 @@ for let x = 0; x < 4; x = x + 1 {
       dori dash;
     }
   }
-  
+
   rosaria skill;
-  
-  while .furina.skill.cd { 
+
+  while .furina.skill.cd {
     switch {
       case .dori.burst.ready:
         dori burst;
@@ -100,8 +100,7 @@ for let x = 0; x < 4; x = x + 1 {
         dori attack;
     }
   }
-  
-  print("done");
-  
-}
 
+  print("done");
+
+}

@@ -30,7 +30,7 @@ xinyan add stats hp=4780 atk=311 er=0.518 def%=0.583 def%=0.583; #mainstats
 xinyan add stats def%=0.496 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5296; #substats
 
 #enemy config
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 
@@ -39,7 +39,7 @@ options swap_delay=12 iteration=1000;
 active xinyan;
 let rotations = 5;
 
-#action list 
+#action list
 
   xinyan skill,burst;
   gorou skill,burst;
@@ -51,18 +51,17 @@ let rotations = 5;
        attack:4,charge:5,skill[travel=0],charge;
        #"C0 1PS" combo
        wait(20); #catch ushi particles
-       
+
 for let i = 0; i < 4; i = i + 1 {
 
   xinyan skill,burst;
   gorou skill,burst;
   albedo attack,skill;
-  
+
   itto attack,burst[prestack=1],
        attack,skill[travel=0],charge:4,
        attack:3,charge:4,
-       attack:3,skill[travel=0],charge:4; 
+       attack:3,skill[travel=0],charge:4;
        #"C0 2PS" combo
 
 }
-

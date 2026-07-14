@@ -31,7 +31,7 @@ active beidou;
 # ----  Actions List
 
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -41,7 +41,7 @@ for let i=0; i<4; i=i+1 {
   if .tighnari.burst.ready {
     tighnari skill, aim, burst, aim:2;
   } else {
-	tighnari skill, aim:3;
+  tighnari skill, aim:3;
   }
   beidou skill, burst;
   sucrose attack:2, charge, attack:2, charge;

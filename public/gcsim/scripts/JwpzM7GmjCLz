@@ -18,9 +18,9 @@ aetherdendro add weapon="favsword" refine=5 lvl=90/90;
 aetherdendro add set="deepwood" count=4;
 aetherdendro add stats def=54 hp=4989 atk=448 atk%=0.269 er=1.003 em=16 cr=0.587 cd=0.412 dendro%=0.466;
 
-#target lvl=100 resist=0.1 radius=1 pos=-1.05,1.4 hp=999999999; 
+#target lvl=100 resist=0.1 radius=1 pos=-1.05,1.4 hp=999999999;
 #target lvl=100 resist=0.1 radius=1 pos=1.05,1.4 hp=999999999;
-target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999;
 target lvl=100 resist=0.1 radius=1 pos=0,3.5 hp=999999999;
 energy every interval=480,720 amount=1;
 

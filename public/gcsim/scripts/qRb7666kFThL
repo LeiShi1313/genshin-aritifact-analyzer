@@ -9,7 +9,7 @@ luminepyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.
 #luminepyro add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 #luminepyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=158.56 cr=0.2317 cd=0.662; # OC
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
@@ -47,22 +47,22 @@ for let i = 0; i < 4; i = i + 1 {
     furina attack;
   }
   furina burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett burst, skill;
-  
+
   luminepyro skill[hold=1];
   if .luminepyro.burst.ready {
     luminepyro burst;
   }
-  
+
   if .xianyun.sets.vv >= 4 {
     xianyun attack:2; sleep(20);
   }
-  
+
   while .xianyun.status.xianyun-airborne-buff {
-    luminepyro jump; 
+    luminepyro jump;
     if .airborne {
       let variableDelay = rand() * 15; print(variableDelay);
       wait(variableDelay);
@@ -72,6 +72,6 @@ for let i = 0; i < 4; i = i + 1 {
       luminepyro dash;
     }
   }
-  
+
   bennett skill;
 }

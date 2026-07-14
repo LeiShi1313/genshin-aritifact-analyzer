@@ -16,13 +16,13 @@ furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622;
 furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*5 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*9;
 
-eula char lvl=90/90 cons=0 talent=9,9,9; 
+eula char lvl=90/90 cons=0 talent=9,9,9;
 eula  add weapon="aquamarine" refine=1 lvl=90/90;
 eula add set="scroll" count=4;
 eula add stats hp=4780 atk=311 em=187 em=187 em=187;
 eula add stats hp%=0.0992 hp=507.88 atk%=0.1984 atk=33.08 def%=0.124 def=39.36 em=118.92 cr=0.2648 cd=0.662 er=0.1102 ; #subs
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="no" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -38,7 +38,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
   eula skill, attack;
   escoffier skill, burst, attack;
@@ -46,31 +46,31 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
 }
 
-# First rot only 
+# First rot only
 # Furina ED Q > Eula EN1 > Escoffier EQ N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Furina ED Q > Eula EN1 > Escoffier EQ N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

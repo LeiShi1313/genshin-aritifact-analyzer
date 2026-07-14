@@ -7,7 +7,7 @@ yanfei add set="mh" count=4;
 yanfei add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
 yanfei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2648 cd=0.7944;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 #furina add set="gt" count=4;
 furina add set="tom" count=4;
@@ -28,28 +28,28 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2648 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 #Rotation
 active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-	
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
   }
   yelan burst, attack;
-  
+
   bennett burst, skill;
-  
+
   yanfei attack, skill, attack;
   if .yanfei.burst.ready {
     yanfei burst;
@@ -65,6 +65,5 @@ for let i=0; i<4; i=i+1 {
       yanfei attack;
     }
   }
-	
-}
 
+}

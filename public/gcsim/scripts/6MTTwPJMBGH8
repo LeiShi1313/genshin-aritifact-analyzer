@@ -18,14 +18,14 @@ sara add set="no" count=5;
 sara add stats hp=4780 atk=311 er=0.518 electro%=0.466 cr=0.311; #main
 sara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-jean char lvl=90/90 cons=0 talent=9,9,9; 
+jean char lvl=90/90 cons=0 talent=9,9,9;
 jean add weapon="xiphos" refine=1 lvl=90/90;
 jean add set="vv" count=5;
 jean add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.6061 em=39.64 cr=0.0662 cd=0.1986;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -38,16 +38,16 @@ raiden skill;
 
 for let x = 0; x < 4; x = x + 1 {
   furina skill, dash, burst;
-  
+
   jean burst, attack:2;
-  
+
   sara skill, aim, attack;
-  
+
   jean skill;
-  
+
   sara burst;
-  
+
   raiden attack, burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
-  
+
   jean skill;
 }

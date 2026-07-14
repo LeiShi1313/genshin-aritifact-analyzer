@@ -30,11 +30,11 @@ active xingqiu;
 
 for let i=0; i<4; i=i+1 {
   xingqiu skill, dash, burst, attack;
-  
+
   luminepyro skill, attack, burst;
 
   yelan burst, attack, skill, attack;
-  
+
   hutao skill,
         attack:2, charge, dash,
         attack:2, charge, jump,
@@ -45,9 +45,9 @@ for let i=0; i<4; i=i+1 {
         attack:1, charge, jump,
         attack:1, charge, jump,
         attack:1;
-    
+
   yelan skill, attack:2;
-  
+
   xingqiu attack:5;
 }
 

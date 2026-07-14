@@ -19,7 +19,7 @@ mavuika add set="oc" count=4;
 mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="ins" count=4;
 xilonen add stats hp=3571 atk=232 def%=0.583 def%=0.43725 def%=0.43725;
@@ -52,7 +52,7 @@ mavuika skill, burst, charge, dash;
 mualani skill;
 mualani_combo();
 mualani burst;
-  
+
 mualani attack;
 citlali jump, skill;
 xilonen skill, attack:2;
@@ -69,7 +69,7 @@ mavuika skill, burst, charge, dash;
 mualani skill;
 mualani_combo();
 mualani burst;
-  
+
 mualani attack;
 citlali jump, skill;
 xilonen skill, attack:2;

@@ -26,24 +26,23 @@ yaoyao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 active yae;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
-	if i == 0 {
-		yae attack, skill:3;
-	} else {
-		yae skill, attack, skill, attack, skill, attack;
-	}
-	kazuha skill, high_plunge;
-	fischl attack:2, burst;
-	yaoyao skill, attack:2;
-	kazuha burst, attack, skill, high_plunge;
-	yae attack, charge,dash, burst, attack, skill,attack, skill,attack,skill,attack;
-	fischl attack, skill;
-	yaoyao attack, burst;
-	kazuha skill, high_plunge;
-	yae attack:2, charge, dash, attack:2, charge, dash;
-	print("done");
+  if i == 0 {
+    yae attack, skill:3;
+  } else {
+    yae skill, attack, skill, attack, skill, attack;
+  }
+  kazuha skill, high_plunge;
+  fischl attack:2, burst;
+  yaoyao skill, attack:2;
+  kazuha burst, attack, skill, high_plunge;
+  yae attack, charge,dash, burst, attack, skill,attack, skill,attack,skill,attack;
+  fischl attack, skill;
+  yaoyao attack, burst;
+  kazuha skill, high_plunge;
+  yae attack:2, charge, dash, attack:2, charge, dash;
+  print("done");
 }
-

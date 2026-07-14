@@ -1,4 +1,4 @@
-# Kokomi Nahida Yelan Raiden. ~22s Rot. Kokomi on-field Hyperbloom. Kokomi's skill heals over the setup period and is freshed with her burst. Kokomi's burst is wrapped by Yelan skill uses. 
+# Kokomi Nahida Yelan Raiden. ~22s Rot. Kokomi on-field Hyperbloom. Kokomi's skill heals over the setup period and is freshed with her burst. Kokomi's burst is wrapped by Yelan skill uses.
 
 # Team
 kokomi char lvl=90/90 cons=0 talent=9,9,9;
@@ -26,7 +26,7 @@ raiden add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3306 em=118.92 cr=0.0662 cd=0.2648;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -39,15 +39,15 @@ active kokomi;
 
 for let i=0; i<4; i=i+1 {
   kokomi skill;
-  
+
   raiden attack, skill;
-  
+
   yelan burst, attack;
 
-  nahida skill, attack, charge; 
-  
+  nahida skill, attack, charge;
+
   yelan attack, skill, attack;
-  
+
   kokomi burst;
   kokomi attack:2, walk;
   kokomi attack:2, walk;
@@ -59,12 +59,12 @@ for let i=0; i<4; i=i+1 {
   kokomi attack:2, walk;
   kokomi attack:2, walk;
   kokomi attack:2, walk;
-  
+
   # Catch own particles
   yelan attack:1, skill, attack:4;
-  
+
   nahida skill, attack:2, charge;
-  
+
   kokomi attack:2;
   print("done");
 }

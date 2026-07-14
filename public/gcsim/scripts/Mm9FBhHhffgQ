@@ -4,7 +4,7 @@ kokomi char lvl=90/90 cons=0 talent=9,9,9;
 kokomi add weapon="hakushinring" refine=5 lvl=90/90;
 kokomi add set="ohc" count=5;
 kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359 ; #main
-kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.4464 er=0.3857 em=39.64 cr=0.0662 cd=0.1324 ;																				
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.4464 er=0.3857 em=39.64 cr=0.0662 cd=0.1324 ;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="thestringless" refine=3 lvl=90/90;
@@ -16,7 +16,7 @@ nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="thewidsith" refine=3 lvl=90/90;
 nahida add set="deepwoodmemories" count=5;
 nahida add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311 ; #main
-nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=198.2 cr=0.1655 cd=0.4634 ;																																																																						
+nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=198.2 cr=0.1655 cd=0.4634 ;
 
 kuki char lvl=90/90 cons=6 talent=9,9,9;
 kuki add weapon="xiphos" refine=1 lvl=90/90;
@@ -32,11 +32,11 @@ nahida skill, burst;
 kokomi attack, skill;
 kuki attack, skill;
 fischl attack, skill;
-kokomi attack, burst, attack:2, walk, 
-  attack:2, walk, 
-  attack:2, walk, 
-  attack:2, walk, 
-  attack:2, walk, 
+kokomi attack, burst, attack:2, walk,
+  attack:2, walk,
+  attack:2, walk,
+  attack:2, walk,
+  attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2, walk,
@@ -44,8 +44,8 @@ kokomi attack, burst, attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2;
-fischl attack, burst; 
-kuki attack:2, skill; 
+fischl attack, burst;
+kuki attack:2, skill;
 kokomi attack:2, charge, attack:2, charge, attack:2, skill, dash;
 nahida skill, burst;
 kokomi attack:2, charge, attack:2;
@@ -59,9 +59,9 @@ nahida attack, skill, burst, charge;
 kuki attack, skill;
 kokomi attack:2, skill, dash, attack:2, charge, attack:2, charge;
 fischl attack, skill;
-kokomi attack, burst, attack:2, walk, 
-  attack:2, walk, 
-  attack:2, walk, 
+kokomi attack, burst, attack:2, walk,
+  attack:2, walk,
+  attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2, walk,
@@ -71,17 +71,16 @@ kuki skill, dash, attack;
 kokomi attack:2, charge;
 fischl attack, burst;
 kokomi attack:2, charge;
-nahida attack, skill, burst; 
+nahida attack, skill, burst;
 kokomi attack:2, skill, dash, attack:2, charge, attack:2, charge, attack:2, charge;
 kuki attack, skill;
 fischl skill, dash, attack;
-kokomi attack, burst, attack:2, walk, 
-  attack:2, walk, 
-  attack:2, walk, 
+kokomi attack, burst, attack:2, walk,
+  attack:2, walk,
+  attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2, walk,
   attack:2;
-

@@ -3,7 +3,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) || ( char_id == .keys.char.bennett && action_id == .action.burst ) {
     pick_up_crystallize("any"); # Pick up crystallize before every dash and Yelan E
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -32,42 +32,42 @@ bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;																														
+bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
 
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active navia;
-  
+
   chiori skill:2;
-  
+
   navia skill, burst;
-  
+
   yelan skill, burst, attack;
-  
+
   bennett skill, burst, attack;
-  
+
   navia attack, skill, attack:2, dash, attack:2, dash, attack:2;
-  
+
   yelan attack, skill, attack;
 
   navia attack, skill, attack:2, dash, attack:3, skill[hold=1], attack;
 for let i=0; i<2; i=i+1 {
-  
+
   navia attack;
-  
+
   chiori skill:2;
-  
+
   navia burst;
-  
+
   yelan skill, burst, attack;
-  
+
   bennett skill, attack, burst, attack;
-  
+
   navia attack, skill, attack:2, dash, attack:2, dash, attack:3;
-  
+
   yelan skill, attack;
-  
+
   navia attack, skill, attack:2, dash, attack:2, dash, attack:2;
 
 }

@@ -22,8 +22,8 @@ options swap_delay=12 iteration=100;
 # ----
 active beidou;
 
-target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -33,5 +33,5 @@ for let i=0; i<4; i=i+1 {
    sara skill, aim, burst;
    beidou skill[counter=2], burst;
    sara attack:2, aim, attack:3, aim, attack:3, aim, attack:2, skill, aim;
-  
+
 }

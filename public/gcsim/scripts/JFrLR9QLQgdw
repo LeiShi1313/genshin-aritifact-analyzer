@@ -1,4 +1,4 @@
-# Kazaha Furina Faruzan Xianyun. ~19s Rot. Whale Kazuha Anemo Plunge. Kazuha EPQEPD 4JPD EPD JP N1C. 
+# Kazaha Furina Faruzan Xianyun. ~19s Rot. Whale Kazuha Anemo Plunge. Kazuha EPQEPD 4JPD EPD JP N1C.
 
 # Team - Options listed by DPS
 kazuha char lvl=90/90 cons=6 talent=9,9,9;
@@ -33,7 +33,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,15 +46,15 @@ active furina;
 
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
-  
+
   faruzan skill, burst;
-  
+
   xianyun skill, low_plunge;
   if !.xianyun.burst.ready  {
     xianyun skill, low_plunge;
   }
   xianyun burst;
-  
+
   while .xianyun.status.xianyun-airborne-buff {
     if .kazuha.skill.ready && .kazuha.burst.ready {
       kazuha skill, high_plunge[collision=1], burst;
@@ -73,5 +73,5 @@ for let i = 0; i < 4; i = i + 1 {
     }
   }
   kazuha attack, charge;
-  
+
 }

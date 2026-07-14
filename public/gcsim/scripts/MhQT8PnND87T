@@ -63,7 +63,7 @@ for let i=0; i<3; i=i+1 {
   sara skill;
   if .sara.burst.ready {
     sara burst;
-  } 
+  }
   varesa_combo(2);
   sara aim;
   varesa_combo(4);

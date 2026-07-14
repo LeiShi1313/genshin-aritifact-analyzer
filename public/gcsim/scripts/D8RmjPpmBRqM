@@ -4,7 +4,7 @@
 shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="lamppost" refine=5 lvl=90/90;
 shenhe add set="bs" count=4;
-shenhe add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+shenhe add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
 
 chongyun char lvl=90/90 cons=6 talent=9,9,9;
@@ -13,21 +13,21 @@ chongyun add set="no" count=4;
 chongyun add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
 chongyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="lithicspear" refine=1 lvl=90/90;
 #rosaria add weapon="deathmatch" refine=1 lvl=90/90;
 rosaria add set="bs" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.3306 em=39.64 cr=0.1324 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -41,11 +41,11 @@ active shenhe;
 
 for let i=0; i<4; i=i+1 {
   esco skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   chongyun burst, skill;
-  
+
   #shenhe skill;
   while .rosaria.skill.cd {
     switch {
@@ -61,9 +61,9 @@ for let i=0; i<4; i=i+1 {
         shenhe attack;
     }
   }
-  
+
   rosaria skill;
-  
+
   while .status.chongyunfield {
     switch {
       case .shenhe.skill.ready:

@@ -42,11 +42,33 @@ test("syncGCSimScripts atomically replaces stale and duplicate files", async (t)
   assert.deepEqual(await readdir(root), ["scripts"]);
   assert.equal(
     await readFile(path.join(outputDir, "keep"), "utf8"),
-    "new keep"
+    "new keep\n"
   );
   assert.equal(
     await readFile(path.join(outputDir, "new-id"), "utf8"),
-    "new config"
+    "new config\n"
+  );
+});
+
+test("syncGCSimScripts normalizes line endings and trailing whitespace", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "gcsim-snapshot-"));
+  const outputDir = path.join(root, "scripts");
+  t.after(() => rm(root, { recursive: true, force: true }));
+
+  await syncGCSimScripts({
+    outputDir,
+    fetchPage: async () => [
+      {
+        _id: "mixed",
+        config:
+          "options iteration=1000;  \r\n\r\n  \tattack;\t\r\n\r\n",
+      },
+    ],
+  });
+
+  assert.equal(
+    await readFile(path.join(outputDir, "mixed"), "utf8"),
+    "options iteration=1000;\n\n    attack;\n"
   );
 });
 

@@ -1,7 +1,7 @@
 // KokomiClan's Notes:
 // This Nilou Bloom rotation is taken from my own and others' speedruns and should reflect the "quickswap" nature we see in practice. Bloom dmg
-// is usually neglible since you are constantly swapping and using bursts as well for i-framing self-bloom damage. Builds are only indicative. 
-// We also assume dashes can be done without losing positioning (in practice you can forward dash but HOLD W, HOLD D to keep your position if done right...). 
+// is usually neglible since you are constantly swapping and using bursts as well for i-framing self-bloom damage. Builds are only indicative.
+// We also assume dashes can be done without losing positioning (in practice you can forward dash but HOLD W, HOLD D to keep your position if done right...).
 // NB: Higher dendro uptime does not necessarily lead to superior results (compare the hydro/dendro uptime with the no aura uptime as well).
 // The warnings about delay in swapping and delay in skill are small enough that I wouldn't worry about them too much.
 // Enjoy :)
@@ -54,26 +54,26 @@ for let i=0; i<10; i=i+1 {
   koko_q = 0;
   collei_q = 0;
   nahida_q = 0;
- 
+
   while !.nahida.skill.ready
   {
     nahida attack:1, charge;
   }
-  
+
   // Nahida starts the rotation with E skill, assuming it hits. In practice, if enemies are spread you would use hold skill.
   if .nahida.energy < 50
   {
     // Sometimes we don't have energy xD; though this is totally dependent on the enemies & particle drops.
     nahida attack:1, skill;
- 
+
   }
   else
   {
     nahida skill, burst;
     nahida_q = 1;
   }
-  
-  
+
+
   // Use Kokomi's skill and set up jellyfish.
   if .kokomi.skill.ready
   {
@@ -83,10 +83,10 @@ for let i=0; i<10; i=i+1 {
   {
      kokomi charge, dash; // Hit enemies with AOE charge attack and apply hydro. DO NOT USE NORMALS HERE: "attack:1" as this will lead to a dps loss!
   }
-  
-   
+
+
   // Set up Nilou's skill. If done right, you should have minimal downtime on skill cd when looping back here. DO NOT SWAP KOKOMI & NILOU ORDER!!! DPS LOSS!!!
-  nilou skill:4;  
+  nilou skill:4;
 
   // Always use Collei's skill before burst to ensure CD comes down earlier & have higher dendro app. For some single target cases you would swap this order.
   if .collei.energy < 60
@@ -96,7 +96,7 @@ for let i=0; i<10; i=i+1 {
     {
       collei skill;
       wait(24); // Catch particles
-      
+
       // Sometimes it takes a bit of time for the particles to funnel
       if .collei.burst.ready
         {
@@ -111,14 +111,14 @@ for let i=0; i<10; i=i+1 {
           nahida_q = 1;
         }
       }
-      
+
     }
     else
     {
       // Use Nahida for Aura Stability
       nahida attack:1, skill;
     }
-    
+
   }
   else
   {
@@ -129,7 +129,7 @@ for let i=0; i<10; i=i+1 {
     else
     {
       collei burst;
-      
+
        // If Nahida's burst didn't trigger earlier, we use it here: Don't move it outside this, otherwise you will lose dps due to insufficient elemental applications.
       if nahida_q == 0 && .nahida.burst.ready
       {
@@ -137,8 +137,8 @@ for let i=0; i<10; i=i+1 {
       }
     }
   }
-  
-  
+
+
   // Use Kokomi burst and apply 2U hydro, otherwise charge attack for hydro app.
   if .kokomi.energy < 70
   {
@@ -149,13 +149,13 @@ for let i=0; i<10; i=i+1 {
     kokomi burst;
     koko_q = 1;
   }
-  
-  
+
+
   if collei_q == 1
   {
       // Kokomi attacks normally -> NB: Do not increase this or DPS will drop
       kokomi attack:1, charge, attack:6;
-      
+
       // Follow up with Nahiha to ensure aura stability
       nahida skill, attack:1;
   }
@@ -163,19 +163,19 @@ for let i=0; i<10; i=i+1 {
   {
       // Kokomi attacks normally
       kokomi attack:3, dash, charge;
-      
+
       // Nahida ensures aura stability
       nahida skill, attack:1;
-  } 
-  
-  
+  }
+
+
   // Kokomi follows up again - if skill is ready it will persist throughh the dendro application at the end. Only use if Kokomi didn't burst before...
   if .kokomi.skill.ready && (koko_q == 0)
   {
     kokomi skill, attack:1;
   }
   else
-  { 
+  {
     // Use Nilou's burst for damage & hydro application. If not available, swap to Kokomi instead
     if .nilou.burst.ready
     {
@@ -187,8 +187,8 @@ for let i=0; i<10; i=i+1 {
       kokomi attack:1, charge;
     }
   }
- 
-  
+
+
   // Re-apply dendro -> Aura Stability
   if .collei.skill.ready
   {
@@ -198,11 +198,11 @@ for let i=0; i<10; i=i+1 {
   {
     nahida attack:1, charge;
   }
-  
+
   // Final Koko Instance of Hydro
   kokomi attack:1, charge;
-  
-  
+
+
   // End of rotation loop
   print("Nilou bloom has destroyed the simulation!");
 }

@@ -32,13 +32,10 @@ active ganyu;
 
 for let i=0; i<5; i=i+1{
     ganyu aim[weakspot=1];
-	kazuha skill, high_plunge, burst;
-	layla burst, skill;
-	kokomi skill;
-	ganyu aim[weakspot=1], skill, burst;
-	kazuha skill, high_plunge;
-	ganyu aim[weakspot=1]:3, skill;
+  kazuha skill, high_plunge, burst;
+  layla burst, skill;
+  kokomi skill;
+  ganyu aim[weakspot=1], skill, burst;
+  kazuha skill, high_plunge;
+  ganyu aim[weakspot=1]:3, skill;
 }
-
-
-

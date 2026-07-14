@@ -35,24 +35,24 @@ for let r = 5; r > 0; r = r - 1 {
   kazuha skill, high_plunge, burst;
   bennett skill, burst, attack;
   kazuha attack, skill[hold=1], high_plunge;
-  
+
   lyney aim[weakspot=1], aim, burst;
   delay(11); # So Lyney doesn't cancel his own burst before it deals damage
   lyney skill, aim, skill, aim, aim;
-  
+
   bennett skill;
   kazuha skill, high_plunge, burst, attack;
   bennett skill, burst;
   klee attack, skill;
   kazuha attack, skill[hold=1], high_plunge;
   klee attack, burst, walk;
-  
+
   for let r = 5; r > 0; r = r - 1 {
     klee attack[travel=6], charge; # 5N1C
-  }  
-  
+  }
+
   klee attack;
-  
+
   if (r > 1) {
    klee skill[bounce=3, mine=8]; # Begins next rotation
   }
@@ -65,4 +65,3 @@ wait(25); # So sim doesn't end with final CA mid animation
 # Klee E > Lyney CA > Kazuha E hP Q N1 > Bennett Q E > Kazuha N1 hE hP > Lyney 2CA Qc CA E 2CA
 # Bennett E > Kazuha E hP Q N1 > Bennett Q E > Klee N1 E > Kazuha N1 hE hP > Klee N1 Q 5N1C N1
 # Start again from the beginning.
-

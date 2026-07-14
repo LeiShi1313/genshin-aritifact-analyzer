@@ -33,19 +33,19 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
 active ineffa;
 
 for let i=0; i<6; i=i+1 {
-  
+
   if .ineffa.burst.ready {
     ineffa burst;
   } else {
     ineffa skill, attack;
   }
-  
+
   if .furina.skill.ready {
     furina skill, dash, attack;
   } else {
     furina attack:2;
   }
-  
+
   sucrose attack;
   if .sucrose.burst.ready {
     sucrose burst;
@@ -54,12 +54,12 @@ for let i=0; i<6; i=i+1 {
   } else {
     sucrose charge;
   }
-  
+
   flins skill, skill,
         attack:3, dash, attack:4, burst,
         attack:4, skill, burst,
         attack:4, dash, attack:1;
-  
+
   if .ineffa.status.ineffa-a4 { # extend Flins fieldtime on rotations with Ineffa burst to avoid cooldown problems on the next rotation
     flins attack:3;
   }
@@ -70,7 +70,7 @@ for let i=0; i<6; i=i+1 {
   } else {
     sucrose charge;
   }
-  
+
 }
 
 # Rotation

@@ -5,7 +5,7 @@ luminehydro add weapon="wolffang" refine=1 lvl=90/90;
 luminehydro add set="ur" count=4;
 luminehydro add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
 luminehydro add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
-										
+
 nahida char lvl=90/90 cons=0 talent=9,9,9 ;
 nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
 nahida add set="totm" count=4;
@@ -26,7 +26,7 @@ bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 
 
 active nahida;
-target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=9999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=9999999999;
 energy every interval=480,720 amount=1;
     #yelan aim;
 for let i=0; i<4; i=i+1 {
@@ -41,5 +41,5 @@ for let i=0; i<4; i=i+1 {
     bennett attack:2,skill;
     xiangling attack:3;
     nahida attack:2;
-	
+
 }

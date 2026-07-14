@@ -19,9 +19,9 @@ sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="noblesseoblige" count=4;
-bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; 
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
-																											            
+
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=1;
@@ -32,7 +32,7 @@ for let x=0; x<4; x=x+1 {
     bennett skill, dash;
     yoimiya burst;               # catch bennett particles and for double swirl setup
   } else {
-    bennett skill, attack:4;     # E N4 to make consistent 20s rot for TTDS cd. 
+    bennett skill, attack:4;     # E N4 to make consistent 20s rot for TTDS cd.
    #bennett skill, dash;         # With 'E dash', No TTDS for that non-yoi Q rot. But slightly more DPS due to shorter rot length
   }
   yelan attack, skill, attack, burst, attack;

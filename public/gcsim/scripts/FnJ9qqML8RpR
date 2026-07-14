@@ -19,8 +19,8 @@ lauma add weapon="etherlightspindlelute" refine=5 lvl=90/90;
 lauma add set="sms" count=5;
 lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
 lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
-                                                                                                                                                                                                
-nahida char lvl=90/90 cons=0 talent=9,9,9; 
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="favcodex" refine=3 lvl=90/90;
 nahida add set="deepwood" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 cr=0.311;
@@ -41,13 +41,13 @@ for let i=0; i<4; i=i+1 {
   nahida burst;
   lauma attack, skill[hold=1], burst;
   kokomi burst;
-  
+
   kokomi attack:3, dash;
   kokomi attack:3, dash;
   kokomi attack:3, dash;
   kokomi attack:3, dash;
   kokomi attack:3, dash;
-  
+
   lauma attack, skill[hold=1];
   nahida skill, charge;
   kokomi attack:2, charge;

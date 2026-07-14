@@ -1,0 +1,95 @@
+fn rand_delay(mean, stddev) {
+  let del = randnorm() * stddev + mean;
+  if del > (mean + mean) {
+    del = mean + mean;
+  }
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function
+  # will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  # this following if block handles conditionally adding in delay depending on
+  # what the previous and next action is. in this example, delay is not added between attacks
+  # and charge attack following an attack
+  # modify these conditions as you see fit
+  if action_id == .action.swap {
+    # add delay before swap
+    rand_delay(12, 3);
+  } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
+    # add delay after attack, but only if not followed by another attack or charge
+    rand_delay(3, 1);
+  } else if prev_action_id != .action.attack {
+    # add delay to everything else
+    rand_delay(3, 1);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+#-----------------------------------------------------
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
+neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90 ;
+neuvillette add set="mh" count=4;
+neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.1986 cd=0.662;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="favoniuslance" refine=3 lvl=90/90;
+xiangling add set="eosf" count=5;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
+xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.331 cd=0.5296;
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=3 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.331 cd=0.4634;
+
+kirara char lvl=90/90 cons=6 talent=9,9,9;
+kirara add weapon="favsword" refine=3 lvl=90/90;
+kirara add set="totm" count=4;
+kirara add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
+kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=59.46 cr=0.331 cd=0.5296;
+
+#kirara add set="ins" count=4;
+#kirara add stats hp=3571 atk=232 hp%=0.3495 hp%=0.3495 cr=0.311 ; #main
+#kirara add stats def=31.488 def%=0.0992 hp=1929.944 hp%=0.37696 atk=26.464 atk%=0.07936 er=0.08816 em=31.712 cr=0.31776 cd=0.10592;
+                          #below is taken from caxia5's db submission
+
+# ----  Default Enemy
+options iteration=1000;
+target lvl=100 resist=0.1 hp=100000000 pos=0,2.4 radius=2;
+#target lvl=100 resist=0.1 hp=100000000 pos=0,6.6 radius=2;
+energy every interval=480,720 amount=1;
+
+active neuv;
+for let i = 0; i < 4; i = i + 1 {
+  neuv burst;
+  kazuha skill, high_plunge; #hydro swirl
+  kirara burst, skill[short_hold=1];
+  xiangling burst, skill, dash;
+  neuv charge, charge, skill, attack:3;
+  kazuha skill, high_plunge, burst;
+  kirara skill[short_hold=1]; #34frames=hold until 3hits for reliable fav proc
+  xiangling skill, dash, attack:3;
+  neuv charge, skill, charge;
+}
+wait(173);
+
+#Neuv Q >
+#KZ tEP > Kirara Q shE > XL QE dash > Neuv 2C E N3 >
+#KZ tEP Q > Kirara hE(34f) > XL E dash N3 > Neuv C E C

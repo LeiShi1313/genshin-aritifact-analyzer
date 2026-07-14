@@ -24,7 +24,7 @@ raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952
 
 options swap_delay=12 iteration=1000 duration =150;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=1;
 
 active ganyu;
@@ -40,14 +40,13 @@ while 1 {
     } else if .kokomi.skill.ready {
       kokomi attack, skill, dash;
     } else if (f() - timer > 7.5*60) {
-		ganyu aim[weakspot=1];
-		timer = f();
-	} else if .ganyu.skill.ready {
-		ganyu skill;
-	} else if .ganyu.burst.ready {
-		ganyu burst;
-	} else { 
-		ganyu aim;
-	}
+    ganyu aim[weakspot=1];
+    timer = f();
+  } else if .ganyu.skill.ready {
+    ganyu skill;
+  } else if .ganyu.burst.ready {
+    ganyu burst;
+  } else {
+    ganyu aim;
+  }
 }
-

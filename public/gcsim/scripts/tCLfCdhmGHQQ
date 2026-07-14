@@ -32,13 +32,13 @@ for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
   lisa burst;
   faruzan skill, burst;
-  lynette burst, skill, 
+  lynette burst, skill,
           attack:2, charge,
           attack:2, charge,
           attack;
   faruzan skill, aim;
   lisa skill[hold=1];
-  lynette skill, attack:2, charge, 
+  lynette skill, attack:2, charge,
           attack, charge,
           attack, charge;
 

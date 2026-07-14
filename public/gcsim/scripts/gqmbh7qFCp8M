@@ -10,18 +10,18 @@ xingqiu add set="emblemofseveredfate" count=4;
 xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2648 cd=0.662;
 
-fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="vhunt" refine=1 lvl=90/90;
 fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; 
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622;
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="noblesseoblige" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.5510 em=39.64 cr=0.1986 cd=0.662;
-																											            
+
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=0.1 hp=100000000 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=1;
@@ -43,7 +43,7 @@ for let x=0; x<4; x=x+1 {
     fischl attack:4;
   } else {
     bennett attack, skill;
-    fischl attack:3, dash, 
+    fischl attack:3, dash,
            attack:4, dash;
   }
 }

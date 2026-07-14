@@ -30,7 +30,7 @@ target lvl=100 resist=0.1 hp=9999999999999 pos=0,1.35;
 #fischl add set="tf" count=2;
 #fischl add set="glad" count=2;
 
-																
+
 active faruzan;
 for let x = 0; x < 4; x = x + 1  {
 
@@ -59,4 +59,3 @@ wanderer attack, skill;
   wanderer skill;
 }
 }
-

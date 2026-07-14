@@ -2,7 +2,7 @@ fn rand_delay(mean, stddev) {
   let del = randnorm() * stddev + mean;
   if del > (mean + mean) {
       del = mean + mean;
-  }      
+  }
   delay(del);
 }
 
@@ -14,12 +14,12 @@ fn execute_action(char_id number, action_id number, p map) {
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
   }
-    
+
   # Inserts a random delay before swap
   if action_id == .action.swap {
     rand_delay(12, 3);
   }
-  
+
   # Inserts pick_up_crystallized("any") before dashes, Yelan E and Xilonen E
   if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) || ( char_id == .keys.char.xilonen && action_id == .action.skill ) {
     pick_up_crystallize("any");
@@ -58,50 +58,50 @@ xilonen add set="archaicpetra" count=1;
 xilonen add stats def%=1.531 def=56 hp=5497 hp%=0.047 atk=364 atk%=0.344 er=0.5820000000000001 em=86 cr=0.474;
 
 options iteration=1000 swap_delay=1; # Swap delay is handled by the pre-action hook above
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=10000000 particle_threshold=624000 particle_drop_count=3; # Energy drops based on 12-3 (300% HP) Icewind Suite; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=10000000 particle_threshold=624000 particle_drop_count=3; # Energy drops based on 12-3 (300% HP) Icewind Suite;
 
 active yelan;
 
 yelan aim;
 
 while true {
-  
+
   if .xilonen.status.scroll-4pc-hydro < 120 && .xilonen.skill.ready && .xilonen.swap.ready { # Maintain Xilo buffs every 15s or so
     xilonen skill, attack:2;
   }
-  
+
   else if .aethergeo.skill.ready && .aethergeo.swap.ready {
     aethergeo skill, dash;
     if .xingqiu.status.xingqiuburst {
       aethergeo attack;
     }
   }
-  
+
   else if .aethergeo.burst.ready && .aethergeo.swap.ready {
     aethergeo burst;
     if .xingqiu.status.xingqiuburst {
       aethergeo attack;
     }
   }
-  
+
   else if .xingqiu.burst.ready && .xingqiu.swap.ready {
     xingqiu burst, attack;
   }
-  
+
   else if .xingqiu.skill.ready && .xingqiu.swap.ready {
     xingqiu skill, attack;
   }
-  
+
   else if .yelan.burst.ready && .yelan.swap.ready {
     yelan burst, attack;
   }
-  
+
   else if .yelan.skill.ready && .yelan.swap.ready {
     yelan skill, attack;
   }
-  
+
   else {
     yelan attack;
   }
-  
+
 }

@@ -11,7 +11,7 @@ xingqiu add weapon="favoniussword" refine=3 lvl=90/90;
 xingqiu add set="eosf" count=4;
 xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #88.35 / 129.26 | 191.26 er
 xingqiu add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.1982 def%=0.1239 em=39.63 er=0.1101 cr=0.3305 cd=0.7926;
-            
+
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="favoniuscodex" refine=3 lvl=90/90;
 nahida add set="deepwood" count=4;
@@ -106,7 +106,7 @@ for let r=0; r<4; r=r+1 {
   if !marked && .nahida.skill.ready {
     nahida skill[hold=1];
   }
-  
+
   #Xingqiu
   xingqiu skill, dash;
   pick_up_crystallize("any");
@@ -124,7 +124,7 @@ for let r=0; r<4; r=r+1 {
     pick_up_crystallize("any");
     xingqiu attack;
   }
-      
+
   #Bennett
   bennett skill;
   while !.bennett.burst.ready {
@@ -135,7 +135,7 @@ for let r=0; r<4; r=r+1 {
     }
   }
   bennett burst;
-  
+
   #Albedo
   albedo attack, skill, attack;
   while !.albedo.burst.ready {
@@ -147,43 +147,43 @@ for let r=0; r<4; r=r+1 {
   }
   #let burstMoment = f();
   albedo burst, attack;
-  
+
   #APL (Albedo/Nahida)
   while (.xingqiu.skill.cd > 150) && (.albedo.mods.bennett-field > 20 || .status.bennettburst > 60) {
     switch {
-    
+
       case .nahida.swap.ready && .element.t0.hydro:
         nahida swap;
-        
+
         while .element.t0.hydro || !.albedo.swap.ready {
           if (.gadgets.dendrocore.count >= 2) && .albedo.swap.ready {
             albedo attack;
             break;
           }
-            
+
           switch {
-          
+
             case .previous-action == .action.charge:
               nahida dash;
               pick_up_crystallize("any");
-              
+
             case .nahida.skill.ready:
               nahida skill;
-              
+
             case .nahida.normal > 2:
               nahida charge;
-              
+
             default:
               nahida attack;
           }
         }
-        
+
       #case .bennett.swap.ready && .bennett.skill.ready && !.albedo.mods.instructor:
         #bennett skill, attack;
-        
+
       #case .albedo.swap.ready && (.albedo.mods.albedo-skill-icd > 100) && .albedo.skill.ready && (f() - burstMoment > 160):
         #albedo skill;
-        
+
       case .albedo.normal > 3:
         if .albedo.skill.ready {
           albedo skill;
@@ -191,15 +191,15 @@ for let r=0; r<4; r=r+1 {
           albedo charge, dash;
           pick_up_crystallize("any");
         }
-        
+
       default:
         albedo attack;
     }
   }
-  
+
   while !.nahida.swap.ready {
     albedo attack;
   }
-  
+
   print("Rotation ", r, " done");
 }

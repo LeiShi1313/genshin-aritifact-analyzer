@@ -1,13 +1,13 @@
 options swap_delay=12 iteration=100 workers=8 ;
 
 
-ganyu char lvl=90/90 cons=0 talent=9,9,9; 	
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
 ganyu add weapon="hamayumi" refine=5 lvl=90/90;
 ganyu add set="ur" count=4;
 ganyu add stats hp=4780 atk=311 em=187 cryo%=0.466 cr=0.311 ; #main
 ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-nahida  char lvl=90/90 cons=0 talent=9,9,9; 
+nahida  char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="pamber" refine=5 lvl=90/90;
 nahida add set="gd" count=2;
 nahida add set="eosf" count=2;
@@ -20,7 +20,7 @@ dehya add set="tom" count=4;
 dehya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
 dehya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwoodblade" refine=5 lvl=90/90 +params=[pickup_delay=250];
 bennett add set="noblesse" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
@@ -41,9 +41,8 @@ for let x=0; x<4; x=x+1 {
   ganyu aim:6;
   if !.dehya.mods.sacrificial-cd {
     ganyu aim;
-  
+
   }
   ganyu skill;
 
 }
-

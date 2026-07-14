@@ -4,7 +4,7 @@ lyney add set="marechausseehunter" count=4;
 lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622 ; #main
 lyney add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
 zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
 zhongli add set="archaicpetra" count=4;
 zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311 ; #main
@@ -46,17 +46,17 @@ for let r = 4; r > 0; r = r - 1 {
   rand_delay();
   zhongli swap;
   rand_delay();
-  
+
   while !.zhongli.mods.favonius-cd && !.bennett.burst.ready {
       zhongli attack;
   }
-  
+
   rand_delay();
   zhongli skill[hold=1];
   rand_delay();
   zhongli dash;
   rand_delay();
-  
+
   bennett swap;
   rand_delay();
   bennett skill;
@@ -64,7 +64,7 @@ for let r = 4; r > 0; r = r - 1 {
   bennett burst;
   rand_delay();
   kazuha swap;
-  
+
   if .kazuha.burst.ready {
     rand_delay();
     kazuha burst;
@@ -74,7 +74,7 @@ for let r = 4; r > 0; r = r - 1 {
     rand_delay();
     kazuha high_plunge;
   }
-  
+
   rand_delay();
   lyney swap;
   rand_delay();
@@ -82,7 +82,7 @@ for let r = 4; r > 0; r = r - 1 {
   rand_delay();
   lyney aim;
   rand_delay();
-  
+
   if .lyney.burst.ready {
     lyney burst;
     delay(11); # Long enough for burst firework to spawn
@@ -93,7 +93,7 @@ for let r = 4; r > 0; r = r - 1 {
     lyney aim;
     rand_delay();
   }
-  
+
   lyney aim;
   rand_delay();
   lyney skill;

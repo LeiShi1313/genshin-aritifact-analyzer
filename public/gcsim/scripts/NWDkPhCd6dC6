@@ -30,29 +30,27 @@ target lvl=100 resist=.10 hp=9999999 radius=2 pos=0,2.4;
 active tartaglia;
 
 for let x=0; x<4; x=x+1 {
-	tartaglia skill, attack:2;
-	bennett burst;
-	jean skill, attack, burst;
-	xiangling burst, skill, dash, walk;
-	tartaglia burst, walk, skill,
-		attack:2, charge, dash,
-		attack:2, charge, dash,
-		attack:2, charge, dash,
-		attack:2, charge, dash,
-		attack:2, charge, dash,
-		attack:2, charge, dash;
-	jean skill, attack;
-	tartaglia aim;
-	bennett skill;
-	xiangling skill, attack:2;
-	tartaglia aim;
-	bennett skill;
-	tartaglia aim;
-	jean skill, attack;
-	bennett skill;
-	xiangling attack:2;
-	tartaglia aim;
-	print("end");
+  tartaglia skill, attack:2;
+  bennett burst;
+  jean skill, attack, burst;
+  xiangling burst, skill, dash, walk;
+  tartaglia burst, walk, skill,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash;
+  jean skill, attack;
+  tartaglia aim;
+  bennett skill;
+  xiangling skill, attack:2;
+  tartaglia aim;
+  bennett skill;
+  tartaglia aim;
+  jean skill, attack;
+  bennett skill;
+  xiangling attack:2;
+  tartaglia aim;
+  print("end");
 }
-
-

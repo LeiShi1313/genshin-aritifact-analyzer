@@ -33,7 +33,7 @@ baizhu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #baizhu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.3972 cd=0.5958; # TTDS
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,16 +45,16 @@ active fischl;
 
 for let i=0; i<4; i=i+1 {
   fischl attack, skill;
-  
+
   nahida skill, attack;
   if .nahida.burst.ready {
     nahida burst, attack:1, charge;
   } else {
     nahida attack, charge;
   }
-  
+
   baizhu skill, attack, burst, attack;
-  
+
   fischl attack:2, burst;
 
   cyno skill, burst, attack:2, skill;

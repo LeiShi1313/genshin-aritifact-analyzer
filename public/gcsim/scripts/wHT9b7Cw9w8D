@@ -30,13 +30,13 @@ baizhu add stats hp=4780 atk=311 er=0.518 hp%=0.466 hp%=0.466; #main
 baizhu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Clorinde Combo
 fn clorinde_combo() {
@@ -55,9 +55,9 @@ active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   baizhu skill, burst;
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -65,11 +65,11 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   clorinde_combo();
 
   yelan attack, skill, attack;
-  
+
   clorinde_combo();
   #clorinde burst;
 }

@@ -15,7 +15,7 @@ yelan add weapon="favoniuswarbow" refine=3 lvl=90/90;
 yelan add set="emblemofseveredfate" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
 yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2979 cd=0.5958 ;
-																					
+
 xiangling char lvl=90/90 cons=6 talent=9,9,9;
 
 xiangling add weapon="dragonsbane" refine=3 lvl=90/90;
@@ -27,10 +27,10 @@ options swap_delay=12 iteration=1000;
 
 let ca = 0;
 active xingqiu;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
  while !.xingqiu.burst.ready {
      xingqiu attack;
  }
@@ -62,7 +62,7 @@ hutao skill;
         if .hutao.mods.paramita {
          hutao charge;
          ca = ca +1;
-        }    
+        }
 
       if ca >= 8 && .hutao.energy == 60{
       #if ca >= 7 && .energy.hutao == 60{
@@ -83,6 +83,3 @@ hutao skill;
 }
   ca = ca - ca;
 }
-
-
-

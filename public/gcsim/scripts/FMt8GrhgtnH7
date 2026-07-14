@@ -1,5 +1,5 @@
 
-yoimiya char lvl=90/90 cons=6 talent=9,9,9; 
+yoimiya char lvl=90/90 cons=6 talent=9,9,9;
 yoimiya add weapon="thunderingpulse" refine=5 lvl=90/90 +params=[stacks=5];
 yoimiya add set="sr" count=5;
 yoimiya add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
@@ -13,17 +13,16 @@ active yoimiya;
 #-------------------------------------------
 
 while 1 {
-	if .yoimiya.skill.ready {
-		yoimiya skill;
-	} else if .yoimiya.normal==5 {
-		yoimiya attack;
-		if .yoimiya.dash.ready {
-			yoimiya dash;
-		} else {
-			yoimiya jump;
-		}
-	} else {
-		yoimiya attack;
-	}
+  if .yoimiya.skill.ready {
+    yoimiya skill;
+  } else if .yoimiya.normal==5 {
+    yoimiya attack;
+    if .yoimiya.dash.ready {
+      yoimiya dash;
+    } else {
+      yoimiya jump;
+    }
+  } else {
+    yoimiya attack;
+  }
 }
-

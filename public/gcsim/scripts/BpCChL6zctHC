@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -58,19 +58,19 @@ fn execute_action(char_id number, action_id number, p map) {
 options iteration=1000;
 
 # Build assumptions
-dehya char lvl=90/90 cons=1 talent=9,9,9; 
+dehya char lvl=90/90 cons=1 talent=9,9,9;
 dehya add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 dehya add set="vg" count=4;
 dehya add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; #main stats: ER Pyro% CD
 dehya add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main stats: ATK% Pyro% CR
 bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
-kuki char lvl=90/90 cons=6 talent=9,9,9; 
+kuki char lvl=90/90 cons=6 talent=9,9,9;
 kuki add weapon="xiphosmoonlight" refine=1 lvl=90/90;
 kuki add set="scroll" count=4;
 kuki add stats hp=4780 atk=311 em=187 em=187 em=187; # Main stats: EM EM EM

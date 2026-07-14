@@ -36,7 +36,7 @@ for let i=0; i<4; i=i+1 {
   if .wanderer.burst.ready {
     wanderer burst, attack;
   }
-  wanderer skill, attack;	
+  wanderer skill, attack;
   while .wanderer.skydweller-points > 4 {
     if .wanderer.normal < 3 {
       wanderer attack;

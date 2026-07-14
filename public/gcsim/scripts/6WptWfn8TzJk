@@ -29,37 +29,37 @@ options swap_delay=12 iteration=1000;
 active navia;
 
 for let i=0; i<4; i=i+1 {
-  
+
   navia burst;
-  
+
   furina skill, dash, attack, burst, attack;
-  
+
   xilonen skill, attack:2;
   pick_up_crystallize("any");
-  
+
   chiori skill;
   pick_up_crystallize("any");
   chiori skill;
-  
+
   navia skill, attack;
-  
+
   chiori attack, burst, attack:2, skill;
   pick_up_crystallize("any");
   chiori skill;
-  
+
   navia skill[hold=1], attack;
-  
+
   xilonen skill, attack:2;
   pick_up_crystallize("any");
-  
+
   chiori attack, skill;
   pick_up_crystallize("any");
   chiori attack:3, dash, attack:3, skill;
   pick_up_crystallize("any");
   chiori skill;
-  
+
   if is_even(i) {
     navia skill, attack;
   }
-  
+
 }

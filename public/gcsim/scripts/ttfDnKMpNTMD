@@ -11,7 +11,7 @@ hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 
 #hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622;
 #hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2317 cd=0.662; # MH
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
@@ -23,14 +23,14 @@ yelan add set="emblem" count=4;
 yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1488 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140]; # to Fischl
 bennett add set="no" count=4;
-bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; 
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1655 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,7 +46,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     emilie skill, attack;
   }
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -54,9 +54,9 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   bennett skill, burst, attack;
-  
+
   hutao skill,
         attack:3, charge, jump,
         attack:3, charge, jump,

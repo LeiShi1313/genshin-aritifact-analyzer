@@ -25,14 +25,14 @@ citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 #citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Evenstar
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.3306 em=39.64 cr=0.2317 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -49,11 +49,11 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   esco skill, burst;
-  
+
   citlali skill, burst;
-  
+
   yoimiya skill,
     attack:5, dash,
     attack:5, dash,

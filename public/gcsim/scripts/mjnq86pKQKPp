@@ -1,0 +1,81 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+flins char lvl=90/90 cons=1 talent=9,9,9;
+flins add weapon="bloodsoakedruins" refine=1 lvl=90/90;
+//flins add weapon="deathmatch" refine=1 lvl=90/90;
+flins add set="nightoftheskysunveiling" count=4;
+flins add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+flins add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+//flins add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+//flins add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1653 em=39.64 cr=0.2648 cd=0.662; // Deathmatch
+//flins add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.2204 em=39.64 cr=0.2648 cd=0.662;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+ineffa add set="aubadeofmorningstarandmoon" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+ineffa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="sacjade" refine=1 lvl=90/90;
+columbina add set="silkenmoonsserenade" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+columbina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.2317 cd=0.662;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2648 cd=0.1324;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active ineffa;
+for let i=0; i<6; i=i+1 {
+
+  if !is_even(i) {
+    ineffa skill, burst;
+    columbina skill, attack;
+  } else {
+    ineffa skill;
+    if i {
+      ineffa attack;
+      sucrose swap;         print("Sucrose N2C > Columbina    E Q");
+      sucrose attack:2, charge; // Sucrose N4  > Columbina    E Q also works
+      //columbina attack;
+    }
+    columbina skill, burst;
+  }
+
+  if !is_even(i) && .sucrose.burst.ready {
+    sucrose attack, burst;
+  } else if .sucrose.skill.ready {
+    sucrose swap; wait(8); # Hide swap cd warning
+    sucrose attack, skill, dash;
+  } else {
+    sucrose attack, charge;
+  }
+
+  flins skill, attack,
+        skill, burst,
+        attack:4, dash, attack:2,
+        skill, attack, burst,
+        attack:4, dash, attack:2,
+        skill, attack, burst,
+        attack:2;
+
+  # Go back to Sucrose to Refresh 4pc VV
+  if .sucrose.skill.ready {
+    sucrose attack, skill, dash;
+  } else {
+    sucrose attack, charge;
+  }
+}
+
+# Ineffa E  > Sucrose N2C > Columbina E Q  > Sucrose setup > Flins E N1 E Q 2[N4D N2 E N1 Q] N2 > Sucrose setup
+# Ineffa EQ >               Columbina E N1 > Sucrose setup > Flins E N1 E Q 2[N4D N2 E N1 Q] N2 > Sucrose setup

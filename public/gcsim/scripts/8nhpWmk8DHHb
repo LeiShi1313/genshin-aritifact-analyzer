@@ -33,14 +33,13 @@ energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
     kamisatoayato burst[radius=2];
-	kuki skill;
-	kazuha skill, high_plunge, burst, attack;
-	collei burst, skill;
+  kuki skill;
+  kazuha skill, high_plunge, burst, attack;
+  collei burst, skill;
     kamisatoayato skill, attack:15;
-	kuki skill;
-	kazuha skill, high_plunge, burst, attack;
-	collei burst, skill;
+  kuki skill;
+  kazuha skill, high_plunge, burst, attack;
+  collei burst, skill;
     kamisatoayato skill, attack:15;
     print("done");
 }
-

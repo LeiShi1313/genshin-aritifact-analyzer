@@ -24,15 +24,15 @@ bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 
 
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 active bennett;
 
 for let i=0; i<4; i=i+1 {
   bennett burst, skill;
-  
+
   xiangling burst, skill, dash;
-  
+
   if .barbara.skill.ready {
     barbara skill, attack;
   } else {
@@ -48,9 +48,9 @@ for let i=0; i<4; i=i+1 {
     chasca aim[bullets=4];
   }
   set_player_pos(0,0);
-  
+
   bennett attack, skill;
-  
+
   xiangling attack:5;
 }
 

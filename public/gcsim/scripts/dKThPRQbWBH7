@@ -4,26 +4,26 @@ dori char lvl=90/90 cons=6 talent=9,9,9;
 dori add weapon="favoniusgreatsword" refine=3 lvl=90/90;
 dori add set="clam" count=4;
 dori add stats hp=4780 atk=311 hp%=0.466 em=187 heal=0.359 ; #main
-dori add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.2755 em=118.92 cr=0.3972 cd=0.1324 ;																																																																																																																																																																																			
+dori add stats def=39.36 def%=0.124 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.2755 em=118.92 cr=0.3972 cd=0.1324 ;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="wolffang" refine=1 lvl=90/90;
-furina add set="goldentroupe" count=5;							
+furina add set="goldentroupe" count=5;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
-furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;																																																																										
+furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="slingshot" refine=5 lvl=90/90;
 yelan add set="vourukashasglow" count=2;
 yelan add set="tom" count=2;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
-yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;																																																																																																	
+yelan add stats def=39.36 def%=0.124 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
 kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="xiphos" refine=1 lvl=90/90;
 kazuha add set="viridescentvenerer" count=5;
 kazuha add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
-kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3306 em=118.92 cr=0.1324 cd=0.1324 ;											
+kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.3306 em=118.92 cr=0.1324 cd=0.1324 ;
 
 target lvl=100 resist=0.1 hp=1000000000 radius=1 pos=0,2;
 energy every interval=480,720 amount=1;
@@ -40,8 +40,8 @@ if (x == 0) {
  yelan burst,attack,skill,attack:4;
   dori skill,attack:3;
  kazuha attack,skill, high_plunge,attack;
- 
+
   yelan attack:6,skill,attack:2;
- 
+
 }
 yelan attack:4;

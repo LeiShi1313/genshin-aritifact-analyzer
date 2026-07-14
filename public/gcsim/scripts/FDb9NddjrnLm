@@ -7,7 +7,7 @@ alhaitham char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=80];
 #alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3966 cd=0.6605;
                    #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 4[2]  er 2[0]   cr 12[10] cd 10[8]
                    #sub; total[distributed] rolls
-                   
+
 #Wolf-Fang Build ----------------------------------------------------------------
 alhaitham add weapon="wolffang" refine=1 lvl=90/90;
 alhaitham add set="mh" count=4;
@@ -15,7 +15,7 @@ alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #55.695 [91
 alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=178.335 er=0.1101 cr=0.23135 cd=0.6605;
                    #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 9[7]    er 2[0]   cr 7[5]    cd 10[8]
                    #sub; total[distributed] rolls
-                   
+
 #HoD Build ----------------------------------------------------------------------
 #alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
 #alhaitham add set="mh" count=4;

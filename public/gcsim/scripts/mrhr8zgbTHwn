@@ -111,7 +111,7 @@ for let r=0; r<4; r=r+1 {
     }
   }
   xingqiu burst, attack;
-  
+
   diona skill[hold=1], attack;
   while !.diona.burst.ready {
     if .diona.skill.ready {
@@ -121,9 +121,9 @@ for let r=0; r<4; r=r+1 {
     }
   }
   diona burst;
-  
+
   kuki attack, skill, dash;
-  
+
   alhaitham attack;
   let alhaithamStart = f();
   while !.xingqiu.skill.ready {
@@ -140,19 +140,19 @@ for let r=0; r<4; r=r+1 {
         while !.alhaitham.mirrors && (f() - waitStart < 120) {
           alhaitham attack;
         }
-      
+
       case .alhaitham.skill.ready && (.alhaitham.mirrors == 0):
         alhaitham skill[hold=1], low_plunge[short=1];
-      
+
       case !.status.alhaitham-a1-icd && (.alhaitham.mirrors < 3):
         if .alhaitham.normal == 1 {
           alhaitham attack;
         }
         alhaitham charge, dash;
-      
+
       case .alhaitham.normal > 3:
         alhaitham dash;
-      
+
       default:
         alhaitham attack;
     }

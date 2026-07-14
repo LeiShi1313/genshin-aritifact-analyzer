@@ -1,20 +1,20 @@
 # Navia Xilonen Escoffier Xianyun. ~20s Rot. Navia Plunge. 2 Xilonen skills, one funneled to Navia. Rotation gives TTDS to Navia for both skills and all plunges. C0 Xilonen doesn't provide RES shred but is worth using for energy and Scroll.
 
 # Team: Options listed by DPS
-navia char lvl=90/90 cons=0 talent=9,9,9; 
+navia char lvl=90/90 cons=0 talent=9,9,9;
 navia add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 navia add set="nighttime" count=4;
 #navia add set="lno" count=4;
 navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311; #main
 navia add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
 xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="tom" count=4;
 #escoffier add set="gt" count=4;
@@ -30,7 +30,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,7 +43,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.xilonen && action_id == .action.skill) {
     pick_up_crystallize("any");
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -52,17 +52,17 @@ active navia; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   esco skill;
-  
+
   if i > 0 {
     xilonen burst;
   }
-  xilonen skill, attack:2; 
+  xilonen skill, attack:2;
   pick_up_crystallize("any");
-  
+
   navia burst;
-  
-  xianyun skill, low_plunge, burst; 
-   
+
+  xianyun skill, low_plunge, burst;
+
   navia skill;
   for let h = 4; h > 0; h = h - 1 {
     navia jump;
@@ -73,9 +73,9 @@ for let i=0; i<4; i=i+1 {
       navia dash;
     }
   }
-  
+
   xilonen skill, attack:2;
-  
+
   navia skill;
   for let h = 4; h > 0; h = h - 1 {
     navia jump;

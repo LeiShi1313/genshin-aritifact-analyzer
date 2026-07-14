@@ -6,13 +6,13 @@ diona add set="bs" count=4;
 diona add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 diona add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
-mona char lvl=90/90 cons=0 talent=9,9,9; 
+mona char lvl=90/90 cons=0 talent=9,9,9;
 mona add weapon="ttds" refine=5 lvl=90/90;
 mona add set="totm" count=4;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
 mona add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
-venti char lvl=90/90 cons=0 talent=9,9,9; 
+venti char lvl=90/90 cons=0 talent=9,9,9;
 venti add weapon="favbow" refine=3 lvl=90/90;
 venti add set="vv" count=4;
 venti add stats hp=4780 atk=311 em=187 em=187 cr=0.311 ; #main
@@ -34,9 +34,9 @@ for let i = 5; i > 0; i = i - 1 {
   shenhe skill, attack, burst;
 
   venti skill, burst;
-  
+
   mona burst, attack, skill;
-  
+
   diona aim[weakspot=1], skill[hold=1];
 
   shenhe skill, attack;
@@ -45,4 +45,3 @@ for let i = 5; i > 0; i = i - 1 {
 
   diona burst, aim[weakspot=1]:7;
 }
-

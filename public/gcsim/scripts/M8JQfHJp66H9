@@ -16,7 +16,7 @@ chevreuse add set="no" count=4;
 chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
 chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
-xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="catch" refine=5 lvl=90/90;
 xiangling add set="emblem" count=4;
 xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
@@ -34,7 +34,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 #bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # WF
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,13 +47,13 @@ active lisa;
 
 for let i=0; i<4; i=i+1 {
   lisa skill[hold=1], burst; # sleep(20); # Waiting for partcles is similar
-  
+
   bennett burst, skill;
-  
+
   chev burst, skill[hold=1]:3; # Over passing particles to XL
-  
+
   xiangling burst, skill, dash;
-  
+
   bennett skill, attack;
   while .bennett.burst.cd {
     if .bennett.skill.ready {
@@ -62,5 +62,5 @@ for let i=0; i<4; i=i+1 {
       bennett attack;
     }
   }
-  
+
 }

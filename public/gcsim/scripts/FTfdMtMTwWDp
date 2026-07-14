@@ -19,7 +19,7 @@ fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 #bennett add set="scroll" count=4;
@@ -27,7 +27,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.2979 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -44,28 +44,28 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   bennett skill, burst;
-  
+
   if .lanyan.burst.ready {
     lanyan burst;
   }
-  
+
   if .amy.skill.ready {
     amy attack, skill;
   } else {
     amy attack:2, burst;
   }
-  
+
   while .lanyan.skill.ready {
     lanyan skill:2;
   }
   if .lanyan.burst.ready {
     lanyan burst;
   }
-  
+
   bennett attack, skill;
-  
+
   while .furina.skill.cd {
     if .lanyan.normal > 1 && .stam > 50 {
       lanyan charge;

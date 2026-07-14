@@ -42,11 +42,11 @@ fn rand_counter() {
     counter = 2;
   } else if counter > 0.75 && counter <= 0.5 {
     counter = 1;
-  } 
+  }
   else {
     counter = 0;
   }
-  
+
   return counter;
 }
 
@@ -55,11 +55,11 @@ active beidou; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   fischl attack, skill;
-  
+
   furina skill, dash, burst;
-  
+
   mika burst, attack, skill[hold=0];
-  
+
   while .fischl.oz {
     switch {
       case .beidou.skill.ready:
@@ -72,9 +72,9 @@ for let i=0; i<4; i=i+1 {
         beidou attack;
     }
   }
-  
+
   fischl attack:2, burst;
-  
+
   while .furina.skill.cd {
   #while .fischl.skill.cd > 30 {
     switch {
@@ -90,4 +90,3 @@ for let i=0; i<4; i=i+1 {
   }
 
 }
-

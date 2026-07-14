@@ -12,13 +12,13 @@ venti add set="vv" count=4;
 venti add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
 venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=119.6 cr=0.331 cd=0.662;
 
-kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=1; 
+kuki char lvl=90/90 cons=6 talent=9,9,9 start_hp=1;
 kuki add weapon="favoniussword" refine=5 lvl=90/90;
 kuki add set="gildeddreams" count=4;
 kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
 kuki add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
 
-collei char lvl=90/90 cons=6 talent=9,9,9; 
+collei char lvl=90/90 cons=6 talent=9,9,9;
 collei add weapon="favoniuswarbow" refine=5 lvl=90/90;
 collei add set="noblesseoblige" count=4;
 collei add stats hp=4780 atk=311 er=0.518 dendro%=0.466 cr=0.311; #main
@@ -28,8 +28,8 @@ collei add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 active collei;
 # ----  Actions List
 
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {

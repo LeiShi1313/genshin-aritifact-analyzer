@@ -2,14 +2,14 @@ yoimiya char lvl=90/90 cons=0 talent=9,9,9;
 yoimiya add weapon="rust" refine=3 lvl=90/90;
 yoimiya add set="marechausseehunter" count=4;
 #yoimiya add set="shime" count=4;
-yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main 
+yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favoniussword" refine=3 lvl=90/90;
 #furina add set="gt" count=4;
 furina add set="tenacityofthemillelith" count=4;
-furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main 
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2979 cd=0.662;
 
 lynette char lvl=90/90 cons=6 talent=9,9,9;
@@ -18,13 +18,13 @@ lynette add set="viridescentvenerer" count=4;
 lynette add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;  #main
 lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.4634;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=79.28 cr=0.2979 cd=0.7944;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=100;
 
@@ -46,7 +46,7 @@ for let i=0; i<4; i=i+1 {
 
 
 # weapon swirl isn't implemented in sim. in game rotation for c6 lynette + c6 bennett.
-#-------------------------------------------- 
+#--------------------------------------------
 
 #active furina;
 #for let i=0; i<4; i=i+1 {
@@ -60,4 +60,3 @@ for let i=0; i<4; i=i+1 {
 #  lynette skill, attack;
 #  bennett skill;
 #}
-

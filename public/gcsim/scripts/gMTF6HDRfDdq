@@ -31,13 +31,13 @@ kirara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992
 #kirara add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.23808 atk=26.464 atk%=0.07936 er=0.30856 em=31.712 cr=0.29128 cd=0.21184; # Ins/Shields
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 energy every interval=480,720 amount=1;
 
@@ -49,11 +49,11 @@ for let i=0; i<4; i=i+1 {
   kirara skill[hold=1], attack;
   sucrose attack, charge, skill, dash, attack, charge, burst, attack; # Final attack allows Sara's burst to catch Hakushin
   sara aim:2, skill, burst;
-  
+
   fischl aim, skill;
   kirara burst, skill;
   sucrose attack, skill, dash;
   sara aim:1, skill, aim:5, skill;
-  
+
   print("done");
 }

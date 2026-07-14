@@ -21,7 +21,7 @@ aetherelectro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%
 #aetherelectro add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
 #aetherelectro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.1986 cd=0.662; #Em/Pyro/Cr
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
@@ -36,7 +36,7 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 #fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; #ATK/Cr
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140]; # to Fischl
 bennett add set="no" count=4;
 #bennett add set="deepwood" count=4;
@@ -46,7 +46,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.1324; # Heals
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -69,13 +69,13 @@ for let i=0; i<4; i=i+1 {
   } else {
     emilie attack, skill;
   }
-  
+
   # Fill time
   if i > 0 {
     bennett attack:1, charge;
   }
   bennett skill, burst;
-  
+
   # Use burst over skill
   amy attack;
   if .amy.burst.ready {
@@ -83,8 +83,8 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
-  while .aetherelectro.mods.bennett-field || .status.bennettburst { 
+
+  while .aetherelectro.mods.bennett-field || .status.bennettburst {
     switch {
       case .aetherelectro.skill.ready:
         aetherelectro skill[hits=3, amulet_delay=107];
@@ -98,8 +98,8 @@ for let i=0; i<4; i=i+1 {
         aetherelectro attack;
     }
   }
-  
+
   bennett skill, attack; # clear Electro
-  
+
   print("done");
 }

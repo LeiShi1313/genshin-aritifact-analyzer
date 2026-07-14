@@ -1,24 +1,24 @@
 options swap_delay=12 iteration=1000;
 
-ayaka char lvl=90/90 cons=0 talent=9,9,9; 
+ayaka char lvl=90/90 cons=0 talent=9,9,9;
 ayaka add weapon="wolffang" refine=1 lvl=90/90;
 ayaka add set="blizzardstrayer" count=4;
 ayaka add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main;
 ayaka add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.662;
 
-lynette char lvl=90/90 cons=6 talent=9,9,9; 
+lynette char lvl=90/90 cons=6 talent=9,9,9;
 lynette add weapon="favoniussword" refine=3 lvl=90/90;
 lynette add set="viridescentvenerer" count=5;
 lynette add stats hp=4780 atk=311 cr=0.311 atk%=0.466 atk%=0.466; #main
 lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-mona char lvl=90/90 cons=0 talent=9,9,9; 
+mona char lvl=90/90 cons=0 talent=9,9,9;
 mona add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
 mona add set="totm" count=4;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
 mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.2648 cd=0.7944;
 
-shenhe char lvl=90/90 cons=0 talent=9,9,9; 
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
 shenhe add set="noblesse" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
@@ -39,4 +39,3 @@ for let x = 0; x < 5; x = x + 1 {
   lynette attack, skill;
   ayaka dash, attack:2, charge, dash, attack:2, charge;
 }
-

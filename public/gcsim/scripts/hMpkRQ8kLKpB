@@ -3,11 +3,11 @@
 # Team- Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-razor add set="pf" count=4; 
+razor add set="pf" count=4;
 #razor add set="ts" count=4;
-#razor add set="echoes" count=4; 
+#razor add set="echoes" count=4;
 #razor add set="gd" count=4; # Reaction damage
-razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK; PF
 #razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
 #razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/Phys; PF/Echoes
@@ -38,7 +38,7 @@ citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=158.56 cr=0.2979 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -58,15 +58,15 @@ for let i=0; i<4; i=i+1 {
   #} else {
     nahida charge;
   #}
-  
+
   citlali skill, burst;
-  
+
   if .amy.burst.ready {
     amy attack:2, burst;
   } else {
     amy attack:1, skill;
   }
-  
+
   # Standard Rotation
   razor skill, dash, attack, burst;
   razor attack:1, skill, dash;
@@ -74,8 +74,8 @@ for let i=0; i<4; i=i+1 {
   razor attack:3, dash;
   razor attack:3, skill, dash;
   razor attack:3, dash;
-  razor attack:3, dash; 
+  razor attack:3, dash;
   razor attack:3;
-  
+
   print("done");
 }

@@ -48,32 +48,32 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-               
+
           attack:2, charge, dash,
-        
+
           attack:5, dash,
           attack:2;
-          
+
   }
 }
 
-# First rot only 
+# First rot only
 # Furina ED N1 Q > Sigewinne hED > Citlali E N2      > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Furina ED N1 Q > Sigewinne hED > Citlali E N1 Q/N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

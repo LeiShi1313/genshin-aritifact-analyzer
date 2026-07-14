@@ -29,7 +29,7 @@ jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, burst;
   jean skill, burst;
   while !.jean.mods.favonius-cd {

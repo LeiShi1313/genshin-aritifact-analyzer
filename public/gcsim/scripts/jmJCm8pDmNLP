@@ -7,14 +7,14 @@ lyney add set="marechausseehunter" count=4;
 lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
 lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.3972 cd=0.662;
 
-yae char lvl=90/90 cons=0 talent=9,9,9; 
+yae char lvl=90/90 cons=0 talent=9,9,9;
 yae add weapon="widsith" refine=3 lvl=90/90; # yae gets a widsith buff every other rotation
 yae add set="gt" count=4;
 #yae add set="tom" count=4; # marginal team dps increase, gets worse with higher yae investment
 yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
-																														
-fischl char lvl=90/90 cons=6 talent=9,9,9; 
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="alleyhunter" refine=1 lvl=90/90;
 fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
@@ -25,7 +25,7 @@ chevreuse add weapon="favlance" refine=3 lvl=90/90;
 chevreuse add set="no" count=4;
 chevreuse add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
-				
+
 # - Options
 
 options swap_delay=12 iteration=1000;

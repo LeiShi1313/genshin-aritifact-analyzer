@@ -8,7 +8,7 @@ freminet add set="lno" count=4; # Everything else sucks
 freminet add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
@@ -29,7 +29,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3857 em=59.46 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -53,12 +53,12 @@ for let i = 0; i < 4; i = i + 1 {
     esco burst;
   }
   esco skill;
-  
+
   chongyun burst, skill;
-  
+
   xianyun skill, low_plunge, burst; # N1 Needed for Cryo VV
-  
-  freminet skill:2; 
+
+  freminet skill:2;
   FreminetPlunge(); freminet dash;
   FreminetPlunge(); freminet dash;
   FreminetPlunge(); freminet dash;

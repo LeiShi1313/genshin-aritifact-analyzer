@@ -1,4 +1,4 @@
-fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="fadingtwilight" refine=5 lvl=90/90;
 fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
@@ -10,17 +10,17 @@ furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.4634;
 
-xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="kitaincrossspear" refine=5 lvl=90/90;
 xiangling add set="eosf" count=4;
 xiangling add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
 xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.2979 cd=0.7944;
 
-kokomi char lvl=90/90 cons=0 talent=9,9,9; 
+kokomi char lvl=90/90 cons=0 talent=9,9,9;
 kokomi add weapon="hakushinring" refine=5 lvl=90/90;
 kokomi add set="oceanhuedclam" count=4;
 kokomi add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 heal=0.359 ; #main
-kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=79.28 cr=0.0662 cd=0.1324 ;	
+kokomi add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.5952 er=0.1102 em=79.28 cr=0.0662 cd=0.1324 ;
 
 target lvl=100 resist=.1 hp=9999999 radius=2 pos=0,2.4;
 energy every interval=480,720 amount=1;

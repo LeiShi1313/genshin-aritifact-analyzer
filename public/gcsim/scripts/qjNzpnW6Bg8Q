@@ -42,11 +42,11 @@ for let i=0; i<4; i=i+1 {
   } else {
     emilie skill;
   }
-  
+
   thoma skill, burst, attack;
 
   chongyun skill;
-  
+
   yunjin burst,
          attack:4, skill[perfect=1],
          attack:4, dash,

@@ -38,21 +38,20 @@ for let i = 0; i < 5; i = i + 1 {
   kokomi attack, burst,
     attack:2, charge, jump,
     attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2;
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2;
   aetherdendro skill, attack:3;
   if (i == 0) {
-	while (f() < t + 18*60){
-	  kokomi attack:2, charge, jump; 
-	}
-  } else {
-	while (f() < t + 17*60){
-	  kokomi attack:2, charge, jump; 
-	}
+  while (f() < t + 18*60){
+    kokomi attack:2, charge, jump;
   }
-  print("done"); 
+  } else {
+  while (f() < t + 17*60){
+    kokomi attack:2, charge, jump;
+  }
+  }
+  print("done");
   kokomi skill;
   raiden skill;
 }
-

@@ -1,10 +1,10 @@
-# Inserts a randomized delay before swaps 
+# Inserts a randomized delay before swaps
 
 fn rand_delay(mean, stddev) {
   let del = randnorm() * stddev + mean;
   if del > (mean + mean) {
       del = mean + mean;
-  }      
+  }
   delay(del);
 }
 
@@ -16,11 +16,11 @@ fn execute_action(char_id number, action_id number, p map) {
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
   }
-    
+
   # Random delay before swap
   if action_id == .action.swap {
     rand_delay(12, 3);
-  } 
+  }
 
   prev_char_id = char_id;
   prev_action_id = action_id;
@@ -64,38 +64,38 @@ active lyney;
 lyney aim;
 
 while true {
-  
+
   print(.emilie.tags.lumidouce-level);
   print(.emilie.status.lumidouce-case);
-  
+
   if .emilie.burst.ready && .emilie.tags.lumidouce-level >= 2 && !.status.bennettburst { # Prioritize Emilie Q over E if case level is max
     emilie burst;
   }
-  
+
   else if .emilie.skill.ready && !.status.bennettburst && !.emilie.burst.cd { # Emilie E when Q can't be used to maintain case
     emilie skill, attack;
   }
-  
+
   else if .zhongli.skill.ready && !.status.bennettburst {
     zhongli skill[hold=1], dash, attack;
   }
-  
+
   else if .bennett.burst.ready || !.bennett.burst.cd && .bennett.energy >= 55 {
     bennett skill, burst;
   }
-  
+
   else if .lyney.status.mh-4pc && .lyney.burst.ready && .status.bennettburst { # Condition could be more refined. Ideally you build 2 MH stacks before Lyney Q.
     lyney burst;
     delay(11);   # Don't detonate burst before collision damage
     lyney skill; # Detonate burst
   }
-  
+
   else if .lyney.skill.ready && ( .status.bennettburst && .lyney.energy < 55 && .lyney.propSurplusStacks == 5 || !.status.bennettburst && .lyney.status.bennett-field < 120 ) {
     lyney skill; # Lyney E at 5 prop stacks unless Bennett Q will expire soon, and not if Q is ready very soon
   }
-  
+
   else {
     lyney aim;
   }
-  
+
 }

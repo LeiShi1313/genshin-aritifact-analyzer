@@ -5,7 +5,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
     pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 

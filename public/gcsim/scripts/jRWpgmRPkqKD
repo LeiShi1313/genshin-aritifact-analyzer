@@ -30,7 +30,7 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 
 energy every interval=480,720 amount=1;
 
-# set swap icd to be 24 frames to simulate booking 
+# set swap icd to be 24 frames to simulate booking
 set_swap_icd(24);
 
 
@@ -48,7 +48,7 @@ for let i=0; i<5; i=i+1 {
   mualani attack, skill, attack;
   mavuika skill;
   sucrose skill, dash;
-  # Mualani burst hit the target immediately 
+  # Mualani burst hit the target immediately
   # given Mualani is close enough to the target
   mualani burst[travel=1];
   # xilonen skill in cd, so casting 2 additional attacks
@@ -62,4 +62,3 @@ for let i=0; i<5; i=i+1 {
   }
   mualani skill;
 }
-

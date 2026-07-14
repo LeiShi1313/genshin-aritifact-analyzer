@@ -41,4 +41,3 @@ for let x=0; x<4; x=x+1 {
 wait(173);
 
 # Raiden N1 E > Nahida EQ > Lynette EQ > Neuvillette N1 E C Q N1 > Lynette E N1 > Neuvillette N1C N1 E 2[C]
-

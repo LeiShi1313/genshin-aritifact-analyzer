@@ -2,7 +2,7 @@
 
 # Team
 charlotte char lvl=90/90 cons=6 talent=9,9,9;
-charlotte add weapon="widsith" refine=3 lvl=90/90; 
+charlotte add weapon="widsith" refine=3 lvl=90/90;
 charlotte add set="bs" count=4;
 #charlotte add set="mh" count=4;
 charlotte add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
@@ -27,7 +27,7 @@ kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 kazuha add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -39,21 +39,20 @@ active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   shenhe skill, burst;
-  
+
   kazuha skill, high_plunge[collision=rand()>0.2];
-  
+
   charlotte burst, skill[hold=1];
 
   kazuha burst, skill, high_plunge[collision=rand()>0.2];
-  
+
   shenhe attack, skill;
-  
+
   charlotte attack:3, dash, attack:3, dash, attack:2;
-  
+
   kazuha skill, high_plunge[collision=rand()>0.2];
-  
+
   charlotte attack:2, dash, attack;
 }
-

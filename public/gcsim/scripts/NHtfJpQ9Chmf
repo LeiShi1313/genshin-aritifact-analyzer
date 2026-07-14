@@ -43,7 +43,7 @@ while x {
     attack:1, charge, jump,
     attack:1, charge, jump,
     attack:1, charge, jump,
-    attack;  
+    attack;
   yelan skill, attack;
 
 x = x - 1;

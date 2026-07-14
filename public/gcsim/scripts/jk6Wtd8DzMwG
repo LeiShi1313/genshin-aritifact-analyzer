@@ -8,7 +8,7 @@ razor add set="ts" count=4;
 #razor add set="pf" count=4;
 razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
 razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/Electro; PF/TS
-#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK; PF
 #razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622 ; #main
 #razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/Phys; Echoes
@@ -35,31 +35,31 @@ kirara add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.15872 atk=26.464 atk%=0
 #kirara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.1324 ; # NO
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active razor; # SS stacks
 
 for let i=0; i<4; i=i+1 {
-	fischl attack, skill;
-	
-	kazuha skill, high_plunge, burst;
-	
-	kirara skill[hold=1], burst, attack;
-	
-	fischl attack:2, burst;
-	
-	kazuha skill, high_plunge;
-	
-	razor skill, dash, attack, burst, attack, skill, dash;
+  fischl attack, skill;
+
+  kazuha skill, high_plunge, burst;
+
+  kirara skill[hold=1], burst, attack;
+
+  fischl attack:2, burst;
+
+  kazuha skill, high_plunge;
+
+  razor skill, dash, attack, burst, attack, skill, dash;
     while .fischl.skill.cd > 60 {
-	  if .razor.normal > 3 && .razor.skill.ready {
+    if .razor.normal > 3 && .razor.skill.ready {
        razor skill, dash;
     } else if .razor.normal > 3 {
       razor dash;

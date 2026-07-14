@@ -10,7 +10,7 @@ xiangling add set="ap" count=4;
 xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
 xiangling add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944 ;
 
-zhongli char lvl=90/90 cons=0 talent=9,9,9; 
+zhongli char lvl=90/90 cons=0 talent=9,9,9;
 zhongli add weapon="favoniuslance" refine=3 lvl=90/90;
 zhongli add set="totm" count=4;
 zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311 ; #main
@@ -29,19 +29,19 @@ energy every interval=480,720 amount=1;
 active lyney;
 
 for let r = 4; r > 0; r = r - 1 {
-  
+
   lyney aim;
-  
+
   zhongli skill[hold=1], dash;
   while !.zhongli.mods.favonius-cd {
     zhongli attack;
   }
-  
+
   if !.bennett.burst.ready {
     bennett skill;
   }
   bennett burst;
-  
+
   if .xiangling.burst.ready {
     xiangling burst, skill, dash;
   }
@@ -49,9 +49,9 @@ for let r = 4; r > 0; r = r - 1 {
     xiangling attack, skill, dash, attack;
   }
   pick_up_crystallize("pyro");
-  
+
   lyney aim[weakspot=1], aim;
-  
+
   if .lyney.burst.ready {
     lyney burst;
     delay(11); # Just so he doesn't cancel his own burst before it deals damage
@@ -62,5 +62,5 @@ for let r = 4; r > 0; r = r - 1 {
   }
 
   lyney aim, aim[weakspot=1], skill;
-  
+
 }

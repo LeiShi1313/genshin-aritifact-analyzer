@@ -20,7 +20,7 @@ kokomi add stats def%=0.262 def=60 hp=6573 hp%=1.347 atk=349 atk%=0.14 er=0.24 c
 
 options swap_delay=12 iteration=1000;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active chiori;
@@ -29,7 +29,7 @@ for let i = 0; i < 4; i = i + 1 {
   chiori skill:2;
   furina attack, skill, dash, burst;
   kokomi attack;
-  if .kokomi.burst.ready { 
+  if .kokomi.burst.ready {
     kokomi burst;
   }
   kokomi skill;
@@ -38,8 +38,8 @@ for let i = 0; i < 4; i = i + 1 {
   for let combo = 0; combo < 3; combo = combo + 1 {
     chiori skill, attack;
     while !.chiori.skill.ready {
-      if .chiori.burst.ready { 
-        chiori burst; 
+      if .chiori.burst.ready {
+        chiori burst;
       }
       # N3D
       if .chiori.normal == 4 {

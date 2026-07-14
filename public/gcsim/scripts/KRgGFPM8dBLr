@@ -1,4 +1,4 @@
-dehya char lvl=90/90 cons=0 talent=9,9,9; 
+dehya char lvl=90/90 cons=0 talent=9,9,9;
 dehya add weapon="aquamarine" refine=1 lvl=90/90;
 dehya add set="fopl" count=2;
 dehya add set="wt" count=2;
@@ -39,7 +39,7 @@ active lyney;
 
 let last_weakspot_time = -10000;
 fn aim_w() {
-  
+
   if f()-last_weakspot_time > 60*6 {
     last_weakspot_time = f();
     lyney aim[weakspot=1];

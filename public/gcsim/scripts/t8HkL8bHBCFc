@@ -1,9 +1,9 @@
 arle char lvl=90/90 cons=0 talent=9,9,9;
 arle add weapon="fjords" refine=1 lvl=90/90;
 arle add set="fohw" count=5;
-arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; 
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
 arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
-        
+
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favoniuswarbow" refine=4 lvl=90/90;
 yelan add set="eosf" count=4;
@@ -16,7 +16,7 @@ lanyan add set="vv" count=4;
 lanyan add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 lanyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
@@ -29,7 +29,7 @@ energy every interval=480,720 amount=1;
 active arle;
 
 for let i = 0; i < 4; i = i + 1 { # total 4rots, 2 TTDS rots
-  arle skill; 
+  arle skill;
   bennett skill, attack;
   yelan skill, attack, burst, attack;
   bennett burst;
@@ -44,9 +44,9 @@ for let i = 0; i < 4; i = i + 1 { # total 4rots, 2 TTDS rots
       lanyan attack, dash;   # using dash after N1; C0 swapping to early right after Lan Yan N1 makes Arle N1 fail to trigger Yelan Q due to cd
     //}
   }
-  arle attack:3, charge, 
-       attack:3, dash, 
-       attack:3, dash, 
+  arle attack:3, charge,
+       attack:3, dash,
+       attack:3, dash,
        attack:3, dash,
        attack:3, dash,
        attack:3;
@@ -55,4 +55,4 @@ for let i = 0; i < 4; i = i + 1 { # total 4rots, 2 TTDS rots
   }
 }
 
-# Arle E > Bennett E > Yelan E N1 Q N1 > Bennett Q > Lan Yan (Q) 2[E] (N1 if C0) > Arle N3C 5[N3D] 
+# Arle E > Bennett E > Yelan E N1 Q N1 > Bennett Q > Lan Yan (Q) 2[E] (N1 if C0) > Arle N3C 5[N3D]

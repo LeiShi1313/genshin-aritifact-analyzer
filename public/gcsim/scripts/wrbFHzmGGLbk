@@ -9,7 +9,7 @@ ganyu add set="bs" count=4;
 ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
@@ -21,7 +21,7 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.6061 em=39.64 cr=0.3972 cd=0.1324;
 
-charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte char lvl=90/90 cons=6 talent=9,9,9;
 charlotte add weapon="ttds" refine=5 lvl=90/90;
 charlotte add set="ohc" count=4;
 #charlotte add set="sodp" count=4;
@@ -29,7 +29,7 @@ charlotte add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311;
 charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6061 em=39.64 cr=0.1324 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,20 +46,19 @@ for let x = 0; x < 4; x = x + 1 {
     furina attack;
   }
   furina burst;
-  
+
   shenhe burst, skill;
-  
+
   charlotte skill, burst;
-  
+
   ganyu aim[hold=2, weakspot=rand()>0.2], burst, skill;
-  ganyu aim[hold=2, weakspot=rand()>0.2], 
+  ganyu aim[hold=2, weakspot=rand()>0.2],
         aim[hold=2, weakspot=rand()>0.2];
-  
+
   shenhe skill, attack;
-  
+
   ganyu aim[hold=2, weakspot=rand()>0.2],
         aim[hold=2, weakspot=rand()>0.2],
         aim[hold=2, weakspot=rand()>0.2],
         skill;
 }
-

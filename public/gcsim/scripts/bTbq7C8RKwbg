@@ -38,5 +38,3 @@ for let i = 0; i < 5; i = i + 1{
   ayaka dash, attack:2, charge, dash, attack:2, skill, attack, charge, attack, charge;
   print("rotation done");
 }
-
-

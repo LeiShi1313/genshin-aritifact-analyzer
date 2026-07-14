@@ -42,4 +42,3 @@ ayato skill, attack:12;
 
   rotations = rotations - 1;
 }
-

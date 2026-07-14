@@ -10,7 +10,7 @@ citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 em=187 em=187 em=187;
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
-xilonen char lvl=90/90 cons=6 talent=10,10,10; 
+xilonen char lvl=90/90 cons=6 talent=10,10,10;
 xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
 xilonen add set="ap" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583;
@@ -48,10 +48,10 @@ for let i=0; i<4; i=i+1 {
     }
     delay(28);
   }
-  
+
   delay(15);
   print("14f wait after 4th plunge");
-  
+
   for let j=0; j<3; j=j+1 {
     klee jump;
     if .airborne {

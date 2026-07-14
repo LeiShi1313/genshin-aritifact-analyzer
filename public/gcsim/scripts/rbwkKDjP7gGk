@@ -79,10 +79,9 @@ for let i = 0; i < 5; i = i + 1 {
   jean burst;
   yelan burst, attack, skill, attack, skill, attack:3;
   jean skill, attack;
-  raiden burst, 
+  raiden burst,
          attack:4, skill,
          attack:4, dash,
          attack:4, dash,
          attack:4;
 }
-

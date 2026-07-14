@@ -22,7 +22,7 @@ citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 em=187 em=187 em=187;
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.4634;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="totm" count=4;
 escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
@@ -38,7 +38,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active xingqiu;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   xingqiu skill, dash, burst, attack;
   escoffier skill, burst, attack;
   citlali skill, attack, burst, attack;
@@ -46,31 +46,31 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
 }
 
-# First rot only 
+# First rot only
 # Xingqiu ED Q N1 > Escoffier EQ N1 > Citlali E N1 Q N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Xingqiu ED Q N1 > Escoffier EQ N1 > Citlali E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

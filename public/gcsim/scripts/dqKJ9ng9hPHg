@@ -22,7 +22,7 @@ options swap_delay=12 iteration=1000;
 
 active fischl;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
   fischl aim;
   kazuha skill, high_plunge, burst;
@@ -42,4 +42,3 @@ for let i=0; i<4; i=i+1 {
   kazuha skill, high_plunge, burst;
   print("done!");
 }
-

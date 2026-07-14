@@ -12,7 +12,7 @@ nahida add set="tom" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
-faruzan char lvl=90/90 cons=6 talent=9,9,9; 
+faruzan char lvl=90/90 cons=6 talent=9,9,9;
 faruzan add weapon="stringless" refine=3 lvl=90/90;
 faruzan add set="vv" count=4;
 faruzan add stats hp=4780 atk=311 em=187 em=187 cr=0.311;
@@ -29,7 +29,7 @@ target lvl=100 resist=0.1 hp=100000000 pos=2,0;
 energy every interval=480,720 amount=1;
 
 active fischl;
-for let i = 6; i > 0; i = i - 1 { 
+for let i = 6; i > 0; i = i - 1 {
   if i > 0 {
     fischl attack:2;
   }
@@ -44,4 +44,3 @@ for let i = 6; i > 0; i = i - 1 {
   heizou attack:2, charge, attack:3, charge, attack, charge, skill;
   print("rotation done");
 }
-

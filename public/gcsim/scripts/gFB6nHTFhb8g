@@ -38,45 +38,45 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 
 active furina;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
-  
+
   shenhe skill[hold=1], burst;
   if !.shenhe.mods.favonius-cd && .shenhe.weapon == .keys.weapon.favlance {
     shenhe attack;
   }
-  
+
   kokomi skill, dash, attack;
 
   if i == 0 && First_Rot_Nuke == true {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack:2;
   }
 }
 
-# First rot only 
+# First rot only
 # Furina ED N1 Q > Shenhe hEQ (NX) > Kokomi EDN1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # Furina ED N1 Q > Shenhe hEQ (NX) > Kokomi EDN1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

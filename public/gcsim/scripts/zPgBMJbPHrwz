@@ -22,7 +22,7 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 kuki char lvl=90/90 cons=6 talent=9,9,9; # start_hp=1;
 kuki add weapon="wolffang" refine=1 lvl=90/90;
 #kuki add weapon="xiphos" refine=1 lvl=90/90;
-kuki add set="tom" count=4; 
+kuki add set="tom" count=4;
 #kuki add set="gt" count=4;
 kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
 kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.3972 cd=0.331; # DMG
@@ -30,7 +30,7 @@ kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662; # Heals
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -60,7 +60,7 @@ for let i=0; i<4; i=i+1 {
     fischl skill;
   }
 
-  nahida skill; 
+  nahida skill;
   if i > 0 && .nahida.burst.ready { # Wanted to fill time
     nahida attack, burst, charge;
   } else if i == 0 {
@@ -68,12 +68,12 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida attack, charge, dash, charge;
   }
-  
+
   kuki skill, attack;
   if .kuki.burst.ready {
     kuki burst;
   }
-  
+
   clorinde_combo();
   clorinde burst;
 }

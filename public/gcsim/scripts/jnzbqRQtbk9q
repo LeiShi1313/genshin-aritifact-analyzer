@@ -21,7 +21,7 @@ lauma add set="deepwood" count=5;
 lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
 lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
 
-kuki char lvl=90/90 cons=6 talent=9,9,9; 
+kuki char lvl=90/90 cons=6 talent=9,9,9;
 kuki add weapon="xiphos" refine=1 lvl=90/90;
 kuki add set="fopl" count=4;
 kuki add stats hp=4780 atk=311 em=187 em=187 em=187;
@@ -46,19 +46,19 @@ for let i=0; i<4; i=i+1 {
   alhaitham attack:2, charge, dash;
   alhaitham attack:3, charge, dash;
   kuki burst;
-  
+
   lauma attack, skill[hold=1];
   alhaitham burst;
   kuki skill, attack;
-  
+
   alhaitham attack:3, dash;
   alhaitham attack:2, charge, dash;
-  
+
   alhaitham attack:3, dash;
   alhaitham attack:3, charge, dash;
   alhaitham attack:3, dash;
   alhaitham attack:3, charge, dash;
-  
+
   alhaitham attack:2;
 }
 

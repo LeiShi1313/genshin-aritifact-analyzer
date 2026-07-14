@@ -10,7 +10,7 @@ xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 #xianyun add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 #xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=118.92 cr=0.331 cd=0.331; # 2T
 
-nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="tom" count=4;
 #nahida add set="gt" count=4;
@@ -35,31 +35,31 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # ATK Sands
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active yae;
 
 for let i = 0; i < 4; i = i + 1 {
   yae skill:3;
-  
+
   nahida skill;
   if i > 0 && .nahida.burst.ready {
     nahida burst, charge;
   } else {
     nahida attack, charge;
   }
-  
+
   fischl attack, skill;
-  
+
   xianyun skill, low_plunge, attack, burst; # Attack for Fischl C6
-  
+
   while .yae.skill.charge < 3 {
     if .xianyun.status.xianyun-airborne-buff {
       xianyun jump;
@@ -72,11 +72,11 @@ for let i = 0; i < 4; i = i + 1 {
       xianyun attack;
     }
   }
-  
+
   yae skill:3;
-  
+
   fischl attack:2, burst;
-  
+
   # Matches Yae Totems expiring
   while .status.yae_oldest_totem_expiry > 390 {
     if .xianyun.skill.ready {
@@ -92,9 +92,9 @@ for let i = 0; i < 4; i = i + 1 {
       xianyun attack;
     }
   }
-  
+
   if .yae.burst.ready && .yae.energy == .yae.energymax {
     yae burst;
   }
-  
+
 }

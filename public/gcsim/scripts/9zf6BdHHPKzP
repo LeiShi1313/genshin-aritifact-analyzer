@@ -16,7 +16,7 @@ gorou char lvl=90/90 cons=6 talent=9,9,9;
 gorou add weapon="favoniuswarbow" refine=4 lvl=90/90;
 gorou add set="theexile" count=4;
 gorou add stats hp=3571 atk=232 er=0.3885 geo%=0.3495 cr=0.311; #main
-gorou add stats def=33.0624 def%=0.10416 hp=426.6192 hp%=0.083328 atk=27.7872 atk%=0.0834272 er=0.478268 em=33.2976 cr=0.386608 cd=0.309816;										
+gorou add stats def=33.0624 def%=0.10416 hp=426.6192 hp%=0.083328 atk=27.7872 atk%=0.0834272 er=0.478268 em=33.2976 cr=0.386608 cd=0.309816;
 # 0.84x stat scalar to account for one 5* artifact
 
 kokomi char lvl=90/90 cons=0 talent=9,9,9;
@@ -38,25 +38,25 @@ active gorou;
   gorou skill, burst;
   albedo attack, skill;
   kokomi attack,skill;
-  
-  itto attack, burst[prestack=1], 
-       attack, skill, attack:2, charge:5, 
-       attack:4, charge:5, 
+
+  itto attack, burst[prestack=1],
+       attack, skill, attack:2, charge:5,
+       attack:4, charge:5,
        skill[travel=0], charge;
        sleep(21); #catch ushi particles
-       
+
        #"C0 1PS" combo
 
   for let i=0; i<4; i=i+1 {
-  
+
   gorou attack:2, skill, burst;
   albedo attack, skill, attack;
   kokomi attack, skill;
-  
-  itto attack, burst[prestack=1], 
+
+  itto attack, burst[prestack=1],
        attack, skill, charge:4,
-       attack:3, charge:4, 
-       attack:3, skill, charge:4; 
-       
+       attack:3, charge:4,
+       attack:3, skill, charge:4;
+
        #"C0 2PS" combo
   }

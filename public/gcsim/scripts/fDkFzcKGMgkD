@@ -1,4 +1,4 @@
-# Razor Rosaria Fischl Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging. OHC > SoDP Xianyun, but bubbles may miss. Razor uses burst when ready just to fill rotation time. 50% Collisions. 
+# Razor Rosaria Fischl Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging. OHC > SoDP Xianyun, but bubbles may miss. Razor uses burst when ready just to fill rotation time. 50% Collisions.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
@@ -24,7 +24,7 @@ fischl add set="tom" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add set="ohc" count=4; # Bubbles may miss
 #xianyun add set="sodp" count=4;
@@ -32,7 +32,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -52,15 +52,15 @@ fn RazorPlunge() {
 
 for let x = 0; x < 4; x = x + 1 {
   xianyun skill, low_plunge, burst;
-  
-  if .amy.skill.ready { 
-    amy attack:1, skill; 
-  } else { 
-    amy attack:2, burst; 
+
+  if .amy.skill.ready {
+    amy attack:1, skill;
+  } else {
+    amy attack:2, burst;
   }
-  
+
   rosaria skill, burst;
-  
+
   razor skill;
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;

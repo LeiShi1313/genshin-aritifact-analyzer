@@ -26,7 +26,7 @@ options swap_delay=12 iteration=1000;
 
 active mualani;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn mualani_combo() {
@@ -46,16 +46,16 @@ mualani attack; # for hydro swirl in the 1st rot
 
 for let i=0; i<2; i=i+1 {
   lynette skill;
-  xiangling burst, skill, dash; 
+  xiangling burst, skill, dash;
   candace skill, attack, burst;
   wait(8); #catch her own hydro particles on-field
   mualani burst;
   mualani skill;
   mualani_combo();
-  
+
   candace skill, attack:2, dash;
   if !.candace.burst.ready && !.candace.mods.favonius-cd {
-    candace attack; 
+    candace attack;
   }
   candace burst;
   xiangling skill, dash, attack;
@@ -65,9 +65,8 @@ for let i=0; i<2; i=i+1 {
   if .mualani.nightsoul.state {
     mualani skill; # exit the nightsoul state
   }
-  
+
   while !.element.t0.hydro {
     mualani attack;
   }
 }
-

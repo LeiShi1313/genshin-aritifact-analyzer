@@ -26,8 +26,8 @@ mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.396
 kuki char lvl=90/90 cons=6 talent=9,9,9;
 #kuki add weapon="wolffang" refine=1 lvl=90/90;
 kuki add weapon="xiphos" refine=1 lvl=90/90;
-kuki add set="deepwood" count=4; 
-#kuki add set="tom" count=4; 
+kuki add set="deepwood" count=4;
+#kuki add set="tom" count=4;
 #kuki add set="gt" count=4;
 kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
 kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.3641 cd=0.331; # DMG
@@ -36,7 +36,7 @@ kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -62,13 +62,13 @@ active nahida;
 nahida skill;
 
 for let i=0; i<4; i=i+1 {
-  # Skip Q on  first rotation, then use as available 
+  # Skip Q on  first rotation, then use as available
   if !is_even(i) {
     nahida skill, attack, burst, charge;
   } else if i > 0 {
     nahida skill, attack:2, charge;
   }
-  
+
   kuki skill, attack;
   if i > 0 && .kuki.burst.ready  {
     kuki burst;
@@ -85,7 +85,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     mav skill, attack;
   }
-  
+
   sethos skill; #aim[hold=2] # High ping only; dodges energy drain
   sethosCombo();
   sethos aim[hold=2]:1;

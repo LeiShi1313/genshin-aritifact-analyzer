@@ -27,7 +27,7 @@ baizhu add stats hp=3571 atk=232 er=0.3885 hp%=0.466 hp%=0.3495; #main
 baizhu add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.23142 em=33.2976 cr=0.27804 cd=0.166824;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,29 +43,29 @@ for let i=0; i<4; i=i+1 {
   } else {
     yae skill, attack, skill, attack, skill;
   }
-  
+
   kazuha skill, high_plunge;
-  
+
   fischl attack, skill;
-  
+
   baizhu skill, burst;
-  
+
   kazuha attack, burst;
-  
+
   yae attack:2, charge, dash;
   yae burst, skill, attack, skill, skill;
-  
+
   kazuha skill, high_plunge;
-  
+
   fischl attack:2, burst;
-  
+
   baizhu skill, attack;
-  
+
   yae attack:2, charge, dash;
   yae attack:2;
-  
+
   kazuha skill, high_plunge;
-  
+
   yae attack:1, charge, dash;
   yae attack:2, charge, dash;
 }

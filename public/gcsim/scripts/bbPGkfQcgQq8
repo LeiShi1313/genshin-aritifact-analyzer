@@ -29,8 +29,8 @@ yaoyao add stats hp%=0.0992 hp=507.88 atk%=0.0992 atk=33.08 def%=0.124 def=39.36
 
 options swap_delay=12 iteration=1000;
 active nilou;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=2.5,0.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {

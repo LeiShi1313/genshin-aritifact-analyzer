@@ -22,14 +22,14 @@ xingqiu add set="emblem" count=4;
 xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
 xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -42,7 +42,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.xilonen && action_id == .action.skill ) {
     pick_up_crystallize("any");
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -53,19 +53,19 @@ for let i = 0; i < 4; i = i + 1 {
   if i > 0 {
     xilonen burst;
   }
-  
+
   furina skill, dash, burst;
-  
+
   xq skill, dash, burst, attack;
-  
+
   xilonen skill, attack:2;
-  
+
   noelle skill, attack, burst;
   noelle attack:3, dash;
   noelle attack:3, dash;
   noelle attack:3;
-  
+
   xilonen skill, attack:2;
-  
+
   noelle attack:4;
 }

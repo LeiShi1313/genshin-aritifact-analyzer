@@ -10,7 +10,7 @@ hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 
 #hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622; #main
 #hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # SR
 
-chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favlance" refine=3 lvl=90/90;
 chevreuse add set="no" count=4;
 chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
@@ -29,7 +29,7 @@ ororon add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.3972 cd=0.1986;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12; # KQMS
 energy every interval=480,720 amount=1; # KQMS
 
@@ -39,13 +39,13 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # 1T
 # Rotation
 active mav; # SS Stacks
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   ororon burst, skill;
-  
+
   chev burst, skill[hold=1];
-  
+
   mav skill, burst, charge:2 ,dash, charge:2, dash;
-  
+
   hutao skill,
     attack:3, charge, jump,
     attack:2, charge, jump,

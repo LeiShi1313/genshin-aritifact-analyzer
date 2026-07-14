@@ -3,7 +3,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) {
     pick_up_crystallize("any"); # Pick up crystallize before every dash and Yelan E
   }
-    
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -39,8 +39,8 @@ energy every interval=480,720 amount=1;
 active zhongli;
 for let x=0; x<4; x=x+1 {
   zhongli skill[hold=1], dash;
-  while !.zhongli.mods.favonius-cd { 
-    zhongli attack; 
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
   }
   navia   burst;
   yelan skill, burst, attack;
@@ -52,4 +52,3 @@ for let x=0; x<4; x=x+1 {
   bennett skill, attack;
   navia   skill[hold=1], attack:3, dash, attack:2;
 }
-

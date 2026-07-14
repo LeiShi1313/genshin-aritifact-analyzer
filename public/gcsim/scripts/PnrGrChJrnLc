@@ -5,7 +5,7 @@ kazuha add stats hp=4780 atk=311 em=187 em=187 cd=0.622 ; #main
 kazuha add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.3641 cd=0.662 ;
 #kazuha 8 cdmg, 9 cr, 3 em. moved one sub from cr->em because of xianyun A1
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="freedomsworn" refine=5 lvl=90/90 ;
 bennett add set="instructor" count=4;
 bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 cr=0.232; #mainstats
@@ -40,9 +40,9 @@ for let i=0; i<4; i=i+1 {
   xianyun skill, low_plunge, burst;
   kazuha burst;
   bennett skill, dash, burst, attack;
-  kazuha skill, high_plunge; 
+  kazuha skill, high_plunge;
 
-#for ingame, use this 
+#for ingame, use this
 #  furina E dash Q
 #  xianyun EPQ
 #  kazuha Q

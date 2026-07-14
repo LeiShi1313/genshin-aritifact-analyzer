@@ -51,7 +51,7 @@ fn execute_action(char_id number, action_id number, p map) {
 
   if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
     delay(randy(3, 1, 0, 6)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
-    
+
   } else if prev_action_id != .action.attack {
     delay(randy(3, 1, 0, 6)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
   }

@@ -19,7 +19,7 @@ lauma add set="deepwood" count=5;
 lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
 lauma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.331 cd=0.2648;
 
-ineffa char lvl=90/90 cons=0 talent=9,9,9; 
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
 ineffa add weapon="fjords" refine=1 lvl=90/90;
 ineffa add set="fopl" count=4;
 ineffa add stats hp=4780 atk=311 em=187 em=187 em=187;
@@ -45,5 +45,5 @@ for let i=0; i<4; i=i+1 {
 }
 wait(173);
 
-# Lauma N1 (1st rot) > 
+# Lauma N1 (1st rot) >
 # Neuvillette E N1 > Furina E > Lauma N1 Q hE N1 > Ineffa E > Furina Q > Neuvillette N1 C E C Q > Lauma hE > Neuvillette N1 2[C]

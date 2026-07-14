@@ -24,7 +24,7 @@ fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.1102 em=118.92 cr=0.2648 cd=0.1324;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 #xilonen add set="ap" count=4;
@@ -34,7 +34,7 @@ xilonen add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #xilonen add stats def%=0.434 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.331 cd=0.1324; # AP
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,7 +47,7 @@ active yelan;
 
 for let i=0; i<4; i=i+1 {
   xilonen burst;
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -55,12 +55,12 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   xilonen skill, attack:2;
   if .xilonen.sets.ap >= 4 {
     pick_up_crystallize("any");
   }
-  
+
   if .fischl.skill.ready {
     fischl attack, skill;
     if .fischl.sets.ap >= 4{
@@ -72,7 +72,7 @@ for let i=0; i<4; i=i+1 {
       pick_up_crystallize("any");
     }
   }
-  
+
   aetherpyro attack, skill[hold=1];
   while .yelan.mods.yelanburst {
   #while .aetherpyro.mods.nightsoul-blessing {

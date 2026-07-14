@@ -24,29 +24,29 @@ furina add stats hp=5079 hp%=1.113 atk=344 atk%=0.040999999999999995 er=0.563000
 target lvl=100 resist=0.1 hp=100000000 pos=3,0 radius=2;
 energy every interval=480,720 amount=1;
 
-active furina;                                   
-for let i = 0; i < 4; i = i + 1 { ## Do the rotation 4 times 
+active furina;
+for let i = 0; i < 4; i = i + 1 { ## Do the rotation 4 times
   furina skill, dash, attack, burst; ## Furina abilities active
-  
+
   xianyun skill, low_plunge, attack, burst; ## Xianyun abilities active
-  
+
   bennett skill, burst; ## Bennett abilities active
 
   xianyun attack, charge; ## Xianyun abilities active
   wait(50); ## Xianyun swirls (sometimes)
-  
+
   for let q = 0; q < 8; q = q + 1 { ## Qiqi does 8 plunges
     qiqi jump;
     if !.element.t0.hydro { ## Qiqi delays plunge if enemy has no hydro aura
-      delay(20); 
+      delay(20);
     }
     if .airborne {
-      qiqi high_plunge[collision=rand()>0.5], dash; 
+      qiqi high_plunge[collision=rand()>0.5], dash;
     }
   }
   if .qiqi.skill.ready { ## DPS gain
     qiqi skill;
   }
-  
+
   bennett skill; ## Bennett extra skill while waiting for Furina skill cd
 }

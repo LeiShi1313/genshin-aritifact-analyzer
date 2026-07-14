@@ -1,4 +1,4 @@
-neuvillette char lvl=90/90 cons=0 talent=9,9,9; 
+neuvillette char lvl=90/90 cons=0 talent=9,9,9;
 neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90 ;
 neuvillette add set="mh" count=4;
 neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main

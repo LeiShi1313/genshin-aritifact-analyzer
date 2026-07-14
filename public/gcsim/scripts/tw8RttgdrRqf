@@ -21,34 +21,34 @@ fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
 
 bennett char lvl=90/90 cons=5 talent=9,9,9;
-bennett add weapon="alleyflash" refine=1 lvl=90/90; 
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active xinyan;
 
 for let i=0; i<4; i=i+1 {
   bennett skill, burst;
-  
+
   rosaria skill, burst;
-  
-  if .amy.skill.ready { 
-    amy attack:1, skill; 
-  } else { 
-    amy attack:2, burst; 
+
+  if .amy.skill.ready {
+    amy attack:1, skill;
+  } else {
+    amy attack:2, burst;
   }
-  
+
   xinyan skill;
   # xinyan burst, attack:5;
   while .xinyan.skill.cd > 720 {
@@ -60,9 +60,9 @@ for let i=0; i<4; i=i+1 {
       xinyan attack;
     }
   }
-  
+
   rosaria skill;
-  
+
   # xinyan attack:4;
   while .xinyan.skill.cd > 380 {
     if .xinyan.burst.ready && .xinyan.energy == .xinyan.energymax {
@@ -73,6 +73,5 @@ for let i=0; i<4; i=i+1 {
       xinyan attack;
     }
   }
-  
-}
 
+}

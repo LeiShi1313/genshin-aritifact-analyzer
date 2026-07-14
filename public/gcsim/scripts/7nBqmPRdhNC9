@@ -1,13 +1,13 @@
 # Gaming Furina Fischl Chevreuse. ~20s Rot. Gaming Overvape. Gaming does 7 E plunges with delays. Healing & DPS Chev perform similarly. Oz leaves the field before Gaming's burst ends.
 
 # Team
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=4;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
@@ -16,10 +16,10 @@ furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="chainbreaker" refine=5 lvl=90/90;
 fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; 
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favlance" refine=3 lvl=90/90;
 chevreuse add set="sodp" count=4;
 #chevreuse add set="no" count=4;
@@ -30,7 +30,7 @@ chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0
 #chevreuse add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296; # ADC
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,19 +43,19 @@ active gaming; # SS stacks
 furina skill, dash;
 
 for let i = 0; i < 4; i = i + 1 {
-  if .amy.skill.ready { 
-    amy attack:1, skill; 
-  } else { 
-    amy attack:2, burst; 
+  if .amy.skill.ready {
+    amy attack:1, skill;
+  } else {
+    amy attack:2, burst;
   }
-  
-  chev burst, skill[hold=1]:3; 
-  
+
+  chev burst, skill[hold=1]:3;
+
   if .furina.skill.ready {
     furina skill, dash;
   }
   furina burst;
-  
+
   gaming burst;
   for let j = 0; j < 6; j = j + 1 {
     sleep(45);

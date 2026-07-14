@@ -4,7 +4,7 @@ ningguang add set="nighttime" count=4;
 ningguang add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311;
 ningguang add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favoniuslance" refine=3 lvl=90/90;
 rosaria add set="eosf" count=5;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311 ;
@@ -23,7 +23,7 @@ chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
 chiori add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.662;
 
 # Options
-options iteration=100; 
+options iteration=100;
 options swap_delay=12;
 options duration=90;
 energy every interval=480,720 amount=1;
@@ -34,7 +34,7 @@ let c_twirl = 2;
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
   return _execute_action(char_id, action_id, p);
 }

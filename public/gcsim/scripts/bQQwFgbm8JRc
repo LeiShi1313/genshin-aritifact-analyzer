@@ -22,11 +22,11 @@ chevreuse add set="sodp" count=4;
 chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
 chevreuse add stats def%=0.124 def=39.36 hp=2031.52 hp%=0.3962 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.1324;
 
-options iteration=1000 swap_delay=12;                                                                       
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+options iteration=1000 swap_delay=12;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
-fn clorinde_combo_opener() { 
+fn clorinde_combo_opener() {
   clorinde skill, attack:3, skill;
   set_player_pos(0, -5); # clorinde lunge into sara burst
   while .clorinde.status.clorinde-night-watch {
@@ -39,7 +39,7 @@ fn clorinde_combo_opener() {
   }
 }
 
-fn clorinde_combo_rotation() { 
+fn clorinde_combo_rotation() {
   clorinde skill, attack, skill; # adjustment due to chev healing
   set_player_pos(0, -5); # clorinde lunge into sara burst
   while .clorinde.status.clorinde-night-watch {
@@ -63,7 +63,7 @@ sara burst;
 clorinde_combo_opener();
 
 for let i = 0; i < 2; i = i + 1 { # 4 16s Rotations
-  
+
   #teammates no bursts
   sara aim;
   chevreuse attack, skill[hold=1];
@@ -75,10 +75,10 @@ for let i = 0; i < 2; i = i + 1 { # 4 16s Rotations
     clorinde attack;
   }
   mav attack, skill;
-  sara attack, skill, attack; 
+  sara attack, skill, attack;
   clorinde attack;
   clorinde_combo_rotation();
-  
+
   #teammates bursts
   sara aim;
   chevreuse attack, skill[hold=1];
@@ -89,5 +89,5 @@ for let i = 0; i < 2; i = i + 1 { # 4 16s Rotations
   mav burst, skill, dash;
   sara skill, burst;
   clorinde_combo_rotation();
-  
+
 }

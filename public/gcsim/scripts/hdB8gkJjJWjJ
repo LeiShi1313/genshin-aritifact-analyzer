@@ -27,7 +27,7 @@ options swap_delay=12 iteration=1000;
 
 active neuvillette;
 
-target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0;i<4;i=i+1 {
@@ -35,11 +35,11 @@ for let i=0;i<4;i=i+1 {
 neuvillette skill,burst;
 
 kazuha skill, high_plunge,burst;
-neuvillette charge, skill; 
+neuvillette charge, skill;
 
 kazuha skill, high_plunge;
 neuvillette charge;
-childe burst; 
+childe burst;
 
 kazuha skill[glide_cancel=1];
 neuvillette charge;

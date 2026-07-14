@@ -1,4 +1,4 @@
-# Rosaria Furina Fischl Xianyun. ~20s Rot. Rosaria Phys plunge with Superconduct. Rosaaria NAs between plunges. OHC > SoDP Xianyun, but bubbles may miss. 50% Collisions. 
+# Rosaria Furina Fischl Xianyun. ~20s Rot. Rosaria Phys plunge with Superconduct. Rosaaria NAs between plunges. OHC > SoDP Xianyun, but bubbles may miss. 50% Collisions.
 
 # Team - Options listed by DPS
 rosaria char lvl=90/90 cons=6 talent=9,9,9;
@@ -8,13 +8,13 @@ rosaria add set="lno" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-fischl char lvl=90/90 cons=6 talent=9,9,9; 
+fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="chainbreaker" refine=5 lvl=90/90;
 #fischl add weapon="stillness" refine=5 lvl=90/90;
 fischl add set="gt" count=4;
@@ -30,7 +30,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3857 em=59.46 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,21 +48,21 @@ for let i = 0; i < 4; i = i + 1 {
     furina attack;
   }
   furina burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   rosaria skill, burst;
-  
+
   if .fischl.skill.ready {
-    fischl attack:2, skill; 
+    fischl attack:2, skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   while .rosaria.status.xianyun-airborne-buff {
     if .rosaria.skill.ready {
       rosaria skill;
-    } else {  
+    } else {
       rosaria jump;
       if .airborne {
         rosaria high_plunge[collision=rand()>0.5];

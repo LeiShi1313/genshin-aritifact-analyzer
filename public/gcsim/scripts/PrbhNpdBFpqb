@@ -57,7 +57,7 @@ for let i=0; i<4; i=i+1 {
   }
   if .chevreuse.burst.ready {
     chevreuse burst;
-  } 
+  }
   chevreuse skill[hold=1];
   varesa_combo(3);
   bennett skill;

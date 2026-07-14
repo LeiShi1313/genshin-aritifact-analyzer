@@ -1,10 +1,10 @@
 wrio char lvl=90/90 cons=0 talent=9,9,9;
-wrio add weapon="widsith" refine=3 lvl=90/90; 
+wrio add weapon="widsith" refine=3 lvl=90/90;
 wrio add set="mh" count=4;
 wrio add stats hp=4780 atk=311 atk%=.466 cryo%=0.466 cd=0.622;
 wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=5 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
@@ -14,13 +14,13 @@ shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favoniuslance" refine=5 lvl=90/90;
 shenhe add set="ap" count=5;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
-shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296 ;											
+shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296 ;
 
 chiori char lvl=90/90 cons=0 talent=9,9,9;
 chiori add weapon="cinnabar" refine=5 lvl=90/90;
 chiori add set="gt" count=4;
 chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622 ; #main
-chiori add stats def=39.36 def%=0.248 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;				
+chiori add stats def=39.36 def%=0.248 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662 ;
 
 options swap_delay=12 iteration=1000;
 target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,3;
@@ -50,4 +50,3 @@ for let i=0; i<4; i=i+1 {
     wrio attack:3;
   }
 }
-

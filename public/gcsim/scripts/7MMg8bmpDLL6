@@ -10,21 +10,21 @@ bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
-xiangling char lvl=90/90 cons=6 talent=9,9,9; 
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="favlance" refine=3 lvl=90/90;
 xiangling add set="eosf" count=2;
 xiangling add set="scroll" count=2;
 xiangling add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
 xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000;
 energy every interval=480,720 amount=1;
 
 active wrio;
@@ -36,7 +36,7 @@ for let i=0; i<4; i=i+1 {
   xiangling burst, skill;
   wrio skill,
        attack:3, charge, jump,
-       attack:3, charge, jump, 
+       attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,
@@ -44,6 +44,6 @@ for let i=0; i<4; i=i+1 {
   if .wrio.burst.ready  {
     wrio burst, attack;
   } else {
-    wrio charge, jump, attack:4, charge; 
+    wrio charge, jump, attack:4, charge;
   }
 }

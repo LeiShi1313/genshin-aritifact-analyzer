@@ -13,10 +13,10 @@ fischl add stats hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 def=39.36 def%=0.124
 heizou char lvl=90/90 cons=6 talent=9,9,9;
 heizou add weapon="hakushin" refine=5 lvl=90/90;
 heizou add set="vv" count=4;
-heizou add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; # main 
+heizou add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; # main
 heizou add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-nahida char lvl=90/90 cons=0 talent=9,9,9; 
+nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="totm" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; # main
@@ -38,18 +38,18 @@ fn clorinde_combo() {
   }
 }
 
-active fischl; 
+active fischl;
 
 fischl burst;
 heizou skill;
 nahida skill, attack;
 clorinde_combo();
 heizou attack; # swirl refresh VV and hakushin ring
-clorinde burst; 
+clorinde burst;
 
-for let r=0; r<4; r=r+1 { # 4 rotations 
+for let r=0; r<4; r=r+1 { # 4 rotations
 
-  nahida skill; 
+  nahida skill;
   if .fischl.burst.ready { # fischl burst every other rotation
     fischl attack:2, burst;
   } else {
@@ -58,7 +58,6 @@ for let r=0; r<4; r=r+1 { # 4 rotations
   heizou attack, charge, skill;
   clorinde_combo();
   heizou attack; # swirl refresh VV and hakushin ring
-  clorinde burst; 
-  
+  clorinde burst;
+
 }
-  

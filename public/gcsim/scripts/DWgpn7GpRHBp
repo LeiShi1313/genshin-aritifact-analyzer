@@ -33,13 +33,13 @@ bennett add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000;
 
 # Rotation
 active dori; # SS stacks
@@ -48,7 +48,7 @@ dori skill;
 
 for let i=0; i<4; i=i+1 {
   bennett burst;
-  
+
   # Prioritize burst
   amy attack;
   if !.amy.skill.ready {
@@ -56,16 +56,16 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
+
   # Burst every rot is nearly identical
   if .chev.burst.ready {
     chev burst, skill[hold=1]:3;
   } else {
-    chev attack, skill[hold=1]; 
+    chev attack, skill[hold=1];
   }
-  
+
   # Skill/Burst(/NA) with Dori as available, otherwise Bennett skill
-  while !.bennett.burst.ready { 
+  while !.bennett.burst.ready {
     switch {
       case .dori.skill.ready && .dori.swap.ready:
         dori skill;
@@ -79,7 +79,6 @@ for let i=0; i<4; i=i+1 {
         bennett attack;
     }
   }
-  
+
   print("done");
 }
-

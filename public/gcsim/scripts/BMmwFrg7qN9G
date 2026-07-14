@@ -23,14 +23,14 @@ lisa add set="scroll" count=4;
 lisa add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 lisa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5456 er=0.3857 em=158.56 cr=0.0662 cd=0.1324;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.4408 em=39.64 cr=0.1324 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -42,20 +42,20 @@ target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
 active lisa;
 
 for let i=0; i<4; i=i+1 {
-  lisa skill[hold=1], burst; sleep(20); # Catch her own particles 
-  
+  lisa skill[hold=1], burst; sleep(20); # Catch her own particles
+
   furina skill, dash;
   if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd || !.furina.burst.ready) {
     furina attack;
   }
   furina burst;
-  
+
   esco skill, burst;
-  
+
   rosaria skill, burst;
   # N3CD combo + skill when available
   let rosariaSkills = 0;
-  while rosariaSkills < 2 { 
+  while rosariaSkills < 2 {
     if .rosaria.skill.ready {
       rosaria skill;
       rosariaSkills = rosariaSkills + 1;

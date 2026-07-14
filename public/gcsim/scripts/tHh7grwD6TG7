@@ -41,14 +41,13 @@ for let i = 0; i < 5; i = i + 1 {
   kokomi attack, burst,
     attack:2, charge, jump,
     attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2;
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2;
   aetherdendro skill, attack:3;
   kuki burst;
   while (f() < t + 20*60){
-	kokomi attack:2, charge, jump;
+  kokomi attack:2, charge, jump;
   }
   print("done");
 }
-

@@ -1,25 +1,25 @@
 # Gaming Furina Xilonen Xianyun. ~20s Rot. Gaming does 7 E plunges with no delay for the final plunge. Xilonen's Scroll set buffs Pyro on the first rotation. Xilonen does not use Q.
 
 # Team
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=4;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
 xilonen add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add set="sodp" count=4;
 #xianyun add set="ohc" count=4;
@@ -28,7 +28,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=148.86 atk%=0.3968 er=0.4959 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,9 +45,9 @@ for let i = 0; i < 4; i = i + 1 {
   xilonen skill, attack:2;
 
   furina skill, dash, burst;
-  
+
   xianyun skill, high_plunge, burst;
-  
+
   gaming burst;
   for let j = 0; j < 6; j = j + 1 {
     sleep(45);
@@ -55,4 +55,3 @@ for let i = 0; i < 4; i = i + 1 {
   }
   gaming skill, high_plunge;
 }
-

@@ -58,13 +58,13 @@ active fischl;
 for let r = 5; r > 0; r = r - 1 {
   let src = f();
   let counter_chance = rand();
-  
+
   fischl skill, attack;
-  
+
   if !.nahida.mods.instructor-4pc && .nahida.skill.ready {
     nahida skill, attack;
   }
-  
+
   if counter_chance <= 0.1 { # 10% perfect counter
     beidou skill[counter=2];
   } else if counter_chance <= 0.5 { # 50% regular counter
@@ -72,14 +72,14 @@ for let r = 5; r > 0; r = r - 1 {
   } else {
     beidou skill;
   }
-  
+
   beidou burst;
   delay(17); # Catch her own particles
-  
+
   kazuha attack, skill, high_plunge, attack, burst, attack;
   fischl attack, aim[hold=0], burst;
   kazuha attack, skill, high_plunge, attack;
-  
+
   while f() - src <= 20.5 * 60 {
     if .fischl.normal > 2 { # Fischl cancels N2 with physical aimed shot
       fischl aim[hold=0];

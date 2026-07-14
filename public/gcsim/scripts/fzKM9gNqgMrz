@@ -22,7 +22,7 @@ xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 heal=0.359; #main
 xilonen add stats def%=0.062*8 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*6;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 options swap_delay=12 iteration=1000;
 
@@ -34,11 +34,11 @@ for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
   xilonen skill, attack, attack;
   yelan burst, attack, skill, attack;
-  arle attack:2, charge, 
-         attack:2, charge, 
+  arle attack:2, charge,
          attack:2, charge,
          attack:2, charge,
-         attack:2, charge, 
+         attack:2, charge,
+         attack:2, charge,
          attack:2, charge,
          attack:2, charge,
          attack:2;

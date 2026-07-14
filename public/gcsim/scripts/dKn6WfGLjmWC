@@ -1,4 +1,4 @@
-# Chongyun Furina Shenhe Escoffier. ~21s Rot. Chongyun onfield uses his burst whenever it is ready. 2E Shenhe. 
+# Chongyun Furina Shenhe Escoffier. ~21s Rot. Chongyun onfield uses his burst whenever it is ready. 2E Shenhe.
 
 # Team - Options listed by DPS
 chongyun char lvl=90/90 cons=6 talent=9,9,9;
@@ -19,14 +19,14 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.3972 cd=0.3972;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.3857 em=39.64 cr=0.2317 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,15 +43,15 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   esco skill, burst;
-  
+
   shenhe skill[hold=0], burst;
-  
+
   while.chongyun.skill.ready {
     chongyun skill;
   }
-  while .shenhe.skill.cd { 
+  while .shenhe.skill.cd {
     if .chongyun.burst.ready {
       chongyun burst;
     } else if .chongyun.normal > 3 {
@@ -60,10 +60,10 @@ for let i=0; i<4; i=i+1 {
       chongyun attack;
     }
   }
-  
+
   shenhe skill[hold=0], attack;
-  
-  while .furina.skill.cd { 
+
+  while .furina.skill.cd {
     if .chongyun.burst.ready {
       chongyun burst;
     } else if .chongyun.normal > 2 {
@@ -73,4 +73,3 @@ for let i=0; i<4; i=i+1 {
     }
   }
 }
-

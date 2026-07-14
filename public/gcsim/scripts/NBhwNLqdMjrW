@@ -24,14 +24,14 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 #fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # SoS
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -64,9 +64,9 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   bennett burst, attack, skill;
-  
+
   # burst over skill
   amy attack;
   if .amy.burst.ready && .amy.energy == .amy.energymax {
@@ -74,15 +74,14 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
+
   lynette attack, burst;
   # While Oz is on field
   while .fischl.oz { #|| .lynette.mods.bennett-field {
     LynetteCombo();
   }
-  
+
   bennett skill;
 
   print("done");
 }
-

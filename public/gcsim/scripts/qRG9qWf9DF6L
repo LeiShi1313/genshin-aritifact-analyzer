@@ -36,7 +36,7 @@ fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488
 #fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944; # Other
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,7 +51,7 @@ fn lanyanDrivingCombo() {
     case .lanyan.normal > 1 && .lanyan.skill.ready:
       set_player_pos(0, 0); # toward
       lanyan skill; set_player_pos(0, -3); # away
-      lanyan skill; 
+      lanyan skill;
     case .lanyan.normal > 1 && .previous-action == .action.skill && .stam > 18:
       lanyan dash; set_player_pos(0, 0); # toward
     case .lanyan.normal > 2 && .stam > 18:
@@ -72,15 +72,15 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   mav skill, attack, burst, dash;
-  
-  if .amy.burst.ready { 
+
+  if .amy.burst.ready {
     amy attack:2, burst;
   } else {
     amy attack, skill;
   }
-  
+
   while .yelan.mods.yelanburst {
     lanyanDrivingCombo();
   }

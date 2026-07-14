@@ -20,7 +20,7 @@ yoimiya add set="mh" count=4;
 yoimiya add stats hp=4780 atk=311 em=186  atk%=0.466 cd=0.622; #main 5* set
 #yoimiya add set="fopl" count=4;
 #yoimiya add stats hp=4780 atk=311 em = 186 em = 186 em = 186; #main 5* set
-yoimiya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=79.28 cr=0.331 cd=0.662 ; 
+yoimiya add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=79.28 cr=0.331 cd=0.662 ;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festering" refine=5 lvl=90/90;
@@ -44,7 +44,7 @@ for let x=0; x<5; x=x+1 {
   if !.yelan.mods.favonius-cd {
     yelan attack;
   }
-  
+
   if (.yoimiya.burst.ready) {
     yoimiya burst;
   }

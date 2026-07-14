@@ -4,7 +4,7 @@
 alhaitham char lvl=90/90 cons=0 talent=9,9,9;
 alhaitham add weapon="wolffang" refine=1 lvl=90/90;
 #alhaitham add weapon="harbinger" refine=5 lvl=90/90;
-#alhaitham add weapon="umbrella" refine=5 lvl=90/90; 
+#alhaitham add weapon="umbrella" refine=5 lvl=90/90;
 alhaitham add set="mh" count=4;
 alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
 alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662; # WF
@@ -27,7 +27,7 @@ yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=4 lvl=90/90;
 yelan add set="deepwood" count=4;
 #yelan add set="eosf" count=4;
-yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; 
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 dori char lvl=90/90 cons=6 talent=9,9,9;
@@ -39,7 +39,7 @@ dori add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,7 +51,7 @@ active furina;
 
 for let r=0; r<4; r=r+1 {
   furina skill, dash, burst;
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -59,16 +59,16 @@ for let r=0; r<4; r=r+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   dori skill, attack, burst, attack;
 
-  haitham skill, 
+  haitham skill,
           attack:3, dash,
           attack:3;
   haitham burst;
-  
+
   yelan skill, attack;
-  
+
   haitham attack:3, charge, # Gain mirror
           attack:3, dash,
           attack:3, dash, # Yelan burst expires

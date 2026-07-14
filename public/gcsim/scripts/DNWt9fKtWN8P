@@ -30,14 +30,14 @@ zhongli add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cd=0.622; #mainstats
 zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; #substats
 
 #enemy config
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
-options swap_delay=12 iteration=1000; 
+options swap_delay=12 iteration=1000;
 active zhongli;
 
-#action list 
+#action list
 
   zhongli skill[hold=1], dash;
   gorou swap; wait(5); gorou burst;
@@ -48,7 +48,7 @@ active zhongli;
        attack:4,charge:5,skill[travel=0],charge;
        #"C0 1PS" combo
        wait(20); #catch ushi particles
-       
+
 for let i = 0; i < 4; i = i + 1 {
 
   zhongli skill, burst; #refreshing pillar
@@ -57,10 +57,7 @@ for let i = 0; i < 4; i = i + 1 {
   itto attack, burst[prestack=1],
        attack, skill[travel=0],charge:4,
        attack:3, charge:4,
-       attack:3, skill[travel=0],charge:4; 
+       attack:3, skill[travel=0],charge:4;
        #"C0 2PS" combo
 
 }
-
-
-

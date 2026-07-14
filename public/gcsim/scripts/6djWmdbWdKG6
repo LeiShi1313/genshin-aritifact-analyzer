@@ -1,0 +1,41 @@
+mona char lvl=90/90 cons=6 talent=10,3,10;
+mona add weapon="widsith" refine=5 lvl=90/90;
+mona add set="goldentroupe" count=1;
+mona add set="adaycarvedfromrisingwinds" count=4;
+mona add stats def%=0.057999999999999996 def=44 hp=4780 hp%=0.21000000000000002 atk=354 atk%=0.274 er=.641 em=77 cr=0.587 cd=0.979 hydro%=0.466;
+
+jean char lvl=90/90 cons=0 talent=2,5,8;
+jean add weapon="favoniussword" refine=5 lvl=90/90;
+jean add set="viridescentvenerer" count=4;
+jean add set="huskofopulentdreams" count=1;
+jean add stats def%=0.11699999999999999 def=44 hp=4780 hp%=0.303 atk=325 atk%=0.612 er=0.823 em=98 cr=.64 cd=0.482;
+
+bennett char lvl=90/90 cons=6 talent=1,3,10;
+bennett add weapon="favoniussword" refine=5 lvl=90/90;
+bennett add set="noblesseoblige" count=4;
+bennett add set="marechausseehunter" count=1;
+bennett add stats def%=0.102 def=88 hp=3663 hp%=0.187 atk=329 atk%=0.158 er=1.074 em=61 cr=.61 cd=0.054000000000000006 dendro%=0.387;
+
+nicole char lvl=90/90 cons=0 talent=1,10,10;
+nicole add weapon="oathsworneye" refine=5 lvl=90/90;
+nicole add set="celestialgift" count=4;
+nicole add set="noblesseoblige" count=1;
+nicole add stats def%=0.218 def=60 hp=5826 hp%=0.111 atk=397 atk%=1.602 er=0.653 em=61 cr=0.101 cd=0.078;
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=.1 radius=3 pos=0,3.4 hp=999999999999;
+energy every interval=480,720 amount=1;
+
+
+active mona;
+mona skill;
+for let i = 0; i < 5; i = i + 1 {
+#  mona attack, attack, attack, attack, skill;
+  nicole skill, burst;
+  bennett skill, burst;
+  mona burst, attack;
+  jean skill, burst;
+  mona charge:2;
+  bennett attack, skill;
+  mona charge:3, attack:4, skill;
+}

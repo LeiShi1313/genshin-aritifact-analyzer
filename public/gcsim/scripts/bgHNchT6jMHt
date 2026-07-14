@@ -30,13 +30,13 @@ thoma add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
 thoma add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.331 cd=0.3972;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000;
 
 # Combos
 fn sethosCombo() {
@@ -61,19 +61,19 @@ for let i=0; i<4; i=i+1 {
   if !.thoma.mods.favonius-cd {
     thoma attack;
   }
-  
+
   amy attack;
   if !.amy.skill.ready {
     amy attack, burst;
   } else {
     amy skill;
   }
-  
+
   # Burst+C4 Combo every rotation
-  chev burst, attack, skill[hold=1], 
-              attack, skill[hold=1], 
+  chev burst, attack, skill[hold=1],
+              attack, skill[hold=1],
               attack, skill[hold=1];
-  
+
   sethos skill; # aim[hold=2]; # High ping only; dodges energy drain
   sethosCombo();
   sethos aim[hold=2];

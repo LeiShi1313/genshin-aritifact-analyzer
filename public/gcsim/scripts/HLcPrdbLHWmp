@@ -1,10 +1,10 @@
 #For the purpose of maximizing dmg per hit against cocijo, for achievement II
-#Only abilities that cause dmg will cause cocijo to build up his shield, 
+#Only abilities that cause dmg will cause cocijo to build up his shield,
 #  so skills like ayaka d, mona d, and barbara lingering e collision can apply aura for free
 #This sim uses ayaka for melt and cryo resonance. Without her, gaming would use mona or barb,
 #  and use the rainslasher instead.
-#  Serpent spine or high refine plunge weapon from natlan will always be better 
-#On WL 9, you have 34 hits to do ~2.7MM dmg, so on avg ~80K dmg per hit is needed. 
+#  Serpent spine or high refine plunge weapon from natlan will always be better
+#On WL 9, you have 34 hits to do ~2.7MM dmg, so on avg ~80K dmg per hit is needed.
 #Low options because we care only about dmg/hit, not dps. Only use e/swap/d, so no energy randomness
 #This build does not need food or potion buffs; apply as needed if you have weaker weapons/artifacts
 #Gaming needs to start the fight with full energy to maximise shim buff
@@ -15,7 +15,7 @@
 
 
 #Fewer iterations because human error is simulated, but energy/crit rng doesn't matter as much
-#Less duration because cocijo forces rotations to occur more than every 20s anyway, 
+#Less duration because cocijo forces rotations to occur more than every 20s anyway,
 #Over the 34 rotations that occur, can assume that on average, each rot does the dmg of the avg rot
 options iteration=100 duration=30 swap_delay=12;
 
@@ -53,7 +53,7 @@ charlotte add stats def=67 hp=5736 hp%=0.426 atk=101 atk%=0.7290000000000001 er=
 
 
 let first_heal_frames = 1.9 * 60;
-let heal_tick_frames = 2 * 60; 
+let heal_tick_frames = 2 * 60;
 fn human_error_frames() { #returns a 1/4s delay with uniform variance of +- 1/8s
   return (0.5 + rand()) * 0.25 * 60 ;
 }
@@ -61,10 +61,10 @@ fn human_error_frames() { #returns a 1/4s delay with uniform variance of +- 1/8s
 #Chev setup- artifact heal buldup, c6 buildup
 active chevreuse;
 #Cause skill to hit at ~1s mark, for easy back calc for future actions and delays
-#Chev needs to stand in a safe space and release in middle of cocijo's spin. 
+#Chev needs to stand in a safe space and release in middle of cocijo's spin.
 #  Exact timing uninportant as long as it's in 2nd half of spin
 #  Need to aim away from cocijo so splash doesn't hit
-chevreuse skill[hold=41]; #Hits target 1 
+chevreuse skill[hold=41]; #Hits target 1
 let chev_skill_ref = f(); #Normalize to t=0
 
 #need to move into melee range of cocijo after his spin ends
@@ -84,30 +84,30 @@ ayaka swap;
 ayaka dash[f = human_error_frames()]; #ends at ~t=5.5s
 
 #gaming is on field for ~5.5 < t < 6.5. Chev heal ticks at t=5.9
-gaming swap; 
+gaming swap;
 
-#Should happen on CD since gaming does nothing and action queues. 
+#Should happen on CD since gaming does nothing and action queues.
 #ends @t=7.5s, close to chev buff @t=7.9s Human delay and longer swap times delays
 #Sets up ttds that lasts 10s
-#At higher swap delays (including at the usual swap=12), 
+#At higher swap delays (including at the usual swap=12),
 #  Charlotte will steal one stack of chev c6 buff,
 #  Except at the fastest human response times
 #  In the sampler, even the 75 percentile seed has Charlotte stealing a stack
 #  Only at max seed did gaming have all 3 stacks
-charlotte swap; 
+charlotte swap;
 
-#skill takes long enough that it will always land after t=8s, 
+#skill takes long enough that it will always land after t=8s,
 #Buffs:
 #  Will have 2/3 chev c6 (unless charlotte swap is early, then 3/3) and artifact buff
 #  Will always have ttds and shim buff (if energy managed right)
 #  Will never have mailed flower passive. Melt will cause passive to apply on next plunge
 #  Pyro resonance / cryo resonance / melt: Always active
-gaming skill, high_plunge; 
+gaming skill, high_plunge;
 
-#Wait for skill to reach ~2s cd. Ends after t=12s, 
-#Captures last 2 heal ticks at both t=9.9 and 11.9s 
-#Stay in melee range of mob to bait jump attack 
-delay(4 * 60 + human_error_frames()); 
+#Wait for skill to reach ~2s cd. Ends after t=12s,
+#Captures last 2 heal ticks at both t=9.9 and 11.9s
+#Stay in melee range of mob to bait jump attack
+delay(4 * 60 + human_error_frames());
 ayaka dash[f = human_error_frames()];
 gaming swap;
 

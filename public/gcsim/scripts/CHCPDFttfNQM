@@ -3,7 +3,7 @@
 # Team
 charlotte char lvl=90/90 cons=6 talent=9,9,9;
 charlotte add weapon="widsith" refine=3 lvl=90/90;
-#charlotte add weapon="flowingpurity" refine=5 lvl=90/90; 
+#charlotte add weapon="flowingpurity" refine=5 lvl=90/90;
 charlotte add set="bs" count=4;
 #charlotte add set="mh" count=4;
 charlotte add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
@@ -22,13 +22,13 @@ shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1653 em=39.64 cr=0.3972 cd=0.4634;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="wavebreakersfin" refine=1 lvl=90/90;
 rosaria add set="bs" count=4;
 rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -41,20 +41,20 @@ active furina;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   shenhe skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   charlotte burst, skill[hold=1], attack:2;
-  
+
   rosaria skill;
-  
+
   shenhe skill, attack;
-  
+
   charlotte attack:3, dash, attack:3, dash, attack:3;
-  
+
   rosaria skill;
-  
+
   charlotte attack:3;
 }

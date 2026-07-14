@@ -22,10 +22,10 @@ options swap_delay=12 iteration=1000;
 
 active nahida;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   nahida burst, skill;
   xingqiu skill, dash, burst, attack;
   luminedendro skill, burst, attack;
@@ -43,4 +43,3 @@ for let i=0; i<4; i=i+1 {
   }
   print("end");
 }
-

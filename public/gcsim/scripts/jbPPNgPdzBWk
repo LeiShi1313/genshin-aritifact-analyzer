@@ -14,19 +14,19 @@ skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 
 // skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 // skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
-citlali char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+citlali char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 citlali add weapon="ttds" refine=5 lvl=90/90;
 citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 em=187 em=187 em=187;
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="no" count=4;
 escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
@@ -47,15 +47,15 @@ skirk skill,
       attack:5, dash,
       attack:5, burst,
       attack:5, dash,
-      
+
       attack:2, charge, dash,
-      
+
       attack:5, dash;
 
 furina swap;
 print("Skirk E cd (60 FPS) is ", .skirk.skill.cd);
 print("Skirk Q cd (60 FPS) is ", .skirk.burst.cd);
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina burst;
   escoffier skill, burst, attack; # N1 to simulate better timing (Escoffier E Cryo app happens before Furina's triple attacks)
   furina skill, dash, attack;
@@ -64,27 +64,27 @@ for let i=0; i<4; i=i+1 {
   while !.element.t0.hydro && f()-StartFrame < 55 {
     wait(1);
   }
-  # check if the enemy has Hydro aura(including the hidden one), if not, wait up to 55f(~0.9s) before applying Cryo. 
+  # check if the enemy has Hydro aura(including the hidden one), if not, wait up to 55f(~0.9s) before applying Cryo.
   # during this 55f, Escoffier applies Cryo first and Furina's 1st pet attack happens, her 2nd/3rd pet attacks will happen soon
-  
+
   # Right before 2nd/3rd pet attacks hit the enemy, cast Citlali E. so Cryo app is after the triple pet attacks
   # Depending on luck, 1 or 2 or 3 of Furina pet attacks will apply Hydro!!
-  
+
   # If its only 1 Hydro app, you can't trigger Scroll.
   citlali skill;
 
   skirk skill,
         attack:2, burst,
-        
+
         attack:5, dash,
         attack:5, dash,
         attack:5, dash,
-        
+
         attack:2, charge, dash,
-        
+
         attack:5, dash,
         attack:2;
 }
 
-# Furina N1 ED > Citlali E N1 > Escoffier E N1 > Furina "catch Esco particles" > Skirk tE N5D N5Q N5D N2CD N5D > 
+# Furina N1 ED > Citlali E N1 > Escoffier E N1 > Furina "catch Esco particles" > Skirk tE N5D N5Q N5D N2CD N5D >
 # Furina Q > Escoffier EQ N1 > Furina ED > Citlali "wait for Furina triple attacks" E > Skirk tE N2Q 3[N5D] N2CD N5D N2

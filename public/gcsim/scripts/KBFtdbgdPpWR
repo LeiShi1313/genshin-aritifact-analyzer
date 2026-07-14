@@ -33,7 +33,7 @@ hurt every interval=120,360 amount=3000,5000 element=physical; # get hit every 2
 # Rotation assumptions
 active eula; # prestack serpent spine
 
-for let i = 0; i < 4; i = i + 1 { 
+for let i = 0; i < 4; i = i + 1 {
   rosaria skill;
   while !.rosaria.mods.favonius-cd {
     rosaria attack;
@@ -52,4 +52,3 @@ for let i = 0; i < 4; i = i + 1 {
 }
 
 # Rosaria E > Eula E > Bennett E Q > Fischl E > Rosaria Q > Eula Q N4 hE N4 > Fischl Q > Rosaria E > Eula N4dN3
-

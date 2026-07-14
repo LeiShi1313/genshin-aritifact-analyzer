@@ -24,7 +24,7 @@ furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
 furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1324 cd=0.7944 ;
 
 #enemy config
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
@@ -37,8 +37,8 @@ for let i=0; i<4; i=i+1 {
  albedo attack, skill;
  itto attack, burst[prestack=1];
            itto attack, skill, attack:2, charge:5;
-           itto attack:4, charge:5; 
+           itto attack:4, charge:5;
            itto skill[travel=0], charge;
-           delay(47);           
+           delay(47);
 
 }

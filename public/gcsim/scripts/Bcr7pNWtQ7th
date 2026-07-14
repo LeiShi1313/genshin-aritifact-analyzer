@@ -1,9 +1,9 @@
 # Qiqi Furina Yelan Dori. ~20s Rot. Phys Qiqi on field. 1E Yelan. OHC > PF.
 
 # Team
-qiqi char lvl=90/90 cons=0 talent=9,9,9; 
-qiqi add weapon="favsword" refine=3 lvl=90/90; 
-qiqi add set="ohc" count=4; 
+qiqi char lvl=90/90 cons=0 talent=9,9,9;
+qiqi add weapon="favsword" refine=3 lvl=90/90;
+qiqi add set="ohc" count=4;
 qiqi add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311; #main
 qiqi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.331 cd=0.3972;
 
@@ -26,7 +26,7 @@ fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -40,23 +40,23 @@ fischl skill;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   if .qiqi.skill.ready {
     qiqi skill, attack:2;
   } else if .qiqi.burst.ready {
     qiqi burst;
   }
-  
+
   amy attack;
-  if .amy.skill.ready { 
-    amy skill; 
-  } else { 
-    amy attack, burst; 
+  if .amy.skill.ready {
+    amy skill;
+  } else {
+    amy attack, burst;
   }
-  
+
   yelan skill, burst, attack;
-  
-  while .furina.skill.cd { 
+
+  while .furina.skill.cd {
     if .qiqi.normal > 4 {
       qiqi dash;
     } else {

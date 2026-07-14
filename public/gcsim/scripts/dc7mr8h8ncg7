@@ -1,0 +1,61 @@
+## Function to maximize Geo resonance uptime for non-lcrys Noelle
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+
+  if !.noelle.status.breastplate &&
+  (action_id == .action.dash) || (char_id == .keys.char.xilonen && action_id == .action.skill) {
+
+    pick_up_crystallize("any");   ## Pick up crys on dash/Xilo E if Noelle E isn't up
+
+  }
+  return _execute_action(char_id, action_id, p);
+}
+
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+noelle add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+noelle add set="huskofopulentdreams" count=4;
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+noelle add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favoniussword" refine=5 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
+xilonen add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="sacbow" refine=5 lvl=90/90;
+fischl add set="risingwinds" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="moonweaversdawn" refine=2 lvl=90/90;
+durin add set="celestialgift" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*2 em=19.82*12 cr=0.0331*4 cd=0.0662*2;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active noelle; # SS stacks
+
+for let i = 0; i < 4; i = i + 1 {
+
+  durin skill, skill, burst;
+
+  fischl attack:2, skill;
+
+  xilonen skill, attack:2;
+
+  noelle skill, burst, attack:3, dash, attack:3, dash, attack:1;
+
+  fischl attack:2, burst;
+
+  xilonen skill, attack:2;
+
+  noelle attack:3, dash, attack:3, dash, attack:3;
+
+  # Durin EEQ > Fischl N2E > Xilonen EN2 > Noelle EQ 2N3D N1 > Fischl N2Q > Xilonen EN2 > Noelle 2N3D N3
+} # Combo variations like N3D N2D N1 into N4D N3D N1 or 2N3D N1 into 2N2D N4 result in a slightly higher sim dps

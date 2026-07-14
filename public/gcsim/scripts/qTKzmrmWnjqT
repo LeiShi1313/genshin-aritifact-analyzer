@@ -22,7 +22,7 @@ ineffa add set="gd" count=4;
 ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
 ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*2 em=19.82*3 cr=0.0331*12 cd=0.0662*10;
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -52,9 +52,9 @@ for let i=0; i<10; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
 
-  wanderer attack, skill, attack;	
+
+  wanderer attack, skill, attack;
   while .wanderer.skydweller-points > 3 {
     if .wanderer.normal < 3 {
       wanderer attack;
@@ -65,11 +65,10 @@ for let i=0; i<10; i=i+1 {
     } else {
       wanderer attack;
     }
-  } 
+  }
   if .wanderer.status.windfavored-state && .wanderer.burst.ready {
     wanderer burst, attack;
   } else if .wanderer.status.windfavored-state && !.wanderer.burst.ready {
     wanderer skill, low_plunge;
   }
 }
-

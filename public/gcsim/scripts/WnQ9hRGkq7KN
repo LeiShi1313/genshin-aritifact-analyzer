@@ -21,7 +21,7 @@ yunjin add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583 ; #main
 #non-fav
 yunjin add stats def%=0.372 def=216.48 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.0662 cd=0.1324;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
@@ -38,7 +38,7 @@ for let i=0; i<4; i=i+1 {
   xilonen skill, attack:2;
   yunjin skill, attack, burst, attack, dash;
   pick_up_crystallize("hydro");
-  yoimiya skill, 
+  yoimiya skill,
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,

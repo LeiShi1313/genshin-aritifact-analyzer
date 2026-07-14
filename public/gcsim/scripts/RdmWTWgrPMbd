@@ -40,7 +40,7 @@ for let i = 0; i < 5; i = i + 1 {
     yelan skill;
   }
   yelan burst;
-  zhongli skill[hold=1], dash; 
+  zhongli skill[hold=1], dash;
   while !.zhongli.mods.favonius-cd {
     zhongli attack;
   }

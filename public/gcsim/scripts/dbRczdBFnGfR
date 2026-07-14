@@ -1,4 +1,4 @@
-# Dori Furina Sara Xianyun. ~21s Rot. Dori Taser Plunge. 3 Dori skill per rotation for ER reasons. Just 6 plunges are spent. Dori uses burst before Xianyun for reliable VV. 50% Collisons. 
+# Dori Furina Sara Xianyun. ~21s Rot. Dori Taser Plunge. 3 Dori skill per rotation for ER reasons. Just 6 plunges are spent. Dori uses burst before Xianyun for reliable VV. 50% Collisons.
 
 # Team
 dori char lvl=90/90 cons=6 talent=9,9,9;
@@ -33,13 +33,13 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.551 em=198.2 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Dori Plunge Combo
 fn DoriPlunge() {
@@ -56,24 +56,24 @@ active dori; # SS Stacks
 
 for let x=0; x<4; x=x+1 {
   furina skill, dash, burst;
-  
+
   dori skill, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   sara skill, aim;
   sara attack;
   #wait(15); # Sara self buffs
-  
+
   dori skill, attack;
   DoriPlunge(); dori dash;
   DoriPlunge(); dori dash;
   DoriPlunge();
-  
+
   xianyun attack:2, charge;
-  
+
   sara burst;
-  
+
   dori skill, attack;
   DoriPlunge(); dori dash;
   DoriPlunge(); dori dash;

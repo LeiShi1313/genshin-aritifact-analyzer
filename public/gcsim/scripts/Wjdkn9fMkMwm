@@ -28,23 +28,23 @@ furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #enemy config
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=90000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=90000000;
 energy every interval=480,720 amount=1;
 
 active chiori;
 chiori skill:2;
-#action list 
+#action list
 for let x=0; x<4; x=x+1 {
   navia burst;
-  
+
   furina skill, attack, burst, attack;
-  
+
   yelan burst;
   yelan attack, skill, attack, skill, attack:2;
-  
+
   navia skill[hold=1], attack:3, dash;
   navia skill[hold=1], attack:3, dash;
-  
+
   if .chiori.burst.ready && .chiori.energy == .chiori.energymax {
     chiori burst;
   }

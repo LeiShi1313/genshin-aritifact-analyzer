@@ -8,7 +8,7 @@ haitham add set="ur" count=4;
 haitham add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cr=0.311;
 haitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
-emilie char lvl=90/90 cons=0 talent=9,9,9; 
+emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 #emilie add set="deepwood" count=4;
@@ -33,13 +33,13 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.3972 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active emilie;
@@ -51,11 +51,11 @@ for let i=0; i<4; i=i+1 {
   } else {
     emilie skill;
   }
-  
+
   xianyun attack, skill, low_plunge, attack, burst;
-  
+
   bennett skill, burst;
-  
+
   haitham skill[hold=1], low_plunge[short=1], attack;
   # Plunge Combo w/ skill as available
   while .haitham.status.xianyun-airborne-buff {
@@ -65,15 +65,15 @@ for let i=0; i<4; i=i+1 {
       haitham jump;
       if .airborne {
         haitham high_plunge[collision=rand()>0.4];
-      } 
+      }
       haitham attack:1;
     }
   }
   if .haitham.burst.ready {
     haitham burst;
   }
-  
+
   bennett skill;
-  
+
   print("done");
 }

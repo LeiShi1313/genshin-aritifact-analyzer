@@ -8,7 +8,7 @@ shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
 shenhe add set="noblesseoblige" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
-shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.3972 cd=0.3972;					
+shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.3972 cd=0.3972;
 
 thoma char lvl=90/90 cons=6 talent=9,9,9;
 thoma add weapon="favoniuslance" refine=3 lvl=90/90;
@@ -20,10 +20,10 @@ emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622 ; #main
-emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;    
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=50000000;
 energy every interval=480,720 amount=1;
 
 active emilie;
@@ -44,7 +44,7 @@ for let r=0; r<4; r=r+1 {
   }
   wrio skill,
        attack:3, charge, jump,
-       attack:3, charge, jump, 
+       attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,

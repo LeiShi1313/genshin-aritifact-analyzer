@@ -32,23 +32,23 @@ bennett add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 a
 #bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=126.848 cr=0.2648 cd=0.42368; # Fav
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=1 pos=-1.3,1.4 hp=100000000;
-target lvl=100 resist=0.1 radius=1 pos=1.3,1.4 hp=100000000; 
+target lvl=100 resist=0.1 radius=1 pos=1.3,1.4 hp=100000000;
 
 active nahida;
 
 for let i=0; i<4; i=i+1 {
   nahida skill, burst;
-  
+
   xq skill, dash, burst, attack;
-  
+
   bennett skill, attack, burst, attack;
-  
+
   while .status.bennettburst || .kazuha.infusion.bennett-fire-weapon {
     if .kazuha.skill.ready {
       kazuha skill, high_plunge[collision=rand()>0.5];
@@ -58,6 +58,6 @@ for let i=0; i<4; i=i+1 {
       kazuha attack;
     }
   }
-  
+
   bennett skill, attack;
 }

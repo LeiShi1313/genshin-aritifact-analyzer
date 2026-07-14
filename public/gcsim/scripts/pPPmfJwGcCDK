@@ -6,19 +6,19 @@ mona add set="tenacityofthemillelith" count=4;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
 mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2648 cd=0.7944;
 
-shenhe char lvl=90/90 cons=0 talent=9,9,9; 
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favoniuslance" refine=3 lvl=90/90;
 shenhe add set="noblesseoblige" count=5;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
 shenhe add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.3306 em=39.64 cr=0.3972 cd=0.2648;
 
-venti char lvl=90/90 cons=0 talent=9,9,9; 
+venti char lvl=90/90 cons=0 talent=9,9,9;
 venti add weapon="favoniuswarbow" refine=3 lvl=90/90;
 venti add set="viridescentvenerer" count=5;
 venti add stats hp=4780 atk=311 atk%=0.466 cr=0.311 anemo%=0.466; #main
 venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
 
-ganyu char lvl=90/90 cons=0 talent=9,9,9; 
+ganyu char lvl=90/90 cons=0 talent=9,9,9;
 ganyu add weapon="prototypecrescent" refine=5 lvl=90/90;
 ganyu add set="blizzardstrayer" count=5;
 ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622 ; #main
@@ -29,8 +29,8 @@ energy every interval=480,720 amount=1;
 active ganyu;
 #-------------------------------------------
 for let x = 0; x<5; x=x+1 {
-	ganyu aim[weakspot=1];
-	shenhe burst, skill;
+  ganyu aim[weakspot=1];
+  shenhe burst, skill;
     ganyu skill, burst;
     venti skill, burst;
     mona skill, burst;
@@ -41,5 +41,3 @@ for let x = 0; x<5; x=x+1 {
     ganyu aim[travel=0];
 }
 wait(24);
-
-

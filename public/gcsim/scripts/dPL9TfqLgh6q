@@ -47,11 +47,11 @@ active fischl;
 
 for let i=0; i<4; i=i+1 {
   fischl attack, skill;
-  
+
   furina skill, dash, burst;
-  
+
   mika burst, attack, skill[hold=0];
-  
+
   keq skill;
   while .fischl.oz {
     if .keq.normal > 2 && .stam > 25 {
@@ -62,9 +62,9 @@ for let i=0; i<4; i=i+1 {
       keq attack;
     }
   }
-  
+
   fischl attack:2, burst;
-  
+
   keq skill;
   while .furina.skill.cd {
   #while .fischl.skill.cd > 30 {
@@ -77,6 +77,5 @@ for let i=0; i<4; i=i+1 {
     }
   }
   keq burst;
-  
-}
 
+}

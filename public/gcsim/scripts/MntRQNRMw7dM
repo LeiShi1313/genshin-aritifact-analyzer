@@ -24,10 +24,10 @@ xiao add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.1982 def=39.35 def%=0.1239 
 
 active mavuika;
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
-// Mavuika E Bennett EQ Xiao E (E) Citlali EQ Mavuika Q 2[4CFD] CFD 
+// Mavuika E Bennett EQ Xiao E (E) Citlali EQ Mavuika Q 2[4CFD] CFD
 
 for let i=0;i<5;i=i+1 {
   mavuika skill;
@@ -43,9 +43,3 @@ for let i=0;i<5;i=i+1 {
   mavuika charge:3, charge[hold=6], charge[final=1], dash;
   mavuika charge, charge[final=1], dash;
 }
-
-
-
-
-
-

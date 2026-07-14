@@ -11,7 +11,7 @@ kirara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #kirara add set="instructor" count=4; kirara add stats def%=0.124 def=39.36 hp=4078.88 hp%=0.0992 atk=265.08 atk%=0.4487 er=0.3306 em=39.64 cr=0.43185 cd=0.3972 dendro%=0.466;
 
 
-herexcellencythealmightynarukamiogoshogodofthunder char lvl=90/90 cons=0 talent=9,9,9; 
+herexcellencythealmightynarukamiogoshogodofthunder char lvl=90/90 cons=0 talent=9,9,9;
 herexcellencythealmightynarukamiogoshogodofthunder add weapon="deathmatch" refine=1 lvl=90/90;
 herexcellencythealmightynarukamiogoshogodofthunder add set="eosf" count=4;
 herexcellencythealmightynarukamiogoshogodofthunder add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
@@ -26,39 +26,39 @@ sara add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 
 
 sucrose char lvl=90/90 cons=6 talent=9,9,9;
-sucrose add weapon="hakushinring" refine=5 lvl=90/90; 
+sucrose add weapon="hakushinring" refine=5 lvl=90/90;
 sucrose add set="viridescentvenerer" count=4;
 sucrose add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.0992 atk=344.08 atk%=0.3964 er=0.6612 em=679.92 cr=0.0662 cd=0.1324;
-																											
+
 options swap_delay=12 iteration=1000;
 
 active herexcellencythealmightynarukamiogoshogodofthunder ;
 
-target lvl=100 resist=0.1 radius=2 pos=2.1,1.5 hp=999999999; 
-#target lvl=100 resist=0.1 radius=2 pos=-2.1,1.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=2.1,1.5 hp=999999999;
+#target lvl=100 resist=0.1 radius=2 pos=-2.1,1.5 hp=999999999;
 
 energy every interval=480,720 amount=1;
 
   herexcellencythealmightynarukamiogoshogodofthunder skill;
- 
+
  for let i=0; i<4; i=i+1 {
 
    sucrose attack, skill, dash, attack:2, charge;
    wait(26);
-  
+
   kirara burst, attack, skill;
   sara skill, aim, attack;
-  
+
   if .sucrose.skill.ready {
     sucrose attack, skill, dash, burst, attack:2, charge;
   } else {
     sucrose attack:2, burst, attack, charge;
   }
- 
-  sara burst; 
-  herexcellencythealmightynarukamiogoshogodofthunder burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
-  
-  }
-  
 
-# Raiden e > Sucrose n1e (n2c) > DMC q e n1 > Sara e aim n1 > Sucrose ed q n2 > Raiden q n4e 3n4d 
+  sara burst;
+  herexcellencythealmightynarukamiogoshogodofthunder burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
+
+  }
+
+
+# Raiden e > Sucrose n1e (n2c) > DMC q e n1 > Sara e aim n1 > Sucrose ed q n2 > Raiden q n4e 3n4d

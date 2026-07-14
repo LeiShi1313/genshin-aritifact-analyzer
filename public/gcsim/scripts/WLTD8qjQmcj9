@@ -11,7 +11,7 @@ ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 
 #ganyu add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 #ganyu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662; # Scion
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -31,12 +31,12 @@ chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
 chiori add stats def%=0.372 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2648 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # --- Targets
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=1000000000; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=1000000000;
 
 # Protoype Crescent Headshot Conditional
 fn ganyuAim() {
@@ -55,18 +55,18 @@ for let i=0; i<4; i=i+1 {
     esco burst;
   }
   esco skill;
-  
+
   if i == 0 && .zl.sets.ap >= 4 { # Needed for initial crystallize shard pickup
-    zl skill[hold=1], dash, attack:2, dash; pick_up_crystallize("any"); 
+    zl skill[hold=1], dash, attack:2, dash; pick_up_crystallize("any");
   } else {
-    zl attack, skill[hold=1], dash; pick_up_crystallize("any"); 
+    zl attack, skill[hold=1], dash; pick_up_crystallize("any");
   }
-  
+
   if .chiori.skill.cd && .chiori.burst.ready {
     chiori burst;
   }
   chiori skill:2;
-  
+
   ganyu skill;
   if .ganyu.burst.ready {
     ganyu burst;
@@ -82,4 +82,3 @@ for let i=0; i<4; i=i+1 {
     ganyu aim;
   }
 }
-

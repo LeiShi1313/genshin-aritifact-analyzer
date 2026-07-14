@@ -29,7 +29,7 @@ raiden add set="fopl" count=4;
 raiden add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.3641 cd=0.331;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 #xianyun add set="sodp" count=4;
 xianyun add set="deepwood" count=4;
@@ -37,7 +37,7 @@ xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466 ; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.2976 er=0.6612 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -62,18 +62,18 @@ raiden skill;
 
 for let x = 0; x < 4; x = x + 1 {
   furina skill, dash, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   haitham skill[hold=1], low_plunge[short=1];
   haitham attack:2; alhaitham_plunge(closeColl);
   haitham attack:2; alhaitham_plunge(closeColl);
   haitham attack:2; alhaitham_plunge(closeColl);
   haitham attack:2; alhaitham_plunge(closeColl);
   haitham attack:1, burst;
-  
+
   raiden attack, skill; # With good ping
-  
+
   haitham attack:2; alhaitham_plunge(farColl);
   haitham attack:2; alhaitham_plunge(farColl);
   haitham attack:2; alhaitham_plunge(farColl);
@@ -86,8 +86,7 @@ for let x = 0; x < 4; x = x + 1 {
       haitham attack;
     }
   }
-  
-  #raiden skill, attack; # Without good ping 
+
+  #raiden skill, attack; # Without good ping
   print("done");
 }
-

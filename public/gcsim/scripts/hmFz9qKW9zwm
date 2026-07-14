@@ -33,7 +33,7 @@ for let i = 0; i < 5; i = i + 1 {
   furina burst, skill, dash, attack:2;
   kazuha skill, high_plunge, burst;
   yelan attack:2, skill, burst, attack;
-  furina attack, charge, attack, charge; 
+  furina attack, charge, attack, charge;
   kazuha attack, skill, high_plunge;
   xingqiu attack, skill, dash, attack;
   yelan attack:4, skill, attack:4;

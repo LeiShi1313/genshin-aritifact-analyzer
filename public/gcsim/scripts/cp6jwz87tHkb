@@ -23,7 +23,7 @@ xilonen add set="scrolloftheheroofcindercity" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
 xilonen add stats cr=0.256;
 
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 

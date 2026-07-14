@@ -20,8 +20,8 @@ kazuha add set="deepwoodmemories" count=4;
 kazuha add stats def%=0.28500000000000003 def=32 hp=5587 hp%=0.11099999999999999 atk=378 atk%=0.099 er=0.29100000000000004 em=559.5 cr=0.268 cd=0.731;
 
 options swap_delay=12 debug=true iteration=100 workers=30 mode=sl;
-target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=1.5,0 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=1.5,0 hp=999999999;
 target lvl=100 resist=0.1 radius=1 pos=-1,-1.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
@@ -31,8 +31,8 @@ for let r = 0; r < 4; r = r + 1 {
   baizhu skill, burst;
   xingqiu skill, burst;
   kazuha attack, skill[hold=1], high_plunge, burst;
-  kaveh skill, burst, attack:3, dash, attack:4, skill, attack:4, attack:4, skill; 
+  kaveh skill, burst, attack:3, dash, attack:4, skill, attack:4, attack:4, skill;
   kazuha skill, high_plunge;
-  
-  
+
+
 }

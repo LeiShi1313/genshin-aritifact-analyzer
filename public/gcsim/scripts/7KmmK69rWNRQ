@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -20,7 +20,7 @@ let prev_action_id = -1;
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
-  
+
   # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
@@ -89,7 +89,7 @@ energy every interval=480,720 amount=1; # standard Energy drops
 # Rotation assumptions
 active dehya;
 
-for let i=0; i<2; i=i+1 { 
+for let i=0; i<2; i=i+1 {
   # First rotation (no Albedo burst)
   dehya  skill, attack;
   albedo skill, attack;
@@ -97,7 +97,7 @@ for let i=0; i<2; i=i+1 {
   kokomi skill, attack;
   dehya  burst, attack:10;
   kokomi burst, attack:3, dash, attack:3, dash, attack:3, dash, attack:3;
-  
+
   # Second rotation (no Nahida burst)
   dehya  skill, attack;
   nahida skill, attack;

@@ -39,7 +39,7 @@ while 1 {
   lisa attack:2;
   kazuha attack, skill, high_plunge, burst;
   fischl attack:2, burst;
-  yaoyao skill, attack:2; 
+  yaoyao skill, attack:2;
   lisa burst, skill[hold=1], attack:3;
   kazuha skill, high_plunge;
   lisa attack:2, charge, attack:2, charge;

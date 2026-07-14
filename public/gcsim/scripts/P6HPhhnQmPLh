@@ -1,0 +1,73 @@
+# Team - Options Listed by DPS
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="stillness" refine=5 lvl=90/90;
+lyney add set="mh" count=4;
+lyney add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+lyney add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*2 em=19.82*3 cr=0.0331*12 cd=0.0662*10;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festeringdesire" refine=5 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*7 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*7;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="pamber" refine=5 lvl=90/90;
+nicole add set="gift" count=4;
+nicole add stats hp=4780 atk=311  atk%=0.466 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*4 em=19.82*8 cr=0.0331*2 cd=0.0662*2;
+
+options swap_delay=12 iteration=100;
+energy every interval=480,720 amount=1;
+
+# Protoype Crescent Headshot Conditional
+fn lyneyAim() {
+  if .lyney.weapon == .keys.weapon.crescent { # Attempts headshots (50%) with Crescent
+    lyney aim[hold=2, weakspot=rand()>0.5];
+  } else { # Non weakspot opponents
+    lyney aim[hold=2];
+  }
+}
+
+# - Target
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+
+# - Actions
+
+active furina;
+for let i=0; i<5; i=i+1 {
+  if .furina.skill.ready { #furina uses skill and burst every other rotation
+    if !.furina.burst.ready {
+      furina attack;
+    }
+    furina skill, walk;
+    delay(13);
+    furina burst;
+  }
+
+  nicole skill, burst;
+  if .fischl.skill.ready {
+    fischl skill, attack;
+  } else {
+    fischl attack:2, burst;
+  }
+  lyneyAim();
+  lyneyAim();
+  if .lyney.burst.ready {
+    lyney burst; delay(11); # to avoid canceling his burst without dealing damage
+    lyney skill;
+  } else {
+    lyneyAim();
+  }
+  lyneyAim();
+  lyneyAim();
+  lyney skill;
+  lyneyAim();
+
+}

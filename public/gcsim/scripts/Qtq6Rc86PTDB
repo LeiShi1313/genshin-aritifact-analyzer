@@ -4,7 +4,7 @@ lyney add set="marechausseehunter" count=4;
 lyney add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 lyney add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favoniussword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622 ; #main
@@ -36,19 +36,19 @@ for let r = rotations; r > 0; r = r - 1 {
     if !.furina.burst.ready {
       bennett skill;
     }
-    furina skill, walk; 
+    furina skill, walk;
   }
-    
+
   if !.furina.burst.ready {
     furina attack:2;
   }
-  
-  furina burst;  
-    
+
+  furina burst;
+
   bennett burst, skill;
-  
+
   kazuha skill, high_plunge;
-  
+
   lyney aim[weakspot=1], aim, aim, aim[weakspot=1];
   if .lyney.burst.ready {
     lyney burst;
@@ -60,7 +60,7 @@ for let r = rotations; r > 0; r = r - 1 {
   else {
     lyney aim;
   }
-      
+
   lyney skill;
 
 }

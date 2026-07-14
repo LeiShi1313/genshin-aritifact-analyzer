@@ -1,7 +1,7 @@
 kuki char lvl=90/90 cons=6 talent=9,9,9;
 kuki add weapon="xiphos" refine=1 lvl=90/90;
 kuki add set="fopl" count=5;
-kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #mainstats 
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #mainstats
 kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; #substats
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
@@ -47,9 +47,9 @@ for let x = 0; x< 5; x=x+1 {
     if .yelan.tags.yelan_breakthrough {
         yelan aim:1, attack:2, skill, attack;
     } else {
-        yelan attack:2, skill, attack; 
-    } 
+        yelan attack:2, skill, attack;
+    }
     baizhu attack:2, walk[f=3], attack:4, dash;
     print("Done");
-  
+
 }

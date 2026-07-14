@@ -26,8 +26,8 @@ xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4
 
 
 active kokomi;
-target lvl=100 resist=0.1 pos=-1.2, 1.1 hp=999999999;  
-target lvl=100 resist=0.1 pos=1.2, 1.1 hp=999999999;  
+target lvl=100 resist=0.1 pos=-1.2, 1.1 hp=999999999;
+target lvl=100 resist=0.1 pos=1.2, 1.1 hp=999999999;
 energy every interval=480,720 amount=1;
 
 let cur_target = 1;
@@ -42,7 +42,7 @@ fn switch_target() {
   return 0;
 }
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
     kokomi attack, skill;
     nahida skill;
     xiangling burst, skill;
@@ -65,4 +65,3 @@ for let i=0; i<4; i=i+1 {
         switch_target();
     print("done");
 }
-

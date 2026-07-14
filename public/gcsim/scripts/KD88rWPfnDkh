@@ -1,18 +1,18 @@
 options swap_delay=12 iteration=100;
 
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=5;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favoniussword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-chevreuse char lvl=90/90 cons=6 talent=9,9,9; 
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
 chevreuse add weapon="favoniuslance" refine=3 lvl=90/90;
 chevreuse add set="sodp" count=4;
 chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
@@ -24,7 +24,7 @@ bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=118.92 cr=0.2648 cd=0.7282;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active gaming; ## SS Stacks
@@ -32,20 +32,19 @@ for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, attack;
 
   chev attack, skill[hold=1];
-	
-	furina burst;
-  
-	bennett burst;
-  
+
+  furina burst;
+
+  bennett burst;
+
   gaming swap;
-	gaming burst;
-	gaming skill;
+  gaming burst;
+  gaming skill;
   sleep(42);
-	gaming low_plunge;
+  gaming low_plunge;
   for let j = 0; j < 7; j = j + 1 {
     gaming skill;
     sleep(17);
     gaming high_plunge;
   }
 }
-

@@ -36,7 +36,7 @@ for let i = 0; i < 2; i = i + 1 {
   furina skill, dash, attack;
   mavuika burst, skill, dash;
   chasca skill, aim:5, burst;
-  
+
   emilie burst;
   mavuika attack, skill;
   chasca skill, aim:4, aim[bullets=4];

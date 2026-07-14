@@ -38,13 +38,13 @@ kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #kirara add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.333648 cd=0.222432; # 4*
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-  
+
 # Rotation
 active fischl; # SS Stacks
 
@@ -57,23 +57,22 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     nahida charge;
   }
-  
+
   kirara skill[short_hold=1];
 
   haitham burst;
-  
+
   if .fischl.skill.ready {
     fischl attack, skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   # Optimized-ish combo for 20s rot
-  alhaitham attack:3, dash, 
+  alhaitham attack:3, dash,
             attack:3, charge, dash,
             attack:3, charge, dash,
             attack:1, skill[hold=1], low_plunge[short=1];
   alhaitham attack:4, charge, dash,
             attack:4;
 }
-

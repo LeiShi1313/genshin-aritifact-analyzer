@@ -5,13 +5,13 @@ razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 razor add set="pf" count=4;
 #razor add set="glad" count=4;
-razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main 
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
 razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=4 lvl=90/90;
 yelan add set="emblem" count=4;
-yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main 
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.7282;
 
 ororon char lvl=90/90 cons=6 talent=9,9,9;
@@ -26,11 +26,11 @@ ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 layla char lvl=90/90 cons=6 talent=9,9,9;
 layla add weapon="favsword" refine=3 lvl=90/90;
 layla add set="tom" count=4;
-layla add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main 
+layla add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
 layla add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -43,7 +43,7 @@ active razor; # SS stacks
 
 for let i=0; i<4; i=i+1 {
   ororon burst, skill;
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -51,9 +51,9 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   layla burst, attack, skill;
-  
+
   razor skill, dash, attack, burst;
   while .razor.mods.razor-q > 290 { # 3rd Razor skill
     if .razor.normal > 3 && .razor.skill.ready {
@@ -64,6 +64,5 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-  
-}
 
+}

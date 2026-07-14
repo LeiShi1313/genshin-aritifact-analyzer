@@ -4,13 +4,13 @@ mavuika add set="oc" count=4;
 mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
 mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=118.88 cr=0.2648 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9 ; 
+bennett char lvl=90/90 cons=6 talent=9,9,9 ;
 bennett add weapon="sapwood" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311;
@@ -20,7 +20,7 @@ xingqiu char lvl=90/90 cons=6 talent=9,9,9;
 xingqiu add weapon="sacsword" refine=3 lvl=90/90;
 xingqiu add set="ap" count=4;
 #xingqiu add set="ins" count=4;
-xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; 
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
 xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 #xingqiu add stats hp=3571 atk=232 atk%=0.348 hydro%=0.466 cr=0.232;
 #xingqiu add stats def%=0.10416 def=33.0624 hp=426.6192 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.194628 cd=0.500472;
@@ -45,9 +45,9 @@ for let i = 0; i<4; i=i+1 {
     xingqiu burst, attack, dash;
   }
   pick_up_crystallize("pyro");
-  mavuika burst, 
+  mavuika burst,
           charge, dash, attack,
-          charge, dash, attack, 
+          charge, dash, attack,
           charge, dash, attack,
           charge, dash, attack,
           charge, dash, attack,
@@ -57,9 +57,9 @@ for let i = 0; i<4; i=i+1 {
     wait(33);
   }
   mavuika charge, dash, attack;
-  if !i { 
+  if !i {
     mavuika skill;
   }
   mavuika charge:3;
-        
+
 }

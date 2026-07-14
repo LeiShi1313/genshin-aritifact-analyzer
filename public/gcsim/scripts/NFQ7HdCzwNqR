@@ -34,7 +34,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2317 cd=0.7282;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -47,22 +47,22 @@ active bennett;
 
 for let i=0; i<4; i=i+1 {
   bennett skill, burst;
-  
+
   # Fischl before Chev is better
   if !.amy.skill.ready {
     amy attack:2, burst;
   } else {
     amy attack, skill;
   }
-  
+
   # Every other Rotation
   if .chev.burst.ready {
     chev burst, skill[hold=1]:2;
   } else {
     chev skill[hold=1], attack;
   }
-  
-  while .aetherpyro.mods.bennett-field || .status.bennettburst { 
+
+  while .aetherpyro.mods.bennett-field || .status.bennettburst {
     switch {
       case .aetherpyro.skill.ready:
         aetherpyro skill[hold=1], attack:1, charge;
@@ -76,6 +76,6 @@ for let i=0; i<4; i=i+1 {
         aetherpyro attack;
     }
   }
-  
+
   print("done");
 }

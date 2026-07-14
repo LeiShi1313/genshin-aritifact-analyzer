@@ -50,13 +50,13 @@ while 1 {
             if .xingqiu.status.xingqiuburst > 0 || .yelan.status.yelanburst > 0{
               kuki attack;
             }
-        case .xingqiu.status.xingqiuburst > 0 && .xingqiu.status.xingqiuburst < 600 
+        case .xingqiu.status.xingqiuburst > 0 && .xingqiu.status.xingqiuburst < 600
             && .xingqiu.skill.ready && .xingqiu.swap.ready:
             if .nahida.onfield {
               nahida charge;
             }
             xingqiu attack, skill, dash, attack:2;
-        case .yelan.burst.ready && .yelan.swap.ready && 
+        case .yelan.burst.ready && .yelan.swap.ready &&
             .xingqiu.status.xingqiuburst > 0 && .status.nahida-q > 300:
             yelan burst, attack;
         case .yelan.skill.ready && .yelan.swap.ready:
@@ -69,7 +69,7 @@ while 1 {
             if .xingqiu.status.xingqiuburst > 0 || .yelan.status.yelanburst > 0{
               kuki attack;
             }
-        
+
         case .kuki.onfield && !.kuki.swap.ready:
             kuki attack;
         case .xingqiu.onfield && !.xingqiu.swap.ready:
@@ -89,4 +89,3 @@ while 1 {
     }
 
 }
-

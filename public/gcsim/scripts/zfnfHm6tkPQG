@@ -24,39 +24,39 @@ nahida add set="deepwoodmemories" count=4;
 nahida add stats hp=4780 atk=311 em=187.0 dendro%=0.4660 cr=0.3110;
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.2317 cd=0.5958;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 active raiden;
 
 let flag = 0;
 while flag < 100 {
   let a = rand() * 4;
-  
+
   if a < 1{
-      print("raiden"); 
+      print("raiden");
       if (.raiden.skill.ready) { raiden skill; }
       raiden attack;
     }
-    
+
   else if a < 2{
-      print("yelan"); 
+      print("yelan");
       if (.yelan.skill.ready) { yelan skill; }
       if (.yelan.burst.ready) { yelan burst; }
       yelan attack;
     }
   else if a < 3{
-      print("xingqiu"); 
+      print("xingqiu");
       if (.xingqiu.skill.ready) { xingqiu skill; }
       if (.xingqiu.burst.ready) { xingqiu burst; }
       xingqiu attack;
     }
   else if a < 4{
-      print("nahida"); 
+      print("nahida");
       if (.nahida.skill.ready) { nahida skill; }
       if (.nahida.burst.ready) { nahida burst; }
       nahida attack;
   }
-  
+
   flag = flag + 1;
   print(flag);
 }

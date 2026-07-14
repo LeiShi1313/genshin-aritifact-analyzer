@@ -4,17 +4,17 @@ nahida add set="gt" count=4;
 nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.24 cr=0.331 cd=0.7944;
 
-nilou char lvl=90/90 cons=0 talent=9,9,9;							
-nilou add weapon="dockhand" refine=1 lvl=90/90;							
+nilou char lvl=90/90 cons=0 talent=9,9,9;
+nilou add weapon="dockhand" refine=1 lvl=90/90;
 nilou add set="tenacity" count=2;
-nilou add set="vg" count=2;				
+nilou add set="vg" count=2;
 nilou add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466 ; #main
 nilou add stats def=39.36 def%=0.124 hp=2539.4 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=198.2 cr=0.0662 cd=0.1324 ;
 
-yelan char lvl=90/90 cons=0 talent=9,9,9;																
+yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add set="esf" count=4;
-yelan add weapon="stringless" refine=3 lvl=90/90;							
-yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main								
+yelan add weapon="stringless" refine=3 lvl=90/90;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 kirara char lvl=90/90 cons=6 talent=9,9,9;
@@ -28,34 +28,32 @@ options swap_delay=12 debug=true iteration=1000 workers=30;
 #target lvl=100 resist=0.1 hp=100000000 pos=-2.4,2.4 radius=2;
 target lvl=100 resist=0.1 hp=100000000 pos=2.4,2.4 radius=2;
 
-energy every interval=480,720 amount=1; 
-					
+energy every interval=480,720 amount=1;
+
 active nahida;
 nahida skill;
 for let i = 0; i < 3; i = i + 1 {
-  
+
   if i {
     nahida dash, attack:1, charge;
   }
-  
-	nilou skill, attack:2, skill;
-	
-	kirara burst, skill;
-	
-	yelan skill, burst, attack;
-	
-	nahida skill, attack:3, dash, attack:3, dash, attack:3, skill, attack, charge;
 
-	kirara skill, attack;
-	
-	yelan skill, attack;
-	if .yelan.breakthrough {
-	  yelan aim;
-	}
-	yelan attack:3;
-	
-	nahida attack, skill, attack, charge, dash, attack:2;
-	
+  nilou skill, attack:2, skill;
+
+  kirara burst, skill;
+
+  yelan skill, burst, attack;
+
+  nahida skill, attack:3, dash, attack:3, dash, attack:3, skill, attack, charge;
+
+  kirara skill, attack;
+
+  yelan skill, attack;
+  if .yelan.breakthrough {
+    yelan aim;
+  }
+  yelan attack:3;
+
+  nahida attack, skill, attack, charge, dash, attack:2;
+
 }
-
-

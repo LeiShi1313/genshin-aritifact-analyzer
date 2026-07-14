@@ -42,7 +42,7 @@ for let i=0; i<3; i=i+1 {
   }
   mualani walk[f=91], attack,
           skill;
- 
+
   mualani attack, charge;
   xilonen burst, skill, attack:2;
   sucrose skill, dash, attack;

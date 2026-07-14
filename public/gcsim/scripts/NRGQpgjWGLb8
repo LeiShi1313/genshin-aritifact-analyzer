@@ -55,7 +55,7 @@ kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #kuki add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.08816 em=31.712 cr=0.28466 cd=0.43692; # Ins
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -90,7 +90,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida charge;
   }
-  
+
   # Fischl burst over skill
   amy attack;
   if .amy.burst.ready && .amy.energy == .amy.energymax {
@@ -98,12 +98,12 @@ for let i=0; i<4; i=i+1 {
   } else {
     amy skill;
   }
-  
+
   # Kuki burst, energy permitting
   if .kuki.burst.ready && .kuki.energy == .kuki.energymax {
     kuki burst;
   }
-  
+
   # While OZ is on field
   while .fischl.oz {
     TFCombo();
@@ -111,4 +111,3 @@ for let i=0; i<4; i=i+1 {
 
   print("done");
 }
-

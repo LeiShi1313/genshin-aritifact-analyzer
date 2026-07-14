@@ -1,4 +1,4 @@
-# Skirk Furina Mona Escoffier. ~10s rotation; ONE ROTATION Skirk burst nuke sim to simulate speedrunning. Freeze immunity loses 20k~ DPS. The team does not rotate sustainably. Teamwide staring HP = 60%. 
+# Skirk Furina Mona Escoffier. ~10s rotation; ONE ROTATION Skirk burst nuke sim to simulate speedrunning. Freeze immunity loses 20k~ DPS. The team does not rotate sustainably. Teamwide staring HP = 60%.
 
 options swap_delay=12 iteration=1000;
 
@@ -9,7 +9,7 @@ skirk add set="bs" count=4;
 skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 skirk add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=60]; 
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=60];
 furina add weapon="wolffang" refine=1 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
@@ -21,10 +21,10 @@ mona add set="no" count=4;
 mona add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311;
 mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=60]; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=60];
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="scroll" count=4;
-escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*2 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
 
 # Target and Energy assumptions
@@ -40,4 +40,3 @@ escoffier skill, burst;
 mona burst;
 skirk burst;
 wait(57); # for her burst to hit
-

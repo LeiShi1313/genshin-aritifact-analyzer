@@ -31,9 +31,9 @@ target lvl=100 resist=.1 hp=1000000000 pos=0,0;
 # Fischl only every hits the first target (except for initial E/Q cast hit).
 
 # Jean's E+NA+CA hit both targets (very difficult to do consistently except for tightly grouped small enemies)
-#target lvl=100 resist=.1 hp=1000000000 pos=0,2; 
+#target lvl=100 resist=.1 hp=1000000000 pos=0,2;
 # Jean's E+NA hit both targets (possible in most fights as long as the enemies keep close)
-target lvl=100 resist=.1 hp=1000000000 pos=2.1,0; 
+target lvl=100 resist=.1 hp=1000000000 pos=2.1,0;
 # Jean's E hits both targets (easily achievable in most fights)
 #target lvl=100 resist=.1 hp=1000000000 pos=3,2;
 # None of Jean's attacks hit both targets (only against giant enemies, e.g. Coral Defenders)
@@ -60,13 +60,12 @@ for let x = 0; x < 5; x = x + 1 {
   jean attack:3, charge;
 
   rosaria skill;
-  
+
   beidou skill[counter=1];
-  
+
   jean attack:3, charge;
   jean skill;
   jean attack, charge;
 
   print("rotation done");
 }
-

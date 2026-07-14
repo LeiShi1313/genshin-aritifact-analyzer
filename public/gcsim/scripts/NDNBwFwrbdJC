@@ -36,7 +36,7 @@ xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="ttds" refine=5 lvl=90/90;
 #xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 #xianyun add set="ohc" count=4; # Bubbles may miss while airborne
-xianyun add set="vv" count=4; 
+xianyun add set="vv" count=4;
 #xianyun add set="sodp" count=4;
 xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.2755 em=39.64 cr=0.3972 cd=0.331; # TTDS
@@ -44,13 +44,13 @@ xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.297
 #xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296; # Oathsworn
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Xianyun Plunge Combo
 fn XianyunPlunge() {
@@ -69,21 +69,21 @@ for let i = 0; i < 4; i = i + 1 {
     furina attack;
   }
   furina burst;
-  
+
   faruzan skill, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   kazuha skill, high_plunge[collision=1], burst;
-  
+
   faruzan aim:2, skill;
-  
+
   kazuha skill, high_plunge[collision=1];
-  
+
   XianyunPlunge(); xianyun dash;
   XianyunPlunge();
-  
-  faruzan aim:2; 
-  
+
+  faruzan aim:2;
+
   kazuha skill, high_plunge[collision=1];
 }

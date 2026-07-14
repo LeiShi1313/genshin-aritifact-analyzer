@@ -34,7 +34,7 @@ for let i = 0; i < 4; i = i + 1 {
     kazuha skill, high_plunge;
     yelan skill,  burst, attack;
     xingqiu burst, attack;
-    furina attack, charge, attack:2, charge, attack:4; 
+    furina attack, charge, attack:2, charge, attack:4;
   } else {
     furina burst;
     xingqiu burst, attack;

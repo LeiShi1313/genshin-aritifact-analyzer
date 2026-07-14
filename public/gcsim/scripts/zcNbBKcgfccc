@@ -25,7 +25,7 @@ kirara add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -46,7 +46,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     aetheranemo attack, skill[hold=1], attack:2;
   }
-  
+
 
   sara aim, skill;
   fischl attack:3, skill;
@@ -58,7 +58,6 @@ for let i=0; i<4; i=i+1 {
     aetheranemo attack, skill[hold=1], attack:2;
   }
   sara aim, skill;
-  
+
   print("done");
 }
-

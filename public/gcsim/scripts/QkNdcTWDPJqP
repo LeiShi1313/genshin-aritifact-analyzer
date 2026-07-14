@@ -15,7 +15,7 @@ yelan add set="emblem" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
 
-ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon char lvl=90/90 cons=6 talent=9,9,9;
 ororon add weapon="favbow" refine=4 lvl=90/90;
 ororon add set="scroll" count=4;
 ororon add stats hp=4780 atk=311 em=187 em=187 em=187; #main
@@ -28,7 +28,7 @@ nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=118.92 cr=0.2979 cd=0.4634;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,7 +45,7 @@ for let i=0; i<4; i=i+1 {
   } else {
     nahida skill, attack, burst;
   }
-  
+
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -53,10 +53,10 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   ororon skill, attack, burst, attack;
-  
-  sethos skill, attack; #aim[hold=2]; # High ping only 
+
+  sethos skill, attack; #aim[hold=2]; # High ping only
   sethos burst;
   sethos attack:2, dash,
          attack:2, dash,

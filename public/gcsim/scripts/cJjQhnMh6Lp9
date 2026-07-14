@@ -36,13 +36,13 @@ dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 e
 #dori add stats def%=0.10416 def=33.0624 hp=426.619 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.185136 em=33.2976 cr=0.333648 cd=0.111216; # 4*
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active fischl;
@@ -58,18 +58,18 @@ for let r=0; r<4; r=r+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   dori skill, burst; # No N1 after burst
-  
+
   haitham burst;
-  
+
   amy attack;
   if .amy.skill.ready {
     amy skill;
   } else {
     amy attack, burst;
   }
-  
+
   haitham attack:3, dash,
           attack:3;
   haitham skill, attack:3, charge, dash,

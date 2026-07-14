@@ -4,13 +4,13 @@ wriothesley add set="marechausseehunter" count=4;
 wriothesley add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
 wriothesley add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.2648 cd=0.7944;
 
-diona char lvl=90/90 cons=6 talent=9,9,9; 
+diona char lvl=90/90 cons=6 talent=9,9,9;
 diona add weapon="favbow" refine=3 lvl=90/90;
 diona add set="scroll" count=4;
 diona add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311 ; #main
 diona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.3857 em=39.64 cr=0.331 cd=0.4634;
 
-jean char lvl=90/90 cons=0 talent=9,9,9; 
+jean char lvl=90/90 cons=0 talent=9,9,9;
 jean add weapon="favsword" refine=3 lvl=90/90;
 jean add set="vv" count=4;
 jean add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
@@ -23,7 +23,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active diona;
@@ -37,7 +37,7 @@ for let i=0; i<4; i=i+1 {
   bennett skill, burst;
   wrio skill,
        attack:3, charge, jump,
-       attack:3, charge, jump, 
+       attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,
        attack:3, charge, jump,

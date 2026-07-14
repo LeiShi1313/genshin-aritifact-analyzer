@@ -23,13 +23,13 @@ mika add set="shimenawasreminiscence" count=1;
 mika add stats def%=0.073 def=37 hp=4989 hp%=0.519 atk=329 atk%=0.34400000000000003 er=1.36 cr=0.26000000000000006 cd=0.372;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active kuki;
 for let i=0; i<4; i=i+1 {
   kuki skill;
-  
+
   // Option A - Mika skill and burst
   // while !.mika.burst.ready && !.mika.mods.favonius-cd {
   //   while !.mika.skill.cd {
@@ -38,13 +38,13 @@ for let i=0; i<4; i=i+1 {
   //   mika attack;
   // }
   // mika burst;
-  
+
   // Option B - Mika skill, burst only if ready
   if .mika.burst.ready {
     mika burst;
   }
   mika skill;
-  
+
   while !.yunjin.burst.ready && !.yunjin.mods.favonius-cd {
     while !.yunjin.skill.cd {
       yunjin skill;
@@ -52,7 +52,7 @@ for let i=0; i<4; i=i+1 {
     yunjin attack;
   }
   yunjin burst;
-  
+
   if .amber.burst.ready {
     amber burst;
   }
@@ -61,4 +61,3 @@ for let i=0; i<4; i=i+1 {
     amber attack: 5, dash;
   }
 }
-

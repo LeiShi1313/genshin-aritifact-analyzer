@@ -18,7 +18,7 @@ nahida add set="ap" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.24 cr=0.331 cd=0.7944;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="harbinger" refine=5 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; #main
@@ -34,28 +34,28 @@ for let i=0; i<3; i=i+1 {
   if !i {
     yae skill:3;
   } else {
-    yae skill:2, attack, skill; 
+    yae skill:2, attack, skill;
   }
-  
+
   xilonen skill, attack:2;
-  
-  nahida skill, dash; pick_up_crystallize("any"); 
+
+  nahida skill, dash; pick_up_crystallize("any");
   nahida burst;
-  
+
   fischl attack, skill;
-  
+
   yae attack:2, charge, dash, attack:2,
       burst, skill, attack, skill, attack, skill;
-      
+
   xilonen skill, attack:2;
-  
+
   nahida skill, attack, dash; pick_up_crystallize("any");
-  
+
   fischl attack:2, burst;
-  
+
   yae attack:2, charge, dash, attack:2, charge, jump;
-  
+
   nahida skill, attack, charge;
-  
+
   yae attack:2, charge, jump, attack:2;
 }

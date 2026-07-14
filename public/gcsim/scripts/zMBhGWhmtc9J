@@ -33,19 +33,18 @@ active mona;
 
 for let i = 0; i < 4; i = i + 1 {
   mona skill;
-  
+
   bennett skill, burst, attack;
-  
+
   citlali attack, skill, charge;
 
   mona burst;
-  
+
   chasca skill;
   if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
     chasca burst, aim:3;
-  } else { 
+  } else {
     chasca aim:4;
   }
 }
 wait(125);
-

@@ -24,29 +24,29 @@ nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=3 pos=0,3.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active nahida;
 
     nahida skill;
-    
+
 for let i=0; i<4; i=i+1 {
 
     nahida burst;
     if i != 0 {
       nahida attack, charge, dash, charge;
     }
-    
+
     raiden skill;
     if i != 0 {
       raiden attack;
     }
-    
+
     fischl skill, attack;
-    
+
     xingqiu burst, attack;
-    
+
     nahida attack:2, skill,
            attack:3, charge,
            attack:3, dash,
@@ -61,7 +61,7 @@ for let i=0; i<4; i=i+1 {
            attack:3, dash,
            attack:2, dash,
            attack:3;
-           
+
     print("done");
 }
 

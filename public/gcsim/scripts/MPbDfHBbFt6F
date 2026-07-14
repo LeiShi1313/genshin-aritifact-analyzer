@@ -38,13 +38,13 @@ chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # HoD
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Xilonen Plunge Combo
 fn XilonenPlunge() {
@@ -56,14 +56,14 @@ fn XilonenPlunge() {
 
 # Rotation
 active furina;
- 
+
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, attack, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   chiori skill:2;
-  
+
   xilonen skill; pick_up_crystallize("any");
   XilonenPlunge(); xilonen attack;
   XilonenPlunge(); xilonen attack;
@@ -73,7 +73,7 @@ for let i = 0; i < 4; i = i + 1 {
   XilonenPlunge(); xilonen attack; # Final Geo Plunge with C0
   XilonenPlunge(); xilonen attack;
   XilonenPlunge();
-  
+
   # Xilonen burst or Chiori burst to fill time
   if .xilonen.burst.ready {
     xilonen burst;

@@ -38,7 +38,7 @@ bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #bennett add stats def%=0.124 def=39.36 hp=1777.58 hp%=0.496 atk=33.08 atk%=0.0992 er=0.4959 em=39.64 cr=0.0662 cd=0.1324; # SoDP
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -55,11 +55,11 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   bennett skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   freminet skill, burst,
            attack:2, skill, skill,
            attack:2, skill, attack:1, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time

@@ -33,47 +33,46 @@ nahida skill, burst;
 let t = f();
   fischl attack, skill;
   kokomi attack, skill;
-  
+
   let n = f();
   while (f() < n + 8*60) {
     nahida attack;
     if (.nahida.skill.ready) {
-	  nahida skill;
-	}
+    nahida skill;
   }
-  
+  }
+
   fischl attack, burst;
   kokomi burst,
     attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge;
-	
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2, charge;
+
 
 for let i = 0; i < 3; i = i + 1 {
   let t = f();
   fischl attack, skill;
   kokomi attack, charge, skill;
   raiden skill, attack;
-  
+
   let n = f();
   while (f() < n + 5*60) {
     nahida attack;
     if (.nahida.skill.ready) {
-	  nahida skill;
-	}
+    nahida skill;
+  }
   }
   nahida burst;
-  
+
   fischl attack, burst;
   kokomi burst,
     attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge, jump,
-	attack:2, charge;
-  
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2, charge, jump,
+  attack:2, charge;
+
   print("done");
 }
-

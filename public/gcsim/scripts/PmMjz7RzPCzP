@@ -31,13 +31,13 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 fn kinich_combo() {
   kinich skill;
-  
-  for let c=0; c<5; c=c+1 { 
+
+  for let c=0; c<5; c=c+1 {
     kinich attack[direction=1]:2;
     while .kinich.nightsoul.points < 20 && .kinich.nightsoul.state {
       wait(1);
@@ -46,9 +46,9 @@ fn kinich_combo() {
       kinich skill[hold=1];
     }
   }
-  
+
   if .kinich.burst.ready {
-	kinich burst;
+  kinich burst;
   }
 
 }
@@ -59,14 +59,14 @@ for let i=0; i<4; i=i+1 {
   thoma skill, attack, burst, attack;
 
   bennett skill, burst;
-  
+
   if .fischl.skill.ready {
     fischl attack, skill;
   } else {
     fischl attack:2, burst;
   }
-  
+
   kinich_combo();
-  
+
   #bennett skill, attack;
 }

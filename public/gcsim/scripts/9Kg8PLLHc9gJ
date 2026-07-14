@@ -2,14 +2,14 @@
 fn rand_delay(mean, stddev, min, max) {
   # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
   let del = randnorm() * stddev + mean;
-  
+
   # truncate random value according to min and max
   if del < min {
     del = min;
   } else if del > max {
     del = max;
   }
-  
+
   # execute delay
   delay(del);
 }
@@ -58,7 +58,7 @@ fn execute_action(char_id number, action_id number, p map) {
 options iteration=1000;
 
 # Build assumptions
-dehya char lvl=90/90 cons=1 talent=9,9,9; 
+dehya char lvl=90/90 cons=1 talent=9,9,9;
 dehya add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 dehya add set="eosf" count=4;
 dehya add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cd=0.622; # Main stats: ER Pyro% CD
@@ -76,7 +76,7 @@ citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 em=187 em=187 cr=0.311; # Main stats: EM EM CR
 citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
 
-kazuha char lvl=90/90 cons=0 talent=9,9,9; 	
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
 kazuha add weapon="favsword" refine=3 lvl=90/90;
 kazuha add set="vv" count=4;
 kazuha add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main stats: ER EM EM

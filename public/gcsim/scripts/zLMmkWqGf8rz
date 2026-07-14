@@ -35,20 +35,20 @@ for let x = 0; x < 5; x = x + 1 {
     {
       qiqi skill;
     }
-	xingqiu burst, attack;
-	raiden skill, attack;
-	nahida 
-		attack:2, skill,
-		attack:3, jump,
-		attack:3, jump,
-		attack:3, skill,
-		attack:3, charge;
-	xingqiu skill, dash, attack:2;
-	nahida
-		attack:2, skill,
-		attack:3, jump,
-		attack:3, jump,
-		attack:3, skill,
-		attack:2, charge;
-	print("Rotation Done");
+  xingqiu burst, attack;
+  raiden skill, attack;
+  nahida
+    attack:2, skill,
+    attack:3, jump,
+    attack:3, jump,
+    attack:3, skill,
+    attack:3, charge;
+  xingqiu skill, dash, attack:2;
+  nahida
+    attack:2, skill,
+    attack:3, jump,
+    attack:3, jump,
+    attack:3, skill,
+    attack:2, charge;
+  print("Rotation Done");
 }

@@ -35,17 +35,17 @@ fn doAPL() {
     switch {
       case .furina.swap.ready && .furina.skill.ready:
         furina skill, dash;
-      
+
       case .furina.swap.ready && .furina.burst.ready && !.furina.status.furina-burst:
         furina burst;
-      
+
       case .bennett.swap.ready && .bennett.burst.ready:
         bennett swap;
         if .bennett.skill.ready {
           bennett skill, dash;
         }
         bennett burst;
-        
+
       case .luminegeo.swap.ready && .luminegeo.burst.ready:
         if !.luminegeo.onfield && .status.bennettburst {
           luminegeo attack; #make more time for bennett buff tick
@@ -58,13 +58,13 @@ fn doAPL() {
           }
         }
         luminegeo burst;
-        
+
       case .zhongli.swap.ready && .zhongli.skill.ready && .status.bennettburst:
         if !.zhongli.onfield {
           zhongli attack;
         }
         zhongli dash; set_player_pos(0, -3); #dash back for pillar to be in the middle of gmc burst
-        
+
         if (.construct.count.zhongli == 0) || !.zhongli.shielded {
           zhongli skill[hold=1];
         } else {
@@ -73,12 +73,12 @@ fn doAPL() {
           }
           zhongli skill;
         }
-  
+
         zhongli dash; set_player_pos(0, 0); #reset position (and dash cancel hE)
-        
+
       case .zhongli.swap.ready && .zhongli.burst.ready:
         zhongli burst;
-        
+
       case .luminegeo.swap.ready && .luminegeo.skill.ready:
         if !.luminegeo.onfield && .status.bennettburst {
           luminegeo attack;
@@ -88,21 +88,21 @@ fn doAPL() {
         } else {
           luminegeo skill[short_hold=1];
         }
-        
+
       case .bennett.swap.ready && .bennett.skill.ready:
         bennett swap;
         while !.bennett.mods.bennett-field && .status.bennettburst {
           bennett attack;
         }
         bennett skill;
-      
+
       case .furina.swap.ready && ((.status.bennettburst && (.furina.hpratio < 0.7)) || (!.furina.mods.favonius-cd && .furina.weapon == .keys.weapon.favsword)):
         if .furina.onfield {
           furina attack;
         } else {
           furina swap;
         }
-      
+
       case .zhongli.swap.ready && .status.bennettburst && (.zhongli.hpratio < 0.7):
         if .zhongli.onfield {
           if (.zhongli.normal > 1) && (.stam >= 25) {
@@ -113,21 +113,21 @@ fn doAPL() {
         } else {
           zhongli swap;
         }
-      
+
       case .luminegeo.swap.ready && .status.bennettburst && (.luminegeo.hpratio < 0.7):
         if .luminegeo.onfield {
           luminegeo attack;
         } else {
           luminegeo swap;
         }
-      
+
       case .bennett.swap.ready && .status.bennettburst && (.bennett.hpratio < 0.7):
         if .bennett.onfield {
           bennett attack;
         } else {
           bennett swap;
         }
-      
+
       case .zhongli.onfield:
         if (.zhongli.normal > 1) && (.stam >= 25) {
           zhongli charge;
@@ -180,7 +180,7 @@ fn execute_action(char_id number, action_id number, p map) {
   if prev_char_id != char_id && action_id != .action.swap {
     execute_action(char_id, .action.swap, []);
   }
-  
+
   if action_id == .action.dash {
     pick_up_crystallize("any"); #pick up a crystallize before each dash
   }
@@ -188,10 +188,10 @@ fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.swap {
     delay(randy(9.5, 1.5, 8, 17, 0)); #SWAP DELAY (frames, including 1f base): mean 10.5 stddev 1.5, bounds: 9-18f
                                                      #corresponding ping (ms): mean 87.5 stddev 12.5, bounds: 75-150ms
-    
+
   } else if prev_action_id == .action.attack && action_id != .action.attack && action_id != .action.charge {
     delay(randy(3, 1, 0, 6, 0)); #NA DELAY (except if next action is NA/CA): mean 3 stddev 1, bounds: 0-6f
-    
+
   } else if prev_action_id != .action.attack {
     delay(randy(3, 1, 0, 6, 0)); #OTHER ACTION DELAY: mean 3 stddev 1, bounds: 0-6f
   }

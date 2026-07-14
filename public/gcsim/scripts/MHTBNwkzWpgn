@@ -38,14 +38,14 @@ fn clorinde_combo() {
 }
 
 active furina;
-for let i=0; i<2; i=i+1 { 
+for let i=0; i<2; i=i+1 {
   furina skill, dash, attack, burst, attack;
   ororon skill, burst;
   kazuha skill, high_plunge;
   clorinde_combo();
   kazuha skill, high_plunge;
   clorinde burst;
-  
+
   kazuha burst;
   ororon skill, burst;
   kazuha skill, high_plunge;

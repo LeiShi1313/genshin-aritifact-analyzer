@@ -22,13 +22,13 @@ yaoyao char lvl=90/90 cons=6 talent=9,9,9;
 yaoyao add weapon="moonpiercer" refine=5 lvl=90/90;
 yaoyao add set="instructor" count=4;
 yaoyao add stats hp=3571 atk=232 atk%=0.3495 dendro%=0.466 cr=0.233;
-yaoyao add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.17856 er=0.08816 em=31.712 cr=0.21846 cd=0.43692;										
+yaoyao add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.17856 er=0.08816 em=31.712 cr=0.21846 cd=0.43692;
 
 
 active fischl;
 
-target lvl=100 resist=0.1 radius=1 pos=0, 1.4 hp=999999999; 
-target lvl=100 resist=0.1 radius=1 pos=0, 3.5 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0, 1.4 hp=999999999;
+target lvl=100 resist=0.1 radius=1 pos=0, 3.5 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<6; i=i+1 {
@@ -45,4 +45,3 @@ for let i=0; i<6; i=i+1 {
 
     print("done");
 }
-

@@ -38,4 +38,3 @@ for let i = 0; i < 3; i = i + 1 {
   kuki burst, skill, attack;
   ayato skill, attack:15;
 }
-

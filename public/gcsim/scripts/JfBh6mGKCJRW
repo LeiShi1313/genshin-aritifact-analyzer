@@ -34,18 +34,18 @@ for let i=0; i<4; i=i+1 {
     bennett attack;
   }
   bennett skill, burst;
-  
+
   if .barbara.skill.ready {
     barbara attack:2, skill;
   } else {
     barbara attack:4; # Barbara E from last rotation help apply 1 more Hydro for Mavuika to Vape
   }
-  
+
   set_player_pos(0,-2);  # To simulate that Barbara E ring doesn't apply Hydro to the enemy
   mavuika burst;
   set_player_pos(0,0);
   mavuika charge, skill, dash;
-  
+
   chasca attack, skill;
   set_player_pos(0,-2);  # To simulate that Barbara E ring doesn't apply Hydro to the enemy
   chasca aim:4;

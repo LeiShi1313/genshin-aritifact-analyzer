@@ -34,15 +34,15 @@ active wrio;
 wrio attack;
 for let i=0; i<4; i=i+1 {
   xilonen skill, attack:2;
-  
+
   chiori skill;
   pick_up_crystallize("cryo");
   chiori skill;
-  
-  rosaria skill; 
-  pick_up_crystallize("cryo"); 
+
+  rosaria skill;
+  pick_up_crystallize("cryo");
   rosaria burst;
-  
+
   wrio skill,
        attack:3, charge, jump,
        attack:3, charge, jump,

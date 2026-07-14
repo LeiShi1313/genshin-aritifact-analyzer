@@ -26,33 +26,33 @@ furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cd=0.622; #mainstats
 furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662 ;
 
 #enemy config
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
 options swap_delay=12 iteration=1000;
 active furina;
 
-#action list 
-       
+#action list
+
    for let i=0; i<4; i=i+1 {
-   
+
    furina skill, dash, burst;
    gorou attack, skill, burst;
    albedo attack, skill;
-   
+
    itto attack, burst, skill[travel=0];
-  
+
        while !.itto.skill.ready {
        if .itto.tags.strStack > 0 { itto charge; }
        else { itto attack; }
        } #manage itto C6 until second ushi
-       
+
        itto skill[travel=0];
-        
+
        while .itto.mods.itto-q {
        if .itto.tags.strStack > 0 { itto charge; }
        else { itto attack; }
        } #manage itto C6 until Q expires
-       
+
    }

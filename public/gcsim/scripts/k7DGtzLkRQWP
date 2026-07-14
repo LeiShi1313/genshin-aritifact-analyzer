@@ -32,9 +32,8 @@ for let x=0; x<4; x=x+1 {
   yelan skill;
   while !.yelan.burst.ready {
     yelan attack;
-  } 
+  }
   yelan burst, attack;
   yunjin skill[hold=1], attack, burst, attack;
   yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack:2;
 }
-

@@ -1,4 +1,4 @@
-# Freminet Furina Ororon Escoffier. ~21s Rot. Phys-Shatter Freminet. MH and PF are within 1%. EM sands also trails by less than 1% if the opponent is Freezable. Ororon goes before Furina to assist Furina's ER and sees low EC uptime in the rear of the rotation. If the opponent is not freezable, Ororon should go just before Freminet, as Freminet otherwise sees very low Superconduct count for his passives. 
+# Freminet Furina Ororon Escoffier. ~21s Rot. Phys-Shatter Freminet. MH and PF are within 1%. EM sands also trails by less than 1% if the opponent is Freezable. Ororon goes before Furina to assist Furina's ER and sees low EC uptime in the rear of the rotation. If the opponent is not freezable, Ororon should go just before Freminet, as Freminet otherwise sees very low Superconduct count for his passives.
 
 # Team - Options ordered by DPS
 freminet char lvl=90/90 cons=6 talent=9,9,9;
@@ -35,7 +35,7 @@ escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.4408 em=39.64 cr=0.2317 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,11 +48,11 @@ active ororon;
 
 for let i=0; i<4; i=i+1 {
   ororon skill, burst;
-  
+
   furina skill, dash, burst;
-  
+
   escoffier skill, burst;
-  
+
   freminet skill, attack, burst,
            attack:2, skill, skill,
            attack:2, skill, attack:1, skill,  #First skill for 4 stack Pers, 2nd skill starts Pers Time

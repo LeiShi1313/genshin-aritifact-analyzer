@@ -44,13 +44,13 @@ active citlali;
 
 for let i=0; i<4; i=i+1 {
   citlali attack, skill;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   kazuha skill, high_plunge[collision=1], burst;
-  
+
   bennett skill, burst, attack; # N1 needed for pyro to swirl for vv
-  
+
   kazuha skill, high_plunge[collision=1];
   KazuPlunge();
   KazuPlunge();
@@ -58,12 +58,12 @@ for let i=0; i<4; i=i+1 {
   KazuPlunge();
   kazuha skill, high_plunge[collision=1];
   KazuPlunge();
-  
+
   if i != 3 {
     bennett skill;
-    
+
     xianyun skill, low_plunge;
-    
+
     kazuha skill, high_plunge[collision=1];
   }
 }

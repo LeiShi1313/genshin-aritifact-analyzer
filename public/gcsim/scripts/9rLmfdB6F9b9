@@ -38,7 +38,7 @@ for let i = 0; i < 3; i = i + 1 {
   xiangling burst,skill,dash;
   pick_up_crystallize("any");
   ganyu aim:7;
-  
+
   shenhe attack,skill;
   xilonen skill,attack:2;
   xiangling attack,skill,dash;

@@ -44,25 +44,24 @@ active nahida;
 
 nahida skill;
 for let x = 0; x < 5; x = x + 1 {
-	zhongli skill[hold=1], dash;
-	switch_target();
-	xingqiu burst, attack;
+  zhongli skill[hold=1], dash;
+  switch_target();
+  xingqiu burst, attack;
     thoma burst, attack, skill, attack, dash;
     switch_target();
     thoma attack;
-	nahida attack:3, skill, 
-		attack:3, charge;
-	xingqiu skill, dash;
+  nahida attack:3, skill,
+    attack:3, charge;
+  xingqiu skill, dash;
     switch_target();
 
     xingqiu attack:2;
-	nahida attack:3, skill, 
-		attack:3, charge, dash;
+  nahida attack:3, skill,
+    attack:3, charge, dash;
         switch_target();
     nahida attack:4, dash;
     switch_target();
-    nahida attack:3, skill, 
-		attack:3, charge;
-	print("done");
+    nahida attack:3, skill,
+    attack:3, charge;
+  print("done");
 }
-

@@ -13,10 +13,10 @@ fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 a
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="hakushin" refine=5 lvl=90/90;
 nahida add set="instructor" count=4;
-nahida add stats hp=3571 atk=232 em=139.3 dendro%=0.466 em=139.3; #main 
+nahida add stats hp=3571 atk=232 em=139.3 dendro%=0.466 em=139.3; #main
 nahida add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*2 em=16.6488*8 cr=0.027804*7 cd=0.055608*3;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
 xilonen add weapon="favoniussword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 heal=0.359;
@@ -28,32 +28,31 @@ energy every interval=480,720 amount=1;
 
 active fischl;
 
-for let i=0; i<4; i=i+1 { # 4 rotations 
+for let i=0; i<4; i=i+1 { # 4 rotations
   if i > 0 {
     fischl attack:2;
   }
   fischl burst;
-  
+
   nahida skill, attack, charge;
-  
+
   xilonen skill, attack:2;
-  
+
   keqing skill, attack:2, burst, skill,
     attack, charge,
     attack, charge,
     attack, skill,
     attack, charge, attack;
-  
+
   nahida skill, attack, charge;
-  
+
   fischl skill, attack;
-  
+
   xilonen skill, attack:2, burst;
-  
+
   keqing skill, burst, skill,
     attack, charge,
     attack, charge,
     attack, skill,
     attack, charge, attack:2, charge;
 }
-

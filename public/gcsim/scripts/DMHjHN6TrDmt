@@ -1,13 +1,13 @@
 # Gaming Furina Lanyan Bennett. ~20s Rot. Gaming catches Man Chai in midair, doing 7 skill plunges with delay to maintain Hydro Aura. The final plunge is unbuffed. Bennett does EQN1; Lanyan skill picks up Pyro and VV swirls Pyro. Lanyan does not burst. Hydro VV is MIA.
 
 # Team
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=4;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
 gaming add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=5 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
@@ -28,7 +28,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -40,11 +40,11 @@ active gaming; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-  
+
   bennett skill, burst, attack;
 
   lanyan skill:2;
-  
+
   gaming burst;
   for let j = 0; j < 6; j = j + 1 {
     sleep(45);

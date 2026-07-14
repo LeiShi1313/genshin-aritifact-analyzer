@@ -27,33 +27,32 @@ baizhu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992
 # ----  Default Enemy
 options swap_delay=12 iteration=500;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active amy;
 
 for let i=0; i<4; i=i+1 {
   amy attack, skill;
-  
+
   baizhu skill, burst;
-  
+
   nahida skill, attack, burst;
-  
-  alhaitham skill[hold=1], low_plunge[short=1], 
-            attack:3, dash, 
-            attack:3, dash, 
+
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:3, dash,
+            attack:3, dash,
             attack:2;
-  
+
   amy attack:2, burst;
-  
+
   alhaitham burst;
-  
+
   nahida skill, attack, charge;
-  
-  alhaitham attack:3, dash, 
-            attack:3, charge, 
-            attack:3, dash, 
-            attack:3, dash, 
+
+  alhaitham attack:3, dash,
+            attack:3, charge,
+            attack:3, dash,
+            attack:3, dash,
             attack:2, charge;
 }
-

@@ -1,4 +1,4 @@
-# Lynette Faruzan Furina Escoffier. ~20s Rot. DPS Lynette double Cryo for Resonance and Rosaria for additional CR to the team. Faruzan refreshes Cryo VV between Xianyun skill. 50/50 Cryo/Anemo DPS distribution. 
+# Lynette Faruzan Furina Escoffier. ~20s Rot. DPS Lynette double Cryo for Resonance and Rosaria for additional CR to the team. Faruzan refreshes Cryo VV between Xianyun skill. 50/50 Cryo/Anemo DPS distribution.
 # Team - Options listed by DPS
 lynette char lvl=90/90 cons=6 talent=9,9,9;
 lynette add weapon="finale" refine=5 lvl=90/90;
@@ -19,14 +19,14 @@ rosaria add set="no" count=4;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=3 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.3857 em=39.64 cr=0.0993 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -39,21 +39,21 @@ active rosaria;
 
 for let i = 0; i < 4; i = i + 1 {
   esco skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   faruzan skill, burst;
-  
-  lynette burst, skill, 
+
+  lynette burst, skill,
           attack:2, charge,
           attack:2, charge,
           attack:1;
-          
+
   rosaria skill;
-  
+
   faruzan skill, aim:1;
-  
-  lynette skill, attack:2, charge, 
+
+  lynette skill, attack:2, charge,
           attack:1, charge,
           attack:1, charge;
 }

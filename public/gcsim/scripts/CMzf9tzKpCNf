@@ -5,7 +5,7 @@ rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="prospectorsdrill" refine=1 lvl=90/90;
 rosaria add set="mh" count=4;
 #rosaria add set="bs" count=4;
-rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
@@ -27,13 +27,13 @@ jean add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311; #main
 jean add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active chongyun;
@@ -41,13 +41,13 @@ active chongyun;
 #Fav GS Rotation
 for let i=0; i<4; i=i+1 {
   chongyun burst;
-  
+
   furina skill, dash, burst;
-  
+
   chongyun skill;
-  
+
   jean skill, burst;
-  
+
   rosaria attack, skill, burst;
   while .debuff.res.t0.vvcryo {
     if .rosaria.skill.ready {
@@ -60,9 +60,9 @@ for let i=0; i<4; i=i+1 {
       rosaria attack;
     }
   }
-  
+
   jean attack, skill;
-  
+
   while .furina.skill.cd> 60 {
     if .rosaria.skill.ready {
       rosaria skill;
@@ -74,7 +74,7 @@ for let i=0; i<4; i=i+1 {
       rosaria attack;
     }
   }
-  
+
 }
 
 # Notation

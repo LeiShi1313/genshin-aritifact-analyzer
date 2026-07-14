@@ -25,14 +25,14 @@ energy every interval=480,720 amount=1;
 target lvl=100 resist=0.1 hp=10000000;
 
 active furina;
- 
+
 for let r = 0; r < 5; r = r + 1 {
   furina burst, skill;
 
   if .yaoyao.burst.ready {
     yaoyao burst, dash, attack, dash, attack, skill, dash;
-  } else { 
-    yaoyao skill, attack:2; 
+  } else {
+    yaoyao skill, attack:2;
   }
 
   alhaitham burst;

@@ -22,15 +22,15 @@ raiden add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311; #main
 raiden add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.331 cd=0.5296;
 
 charlotte char lvl=90/90 cons=6 talent=9,9,9;
-charlotte add weapon="ttds" refine=5 lvl=90/90; 
+charlotte add weapon="ttds" refine=5 lvl=90/90;
 charlotte add set="clam" count=4;
 #charlotte add set="no" count=4;
 #charlotte add set="sodp" count=4;
-charlotte add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; 
+charlotte add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
 charlotte add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.2755 em=39.64 cr=0.2979 cd=0.3972;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12; # Standard
 energy every interval=480,720 amount=1; # Standard
 
@@ -43,10 +43,10 @@ raiden skill;
 
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
-  
+
   charlotte skill[hold=1], burst; # Particles caught by Eula
-  
+
   eula skill, attack, burst, walk, attack:4, skill[hold=1], walk[f=10], attack:4;
-  
+
   raiden burst, attack:4, skill, dash, attack:4;
 }

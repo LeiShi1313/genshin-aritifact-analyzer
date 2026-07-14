@@ -23,7 +23,7 @@ rosaria add set="noblesseoblige" count=4;
 rosaria add stats def=60 hp=5288 atk=339 atk%=0.29200000000000004 er=1.0939999999999999 em=19 cr=0.7849999999999999 cd=0.194 cryo%=0.466;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active kuki;
@@ -31,7 +31,7 @@ for let i=0; i<4; i=i+1 {
   kuki skill;
 
   rosaria skill, burst;
-  
+
   while !.yunjin.burst.ready && !.yunjin.mods.favonius-cd {
     while !.yunjin.skill.cd {
       yunjin skill;
@@ -39,7 +39,7 @@ for let i=0; i<4; i=i+1 {
     yunjin attack;
   }
   yunjin burst;
-  
+
 
   if .amber.burst.ready {
     amber burst;
@@ -49,4 +49,3 @@ for let i=0; i<4; i=i+1 {
     amber attack: 5, dash;
   }
 }
-

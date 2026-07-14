@@ -51,5 +51,5 @@ for let i=0; i<4; i=i+1 {
   baizhu skill, burst;
   ororon burst, skill;
   varesa_combo(6);
-  
+
 }

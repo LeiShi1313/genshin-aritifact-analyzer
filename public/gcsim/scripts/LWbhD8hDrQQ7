@@ -14,7 +14,7 @@ diona add set="no" count=4;
 diona add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
 diona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
 
-charlotte char lvl=90/90 cons=6 talent=9,9,9; 
+charlotte char lvl=90/90 cons=6 talent=9,9,9;
 charlotte add weapon="ttds" refine=5 lvl=90/90;
 charlotte add set="ap" count=4;
 charlotte add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
@@ -24,7 +24,7 @@ charlotte add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*
 // charlotte add stats hp=3571 atk=232 er=0.518 em=139 em=139;
 // charlotte add stats def%=0.052*2 def=16.53*2 hp=213.31*2 hp%=0.0417*2 atk=13.89*2 atk%=0.0417*2 er=0.0463*10 em=16.65*2 cr=0.0278*6 cd=0.0556*2;
 
-xilonen char lvl=90/90 cons=0 talent=9,9,9 ; 
+xilonen char lvl=90/90 cons=0 talent=9,9,9 ;
 xilonen add weapon="favsword" refine=3 lvl=90/90;
 xilonen add set="scroll" count=4;
 xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
@@ -37,14 +37,14 @@ energy every interval=480,720 amount=1;
 active diona;
 
 for let i=0; i<4; i=i+1 {
-  
+
   if i{
     diona skill[hold=1], aim, burst;
   } else {
     diona skill[hold=1], burst;
   }
-  
-  
+
+
   mavuika skill[hold=1], attack;
   xilonen skill, attack:2;
   charlotte skill[hold=1]; pick_up_crystallize("pyro");
@@ -53,9 +53,9 @@ for let i=0; i<4; i=i+1 {
   } else {
     charlotte attack:3;
   }
-  
+
   mavuika burst;
-  
+
   if !is_even(i){
     mavuika charge, dash, attack;
     mavuika charge, dash, attack;
@@ -64,7 +64,7 @@ for let i=0; i<4; i=i+1 {
     mavuika charge, dash, attack;
     mavuika charge, dash, attack;
   } else{
-    
+
     mavuika charge:2, dash;
     mavuika charge, dash, attack;
     mavuika skill[recast=1], attack, skill[recast=1];

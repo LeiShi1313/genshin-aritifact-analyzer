@@ -202,6 +202,9 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
             + `lvl=${characterInfo.level}/${characterInfo.maxLevel} `
             + `cons=${characterInfo.constellation} `
             + `talent=${characterInfo.talents.join(",")}`;
+        if (characterInfo.startHp > 0) {
+            charLine += ` start_hp=${characterInfo.startHp}`;
+        }
         // Add character params if any
         if (characterInfo.params && characterInfo.params.length > 0) {
             charLine += " +params=[" + characterInfo.params.map(param => `${param.key}=${param.value}`).join(",") + "]";
@@ -245,10 +248,10 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
         for (let [label, stats] of Object.entries(statsByLabel)) {
             let statLine = `${char} add stats `
                 + Object.entries(stats).map(([key, value]) => `${key}=${value}`).join(" ");
-            statLine += ";";
             if (label !== "default") {
-                statLine += ` //${label}`;
+                statLine += ` +label=${label}`;
             }
+            statLine += ";";
             statLine += "\n";
             statLines.push(statLine);
         }
@@ -283,7 +286,8 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
             + (target.hp ? ` hp=${target.hp}` : "")
             + (target.particleThreshold ? ` particle_threshold=${target.particleThreshold}` : "")
             + (target.particleDropCount ? ` particle_drop_count=${target.particleDropCount}` : "")
-            + (target.particleElement ? ` particle_element=${target.particleElement.toString().toLowerCase()}` : "")
+            + (target.particleElement ? ` particle_element=${elementToJSON(target.particleElement).toLowerCase()}` : "")
+            + (target.hpMult ? ` hp_mult=${target.hpMult}` : "")
             + (target.freezeResist ? ` freeze_resist=${target.freezeResist}` : "")
             + (target.electroResist ? ` electro=${target.electroResist}` : "") // Deprecated
             + (target.hydroResist ? ` hydro=${target.hydroResist}` : "") // Deprecated

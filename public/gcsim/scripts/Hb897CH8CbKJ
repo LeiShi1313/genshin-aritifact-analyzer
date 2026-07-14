@@ -48,4 +48,3 @@ for let x=0; x<4; x=x+1 {
  navia   skill[hold=1], attack:3, dash; pick_up_crystallize("any");
  bennett skill;
 }
-

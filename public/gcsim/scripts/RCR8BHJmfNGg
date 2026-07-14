@@ -37,7 +37,7 @@ for let i=0; i<2; i=i+1 {
     sara burst;
   }
   chasca skill, aim:4, aim[bullets=4], burst;
-  
+
   sara skill;
   chevreuse attack, skill[hold=1];
   sara aim;

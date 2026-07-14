@@ -33,27 +33,26 @@ energy every interval=480,720 amount=1;
 active yaoyao;
 
 for let i = 0; i < 5; i = i + 1 {
-	set_player_pos(0, 0);
-	yaoyao attack, skill, attack;
-	xingqiu attack, skill[orbital=1], attack, burst[orbital=1], attack;
-	set_player_pos(-1.2, 1);
-	thoma burst, attack, skill, attack:2;
-	set_player_pos(1.2, 1);
-	ayaka dash, attack, skill, dash; set_player_pos(-1.2, 1); 
-	ayaka attack, burst; set_player_pos(1.2, 1); ayaka attack;
-	set_player_pos(-1.2, 1);
-	yaoyao burst, 
-		attack:2, dash;
-		set_player_pos(1.2, 1);
-		yaoyao attack:2, dash;
-		set_player_pos(-1.2, 1);
-		yaoyao attack:2, dash;
-		set_player_pos(1.2, 1);
-		yaoyao attack:2, dash;
-		set_player_pos(-1.2, 1);
-		yaoyao attack;
-	set_player_pos(1.2, 1);
-	ayaka dash, skill, attack:2;
+  set_player_pos(0, 0);
+  yaoyao attack, skill, attack;
+  xingqiu attack, skill[orbital=1], attack, burst[orbital=1], attack;
+  set_player_pos(-1.2, 1);
+  thoma burst, attack, skill, attack:2;
+  set_player_pos(1.2, 1);
+  ayaka dash, attack, skill, dash; set_player_pos(-1.2, 1);
+  ayaka attack, burst; set_player_pos(1.2, 1); ayaka attack;
+  set_player_pos(-1.2, 1);
+  yaoyao burst,
+    attack:2, dash;
+    set_player_pos(1.2, 1);
+    yaoyao attack:2, dash;
+    set_player_pos(-1.2, 1);
+    yaoyao attack:2, dash;
+    set_player_pos(1.2, 1);
+    yaoyao attack:2, dash;
+    set_player_pos(-1.2, 1);
+    yaoyao attack;
+  set_player_pos(1.2, 1);
+  ayaka dash, skill, attack:2;
     print("done");
 }
-

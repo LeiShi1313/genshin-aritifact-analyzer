@@ -21,10 +21,10 @@ yelan add stats def%=0.707 def=39.36 hp=5287.88 hp%=0.1984 atk=344.08 atk%=0.099
 #yunjin add set="huskofopulentdreams" count=4;
 
 #albedo add set="archaicpetra" count=4 ;
-																
-					
-							
-					
+
+
+
+
 options swap_delay=12 debug=true iteration=1000 workers=50 mode=sl;
 target lvl=100 resist=0.1 hp=100000000 pos=0,0;
 #target lvl=100 resist=0.1 hp=100000000 pos=2.1,0;
@@ -32,13 +32,13 @@ energy every interval=480,720 amount=1;
 let rotations = 5;
 
 active albedo;
-while rotations {	
+while rotations {
   albedo skill, attack;
   yelan skill, burst;
   yunjin skill, burst;
   tartaglia burst, walk, skill,
             attack:2, charge, dash,
-            attack:2, charge, dash,        
+            attack:2, charge, dash,
             attack:3, charge, dash,
             attack:2, charge, dash,
             attack:3, charge, dash,
@@ -49,4 +49,3 @@ while rotations {
   print("end");
   rotations = rotations - 1;
 }
-

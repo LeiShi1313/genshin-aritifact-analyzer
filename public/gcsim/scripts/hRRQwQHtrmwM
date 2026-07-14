@@ -37,7 +37,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.4959 em=39.64 cr=0.3972 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -49,17 +49,17 @@ active mav; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
   xianyun skill, low_plunge, attack, burst;
-  
+
   barbara attack, charge;
-  
+
   if .mav.burst.ready && i > 0 {
     mav burst, skill, dash;
   } else if .mav.skill.ready {
     mav skill, dash;
   }
-  
+
   xl burst, skill, dash;
-  
+
   # N1 cancel after plunge for the first 4 plunges, then dash cancel
   let j=0;
   while .xianyun.status.xianyun-airborne-buff {

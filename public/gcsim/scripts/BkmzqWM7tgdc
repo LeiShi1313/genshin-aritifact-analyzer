@@ -33,13 +33,13 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.3306 em=79.28 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
 # Rotation
 active furina;
@@ -50,11 +50,11 @@ for let i=0; i<4; i=i+1 {
     furina attack;
   }
   furina burst;
-  
+
   xianyun skill, low_plunge, burst;
 
   bennett skill, burst;
-  
+
   if .klee.skill.ready {
   #while .klee.skill.ready {
     klee skill[bounce=3, mine=8];
@@ -82,5 +82,5 @@ for let i=0; i<4; i=i+1 {
       klee attack;
     }
   }
-  
+
 }

@@ -36,8 +36,8 @@ for {
     case .zhongli.swap.ready && .zhongli.skill.ready && (f() - shield) > 15*60:
       zhongli skill[hold=1], dash;
       shield = f();
-      while !.zhongli.mods.favonius-cd { 
-        zhongli attack; 
+      while !.zhongli.mods.favonius-cd {
+        zhongli attack;
       }
 
     case .furina.burst.ready && .furina.skill.ready && .furina.swap.ready:
@@ -50,7 +50,7 @@ for {
 
     case .noelle.skill.ready && .noelle.swap.ready:
       noelle skill;
-      if .noelle.status.noelle-burst { 
+      if .noelle.status.noelle-burst {
         noelle attack:2;
       }
 
@@ -73,4 +73,3 @@ for {
       furina attack;
   }
 }
-

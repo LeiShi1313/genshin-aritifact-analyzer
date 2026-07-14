@@ -31,24 +31,24 @@ active ayaka;
 ayaka dash;
 
 for let i=0; i<4; i=i+1 {
-  
+
   xilonen burst, skill, attack:2; pick_up_crystallize("cryo");
-  
+
   shenhe skill, burst;
-  
+
   mualani skill, attack, skill, attack;
 
   ayaka skill, dash, attack, burst, attack:2, charge;
-  
+
   xilonen skill, attack:2; pick_up_crystallize("cryo");
-  
+
   shenhe attack, skill;
 
   mualani skill, attack;
   if .mualani.burst.ready {
     mualani burst;
   }
-  
+
   ayaka skill, dash, attack, charge, attack:2, charge;
 
 }

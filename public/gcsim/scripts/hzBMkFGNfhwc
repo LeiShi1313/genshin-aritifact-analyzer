@@ -1,4 +1,4 @@
-# Freminet Rosaria Bennett Xianyun. ~20s Rot. Freminet Melt Plunge with 6 melted plunges + 1 melted level 1 Shattering pressure. 50% Collisions. 
+# Freminet Rosaria Bennett Xianyun. ~20s Rot. Freminet Melt Plunge with 6 melted plunges + 1 melted level 1 Shattering pressure. 50% Collisions.
 
 # Team - Options listed by DPS
 freminet char lvl=90/90 cons=6 talent=9,9,9;
@@ -18,7 +18,7 @@ rosaria add set="scroll" count=4;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -33,7 +33,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -53,11 +53,11 @@ active freminet;
 
 for let i = 0; i < 4; i = i + 1 {
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, burst;
-  
+
   rosaria skill, burst;
-  
+
   freminet swap;
   FreminetPlunge(); freminet dash; # Fast P
   FreminetPlunge(); freminet skill; # E Fill time without Rosa Q tick
@@ -65,10 +65,10 @@ for let i = 0; i < 4; i = i + 1 {
   FreminetPlunge(); freminet dash; wait(20); # Delay P for Q tick
   FreminetPlunge(); freminet dash; # P to apply Pyro for E Melt
   FreminetPlunge(); freminet skill; # Fast P
-  FreminetPlunge(); #freminet dash; 
+  FreminetPlunge(); #freminet dash;
   #FreminetPlunge(); #freminet attack;
-  
+
   rosaria skill;
-  
+
   bennett skill;
 }

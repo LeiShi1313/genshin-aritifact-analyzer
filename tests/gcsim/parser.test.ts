@@ -61,3 +61,28 @@ test("canonical characters missing from app data fail before encoding", () => {
     /missing-character: GCSIM character "not_in_app_data" is not available in app data/
   );
 });
+
+test("target parsing supports negative positions without consuming action identifiers", () => {
+  const parsed = parseScript(
+    `${characterLine}\n` +
+      "target lvl=100 pos=-1.2, 1.1 resist=0.1;\n" +
+      "let cur_target = 1;\n" +
+      "set_default_target(2);",
+    "target-actions"
+  );
+
+  assert.deepEqual(parsed.targets[0]?.position, [-1.2, 1.1]);
+  assert.deepEqual(parsed.scripts, [
+    "let cur_target = 1;",
+    "set_default_target(2);",
+  ]);
+});
+
+test("character parsing preserves start_hp", () => {
+  const parsed = parseScript(
+    "furina char lvl=90/90 cons=0 talent=10,10,10 start_hp=12345;",
+    "start-hp"
+  );
+
+  assert.equal(parsed.characterInfos[0]?.startHp, 12345);
+});

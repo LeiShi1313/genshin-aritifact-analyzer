@@ -23,19 +23,19 @@ chevreuse add set="deepwoodmemories" count=1;
 chevreuse add stats def=60 hp=6454 hp%=1.1300000000000001 atk=329 atk%=0.158 er=0.414 em=60 cr=0.214 cd=0.552;
 
 options swap_delay=12 iteration=100;
-target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=0,1.4 hp=999999999;
 energy every interval=480,720 amount=1;
 hurt every interval=50,60 amount=1000,3000 element=physical;
 
 active yae;
 
 for let x = 0; x < 4; x = x + 1{
-	yae skill:3;
+  yae skill:3;
   dehya skill:2;
   chevreuse burst, skill[hold=1], attack;
   yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
-	if x ==0 || x ==2 {
-	  yoimiya burst;
-	}
+  if x ==0 || x ==2 {
+    yoimiya burst;
+  }
   yae attack:2, charge, dash, attack;
 }

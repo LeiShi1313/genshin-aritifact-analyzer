@@ -39,9 +39,9 @@ for let i = 0; i <3; i = i + 1 {
 
   yelan burst, attack, skill, attack;
   furina attack, charge, attack:2, charge, attack;
- 
+
   xilonen skill, attack:2;
   kazuha attack, skill, high_plunge, attack;
-  
+
   yelan attack, attack:4, skill, attack:4, dash;
 }

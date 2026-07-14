@@ -25,7 +25,7 @@ xilonen add stats def%=2.1207 def=236.1 hp=5287.88 hp%=0.0991 atk=344.07 atk%=0.
 
 # Options
 
-options iteration=1000; 
+options iteration=1000;
 
 options swap_delay=12;
 
@@ -35,7 +35,7 @@ energy every interval=480,720 amount=1;
 
 target lvl=100 resist=0.1 radius=2 pos=0,3 hp=100000000;
 
-#target lvl=100 resist=0.1 radius=2 pos=3,0 hp=100000000; 
+#target lvl=100 resist=0.1 radius=2 pos=3,0 hp=100000000;
 
 # Rotation
 
@@ -43,27 +43,27 @@ active yae;
 
 yae skill:3;
 
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
 
   raiden skill;
-  
+
   xilonen skill, burst, attack:2;
 
-	furina skill, attack, burst, attack;
+  furina skill, attack, burst, attack;
 
   yae burst, skill:3;
 
-	raiden burst, 
-	       attack:3, charge, dash, 
-	       attack:3, charge, dash, 
-	       attack;
+  raiden burst,
+         attack:3, charge, dash,
+         attack:3, charge, dash,
+         attack;
 
   xilonen skill, attack:2;
 
-	yae burst, skill:3;
+  yae burst, skill:3;
 
-	raiden burst, 
-	       attack:3, charge, dash;
+  raiden burst,
+         attack:3, charge, dash;
 
 }
 

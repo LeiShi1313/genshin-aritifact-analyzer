@@ -23,7 +23,7 @@ yelan add stats def%=0.124 def=39.36 hp=5287.88 hp%=0.6644 atk=344.08 atk%=0.099
 
 # ----
 active yelan;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<5; i=i+1 {

@@ -46,7 +46,7 @@ for let i=0; i<2; i=i+1 {
   mavuika skill, attack;
   skirk_burst();
   chasca skill, aim:4, skill, burst;
-  
+
   mavuika burst, skill, dash;
   skirk_burst();
   chasca skill, aim:4, aim[bullets=4];

@@ -1,4 +1,4 @@
-# Chongyun Citlali Bennett Xianyun. ~19s Rot. Chongyun Melt Plunge with C6 Bennett overriding Chongyun's Cryo infusion. 7 Melted plunges w/ two slight delays & Chongyun Q & E use; Current sim weapon infusion implementation leads to just 6 Melted plunges. VV isn't better than SoDP on Paper, and it should be worse in game. Fav Bennett is needed here. 50% Collisions. 
+# Chongyun Citlali Bennett Xianyun. ~19s Rot. Chongyun Melt Plunge with C6 Bennett overriding Chongyun's Cryo infusion. 7 Melted plunges w/ two slight delays & Chongyun Q & E use; Current sim weapon infusion implementation leads to just 6 Melted plunges. VV isn't better than SoDP on Paper, and it should be worse in game. Fav Bennett is needed here. 50% Collisions.
 
 # Team - Options listed by DPS
 chongyun char lvl=90/90 cons=6 talent=9,9,9;
@@ -17,7 +17,7 @@ citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.099
 #citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 #citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648; # Evenstar
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="favsword" refine=3 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -32,7 +32,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -52,20 +52,20 @@ active chongyun; # SS Stacks
 
 for let i = 0; i < 4; i = i + 1 {
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, burst;
-  
+
   # VV only action - DPS loss
-  # Xianyun VV DPS return is questionable past 1 rot, & 
-  # Human precision may affect presence of Pyro here 
+  # Xianyun VV DPS return is questionable past 1 rot, &
+  # Human precision may affect presence of Pyro here
   if .xianyun.sets.vv >= 4 && i == 0 && .element.t0.pyro {
     xianyun attack:2;
   }
-  
+
   citlali skill, burst;
-  
+
   chongyun swap;
-  ChongyunPlunge(); chongyun dash; 
+  ChongyunPlunge(); chongyun dash;
   ChongyunPlunge(); chongyun dash; wait(10); # Slight delay for Q Tick
   ChongyunPlunge(); chongyun skill;
   ChongyunPlunge(); chongyun dash;
@@ -73,7 +73,7 @@ for let i = 0; i < 4; i = i + 1 {
   ChongyunPlunge(); chongyun burst; # Wastes a Q Tick. Reliably enabled by Fav Bennett
   ChongyunPlunge(); #chongyun dash;
   #ChongyunPlunge(); chongyun attack; Extending the rotation for TTDS isn't worthwhile.
-  
+
   bennett skill;
   while !.bennett.mods.favonius-cd { # Mandatory
     bennett attack;

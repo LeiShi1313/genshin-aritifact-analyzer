@@ -1,4 +1,4 @@
-# Diluc Chongyun Nahida Xianyun. ~16s Rot. Diluc Melt Plunge. Uses Diluc E to (re)establish Burning aura to Melt plunge. Nahida bursts every other rotation. Chongyun uses E before Xianyun. 50% Collisions. 
+# Diluc Chongyun Nahida Xianyun. ~16s Rot. Diluc Melt Plunge. Uses Diluc E to (re)establish Burning aura to Melt plunge. Nahida bursts every other rotation. Chongyun uses E before Xianyun. 50% Collisions.
 
 # Team - Options listed by DPS
 diluc char lvl=90/90 cons=0 talent=9,9,9;
@@ -28,7 +28,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.2755 em=39.64 cr=0.0662 cd=0.331;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -55,11 +55,11 @@ for let i = 0; i < 4; i = i + 1 {
   } else {
     nahida skill, attack, charge;
   }
-  
+
   chongyun burst, skill;
-  
+
   xianyun skill, high_plunge, burst;
-  
+
   diluc skill;
   DilucPlunge(); diluc dash;
   DilucPlunge(); #diluc dash;

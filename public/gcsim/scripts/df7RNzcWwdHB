@@ -16,21 +16,21 @@ shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976
 rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="thecatch" refine=5 lvl=90/90;
 rosaria add set="bs" count=4;
-rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3641 cd=0.662; # The Catch + BS
 #rosaria add weapon="deathmatch" refine=1 lvl=90/90;
 #rosaria add set="emblem" count=4;
-#rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main 
+#rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 #rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2979 cd=0.662; # Deathmatch + EoSF
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
 escoffier add weapon="deathmatch" refine=1 lvl=90/90;
 escoffier add set="gt" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
 escoffier add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -45,19 +45,19 @@ for let i=0; i<4; i=i+1 {
     esco burst;
   }
   esco skill;
-  
+
   shenhe skill;
   if .shenhe.burst.cd {
     shenhe attack;
   }
   shenhe burst;
-  
+
   rosaria skill, burst;
-  
+
   while.chongyun.skill.ready {
     chongyun skill;
   }
-  while .shenhe.skill.cd { 
+  while .shenhe.skill.cd {
     if .chongyun.burst.ready {
       chongyun burst;
     } else if .chongyun.normal > 3 {
@@ -66,9 +66,9 @@ for let i=0; i<4; i=i+1 {
       chongyun attack;
     }
   }
-  
+
   shenhe skill, attack;
-  
+
   while .status.chongyunfield {
     if .chongyun.burst.ready {
       chongyun burst;

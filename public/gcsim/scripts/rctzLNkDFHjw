@@ -1,4 +1,4 @@
-# Xinyan Furina Bennett Xianyun. ~20s Rot. Xinyan Lazy Vape Plunge, no attempt to wait for Hydro aura at all and Xinyan uses her skill and burst immediately when avialable since working around the pyro application is more effort than it's worth. Note than in game, Xinyan's Q will cause an unspecified number of extra L3 Xinyan shield pulses upon creation, maxing LNO stacks immediately. In OHC > SoDP Xianyun, but bubbles may miss. 50% Collisions. 
+# Xinyan Furina Bennett Xianyun. ~20s Rot. Xinyan Lazy Vape Plunge, no attempt to wait for Hydro aura at all and Xinyan uses her skill and burst immediately when avialable since working around the pyro application is more effort than it's worth. Note than in game, Xinyan's Q will cause an unspecified number of extra L3 Xinyan shield pulses upon creation, maxing LNO stacks immediately. In OHC > SoDP Xianyun, but bubbles may miss. 50% Collisions.
 
 # Team - Options listsed by DPS
 xinyan char lvl=90/90 cons=6 talent=9,9,9;
@@ -8,7 +8,7 @@ xinyan add set="lno" count=4;
 xinyan add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
 xinyan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="tom" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
@@ -21,7 +21,7 @@ bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2317 cd=0.7282;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add set="ohc" count=4; # Bubbles may miss
 #xianyun add set="sodp" count=4;
@@ -29,7 +29,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -41,11 +41,11 @@ active xinyan; # SS Stacks
 
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, attack, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett burst, skill;
-  
+
   xinyan skill;
   if .xinyan.burst.ready { # This always maxes LNO stacks in practice
     xinyan burst;
@@ -64,7 +64,6 @@ for let i = 0; i < 4; i = i + 1 {
   if !.xinyan.burst.cd { # fills time for Furina E CD
     xinyan attack:2;
   }
-  
+
   bennett attack, skill:1;
 }
-

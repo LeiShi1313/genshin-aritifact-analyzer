@@ -1,7 +1,7 @@
 # Gaming Xingqiu Yelan Bennett. ~21s Rot. Gaming Double Hydro Vape with Gaming weaving Pyro infused normal attacks inbetween 7 skill plunges. Support set options in config.
 
 # Team
-gaming char lvl=90/90 cons=6 talent=9,9,9; 
+gaming char lvl=90/90 cons=6 talent=9,9,9;
 gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 gaming add set="cw" count=4;
 gaming add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
@@ -36,7 +36,7 @@ bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=99.1 cr=0.2648 cd=0.7944; # 5*
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -48,11 +48,11 @@ active gaming; # SS Stacks
 
 for let r=0; r<4; r=r+1{
   xingqiu skill, dash, burst, attack;
-  
+
   yelan skill, attack, burst, attack;
-  
+
   bennett burst, skill, attack;
-  
+
   gaming burst, attack:2;
   for let i=0; i<6; i=i+1 {
     gaming skill, high_plunge, attack;

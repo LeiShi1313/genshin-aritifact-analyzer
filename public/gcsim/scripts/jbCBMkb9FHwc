@@ -105,7 +105,7 @@ for let r=0; r<4; r=r+1 {
     furina attack;
   }
   furina burst;
-  
+
   yelan skill;
   while !.yelan.burst.ready {
     if .yelan.skill.ready {
@@ -115,7 +115,7 @@ for let r=0; r<4; r=r+1 {
     }
   }
   yelan burst;
-  
+
   alhaitham attack;
   while !.alhaitham.burst.ready {
     alhaitham attack;

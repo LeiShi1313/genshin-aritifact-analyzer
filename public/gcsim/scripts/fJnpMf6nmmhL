@@ -1,7 +1,7 @@
 # Raiden Furina Ororon Bennett. ~20s Rot. Ororon EQ in Bennett Burst. Bennett fills time after Raiden.
 
 # Team
-raiden char lvl=90/90 cons=0 talent=9,9,9; 
+raiden char lvl=90/90 cons=0 talent=9,9,9;
 raiden add weapon="deathmatch" refine=1 lvl=90/90;
 raiden add set="emblem" count=4;
 raiden add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
@@ -13,20 +13,20 @@ furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5958;
 
-ororon char lvl=90/90 cons=6 talent=9,9,9; 
+ororon char lvl=90/90 cons=6 talent=9,9,9;
 ororon add weapon="favbow" refine=4 lvl=90/90;
 ororon add set="scroll" count=4;
 ororon add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
 bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=99.1 cr=0.2979 cd=0.7944;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -39,16 +39,16 @@ raiden skill;
 
 for let i=0; i<4; i=i+1 {
   furina skill, dash, burst;
-	
-	if .bennett.skill.ready {
-	  bennett skill;
-	}
-	bennett burst;
-	
+
+  if .bennett.skill.ready {
+    bennett skill;
+  }
+  bennett burst;
+
   ororon skill, burst;
-  
-	raiden burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
-	
+
+  raiden burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
+
   while .furina.skill.cd {
     if .bennett.skill.ready {
       bennett skill;
@@ -56,5 +56,5 @@ for let i=0; i<4; i=i+1 {
       bennett attack;
     }
   }
-  
+
 }

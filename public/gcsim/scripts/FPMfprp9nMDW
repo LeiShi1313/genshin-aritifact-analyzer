@@ -19,7 +19,7 @@ lynette add set="viridescentvenerer" count=4;
 lynette add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
 lynette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-ineffa char lvl=90/90 cons=0 talent=9,9,9; 
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
 ineffa add weapon="kitain" refine=5 lvl=90/90;
 ineffa add set="gd" count=4;
 ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;

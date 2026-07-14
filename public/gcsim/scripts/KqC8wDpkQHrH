@@ -1,6 +1,6 @@
 options iteration=1000 swap_delay=12;
 
-hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao char lvl=90/90 cons=0 talent=9,9,9  +params=[start_hp%=1];
 hutao add weapon= "balladofthefjords" refine=1 lvl=90/90;
 hutao add set="notsu" count=4;
 hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622;
@@ -12,16 +12,16 @@ yelan add set="sms" count=4;
 yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
 yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*3 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
-ineffa char lvl=90/90 cons=0 talent=9,9,9; 
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
 ineffa add weapon="balladofthefjords" refine=1 lvl=90/90;
-ineffa add set="tom" count=4;
+ineffa add set="aubade" count=4;
 ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
 ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
 
-flins char lvl=90/90 cons=0 talent=9,9,9 ; 
+flins char lvl=90/90 cons=0 talent=9,9,9 ;
 flins add weapon="deathmatch" refine=1 lvl=90/90;
 flins add set="no" count=4;
-flins add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622 ; 
+flins add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622 ;
 flins add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
 # Target and Energy assumptions
@@ -30,11 +30,11 @@ energy every interval=480,720 amount=1; # standard Energy drops
 
 # Rotation assumptions
 active yelan;
-for let i = 0; i < 6; i = i + 1 {
+for let i = 0; i < 5; i = i + 1 {
   yelan skill;
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
-  } 
+  }
   while !.yelan.burst.ready {
     yelan attack;
   }
@@ -51,7 +51,7 @@ for let i = 0; i < 6; i = i + 1 {
     }
   }
   if i == 0 {
-    flins burst, skill, attack; 
+    flins burst, skill, attack;
   } else {
     flins skill, skill, burst;
   }
@@ -67,5 +67,3 @@ for let i = 0; i < 6; i = i + 1 {
     attack:2, charge, jump,
     attack:2;
 }
-
-

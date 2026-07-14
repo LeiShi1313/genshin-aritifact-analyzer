@@ -32,15 +32,15 @@ bennett skill;
 
 for let i=0; i<4; i=i+1 {
   xilonen skill, attack:2;
-  
+
   if i {
     bennett skill;
   }
   bennett burst;
-  
+
   mavuika burst, charge, skill, dash;
   pick_up_crystallize("any");
-  
+
   lyney aim[weakspot=1], aim;
   if .lyney.burst.ready {
     lyney burst;

@@ -42,7 +42,7 @@ for let x = 5; x; x = x - 1 {
   baizhu skill, attack:3;
   if .nilou.burst.ready
   {
-    nilou burst;  
+    nilou burst;
   }
   print("rotation done");
 }

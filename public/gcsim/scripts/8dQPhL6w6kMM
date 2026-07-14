@@ -2,9 +2,9 @@ neuvillette char lvl=90/90 cons=0 talent=9,9,9;
 neuvillette add weapon="sacjade" refine=1 lvl=90/90;
 neuvillette add set="marechausseehunter" count=5;
 neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
-neuvillette add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.1986 cd=0.662 ;									
-										
-									
+neuvillette add stats def=39.36 def%=0.124 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.1986 cd=0.662 ;
+
+
 
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
@@ -24,7 +24,7 @@ sucrose add weapon="hakushinring" refine=5 lvl=90/90;
 sucrose add set="viridescentvenerer" count=4;
 sucrose add stats hp=4780 atk=311 er=0.518 em=187 em=187 ; #main
 sucrose add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=118.92 cr=0.2648 cd=0.4634 ;
-											
+
 
 fn rand_delay(mean, stddev) {
   let del = randnorm() * stddev + mean;

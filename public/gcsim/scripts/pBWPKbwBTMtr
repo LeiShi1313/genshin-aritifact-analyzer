@@ -41,4 +41,3 @@ while rotations < 5 {
   yelan attack:4,skill,attack:4;
   rotations = rotations + 1;
 }
-

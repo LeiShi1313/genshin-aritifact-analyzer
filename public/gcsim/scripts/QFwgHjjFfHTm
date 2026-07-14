@@ -6,7 +6,7 @@ alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.
                    #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 6[4]   er 5[3]    cr 10[8]  cd 7[5]
                    #sub; total[distributed] rolls
 
-#Gilded Alhaitham + Deepwood XQ is ~1k more DPS than Deepwood Alhaitham + Noblesse/Emblem XQ (likely changes in AoE, and possibly with different weapons)                                
+#Gilded Alhaitham + Deepwood XQ is ~1k more DPS than Deepwood Alhaitham + Noblesse/Emblem XQ (likely changes in AoE, and possibly with different weapons)
 #alhaitham add set="deepwood" count=4;
 #alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cr=0.311; #73.15 / 158.015 | 127.525 er
 #alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=198.15 er=0.27525 cr=0.3305 cd=0.19815;

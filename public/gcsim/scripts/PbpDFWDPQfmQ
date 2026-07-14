@@ -1,4 +1,4 @@
-# Eula Rosaria Bennett Xianyun. ~20s Rot. Eula Melt Plunge with 6 melted plunges + 1 melted level skill. VV Xianyun swirls with NA in the 1st rotation. Delays once for tick of Rosaria's Q 50% Collisions. 
+# Eula Rosaria Bennett Xianyun. ~20s Rot. Eula Melt Plunge with 6 melted plunges + 1 melted level skill. VV Xianyun swirls with NA in the 1st rotation. Delays once for tick of Rosaria's Q 50% Collisions.
 
 # Team - Options listed by DPS
 eula char lvl=90/90 cons=6 talent=9,9,9;
@@ -18,7 +18,7 @@ rosaria add set="scroll" count=4;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
 rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="favsword" refine=3 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -33,7 +33,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -53,27 +53,27 @@ active eula; # SS Stacks
 
 for let i = 0; i < 4; i = i + 1 {
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, burst;
-  
+
   if i == 0 {
     xianyun attack:2;
   }
-  
+
   rosaria skill, burst;
-  
-  eula swap; 
+
+  eula swap;
   if i == 0 {
     wait(5); # Avoids a Physical first plunge
-  }  
+  }
   EulaPlunge(); eula dash; # Fast P
   EulaPlunge(); eula skill; # E Fill time without Rosa Q tick
   EulaPlunge(); eula dash; # Fast P
   EulaPlunge(); eula dash; wait(40); # Delay P for Rosa Q tick
   EulaPlunge(); eula dash; # P to apply Pyro for E Melt
   EulaPlunge(); eula skill; # Fast P
-  #EulaPlunge(); #eula dash; 
+  #EulaPlunge(); #eula dash;
   EulaPlunge(); eula attack;
-  
+
   bennett skill;
 }

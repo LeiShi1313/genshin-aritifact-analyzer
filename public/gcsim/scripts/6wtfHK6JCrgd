@@ -1,9 +1,9 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
@@ -21,7 +21,7 @@ zhongli add set="totm" count=4;
 zhongli add stats hp=4780 atk=311 hp%=0.466 geo%=0.466 cr=0.311;
 zhongli add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-rosaria char lvl=90/90 cons=6 talent=9,9,9; 
+rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="bs" count=2;
 rosaria add set="no" count=2;
@@ -41,23 +41,23 @@ energy every interval=480,720 amount=1;
 active zhongli;
 for let x=0; x<4; x=x+1 {
   zhongli skill[hold=1], dash;
-  while !.zhongli.mods.favonius-cd { 
-    zhongli attack; 
+  while !.zhongli.mods.favonius-cd {
+    zhongli attack;
   }
   navia burst;
   shenhe attack, skill, burst;  pick_up_crystallize("any"); #pickup with shenhe tE dashing
-  if !.shenhe.mods.favonius-cd { 
-    shenhe attack;     
+  if !.shenhe.mods.favonius-cd {
+    shenhe attack;
   }
-  rosaria skill, burst;         pick_up_crystallize("any"); #pickup with rosaria E dashing    
+  rosaria skill, burst;         pick_up_crystallize("any"); #pickup with rosaria E dashing
   if !.rosaria.mods.favonius-cd {
-    rosaria attack;              
+    rosaria attack;
   }
-  navia skill[hold=1], attack:3, dash, attack:2;  
+  navia skill[hold=1], attack:3, dash, attack:2;
   shenhe attack, skill, attack; pick_up_crystallize("any"); #pickup with shenhe tE dashing
-  if !.shenhe.mods.favonius-cd { 
-    shenhe attack;     
-  } 
+  if !.shenhe.mods.favonius-cd {
+    shenhe attack;
+  }
   rosaria skill;                pick_up_crystallize("any"); #pickup with rosaria E dashing
   navia skill, attack:3, dash, attack:2, dash;
   print(.navia.shrapnel);
@@ -66,7 +66,7 @@ for let x=0; x<4; x=x+1 {
   }
 }
 
-# Zhongli hE dash (N# for fav) > 
-# Navia Q         > Shenhe N1 tE Q  (N1 for fav) > Rosaria EQ (N1 for fav) > 
-# Navia hE N3D N2 > Shenhe N1 tE N1 (N1 for fav) > Rosaria E > 
+# Zhongli hE dash (N# for fav) >
+# Navia Q         > Shenhe N1 tE Q  (N1 for fav) > Rosaria EQ (N1 for fav) >
+# Navia hE N3D N2 > Shenhe N1 tE N1 (N1 for fav) > Rosaria E >
 # Navia tE N3D N2D (tE if available)

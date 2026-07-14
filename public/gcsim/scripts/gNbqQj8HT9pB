@@ -44,4 +44,3 @@ for let r = 4; r > 0; r = r - 1 {
   }
   kazuha skill, high_plunge;
 }
-

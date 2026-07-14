@@ -43,9 +43,9 @@ for let r = 5; r > 0; r = r - 1 {
   }
   for let r = 5; r > 0; r = r - 1 {
     klee attack[travel=6], charge; # 5N1C
-  }  
+  }
   klee attack;
-  
+
   if (r > 1) {
     bennett skill; # Begins next rotation
   }

@@ -24,7 +24,7 @@ hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 
 
 options swap_delay=12 iteration=1000;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 # ----
@@ -38,7 +38,7 @@ for let r = 0; r < 4; r = r + 1{
   sucrose attack;
   sucrose skill,dash;#dash forward?
   set_player_pos(0,0);
-  sucrose attack:2; 
+  sucrose attack:2;
   hutao attack,skill;
   for let ca = 9; .hutao.mods.paramita; ca = ca - 1 {
     hutao attack;
@@ -58,4 +58,3 @@ for let r = 0; r < 4; r = r + 1{
   }
 wait (100);
 }
-

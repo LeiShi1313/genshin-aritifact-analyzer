@@ -1,5 +1,5 @@
 # Itto hypercarry with c2 xilonen. Personal stats. One rotation.
- 
+
 itto char lvl=90/90 cons=0 talent=10,10,10;
 itto add weapon="redhornstonethresher" refine=1 lvl=90/90;
 itto add set="huskofopulentdreams" count=4 +params=[stacks=4];
@@ -18,13 +18,13 @@ gorou add set="noblesseoblige" count=4;
 gorou add set="nighttimewhispersintheechoingwoods" count=1;
 gorou add stats def%=0.583 def=74 hp=7350 atk=379 atk%=0.34400000000000003 er=1.03 em=54 cr=0.462;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 ; 
+furina char lvl=90/90 cons=0 talent=9,9,9 ;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;
 
@@ -34,10 +34,9 @@ furina skill, burst;
 xilonen skill, attack:2;
 gorou skill, burst;
   #"C0 1PS" combo
-  
+
   itto attack, burst[prestack=1],
        attack, skill,
        attack:2, charge:5,
        attack:4, charge:5, skill[travel=0], charge;
        sleep(21); #catch ushi particles
-

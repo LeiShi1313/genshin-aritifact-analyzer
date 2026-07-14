@@ -48,32 +48,32 @@ for let i=0; i<4; i=i+1 {
     skirk burst;
     skirk skill,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-    
+
           attack:5, dash,
           attack:5, dash,
-          
+
           attack:2, charge, dash,
-          
+
           attack:5, dash,
           attack;
   } else {
     skirk skill,
           attack:2, burst,
-          
+
           attack:5, dash,
           attack:5, dash,
           attack:5, dash,
-               
+
           attack:2, charge, dash,
-        
+
           attack:5, dash,
           attack:2;
   }
 }
 
-# First rot only 
+# First rot only
 # Furina ED N1 Q > Escoffier EQ  > Sigewinne tED  > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
 # If Escoffier Q ready
 # Furina ED N1 Q > Escoffier EQ  > Sigewinne tED  > Skirk   tE N2Q      3[N5D] N2CD N5D N2

@@ -6,7 +6,7 @@ lyney add set="mh" count=4;
 lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
 lyney add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -39,7 +39,7 @@ target lvl=100 resist=0.1 radius=1.5 pos=2.5,0.5 hp=9999999;
 
 active lyney;
 
-for let i=0; i<5; i=i+1 { 
+for let i=0; i<5; i=i+1 {
   lyney aim[weakspot=weak];
   kazuha skill, high_plunge, burst;
   while !.kazuha.mods.favonius-cd {

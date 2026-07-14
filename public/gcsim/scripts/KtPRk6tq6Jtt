@@ -16,7 +16,7 @@ nahida add set="deepwood" count=4;
 nahida add stats hp=4780 atk=311 em=187 cr=0.311 dendro%=0.466;
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="noblesseoblige" count=5;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ; #main
@@ -29,19 +29,19 @@ energy every interval=480,720 amount=1;
 active ayato;
 
 for let x = 10; x; x = x - 1 {
-  if .ayato.burst.ready { 
-    ayato burst; 
+  if .ayato.burst.ready {
+    ayato burst;
   }
   nahida skill, attack;
-  if .nahida.burst.ready { 
-    nahida burst; 
-  } else { 
-    nahida attack; 
+  if .nahida.burst.ready {
+    nahida burst;
+  } else {
+    nahida attack;
   }
   yae attack, skill:3;
   bennett skill;
-  if .bennett.burst.ready { 
-    bennett burst; 
+  if .bennett.burst.ready {
+    bennett burst;
   }
   if .yae.burst.ready {
     yae attack:2, burst, skill:3;

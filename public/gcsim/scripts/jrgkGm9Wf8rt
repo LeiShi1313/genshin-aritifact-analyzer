@@ -3,14 +3,14 @@
 let _execute_action = execute_action;
 fn execute_action(char_id number, action_id number, p map) {
   if action_id == .action.dash {
-	pick_up_crystallize("any"); # Pick up crystallize before every dash
+  pick_up_crystallize("any"); # Pick up crystallize before every dash
   }
-	
+
   return _execute_action(char_id, action_id, p);
 }
 
 # --- Team
-navia char lvl=90/90 cons=0 talent=9,9,9; 
+navia char lvl=90/90 cons=0 talent=9,9,9;
 navia add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
 navia add set="nighttimewhispers" count=5;
 navia add stats hp=4780 atk=311 atk%=0.466 geo%=0.466 cr=0.311 ; #main
@@ -22,7 +22,7 @@ chiori add set="gt" count=4;
 chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311 ; # main
 chiori add stats def%=0.248 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
-xianyun char lvl=90/90 cons=0 talent=9,9,9; 
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add set="clam" count=5;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
@@ -52,17 +52,17 @@ for let x = 0; x < 4; x = x + 1 {
     chiori burst;
   }
   chiori skill:2;
-  xianyun skill, low_plunge, burst; 
+  xianyun skill, low_plunge, burst;
   bennett skill, burst;
   navia skill[hold=1];
-  
+
   for let h = 4; h > 0; h = h - 1 {
     navia jump;
     if .airborne {
         navia high_plunge[collision=rand()>0.5], dash;
     }
   }
-  
+
   bennett skill, attack;
   navia skill;
   for let h = 4; h > 0; h = h - 1 {
@@ -72,5 +72,3 @@ for let x = 0; x < 4; x = x + 1 {
     }
   }
 }
-
-

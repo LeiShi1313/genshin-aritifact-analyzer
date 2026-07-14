@@ -24,7 +24,7 @@ beidou add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 
 #enemy config
 target lvl=100 resist=0.1 radius=1 pos=1.05,1.2 hp=999999999;
-target lvl=100 resist=0.1 radius=1 pos=-1.05,1.2 hp=999999999; 
+target lvl=100 resist=0.1 radius=1 pos=-1.05,1.2 hp=999999999;
 energy every interval=480,720 amount=1;
 
 #sim config
@@ -41,6 +41,6 @@ for let i=0; i<4; i=i+1 {
  beidou skill [counter=1], burst;
  itto attack, burst[prestack=1];
            itto attack:3, skill, charge:5;
-           itto attack:4, charge:5; 
+           itto attack:4, charge:5;
            itto skill;
 }

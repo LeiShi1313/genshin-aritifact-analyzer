@@ -16,11 +16,13 @@ import SETS from '../src/data/sets.json' assert { type: "json" };
 const __dirname = new URL('.', import.meta.url).pathname;
 const gcsimCharRegx = /\s*(?<char>\w+)\s+((?<ch>char)|add\s+(?<stats>stats)|add\s+(?<ws>weapon|set)\s*=\s*\"(?<wsname>\w+)\")\s+(?<attrs>.*?)\s*;/gm;
 const gcsimEnergyRegx = /\s*energy\s+(?<type>once|every)\s+(?<attrs>.*?)\s*;/gm;
-const gcsimTargetRegx = /\s*target\s+(?<attrs>.*?)\s*;/gm;
+const gcsimTargetRegx =
+    /^[ \t]*target(?:[ \t]+(?<attrs>.*?))?[ \t]*;[ \t]*$/gm;
 const gcsimHurtRegx = /\s*hurt\s+(?<type>once|every)\s+(?<attrs>.*?)\s*;/gm;
 const gcsimOptionsRegx = /\s*options\s+(?<attrs>.*?);/gm;
 const gcsimParamsRegx = /\s*\+params\s*=\s*\[(?<params>.*?)\]/gm;
-const gcsimKeyValRegx = /(?<key>[\w_%]+)\s*=\s*(?<value>true|false|\d+\s*,\s*\d+\s*,\s*\d+|[\d*\.*\d+]+\s*,\s*[\d*\.*\d+]+|\d+\/\d+|\d*\.*\d+|\d+|[\w_]+)\s*/gm;
+const gcsimKeyValRegx =
+    /(?<key>[\w_%]+)\s*=\s*(?<value>true|false|\d+\/\d+|[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?(?:\s*,\s*[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?){0,2}|[\w_]+)\s*/gm;
 const gcsimTargetTypeRegx = /type\s*=\s*(?<typename>\w+)(?:\[(?<params>[^\]]+)\])?/;
 
 // Convert snake_case to camelCase
@@ -305,6 +307,8 @@ const parseCharacters = (script: string, parsedScript: GCSimScript, sourceId: st
                     const talents = attr.groups.value.split(",");
                     characters[char].talents = talents.map(talent => parseInt(talent));
                     hasTalents = true;
+                } else if (attr.groups?.key === "start_hp") {
+                    characters[char].startHp = parseInt(attr.groups.value);
                 }
             }
             if (!hasLevel || !hasCons || !hasTalents) {
@@ -370,9 +374,6 @@ const parseEnergy = (script: string, parsedScript: GCSimScript) => {
 const parseTarget = (script: string, parsedScript: GCSimScript) => {
     const targets = [];
     for (let match of script.matchAll(gcsimTargetRegx)) {
-        if (!match.groups?.attrs) {
-            continue;
-        }
         const target: GCSimScriptTarget = {
             position: [],
             radius: 0,
@@ -392,7 +393,7 @@ const parseTarget = (script: string, parsedScript: GCSimScript) => {
             geoResist: 0,
         };
 
-        let attrs = match.groups.attrs;
+        let attrs = match.groups?.attrs ?? "";
 
         // Parse target type if present (e.g., type=aeonblightdrake[hp_mult=3.00])
         const typeMatch = attrs.match(gcsimTargetTypeRegx);

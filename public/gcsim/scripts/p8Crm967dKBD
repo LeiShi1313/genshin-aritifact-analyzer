@@ -12,7 +12,7 @@ skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 
 //skirk add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
 //skirk add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+furina char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
@@ -24,7 +24,7 @@ yelan add set="no" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
 yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
 
-escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0]; 
+escoffier char lvl=90/90 cons=0 talent=9,9,9 +params=[start_energy=0];
 escoffier add weapon="favlance" refine=3 lvl=90/90;
 escoffier add set="scroll" count=4;
 escoffier add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622;
@@ -42,33 +42,33 @@ escoffier skill, attack:3;  # Catch her own particles
 yelan skill, attack:2, dash, attack:2;  # Catch her own particles
 skirk skill,
       attack:5, dash,
-      
+
       attack:2, burst,
-      
+
       attack:5, dash,
       attack:5, dash,
-      
+
       attack:2, charge, dash,
-      
+
       attack:5, dash,
       attack:2;
-      
+
 furina swap;
 print("Skirk E cd (60 FPS) is ", .skirk.skill.cd);
 print("Skirk Q cd (60 FPS) is ", .skirk.burst.cd);
-for let i=0; i<4; i=i+1 { 
+for let i=0; i<4; i=i+1 {
   furina burst, skill, dash;
   escoffier skill, burst;
   yelan skill, attack, burst, attack;
   skirk skill,
         attack:2, burst,
-        
+
         attack:5, dash,
         attack:5, dash,
         attack:5, dash,
-        
+
         attack:2, charge, dash,
-        
+
         attack:5, dash,
         attack:2;
 }

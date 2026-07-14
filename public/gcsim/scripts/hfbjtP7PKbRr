@@ -28,7 +28,7 @@ active yae;
 
 
 
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
@@ -37,16 +37,15 @@ for let i=0; i<4; i=i+1 {
     } else {
         yae attack, skill:3;
     }
-	kazuha skill, high_plunge;
-	fischl attack:2, burst;
-	baizhu skill, burst;
-	kazuha burst, attack, skill, high_plunge;
-	yae attack, charge, dash, burst, attack, skill, attack, skill, attack, skill, attack;
-	fischl attack, skill;
-	baizhu skill;
-	kazuha skill, high_plunge;
-	yae attack:2, charge, dash, attack:2, charge, dash;
+  kazuha skill, high_plunge;
+  fischl attack:2, burst;
+  baizhu skill, burst;
+  kazuha burst, attack, skill, high_plunge;
+  yae attack, charge, dash, burst, attack, skill, attack, skill, attack, skill, attack;
+  fischl attack, skill;
+  baizhu skill;
+  kazuha skill, high_plunge;
+  yae attack:2, charge, dash, attack:2, charge, dash;
     print("done");
 
 }
-

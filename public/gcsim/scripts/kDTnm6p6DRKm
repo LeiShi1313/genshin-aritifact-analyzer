@@ -29,7 +29,7 @@ ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992
 #ororon add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=158.56 cr=0.3972 cd=0.331; # FT
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -63,7 +63,7 @@ for let i=0; i<4; i=i+1 {
   #} else {
     nahida charge;
   #}
-  
+
   yelan skill; set_player_pos(0, 0); # toward opponent
   if !.yelan.burst.ready && .yelan.breakthrough {
     yelan aim;
@@ -71,9 +71,9 @@ for let i=0; i<4; i=i+1 {
     yelan attack;
   }
   yelan burst, attack;
-  
+
   ororon skill, attack, burst, attack; # For Ororon's ER passive to land on himself
-  
+
   kinich_combo();
   if .kinich.burst.ready { #&& .kinich.energy == .kinich.energymax {
     kinich burst;

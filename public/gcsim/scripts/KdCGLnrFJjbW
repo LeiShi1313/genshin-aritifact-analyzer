@@ -1,4 +1,4 @@
-# Team 
+# Team
 eula char lvl=90/90 cons=0 talent=9,9,9;
 eula add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 #eula add weapon="fruitfulhook" refine=1 lvl=90/90;
@@ -12,7 +12,7 @@ citlali add set="scroll" count=4;
 citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
 citlali add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2317 cd=0.7282;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="favoniussword" refine=3 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
@@ -25,7 +25,7 @@ xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
 xianyun add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
 
 # Options
-options iteration=1000; 
+options iteration=1000;
 options swap_delay=12;
 energy every interval=480,720 amount=1;
 
@@ -51,36 +51,36 @@ fn EulaLowPlunge() {
 active eula; # SS Stacks
 
 for let i = 0; i < 4; i = i + 1 {
-  
+
   if i {
     bennett skill;
     while !.bennett.mods.favonius-cd {
       bennett attack;
     }
   }
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, dash, burst;
-  
+
   xianyun swap;
-  delay(47); # Just so you don't lose VV uptime trying to switch out due to swap CD    
+  delay(47); # Just so you don't lose VV uptime trying to switch out due to swap CD
   xianyun attack;
-  
+
   citlali skill, burst;
-  
+
   eula swap;
   delay(4);
   EulaPlunge(); eula dash;
   EulaPlunge(); eula dash;
   delay(14);
   EulaPlunge(); eula skill;
-  EulaPlunge(); eula dash; 
-  delay(15); 
+  EulaPlunge(); eula dash;
+  delay(15);
   EulaPlunge(); eula dash;
   delay(16);
   EulaPlunge(); eula skill;
   EulaLowPlunge(); eula dash;
   EulaLowPlunge(); eula dash;
-  
+
 }

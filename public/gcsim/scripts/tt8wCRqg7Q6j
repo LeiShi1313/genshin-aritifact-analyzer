@@ -6,7 +6,7 @@ diluc add set="cw" count=4;
 diluc add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622 ; #main
 diluc add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
 
-furina char lvl=90/90 cons=0 talent=9,9,9; 
+furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="totm" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311 ; #main
@@ -18,7 +18,7 @@ xianyun add set="vv" count=5;
 xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
 xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.4408 em=79.28 cr=0.0662 cd=0.1324;
 
-bennett char lvl=90/90 cons=6 talent=9,9,9; 
+bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 cr=0.311 pyro%=0.466 ; #main
@@ -29,22 +29,22 @@ target lvl=100 type=icewindsuite[hp_mult=3.75] radius=2 pos=0,2.4; # 12-3 Icewin
 
 active diluc; #SS stacks
 
-for let r = 0; r < 2; r = r + 1 { 
+for let r = 0; r < 2; r = r + 1 {
   furina skill, dash, burst;
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett burst, skill, attack;
 
   xianyun attack[travel=0], attack:2, charge;
-  
+
   for let h=0; h<1; h=h+1 { # 1 plunge -- 66% collision rate
     diluc dash, jump;
     if .airborne {
       diluc high_plunge[collision=rand()>0.3333], dash, skill:3;
     }
   }
-  for let h=0; h<7; h=h+1 { # 7 plunges -- 66% collision rate 
+  for let h=0; h<7; h=h+1 { # 7 plunges -- 66% collision rate
     diluc dash, jump;
     if !.element.t0.hydro {
       wait(7);
@@ -53,5 +53,5 @@ for let r = 0; r < 2; r = r + 1 {
       diluc high_plunge[collision=rand()>0.3333];
     }
   }
-  
+
 }

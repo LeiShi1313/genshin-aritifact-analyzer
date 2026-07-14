@@ -24,20 +24,20 @@ let t = 0;
 #--------------------------------------------
 
 active yelan;
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 for let i=0; i<4; i=i+1 {
- 
+
   yelan skill, burst, attack;
   if .fischl.burst.ready {
-    fischl attack:2, burst; 
+    fischl attack:2, burst;
   } else {
-    fischl attack:1, skill; 
-   
+    fischl attack:1, skill;
+
   }
    kazuha attack,skill,high_plunge;
-    
+
  hutao attack,skill,
      attack:2, charge, dash,
      attack:2, charge, jump,
@@ -50,4 +50,3 @@ for let i=0; i<4; i=i+1 {
      attack:2, charge;
      kazuha attack,skill,high_plunge,burst;
 }
-

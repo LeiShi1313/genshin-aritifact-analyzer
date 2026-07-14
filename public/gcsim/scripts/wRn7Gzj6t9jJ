@@ -1,6 +1,6 @@
 alhaitham char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=90];
 alhaitham add set="mh" count=4;
-                   
+
 #Wolf-Fang Build ----------------------------------------------------------------
 #alhaitham add weapon="wolffang" refine=1 lvl=90/90;
 #alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #52.39 [88.39 / 96.39] / 178.25 | 111.01 er
@@ -14,7 +14,7 @@ alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #44.66 [80.
 alhaitham add stats hp=507.88 atk=33.07 def=39.35 hp%=0.0991 atk%=0.0991 def%=0.1239 em=79.26 er=0.1101 cr=0.3966 cd=0.6605;
                    #hp 2[0]   atk 2[0]  def 2[0]  hp% 2[0]   atk% 2[0]   def% 2[0]   em 4[2]  er 2[0]   cr 12[10] cd 10[8]
                    #sub; total[distributed] rolls
-                   
+
 #HoD Build ----------------------------------------------------------------------
 #alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90; #better but somewhat reliant on not getting hit
 #alhaitham add stats hp=4780 atk=311 em=186.5 dendro%=0.466 cd=0.622; #62.745 [98.745] / 225.11 | 111.01 er
@@ -35,13 +35,13 @@ furina add set="deepwood" count=4;
 #furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #63.86 [75.86] / 178.25 | 156.95 er
 #furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
                 #hp 2[0]   atk 2[0]  def 2[0]  hp% 4[2]   atk% 2[0]   def% 2[0]   em 2[0]  er 2[0]   cr 12[10] cd 10[8]
-                
+
 #Wolf-Fang Build ----------------------------------------------------------------
 furina add weapon="wolffang" refine=1 lvl=90/90;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #88.115 [96.115] / 178.25 | 116.515 er
 furina add stats hp=507.88 atk=33.07 def=39.35 hp%=0.1982 atk%=0.0991 def%=0.1239 em=39.63 er=0.16515 cr=0.36355 cd=0.6605;
                 #hp 2[0]   atk 2[0]  def 2[0]  hp% 4[2]   atk% 2[0]   def% 2[0]   em 2[0]  er 3[1]    cr 11[9]   cd 10[8]
-              
+
 fischl char lvl=90/90 cons=6 talent=9,9,9 +params=[start_hp%=70];
 fischl add weapon="stringless" refine=3 lvl=90/90;
 fischl add set="gt" count=4;
@@ -119,7 +119,7 @@ options swap_delay=1 iteration=1000 ignore_burst_energy=false;
 
 # --- Targets
 target lvl=100 resist=0.1 hp=999999999999 radius=2 pos=0,2.5 particle_threshold=520000 particle_drop_count=3; #Energy drops based on 12-3 Icewind Suite
-#Fischl owns about 25% of hyperblooms with this target setup. 
+#Fischl owns about 25% of hyperblooms with this target setup.
 #Fischl HB ownership is inversely proportional to target radius; decrease radius for higher Fischl ownership, or increase radius for lower Fischl ownership
 
 active kuki;

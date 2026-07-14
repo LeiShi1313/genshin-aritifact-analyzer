@@ -29,7 +29,7 @@ energy every interval=480,720 amount=1;
 active furina;
 
 furina skill, dash, burst;
-bennett skill, burst;                 
+bennett skill, burst;
 emilie skill, attack;
 klee attack, burst, walk, attack[travel=6], charge;
 klee attack[travel=6], charge, attack, skill[bounce=3, mine=8];
@@ -54,6 +54,6 @@ for let x = 3; x > 0; x = x - 1 {
   klee attack[travel=6], charge, attack, skill[bounce=3, mine=8], jump;
   for let r = 5; r> 0; r = r - 1 {
     klee attack[travel=6], charge;
-  }  
+  }
   klee attack, walk, attack, walk, attack;
 }

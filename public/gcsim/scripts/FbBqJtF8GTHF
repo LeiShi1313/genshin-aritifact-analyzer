@@ -1,0 +1,73 @@
+arle char lvl=100/100 cons=6 talent=10,10,10;
+arle add weapon="sss" refine=5 lvl=90/90;
+arle add set="gd" count=4;
+arle add stats hp=4780 atk=311 em=187 em=187 cd=0.622;
+arle add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=100/100 cons=6 talent=10,10,10;
+nicole add weapon="angelosheptades" refine=5 lvl=90/90;
+nicole add set="ap" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
+
+xilonen char lvl=100/100 cons=6 talent=10,10,10;
+xilonen add weapon="peakpatrolsong" refine=5 lvl=90/90;
+xilonen add set="scroll" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583;
+xilonen add stats def%=0.062*6 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
+
+citlali char lvl=100/100 cons=6 talent=10,10,10;
+citlali add weapon="starcallerswatch" refine=5 lvl=90/90;
+citlali add set="ins" count=4;
+citlali add stats hp=3571 atk=232 em=187 em=139.3 em=139.3;
+citlali add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*2 em=16.6488*6 cr=0.027804*10 cd=0.055608*2;
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=.1 hp=1000000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+active arle;
+
+for let i = 0; i < 6; i = i + 1 {
+
+  if i==0 {
+    arle skill;
+    xilo skill, attack:2;
+    nicole skill, attack:3; pick_up_crystallize("pyro");
+    citlali skill, attack;
+    arle swap; delay(36);
+    arle charge[early_cancel=1], dash;
+    arle attack, walk,
+         attack:3, dash,
+         attack:3, dash,
+         attack:2; delay(28); arle attack;
+    citlali attack;
+    arle attack, walk,
+         attack:3, dash,
+         attack:3, dash,
+         attack:3;
+  }
+  else {
+    arle skill;
+    xilo skill, attack:2;
+    nicole skill, attack:3; pick_up_crystallize("pyro");
+    citlali skill, attack;
+    arle swap; delay(36);
+    arle charge[early_cancel=1], dash;
+    arle attack, walk,
+         attack:3, dash,
+         attack:3, dash,
+         attack:2; delay(28); arle attack;
+    citlali attack;
+    arle attack, walk;
+
+    if i > 4 {
+      arle burst; # arle Q last rot
+    }
+    else {
+      arle attack:3, dash,
+           attack:3, dash,
+           attack, charge;
+    }
+  }
+
+}

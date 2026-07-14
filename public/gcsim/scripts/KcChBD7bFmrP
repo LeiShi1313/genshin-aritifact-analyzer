@@ -23,7 +23,7 @@ thoma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 thoma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*11 em=19.82*6 cr=0.0331*2 cd=0.0662*2;
 
 options swap_delay=12 iteration=1000;
-target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999; 
+target lvl=100 resist=0.1 radius=3 pos=0,3.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
 active ayato;
@@ -39,4 +39,3 @@ for let i=0; i<4; i=i+1 {
   collei attack, skill;
   ayato skill, attack:12;
 }
-

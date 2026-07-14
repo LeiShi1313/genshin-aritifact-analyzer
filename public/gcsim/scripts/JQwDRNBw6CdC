@@ -41,4 +41,3 @@ for let i = 0; i < 4; i=i+1 {
     raidenshogun burst, attack:4, dash, attack:4, dash, attack:4, dash, attack:4;
     bennett skill;
 }
-

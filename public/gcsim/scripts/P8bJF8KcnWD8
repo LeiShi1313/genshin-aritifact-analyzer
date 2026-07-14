@@ -33,20 +33,20 @@ for let i=0; i<4; i=i+1 {
     furina skill, dash;
   }
   furina attack, burst;
-  
+
   chevreuse skill[hold=1];
   if .chevreuse.burst.ready {
     chevreuse burst;
   } else {
     chevreuse attack;
   }
-  
+
   if .sara.burst.ready {
     sara burst;
   } else {
     sara skill, aim;
   }
-  
+
   chasca skill;
   if .chasca.burst.ready {
     chasca burst, aim:4;

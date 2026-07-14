@@ -66,13 +66,13 @@ active bennett;
 
 for let i=0; i<4; i=i+1 {
   bennett skill, attack:2; # needs to catch particles to have enough energy
-  
+
   xianyun skill, low_plunge, burst;
-  
+
   bennett skill, dash, burst;
-  
+
   citlali skill, burst;
-  
+
   kazuha skill, high_plunge[collision=1];
   KazuPlunge();
   KazuPlunge();
@@ -85,4 +85,3 @@ for let i=0; i<4; i=i+1 {
   kazuha skill, high_plunge[collision=1];
 
 }
-
