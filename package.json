@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "npm run test:artifact-scoring",
-    "test:artifact-scoring": "tsx --test tests/artifact-scoring/*.test.ts tests/config-and-build.test.ts",
+    "test:artifact-scoring": "tsx --test tests/artifact-scoring/*.test.ts tests/config-and-build.test.ts tests/game-data.test.ts",
     "generate:presets": "tsx scripts/generate-presets.ts",
     "check:presets": "tsx scripts/generate-presets.ts --check",
     "benchmark:artifact-scoring": "tsx tests/artifact-scoring/benchmark.ts",
@@ -59,7 +59,7 @@
     "axios": "^1.2.2",
     "cssnano": "^5.1.13",
     "csv-parse": "^5.3.3",
-    "genshin-db": "^5.2.11",
+    "genshin-db": "^5.2.12",
     "i18next-resources-to-backend": "^1.1.1",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
