@@ -2,7 +2,7 @@ import type { Artifact } from "../genshin/artifact";
 import type { Build } from "../genshin/build";
 import type { ScoreBatchView } from "../features/artifacts/scoringViewModel";
 
-export const ARTIFACT_SCORING_ALGORITHM_VERSION = "artifact-scoring-v1";
+export const ARTIFACT_SCORING_ALGORITHM_VERSION = "artifact-scoring-v2";
 
 export interface PairRef {
   readonly artifactIndex: number;

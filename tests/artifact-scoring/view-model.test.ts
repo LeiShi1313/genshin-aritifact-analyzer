@@ -21,9 +21,11 @@ const batch = (): ScoreBatchView => ({
   artifactIssueFlags: new Uint32Array(2),
   buildStatus: new Uint8Array(3),
   buildIssueFlags: new Uint32Array(3),
+  buildSetPlan: new Uint8Array(3),
   match: new Float64Array([0.8, 0.7, 0.7, 0.6, 0.6, 0.6]),
   expectedFinalMatch: new Float64Array([0.81, 0.9, 0.9, 0.75, 0.75, 0.75]),
   isPreferredMain: new Uint8Array([1, 1, 1, 1, 1, 1]),
+  setCompatibility: new Uint8Array(6),
   pairIssueFlags: new Uint32Array(6),
 });
 

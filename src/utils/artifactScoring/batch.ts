@@ -12,6 +12,11 @@ import {
   createBuildMatchContext,
   projectWeightedRollPointsToMatch,
 } from "./match";
+import {
+  classifyArtifactSetCompatibility,
+  classifyBuildSetPlan,
+  type BuildSetPlan,
+} from "./setEligibility";
 import type {
   BuildScoringProfile,
   CanonicalArtifactState,
@@ -75,6 +80,7 @@ const summaryContentSignature = (
   contentHash64(
     JSON.stringify([
       artifacts.map((artifact) => [
+        artifact.set,
         artifact.star,
         artifact.level,
         artifact.position,
@@ -86,6 +92,9 @@ const summaryContentSignature = (
       ]),
       builds.map(({ id, build }) => [
         id,
+        build.suits.map((suit) =>
+          suit.setCombos.map((combo) => [combo.set, combo.count])
+        ),
         build.flowerAttributes,
         build.plumeAttributes,
         build.sandsAttributes,
@@ -113,8 +122,10 @@ interface PreparedArtifactBatch {
   readonly artifactCount: number;
   readonly buildCount: number;
   readonly batch: ArtifactEvaluationBatch;
+  readonly artifactSets: readonly number[];
   readonly canonicalArtifacts: (CanonicalArtifactState | undefined)[];
   readonly buildProfiles: (BuildScoringProfile | undefined)[];
+  readonly buildSetPlans: readonly BuildSetPlan[];
   readonly issues: EvaluationIssue[];
   readonly summaryKey: string;
 }
@@ -131,14 +142,17 @@ const prepareArtifactBatch = (
   const artifactIssueFlags = new Uint32Array(artifactCount);
   const buildStatus = new Uint8Array(buildCount);
   const buildIssueFlags = new Uint32Array(buildCount);
+  const buildSetPlan = new Uint8Array(buildCount);
   const match = new Float64Array(pairCount);
   const expectedFinalMatch = new Float64Array(pairCount);
   const isPreferredMain = new Uint8Array(pairCount);
+  const setCompatibility = new Uint8Array(pairCount);
   const pairIssueFlags = new Uint32Array(pairCount);
   match.fill(Number.NaN);
   expectedFinalMatch.fill(Number.NaN);
 
   const issues: EvaluationIssue[] = [];
+  const artifactSets = artifacts.map((artifact) => artifact.set);
   const canonicalArtifacts = artifacts.map((artifact, artifactIndex) => {
     const result = canonicalizeArtifact(artifact, artifactIndex);
     issues.push(...result.issues);
@@ -151,6 +165,11 @@ const prepareArtifactBatch = (
       return undefined;
     }
     return result.artifact;
+  });
+  const buildSetPlans = builds.map(({ build }, buildIndex) => {
+    const plan = classifyBuildSetPlan(build);
+    buildSetPlan[buildIndex] = plan.kind;
+    return plan;
   });
   const buildProfiles = builds.map(({ id, build }, buildIndex) => {
     const result = validateBuild(build, id);
@@ -172,9 +191,11 @@ const prepareArtifactBatch = (
     artifactIssueFlags,
     buildStatus,
     buildIssueFlags,
+    buildSetPlan,
     match,
     expectedFinalMatch,
     isPreferredMain,
+    setCompatibility,
     pairIssueFlags,
   };
 
@@ -183,8 +204,10 @@ const prepareArtifactBatch = (
     artifactCount,
     buildCount,
     batch,
+    artifactSets,
     canonicalArtifacts,
     buildProfiles,
+    buildSetPlans,
     issues,
     summaryKey: `${ARTIFACT_SCORING_ALGORITHM_VERSION}:${datasetId}:${summaryContentSignature(
       artifacts,
@@ -203,6 +226,11 @@ const evaluateArtifactRow = (
   prepared.buildProfiles.forEach((profile, buildIndex) => {
     if (!profile) return;
     const pairIndex = artifactIndex * prepared.buildCount + buildIndex;
+    prepared.batch.setCompatibility[pairIndex] =
+      classifyArtifactSetCompatibility(
+        prepared.artifactSets[artifactIndex],
+        prepared.buildSetPlans[buildIndex]
+      );
     const context = createBuildMatchContext(artifact, profile);
     const current = projectWeightedRollPointsToMatch(
       context,
@@ -286,9 +314,11 @@ export const artifactBatchTransferList = (
   batch.artifactIssueFlags.buffer,
   batch.buildStatus.buffer,
   batch.buildIssueFlags.buffer,
+  batch.buildSetPlan.buffer,
   batch.match.buffer,
   batch.expectedFinalMatch.buffer,
   batch.isPreferredMain.buffer,
+  batch.setCompatibility.buffer,
   batch.pairIssueFlags.buffer,
 ];
 

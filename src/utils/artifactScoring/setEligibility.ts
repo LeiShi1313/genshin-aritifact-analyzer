@@ -1,3 +1,4 @@
+import type { Build } from "../../genshin/build";
 import {
   CompensatedSum,
   compensatedSum,
@@ -10,6 +11,56 @@ import {
 } from "./publicScore";
 
 export const SET_ELIGIBILITY_POSITION_COUNT = 5;
+
+export const BUILD_SET_PLAN = {
+  NEUTRAL: 0,
+  STRICT_FOUR_PIECE: 1,
+} as const;
+
+export const SET_COMPATIBILITY = {
+  NEUTRAL: 0,
+  MATCH: 1,
+  MISMATCH: 2,
+} as const;
+
+export type BuildSetPlan = Readonly<{
+  kind: (typeof BUILD_SET_PLAN)[keyof typeof BUILD_SET_PLAN];
+  targetSets: readonly number[];
+}>;
+
+export const classifyBuildSetPlan = (build: Build): BuildSetPlan => {
+  if (
+    build.suits.length === 0 ||
+    build.suits.some(
+      (suit) =>
+        suit.setCombos.length !== 1 ||
+        suit.setCombos[0].count !== 4 ||
+        !Number.isInteger(suit.setCombos[0].set) ||
+        suit.setCombos[0].set <= 0
+    )
+  ) {
+    return Object.freeze({ kind: BUILD_SET_PLAN.NEUTRAL, targetSets: [] });
+  }
+
+  return Object.freeze({
+    kind: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+    targetSets: Object.freeze([
+      ...new Set(build.suits.map((suit) => suit.setCombos[0].set)),
+    ]),
+  });
+};
+
+export const classifyArtifactSetCompatibility = (
+  artifactSet: number,
+  plan: BuildSetPlan
+): (typeof SET_COMPATIBILITY)[keyof typeof SET_COMPATIBILITY] => {
+  if (plan.kind !== BUILD_SET_PLAN.STRICT_FOUR_PIECE) {
+    return SET_COMPATIBILITY.NEUTRAL;
+  }
+  return plan.targetSets.includes(artifactSet)
+    ? SET_COMPATIBILITY.MATCH
+    : SET_COMPATIBILITY.MISMATCH;
+};
 
 export interface PublicScoreBin {
   readonly score: number;

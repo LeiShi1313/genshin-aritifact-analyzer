@@ -16,9 +16,11 @@ const emptyBatch = {
   artifactIssueFlags: new Uint32Array(1),
   buildStatus: new Uint8Array(1),
   buildIssueFlags: new Uint32Array(1),
+  buildSetPlan: new Uint8Array(1),
   match: new Float64Array([0.6]),
   expectedFinalMatch: new Float64Array([0.7]),
   isPreferredMain: new Uint8Array([1]),
+  setCompatibility: new Uint8Array(1),
   pairIssueFlags: new Uint32Array(1),
 };
 

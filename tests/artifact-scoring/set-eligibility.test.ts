@@ -4,6 +4,9 @@ import test from "node:test";
 import { AttributePosition, AttributeType } from "../../src/genshin/attribute";
 import type { Build } from "../../src/genshin/build";
 import {
+  BUILD_SET_PLAN,
+  classifyArtifactSetCompatibility,
+  classifyBuildSetPlan,
   calculateSetEligibilityGates,
   expectedFiveStarDrops,
   lastArrivalProbabilities,
@@ -11,6 +14,7 @@ import {
   publicScoreBins,
   selectConservativePublicScoreCutoff,
   setEligibilityReferenceForLevel,
+  SET_COMPATIBILITY,
 } from "../../src/utils/artifactScoring/setEligibility";
 import { generateNormalFiveStarPopulation } from "../../src/utils/artifactScoring/population";
 import { createScoreDistribution } from "../../src/utils/artifactScoring/probabilityTypes";
@@ -241,4 +245,70 @@ test("reproduces the calibrated triple-EM cutoffs", () => {
       Math.abs(gate.lastArrivalProbability - expectedLastArrival[index]) < 1e-12
     );
   });
+});
+
+test("models only unambiguous four-piece alternatives", () => {
+  const baseBuild: Build = {
+    name: "set-plan",
+    character: 0,
+    weapons: [],
+    suits: [],
+    flowerAttributes: [AttributeType.HP],
+    plumeAttributes: [AttributeType.ATK],
+    sandsAttributes: [AttributeType.ATK_PERCENT],
+    gobletAttributes: [],
+    circletAttributes: [],
+    subAttributes: [{ type: AttributeType.CRIT_RATE, value: 1 }],
+  };
+
+  assert.deepEqual(classifyBuildSetPlan(baseBuild), {
+    kind: BUILD_SET_PLAN.NEUTRAL,
+    targetSets: [],
+  });
+
+  const strict = classifyBuildSetPlan({
+    ...baseBuild,
+    suits: [
+      { setCombos: [{ set: 10, count: 4 }] },
+      { setCombos: [{ set: 20, count: 4 }] },
+      { setCombos: [{ set: 10, count: 4 }] },
+    ],
+  });
+  assert.deepEqual(strict, {
+    kind: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
+    targetSets: [10, 20],
+  });
+  assert.equal(
+    classifyArtifactSetCompatibility(20, strict),
+    SET_COMPATIBILITY.MATCH
+  );
+  assert.equal(
+    classifyArtifactSetCompatibility(30, strict),
+    SET_COMPATIBILITY.MISMATCH
+  );
+
+  for (const suits of [
+    [
+      {
+        setCombos: [
+          { set: 10, count: 2 },
+          { set: 20, count: 2 },
+        ],
+      },
+    ],
+    [
+      {
+        setCombos: [
+          { set: 10, count: 4 },
+          { set: 20, count: 4 },
+        ],
+      },
+    ],
+    [{ setCombos: [{ set: 10, count: 2 }] }],
+  ]) {
+    assert.deepEqual(classifyBuildSetPlan({ ...baseBuild, suits }), {
+      kind: BUILD_SET_PLAN.NEUTRAL,
+      targetSets: [],
+    });
+  }
 });

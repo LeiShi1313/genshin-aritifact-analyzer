@@ -6,9 +6,11 @@ import { AttributePosition, AttributeType } from "../../src/genshin/attribute";
 import type { Build } from "../../src/genshin/build";
 import {
   artifactBatchByteLength,
+  BUILD_SET_PLAN,
   ENTITY_STATUS,
   evaluateArtifactBatch,
   evaluateArtifactBatchCooperatively,
+  SET_COMPATIBILITY,
 } from "../../src/utils/artifactScoring";
 
 const build: Build = {
@@ -59,7 +61,7 @@ test("evaluates a columnar summary and leaves unsupported rows as NaN", () => {
   assert.equal(snapshot.batch.artifactStatus[1], ENTITY_STATUS.UNSUPPORTED);
   assert.equal(Number.isNaN(snapshot.batch.match[1]), true);
   assert.deepEqual(progress, [1, 2]);
-  assert.match(snapshot.summaryKey, /^artifact-scoring-v1:dataset:/);
+  assert.match(snapshot.summaryKey, /^artifact-scoring-v2:dataset:/);
 });
 
 test("marks invalid builds without allocating nested pair objects", () => {
@@ -77,6 +79,53 @@ test("marks invalid builds without allocating nested pair objects", () => {
   assert.equal(Number.isNaN(snapshot.batch.expectedFinalMatch[0]), true);
 });
 
+test("binds strict four-piece compatibility and keys set changes", () => {
+  const strictBuild: Build = {
+    ...build,
+    suits: [{ setCombos: [{ set: 10, count: 4 }] }],
+  };
+  const onSet = { ...artifact(), set: 10 };
+  const offSet = { ...artifact(), set: 20 };
+  const snapshot = evaluateArtifactBatch(
+    "dataset",
+    [onSet, offSet],
+    [{ id: "build", build: strictBuild }]
+  );
+
+  assert.deepEqual(
+    [...snapshot.batch.buildSetPlan],
+    [BUILD_SET_PLAN.STRICT_FOUR_PIECE]
+  );
+  assert.deepEqual(
+    [...snapshot.batch.setCompatibility],
+    [SET_COMPATIBILITY.MATCH, SET_COMPATIBILITY.MISMATCH]
+  );
+  assert.notEqual(
+    snapshot.summaryKey,
+    evaluateArtifactBatch(
+      "dataset",
+      [offSet, offSet],
+      [{ id: "build", build: strictBuild }]
+    ).summaryKey
+  );
+  assert.notEqual(
+    snapshot.summaryKey,
+    evaluateArtifactBatch(
+      "dataset",
+      [onSet, offSet],
+      [
+        {
+          id: "build",
+          build: {
+            ...strictBuild,
+            suits: [{ setCombos: [{ set: 20, count: 4 }] }],
+          },
+        },
+      ]
+    ).summaryKey
+  );
+});
+
 test("keeps the specified 2,112 by 104 transferable summary below 6 MiB", () => {
   const artifactCount = 2_112;
   const buildCount = 104;
@@ -91,9 +140,11 @@ test("keeps the specified 2,112 by 104 transferable summary below 6 MiB", () => 
     artifactIssueFlags: new Uint32Array(artifactCount),
     buildStatus: new Uint8Array(buildCount),
     buildIssueFlags: new Uint32Array(buildCount),
+    buildSetPlan: new Uint8Array(buildCount),
     match: new Float64Array(pairCount),
     expectedFinalMatch: new Float64Array(pairCount),
     isPreferredMain: new Uint8Array(pairCount),
+    setCompatibility: new Uint8Array(pairCount),
     pairIssueFlags: new Uint32Array(pairCount),
   };
   assert.ok(artifactBatchByteLength(batch) < 6 * 1024 * 1024);

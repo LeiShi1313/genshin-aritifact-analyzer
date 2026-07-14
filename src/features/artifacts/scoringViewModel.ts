@@ -15,9 +15,11 @@ export interface ScoreBatchView {
   readonly artifactIssueFlags: Uint32Array;
   readonly buildStatus: Uint8Array;
   readonly buildIssueFlags: Uint32Array;
+  readonly buildSetPlan: Uint8Array;
   readonly match: Float64Array;
   readonly expectedFinalMatch: Float64Array;
   readonly isPreferredMain: Uint8Array;
+  readonly setCompatibility: Uint8Array;
   readonly pairIssueFlags: Uint32Array;
 }
 

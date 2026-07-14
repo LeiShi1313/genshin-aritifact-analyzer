@@ -43,14 +43,19 @@ export {
   toPublicArtifactScoreExact,
 } from "./publicScore";
 export {
+  BUILD_SET_PLAN,
   calculateSetEligibilityGates,
+  classifyArtifactSetCompatibility,
+  classifyBuildSetPlan,
   expectedFiveStarDrops,
   lastArrivalProbabilities,
   oddsLimitedOffPieceFactor,
   publicScoreBins,
   selectConservativePublicScoreCutoff,
   setEligibilityReferenceForLevel,
+  SET_COMPATIBILITY,
 } from "./setEligibility";
+export type { BuildSetPlan, SetEligibilityGate } from "./setEligibility";
 export { rationalFromFiniteDecimal, rationalToNumber } from "./rational";
 export { validateBuild } from "./validation";
 export * from "./types";
