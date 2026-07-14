@@ -37,6 +37,20 @@ export {
 } from "./prospect";
 export { probabilityAtLeast } from "./potential";
 export { estimateScoreDistributionBytes } from "./probabilityTypes";
+export {
+  PUBLIC_SCORE_DEFAULTS,
+  toPublicArtifactScore,
+  toPublicArtifactScoreExact,
+} from "./publicScore";
+export {
+  calculateSetEligibilityGates,
+  expectedFiveStarDrops,
+  lastArrivalProbabilities,
+  oddsLimitedOffPieceFactor,
+  publicScoreBins,
+  selectConservativePublicScoreCutoff,
+  setEligibilityReferenceForLevel,
+} from "./setEligibility";
 export { rationalFromFiniteDecimal, rationalToNumber } from "./rational";
 export { validateBuild } from "./validation";
 export * from "./types";

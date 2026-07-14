@@ -1,7 +1,9 @@
-export const PUBLIC_SCORE_DEFAULTS = Object.freeze({
-  minPotential: 75,
-  minScore: 80,
-});
+import {
+  PUBLIC_SCORE_DEFAULTS,
+  toPublicArtifactScore,
+} from "../../utils/artifactScoring/publicScore";
+
+export { PUBLIC_SCORE_DEFAULTS, toPublicArtifactScore };
 
 export type ArtifactScoreBandId =
   | "ordinary"
@@ -34,12 +36,6 @@ export interface ArtifactScoreAction {
   readonly id: ArtifactScoreActionId;
   readonly recommended: boolean;
 }
-
-export const toPublicArtifactScore = (value: number): number | undefined => {
-  if (!Number.isFinite(value) || value < 0 || value > 1) return undefined;
-  if (value === 1) return 100;
-  return Math.min(99, Math.floor(value * 100 + Number.EPSILON));
-};
 
 export const getArtifactScoreBand = (score: number): ArtifactScoreBand => {
   if (score === 100) {
