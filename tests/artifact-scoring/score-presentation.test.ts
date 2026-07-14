@@ -16,6 +16,9 @@ test("floors the public score and reserves 100 for exact perfection", () => {
   assert.equal(toPublicArtifactScore(0.809999), 80);
   assert.equal(toPublicArtifactScore(1 - Number.EPSILON), 99);
   assert.equal(toPublicArtifactScore(1), 100);
+  assert.equal(toPublicArtifactScore(Math.fround(0.7)), 70);
+  assert.equal(toPublicArtifactScore(Math.fround(0.9)), 90);
+  assert.equal(toPublicArtifactScore(Math.fround(0.749999)), 74);
 
   assert.equal(toPublicArtifactScore(Number.NaN), undefined);
   assert.equal(toPublicArtifactScore(-0.01), undefined);
