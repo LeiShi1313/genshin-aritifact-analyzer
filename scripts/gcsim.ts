@@ -137,11 +137,11 @@ const parseStats = (line: string): GCSimScriptCharacterStat[] => {
     const stats = [];
     let label: string | undefined;
 
-    // Check for +label=xxx
-    const labelMatch = line.match(/\+label\s*=\s*(\w+)/);
+    // Check for label=xxx
+    const labelMatch = line.match(/\blabel\s*=\s*(\w+)/);
     if (labelMatch) {
         label = labelMatch[1];
-        line = line.replace(/\+label\s*=\s*\w+/, ''); // Remove label from line
+        line = line.replace(/\blabel\s*=\s*\w+/, ''); // Remove label from line
     }
 
     for (let match of line.matchAll(gcsimKeyValRegx)) {

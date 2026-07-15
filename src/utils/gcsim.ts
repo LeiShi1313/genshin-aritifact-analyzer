@@ -269,7 +269,7 @@ const gcsimScriptToScript = (script: GCSimScript): string => {
             let statLine = `${char} add stats `
                 + Object.entries(stats).map(([key, value]) => `${key}=${value}`).join(" ");
             if (label !== "default") {
-                statLine += ` +label=${label}`;
+                statLine += ` label=${label}`;
             }
             statLine += ";";
             statLine += "\n";
