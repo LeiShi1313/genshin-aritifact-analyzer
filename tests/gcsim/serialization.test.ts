@@ -11,16 +11,19 @@ import { applyAllOverrides, gcsimScriptToScript } from "../../src/utils/gcsim";
 test("serialization preserves labeled stats and target settings", () => {
   const original = parseScript(
     "furina char lvl=90/90 cons=0 talent=10,10,10 start_hp=12345;\n" +
-      "furina add stats hp=100 +label=flower;\n" +
+      "furina add stats hp=100 label=flower;\n" +
       "target particle_element=pyro hp_mult=2.5;",
     "serialization"
   );
+  const serialized = gcsimScriptToScript(original);
   const reparsed = parseScript(
-    gcsimScriptToScript(original),
+    serialized,
     "serialization:round-trip"
   );
   const decoded = GCSimScript.decode(GCSimScript.encode(original).finish());
 
+  assert.match(serialized, /^furina add stats hp=100 label=flower;$/m);
+  assert.doesNotMatch(serialized, /\+label=/);
   assert.equal(reparsed.characterInfos[0]?.stats[0]?.label, "flower");
   assert.equal(reparsed.characterInfos[0]?.startHp, 12345);
   assert.equal(
