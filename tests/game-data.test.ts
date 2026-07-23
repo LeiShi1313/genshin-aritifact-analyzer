@@ -9,13 +9,19 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
+import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
 import genshindb from "genshin-db";
+import sharp from "sharp";
 
-import { syncNamesFile } from "../scripts/utils.mjs";
+import {
+  downloadImage,
+  nanokaImageUrl,
+  syncNamesFile,
+} from "../scripts/utils.mjs";
 
 const locales = ["de", "en", "es", "fr", "ja", "ko", "zh", "zh-Hant"];
 const databaseLanguage = {
@@ -102,6 +108,63 @@ test("name sync appends each remote entry at most once", () => {
     assert.deepEqual(names, ["Existing", "New", "Other"]);
     assert.equal(readFileSync(path, "utf8"), "Existing\nNew\nOther\n");
   } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("Nanoka image URLs use the WebP asset endpoint", () => {
+  assert.equal(
+    nanokaImageUrl("UI_AvatarIcon_Ayaka"),
+    "https://static.nanoka.cc/assets/gi/UI_AvatarIcon_Ayaka.webp"
+  );
+  assert.equal(
+    nanokaImageUrl("UI_AvatarIcon_Ayaka.png"),
+    "https://static.nanoka.cc/assets/gi/UI_AvatarIcon_Ayaka.webp"
+  );
+});
+
+test("image downloads convert WebP responses to real PNG files", async () => {
+  const directory = mkdtempSync(join(tmpdir(), "genshin-image-fallback-"));
+  const imagePath = join(directory, "fallback.png");
+  const webp = await sharp({
+    create: {
+      width: 1,
+      height: 1,
+      channels: 4,
+      background: { r: 255, g: 0, b: 0, alpha: 1 },
+    },
+  })
+    .webp()
+    .toBuffer();
+  const server = createServer((_request, response) => {
+    response.writeHead(200, { "content-type": "image/webp" });
+    response.end(webp);
+  });
+
+  try {
+    await new Promise<void>((resolve, reject) => {
+      server.once("error", reject);
+      server.listen(0, "127.0.0.1", resolve);
+    });
+    const address = server.address();
+    assert.ok(address && typeof address === "object");
+    assert.equal(
+      await downloadImage(
+        `http://127.0.0.1:${address.port}/fallback.webp`,
+        imagePath
+      ),
+      true
+    );
+    assert.equal(
+      readFileSync(imagePath)
+        .subarray(0, 8)
+        .equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])),
+      true
+    );
+  } finally {
+    if (server.listening) {
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+    }
     rmSync(directory, { recursive: true, force: true });
   }
 });

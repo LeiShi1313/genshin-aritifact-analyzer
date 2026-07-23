@@ -83,6 +83,7 @@ const portWeapons = async () => {
           utils.yattaImageUrl(filename, "weapon"),
           utils.enkaImageUrl(filename),
           directUrl,
+          utils.nanokaImageUrl(filename),
         ],
         imagePath,
         `${name}${suffix}`

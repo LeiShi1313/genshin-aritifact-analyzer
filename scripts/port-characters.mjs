@@ -87,6 +87,7 @@ const portCharacters = async () => {
           utils.yattaImageUrl(filename, "character"),
           utils.enkaImageUrl(filename),
           ...directUrls,
+          utils.nanokaImageUrl(filename),
         ],
         imagePath,
         `${name} ${type}`
