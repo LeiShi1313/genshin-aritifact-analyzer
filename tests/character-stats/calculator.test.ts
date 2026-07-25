@@ -70,10 +70,7 @@ test("combines artifact flat and percent stats without depending on artifact ord
   assert.deepEqual(secondResult, firstResult);
   if (firstResult.status === "invalid") return;
   closeTo(firstResult.stats.maxHp, firstResult.base.hp + 4780);
-  closeTo(
-    firstResult.stats.attack,
-    firstResult.base.attack * (1 + 0.566) + 40
-  );
+  closeTo(firstResult.stats.attack, firstResult.base.attack * (1 + 0.566) + 40);
   closeTo(firstResult.stats.critRate, 0.12);
   assert.equal(firstResult.stats.elementalMastery, 42);
 });
@@ -218,8 +215,25 @@ test("rejects invalid refinement and duplicate artifact slots without mutating i
     ],
   };
   const before = JSON.stringify(duplicateSlots);
+  const negativeArtifactValue: CharacterSheetLoadout = {
+    ...loadout,
+    artifacts: [
+      {
+        slot: "flower",
+        mainStat: { stat: "hpFlat", value: -1 },
+        substats: [],
+      },
+    ],
+  };
 
-  assert.equal(calculateCharacterSheetStats(invalidRefinement).status, "invalid");
+  assert.equal(
+    calculateCharacterSheetStats(invalidRefinement).status,
+    "invalid"
+  );
   assert.equal(calculateCharacterSheetStats(duplicateSlots).status, "invalid");
+  assert.equal(
+    calculateCharacterSheetStats(negativeArtifactValue).status,
+    "invalid"
+  );
   assert.equal(JSON.stringify(duplicateSlots), before);
 });

@@ -167,7 +167,11 @@ export const calculateCharacterSheetStatsFromProgression = (
     }
     seenSlots.add(artifact.slot);
     for (const stat of [artifact.mainStat, ...artifact.substats]) {
-      if (!ARTIFACT_STATS.has(stat.stat) || !Number.isFinite(stat.value)) {
+      if (
+        !ARTIFACT_STATS.has(stat.stat) ||
+        !Number.isFinite(stat.value) ||
+        stat.value < 0
+      ) {
         return invalid([
           { code: "INVALID_ARTIFACT_STAT", sourceKey: stat.stat },
         ]);
