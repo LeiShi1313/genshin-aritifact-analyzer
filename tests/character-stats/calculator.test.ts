@@ -333,6 +333,68 @@ test("rejects invalid refinement and duplicate artifact slots without mutating i
   assert.equal(JSON.stringify(duplicateSlots), before);
 });
 
+test("returns a structured invalid result for malformed runtime loadout shapes", () => {
+  const artifact = {
+    slot: "flower",
+    setKey: "adventurer",
+    mainStat: { stat: "hpFlat", value: 4780 },
+    substats: [],
+  };
+  const malformedCases = [
+    { value: null, sourceKey: "loadout" },
+    {
+      value: { ...raidenLoadout(), character: null },
+      sourceKey: "character",
+    },
+    {
+      value: { ...raidenLoadout(), weapon: [] },
+      sourceKey: "weapon",
+    },
+    {
+      value: { ...raidenLoadout(), artifacts: null },
+      sourceKey: "artifacts",
+    },
+    {
+      value: { ...raidenLoadout(), artifacts: [null] },
+      sourceKey: "artifacts[0]",
+    },
+    {
+      value: {
+        ...raidenLoadout(),
+        artifacts: [{ ...artifact, mainStat: null }],
+      },
+      sourceKey: "artifacts[0].mainStat",
+    },
+    {
+      value: {
+        ...raidenLoadout(),
+        artifacts: [{ ...artifact, substats: null }],
+      },
+      sourceKey: "artifacts[0].substats",
+    },
+    {
+      value: {
+        ...raidenLoadout(),
+        artifacts: [{ ...artifact, substats: [null] }],
+      },
+      sourceKey: "artifacts[0].substats[0]",
+    },
+  ];
+
+  for (const { value, sourceKey } of malformedCases) {
+    assert.doesNotThrow(() =>
+      calculateCharacterSheetStats(value as unknown as CharacterSheetLoadout)
+    );
+    assert.deepEqual(
+      calculateCharacterSheetStats(value as unknown as CharacterSheetLoadout),
+      {
+        status: "invalid",
+        issues: [{ code: "INVALID_LOADOUT", sourceKey }],
+      }
+    );
+  }
+});
+
 test("rejects finite artifact inputs that overflow the calculated sheet", () => {
   const result = calculateCharacterSheetStats({
     ...raidenLoadout(),

@@ -13,6 +13,13 @@ import {
   PROGRESSION_SHARD_COUNT,
   progressionShardIndexForKey,
 } from "../../src/utils/characterStats/internal/sharding";
+import {
+  AUDITED_ARTIFACT_SET_CONSTANT_KEYS,
+  AUDITED_CHARACTER_CONSTANT_KEYS,
+  AUDITED_WEAPON_CONSTANT_KEYS,
+  findConstantRuleAuditGaps,
+} from "../../src/utils/characterStats/internal/rules/constantRuleCoverage";
+import artifactSetMetadata from "../../src/data/sets.json";
 
 const catalogs = buildProgressionCatalogs();
 
@@ -30,6 +37,39 @@ test("progression generation covers every supported character and weapon", () =>
     genshinDbVersion: "5.2.12",
     gameVersion: "6.7",
   });
+});
+
+test("constant-rule audit coverage rejects new and stale catalog keys", () => {
+  assert.deepEqual(
+    findConstantRuleAuditGaps({
+      artifactSetKeys: Object.keys(artifactSetMetadata),
+      characterKeys: Object.keys(characterMetadata),
+      weaponKeys: Object.keys(weaponMetadata),
+    }),
+    []
+  );
+
+  assert.deepEqual(
+    findConstantRuleAuditGaps({
+      artifactSetKeys: [
+        ...AUDITED_ARTIFACT_SET_CONSTANT_KEYS,
+        "future_artifact_set",
+      ],
+      characterKeys: AUDITED_CHARACTER_CONSTANT_KEYS.filter(
+        (key) => key !== "raiden_shogun"
+      ),
+      weaponKeys: [...AUDITED_WEAPON_CONSTANT_KEYS, "future_weapon"],
+    }),
+    [
+      {
+        catalog: "artifact-set",
+        kind: "unaudited",
+        key: "future_artifact_set",
+      },
+      { catalog: "character", kind: "stale", key: "raiden_shogun" },
+      { catalog: "weapon", kind: "unaudited", key: "future_weapon" },
+    ]
+  );
 });
 
 test("character snapshots preserve ascension boundaries and normalize built-in crit baselines", () => {

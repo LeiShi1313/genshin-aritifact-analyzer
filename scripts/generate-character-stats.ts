@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import genshinDb, { type StatFunction, type StatResult } from "genshin-db";
 
 import characterMetadata from "../src/data/characters.json";
+import artifactSetMetadata from "../src/data/sets.json";
 import weaponMetadata from "../src/data/weapons.json";
 import { GENSHIN_DB_VERSION, GENSHIN_GAME_VERSION } from "../src/data/version";
 import type { ProgressionStatKey } from "../src/utils/characterStats/types";
@@ -13,6 +14,7 @@ import {
   PROGRESSION_SHARD_COUNT,
   progressionShardIndexForKey,
 } from "../src/utils/characterStats/internal/sharding";
+import { findConstantRuleAuditGaps } from "../src/utils/characterStats/internal/rules/constantRuleCoverage";
 
 type CharacterSnapshot = readonly [number, number, number, number];
 type WeaponSnapshot = readonly [number, number];
@@ -178,6 +180,19 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
   if (installedGenshinDbVersion !== GENSHIN_DB_VERSION) {
     throw new Error(
       `Installed genshin-db ${installedGenshinDbVersion} does not match generated version ${GENSHIN_DB_VERSION}`
+    );
+  }
+
+  const auditGaps = findConstantRuleAuditGaps({
+    artifactSetKeys: Object.keys(artifactSetMetadata),
+    characterKeys: Object.keys(characterMetadata),
+    weaponKeys: Object.keys(weaponMetadata),
+  });
+  if (auditGaps.length > 0) {
+    throw new Error(
+      `Constant-rule audit coverage is out of date:\n${auditGaps
+        .map(({ catalog, kind, key }) => `- ${catalog} ${kind}: ${key}`)
+        .join("\n")}`
     );
   }
 

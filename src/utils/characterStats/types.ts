@@ -123,6 +123,7 @@ export interface CharacterSheetStats {
 }
 
 export type CharacterSheetIssueCode =
+  | "INVALID_LOADOUT"
   | "CHARACTER_NOT_FOUND"
   | "CHARACTER_PROGRESSION_NOT_FOUND"
   | "WEAPON_NOT_FOUND"

@@ -432,6 +432,61 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "xiphos_moonlight",
 ] as const;
 
+export type ConstantRuleAuditCatalog =
+  | "artifact-set"
+  | "character"
+  | "weapon";
+
+export interface ConstantRuleAuditGap {
+  readonly catalog: ConstantRuleAuditCatalog;
+  readonly kind: "unaudited" | "stale";
+  readonly key: string;
+}
+
+interface ConstantRuleAuditCatalogKeys {
+  readonly artifactSetKeys: readonly string[];
+  readonly characterKeys: readonly string[];
+  readonly weaponKeys: readonly string[];
+}
+
+export const findConstantRuleAuditGaps = ({
+  artifactSetKeys,
+  characterKeys,
+  weaponKeys,
+}: ConstantRuleAuditCatalogKeys): readonly ConstantRuleAuditGap[] => {
+  const catalogs = [
+    {
+      catalog: "artifact-set" as const,
+      current: artifactSetKeys,
+      audited: AUDITED_ARTIFACT_SET_CONSTANT_KEYS,
+    },
+    {
+      catalog: "character" as const,
+      current: characterKeys,
+      audited: AUDITED_CHARACTER_CONSTANT_KEYS,
+    },
+    {
+      catalog: "weapon" as const,
+      current: weaponKeys,
+      audited: AUDITED_WEAPON_CONSTANT_KEYS,
+    },
+  ];
+  const gaps: ConstantRuleAuditGap[] = [];
+
+  for (const { catalog, current, audited } of catalogs) {
+    const currentKeys = new Set<string>(current);
+    const auditedKeys = new Set<string>(audited);
+    for (const key of [...currentKeys].sort()) {
+      if (!auditedKeys.has(key)) gaps.push({ catalog, kind: "unaudited", key });
+    }
+    for (const key of [...auditedKeys].sort()) {
+      if (!currentKeys.has(key)) gaps.push({ catalog, kind: "stale", key });
+    }
+  }
+
+  return gaps;
+};
+
 const auditedCharacters = new Set<string>(AUDITED_CHARACTER_CONSTANT_KEYS);
 const auditedWeapons = new Set<string>(AUDITED_WEAPON_CONSTANT_KEYS);
 const auditedArtifactSets = new Set<string>(

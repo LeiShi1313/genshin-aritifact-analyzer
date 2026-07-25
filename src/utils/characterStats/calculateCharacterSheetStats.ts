@@ -152,10 +152,39 @@ const ownEntry = <Entry>(
 const hasArtifactSetIdentity = (setKey: unknown): setKey is string =>
   typeof setKey === "string" && setKey.trim().length > 0;
 
+const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+const malformedLoadoutPath = (value: unknown): string | undefined => {
+  if (!isRecord(value)) return "loadout";
+  if (!isRecord(value.character)) return "character";
+  if (value.weapon !== null && !isRecord(value.weapon)) return "weapon";
+  if (!Array.isArray(value.artifacts)) return "artifacts";
+
+  for (const [artifactIndex, artifact] of value.artifacts.entries()) {
+    const artifactPath = `artifacts[${artifactIndex}]`;
+    if (!isRecord(artifact)) return artifactPath;
+    if (!isRecord(artifact.mainStat)) return `${artifactPath}.mainStat`;
+    if (!Array.isArray(artifact.substats)) return `${artifactPath}.substats`;
+    for (const [substatIndex, substat] of artifact.substats.entries()) {
+      if (!isRecord(substat)) {
+        return `${artifactPath}.substats[${substatIndex}]`;
+      }
+    }
+  }
+
+  return undefined;
+};
+
 export const calculateCharacterSheetStatsFromProgression = (
   loadout: CharacterSheetLoadout,
   progression: CharacterSheetProgressionData
 ): CharacterSheetResult => {
+  const malformedPath = malformedLoadoutPath(loadout);
+  if (malformedPath) {
+    return invalid([{ code: "INVALID_LOADOUT", sourceKey: malformedPath }]);
+  }
+
   const character = ownEntry(progression.characters, loadout.character.key);
   if (!character) {
     return invalid([
