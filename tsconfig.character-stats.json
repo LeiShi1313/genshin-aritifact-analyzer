@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": [
+    "src/utils/characterStats/**/*.ts",
+    "tests/character-stats/**/*.test.ts"
+  ]
+}
