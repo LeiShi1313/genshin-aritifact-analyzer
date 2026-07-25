@@ -103,14 +103,21 @@ test("GOOD parser through adapter and calculator produces exact sheet totals", a
   );
 
   const result = calculateCharacterSheetStats(adapted.loadout);
-  assert.equal(result.status, "partial");
+  assert.equal(result.status, "complete");
   if (result.status === "invalid") return;
   assert.equal(Math.round(result.stats.maxHp), 17687);
   assert.equal(Math.round(result.stats.attack), 1530);
   assert.equal(result.stats.elementalMastery, 46);
   assert.equal(result.stats.critRate, 1.176);
   assert.equal(result.stats.critDamage, 1.278);
+  assert.equal(result.stats.energyRecharge, 2.84928);
   assert.equal(result.stats.damageBonus.electro, 0.466);
+  assert.equal(
+    result.appliedRuleIds.includes(
+      "artifact_set.emblem_of_severed_fate.two_piece"
+    ),
+    true
+  );
 });
 
 test("GOOD character imports preserve post-90 progression caps", async () => {
