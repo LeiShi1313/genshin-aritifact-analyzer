@@ -157,10 +157,12 @@ export const calculateCharacterSheetStatsFromProgression = (
 
   const seenSlots = new Set<ArtifactSlot>();
   for (const artifact of loadout.artifacts) {
-    if (
-      !ARTIFACT_SLOTS.includes(artifact.slot) ||
-      seenSlots.has(artifact.slot)
-    ) {
+    if (!ARTIFACT_SLOTS.includes(artifact.slot)) {
+      return invalid([
+        { code: "INVALID_ARTIFACT_SLOT", sourceKey: artifact.slot },
+      ]);
+    }
+    if (seenSlots.has(artifact.slot)) {
       return invalid([
         { code: "DUPLICATE_ARTIFACT_SLOT", sourceKey: artifact.slot },
       ]);

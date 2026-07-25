@@ -225,6 +225,16 @@ test("rejects invalid refinement and duplicate artifact slots without mutating i
       },
     ],
   };
+  const invalidSlot = {
+    ...loadout,
+    artifacts: [
+      {
+        slot: "invalid-slot",
+        mainStat: { stat: "hpFlat", value: 100 },
+        substats: [],
+      },
+    ],
+  } as unknown as CharacterSheetLoadout;
 
   assert.equal(
     calculateCharacterSheetStats(invalidRefinement).status,
@@ -235,5 +245,9 @@ test("rejects invalid refinement and duplicate artifact slots without mutating i
     calculateCharacterSheetStats(negativeArtifactValue).status,
     "invalid"
   );
+  assert.deepEqual(calculateCharacterSheetStats(invalidSlot), {
+    status: "invalid",
+    issues: [{ code: "INVALID_ARTIFACT_SLOT", sourceKey: "invalid-slot" }],
+  });
   assert.equal(JSON.stringify(duplicateSlots), before);
 });
