@@ -913,6 +913,7 @@
   width: 1260px !important;
   min-width: 1260px !important;
   min-height: 1030px !important;
+  margin: 0 !important;
 }
 
 .character-showcase-card.is-exporting .ccp-seal-art,

@@ -448,3 +448,15 @@ test("the production card gates incomplete export without approximate markers", 
   assert.doesNotMatch(card, /card\.statScopePartial/);
   assert.match(card, /card\.statScope/);
 });
+
+test("the canonical PNG export starts the centered card at the canvas origin", () => {
+  const pageStyles = readSource(
+    "src/features/characters/showcase/showcase-page.css"
+  );
+  const exportRule = ruleBody(
+    pageStyles,
+    ".character-showcase-card.is-exporting"
+  );
+
+  assert.match(exportRule ?? "", /margin:\s*0\s*!important/);
+});
