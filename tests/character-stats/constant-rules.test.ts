@@ -1,11 +1,62 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import artifactSetEffects from "../../src/data/set2pcEffect.json";
 import {
+  ARTIFACT_SET_CONSTANT_RULE_SOURCE,
   ARTIFACT_SET_CONSTANT_RULES,
   CHARACTER_CONSTANT_RULES,
   WEAPON_CONSTANT_RULES,
 } from "../../src/utils/characterStats/internal/rules/constantRules";
+
+const SHEET_EFFECT_BY_DESCRIPTION = {
+  "Gain a 15% Geo DMG Bonus.": { stat: "geoDamageBonus", value: 0.15 },
+  "CRIT Rate +12%": { stat: "critRate", value: 0.12 },
+  "Cryo DMG Bonus +15%": { stat: "cryoDamageBonus", value: 0.15 },
+  "Physical DMG +25%": { stat: "physicalDamageBonus", value: 0.25 },
+  "ATK +18%.": { stat: "attackPercent", value: 0.18 },
+  "Pyro DMG Bonus +15%": { stat: "pyroDamageBonus", value: 0.15 },
+  "Dendro DMG Bonus +15%.": { stat: "dendroDamageBonus", value: 0.15 },
+  "DEF +30%": { stat: "defensePercent", value: 0.3 },
+  "Anemo DMG Bonus +15%": { stat: "anemoDamageBonus", value: 0.15 },
+  "Energy Recharge +20%": { stat: "energyRecharge", value: 0.2 },
+  "Increases Elemental Mastery by 80.": {
+    stat: "elementalMastery",
+    value: 80,
+  },
+  "Hydro DMG Bonus +15%": { stat: "hydroDamageBonus", value: 0.15 },
+  "Character Healing Effectiveness +15%": {
+    stat: "healingBonus",
+    value: 0.15,
+  },
+  "Healing Bonus +15%.": { stat: "healingBonus", value: 0.15 },
+  "Physical DMG is increased by 25%.": {
+    stat: "physicalDamageBonus",
+    value: 0.25,
+  },
+  "Increases Shield Strength by 35%.": {
+    stat: "shieldStrength",
+    value: 0.35,
+  },
+  "HP +20%": { stat: "hpPercent", value: 0.2 },
+  "Electro DMG Bonus +15%": { stat: "electroDamageBonus", value: 0.15 },
+  "Max HP increased by 1,000.": { stat: "hpFlat", value: 1000 },
+  "DEF increased by 100.": { stat: "defenseFlat", value: 100 },
+  "Energy Recharge +20%.": { stat: "energyRecharge", value: 0.2 },
+} as const;
+
+const NON_SHEET_EFFECT_DESCRIPTIONS = [
+  "Increases Elemental Skill DMG by 20%.",
+  "Pyro RES increased by 40%.",
+  "Normal and Charged Attack DMG +15%",
+  "Elemental Burst DMG +20%",
+  "Electro RES increased by 40%.",
+  "All Elemental RES increased by 20%.",
+  "Increases incoming healing by 20%.",
+  "When a nearby party member triggers a Nightsoul Burst, the equipping character regenerates 6 Elemental Energy.",
+  "While the equipping character is in Nightsoul's Blessing and is on the field, their DMG dealt is increased by 15%.",
+  "Plunging Attack DMG increased by 25%.",
+] as const;
 
 const weaponRule = (weaponKey: string) => {
   const rule = WEAPON_CONSTANT_RULES.find(
@@ -121,6 +172,10 @@ test("weapon refinement values are explicit R1-R5 ratio tuples", () => {
 });
 
 test("artifact set constants cover every always-active character-sheet bonus", () => {
+  assert.equal(
+    ARTIFACT_SET_CONSTANT_RULE_SOURCE,
+    "genshin-db@5.2.12/artifact-set-two-piece"
+  );
   assert.equal(ARTIFACT_SET_CONSTANT_RULES.length, 45);
   assert.equal(
     new Set(ARTIFACT_SET_CONSTANT_RULES.map((rule) => rule.id)).size,
@@ -143,6 +198,33 @@ test("artifact set constants cover every always-active character-sheet bonus", (
   assert.deepEqual(artifactSetRule("lucky_dog").effects, [
     { stat: "defenseFlat", value: 100 },
   ]);
+});
+
+test("artifact set rules exhaustively match the generated two-piece catalog", () => {
+  assert.deepEqual(
+    [
+      ...Object.keys(SHEET_EFFECT_BY_DESCRIPTION),
+      ...NON_SHEET_EFFECT_DESCRIPTIONS,
+    ].sort(),
+    Object.keys(artifactSetEffects).sort()
+  );
+
+  const expectedRules = Object.fromEntries(
+    Object.entries(artifactSetEffects).flatMap(([description, setKeys]) => {
+      const effect =
+        SHEET_EFFECT_BY_DESCRIPTION[
+          description as keyof typeof SHEET_EFFECT_BY_DESCRIPTION
+        ];
+      return effect
+        ? setKeys.map((setKey) => [setKey, [effect]] as const)
+        : [];
+    })
+  );
+  const actualRules = Object.fromEntries(
+    ARTIFACT_SET_CONSTANT_RULES.map((rule) => [rule.setKey, rule.effects])
+  );
+
+  assert.deepEqual(actualRules, expectedRules);
 });
 
 test("constant rule data is platform-neutral JSON without executable callbacks", () => {

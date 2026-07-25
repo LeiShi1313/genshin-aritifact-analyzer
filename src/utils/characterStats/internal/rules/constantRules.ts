@@ -54,6 +54,9 @@ const artifactSetRules = (
 // Genshin set catalog. Only bonuses represented on the character stat sheet
 // are included; attack-type damage, resistance, energy restoration, and
 // conditional effects do not alter this calculator's sheet fields.
+export const ARTIFACT_SET_CONSTANT_RULE_SOURCE =
+  "genshin-db@5.2.12/artifact-set-two-piece";
+
 export const ARTIFACT_SET_CONSTANT_RULES: readonly ArtifactSetConstantRule[] = [
   ...artifactSetRules("geoDamageBonus", 0.15, ["archaic_petra"]),
   ...artifactSetRules("critRate", 0.12, ["berserker"]),

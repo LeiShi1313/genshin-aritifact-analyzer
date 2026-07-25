@@ -171,7 +171,7 @@ export interface CharacterSheetCalculationValue {
     readonly gameVersion: string;
     readonly genshinDbVersion: string;
     readonly constantRuleset: string;
-    readonly constantRuleSource: string;
+    readonly constantRuleSources: readonly string[];
   };
   readonly issues: readonly CharacterSheetIssue[];
 }

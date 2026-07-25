@@ -597,10 +597,10 @@ test("keeps audited constant coverage explicit and marks future keys partial", (
   );
   assert.equal(
     result.coverage.constantRuleset,
-    "genshin-artifact-builds/constant-stats@1"
+    "genshin-artifact-builds/constant-stats@2"
   );
-  assert.equal(
-    result.coverage.constantRuleSource,
-    "miao-plugin@03298720363416755a754324ab14cb08037ca345"
-  );
+  assert.deepEqual(result.coverage.constantRuleSources, [
+    "genshin-db@5.2.12/artifact-set-two-piece",
+    "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",
+  ]);
 });

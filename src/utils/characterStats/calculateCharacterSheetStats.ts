@@ -1,4 +1,5 @@
 import {
+  ARTIFACT_SET_CONSTANT_RULE_SOURCE,
   ARTIFACT_SET_CONSTANT_RULES,
   CHARACTER_CONSTANT_RULES,
   WEAPON_CONSTANT_RULES,
@@ -462,9 +463,11 @@ export const calculateCharacterSheetStatsFromProgression = (
         : ("not-applicable" as const),
       gameVersion: progression.manifest.gameVersion,
       genshinDbVersion: progression.manifest.genshinDbVersion,
-      constantRuleset: "genshin-artifact-builds/constant-stats@1",
-      constantRuleSource:
-        "miao-plugin@03298720363416755a754324ab14cb08037ca345",
+      constantRuleset: "genshin-artifact-builds/constant-stats@2",
+      constantRuleSources: [
+        ARTIFACT_SET_CONSTANT_RULE_SOURCE,
+        "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",
+      ],
     },
     issues,
   };
