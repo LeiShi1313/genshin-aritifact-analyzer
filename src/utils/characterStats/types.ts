@@ -76,7 +76,8 @@ export interface CharacterSheetLoadout {
     readonly key: string;
     readonly level: number;
     readonly ascension: number;
-    readonly refinement: 1 | 2 | 3 | 4 | 5;
+    /** Validated by the calculator because imported data is untrusted. */
+    readonly refinement: number;
   } | null;
   readonly artifacts: readonly EquippedArtifactInput[];
 }
