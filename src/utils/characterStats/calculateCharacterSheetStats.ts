@@ -2,6 +2,10 @@ import {
   CHARACTER_CONSTANT_RULES,
   WEAPON_CONSTANT_RULES,
 } from "./internal/rules/constantRules";
+import {
+  hasReviewedCharacterConstants,
+  hasReviewedWeaponConstants,
+} from "./internal/rules/constantRuleCoverage";
 import type {
   ArtifactSlot,
   ArtifactStatKey,
@@ -47,6 +51,48 @@ const ARTIFACT_STATS = new Set<ArtifactStatKey>([
   "healingBonus",
   "physicalDamageBonus",
   ...ELEMENTS.map((element) => `${element}DamageBonus` as const),
+]);
+
+const MAIN_STATS_BY_SLOT: Readonly<Record<ArtifactSlot, ReadonlySet<ArtifactStatKey>>> = {
+  flower: new Set(["hpFlat"]),
+  plume: new Set(["attackFlat"]),
+  sands: new Set([
+    "hpPercent",
+    "attackPercent",
+    "defensePercent",
+    "elementalMastery",
+    "energyRecharge",
+  ]),
+  goblet: new Set([
+    "hpPercent",
+    "attackPercent",
+    "defensePercent",
+    "elementalMastery",
+    "physicalDamageBonus",
+    ...ELEMENTS.map((element) => `${element}DamageBonus` as const),
+  ]),
+  circlet: new Set([
+    "hpPercent",
+    "attackPercent",
+    "defensePercent",
+    "elementalMastery",
+    "critRate",
+    "critDamage",
+    "healingBonus",
+  ]),
+};
+
+const SUBSTAT_STATS = new Set<ArtifactStatKey>([
+  "hpFlat",
+  "hpPercent",
+  "attackFlat",
+  "attackPercent",
+  "defenseFlat",
+  "defensePercent",
+  "elementalMastery",
+  "energyRecharge",
+  "critRate",
+  "critDamage",
 ]);
 
 type Accumulator = Record<ArtifactStatKey | "shieldStrength", number>;
@@ -95,11 +141,17 @@ const invalid = (
   issues,
 });
 
+const ownEntry = <Entry>(
+  entries: Readonly<Record<string, Entry>>,
+  key: string
+): Entry | undefined =>
+  Object.prototype.hasOwnProperty.call(entries, key) ? entries[key] : undefined;
+
 export const calculateCharacterSheetStatsFromProgression = (
   loadout: CharacterSheetLoadout,
   progression: CharacterSheetProgressionData
 ): CharacterSheetResult => {
-  const character = progression.characters[loadout.character.key];
+  const character = ownEntry(progression.characters, loadout.character.key);
   if (!character) {
     return invalid([
       { code: "CHARACTER_NOT_FOUND", sourceKey: loadout.character.key },
@@ -130,7 +182,7 @@ export const calculateCharacterSheetStatsFromProgression = (
         { code: "INVALID_REFINEMENT", sourceKey: loadout.weapon.key },
       ]);
     }
-    equippedWeapon = progression.weapons[loadout.weapon.key];
+    equippedWeapon = ownEntry(progression.weapons, loadout.weapon.key);
     if (!equippedWeapon) {
       return invalid([
         { code: "WEAPON_NOT_FOUND", sourceKey: loadout.weapon.key },
@@ -156,7 +208,9 @@ export const calculateCharacterSheetStatsFromProgression = (
   }
 
   const seenSlots = new Set<ArtifactSlot>();
-  for (const artifact of loadout.artifacts) {
+  let hasUnknownSetIdentity = false;
+  for (const [artifactIndex, artifact] of loadout.artifacts.entries()) {
+    const artifactPath = `artifacts[${artifactIndex}]`;
     if (!ARTIFACT_SLOTS.includes(artifact.slot)) {
       return invalid([
         { code: "INVALID_ARTIFACT_SLOT", sourceKey: artifact.slot },
@@ -168,16 +222,65 @@ export const calculateCharacterSheetStatsFromProgression = (
       ]);
     }
     seenSlots.add(artifact.slot);
-    for (const stat of [artifact.mainStat, ...artifact.substats]) {
+    if (
+      typeof artifact.setKey !== "string" ||
+      artifact.setKey.trim().length === 0
+    ) {
+      hasUnknownSetIdentity = true;
+    }
+    if (
+      !ARTIFACT_STATS.has(artifact.mainStat.stat) ||
+      !Number.isFinite(artifact.mainStat.value) ||
+      artifact.mainStat.value < 0
+    ) {
+      return invalid([
+        {
+          code: "INVALID_ARTIFACT_STAT",
+          sourceKey: `${artifactPath}.mainStat.${artifact.mainStat.stat}`,
+        },
+      ]);
+    }
+    if (!MAIN_STATS_BY_SLOT[artifact.slot].has(artifact.mainStat.stat)) {
+      return invalid([
+        {
+          code: "INVALID_ARTIFACT_MAIN_STAT_FOR_SLOT",
+          sourceKey: `${artifactPath}.${artifact.slot}.${artifact.mainStat.stat}`,
+        },
+      ]);
+    }
+    if (artifact.substats.length > 4) {
+      return invalid([
+        { code: "TOO_MANY_ARTIFACT_SUBSTATS", sourceKey: artifactPath },
+      ]);
+    }
+    const seenSubstats = new Set<ArtifactStatKey>();
+    for (const [substatIndex, substat] of artifact.substats.entries()) {
+      const substatPath = `${artifactPath}.substats[${substatIndex}].${substat.stat}`;
       if (
-        !ARTIFACT_STATS.has(stat.stat) ||
-        !Number.isFinite(stat.value) ||
-        stat.value < 0
+        !ARTIFACT_STATS.has(substat.stat) ||
+        !Number.isFinite(substat.value) ||
+        substat.value < 0
       ) {
         return invalid([
-          { code: "INVALID_ARTIFACT_STAT", sourceKey: stat.stat },
+          { code: "INVALID_ARTIFACT_STAT", sourceKey: substatPath },
         ]);
       }
+      if (!SUBSTAT_STATS.has(substat.stat)) {
+        return invalid([
+          { code: "INVALID_ARTIFACT_SUBSTAT", sourceKey: substatPath },
+        ]);
+      }
+      if (substat.stat === artifact.mainStat.stat) {
+        return invalid([
+          { code: "ARTIFACT_SUBSTAT_MATCHES_MAIN", sourceKey: substatPath },
+        ]);
+      }
+      if (seenSubstats.has(substat.stat)) {
+        return invalid([
+          { code: "DUPLICATE_ARTIFACT_SUBSTAT", sourceKey: substatPath },
+        ]);
+      }
+      seenSubstats.add(substat.stat);
     }
   }
 
@@ -228,8 +331,29 @@ export const calculateCharacterSheetStatsFromProgression = (
     }
   }
 
+  const characterConstantsReviewed = hasReviewedCharacterConstants(
+    loadout.character.key
+  );
+  const weaponConstantsReviewed = loadout.weapon
+    ? hasReviewedWeaponConstants(loadout.weapon.key)
+    : undefined;
   const issues: CharacterSheetIssue[] = [];
+  if (!characterConstantsReviewed) {
+    issues.push({
+      code: "CHARACTER_CONSTANTS_UNREVIEWED",
+      sourceKey: loadout.character.key,
+    });
+  }
+  if (loadout.weapon && !weaponConstantsReviewed) {
+    issues.push({
+      code: "WEAPON_CONSTANTS_UNREVIEWED",
+      sourceKey: loadout.weapon.key,
+    });
+  }
   if (!loadout.weapon) issues.push({ code: "MISSING_WEAPON" });
+  if (hasUnknownSetIdentity) {
+    issues.push({ code: "ARTIFACT_SET_IDENTITY_MISSING" });
+  }
   const setCounts = new Map<string, number>();
   for (const artifact of artifacts) {
     if (!artifact.setKey) continue;
@@ -277,21 +401,58 @@ export const calculateCharacterSheetStatsFromProgression = (
     appliedRuleIds,
     coverage: {
       progression: "complete" as const,
-      characterConstants: "reviewed" as const,
-      weaponConstants: loadout.weapon
+      characterConstants: characterConstantsReviewed
         ? ("reviewed" as const)
+        : ("unreviewed" as const),
+      weaponConstants: loadout.weapon
+        ? weaponConstantsReviewed
+          ? ("reviewed" as const)
+          : ("unreviewed" as const)
         : ("not-equipped" as const),
-      artifactSetConstants: issues.some(
-        (issue) => issue.code === "ARTIFACT_SET_CONSTANTS_UNSUPPORTED"
-      )
-        ? ("unsupported" as const)
-        : ("not-applicable" as const),
+      artifactSetConstants: hasUnknownSetIdentity
+        ? ("unknown" as const)
+        : issues.some(
+            (issue) => issue.code === "ARTIFACT_SET_CONSTANTS_UNSUPPORTED"
+          )
+          ? ("unsupported" as const)
+          : ("not-applicable" as const),
       gameVersion: progression.manifest.gameVersion,
       genshinDbVersion: progression.manifest.genshinDbVersion,
-      constantRuleset: "miao@03298720363416755a754324ab14cb08037ca345",
+      constantRuleset: "genshin-artifact-builds/constant-stats@1",
+      constantRuleSource:
+        "miao-plugin@03298720363416755a754324ab14cb08037ca345",
     },
     issues,
   };
+
+  const calculatedNumbers: ReadonlyArray<readonly [string, number]> = [
+    ["base.hp", value.base.hp],
+    ["base.attack", value.base.attack],
+    ["base.defense", value.base.defense],
+    ["stats.maxHp", value.stats.maxHp],
+    ["stats.attack", value.stats.attack],
+    ["stats.defense", value.stats.defense],
+    ["stats.elementalMastery", value.stats.elementalMastery],
+    ["stats.energyRecharge", value.stats.energyRecharge],
+    ["stats.critRate", value.stats.critRate],
+    ["stats.critDamage", value.stats.critDamage],
+    ["stats.healingBonus", value.stats.healingBonus],
+    ["stats.shieldStrength", value.stats.shieldStrength],
+    ...Object.entries(value.stats.damageBonus).map(
+      ([key, amount]) => [`stats.damageBonus.${key}`, amount] as const
+    ),
+  ];
+  const nonFiniteOutput = calculatedNumbers.find(
+    ([, amount]) => !Number.isFinite(amount)
+  );
+  if (nonFiniteOutput) {
+    return invalid([
+      {
+        code: "CALCULATION_OVERFLOW",
+        sourceKey: nonFiniteOutput[0],
+      },
+    ]);
+  }
 
   return issues.length > 0
     ? { status: "partial", ...value }

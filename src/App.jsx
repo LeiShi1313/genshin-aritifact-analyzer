@@ -4,9 +4,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
-import { Build } from "./genshin/build"
+import { Build } from "./genshin/build";
 import { loadPresets } from "./store/reducers/presets";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemedSuspense from "./features/ThemedSuspense";
@@ -21,7 +20,15 @@ const ArtifactsUpload = lazy(() =>
   import("./features/artifacts/ArtifactsUpload")
 );
 const Artifact = lazy(() => import("./features/artifacts/Artifact"));
-const UploadedArtifacts = lazy(() => import("./features/artifacts/UploadedArtifacts"));
+const UploadedArtifacts = lazy(() =>
+  import("./features/artifacts/UploadedArtifacts")
+);
+const CharactersPage = lazy(() =>
+  import("./features/characters/showcase/CharactersPage")
+);
+const CharacterShowcasePage = lazy(() =>
+  import("./features/characters/showcase/CharacterShowcasePage")
+);
 const Config = lazy(() => import("./features/configs/Config"));
 const GCSim = lazy(() => import("./features/gcsim/GCSim"));
 const GCSimSelect = lazy(() => import("./features/gcsim/Select"));
@@ -39,7 +46,7 @@ const App = () => {
         try {
           presets.push(decodeBuild(rawBuild));
         } catch (e) {
-          console.error(e)
+          console.error(e);
         }
       }
       dispatch(loadPresets(presets));
@@ -55,16 +62,22 @@ const App = () => {
               <Route index element={<Main />} />
               <Route path="build" element={<BuildEditor />} />
               <Route path="builds" element={<BuildsEditor />} />
+              <Route path="characters" element={<CharactersPage />} />
               <Route
-                path="uploaded"
-                element={<UploadedArtifacts />}
+                path="characters/:artifactsId"
+                element={<CharactersPage />}
               />
+              <Route
+                path="characters/:artifactsId/:characterId"
+                element={<CharacterShowcasePage />}
+              />
+              <Route path="uploaded" element={<UploadedArtifacts />} />
               <Route
                 path="artifacts/:artifactsId"
                 element={<ArtifactsUpload />}
               />
               <Route path="artifact" element={<Artifact />} />
-              <Route path="gcsim" element={<GCSim />} >
+              <Route path="gcsim" element={<GCSim />}>
                 <Route index element={<GCSimSelect />} />
                 <Route path="teams" element={<GCSimTeams />} />
                 <Route path="teams/:artifactsId" element={<GCSimTeams />} />

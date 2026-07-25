@@ -82,7 +82,7 @@ export interface ArtifactStatInput {
 
 export interface EquippedArtifactInput {
   readonly slot: ArtifactSlot;
-  readonly setKey?: string;
+  readonly setKey: string;
   readonly mainStat: ArtifactStatInput;
   readonly substats: readonly ArtifactStatInput[];
 }
@@ -125,10 +125,19 @@ export type CharacterSheetIssueCode =
   | "WEAPON_TYPE_MISMATCH"
   | "INVALID_REFINEMENT"
   | "INVALID_ARTIFACT_STAT"
+  | "CALCULATION_OVERFLOW"
   | "INVALID_ARTIFACT_SLOT"
   | "DUPLICATE_ARTIFACT_SLOT"
+  | "INVALID_ARTIFACT_MAIN_STAT_FOR_SLOT"
+  | "INVALID_ARTIFACT_SUBSTAT"
+  | "DUPLICATE_ARTIFACT_SUBSTAT"
+  | "ARTIFACT_SUBSTAT_MATCHES_MAIN"
+  | "TOO_MANY_ARTIFACT_SUBSTATS"
   | "MISSING_WEAPON"
-  | "ARTIFACT_SET_CONSTANTS_UNSUPPORTED";
+  | "ARTIFACT_SET_IDENTITY_MISSING"
+  | "ARTIFACT_SET_CONSTANTS_UNSUPPORTED"
+  | "CHARACTER_CONSTANTS_UNREVIEWED"
+  | "WEAPON_CONSTANTS_UNREVIEWED";
 
 export interface CharacterSheetIssue {
   readonly code: CharacterSheetIssueCode;
@@ -146,12 +155,16 @@ export interface CharacterSheetCalculationValue {
   readonly appliedRuleIds: readonly string[];
   readonly coverage: {
     readonly progression: "complete";
-    readonly characterConstants: "reviewed";
-    readonly weaponConstants: "reviewed" | "not-equipped";
-    readonly artifactSetConstants: "not-applicable" | "unsupported";
+    readonly characterConstants: "reviewed" | "unreviewed";
+    readonly weaponConstants: "reviewed" | "unreviewed" | "not-equipped";
+    readonly artifactSetConstants:
+      | "not-applicable"
+      | "unsupported"
+      | "unknown";
     readonly gameVersion: string;
     readonly genshinDbVersion: string;
     readonly constantRuleset: string;
+    readonly constantRuleSource: string;
   };
   readonly issues: readonly CharacterSheetIssue[];
 }

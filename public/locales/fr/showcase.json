@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "ARCHIVES DU COMPTE / {{format}}",
+    "artifactContribution": "{{profile}} / CONTRIBUTION DES ARTÉFACTS",
+    "character": "ARCHIVES DES PERSONNAGES",
+    "currentSnapshot": "INSTANTANÉ ACTUEL",
+    "entry": "ARCHIVES / {{index}}",
+    "import": "IMPORT"
+  },
+  "card": {
+    "artifactSubstats": "Stats secondaires : {{slot}}",
+    "characterArtifactAlt": "{{slot}} de {{character}}",
+    "characterArtifacts": "Artéfacts de {{character}}",
+    "elite": "Élite",
+    "emptySlot": "Emplacement vide",
+    "equipArtifact": "Équipez cet emplacement, puis importez un nouvel instantané du compte.",
+    "inspectArtifact": "Voir {{slot}}, score {{score}}",
+    "level": "Niv. {{level}}",
+    "maxRollEquivalents": "{{priority}} · {{rolls}} jets maximaux équivalents",
+    "missing": "Manquant",
+    "noArtifact": "Aucun artéfact équipé",
+    "noWeaponSnapshot": "Absent de cet instantané du compte",
+    "rarity": "Rareté {{count}} étoiles",
+    "refinement": "R{{refinement}}",
+    "statScope": "Sans bonus · effets constants uniquement",
+    "statScopePartial": "Approx. · effets constants uniquement",
+    "standard": "Standard",
+    "unscored": "Non évalué"
+  },
+  "detail": {
+    "close": "Fermer les détails de l’artéfact",
+    "mainStat": "Stat principale",
+    "note": "La priorité vient du profil de build sélectionné. La qualité des jets vient des valeurs secondaires réelles de l’artéfact.",
+    "notPrioritized": "Non prioritaire",
+    "priority": "Priorité : {{priority}}",
+    "rolls": "{{rolls}} jets"
+  },
+  "empty": {
+    "backToRoster": "Retour aux personnages",
+    "snapshotDescription": "Ce personnage n’est pas présent dans l’import sélectionné. Revenez à la liste et choisissez un autre instantané du compte.",
+    "snapshotTitle": "Instantané du personnage introuvable"
+  },
+  "legend": {
+    "core": "Essentiel",
+    "coreDescription": "Poids le plus élevé du profil",
+    "minor": "Mineur",
+    "minorDescription": "Poids plus faible du profil",
+    "rollExplanation": "Les marques plus lumineuses indiquent une priorité plus forte et de meilleurs jets.",
+    "useful": "Utile",
+    "usefulDescription": "Contribution recommandée"
+  },
+  "notice": {
+    "profileRequired": "Les valeurs des artéfacts sont affichées, mais les scores et l’accent sur les stats utiles nécessitent un profil de build.",
+    "reloadPage": "Recharger la page",
+    "statsError": "Les stats du personnage n’ont pas pu être chargées. La carte ne peut pas être exportée avant qu’elles soient prêtes.",
+    "statsLoading": "Calcul des stats du personnage…",
+    "statsPartial": "Stats approximatives — les bonus de set non pris en charge et l’équipement manquant ne sont pas inclus.",
+    "statsUnavailable": "Les stats du personnage sont indisponibles, car cet instantané contient des données d’équipement non prises en charge."
+  },
+  "roster": {
+    "accountSnapshot": "Instantané du compte",
+    "averageShort": "MOY",
+    "buildReady": "Build prêt",
+    "chooseProfile": "Choisir un profil de build",
+    "description": "Choisissez un personnage pour comparer ses artéfacts équipés à un profil de build.",
+    "emptyDescription": "Un fichier GOOD contenant personnages, armes et artéfacts déverrouille la liste et les cartes de build. Les imports d’artéfacts seuls restent disponibles dans l’analyseur.",
+    "emptyTitle": "Importer un instantané complet du compte",
+    "filtersLabel": "Filtres des personnages",
+    "importAccount": "Importer le compte",
+    "importFallback": "Import {{id}}",
+    "importNew": "Nouvel import",
+    "missingArtifacts_one": "{{count}} artéfact manquant",
+    "missingArtifacts_other": "{{count}} artéfacts manquants",
+    "needsAttention": "À améliorer",
+    "noArtifacts": "Aucun artéfact équipé",
+    "noResults": "Aucun personnage ne correspond à ces filtres.",
+    "noWeapon": "Aucune arme équipée",
+    "openLatest": "Ouvrir le compte le plus récent",
+    "profileNeeded": "Profil requis",
+    "reviewArtifacts": "Voir tous les artéfacts",
+    "search": "Rechercher des personnages",
+    "title": "Vos personnages"
+  },
+  "status": {
+    "chooseProfile": "Choisir un profil",
+    "flexibleSet": "Set flexible",
+    "noScoringProfile": "Aucun profil de score",
+    "offPiece": "Hors set",
+    "scoreUnavailable": "Score indisponible"
+  },
+  "talents": {
+    "burst": "Déchaînement",
+    "levels": "Niveaux d’aptitudes",
+    "normal": "Normal",
+    "skill": "Compétence"
+  },
+  "toolbar": {
+    "createProfile": "Créer un profil",
+    "custom": "Personnalisé",
+    "disabled": "Désactivé",
+    "exportPng": "Exporter en PNG",
+    "importedSnapshot": "Instantané importé",
+    "improveBuild": "Améliorer le build",
+    "noProfile": "Aucun profil disponible",
+    "preset": "Préréglage",
+    "rendering": "Génération…",
+    "roster": "Personnages",
+    "saved": "Enregistré",
+    "scoringProfile": "Profil de score",
+    "tryAgain": "Réessayer",
+    "updated": "Mis à jour : {{date}}"
+  }
+}

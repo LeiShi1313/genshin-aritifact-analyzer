@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "ARCHIVO DE CUENTA / {{format}}",
+    "artifactContribution": "{{profile}} / APORTE DE ARTEFACTOS",
+    "character": "ARCHIVO DE PERSONAJES",
+    "currentSnapshot": "INSTANTÁNEA ACTUAL",
+    "entry": "ARCHIVO / {{index}}",
+    "import": "IMPORTACIÓN"
+  },
+  "card": {
+    "artifactSubstats": "Subatributos de {{slot}}",
+    "characterArtifactAlt": "{{slot}} de {{character}}",
+    "characterArtifacts": "Artefactos de {{character}}",
+    "elite": "Élite",
+    "emptySlot": "Espacio vacío",
+    "equipArtifact": "Equipa este espacio y vuelve a importar una instantánea de la cuenta.",
+    "inspectArtifact": "Ver {{slot}}, puntuación {{score}}",
+    "level": "Niv. {{level}}",
+    "maxRollEquivalents": "{{priority}} · {{rolls}} tiradas máximas equivalentes",
+    "missing": "Falta",
+    "noArtifact": "Sin artefacto equipado",
+    "noWeaponSnapshot": "No aparece en esta instantánea de la cuenta",
+    "rarity": "Rareza de {{count}} estrellas",
+    "refinement": "R{{refinement}}",
+    "statScope": "Sin mejoras · solo efectos constantes",
+    "statScopePartial": "Aprox. · solo efectos constantes",
+    "standard": "Estándar",
+    "unscored": "Sin puntuar"
+  },
+  "detail": {
+    "close": "Cerrar detalles del artefacto",
+    "mainStat": "Atributo principal",
+    "note": "La prioridad procede del perfil de build seleccionado. La calidad de las tiradas procede de los valores reales del artefacto.",
+    "notPrioritized": "Sin prioridad",
+    "priority": "Prioridad: {{priority}}",
+    "rolls": "{{rolls}} tiradas"
+  },
+  "empty": {
+    "backToRoster": "Volver a personajes",
+    "snapshotDescription": "Este personaje no está en la importación seleccionada. Vuelve a la lista y elige otra instantánea de la cuenta.",
+    "snapshotTitle": "No se encontró la instantánea del personaje"
+  },
+  "legend": {
+    "core": "Clave",
+    "coreDescription": "Mayor peso del perfil",
+    "minor": "Menor",
+    "minorDescription": "Menor peso del perfil",
+    "rollExplanation": "Las marcas más brillantes indican mayor prioridad y mejores tiradas.",
+    "useful": "Útil",
+    "usefulDescription": "Aporte recomendado"
+  },
+  "notice": {
+    "profileRequired": "Se muestran los valores de los artefactos, pero las puntuaciones y el énfasis de subatributos útiles requieren un perfil de build.",
+    "reloadPage": "Recargar página",
+    "statsError": "No se pudieron cargar las estadísticas del personaje. La tarjeta no se puede exportar hasta que estén listas.",
+    "statsLoading": "Calculando estadísticas del personaje…",
+    "statsPartial": "Estadísticas aproximadas: no se incluyen bonos de conjunto no compatibles ni equipo faltante.",
+    "statsUnavailable": "Las estadísticas del personaje no están disponibles porque esta captura contiene datos de equipo no compatibles."
+  },
+  "roster": {
+    "accountSnapshot": "Instantánea de cuenta",
+    "averageShort": "MED",
+    "buildReady": "Build lista",
+    "chooseProfile": "Elige un perfil de build",
+    "description": "Elige un personaje para comparar sus artefactos equipados con un perfil de build.",
+    "emptyDescription": "Un archivo GOOD con personajes, armas y artefactos desbloquea la lista y las tarjetas de build. Las importaciones solo de artefactos siguen disponibles en el analizador.",
+    "emptyTitle": "Importa una instantánea completa de la cuenta",
+    "filtersLabel": "Filtros de personajes",
+    "importAccount": "Importar cuenta",
+    "importFallback": "Importación {{id}}",
+    "importNew": "Nueva importación",
+    "missingArtifacts_one": "Falta {{count}} artefacto",
+    "missingArtifacts_other": "Faltan {{count}} artefactos",
+    "needsAttention": "Requiere atención",
+    "noArtifacts": "Sin artefactos equipados",
+    "noResults": "Ningún personaje coincide con estos filtros.",
+    "noWeapon": "Sin arma equipada",
+    "openLatest": "Abrir la cuenta más reciente",
+    "profileNeeded": "Falta un perfil",
+    "reviewArtifacts": "Revisar todos los artefactos",
+    "search": "Buscar personajes",
+    "title": "Tus personajes"
+  },
+  "status": {
+    "chooseProfile": "Elige un perfil",
+    "flexibleSet": "Set flexible",
+    "noScoringProfile": "Sin perfil de puntuación",
+    "offPiece": "Pieza suelta",
+    "scoreUnavailable": "Puntuación no disponible"
+  },
+  "talents": {
+    "burst": "Definitiva",
+    "levels": "Niveles de talentos",
+    "normal": "Normal",
+    "skill": "Habilidad"
+  },
+  "toolbar": {
+    "createProfile": "Crear perfil",
+    "custom": "Personalizado",
+    "disabled": "Desactivado",
+    "exportPng": "Exportar PNG",
+    "importedSnapshot": "Instantánea importada",
+    "improveBuild": "Mejorar build",
+    "noProfile": "No hay perfiles disponibles",
+    "preset": "Preajuste",
+    "rendering": "Generando…",
+    "roster": "Personajes",
+    "saved": "Guardado",
+    "scoringProfile": "Perfil de puntuación",
+    "tryAgain": "Reintentar",
+    "updated": "Actualizado: {{date}}"
+  }
+}

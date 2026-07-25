@@ -92,6 +92,19 @@ const UploadedArtifacts = () => {
                   onClick={() => navigate(`/gcsim/teams/${key}`)}
                 />
               </div>
+              {uploaded[key].characters?.length > 0 && (
+                <div
+                  className="tooltip tooltip-bottom z-50"
+                  data-tip={t("Characters")}
+                >
+                  <Users
+                    size={24}
+                    weight="bold"
+                    className="cursor-pointer text-secondary"
+                    onClick={() => navigate(`/characters/${key}`)}
+                  />
+                </div>
+              )}
               <div className="tooltip tooltip-bottom z-50" data-tip={t("Delete")}>
                 <X
                   size={24}

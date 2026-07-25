@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "KONTOARCHIV / {{format}}",
+    "artifactContribution": "{{profile}} / ARTEFAKTBEITRAG",
+    "character": "CHARAKTERARCHIV",
+    "currentSnapshot": "AKTUELLER SNAPSHOT",
+    "entry": "ARCHIV / {{index}}",
+    "import": "IMPORT"
+  },
+  "card": {
+    "artifactSubstats": "Unterwerte: {{slot}}",
+    "characterArtifactAlt": "{{character}} – {{slot}}",
+    "characterArtifacts": "Artefakte von {{character}}",
+    "elite": "Elite",
+    "emptySlot": "Leerer Platz",
+    "equipArtifact": "Rüste diesen Platz aus und importiere danach einen neuen Kontosnapshot.",
+    "inspectArtifact": "{{slot}} prüfen, Wertung {{score}}",
+    "level": "St. {{level}}",
+    "maxRollEquivalents": "{{priority}} · {{rolls}} Maximalwurf-Äquivalente",
+    "missing": "Fehlt",
+    "noArtifact": "Kein Artefakt ausgerüstet",
+    "noWeaponSnapshot": "Nicht in diesem Kontosnapshot enthalten",
+    "rarity": "{{count}}-Sterne-Seltenheit",
+    "refinement": "R{{refinement}}",
+    "statScope": "Ohne Buffs · nur konstante Effekte",
+    "statScopePartial": "Ungefähr · nur konstante Effekte",
+    "standard": "Standard",
+    "unscored": "Unbewertet"
+  },
+  "detail": {
+    "close": "Artefaktdetails schließen",
+    "mainStat": "Hauptwert",
+    "note": "Die Priorität stammt aus dem gewählten Build-Profil. Die Wurfqualität basiert auf den tatsächlichen Unterwerten des Artefakts.",
+    "notPrioritized": "Nicht priorisiert",
+    "priority": "Priorität: {{priority}}",
+    "rolls": "{{rolls}} Würfe"
+  },
+  "empty": {
+    "backToRoster": "Zurück zur Übersicht",
+    "snapshotDescription": "Dieser Charakter ist im gewählten Import nicht vorhanden. Kehre zur Übersicht zurück und wähle einen anderen Kontosnapshot.",
+    "snapshotTitle": "Charaktersnapshot nicht gefunden"
+  },
+  "legend": {
+    "core": "Kern",
+    "coreDescription": "Höchstes Profilgewicht",
+    "minor": "Gering",
+    "minorDescription": "Niedrigeres Profilgewicht",
+    "rollExplanation": "Hellere Markierungen bedeuten höhere Priorität und bessere Würfe.",
+    "useful": "Nützlich",
+    "usefulDescription": "Empfohlener Beitrag"
+  },
+  "notice": {
+    "profileRequired": "Artefaktwerte werden angezeigt, aber Wertungen und die Hervorhebung nützlicher Unterwerte benötigen ein Build-Profil.",
+    "reloadPage": "Seite neu laden",
+    "statsError": "Die Charakterwerte konnten nicht geladen werden. Die Karte kann erst exportiert werden, wenn sie verfügbar sind.",
+    "statsLoading": "Charakterwerte werden berechnet…",
+    "statsPartial": "Ungefähre Werte — nicht unterstützte Set-Boni oder fehlende Ausrüstung sind nicht enthalten.",
+    "statsUnavailable": "Die Charakterwerte sind nicht verfügbar, weil dieser Schnappschuss nicht unterstützte Ausrüstungsdaten enthält."
+  },
+  "roster": {
+    "accountSnapshot": "Kontosnapshot",
+    "averageShort": "Ø",
+    "buildReady": "Build bereit",
+    "chooseProfile": "Build-Profil wählen",
+    "description": "Wähle einen Charakter, um seine Artefakte mit einem Build-Profil zu prüfen.",
+    "emptyDescription": "Eine GOOD-Datei mit Charakteren, Waffen und Artefakten schaltet Übersicht und Build-Karten frei. Reine Artefaktimporte bleiben im Analyzer verfügbar.",
+    "emptyTitle": "Vollständigen Kontosnapshot importieren",
+    "filtersLabel": "Charakterfilter",
+    "importAccount": "Konto importieren",
+    "importFallback": "Import {{id}}",
+    "importNew": "Neu importieren",
+    "missingArtifacts_one": "{{count}} Artefakt fehlt",
+    "missingArtifacts_other": "{{count}} Artefakte fehlen",
+    "needsAttention": "Handlungsbedarf",
+    "noArtifacts": "Keine Artefakte ausgerüstet",
+    "noResults": "Keine Charaktere entsprechen diesen Filtern.",
+    "noWeapon": "Keine Waffe ausgerüstet",
+    "openLatest": "Neuestes Konto öffnen",
+    "profileNeeded": "Profil erforderlich",
+    "reviewArtifacts": "Alle Artefakte prüfen",
+    "search": "Charaktere suchen",
+    "title": "Deine Charaktere"
+  },
+  "status": {
+    "chooseProfile": "Profil wählen",
+    "flexibleSet": "Flexibles Set",
+    "noScoringProfile": "Kein Wertungsprofil",
+    "offPiece": "Off-Piece",
+    "scoreUnavailable": "Wertung nicht verfügbar"
+  },
+  "talents": {
+    "burst": "Spezial",
+    "levels": "Talentstufen",
+    "normal": "Standard",
+    "skill": "Fähigkeit"
+  },
+  "toolbar": {
+    "createProfile": "Profil erstellen",
+    "custom": "Eigenes",
+    "disabled": "Deaktiviert",
+    "exportPng": "PNG exportieren",
+    "importedSnapshot": "Importierter Snapshot",
+    "improveBuild": "Build verbessern",
+    "noProfile": "Kein Profil verfügbar",
+    "preset": "Vorlage",
+    "rendering": "Wird erstellt…",
+    "roster": "Übersicht",
+    "saved": "Gespeichert",
+    "scoringProfile": "Wertungsprofil",
+    "tryAgain": "Erneut versuchen",
+    "updated": "Aktualisiert: {{date}}"
+  }
+}

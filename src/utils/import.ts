@@ -15,9 +15,17 @@ import { enumToStringKey } from "./enum";
 /**
  * Convert ascension level to max level
  */
-const ascensionToMaxLevel = (ascension: number): number => {
+const ascensionToMaxLevel = (
+  ascension: number,
+  level: number,
+  equipment: "character" | "weapon"
+): number => {
   const maxLevels = [20, 40, 50, 60, 70, 80, 90];
-  return maxLevels[Math.min(ascension, 6)] ?? 90;
+  const cappedAscension = Math.min(ascension, 6);
+  if (equipment === "weapon" || cappedAscension < 6 || level <= 90) {
+    return maxLevels[cappedAscension] ?? 90;
+  }
+  return level <= 95 ? 95 : 100;
 };
 
 /**
@@ -48,13 +56,14 @@ export const deserializeCharacterFromGood = (
 ): ImportedCharacterInfo => {
   const character = characterFromGoodName(input.key);
   const ascension = input.ascension ?? 0;
+  const level = input.level ?? 1;
   const talent = input.talent ?? { auto: 1, skill: 1, burst: 1 };
 
   return {
     character,
-    level: input.level ?? 1,
+    level,
     ascension,
-    maxLevel: ascensionToMaxLevel(ascension),
+    maxLevel: ascensionToMaxLevel(ascension, level, "character"),
     constellation: input.constellation ?? 0,
     talents: [talent.auto ?? 1, talent.skill ?? 1, talent.burst ?? 1],
   };
@@ -69,12 +78,13 @@ export const deserializeWeaponFromGood = (
 ): ImportedWeaponInfo => {
   const weapon = weaponFromGoodName(input.key);
   const ascension = input.ascension ?? 0;
+  const level = input.level ?? 1;
 
   return {
     weapon,
-    level: input.level ?? 1,
+    level,
     ascension,
-    maxLevel: ascensionToMaxLevel(ascension),
+    maxLevel: ascensionToMaxLevel(ascension, level, "weapon"),
     refinement: input.refinement ?? 1,
     location: resolveCharacter(input.location ?? ""),
   };

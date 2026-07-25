@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ChartLine } from "phosphor-react";
+import { ChartLine, Users } from "phosphor-react";
 
 import ChangeLanguageDropdown from "../i18n/ChangeLanguageDropdown";
 import ThemeSwitcher from "../ThemeSwitcher";
@@ -18,6 +18,11 @@ const MenuItems = ({ location, navigate }) => {
       title: "Home",
       path: "/",
       iconPathEle: <path d="M12,3L20,9V21H15V14H9V21H4V9L12,3Z" />,
+    },
+    {
+      title: "Characters",
+      path: "/characters",
+      iconPathEle: <Users size={20} weight="bold" />,
     },
     {
       title: "Builds",

@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "ACCOUNT ARCHIVE / {{format}}",
+    "artifactContribution": "{{profile}} / ARTIFACT CONTRIBUTION",
+    "character": "CHARACTER ARCHIVE",
+    "currentSnapshot": "CURRENT SNAPSHOT",
+    "entry": "ARCHIVE / {{index}}",
+    "import": "IMPORT"
+  },
+  "card": {
+    "artifactSubstats": "{{slot}} substats",
+    "characterArtifactAlt": "{{character}} {{slot}}",
+    "characterArtifacts": "{{character}} artifacts",
+    "elite": "Elite",
+    "emptySlot": "Empty slot",
+    "equipArtifact": "Equip this slot, then import a fresh account snapshot.",
+    "inspectArtifact": "Inspect {{slot}}, score {{score}}",
+    "level": "Lv. {{level}}",
+    "maxRollEquivalents": "{{priority}} · {{rolls}} max-roll equivalents",
+    "missing": "Missing",
+    "noArtifact": "No artifact equipped",
+    "noWeaponSnapshot": "Not present in this account snapshot",
+    "rarity": "{{count}}-star rarity",
+    "refinement": "R{{refinement}}",
+    "statScope": "Unbuffed · constant effects only",
+    "statScopePartial": "Approx. · constant effects only",
+    "standard": "Standard",
+    "unscored": "Unscored"
+  },
+  "detail": {
+    "close": "Close artifact details",
+    "mainStat": "Main stat",
+    "note": "Priority comes from the selected build profile. Roll quality comes from the artifact's actual substat values.",
+    "notPrioritized": "Not prioritized",
+    "priority": "{{priority}} priority",
+    "rolls": "{{rolls}} rolls"
+  },
+  "empty": {
+    "backToRoster": "Back to roster",
+    "snapshotDescription": "This character is not present in the selected import. Return to the roster and choose another account snapshot.",
+    "snapshotTitle": "Character snapshot not found"
+  },
+  "legend": {
+    "core": "Core",
+    "coreDescription": "Highest profile weight",
+    "minor": "Minor",
+    "minorDescription": "Lower profile weight",
+    "rollExplanation": "Brighter marks mean both stronger priority and better rolls.",
+    "useful": "Useful",
+    "usefulDescription": "Recommended contribution"
+  },
+  "notice": {
+    "profileRequired": "Artifact values are shown, but scores and useful-substat emphasis need a build profile.",
+    "reloadPage": "Reload page",
+    "statsError": "Character stats could not be loaded. The card cannot be exported until they are ready.",
+    "statsLoading": "Calculating character stats…",
+    "statsPartial": "Approximate stats — unsupported set bonuses or missing equipment are not included.",
+    "statsUnavailable": "Character stats are unavailable because this snapshot contains unsupported equipment data."
+  },
+  "roster": {
+    "accountSnapshot": "Account snapshot",
+    "averageShort": "AVG",
+    "buildReady": "Build ready",
+    "chooseProfile": "Choose a build profile",
+    "description": "Choose a character to inspect equipped artifacts against a build profile.",
+    "emptyDescription": "A GOOD file with characters, weapons, and artifacts unlocks the roster and build cards. Artifact-only imports stay available in the analyzer.",
+    "emptyTitle": "Import a complete account snapshot",
+    "filtersLabel": "Roster filters",
+    "importAccount": "Import account",
+    "importFallback": "Import {{id}}",
+    "importNew": "Import new",
+    "missingArtifacts_one": "{{count}} artifact missing",
+    "missingArtifacts_other": "{{count}} artifacts missing",
+    "needsAttention": "Needs attention",
+    "noArtifacts": "No equipped artifacts",
+    "noResults": "No characters match these filters.",
+    "noWeapon": "No equipped weapon",
+    "openLatest": "Open latest account",
+    "profileNeeded": "Profile needed",
+    "reviewArtifacts": "Review all artifacts",
+    "search": "Search characters",
+    "title": "Your characters"
+  },
+  "status": {
+    "chooseProfile": "Choose a profile",
+    "flexibleSet": "Flexible set",
+    "noScoringProfile": "No scoring profile",
+    "offPiece": "Off-piece",
+    "scoreUnavailable": "Score unavailable"
+  },
+  "talents": {
+    "burst": "Burst",
+    "levels": "Talent levels",
+    "normal": "Normal",
+    "skill": "Skill"
+  },
+  "toolbar": {
+    "createProfile": "Create profile",
+    "custom": "Custom",
+    "disabled": "Disabled",
+    "exportPng": "Export PNG",
+    "importedSnapshot": "Imported snapshot",
+    "improveBuild": "Improve build",
+    "noProfile": "No profile available",
+    "preset": "Preset",
+    "rendering": "Rendering…",
+    "roster": "Roster",
+    "saved": "Saved",
+    "scoringProfile": "Scoring profile",
+    "tryAgain": "Try again",
+    "updated": "Updated {{date}}"
+  }
+}

@@ -104,15 +104,17 @@ test("persisted GOOD characters and weapons gain explicit ascension without losi
   const account = output.uploads.artifacts.account;
 
   assert.deepEqual(
-    account.characters.map(({ ascension }) => ascension),
+    account.characters.map(
+      ({ ascension }: { ascension: number }) => ascension
+    ),
     [0, 2, 6, 4]
   );
   assert.deepEqual(
-    account.characters.map(({ maxLevel }) => maxLevel),
+    account.characters.map(({ maxLevel }: { maxLevel: number }) => maxLevel),
     [20, 50, 100, 80]
   );
   assert.deepEqual(
-    account.weapons.map(({ ascension }) => ascension),
+    account.weapons.map(({ ascension }: { ascension: number }) => ascension),
     [1, 6]
   );
 });

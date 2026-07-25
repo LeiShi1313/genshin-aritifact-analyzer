@@ -13,6 +13,12 @@ import {
 
 type ShardLoader = () => Promise<unknown>;
 
+const ownEntry = <Entry>(
+  entries: Readonly<Record<string, Entry>>,
+  key: string
+): Entry | undefined =>
+  Object.prototype.hasOwnProperty.call(entries, key) ? entries[key] : undefined;
+
 const characterShardLoaders: readonly ShardLoader[] = [
   () => import("../../data/characterStats/shards/characters-00.generated.json"),
   () => import("../../data/characterStats/shards/characters-01.generated.json"),
@@ -86,8 +92,10 @@ export const loadAppCharacterSheetProgression = async (
       ? loadShard<WeaponProgression>(weaponShardLoaders, loadout.weapon.key)
       : Promise.resolve({}),
   ]);
-  const character = characterShard[loadout.character.key];
-  const weapon = loadout.weapon ? weaponShard[loadout.weapon.key] : undefined;
+  const character = ownEntry(characterShard, loadout.character.key);
+  const weapon = loadout.weapon
+    ? ownEntry(weaponShard, loadout.weapon.key)
+    : undefined;
 
   return {
     characters: character

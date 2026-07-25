@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
-import { ChartLine } from "phosphor-react";
+import { ChartLine, Users } from "phosphor-react";
 import md5 from "crypto-js/md5";
 
 import { parseImportFile } from "../utils/import";
@@ -13,11 +13,14 @@ import IconConfig from "../assets/svgs/IconConfig";
 import IconUpload from "../assets/svgs/IconUpload";
 import IconArtifactsFile from "../assets/svgs/IconArtifactsFile";
 import IconBuilds from "../assets/svgs/IconBuilds";
+import { getLatestCharacterSource } from "./characters/showcase/characterShowcaseModel";
 
 const Main = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const uploads = useSelector((state) => state.uploads.artifacts);
+  const latestCharacterSource = getLatestCharacterSource(uploads);
 
   const [file, setFile] = useState(null);
   const [fileLoading, setFileLoading] = useState(false);
@@ -31,9 +34,17 @@ const Main = () => {
     setFileLoading(true);
 
     const file = e.target.files[0];
+    if (!file) {
+      setFileLoading(false);
+      return;
+    }
     setFile(file);
 
     const fileReader = new FileReader();
+    fileReader.onerror = () => {
+      setFileLoading(false);
+      alert(t("Unsupported file format, please use supported file format"));
+    };
     fileReader.onload = (e) => {
       const text = e.target.result;
       const key = md5(text).toString();
@@ -41,26 +52,32 @@ const Main = () => {
       try {
         content = JSON.parse(text);
       } catch (_) {
+        setFileLoading(false);
         alert(t("Unsupported file format, please use supported file format"));
         return;
       }
 
       const result = parseImportFile(content);
       if (!result.format) {
+        setFileLoading(false);
         alert(t("Unsupported file format, please use supported file format"));
         return;
       }
 
-      dispatch(uploadArtifacts({
-        key,
-        artifacts: result.artifacts,
-        format: result.format,
-        name: file.name,
-        characters: result.characters,
-        weapons: result.weapons,
-      }));
+      dispatch(
+        uploadArtifacts({
+          key,
+          artifacts: result.artifacts,
+          format: result.format,
+          name: file.name,
+          characters: result.characters,
+          weapons: result.weapons,
+        })
+      );
       setFileLoading(false);
-      navigate(`/uploaded`);
+      navigate(
+        result.characters?.length > 0 ? `/characters/${key}` : "/uploaded"
+      );
     };
     fileReader.readAsText(file, "UTF-8");
   };
@@ -94,6 +111,19 @@ const Main = () => {
             type="file"
             onChange={handleFile}
           />
+
+          {latestCharacterSource && (
+            <button
+              className="btn btn-primary justify-between rounded-full"
+              onClick={() =>
+                navigate(`/characters/${latestCharacterSource.id}`)
+              }
+            >
+              <Users size={20} weight="bold" />
+              {t("Characters")}
+              <div className="w-8" />
+            </button>
+          )}
 
           <button
             className="btn btn-primary justify-between rounded-full"

@@ -58,6 +58,10 @@ jobs:
         if: steps.version.outputs.should_run == 'true'
         run: npm ci
 
+      - name: Update genshin-db dependency
+        if: steps.version.outputs.should_run == 'true'
+        run: npm run update:genshin-db
+
       - name: Generate data
         if: steps.version.outputs.should_run == 'true'
         run: npm run gen
@@ -68,7 +72,11 @@ jobs:
 
       - name: Test generated game data
         if: steps.version.outputs.should_run == 'true'
-        run: npm run test:artifact-scoring
+        run: npm run test:artifact-scoring && npm run test:character-stats
+
+      - name: Check generated character progression
+        if: steps.version.outputs.should_run == 'true'
+        run: npm run check:character-stats-data
 
       - name: Check PNG assets
         if: steps.version.outputs.should_run == 'true'
@@ -140,6 +148,8 @@ jobs:
           Validation:
           - \`npm run build\`
           - \`npm run test:artifact-scoring\`
+          - \`npm run test:character-stats\`
+          - \`npm run check:character-stats-data\`
           - \`node check-pngs.js\`
           - \`npm run clean-gen\`
           EOF

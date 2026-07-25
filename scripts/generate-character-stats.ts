@@ -90,20 +90,56 @@ const normalizeSpecialized = (
   return Math.abs(normalized) < 1e-12 ? 0 : normalized;
 };
 
-const collectSnapshots = <Snapshot>(
+export interface ExpectedProgressionRange {
+  readonly ascension: number;
+  readonly minimumLevel: number;
+  readonly maximumLevel: number;
+}
+
+const progressionRangesThrough = (
+  finalAscension: number,
+  finalLevel: number
+): readonly ExpectedProgressionRange[] => [
+  { ascension: 0, minimumLevel: 1, maximumLevel: 20 },
+  { ascension: 1, minimumLevel: 20, maximumLevel: 40 },
+  { ascension: 2, minimumLevel: 40, maximumLevel: 50 },
+  { ascension: 3, minimumLevel: 50, maximumLevel: 60 },
+  { ascension: 4, minimumLevel: 60, maximumLevel: 70 },
+  ...(finalAscension >= 5
+    ? [{ ascension: 5, minimumLevel: 70, maximumLevel: 80 }]
+    : []),
+  ...(finalAscension >= 6
+    ? [{ ascension: 6, minimumLevel: 80, maximumLevel: finalLevel }]
+    : []),
+];
+
+const CHARACTER_PROGRESSION_RANGES = progressionRangesThrough(6, 100);
+const STANDARD_WEAPON_PROGRESSION_RANGES = progressionRangesThrough(6, 90);
+const LOW_RARITY_WEAPON_PROGRESSION_RANGES = progressionRangesThrough(4, 70);
+
+export const collectSnapshots = <Snapshot>(
   stats: StatFunction,
-  toSnapshot: (result: StatResult) => Snapshot
+  toSnapshot: (result: StatResult) => Snapshot,
+  ranges: readonly ExpectedProgressionRange[],
+  label: string
 ): Record<string, Snapshot> => {
   const snapshots: Record<string, Snapshot> = {};
-  for (let level = 1; level <= 100; level += 1) {
-    for (let ascension = 0; ascension <= 6; ascension += 1) {
+  for (const { ascension, minimumLevel, maximumLevel } of ranges) {
+    for (let level = minimumLevel; level <= maximumLevel; level += 1) {
       let result: StatResult | undefined;
       try {
         result = stats(level, ascension);
-      } catch {
-        continue;
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : String(error);
+        throw new Error(
+          `${label} progression ${level}:${ascension} failed: ${reason}`
+        );
       }
-      if (!result || result.ascension !== ascension) continue;
+      if (!result || result.ascension !== ascension) {
+        throw new Error(
+          `${label} progression ${level}:${ascension} returned an invalid phase`
+        );
+      }
       snapshots[`${level}:${ascension}`] = toSnapshot(result);
     }
   }
@@ -171,7 +207,9 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
           result.defense,
           normalizeSpecialized(specializedStat, result.specialized),
         ];
-      }
+      },
+      CHARACTER_PROGRESSION_RANGES,
+      `Character ${key}`
     );
     if (Object.keys(stats).length === 0) {
       throw new Error(`Character ${key} has no progression snapshots`);
@@ -191,12 +229,19 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
     const specializedStat = weapon.mainStatType
       ? requireProgressionStat(weapon.mainStatType, `Weapon ${key}`)
       : null;
-    const stats = collectSnapshots<WeaponSnapshot>(weapon.stats, (result) => {
-      if (result.attack === undefined || result.specialized === undefined) {
-        throw new Error(`Weapon ${key} returned incomplete progression`);
-      }
-      return [result.attack, result.specialized];
-    });
+    const stats = collectSnapshots<WeaponSnapshot>(
+      weapon.stats,
+      (result) => {
+        if (result.attack === undefined || result.specialized === undefined) {
+          throw new Error(`Weapon ${key} returned incomplete progression`);
+        }
+        return [result.attack, result.specialized];
+      },
+      Number(metadata.rarity) <= 2
+        ? LOW_RARITY_WEAPON_PROGRESSION_RANGES
+        : STANDARD_WEAPON_PROGRESSION_RANGES,
+      `Weapon ${key}`
+    );
     if (Object.keys(stats).length === 0) {
       throw new Error(`Weapon ${key} has no progression snapshots`);
     }

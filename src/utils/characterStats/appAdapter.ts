@@ -1,11 +1,9 @@
 import type { Artifact } from "../../genshin/artifact";
-import {
-  AttributePosition,
-  AttributeType,
-} from "../../genshin/attribute";
+import { AttributePosition, AttributeType } from "../../genshin/attribute";
 import { Character } from "../../genshin/character";
 import { Set as ArtifactSet } from "../../genshin/set";
 import { Weapon } from "../../genshin/weapon";
+import { getArtifactMainStatValue } from "../artifactMainStat";
 import type {
   ArtifactSlot,
   ArtifactStatInput,
@@ -84,6 +82,8 @@ export type AppCharacterSheetAdapterIssueCode =
   | "UNSUPPORTED_WEAPON"
   | "UNSUPPORTED_ARTIFACT_POSITION"
   | "MISSING_ARTIFACT_MAIN_STAT"
+  | "INVALID_ARTIFACT_RARITY_OR_LEVEL"
+  | "UNSUPPORTED_ARTIFACT_SET"
   | "UNSUPPORTED_ARTIFACT_STAT";
 
 export interface AppCharacterSheetAdapterIssue {
@@ -103,11 +103,7 @@ export type AppCharacterSheetAdapterResult =
     };
 
 const normalizedEnumKey = (name: string | undefined): string | undefined => {
-  if (
-    !name ||
-    name === "UNRECOGNIZED" ||
-    name.endsWith("_UNSPECIFIED")
-  ) {
+  if (!name || name === "UNRECOGNIZED" || name.endsWith("_UNSPECIFIED")) {
     return undefined;
   }
   return name.toLowerCase();
@@ -160,19 +156,32 @@ export const adaptAppCharacterSheetLoadout = (
       });
     }
 
-    const mainStat = artifact.mainAttribute
-      ? adaptArtifactStat(
+    const mainStatKey = artifact.mainAttribute
+      ? ARTIFACT_STAT_BY_ATTRIBUTE[artifact.mainAttribute.type]
+      : undefined;
+    const resolvedMainValue = artifact.mainAttribute
+      ? getArtifactMainStatValue(
           artifact.mainAttribute.type,
-          artifact.mainAttribute.value
+          artifact.star,
+          artifact.level
         )
       : undefined;
+    const mainStat =
+      mainStatKey && resolvedMainValue !== undefined
+        ? { stat: mainStatKey, value: resolvedMainValue }
+        : undefined;
     if (!artifact.mainAttribute) {
       issues.push({ code: "MISSING_ARTIFACT_MAIN_STAT", artifactIndex });
-    } else if (!mainStat) {
+    } else if (!mainStatKey) {
       issues.push({
         code: "UNSUPPORTED_ARTIFACT_STAT",
         artifactIndex,
         sourceValue: artifact.mainAttribute.type,
+      });
+    } else if (resolvedMainValue === undefined) {
+      issues.push({
+        code: "INVALID_ARTIFACT_RARITY_OR_LEVEL",
+        artifactIndex,
       });
     }
 
@@ -190,11 +199,18 @@ export const adaptAppCharacterSheetLoadout = (
       substats.push(adapted);
     }
 
-    if (!slot || !mainStat) return;
     const setKey = normalizedEnumKey(ArtifactSet[artifact.set]);
+    if (!setKey) {
+      issues.push({
+        code: "UNSUPPORTED_ARTIFACT_SET",
+        artifactIndex,
+        sourceValue: artifact.set,
+      });
+    }
+    if (!slot || !mainStat || !setKey) return;
     artifacts.push({
       slot,
-      ...(setKey ? { setKey } : {}),
+      setKey,
       mainStat,
       substats,
     });
@@ -212,14 +228,15 @@ export const adaptAppCharacterSheetLoadout = (
         level: input.character.level,
         ascension: input.character.ascension,
       },
-      weapon: input.weapon && weaponKey
-        ? {
-            key: weaponKey,
-            level: input.weapon.level,
-            ascension: input.weapon.ascension,
-            refinement: input.weapon.refinement,
-          }
-        : null,
+      weapon:
+        input.weapon && weaponKey
+          ? {
+              key: weaponKey,
+              level: input.weapon.level,
+              ascension: input.weapon.ascension,
+              refinement: input.weapon.refinement,
+            }
+          : null,
       artifacts,
     },
   };

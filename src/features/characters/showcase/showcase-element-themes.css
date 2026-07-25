@@ -1,0 +1,346 @@
+/*
+ * Stable element-theme contract.
+ *
+ * Every supported element explicitly owns every semantic token used by the
+ * reusable card, its surrounding page, and the roster preview. The doubled
+ * class selectors intentionally outrank each surface's neutral base so Vite
+ * HMR or route-dependent stylesheet order cannot turn Anemo/Geo into Electro.
+ */
+
+/* Character card --------------------------------------------------------- */
+
+.ccp-seal.ccp-seal--electro {
+  --element: #c485df;
+  --element-soft: rgba(196, 133, 223, 0.18);
+  --element-line: rgba(224, 190, 239, 0.2);
+  --frame-border: rgba(238, 216, 248, 0.24);
+  --frame-inset: rgba(231, 199, 247, 0.13);
+  --halo-border: rgba(221, 180, 243, 0.09);
+  --halo-glow: rgba(196, 130, 229, 0.025);
+  --header-muted: rgba(245, 227, 252, 0.54);
+  --source-border: rgba(234, 205, 247, 0.16);
+  --source-text: rgba(244, 226, 251, 0.68);
+  --source-panel: rgba(34, 16, 51, 0.47);
+  --identity-kicker: #d2a0ec;
+  --identity-meta: rgba(249, 234, 255, 0.76);
+  --artifact-index: rgba(239, 219, 247, 0.42);
+  --shell-text: #f8effc;
+  --shell-muted: rgba(240, 218, 249, 0.58);
+  --panel: rgba(27, 13, 42, 0.75);
+  --artifact-shell: rgba(16, 9, 26, 0.97);
+  --artifact-text: #faf0fd;
+  --artifact-muted: rgba(238, 219, 246, 0.62);
+  --rank-strong: #a59aaa;
+  --rank-excellent: #cbc3d1;
+  --rank-exceptional: #d797ef;
+  --rank-crowned: #eac47a;
+  --rank-apex: #ffe2a0;
+  background: #160e23;
+}
+
+.ccp-seal.ccp-seal--pyro {
+  --element: #f05a45;
+  --element-soft: rgba(228, 62, 43, 0.18);
+  --element-line: rgba(249, 205, 183, 0.2);
+  --frame-border: rgba(244, 124, 95, 0.28);
+  --frame-inset: rgba(255, 194, 169, 0.14);
+  --halo-border: rgba(240, 90, 69, 0.11);
+  --halo-glow: rgba(228, 62, 43, 0.035);
+  --header-muted: rgba(255, 231, 216, 0.68);
+  --source-border: rgba(247, 213, 195, 0.22);
+  --source-text: rgba(255, 231, 216, 0.76);
+  --source-panel: rgba(57, 14, 17, 0.68);
+  --identity-kicker: #ee6a55;
+  --identity-meta: rgba(255, 231, 216, 0.8);
+  --artifact-index: rgba(246, 211, 195, 0.44);
+  --shell-text: #fff3e9;
+  --shell-muted: rgba(251, 219, 204, 0.62);
+  --panel: rgba(33, 15, 18, 0.82);
+  --artifact-shell: rgba(15, 10, 11, 0.98);
+  --artifact-text: #fff1e5;
+  --artifact-muted: rgba(246, 211, 195, 0.63);
+  --rank-strong: #a89591;
+  --rank-excellent: #d3b9ae;
+  --rank-exceptional: #f27a5d;
+  --rank-crowned: #f1b66e;
+  --rank-apex: #ffe0a3;
+  background: #150d10;
+}
+
+.ccp-seal.ccp-seal--hydro {
+  --element: #65e2ff;
+  --element-soft: rgba(70, 204, 239, 0.21);
+  --element-line: rgba(169, 234, 250, 0.26);
+  --frame-border: rgba(145, 225, 246, 0.29);
+  --frame-inset: rgba(183, 233, 246, 0.16);
+  --halo-border: rgba(101, 226, 255, 0.1);
+  --halo-glow: rgba(70, 204, 239, 0.035);
+  --header-muted: rgba(220, 246, 252, 0.7);
+  --source-border: rgba(183, 233, 246, 0.22);
+  --source-text: rgba(220, 246, 252, 0.77);
+  --source-panel: rgba(5, 49, 82, 0.57);
+  --identity-kicker: #8bd8eb;
+  --identity-meta: rgba(220, 246, 252, 0.8);
+  --artifact-index: rgba(188, 234, 247, 0.48);
+  --shell-text: #edfaff;
+  --shell-muted: rgba(202, 241, 251, 0.68);
+  --panel: rgba(2, 34, 68, 0.82);
+  --artifact-shell: rgba(2, 17, 38, 0.98);
+  --artifact-text: #eefbff;
+  --artifact-muted: rgba(188, 234, 247, 0.7);
+  --rank-strong: #8caebd;
+  --rank-excellent: #b8d8e4;
+  --rank-exceptional: #6ed4ef;
+  --rank-crowned: #b9ebf7;
+  --rank-apex: #f0fcff;
+  background: #03162f;
+}
+
+.ccp-seal.ccp-seal--dendro {
+  --element: #75983f;
+  --element-soft: rgba(117, 152, 63, 0.16);
+  --element-line: rgba(72, 111, 60, 0.22);
+  --frame-border: rgba(199, 221, 117, 0.28);
+  --frame-inset: rgba(231, 239, 184, 0.15);
+  --halo-border: rgba(149, 187, 78, 0.1);
+  --halo-glow: rgba(117, 152, 63, 0.035);
+  --header-muted: rgba(247, 248, 211, 0.72);
+  --source-border: rgba(231, 239, 184, 0.24);
+  --source-text: rgba(247, 248, 211, 0.82);
+  --source-panel: rgba(18, 76, 50, 0.58);
+  --identity-kicker: #c7dd75;
+  --identity-meta: rgba(247, 248, 211, 0.8);
+  --artifact-index: rgba(211, 224, 147, 0.5);
+  --shell-text: #f8f7d8;
+  --shell-muted: rgba(239, 243, 200, 0.7);
+  --panel: rgba(238, 239, 200, 0.88);
+  --artifact-shell: rgba(239, 239, 205, 0.98);
+  --artifact-text: #1d4735;
+  --artifact-muted: rgba(37, 76, 50, 0.68);
+  --rank-strong: #73816a;
+  --rank-excellent: #5f8a5d;
+  --rank-exceptional: #83a746;
+  --rank-crowned: #a7833e;
+  --rank-apex: #7a5b22;
+  background: #164737;
+}
+
+.ccp-seal.ccp-seal--cryo {
+  --element: #def8ff;
+  --element-soft: rgba(221, 246, 251, 0.13);
+  --element-line: rgba(229, 248, 252, 0.3);
+  --frame-border: rgba(222, 248, 255, 0.3);
+  --frame-inset: rgba(205, 240, 248, 0.17);
+  --halo-border: rgba(222, 248, 255, 0.11);
+  --halo-glow: rgba(185, 237, 244, 0.035);
+  --header-muted: rgba(230, 248, 252, 0.72);
+  --source-border: rgba(205, 240, 248, 0.24);
+  --source-text: rgba(230, 248, 252, 0.8);
+  --source-panel: rgba(31, 74, 103, 0.58);
+  --identity-kicker: #a9e3ef;
+  --identity-meta: rgba(230, 248, 252, 0.8);
+  --artifact-index: rgba(205, 240, 248, 0.52);
+  --shell-text: #f8fcff;
+  --shell-muted: rgba(229, 242, 247, 0.72);
+  --panel: rgba(48, 69, 87, 0.84);
+  --artifact-shell: rgba(35, 53, 68, 0.98);
+  --artifact-text: #f1fbff;
+  --artifact-muted: rgba(217, 233, 239, 0.68);
+  --rank-strong: #9babb2;
+  --rank-excellent: #d0dce0;
+  --rank-exceptional: #b9edf4;
+  --rank-crowned: #e2f2f4;
+  --rank-apex: #fff2c8;
+  background: #2b4357;
+}
+
+.ccp-seal.ccp-seal--anemo {
+  --element: #75e8c6;
+  --element-soft: rgba(82, 211, 175, 0.2);
+  --element-line: rgba(180, 237, 222, 0.21);
+  --frame-border: rgba(117, 232, 198, 0.28);
+  --frame-inset: rgba(180, 237, 222, 0.15);
+  --halo-border: rgba(117, 232, 198, 0.1);
+  --halo-glow: rgba(82, 211, 175, 0.035);
+  --header-muted: rgba(202, 248, 235, 0.72);
+  --source-border: rgba(166, 238, 218, 0.24);
+  --source-text: rgba(221, 255, 245, 0.82);
+  --source-panel: rgba(5, 61, 52, 0.66);
+  --identity-kicker: #6de7c2;
+  --identity-meta: rgba(218, 252, 242, 0.8);
+  --artifact-index: rgba(177, 231, 215, 0.5);
+  --shell-text: #e5fff6;
+  --shell-muted: rgba(204, 244, 232, 0.72);
+  --panel: rgba(9, 51, 47, 0.76);
+  --artifact-shell: rgba(7, 36, 34, 0.98);
+  --artifact-text: #e8fff7;
+  --artifact-muted: rgba(195, 237, 224, 0.7);
+  --rank-strong: #8eaaa2;
+  --rank-excellent: #b8d8cf;
+  --rank-exceptional: #7bd5ba;
+  --rank-crowned: #d1eee5;
+  --rank-apex: #fff0bd;
+  background: #083a34;
+}
+
+.ccp-seal.ccp-seal--geo {
+  --element: #e4b85f;
+  --element-soft: rgba(211, 157, 55, 0.18);
+  --element-line: rgba(238, 204, 132, 0.22);
+  --frame-border: rgba(238, 204, 132, 0.32);
+  --frame-inset: rgba(238, 204, 132, 0.17);
+  --halo-border: rgba(228, 184, 95, 0.1);
+  --halo-glow: rgba(211, 157, 55, 0.035);
+  --header-muted: rgba(255, 239, 204, 0.72);
+  --source-border: rgba(238, 204, 132, 0.25);
+  --source-text: rgba(255, 244, 218, 0.8);
+  --source-panel: rgba(61, 42, 17, 0.7);
+  --identity-kicker: #e4b85f;
+  --identity-meta: rgba(255, 242, 211, 0.78);
+  --artifact-index: rgba(239, 219, 177, 0.48);
+  --shell-text: #fff7e5;
+  --shell-muted: rgba(244, 226, 189, 0.65);
+  --panel: rgba(61, 42, 17, 0.78);
+  --artifact-shell: rgba(39, 27, 12, 0.98);
+  --artifact-text: #fff8e8;
+  --artifact-muted: rgba(239, 219, 177, 0.64);
+  --rank-strong: #ac9b77;
+  --rank-excellent: #d6c395;
+  --rank-exceptional: #dfac4e;
+  --rank-crowned: #f1cf80;
+  --rank-apex: #fff1b8;
+  border: 2px solid var(--frame-border);
+  background: #34220e;
+  box-shadow: inset 0 0 0 6px rgba(232, 187, 91, 0.06),
+    0 20px 50px rgba(51, 33, 13, 0.18);
+}
+
+/* Character detail page -------------------------------------------------- */
+
+.character-showcase-page.character-showcase-page--electro {
+  --showcase-page-accent: #8657a0;
+  --showcase-page-ink: #302738;
+  --showcase-page-label: #776c7c;
+  --showcase-page-muted: #7d7282;
+  --showcase-page-legend-strong: #4c414f;
+  --showcase-page-control: #5f5267;
+  --showcase-page-control-strong: #593d67;
+  --showcase-page-select: #332a39;
+  --showcase-page-meta: #817685;
+  --showcase-page-border: rgba(55, 43, 63, 0.13);
+}
+
+.character-showcase-page.character-showcase-page--pyro {
+  --showcase-page-accent: #c94b3d;
+  --showcase-page-ink: #4b2926;
+  --showcase-page-label: #76524e;
+  --showcase-page-muted: #795954;
+  --showcase-page-legend-strong: #50312d;
+  --showcase-page-control: #754b46;
+  --showcase-page-control-strong: #7f352d;
+  --showcase-page-select: #44221f;
+  --showcase-page-meta: #795d58;
+  --showcase-page-border: rgba(108, 50, 43, 0.16);
+}
+
+.character-showcase-page.character-showcase-page--hydro {
+  --showcase-page-accent: #258fb9;
+  --showcase-page-ink: #173f54;
+  --showcase-page-label: #4d7181;
+  --showcase-page-muted: #557785;
+  --showcase-page-legend-strong: #214c5e;
+  --showcase-page-control: #34677c;
+  --showcase-page-control-strong: #176e91;
+  --showcase-page-select: #12384b;
+  --showcase-page-meta: #577984;
+  --showcase-page-border: rgba(23, 86, 111, 0.16);
+}
+
+.character-showcase-page.character-showcase-page--dendro {
+  --showcase-page-accent: #668e3f;
+  --showcase-page-ink: #2f472a;
+  --showcase-page-label: #64765b;
+  --showcase-page-muted: #687a60;
+  --showcase-page-legend-strong: #385130;
+  --showcase-page-control: #526d46;
+  --showcase-page-control-strong: #4d742f;
+  --showcase-page-select: #293f23;
+  --showcase-page-meta: #6b7c63;
+  --showcase-page-border: rgba(57, 91, 42, 0.16);
+}
+
+.character-showcase-page.character-showcase-page--cryo {
+  --showcase-page-accent: #708b9a;
+  --showcase-page-ink: #2d4654;
+  --showcase-page-label: #647780;
+  --showcase-page-muted: #687b83;
+  --showcase-page-legend-strong: #3b525d;
+  --showcase-page-control: #536d79;
+  --showcase-page-control-strong: #446f83;
+  --showcase-page-select: #293f4a;
+  --showcase-page-meta: #6c7e86;
+  --showcase-page-border: rgba(55, 83, 96, 0.16);
+}
+
+.character-showcase-page.character-showcase-page--anemo {
+  --showcase-page-accent: #2f9f85;
+  --showcase-page-ink: #1f463d;
+  --showcase-page-label: #52766d;
+  --showcase-page-muted: #5a7d74;
+  --showcase-page-legend-strong: #244f45;
+  --showcase-page-control: #35675c;
+  --showcase-page-control-strong: #236f5e;
+  --showcase-page-select: #173f36;
+  --showcase-page-meta: #587b72;
+  --showcase-page-border: rgba(31, 85, 72, 0.16);
+}
+
+.character-showcase-page.character-showcase-page--geo {
+  --showcase-page-accent: #aa7a28;
+  --showcase-page-ink: #503b20;
+  --showcase-page-label: #78684d;
+  --showcase-page-muted: #7d6c50;
+  --showcase-page-legend-strong: #574326;
+  --showcase-page-control: #705b38;
+  --showcase-page-control-strong: #805a1c;
+  --showcase-page-select: #42311c;
+  --showcase-page-meta: #806e51;
+  --showcase-page-border: rgba(104, 75, 28, 0.17);
+}
+
+/* Character roster ------------------------------------------------------- */
+
+.character-roster-card.character-roster-card--electro {
+  --element: #c182df;
+  background: #1c1029;
+}
+
+.character-roster-card.character-roster-card--pyro {
+  --element: #ef654e;
+  background: #261113;
+}
+
+.character-roster-card.character-roster-card--hydro {
+  --element: #70cee9;
+  background: #092642;
+}
+
+.character-roster-card.character-roster-card--dendro {
+  --element: #98bf58;
+  background: #1e422e;
+}
+
+.character-roster-card.character-roster-card--cryo {
+  --element: #9ce3ef;
+  background: #15324a;
+}
+
+.character-roster-card.character-roster-card--anemo {
+  --element: #79d5bc;
+  background: #113d38;
+}
+
+.character-roster-card.character-roster-card--geo {
+  --element: #e1b65c;
+  background: #3b2b15;
+}

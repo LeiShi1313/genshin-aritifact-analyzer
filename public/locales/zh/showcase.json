@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "账号档案 / {{format}}",
+    "artifactContribution": "{{profile}} / 圣遗物贡献",
+    "character": "角色档案",
+    "currentSnapshot": "当前快照",
+    "entry": "档案 / {{index}}",
+    "import": "导入"
+  },
+  "card": {
+    "artifactSubstats": "{{slot}}副词条",
+    "characterArtifactAlt": "{{character}}的{{slot}}",
+    "characterArtifacts": "{{character}}的圣遗物",
+    "elite": "顶级",
+    "emptySlot": "空槽位",
+    "equipArtifact": "请为此槽位装备圣遗物，然后重新导入账号快照。",
+    "inspectArtifact": "查看{{slot}}，评分{{score}}",
+    "level": "Lv. {{level}}",
+    "maxRollEquivalents": "{{priority}} · {{rolls}}次满档词条等值",
+    "missing": "缺失",
+    "noArtifact": "未装备圣遗物",
+    "noWeaponSnapshot": "此账号快照中没有记录",
+    "rarity": "{{count}}星稀有度",
+    "refinement": "R{{refinement}}",
+    "statScope": "无增益 · 仅计常驻效果",
+    "statScopePartial": "估算值 · 仅计常驻效果",
+    "standard": "标准",
+    "unscored": "未评分"
+  },
+  "detail": {
+    "close": "关闭圣遗物详情",
+    "mainStat": "主词条",
+    "note": "优先级来自所选配装方案，强化质量来自圣遗物的实际副词条数值。",
+    "notPrioritized": "非优先词条",
+    "priority": "{{priority}}优先级",
+    "rolls": "{{rolls}}次强化"
+  },
+  "empty": {
+    "backToRoster": "返回角色列表",
+    "snapshotDescription": "所选导入中没有此角色。请返回角色列表并选择其他账号快照。",
+    "snapshotTitle": "找不到角色快照"
+  },
+  "legend": {
+    "core": "核心",
+    "coreDescription": "方案中的最高权重",
+    "minor": "次要",
+    "minorDescription": "方案中的较低权重",
+    "rollExplanation": "标记越亮，代表词条优先级越高且强化越好。",
+    "useful": "有效",
+    "usefulDescription": "推荐贡献词条"
+  },
+  "notice": {
+    "profileRequired": "当前会显示圣遗物数值，但评分和有效副词条高亮需要配装方案。",
+    "reloadPage": "重新加载页面",
+    "statsError": "无法加载角色属性。属性准备完成前不能导出卡片。",
+    "statsLoading": "正在计算角色属性…",
+    "statsPartial": "属性为估算值——暂未计入不支持的套装效果或缺失装备。",
+    "statsUnavailable": "此快照包含不支持的装备数据，因此无法显示角色属性。"
+  },
+  "roster": {
+    "accountSnapshot": "账号快照",
+    "averageShort": "平均",
+    "buildReady": "配装完成",
+    "chooseProfile": "选择配装方案",
+    "description": "选择角色，按配装方案检查已装备的圣遗物。",
+    "emptyDescription": "导入包含角色、武器和圣遗物的 GOOD 文件即可查看角色列表与配装卡。仅含圣遗物的导入仍可在分析器中使用。",
+    "emptyTitle": "导入完整账号快照",
+    "filtersLabel": "角色筛选",
+    "importAccount": "导入账号",
+    "importFallback": "导入 {{id}}",
+    "importNew": "重新导入",
+    "missingArtifacts_one": "缺少{{count}}件圣遗物",
+    "missingArtifacts_other": "缺少{{count}}件圣遗物",
+    "needsAttention": "需要优化",
+    "noArtifacts": "未装备圣遗物",
+    "noResults": "没有符合筛选条件的角色。",
+    "noWeapon": "未装备武器",
+    "openLatest": "打开最新账号",
+    "profileNeeded": "需要配装方案",
+    "reviewArtifacts": "查看全部圣遗物",
+    "search": "搜索角色",
+    "title": "你的角色"
+  },
+  "status": {
+    "chooseProfile": "选择方案",
+    "flexibleSet": "灵活套装",
+    "noScoringProfile": "无评分方案",
+    "offPiece": "散件",
+    "scoreUnavailable": "无法评分"
+  },
+  "talents": {
+    "burst": "爆发",
+    "levels": "天赋等级",
+    "normal": "普攻",
+    "skill": "战技"
+  },
+  "toolbar": {
+    "createProfile": "创建方案",
+    "custom": "自定义",
+    "disabled": "已禁用",
+    "exportPng": "导出 PNG",
+    "importedSnapshot": "已导入快照",
+    "improveBuild": "优化配装",
+    "noProfile": "没有可用方案",
+    "preset": "预设",
+    "rendering": "正在生成…",
+    "roster": "角色列表",
+    "saved": "已保存",
+    "scoringProfile": "评分方案",
+    "tryAgain": "重试",
+    "updated": "更新于 {{date}}"
+  }
+}

@@ -3,7 +3,11 @@ import { initReactI18next } from "react-i18next";
 
 import Backend from "i18next-http-backend";
 import ChainedBackend from "i18next-chained-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
+import {
+  SUPPORTED_LOCALES,
+  cacheSupportedLocale,
+  detectSupportedLocale,
+} from "./i18nLocale";
 // import resourcesToBackend from 'i18next-resources-to-backend';
 // don't want to use this?
 // have a look at the Quick start guide
@@ -12,6 +16,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 if (typeof document !== "undefined") {
   i18n.on("languageChanged", (language) => {
     document.documentElement.lang = language;
+    cacheSupportedLocale(language);
   });
 }
 
@@ -20,22 +25,29 @@ i18n
   // learn more: https://github.com/i18next/i18next-http-backend
   // want your translations to be loaded from a professional CDN? => https://github.com/locize/react-tutorial#step-2---use-the-locize-cdn
   .use(ChainedBackend)
-  // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
-  .use(LanguageDetector)
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    ns: ["common", "artifacts", "characters", "sets", "weapons", "enemy"],
+    ns: [
+      "common",
+      "artifacts",
+      "characters",
+      "sets",
+      "weapons",
+      "enemy",
+      "showcase",
+    ],
     defaultNS: "common",
     backend: {
       backends: [Backend],
     },
+    lng: detectSupportedLocale(),
     fallbackLng: "en",
+    supportedLngs: [...SUPPORTED_LOCALES],
+    load: "currentOnly",
     debug: import.meta.env.DEV,
-    // nonExplicitSupportedLngs: true,
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

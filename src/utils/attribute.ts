@@ -3,8 +3,9 @@ import {
   AttributeType,
   AttributePosition,
 } from "../genshin/attribute";
+import { getArtifactMainStatValue } from "./artifactMainStat";
 
-export const monaAttributeToAttributeType = {
+export const monaAttributeToAttributeType: Record<string, AttributeType> = {
   lifeStatic: AttributeType.HP,
   attackStatic: AttributeType.ATK,
   defendStatic: AttributeType.DEF,
@@ -26,7 +27,7 @@ export const monaAttributeToAttributeType = {
   physicalBonus: AttributeType.PHYSICAL_DAMAGE_BONUS,
 };
 
-export const goodAttributeToAttributeType = {
+export const goodAttributeToAttributeType: Record<string, AttributeType> = {
   hp: AttributeType.HP,
   atk: AttributeType.ATK,
   def: AttributeType.DEF,
@@ -120,48 +121,17 @@ export const attributeValueFromStarAndLevel = (
   attr: AttributeType,
   star: number,
   level: number
-): number => {
-  // TODO: finish this
-  switch (attr) {
-    case AttributeType.HP:
-      return 203.15 * 0.9 ** (star - 5) * level + 717 * 0.9 ** (star - 5);
-    case AttributeType.ATK:
-      return 13.2 * 0.9 ** (star - 5) * level + 47.4 * 0.9 ** (star - 5);
-    case AttributeType.HP_PERCENT:
-    case AttributeType.ATK_PERCENT:
-      return 0.0198 * 0.9 ** (star - 5) * level + 0.069 * 0.9 ** (star - 5);
-    case AttributeType.DEF_PERCENT:
-    case AttributeType.PHYSICAL_DAMAGE_BONUS:
-      return 0.0248 * 0.9 ** (star - 5) * level + 0.086 * 0.9 ** (star - 5);
-    case AttributeType.ELEMENTAL_MASTERY:
-      return 7.95 * 0.9 ** (star - 5) * level + 27.2 * 0.9 ** (star - 5);
-    case AttributeType.ENERGY_RECHARGE:
-      return 0.022 * 0.9 ** (star - 5) * level + 0.078 * 0.9 ** (star - 5);
-    case AttributeType.CRIT_RATE:
-      return 0.0132 * 0.9 ** (star - 5) * level + 0.046 * 0.9 ** (star - 5);
-    case AttributeType.CRIT_DAMAGE:
-      return 0.02645 * 0.9 ** (star - 5) * level + 0.092 * 0.9 ** (star - 5);
-    case AttributeType.HEALING_BONUS:
-      return 0.01525 * 0.9 ** (star - 5) * level + 0.053 * 0.9 ** (star - 5);
-    case AttributeType.PYRO_DAMAGE_BONUS:
-    case AttributeType.HYDRO_DAMAGE_BONUS:
-    case AttributeType.ELECTRO_DAMAGE_BONUS:
-    case AttributeType.CRYO_DAMAGE_BONUS:
-    case AttributeType.ANEMO_DAMAGE_BONUS:
-    case AttributeType.GEO_DAMAGE_BONUS:
-    case AttributeType.DENDRO_DAMAGE_BONUS:
-      return 0.0198 * 0.9 ** (star - 5) * level + 0.069 * 0.9 ** (star - 5);
-    default:
-      return 0;
-  }
-};
+): number => getArtifactMainStatValue(attr, star, level) ?? 0;
 
 export const attributeFromMona = (input: string | Object): Attribute => {
-  if (typeof input === "string" || input instanceof String)
-    input = JSON.parse(input as string);
+  const parsed = (
+    typeof input === "string" || input instanceof String
+      ? JSON.parse(input as string)
+      : input
+  ) as Record<string, unknown>;
   return {
-    type: monaAttributeToAttributeType[input["name"]],
-    value: Number(input["value"]),
+    type: monaAttributeToAttributeType[String(parsed.name)],
+    value: Number(parsed.value),
   };
 };
 
@@ -180,14 +150,33 @@ export const attributeFromGood = (
   };
 };
 
-export const formatAttributeValue = (attr: Attribute): string => {
-  if (
+export const formatAttributeValue = (
+  attr: Attribute,
+  locale?: string
+): string => {
+  const isWholeNumber =
     attr.type === AttributeType.HP ||
     attr.type === AttributeType.ATK ||
     attr.type === AttributeType.DEF ||
-    attr.type === AttributeType.ELEMENTAL_MASTERY
-  ) {
-    return attr.value.toFixed(0);
+    attr.type === AttributeType.ELEMENTAL_MASTERY;
+
+  if (!locale) {
+    if (isWholeNumber) {
+      return attr.value.toFixed(0);
+    }
+    return (attr.value * 100).toFixed(1) + "%";
   }
-  return (attr.value * 100).toFixed(1) + "%";
+
+  if (isWholeNumber) {
+    return new Intl.NumberFormat(locale, {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    }).format(attr.value);
+  }
+
+  return new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 1,
+    style: "percent",
+  }).format(attr.value);
 };

@@ -6,7 +6,13 @@ import {
 } from "./internal/progression";
 import type { CharacterSheetLoadout, CharacterSheetResult } from "./types";
 
-/** Synchronous convenience API backed by the complete generated catalogs. */
+/**
+ * Calculates an unbuffed sheet from character/weapon progression, resolved
+ * artifact stats, and reviewed always-active character/weapon rules.
+ *
+ * Derived, conditional, talent, constellation, team, and artifact-set effects
+ * are intentionally excluded. Unsupported coverage is returned as `partial`.
+ */
 export const calculateCharacterSheetStats = (
   loadout: CharacterSheetLoadout
 ): CharacterSheetResult =>

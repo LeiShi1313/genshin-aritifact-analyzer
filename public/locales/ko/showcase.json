@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "계정 아카이브 / {{format}}",
+    "artifactContribution": "{{profile}} / 성유물 기여도",
+    "character": "캐릭터 아카이브",
+    "currentSnapshot": "현재 스냅샷",
+    "entry": "아카이브 / {{index}}",
+    "import": "가져오기"
+  },
+  "card": {
+    "artifactSubstats": "{{slot}} 보조 옵션",
+    "characterArtifactAlt": "{{character}}의 {{slot}}",
+    "characterArtifacts": "{{character}}의 성유물",
+    "elite": "엘리트",
+    "emptySlot": "빈 슬롯",
+    "equipArtifact": "이 슬롯에 성유물을 장착한 뒤 계정 스냅샷을 다시 가져오세요.",
+    "inspectArtifact": "{{slot}} 확인, 점수 {{score}}",
+    "level": "Lv. {{level}}",
+    "maxRollEquivalents": "{{priority}} · 최대 롤 환산 {{rolls}}회",
+    "missing": "없음",
+    "noArtifact": "장착한 성유물 없음",
+    "noWeaponSnapshot": "이 계정 스냅샷에 없음",
+    "rarity": "{{count}}성 희귀도",
+    "refinement": "R{{refinement}}",
+    "statScope": "버프 없음 · 상시 효과만",
+    "statScopePartial": "예상값 · 상시 효과만",
+    "standard": "표준",
+    "unscored": "미평가"
+  },
+  "detail": {
+    "close": "성유물 상세 닫기",
+    "mainStat": "주 옵션",
+    "note": "우선순위는 선택한 빌드 프로필, 롤 품질은 성유물의 실제 보조 옵션 수치를 기준으로 합니다.",
+    "notPrioritized": "우선순위 없음",
+    "priority": "{{priority}} 우선순위",
+    "rolls": "{{rolls}}롤"
+  },
+  "empty": {
+    "backToRoster": "목록으로 돌아가기",
+    "snapshotDescription": "선택한 가져오기에 이 캐릭터가 없습니다. 목록으로 돌아가 다른 계정 스냅샷을 선택하세요.",
+    "snapshotTitle": "캐릭터 스냅샷을 찾을 수 없음"
+  },
+  "legend": {
+    "core": "핵심",
+    "coreDescription": "프로필 최고 가중치",
+    "minor": "낮음",
+    "minorDescription": "프로필의 낮은 가중치",
+    "rollExplanation": "표시가 밝을수록 우선순위와 롤 품질이 모두 높습니다.",
+    "useful": "유효",
+    "usefulDescription": "권장 기여도"
+  },
+  "notice": {
+    "profileRequired": "성유물 수치는 표시되지만 점수와 유효 보조 옵션 강조에는 빌드 프로필이 필요합니다.",
+    "reloadPage": "페이지 새로고침",
+    "statsError": "캐릭터 스탯을 불러오지 못했습니다. 준비되기 전에는 카드를 내보낼 수 없습니다.",
+    "statsLoading": "캐릭터 스탯 계산 중…",
+    "statsPartial": "예상 스탯 — 지원되지 않는 세트 효과와 누락된 장비는 포함되지 않습니다.",
+    "statsUnavailable": "이 스냅샷에 지원되지 않는 장비 데이터가 있어 캐릭터 스탯을 표시할 수 없습니다."
+  },
+  "roster": {
+    "accountSnapshot": "계정 스냅샷",
+    "averageShort": "평균",
+    "buildReady": "빌드 완료",
+    "chooseProfile": "빌드 프로필 선택",
+    "description": "캐릭터를 선택해 장착 성유물을 빌드 프로필과 비교하세요.",
+    "emptyDescription": "캐릭터, 무기, 성유물이 포함된 GOOD 파일을 가져오면 캐릭터 목록과 빌드 카드를 사용할 수 있습니다. 성유물 전용 가져오기는 분석기에서 계속 사용할 수 있습니다.",
+    "emptyTitle": "전체 계정 스냅샷 가져오기",
+    "filtersLabel": "캐릭터 필터",
+    "importAccount": "계정 가져오기",
+    "importFallback": "가져오기 {{id}}",
+    "importNew": "새로 가져오기",
+    "missingArtifacts_one": "성유물 {{count}}개 부족",
+    "missingArtifacts_other": "성유물 {{count}}개 부족",
+    "needsAttention": "확인 필요",
+    "noArtifacts": "장착한 성유물 없음",
+    "noResults": "필터와 일치하는 캐릭터가 없습니다.",
+    "noWeapon": "장착한 무기 없음",
+    "openLatest": "최신 계정 열기",
+    "profileNeeded": "프로필 필요",
+    "reviewArtifacts": "모든 성유물 검토",
+    "search": "캐릭터 검색",
+    "title": "내 캐릭터"
+  },
+  "status": {
+    "chooseProfile": "프로필 선택",
+    "flexibleSet": "자유 세트",
+    "noScoringProfile": "점수 프로필 없음",
+    "offPiece": "자유 부위",
+    "scoreUnavailable": "점수 사용 불가"
+  },
+  "talents": {
+    "burst": "원소폭발",
+    "levels": "특성 레벨",
+    "normal": "일반",
+    "skill": "스킬"
+  },
+  "toolbar": {
+    "createProfile": "프로필 만들기",
+    "custom": "사용자 설정",
+    "disabled": "비활성",
+    "exportPng": "PNG 내보내기",
+    "importedSnapshot": "가져온 스냅샷",
+    "improveBuild": "빌드 개선",
+    "noProfile": "사용 가능한 프로필 없음",
+    "preset": "프리셋",
+    "rendering": "생성 중…",
+    "roster": "캐릭터 목록",
+    "saved": "저장됨",
+    "scoringProfile": "점수 프로필",
+    "tryAgain": "다시 시도",
+    "updated": "업데이트: {{date}}"
+  }
+}

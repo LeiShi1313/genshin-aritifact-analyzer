@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "帳號檔案 / {{format}}",
+    "artifactContribution": "{{profile}} / 聖遺物貢獻",
+    "character": "角色檔案",
+    "currentSnapshot": "目前快照",
+    "entry": "檔案 / {{index}}",
+    "import": "匯入"
+  },
+  "card": {
+    "artifactSubstats": "{{slot}}副詞條",
+    "characterArtifactAlt": "{{character}}的{{slot}}",
+    "characterArtifacts": "{{character}}的聖遺物",
+    "elite": "頂級",
+    "emptySlot": "空槽位",
+    "equipArtifact": "請為此槽位裝備聖遺物，然後重新匯入帳號快照。",
+    "inspectArtifact": "查看{{slot}}，評分{{score}}",
+    "level": "Lv. {{level}}",
+    "maxRollEquivalents": "{{priority}} · {{rolls}}次滿檔詞條等值",
+    "missing": "缺少",
+    "noArtifact": "未裝備聖遺物",
+    "noWeaponSnapshot": "此帳號快照中沒有記錄",
+    "rarity": "{{count}}星稀有度",
+    "refinement": "R{{refinement}}",
+    "statScope": "無增益 · 僅計常駐效果",
+    "statScopePartial": "估算值 · 僅計常駐效果",
+    "standard": "標準",
+    "unscored": "未評分"
+  },
+  "detail": {
+    "close": "關閉聖遺物詳情",
+    "mainStat": "主詞條",
+    "note": "優先級來自所選配裝方案，強化品質來自聖遺物的實際副詞條數值。",
+    "notPrioritized": "非優先詞條",
+    "priority": "{{priority}}優先級",
+    "rolls": "{{rolls}}次強化"
+  },
+  "empty": {
+    "backToRoster": "返回角色列表",
+    "snapshotDescription": "所選匯入中沒有此角色。請返回角色列表並選擇其他帳號快照。",
+    "snapshotTitle": "找不到角色快照"
+  },
+  "legend": {
+    "core": "核心",
+    "coreDescription": "方案中的最高權重",
+    "minor": "次要",
+    "minorDescription": "方案中的較低權重",
+    "rollExplanation": "標記越亮，代表詞條優先級越高且強化越好。",
+    "useful": "有效",
+    "usefulDescription": "推薦貢獻詞條"
+  },
+  "notice": {
+    "profileRequired": "目前會顯示聖遺物數值，但評分和有效副詞條高亮需要配裝方案。",
+    "reloadPage": "重新載入頁面",
+    "statsError": "無法載入角色屬性。屬性準備完成前無法匯出卡片。",
+    "statsLoading": "正在計算角色屬性…",
+    "statsPartial": "屬性為估算值——暫未計入不支援的套裝效果或缺少的裝備。",
+    "statsUnavailable": "此快照包含不支援的裝備資料，因此無法顯示角色屬性。"
+  },
+  "roster": {
+    "accountSnapshot": "帳號快照",
+    "averageShort": "平均",
+    "buildReady": "配裝完成",
+    "chooseProfile": "選擇配裝方案",
+    "description": "選擇角色，按配裝方案檢查已裝備的聖遺物。",
+    "emptyDescription": "匯入包含角色、武器和聖遺物的 GOOD 檔案即可查看角色列表與配裝卡。僅含聖遺物的匯入仍可在分析器中使用。",
+    "emptyTitle": "匯入完整帳號快照",
+    "filtersLabel": "角色篩選",
+    "importAccount": "匯入帳號",
+    "importFallback": "匯入 {{id}}",
+    "importNew": "重新匯入",
+    "missingArtifacts_one": "缺少{{count}}件聖遺物",
+    "missingArtifacts_other": "缺少{{count}}件聖遺物",
+    "needsAttention": "需要最佳化",
+    "noArtifacts": "未裝備聖遺物",
+    "noResults": "沒有符合篩選條件的角色。",
+    "noWeapon": "未裝備武器",
+    "openLatest": "開啟最新帳號",
+    "profileNeeded": "需要配裝方案",
+    "reviewArtifacts": "查看全部聖遺物",
+    "search": "搜尋角色",
+    "title": "你的角色"
+  },
+  "status": {
+    "chooseProfile": "選擇方案",
+    "flexibleSet": "靈活套裝",
+    "noScoringProfile": "無評分方案",
+    "offPiece": "散件",
+    "scoreUnavailable": "無法評分"
+  },
+  "talents": {
+    "burst": "爆發",
+    "levels": "天賦等級",
+    "normal": "普攻",
+    "skill": "戰技"
+  },
+  "toolbar": {
+    "createProfile": "建立方案",
+    "custom": "自訂",
+    "disabled": "已停用",
+    "exportPng": "匯出 PNG",
+    "importedSnapshot": "已匯入快照",
+    "improveBuild": "最佳化配裝",
+    "noProfile": "沒有可用方案",
+    "preset": "預設",
+    "rendering": "正在產生…",
+    "roster": "角色列表",
+    "saved": "已儲存",
+    "scoringProfile": "評分方案",
+    "tryAgain": "重試",
+    "updated": "更新於 {{date}}"
+  }
+}

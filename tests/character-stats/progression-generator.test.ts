@@ -6,6 +6,7 @@ import weaponMetadata from "../../src/data/weapons.json";
 import {
   buildProgressionCatalogs,
   buildProgressionShards,
+  collectSnapshots,
   serializeProgressionCatalog,
 } from "../../scripts/generate-character-stats";
 import {
@@ -90,5 +91,23 @@ test("progression catalogs split deterministically into browser-loadable shards"
   assert.equal(
     weaponShards.reduce((count, shard) => count + Object.keys(shard).length, 0),
     Object.keys(catalogs.weapons).length
+  );
+});
+
+test("progression collection fails loudly when an expected snapshot throws", () => {
+  const stats = ((level: number, ascension: number) => {
+    if (level === 2) throw new Error("fixture failure");
+    return { ascension };
+  }) as any;
+
+  assert.throws(
+    () =>
+      collectSnapshots(
+        stats,
+        (result) => result.ascension,
+        [{ ascension: 0, minimumLevel: 1, maximumLevel: 2 }],
+        "Fixture"
+      ),
+    /Fixture progression 2:0 failed: fixture failure/
   );
 });

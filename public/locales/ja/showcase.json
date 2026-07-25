@@ -1,0 +1,113 @@
+{
+  "archive": {
+    "account": "アカウント記録 / {{format}}",
+    "artifactContribution": "{{profile}} / 聖遺物寄与度",
+    "character": "キャラクター記録",
+    "currentSnapshot": "現在のスナップショット",
+    "entry": "記録 / {{index}}",
+    "import": "インポート"
+  },
+  "card": {
+    "artifactSubstats": "{{slot}}のサブステータス",
+    "characterArtifactAlt": "{{character}}の{{slot}}",
+    "characterArtifacts": "{{character}}の聖遺物",
+    "elite": "エリート",
+    "emptySlot": "空き枠",
+    "equipArtifact": "この枠に聖遺物を装備し、アカウントを再インポートしてください。",
+    "inspectArtifact": "{{slot}}を確認、スコア{{score}}",
+    "level": "Lv. {{level}}",
+    "maxRollEquivalents": "{{priority}}・最大ロール換算{{rolls}}回",
+    "missing": "未装備",
+    "noArtifact": "聖遺物未装備",
+    "noWeaponSnapshot": "このアカウントデータにはありません",
+    "rarity": "★{{count}}レアリティ",
+    "refinement": "R{{refinement}}",
+    "statScope": "バフなし・常時効果のみ",
+    "statScopePartial": "概算・常時効果のみ",
+    "standard": "標準",
+    "unscored": "未評価"
+  },
+  "detail": {
+    "close": "聖遺物の詳細を閉じる",
+    "mainStat": "メインステータス",
+    "note": "優先度は選択中のビルドプロファイル、ロール品質は聖遺物の実際のサブステータス値に基づきます。",
+    "notPrioritized": "優先外",
+    "priority": "{{priority}}優先",
+    "rolls": "{{rolls}}ロール"
+  },
+  "empty": {
+    "backToRoster": "一覧に戻る",
+    "snapshotDescription": "選択したインポートにこのキャラクターはいません。一覧に戻り、別のアカウントデータを選んでください。",
+    "snapshotTitle": "キャラクターデータが見つかりません"
+  },
+  "legend": {
+    "core": "最重要",
+    "coreDescription": "プロファイル内の最高ウェイト",
+    "minor": "低優先",
+    "minorDescription": "プロファイル内の低いウェイト",
+    "rollExplanation": "明るいマークほど、優先度とロール品質の両方が高いことを示します。",
+    "useful": "有用",
+    "usefulDescription": "推奨される寄与"
+  },
+  "notice": {
+    "profileRequired": "聖遺物の値は表示されていますが、スコアと有用サブステータスの強調にはビルドプロファイルが必要です。",
+    "reloadPage": "ページを再読み込み",
+    "statsError": "キャラクターステータスを読み込めませんでした。準備が完了するまでカードは書き出せません。",
+    "statsLoading": "キャラクターステータスを計算中…",
+    "statsPartial": "概算ステータス — 未対応のセット効果や未装備の装備品は含まれていません。",
+    "statsUnavailable": "このスナップショットに未対応の装備データが含まれているため、キャラクターステータスを表示できません。"
+  },
+  "roster": {
+    "accountSnapshot": "アカウントデータ",
+    "averageShort": "平均",
+    "buildReady": "ビルド完成",
+    "chooseProfile": "ビルドプロファイルを選択",
+    "description": "キャラクターを選び、装備中の聖遺物をビルドプロファイルで確認します。",
+    "emptyDescription": "キャラクター・武器・聖遺物を含むGOODファイルを読み込むと、一覧とビルドカードを利用できます。聖遺物のみのインポートは分析画面で引き続き使用できます。",
+    "emptyTitle": "完全なアカウントデータをインポート",
+    "filtersLabel": "キャラクターフィルター",
+    "importAccount": "アカウントをインポート",
+    "importFallback": "インポート {{id}}",
+    "importNew": "新規インポート",
+    "missingArtifacts_one": "聖遺物が{{count}}個不足",
+    "missingArtifacts_other": "聖遺物が{{count}}個不足",
+    "needsAttention": "要確認",
+    "noArtifacts": "聖遺物未装備",
+    "noResults": "条件に一致するキャラクターはいません。",
+    "noWeapon": "武器未装備",
+    "openLatest": "最新アカウントを開く",
+    "profileNeeded": "プロファイル必要",
+    "reviewArtifacts": "すべての聖遺物を確認",
+    "search": "キャラクターを検索",
+    "title": "キャラクター一覧"
+  },
+  "status": {
+    "chooseProfile": "プロファイルを選択",
+    "flexibleSet": "自由セット",
+    "noScoringProfile": "スコアプロファイルなし",
+    "offPiece": "自由枠",
+    "scoreUnavailable": "スコア利用不可"
+  },
+  "talents": {
+    "burst": "元素爆発",
+    "levels": "天賦レベル",
+    "normal": "通常",
+    "skill": "スキル"
+  },
+  "toolbar": {
+    "createProfile": "プロファイル作成",
+    "custom": "カスタム",
+    "disabled": "無効",
+    "exportPng": "PNGを書き出す",
+    "importedSnapshot": "インポート済みデータ",
+    "improveBuild": "ビルドを改善",
+    "noProfile": "利用可能なプロファイルなし",
+    "preset": "プリセット",
+    "rendering": "生成中…",
+    "roster": "一覧",
+    "saved": "保存済み",
+    "scoringProfile": "スコアプロファイル",
+    "tryAgain": "再試行",
+    "updated": "更新：{{date}}"
+  }
+}

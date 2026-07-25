@@ -44,12 +44,12 @@ test("adapts protobuf identifiers, progression, slots, sets, and resolved artifa
       refinement: 2,
     },
     artifacts: [
-      artifact(AttributePosition.FLOWER, AttributeType.HP, 4780),
+      artifact(AttributePosition.FLOWER, AttributeType.HP, 999),
       undefined,
       artifact(
         AttributePosition.SANDS,
         AttributeType.ENERGY_RECHARGE,
-        0.518,
+        999,
         AttributeType.ATK_PERCENT,
         0.058
       ),
@@ -83,6 +83,33 @@ test("adapts protobuf identifiers, progression, slots, sets, and resolved artifa
   });
 });
 
+test("rejects artifact rarity and level combinations without a main-stat value", () => {
+  const invalidArtifact = {
+    ...artifact(AttributePosition.FLOWER, AttributeType.HP, 4780),
+    star: 5,
+    level: 21,
+  };
+  const result = adaptAppCharacterSheetLoadout({
+    character: {
+      character: Character.RAIDEN_SHOGUN,
+      level: 90,
+      ascension: 6,
+    },
+    weapon: null,
+    artifacts: [invalidArtifact],
+  });
+
+  assert.deepEqual(result, {
+    status: "invalid",
+    issues: [
+      {
+        code: "INVALID_ARTIFACT_RARITY_OR_LEVEL",
+        artifactIndex: 0,
+      },
+    ],
+  });
+});
+
 test("rejects unsupported protobuf artifact fields instead of silently dropping them", () => {
   const result = adaptAppCharacterSheetLoadout({
     character: {
@@ -106,6 +133,33 @@ test("rejects unsupported protobuf artifact fields instead of silently dropping 
     result.issues.map(({ code }) => code),
     ["UNSUPPORTED_ARTIFACT_POSITION", "UNSUPPORTED_ARTIFACT_STAT"]
   );
+});
+
+test("rejects an unknown artifact set instead of claiming complete coverage", () => {
+  const unknownSet = {
+    ...artifact(AttributePosition.FLOWER, AttributeType.HP, 4780),
+    set: ArtifactSet.SET_UNSPECIFIED,
+  };
+  const result = adaptAppCharacterSheetLoadout({
+    character: {
+      character: Character.RAIDEN_SHOGUN,
+      level: 90,
+      ascension: 6,
+    },
+    weapon: null,
+    artifacts: [unknownSet],
+  });
+
+  assert.deepEqual(result, {
+    status: "invalid",
+    issues: [
+      {
+        code: "UNSUPPORTED_ARTIFACT_SET",
+        artifactIndex: 0,
+        sourceValue: ArtifactSet.SET_UNSPECIFIED,
+      },
+    ],
+  });
 });
 
 test("presents calculated stats in a stable character-sheet order", () => {

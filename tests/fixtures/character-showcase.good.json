@@ -1,0 +1,65 @@
+{
+  "format": "GOOD",
+  "version": 1,
+  "source": "character-showcase-browser-smoke",
+  "characters": [
+    { "key": "RaidenShogun", "level": 90, "ascension": 6, "constellation": 2, "talent": { "auto": 6, "skill": 10, "burst": 10 } },
+    { "key": "Furina", "level": 90, "ascension": 6, "constellation": 6, "talent": { "auto": 6, "skill": 13, "burst": 13 } },
+    { "key": "Nahida", "level": 90, "ascension": 6, "constellation": 0, "talent": { "auto": 6, "skill": 10, "burst": 10 } },
+    { "key": "KaedeharaKazuha", "level": 90, "ascension": 6, "constellation": 2, "talent": { "auto": 6, "skill": 10, "burst": 10 } },
+    { "key": "Zhongli", "level": 90, "ascension": 6, "constellation": 0, "talent": { "auto": 6, "skill": 10, "burst": 10 } },
+    { "key": "KamisatoAyaka", "level": 90, "ascension": 6, "constellation": 4, "talent": { "auto": 10, "skill": 10, "burst": 10 } },
+    { "key": "Arlecchino", "level": 90, "ascension": 6, "constellation": 6, "talent": { "auto": 13, "skill": 10, "burst": 10 } }
+  ],
+  "weapons": [
+    { "key": "EngulfingLightning", "level": 90, "ascension": 6, "refinement": 1, "location": "RaidenShogun" },
+    { "key": "SplendorOfTranquilWaters", "level": 90, "ascension": 6, "refinement": 1, "location": "Furina" },
+    { "key": "AThousandFloatingDreams", "level": 90, "ascension": 6, "refinement": 1, "location": "Nahida" },
+    { "key": "FreedomSworn", "level": 90, "ascension": 6, "refinement": 1, "location": "KaedeharaKazuha" },
+    { "key": "VortexVanquisher", "level": 90, "ascension": 6, "refinement": 1, "location": "Zhongli" },
+    { "key": "MistsplitterReforged", "level": 90, "ascension": 6, "refinement": 1, "location": "KamisatoAyaka" },
+    { "key": "CrimsonMoonsSemblance", "level": 90, "ascension": 6, "refinement": 1, "location": "Arlecchino" }
+  ],
+  "artifacts": [
+    {
+      "setKey": "EmblemOfSeveredFate", "slotKey": "flower", "rarity": 5, "level": 20, "mainStatKey": "hp",
+      "substats": [
+        { "key": "critRate_", "value": 23.3 }, { "key": "critDMG_", "value": 7.8 },
+        { "key": "enerRech_", "value": 6.5 }, { "key": "atk_", "value": 5.8 }
+      ],
+      "location": "RaidenShogun", "lock": true
+    },
+    {
+      "setKey": "EmblemOfSeveredFate", "slotKey": "plume", "rarity": 5, "level": 20, "mainStatKey": "atk",
+      "substats": [
+        { "key": "critRate_", "value": 19.4 }, { "key": "critDMG_", "value": 7.8 },
+        { "key": "enerRech_", "value": 6.5 }, { "key": "atk_", "value": 5.8 }
+      ],
+      "location": "RaidenShogun", "lock": true
+    },
+    {
+      "setKey": "EmblemOfSeveredFate", "slotKey": "sands", "rarity": 5, "level": 20, "mainStatKey": "enerRech_",
+      "substats": [
+        { "key": "critRate_", "value": 19.4 }, { "key": "critDMG_", "value": 7.8 },
+        { "key": "atk_", "value": 5.8 }, { "key": "eleMas", "value": 23 }
+      ],
+      "location": "RaidenShogun", "lock": true
+    },
+    {
+      "setKey": "ThunderingFury", "slotKey": "goblet", "rarity": 5, "level": 20, "mainStatKey": "electro_dmg_",
+      "substats": [
+        { "key": "critRate_", "value": 19.4 }, { "key": "critDMG_", "value": 7.8 },
+        { "key": "enerRech_", "value": 6.5 }, { "key": "atk_", "value": 5.8 }
+      ],
+      "location": "RaidenShogun", "lock": true
+    },
+    {
+      "setKey": "EmblemOfSeveredFate", "slotKey": "circlet", "rarity": 5, "level": 20, "mainStatKey": "critRate_",
+      "substats": [
+        { "key": "critDMG_", "value": 46.6 }, { "key": "enerRech_", "value": 6.5 },
+        { "key": "atk_", "value": 5.8 }, { "key": "eleMas", "value": 23 }
+      ],
+      "location": "RaidenShogun", "lock": true
+    }
+  ]
+}
