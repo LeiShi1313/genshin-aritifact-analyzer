@@ -2,10 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { Artifact } from "../../src/genshin/artifact";
-import {
-  AttributePosition,
-  AttributeType,
-} from "../../src/genshin/attribute";
+import { AttributePosition, AttributeType } from "../../src/genshin/attribute";
 import { Character } from "../../src/genshin/character";
 import { Set as ArtifactSet } from "../../src/genshin/set";
 import { Weapon } from "../../src/genshin/weapon";
@@ -13,6 +10,8 @@ import {
   adaptAppCharacterSheetLoadout,
   toAppCharacterStatAttributes,
 } from "../../src/utils/characterStats/appAdapter";
+import { loadAppCharacterSheetProgression } from "../../src/utils/characterStats/appProgressionLoader";
+import { calculateCharacterSheetStatsFromProgression } from "../../src/utils/characterStats/calculateCharacterSheetStats";
 
 const artifact = (
   position: AttributePosition,
@@ -152,4 +151,33 @@ test("presents calculated stats in a stable character-sheet order", () => {
     rows.map(({ value }) => value),
     [20500.4, 1860.2, 830.8, 117, 0.712, 1.426, 2.478, 0.466]
   );
+});
+
+test("loads only the progression shards required by an adapted browser loadout", async () => {
+  const adapted = adaptAppCharacterSheetLoadout({
+    character: {
+      character: Character.RAIDEN_SHOGUN,
+      level: 90,
+      ascension: 6,
+    },
+    weapon: {
+      weapon: Weapon.ENGULFING_LIGHTNING,
+      level: 90,
+      ascension: 6,
+      refinement: 1,
+    },
+    artifacts: [],
+  });
+  assert.equal(adapted.status, "ok");
+  if (adapted.status !== "ok") return;
+
+  const progression = await loadAppCharacterSheetProgression(adapted.loadout);
+  const result = calculateCharacterSheetStatsFromProgression(
+    adapted.loadout,
+    progression
+  );
+
+  assert.ok(progression.characters.raiden_shogun);
+  assert.ok(progression.weapons.engulfing_lightning);
+  assert.equal(result.status, "complete");
 });

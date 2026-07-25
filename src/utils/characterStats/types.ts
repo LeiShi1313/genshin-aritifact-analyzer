@@ -31,12 +31,33 @@ export type ProgressionStatKey =
   | "physicalDamageBonus"
   | `${Element}DamageBonus`;
 
-export type ArtifactSlot =
-  | "flower"
-  | "plume"
-  | "sands"
-  | "goblet"
-  | "circlet";
+export interface CharacterProgression {
+  readonly weaponType: string;
+  readonly specializedStat: ProgressionStatKey;
+  readonly stats: Readonly<
+    Record<string, readonly [number, number, number, number]>
+  >;
+}
+
+export interface WeaponProgression {
+  readonly weaponType: string;
+  readonly specializedStat: ProgressionStatKey | null;
+  readonly stats: Readonly<Record<string, readonly [number, number]>>;
+}
+
+export interface ProgressionManifest {
+  readonly schemaVersion: 1;
+  readonly genshinDbVersion: string;
+  readonly gameVersion: string;
+}
+
+export interface CharacterSheetProgressionData {
+  readonly characters: Readonly<Record<string, CharacterProgression>>;
+  readonly weapons: Readonly<Record<string, WeaponProgression>>;
+  readonly manifest: ProgressionManifest;
+}
+
+export type ArtifactSlot = "flower" | "plume" | "sands" | "goblet" | "circlet";
 
 export type ArtifactStatKey =
   | "hpFlat"
@@ -93,9 +114,7 @@ export interface CharacterSheetStats {
   readonly critDamage: number;
   readonly healingBonus: number;
   readonly shieldStrength: number;
-  readonly damageBonus: Readonly<
-    Record<Element | "physical", number>
-  >;
+  readonly damageBonus: Readonly<Record<Element | "physical", number>>;
 }
 
 export type CharacterSheetIssueCode =
@@ -149,7 +168,7 @@ export type RefinementValues = readonly [
   number,
   number,
   number,
-  number,
+  number
 ];
 
 export interface CharacterConstantRule {

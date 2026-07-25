@@ -2,20 +2,17 @@ import {
   CHARACTER_CONSTANT_RULES,
   WEAPON_CONSTANT_RULES,
 } from "./internal/rules/constantRules";
-import {
-  characterProgression,
-  progressionManifest,
-  weaponProgression,
-} from "./internal/progression";
 import type {
   ArtifactSlot,
   ArtifactStatKey,
   CharacterSheetIssue,
   CharacterSheetLoadout,
+  CharacterSheetProgressionData,
   CharacterSheetResult,
   ConstantEffectStat,
   Element,
   ProgressionStatKey,
+  WeaponProgression,
 } from "./types";
 
 const ELEMENTS: readonly Element[] = [
@@ -91,15 +88,18 @@ const addEffect = (
   accumulator[stat] += value;
 };
 
-const invalid = (issues: readonly CharacterSheetIssue[]): CharacterSheetResult => ({
+const invalid = (
+  issues: readonly CharacterSheetIssue[]
+): CharacterSheetResult => ({
   status: "invalid",
   issues,
 });
 
-export const calculateCharacterSheetStats = (
-  loadout: CharacterSheetLoadout
+export const calculateCharacterSheetStatsFromProgression = (
+  loadout: CharacterSheetLoadout,
+  progression: CharacterSheetProgressionData
 ): CharacterSheetResult => {
-  const character = characterProgression[loadout.character.key];
+  const character = progression.characters[loadout.character.key];
   if (!character) {
     return invalid([
       { code: "CHARACTER_NOT_FOUND", sourceKey: loadout.character.key },
@@ -119,16 +119,18 @@ export const calculateCharacterSheetStats = (
   }
 
   let weaponStats: readonly [number, number] | undefined;
-  let equippedWeapon = undefined as
-    | (typeof weaponProgression)[string]
-    | undefined;
+  let equippedWeapon: WeaponProgression | undefined;
   if (loadout.weapon) {
-    if (!Number.isInteger(loadout.weapon.refinement) || loadout.weapon.refinement < 1 || loadout.weapon.refinement > 5) {
+    if (
+      !Number.isInteger(loadout.weapon.refinement) ||
+      loadout.weapon.refinement < 1 ||
+      loadout.weapon.refinement > 5
+    ) {
       return invalid([
         { code: "INVALID_REFINEMENT", sourceKey: loadout.weapon.key },
       ]);
     }
-    equippedWeapon = weaponProgression[loadout.weapon.key];
+    equippedWeapon = progression.weapons[loadout.weapon.key];
     if (!equippedWeapon) {
       return invalid([
         { code: "WEAPON_NOT_FOUND", sourceKey: loadout.weapon.key },
@@ -155,7 +157,10 @@ export const calculateCharacterSheetStats = (
 
   const seenSlots = new Set<ArtifactSlot>();
   for (const artifact of loadout.artifacts) {
-    if (!ARTIFACT_SLOTS.includes(artifact.slot) || seenSlots.has(artifact.slot)) {
+    if (
+      !ARTIFACT_SLOTS.includes(artifact.slot) ||
+      seenSlots.has(artifact.slot)
+    ) {
       return invalid([
         { code: "DUPLICATE_ARTIFACT_SLOT", sourceKey: artifact.slot },
       ]);
@@ -275,10 +280,9 @@ export const calculateCharacterSheetStats = (
       )
         ? ("unsupported" as const)
         : ("not-applicable" as const),
-      gameVersion: progressionManifest.gameVersion,
-      genshinDbVersion: progressionManifest.genshinDbVersion,
-      constantRuleset:
-        "miao@03298720363416755a754324ab14cb08037ca345",
+      gameVersion: progression.manifest.gameVersion,
+      genshinDbVersion: progression.manifest.genshinDbVersion,
+      constantRuleset: "miao@03298720363416755a754324ab14cb08037ca345",
     },
     issues,
   };

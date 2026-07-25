@@ -1,9 +1,4 @@
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,11 +7,12 @@ import genshinDb, { type StatFunction, type StatResult } from "genshin-db";
 
 import characterMetadata from "../src/data/characters.json";
 import weaponMetadata from "../src/data/weapons.json";
-import {
-  GENSHIN_DB_VERSION,
-  GENSHIN_GAME_VERSION,
-} from "../src/data/version";
+import { GENSHIN_DB_VERSION, GENSHIN_GAME_VERSION } from "../src/data/version";
 import type { ProgressionStatKey } from "../src/utils/characterStats/types";
+import {
+  PROGRESSION_SHARD_COUNT,
+  progressionShardIndexForKey,
+} from "../src/utils/characterStats/internal/sharding";
 
 type CharacterSnapshot = readonly [number, number, number, number];
 type WeaponSnapshot = readonly [number, number];
@@ -237,6 +233,19 @@ const stableValue = (value: unknown): unknown => {
 export const serializeProgressionCatalog = (catalog: unknown): string =>
   `${JSON.stringify(stableValue(catalog))}\n`;
 
+export const buildProgressionShards = <Entry>(
+  catalog: Readonly<Record<string, Entry>>
+): readonly Record<string, Entry>[] => {
+  const shards = Array.from(
+    { length: PROGRESSION_SHARD_COUNT },
+    () => ({} as Record<string, Entry>)
+  );
+  for (const [key, entry] of Object.entries(catalog)) {
+    shards[progressionShardIndexForKey(key)][key] = entry;
+  }
+  return shards;
+};
+
 const outputFiles = {
   characters: "src/data/characterStats/characters.generated.json",
   weapons: "src/data/characterStats/weapons.generated.json",
@@ -245,20 +254,42 @@ const outputFiles = {
 
 export const writeProgressionCatalogs = (check = false): void => {
   const catalogs = buildProgressionCatalogs();
-  for (const [catalog, relativePath] of Object.entries(outputFiles)) {
-    const content = serializeProgressionCatalog(
-      catalogs[catalog as keyof ProgressionCatalogs]
-    );
+  const writeGeneratedFile = (relativePath: string, value: unknown) => {
+    const content = serializeProgressionCatalog(value);
     const path = resolve(relativePath);
     if (check) {
       if (!existsSync(path) || readFileSync(path, "utf8") !== content) {
         throw new Error(`${relativePath} is out of date`);
       }
-      continue;
+      return;
     }
     mkdirSync(dirname(path), { recursive: true });
     writeFileSync(path, content, "utf8");
+  };
+
+  for (const [catalog, relativePath] of Object.entries(outputFiles)) {
+    writeGeneratedFile(
+      relativePath,
+      catalogs[catalog as keyof ProgressionCatalogs]
+    );
   }
+
+  const writeShards = <Entry>(
+    catalog: "characters" | "weapons",
+    entries: Readonly<Record<string, Entry>>
+  ) => {
+    buildProgressionShards(entries).forEach((shard, index) => {
+      writeGeneratedFile(
+        `src/data/characterStats/shards/${catalog}-${String(index).padStart(
+          2,
+          "0"
+        )}.generated.json`,
+        shard
+      );
+    });
+  };
+  writeShards("characters", catalogs.characters);
+  writeShards("weapons", catalogs.weapons);
 };
 
 const isDirectExecution =

@@ -1,4 +1,5 @@
-export { calculateCharacterSheetStats } from "./calculateCharacterSheetStats";
+export { calculateCharacterSheetStats } from "./calculateCharacterSheetStatsBundled";
+export { calculateCharacterSheetStatsFromProgression } from "./calculateCharacterSheetStats";
 export type {
   ArtifactSlot,
   ArtifactStatInput,
@@ -6,7 +7,11 @@ export type {
   CharacterSheetIssue,
   CharacterSheetIssueCode,
   CharacterSheetLoadout,
+  CharacterSheetProgressionData,
   CharacterSheetResult,
   CharacterSheetStats,
+  CharacterProgression,
   EquippedArtifactInput,
+  ProgressionManifest,
+  WeaponProgression,
 } from "./types";

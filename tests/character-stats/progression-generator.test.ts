@@ -5,8 +5,13 @@ import characterMetadata from "../../src/data/characters.json";
 import weaponMetadata from "../../src/data/weapons.json";
 import {
   buildProgressionCatalogs,
+  buildProgressionShards,
   serializeProgressionCatalog,
 } from "../../scripts/generate-character-stats";
+import {
+  PROGRESSION_SHARD_COUNT,
+  progressionShardIndexForKey,
+} from "../../src/utils/characterStats/internal/sharding";
 
 const catalogs = buildProgressionCatalogs();
 
@@ -29,12 +34,10 @@ test("progression generation covers every supported character and weapon", () =>
 test("character snapshots preserve ascension boundaries and normalize built-in crit baselines", () => {
   const raiden = catalogs.characters.raiden_shogun;
   assert.equal(raiden.specializedStat, "energyRecharge");
-  assert.deepEqual(raiden.stats["90:6"], [
-    12907.189733140001,
-    337.2415138,
-    789.30533799,
-    0.32,
-  ]);
+  assert.deepEqual(
+    raiden.stats["90:6"],
+    [12907.189733140001, 337.2415138, 789.30533799, 0.32]
+  );
   assert.notDeepEqual(raiden.stats["20:0"], raiden.stats["20:1"]);
 
   const sandrone = catalogs.characters.sandrone;
@@ -60,4 +63,32 @@ test("generated catalogs serialize deterministically", () => {
 
   assert.equal(first, second);
   assert.equal(first.endsWith("\n"), true);
+});
+
+test("progression catalogs split deterministically into browser-loadable shards", () => {
+  const characterShards = buildProgressionShards(catalogs.characters);
+  const weaponShards = buildProgressionShards(catalogs.weapons);
+
+  assert.equal(characterShards.length, PROGRESSION_SHARD_COUNT);
+  assert.equal(weaponShards.length, PROGRESSION_SHARD_COUNT);
+  assert.strictEqual(
+    characterShards[progressionShardIndexForKey("raiden_shogun")].raiden_shogun,
+    catalogs.characters.raiden_shogun
+  );
+  assert.strictEqual(
+    weaponShards[progressionShardIndexForKey("engulfing_lightning")]
+      .engulfing_lightning,
+    catalogs.weapons.engulfing_lightning
+  );
+  assert.equal(
+    characterShards.reduce(
+      (count, shard) => count + Object.keys(shard).length,
+      0
+    ),
+    Object.keys(catalogs.characters).length
+  );
+  assert.equal(
+    weaponShards.reduce((count, shard) => count + Object.keys(shard).length, 0),
+    Object.keys(catalogs.weapons).length
+  );
 });
