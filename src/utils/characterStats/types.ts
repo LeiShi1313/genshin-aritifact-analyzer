@@ -19,6 +19,18 @@ export type ConstantEffectStat =
   | "allElementalDamageBonus"
   | `${Element}DamageBonus`;
 
+export type ProgressionStatKey =
+  | "hpPercent"
+  | "attackPercent"
+  | "defensePercent"
+  | "elementalMastery"
+  | "energyRecharge"
+  | "critRate"
+  | "critDamage"
+  | "healingBonus"
+  | "physicalDamageBonus"
+  | `${Element}DamageBonus`;
+
 export type RefinementValues = readonly [
   number,
   number,
