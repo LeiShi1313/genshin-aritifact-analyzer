@@ -10,6 +10,8 @@ import { Set as ArtifactSet } from "../../src/genshin/set";
 import {
   buildArtifactShowcase,
   getCharacterBuildOptions,
+  getCharacterShowcaseExportFileName,
+  getCharacterStatsPresentation,
   getEquippedArtifacts,
   getLatestCharacterSource,
   getResolvedArtifactMainAttribute,
@@ -165,6 +167,41 @@ test("artifact presentation binds score, set role, importance, and roll quality 
   assert.equal(presentation.substats[0].importance, "core");
   assert.equal(presentation.substats[0].rollEquivalent, 0.7);
   assert.ok(presentation.score >= 0 && presentation.score <= 100);
+});
+
+test("only complete character sheets expose numeric stats and PNG export", () => {
+  assert.deepEqual(getCharacterStatsPresentation("complete"), {
+    canDisplay: true,
+    canExport: true,
+    noticeKey: undefined,
+  });
+  assert.deepEqual(getCharacterStatsPresentation("partial"), {
+    canDisplay: false,
+    canExport: false,
+    noticeKey: "notice.statsUnavailable",
+  });
+  assert.deepEqual(getCharacterStatsPresentation("invalid"), {
+    canDisplay: false,
+    canExport: false,
+    noticeKey: "notice.statsUnavailable",
+  });
+  assert.equal(getCharacterStatsPresentation("loading").canExport, false);
+  assert.equal(getCharacterStatsPresentation("error").canDisplay, false);
+});
+
+test("character card export filenames preserve Unicode and always have a fallback", () => {
+  assert.equal(
+    getCharacterShowcaseExportFileName("雷电将军", "raiden_shogun"),
+    "雷电将军-build.png"
+  );
+  assert.equal(
+    getCharacterShowcaseExportFileName("神里 綾華", "kamisato_ayaka"),
+    "神里-綾華-build.png"
+  );
+  assert.equal(
+    getCharacterShowcaseExportFileName("✨", "raiden_shogun"),
+    "raiden-shogun-build.png"
+  );
 });
 
 const ELEMENTS = [
@@ -385,7 +422,7 @@ test("the element contract has one owner and is loaded by every production surfa
   }
 });
 
-test("the production card gates export without approximate markers or partial warnings", () => {
+test("the production card gates incomplete export without approximate markers", () => {
   const page = readSource(
     "src/features/characters/showcase/CharacterShowcasePage.jsx"
   );
@@ -395,6 +432,11 @@ test("the production card gates export without approximate markers or partial wa
 
   assert.match(page, /setSheetRequest\(\{ status: "loading", loadout \}\)/);
   assert.match(page, /setSheetRequest\(\{ status: "error", loadout \}\)/);
+  assert.match(page, /getCharacterStatsPresentation\(statsStatus\)/);
+  assert.match(
+    page,
+    /statsPresentation\.canDisplay\s*\?\s*calculation\s*:\s*undefined/
+  );
   assert.match(page, /disabled=\{!statsExportReady \|\| exportState === "working"\}/);
   assert.match(page, /getResolvedArtifactMainAttribute\(artifact\)/);
   assert.match(page, /onClick=\{\(\) => window\.location\.reload\(\)\}/);

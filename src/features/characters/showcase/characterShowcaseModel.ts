@@ -24,6 +24,50 @@ export const CHARACTER_ARTIFACT_POSITIONS = Object.freeze([
   AttributePosition.CIRCLET,
 ]);
 
+export type CharacterStatsPresentationStatus =
+  | "loading"
+  | "error"
+  | "invalid"
+  | "partial"
+  | "complete";
+
+export const getCharacterStatsPresentation = (
+  status: CharacterStatsPresentationStatus
+) => {
+  const isComplete = status === "complete";
+  const noticeKey =
+    status === "loading"
+      ? "notice.statsLoading"
+      : status === "error"
+      ? "notice.statsError"
+      : status === "invalid" || status === "partial"
+      ? "notice.statsUnavailable"
+      : undefined;
+
+  return {
+    canDisplay: isComplete,
+    canExport: isComplete,
+    noticeKey,
+  } as const;
+};
+
+const exportFileStem = (value: string): string =>
+  value
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "");
+
+export const getCharacterShowcaseExportFileName = (
+  displayName: string,
+  characterKey: string
+): string => {
+  const stem =
+    exportFileStem(displayName) || exportFileStem(characterKey) || "character";
+  return `${stem}-build.png`;
+};
+
 interface CharacterSourceUpload {
   readonly date?: Date | string | number;
   readonly characters?: readonly { readonly character: Character }[];

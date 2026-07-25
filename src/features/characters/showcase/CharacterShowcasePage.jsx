@@ -30,6 +30,8 @@ import { calculateCharacterSheetStatsFromProgression } from "../../../utils/char
 import {
   buildArtifactShowcase,
   getCharacterBuildOptions,
+  getCharacterShowcaseExportFileName,
+  getCharacterStatsPresentation,
   getEquippedArtifacts,
   getResolvedArtifactMainAttribute,
   selectCharacterBuildOption,
@@ -102,7 +104,7 @@ const buildStatPriority = (build, type) => {
 
 const buildStats = (calculation, activeBuild, theme, t, locale) => {
   const calculatedRows =
-    calculation && calculation.status !== "invalid"
+    calculation?.status === "complete"
       ? toAppCharacterStatAttributes(
           calculation.stats,
           CHARACTER_ELEMENTS.has(theme) ? theme : undefined
@@ -129,12 +131,6 @@ const sourceDate = (value) => {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? undefined : date;
 };
-
-const safeFileName = (value) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
 
 function ArtifactDetailDialog({ artifact, onClose }) {
   const closeRef = useRef(null);
@@ -357,16 +353,12 @@ export default function CharacterShowcasePage() {
       : calculation?.status === "complete"
       ? "complete"
       : "loading";
-  const statsExportReady =
-    statsStatus === "complete" || statsStatus === "partial";
-  const statsNoticeKey =
-    statsStatus === "loading"
-      ? "notice.statsLoading"
-      : statsStatus === "error"
-      ? "notice.statsError"
-      : statsStatus === "invalid"
-      ? "notice.statsUnavailable"
-      : undefined;
+  const statsPresentation = getCharacterStatsPresentation(statsStatus);
+  const statsExportReady = statsPresentation.canExport;
+  const statsNoticeKey = statsPresentation.noticeKey;
+  const calculationForDisplay = statsPresentation.canDisplay
+    ? calculation
+    : undefined;
   const statsNote = statsNoticeKey
     ? t(statsNoticeKey, { ns: "showcase" })
     : undefined;
@@ -446,6 +438,7 @@ export default function CharacterShowcasePage() {
     const weaponKey = weapon ? Weapon[weapon.weapon]?.toLowerCase() : undefined;
 
     return {
+      characterKey: key,
       theme,
       name,
       nameLines: splitCharacterName(name),
@@ -482,7 +475,13 @@ export default function CharacterShowcasePage() {
         label: t(`talents.${talent}`, { ns: "showcase" }),
         value: info.talents?.[talentIndex] ?? "—",
       })),
-      stats: buildStats(calculation, activeBuild, theme, t, locale),
+      stats: buildStats(
+        calculationForDisplay,
+        activeBuild,
+        theme,
+        t,
+        locale
+      ),
       artifacts,
       date,
     };
@@ -493,7 +492,7 @@ export default function CharacterShowcasePage() {
     activeBuild,
     equippedArtifacts,
     weapon,
-    calculation,
+    calculationForDisplay,
     locale,
     shortDateFormatter,
     t,
@@ -523,7 +522,10 @@ export default function CharacterShowcasePage() {
         backgroundColor: "#160e23",
       });
       const link = document.createElement("a");
-      link.download = `${safeFileName(viewModel.name)}-build.png`;
+      link.download = getCharacterShowcaseExportFileName(
+        viewModel.name,
+        viewModel.characterKey
+      );
       link.href = image;
       link.click();
       setExportState("done");
