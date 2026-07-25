@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
-import { migrateArtifactScoringState } from "../../src/store/migrations/artifactScoring";
+import {
+  migrateArtifactScoringState,
+  migrateImportedProgressionState,
+} from "../../src/store/migrations/artifactScoring";
 
 test("preserves user data and removes obsolete scoring caches and weights", () => {
   const subAttributes = [{ type: 9, value: 0.7 }];
@@ -74,5 +77,42 @@ test("derived artifact scoring state is structurally excluded from persistence",
   assert.doesNotMatch(
     artifactReducerSource,
     /fitsAndRarity|match|potential|prospect/i
+  );
+});
+
+test("persisted GOOD characters and weapons gain explicit ascension without losing max level", () => {
+  const input = {
+    uploads: {
+      artifacts: {
+        account: {
+          characters: [
+            { character: 1, level: 20, maxLevel: 20 },
+            { character: 2, level: 40, maxLevel: 50 },
+            { character: 3, level: 100, maxLevel: 100 },
+            { character: 4, level: 70, maxLevel: 80, ascension: 4 },
+          ],
+          weapons: [
+            { weapon: 1, level: 20, maxLevel: 40 },
+            { weapon: 2, level: 90, maxLevel: 90 },
+          ],
+        },
+      },
+    },
+  };
+
+  const output = migrateImportedProgressionState(input);
+  const account = output.uploads.artifacts.account;
+
+  assert.deepEqual(
+    account.characters.map(({ ascension }) => ascension),
+    [0, 2, 6, 4]
+  );
+  assert.deepEqual(
+    account.characters.map(({ maxLevel }) => maxLevel),
+    [20, 50, 100, 80]
+  );
+  assert.deepEqual(
+    account.weapons.map(({ ascension }) => ascension),
+    [1, 6]
   );
 });

@@ -42,7 +42,9 @@ test("generic GOOD Traveler equipment resolves to the imported element", () => {
   const parsed = parseGOODFormat(travelerFixture(["TravelerAnemo"]));
 
   assert.equal(parsed.characters[0]?.character, Character.TRAVELER_ANEMO);
+  assert.equal(parsed.characters[0]?.ascension, 6);
   assert.equal(parsed.weapons[0]?.location, Character.TRAVELER_ANEMO);
+  assert.equal(parsed.weapons[0]?.ascension, 6);
   assert.equal(parsed.artifacts[0]?.character, Character.TRAVELER_ANEMO);
 });
 

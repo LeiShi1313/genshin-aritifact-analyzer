@@ -1,12 +1,12 @@
 import { Artifact } from "../genshin/artifact";
 import { Character, characterToJSON } from "../genshin/character";
 import { Weapon } from "../genshin/weapon";
-import {
+import type {
   ImportedCharacterInfo,
   ImportedWeaponInfo,
   GOODData,
   ParsedImportResult,
-} from "../genshin/import";
+} from "../types/import";
 import { deserializeFromGood, deserializeFromMona } from "./artifact";
 import { monaPositionToAttributePosition } from "./attribute";
 import { characterFromGoodName } from "./character";
@@ -53,6 +53,7 @@ export const deserializeCharacterFromGood = (
   return {
     character,
     level: input.level ?? 1,
+    ascension,
     maxLevel: ascensionToMaxLevel(ascension),
     constellation: input.constellation ?? 0,
     talents: [talent.auto ?? 1, talent.skill ?? 1, talent.burst ?? 1],
@@ -72,6 +73,7 @@ export const deserializeWeaponFromGood = (
   return {
     weapon,
     level: input.level ?? 1,
+    ascension,
     maxLevel: ascensionToMaxLevel(ascension),
     refinement: input.refinement ?? 1,
     location: resolveCharacter(input.location ?? ""),
@@ -199,4 +201,4 @@ export type {
   ImportedWeaponInfo,
   GOODData,
   ParsedImportResult,
-} from "../genshin/import";
+} from "../types/import";
