@@ -157,21 +157,13 @@ function TalentSummary({ talents, t }) {
   );
 }
 
-function StatWing({ stats, side, approximate, note }) {
+function StatWing({ stats, side }) {
   return (
-    <div
-      className={`ccp-stat-wing ccp-stat-wing--${side}${
-        approximate ? " ccp-stat-wing--approximate" : ""
-      }`}
-      title={approximate ? note : undefined}
-    >
+    <div className={`ccp-stat-wing ccp-stat-wing--${side}`}>
       {stats.map((stat) => (
         <div className={stat.featured ? "is-featured" : ""} key={stat.type}>
           <span>{stat.label}</span>
-          <strong>
-            {approximate && <i aria-hidden="true">≈</i>}
-            {stat.value}
-          </strong>
+          <strong>{stat.value}</strong>
         </div>
       ))}
     </div>
@@ -342,12 +334,7 @@ const CharacterShowcaseCard = forwardRef(function CharacterShowcaseCard(
             profile: build.profileLabel,
           })}
           <small>
-            {t(
-              build.statsApproximate
-                ? "card.statScopePartial"
-                : "card.statScope",
-              { ns: "showcase" }
-            )}
+            {t("card.statScope", { ns: "showcase" })}
           </small>
         </span>
       </header>
@@ -368,14 +355,10 @@ const CharacterShowcaseCard = forwardRef(function CharacterShowcaseCard(
       </div>
 
       <StatWing
-        approximate={build.statsApproximate}
-        note={build.statsNote}
         stats={build.stats.slice(0, 4)}
         side="left"
       />
       <StatWing
-        approximate={build.statsApproximate}
-        note={build.statsNote}
         stats={build.stats.slice(4, 8)}
         side="right"
       />

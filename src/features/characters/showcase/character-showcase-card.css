@@ -407,15 +407,6 @@
   display: block;
 }
 
-.ccp-stat-wing strong > i {
-  display: inline;
-  margin-right: 2px;
-  color: currentColor;
-  font-size: .72em;
-  font-style: normal;
-  opacity: .76;
-}
-
 .ccp-stat-wing span {
   color: rgba(240, 218, 251, 0.49);
   font-size: 8px;

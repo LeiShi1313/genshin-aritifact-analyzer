@@ -362,8 +362,6 @@ export default function CharacterShowcasePage() {
   const statsNoticeKey =
     statsStatus === "loading"
       ? "notice.statsLoading"
-      : statsStatus === "partial"
-      ? "notice.statsPartial"
       : statsStatus === "error"
       ? "notice.statsError"
       : statsStatus === "invalid"
@@ -485,8 +483,6 @@ export default function CharacterShowcasePage() {
         value: info.talents?.[talentIndex] ?? "—",
       })),
       stats: buildStats(calculation, activeBuild, theme, t, locale),
-      statsApproximate: statsStatus === "partial",
-      statsNote,
       artifacts,
       date,
     };
@@ -498,8 +494,6 @@ export default function CharacterShowcasePage() {
     equippedArtifacts,
     weapon,
     calculation,
-    statsStatus,
-    statsNote,
     locale,
     shortDateFormatter,
     t,

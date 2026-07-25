@@ -385,7 +385,7 @@ test("the element contract has one owner and is loaded by every production surfa
   }
 });
 
-test("the production card exposes stat lifecycle state and gates export", () => {
+test("the production card gates export without approximate markers or partial warnings", () => {
   const page = readSource(
     "src/features/characters/showcase/CharacterShowcasePage.jsx"
   );
@@ -396,11 +396,13 @@ test("the production card exposes stat lifecycle state and gates export", () => 
   assert.match(page, /setSheetRequest\(\{ status: "loading", loadout \}\)/);
   assert.match(page, /setSheetRequest\(\{ status: "error", loadout \}\)/);
   assert.match(page, /disabled=\{!statsExportReady \|\| exportState === "working"\}/);
-  assert.match(page, /notice\.statsPartial/);
   assert.match(page, /getResolvedArtifactMainAttribute\(artifact\)/);
   assert.match(page, /onClick=\{\(\) => window\.location\.reload\(\)\}/);
   assert.doesNotMatch(page, /statsRetry/);
-  assert.match(card, /build\.statsApproximate/);
-  assert.match(card, />≈</);
-  assert.match(card, /card\.statScopePartial/);
+  assert.doesNotMatch(page, /notice\.statsPartial/);
+  assert.doesNotMatch(page, /statsApproximate/);
+  assert.doesNotMatch(card, /statsApproximate/);
+  assert.doesNotMatch(card, /≈/);
+  assert.doesNotMatch(card, /card\.statScopePartial/);
+  assert.match(card, /card\.statScope/);
 });

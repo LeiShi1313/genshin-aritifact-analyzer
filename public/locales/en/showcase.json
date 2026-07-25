@@ -23,7 +23,6 @@
     "rarity": "{{count}}-star rarity",
     "refinement": "R{{refinement}}",
     "statScope": "Unbuffed · constant effects only",
-    "statScopePartial": "Approx. · constant effects only",
     "standard": "Standard",
     "unscored": "Unscored"
   },
@@ -54,7 +53,6 @@
     "reloadPage": "Reload page",
     "statsError": "Character stats could not be loaded. The card cannot be exported until they are ready.",
     "statsLoading": "Calculating character stats…",
-    "statsPartial": "Approximate stats — unsupported set bonuses or missing equipment are not included.",
     "statsUnavailable": "Character stats are unavailable because this snapshot contains unsupported equipment data."
   },
   "roster": {

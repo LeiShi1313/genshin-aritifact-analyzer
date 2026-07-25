@@ -23,7 +23,6 @@
     "rarity": "Rareza de {{count}} estrellas",
     "refinement": "R{{refinement}}",
     "statScope": "Sin mejoras · solo efectos constantes",
-    "statScopePartial": "Aprox. · solo efectos constantes",
     "standard": "Estándar",
     "unscored": "Sin puntuar"
   },
@@ -54,7 +53,6 @@
     "reloadPage": "Recargar página",
     "statsError": "No se pudieron cargar las estadísticas del personaje. La tarjeta no se puede exportar hasta que estén listas.",
     "statsLoading": "Calculando estadísticas del personaje…",
-    "statsPartial": "Estadísticas aproximadas: no se incluyen bonos de conjunto no compatibles ni equipo faltante.",
     "statsUnavailable": "Las estadísticas del personaje no están disponibles porque esta captura contiene datos de equipo no compatibles."
   },
   "roster": {

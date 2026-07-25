@@ -23,7 +23,6 @@
     "rarity": "{{count}}星稀有度",
     "refinement": "R{{refinement}}",
     "statScope": "无增益 · 仅计常驻效果",
-    "statScopePartial": "估算值 · 仅计常驻效果",
     "standard": "标准",
     "unscored": "未评分"
   },
@@ -54,7 +53,6 @@
     "reloadPage": "重新加载页面",
     "statsError": "无法加载角色属性。属性准备完成前不能导出卡片。",
     "statsLoading": "正在计算角色属性…",
-    "statsPartial": "属性为估算值——暂未计入不支持的套装效果或缺失装备。",
     "statsUnavailable": "此快照包含不支持的装备数据，因此无法显示角色属性。"
   },
   "roster": {

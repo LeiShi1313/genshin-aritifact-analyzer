@@ -23,7 +23,6 @@
     "rarity": "{{count}}-Sterne-Seltenheit",
     "refinement": "R{{refinement}}",
     "statScope": "Ohne Buffs · nur konstante Effekte",
-    "statScopePartial": "Ungefähr · nur konstante Effekte",
     "standard": "Standard",
     "unscored": "Unbewertet"
   },
@@ -54,7 +53,6 @@
     "reloadPage": "Seite neu laden",
     "statsError": "Die Charakterwerte konnten nicht geladen werden. Die Karte kann erst exportiert werden, wenn sie verfügbar sind.",
     "statsLoading": "Charakterwerte werden berechnet…",
-    "statsPartial": "Ungefähre Werte — nicht unterstützte Set-Boni oder fehlende Ausrüstung sind nicht enthalten.",
     "statsUnavailable": "Die Charakterwerte sind nicht verfügbar, weil dieser Schnappschuss nicht unterstützte Ausrüstungsdaten enthält."
   },
   "roster": {

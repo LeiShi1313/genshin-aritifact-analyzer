@@ -23,7 +23,6 @@
     "rarity": "★{{count}}レアリティ",
     "refinement": "R{{refinement}}",
     "statScope": "バフなし・常時効果のみ",
-    "statScopePartial": "概算・常時効果のみ",
     "standard": "標準",
     "unscored": "未評価"
   },
@@ -54,7 +53,6 @@
     "reloadPage": "ページを再読み込み",
     "statsError": "キャラクターステータスを読み込めませんでした。準備が完了するまでカードは書き出せません。",
     "statsLoading": "キャラクターステータスを計算中…",
-    "statsPartial": "概算ステータス — 未対応のセット効果や未装備の装備品は含まれていません。",
     "statsUnavailable": "このスナップショットに未対応の装備データが含まれているため、キャラクターステータスを表示できません。"
   },
   "roster": {

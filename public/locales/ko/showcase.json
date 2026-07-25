@@ -23,7 +23,6 @@
     "rarity": "{{count}}성 희귀도",
     "refinement": "R{{refinement}}",
     "statScope": "버프 없음 · 상시 효과만",
-    "statScopePartial": "예상값 · 상시 효과만",
     "standard": "표준",
     "unscored": "미평가"
   },
@@ -54,7 +53,6 @@
     "reloadPage": "페이지 새로고침",
     "statsError": "캐릭터 스탯을 불러오지 못했습니다. 준비되기 전에는 카드를 내보낼 수 없습니다.",
     "statsLoading": "캐릭터 스탯 계산 중…",
-    "statsPartial": "예상 스탯 — 지원되지 않는 세트 효과와 누락된 장비는 포함되지 않습니다.",
     "statsUnavailable": "이 스냅샷에 지원되지 않는 장비 데이터가 있어 캐릭터 스탯을 표시할 수 없습니다."
   },
   "roster": {
