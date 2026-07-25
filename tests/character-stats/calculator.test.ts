@@ -389,6 +389,32 @@ test("marks missing artifact set identity as partial instead of complete", () =>
     ),
     true
   );
+
+  const invalidRuntimeIdentities = calculateCharacterSheetStats({
+    ...raidenLoadout(),
+    artifacts: [
+      {
+        slot: "flower",
+        setKey: 1,
+        mainStat: { stat: "hpFlat", value: 4780 },
+        substats: [],
+      },
+      {
+        slot: "plume",
+        setKey: 2,
+        mainStat: { stat: "attackFlat", value: 311 },
+        substats: [],
+      },
+    ],
+  } as unknown as CharacterSheetLoadout);
+
+  assert.equal(invalidRuntimeIdentities.status, "partial");
+  if (invalidRuntimeIdentities.status === "invalid") return;
+  assert.equal(invalidRuntimeIdentities.coverage.artifactSetConstants, "unknown");
+  assert.deepEqual(
+    invalidRuntimeIdentities.issues.map((issue) => issue.code),
+    ["ARTIFACT_SET_IDENTITY_MISSING"]
+  );
 });
 
 test("keeps audited constant coverage explicit and marks future keys partial", () => {

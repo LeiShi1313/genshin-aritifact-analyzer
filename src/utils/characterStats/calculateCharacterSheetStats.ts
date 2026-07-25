@@ -147,6 +147,9 @@ const ownEntry = <Entry>(
 ): Entry | undefined =>
   Object.prototype.hasOwnProperty.call(entries, key) ? entries[key] : undefined;
 
+const hasArtifactSetIdentity = (setKey: unknown): setKey is string =>
+  typeof setKey === "string" && setKey.trim().length > 0;
+
 export const calculateCharacterSheetStatsFromProgression = (
   loadout: CharacterSheetLoadout,
   progression: CharacterSheetProgressionData
@@ -222,10 +225,7 @@ export const calculateCharacterSheetStatsFromProgression = (
       ]);
     }
     seenSlots.add(artifact.slot);
-    if (
-      typeof artifact.setKey !== "string" ||
-      artifact.setKey.trim().length === 0
-    ) {
+    if (!hasArtifactSetIdentity(artifact.setKey)) {
       hasUnknownSetIdentity = true;
     }
     if (
@@ -356,7 +356,7 @@ export const calculateCharacterSheetStatsFromProgression = (
   }
   const setCounts = new Map<string, number>();
   for (const artifact of artifacts) {
-    if (!artifact.setKey) continue;
+    if (!hasArtifactSetIdentity(artifact.setKey)) continue;
     setCounts.set(artifact.setKey, (setCounts.get(artifact.setKey) ?? 0) + 1);
   }
   for (const [setKey, count] of [...setCounts].sort(([left], [right]) =>
