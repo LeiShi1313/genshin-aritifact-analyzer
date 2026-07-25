@@ -1,5 +1,7 @@
 import type {
+  ArtifactSetConstantRule,
   CharacterConstantRule,
+  ConstantEffectStat,
   WeaponConstantRule,
 } from "../../types";
 
@@ -35,6 +37,92 @@ export const CHARACTER_CONSTANT_RULES: readonly CharacterConstantRule[] = [
     effects: [{ stat: "elementalMastery", value: 100 }],
   },
 ] as const;
+
+const artifactSetRules = (
+  stat: ConstantEffectStat,
+  value: number,
+  setKeys: readonly string[]
+): readonly ArtifactSetConstantRule[] =>
+  setKeys.map((setKey) => ({
+    id: `artifact_set.${setKey}.two_piece`,
+    setKey,
+    requiredPieces: 2,
+    effects: [{ stat, value }],
+  }));
+
+// Rebuilt from the always-active two-piece descriptions in the generated
+// Genshin set catalog. Only bonuses represented on the character stat sheet
+// are included; attack-type damage, resistance, energy restoration, and
+// conditional effects do not alter this calculator's sheet fields.
+export const ARTIFACT_SET_CONSTANT_RULES: readonly ArtifactSetConstantRule[] = [
+  ...artifactSetRules("geoDamageBonus", 0.15, ["archaic_petra"]),
+  ...artifactSetRules("critRate", 0.12, ["berserker"]),
+  ...artifactSetRules("cryoDamageBonus", 0.15, [
+    "blizzard_strayer",
+    "finale_of_the_deep_galleries",
+  ]),
+  ...artifactSetRules("physicalDamageBonus", 0.25, [
+    "bloodstained_chivalry",
+    "pale_flame",
+  ]),
+  ...artifactSetRules("attackPercent", 0.18, [
+    "brave_heart",
+    "echoes_of_an_offering",
+    "gladiators_finale",
+    "resolution_of_sojourner",
+    "shimenawas_reminiscence",
+    "vermillion_hereafter",
+    "nighttime_whispers_in_the_echoing_woods",
+    "fragment_of_harmonic_whimsy",
+    "unfinished_reverie",
+    "a_day_carved_from_rising_winds",
+    "disenchantment_in_deep_shadow",
+  ]),
+  ...artifactSetRules("pyroDamageBonus", 0.15, [
+    "crimson_witch_of_flames",
+  ]),
+  ...artifactSetRules("dendroDamageBonus", 0.15, ["deepwood_memories"]),
+  ...artifactSetRules("defensePercent", 0.3, [
+    "defenders_will",
+    "husk_of_opulent_dreams",
+  ]),
+  ...artifactSetRules("anemoDamageBonus", 0.15, [
+    "desert_pavilion_chronicle",
+    "viridescent_venerer",
+  ]),
+  ...artifactSetRules("energyRecharge", 0.2, [
+    "emblem_of_severed_fate",
+    "scholar",
+    "the_exile",
+    "silken_moons_serenade",
+    "celestial_gift",
+  ]),
+  ...artifactSetRules("elementalMastery", 80, [
+    "flower_of_paradise_lost",
+    "gilded_dreams",
+    "instructor",
+    "wanderers_troupe",
+    "night_of_the_skys_unveiling",
+    "aubade_of_morningstar_and_moon",
+  ]),
+  ...artifactSetRules("hydroDamageBonus", 0.15, [
+    "heart_of_depth",
+    "nymphs_dream",
+  ]),
+  ...artifactSetRules("healingBonus", 0.15, [
+    "maiden_beloved",
+    "ocean_hued_clam",
+    "song_of_days_past",
+  ]),
+  ...artifactSetRules("shieldStrength", 0.35, ["retracing_bolide"]),
+  ...artifactSetRules("hpPercent", 0.2, [
+    "tenacity_of_the_millelith",
+    "vourukashas_glow",
+  ]),
+  ...artifactSetRules("electroDamageBonus", 0.15, ["thundering_fury"]),
+  ...artifactSetRules("hpFlat", 1000, ["adventurer"]),
+  ...artifactSetRules("defenseFlat", 100, ["lucky_dog"]),
+];
 
 const pct12 = [0.12, 0.15, 0.18, 0.21, 0.24] as const;
 const pct16 = [0.16, 0.2, 0.24, 0.28, 0.32] as const;

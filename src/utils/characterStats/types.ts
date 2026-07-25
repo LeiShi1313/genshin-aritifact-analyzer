@@ -8,14 +8,19 @@ export type Element =
   | "pyro";
 
 export type ConstantEffectStat =
+  | "hpFlat"
   | "hpPercent"
+  | "attackFlat"
   | "attackPercent"
+  | "defenseFlat"
   | "defensePercent"
   | "elementalMastery"
+  | "energyRecharge"
   | "critRate"
   | "critDamage"
   | "healingBonus"
   | "shieldStrength"
+  | "physicalDamageBonus"
   | "allElementalDamageBonus"
   | `${Element}DamageBonus`;
 
@@ -135,7 +140,7 @@ export type CharacterSheetIssueCode =
   | "TOO_MANY_ARTIFACT_SUBSTATS"
   | "MISSING_WEAPON"
   | "ARTIFACT_SET_IDENTITY_MISSING"
-  | "ARTIFACT_SET_CONSTANTS_UNSUPPORTED"
+  | "ARTIFACT_SET_CONSTANTS_UNREVIEWED"
   | "CHARACTER_CONSTANTS_UNREVIEWED"
   | "WEAPON_CONSTANTS_UNREVIEWED";
 
@@ -159,7 +164,8 @@ export interface CharacterSheetCalculationValue {
     readonly weaponConstants: "reviewed" | "unreviewed" | "not-equipped";
     readonly artifactSetConstants:
       | "not-applicable"
-      | "unsupported"
+      | "reviewed"
+      | "unreviewed"
       | "unknown";
     readonly gameVersion: string;
     readonly genshinDbVersion: string;
@@ -204,5 +210,16 @@ export interface WeaponConstantRule {
     readonly stat: ConstantEffectStat;
     /** R1 through R5. Ratios use 1 = 100%; flat EM uses raw points. */
     readonly valuesByRefinement: RefinementValues;
+  }[];
+}
+
+export interface ArtifactSetConstantRule {
+  readonly id: string;
+  readonly setKey: string;
+  readonly requiredPieces: 2;
+  readonly effects: readonly {
+    readonly stat: ConstantEffectStat;
+    /** Ratios use 1 = 100%; flat stats and EM use raw points. */
+    readonly value: number;
   }[];
 }

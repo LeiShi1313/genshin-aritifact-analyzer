@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  ARTIFACT_SET_CONSTANT_RULES,
   CHARACTER_CONSTANT_RULES,
   WEAPON_CONSTANT_RULES,
 } from "../../src/utils/characterStats/internal/rules/constantRules";
@@ -11,6 +12,14 @@ const weaponRule = (weaponKey: string) => {
     (candidate) => candidate.weaponKey === weaponKey
   );
   assert.ok(rule, `missing constant rule for ${weaponKey}`);
+  return rule;
+};
+
+const artifactSetRule = (setKey: string) => {
+  const rule = ARTIFACT_SET_CONSTANT_RULES.find(
+    (candidate) => candidate.setKey === setKey
+  );
+  assert.ok(rule, `missing constant rule for ${setKey}`);
   return rule;
 };
 
@@ -111,13 +120,40 @@ test("weapon refinement values are explicit R1-R5 ratio tuples", () => {
   ]);
 });
 
+test("artifact set constants cover every always-active character-sheet bonus", () => {
+  assert.equal(ARTIFACT_SET_CONSTANT_RULES.length, 45);
+  assert.equal(
+    new Set(ARTIFACT_SET_CONSTANT_RULES.map((rule) => rule.id)).size,
+    ARTIFACT_SET_CONSTANT_RULES.length
+  );
+  assert.equal(
+    new Set(ARTIFACT_SET_CONSTANT_RULES.map((rule) => rule.setKey)).size,
+    ARTIFACT_SET_CONSTANT_RULES.length
+  );
+
+  assert.deepEqual(artifactSetRule("emblem_of_severed_fate").effects, [
+    { stat: "energyRecharge", value: 0.2 },
+  ]);
+  assert.deepEqual(artifactSetRule("gladiators_finale").effects, [
+    { stat: "attackPercent", value: 0.18 },
+  ]);
+  assert.deepEqual(artifactSetRule("adventurer").effects, [
+    { stat: "hpFlat", value: 1000 },
+  ]);
+  assert.deepEqual(artifactSetRule("lucky_dog").effects, [
+    { stat: "defenseFlat", value: 100 },
+  ]);
+});
+
 test("constant rule data is platform-neutral JSON without executable callbacks", () => {
   const serialized = JSON.stringify({
+    artifactSets: ARTIFACT_SET_CONSTANT_RULES,
     characters: CHARACTER_CONSTANT_RULES,
     weapons: WEAPON_CONSTANT_RULES,
   });
   const parsed = JSON.parse(serialized);
 
+  assert.deepEqual(parsed.artifactSets, ARTIFACT_SET_CONSTANT_RULES);
   assert.deepEqual(parsed.characters, CHARACTER_CONSTANT_RULES);
   assert.deepEqual(parsed.weapons, WEAPON_CONSTANT_RULES);
   assert.equal(serialized.includes("function"), false);

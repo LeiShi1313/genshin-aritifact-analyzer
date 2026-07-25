@@ -1,6 +1,70 @@
 // This is an intentionally manual audit boundary. When generated catalogs add
 // keys, the freshness test fails until their always-active stat rules have
 // been reviewed and this manifest is deliberately updated.
+export const AUDITED_ARTIFACT_SET_CONSTANT_KEYS = [
+  "archaic_petra",
+  "berserker",
+  "blizzard_strayer",
+  "bloodstained_chivalry",
+  "brave_heart",
+  "crimson_witch_of_flames",
+  "deepwood_memories",
+  "defenders_will",
+  "desert_pavilion_chronicle",
+  "echoes_of_an_offering",
+  "emblem_of_severed_fate",
+  "flower_of_paradise_lost",
+  "gambler",
+  "gilded_dreams",
+  "gladiators_finale",
+  "heart_of_depth",
+  "husk_of_opulent_dreams",
+  "instructor",
+  "lavawalker",
+  "maiden_beloved",
+  "martial_artist",
+  "noblesse_oblige",
+  "ocean_hued_clam",
+  "pale_flame",
+  "prayers_for_destiny",
+  "prayers_for_illumination",
+  "prayers_for_wisdom",
+  "prayers_to_springtime",
+  "resolution_of_sojourner",
+  "retracing_bolide",
+  "scholar",
+  "shimenawas_reminiscence",
+  "tenacity_of_the_millelith",
+  "the_exile",
+  "thundering_fury",
+  "thundersoother",
+  "tiny_miracle",
+  "vermillion_hereafter",
+  "viridescent_venerer",
+  "wanderers_troupe",
+  "nymphs_dream",
+  "vourukashas_glow",
+  "golden_troupe",
+  "marechaussee_hunter",
+  "song_of_days_past",
+  "nighttime_whispers_in_the_echoing_woods",
+  "adventurer",
+  "lucky_dog",
+  "traveling_doctor",
+  "fragment_of_harmonic_whimsy",
+  "unfinished_reverie",
+  "scroll_of_the_hero_of_cinder_city",
+  "obsidian_codex",
+  "long_nights_oath",
+  "finale_of_the_deep_galleries",
+  "night_of_the_skys_unveiling",
+  "silken_moons_serenade",
+  "aubade_of_morningstar_and_moon",
+  "a_day_carved_from_rising_winds",
+  "celestial_gift",
+  "disenchantment_in_deep_shadow",
+] as const;
+
 export const AUDITED_CHARACTER_CONSTANT_KEYS = [
   "aether",
   "aino",
@@ -370,6 +434,12 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
 
 const auditedCharacters = new Set<string>(AUDITED_CHARACTER_CONSTANT_KEYS);
 const auditedWeapons = new Set<string>(AUDITED_WEAPON_CONSTANT_KEYS);
+const auditedArtifactSets = new Set<string>(
+  AUDITED_ARTIFACT_SET_CONSTANT_KEYS
+);
+
+export const hasReviewedArtifactSetConstants = (key: string): boolean =>
+  auditedArtifactSets.has(key);
 
 export const hasReviewedCharacterConstants = (key: string): boolean =>
   auditedCharacters.has(key);

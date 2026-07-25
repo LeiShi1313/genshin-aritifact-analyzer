@@ -7,10 +7,12 @@ import {
 } from "../../src/utils/characterStats";
 import { calculateCharacterSheetStatsFromProgression } from "../../src/utils/characterStats/calculateCharacterSheetStats";
 import {
+  AUDITED_ARTIFACT_SET_CONSTANT_KEYS,
   AUDITED_CHARACTER_CONSTANT_KEYS,
   AUDITED_WEAPON_CONSTANT_KEYS,
 } from "../../src/utils/characterStats/internal/rules/constantRuleCoverage";
 import { characterProgression, weaponProgression } from "../../src/utils/characterStats/internal/progression";
+import artifactSets from "../../src/data/sets.json";
 
 const closeTo = (actual: number, expected: number, tolerance = 1e-10) => {
   assert.ok(
@@ -192,13 +194,17 @@ test("returns structured invalid and partial results instead of silent zeroes", 
       },
     ],
   });
-  assert.equal(activeSet.status, "partial");
-  assert.equal(
-    activeSet.issues.some(
-      (issue) => issue.code === "ARTIFACT_SET_CONSTANTS_UNSUPPORTED"
-    ),
-    true
-  );
+  assert.equal(activeSet.status, "complete");
+  if (activeSet.status !== "invalid") {
+    closeTo(activeSet.stats.energyRecharge, 2.07128);
+    assert.equal(activeSet.coverage.artifactSetConstants, "reviewed");
+    assert.equal(
+      activeSet.appliedRuleIds.includes(
+        "artifact_set.emblem_of_severed_fate.two_piece"
+      ),
+      true
+    );
+  }
 
   const inheritedKey = calculateCharacterSheetStats({
     ...raidenLoadout(),
@@ -208,6 +214,60 @@ test("returns structured invalid and partial results instead of silent zeroes", 
     status: "invalid",
     issues: [{ code: "CHARACTER_NOT_FOUND", sourceKey: "constructor" }],
   });
+});
+
+test("reviewed artifact sets without sheet-visible bonuses remain complete", () => {
+  const result = calculateCharacterSheetStats({
+    ...raidenLoadout(),
+    artifacts: [
+      {
+        slot: "flower",
+        setKey: "gambler",
+        mainStat: { stat: "hpFlat", value: 4780 },
+        substats: [],
+      },
+      {
+        slot: "plume",
+        setKey: "gambler",
+        mainStat: { stat: "attackFlat", value: 311 },
+        substats: [],
+      },
+    ],
+  });
+
+  assert.equal(result.status, "complete");
+  if (result.status === "invalid") return;
+  assert.equal(result.coverage.artifactSetConstants, "reviewed");
+});
+
+test("future artifact sets remain partial until their sheet constants are audited", () => {
+  const result = calculateCharacterSheetStats({
+    ...raidenLoadout(),
+    artifacts: [
+      {
+        slot: "flower",
+        setKey: "future_artifact_set",
+        mainStat: { stat: "hpFlat", value: 4780 },
+        substats: [],
+      },
+      {
+        slot: "plume",
+        setKey: "future_artifact_set",
+        mainStat: { stat: "attackFlat", value: 311 },
+        substats: [],
+      },
+    ],
+  });
+
+  assert.equal(result.status, "partial");
+  if (result.status === "invalid") return;
+  assert.equal(result.coverage.artifactSetConstants, "unreviewed");
+  assert.equal(
+    result.issues.some(
+      (issue) => issue.code === "ARTIFACT_SET_CONSTANTS_UNREVIEWED"
+    ),
+    true
+  );
 });
 
 test("rejects invalid refinement and duplicate artifact slots without mutating input", () => {
@@ -418,6 +478,10 @@ test("marks missing artifact set identity as partial instead of complete", () =>
 });
 
 test("keeps audited constant coverage explicit and marks future keys partial", () => {
+  assert.deepEqual(
+    [...AUDITED_ARTIFACT_SET_CONSTANT_KEYS].sort(),
+    Object.keys(artifactSets).sort()
+  );
   assert.equal(
     AUDITED_CHARACTER_CONSTANT_KEYS.every((key) => characterProgression[key]),
     true

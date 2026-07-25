@@ -1,8 +1,10 @@
 import {
+  ARTIFACT_SET_CONSTANT_RULES,
   CHARACTER_CONSTANT_RULES,
   WEAPON_CONSTANT_RULES,
 } from "./internal/rules/constantRules";
 import {
+  hasReviewedArtifactSetConstants,
   hasReviewedCharacterConstants,
   hasReviewedWeaponConstants,
 } from "./internal/rules/constantRuleCoverage";
@@ -359,14 +361,27 @@ export const calculateCharacterSheetStatsFromProgression = (
     if (!hasArtifactSetIdentity(artifact.setKey)) continue;
     setCounts.set(artifact.setKey, (setCounts.get(artifact.setKey) ?? 0) + 1);
   }
+  let hasActiveArtifactSet = false;
+  let hasUnreviewedArtifactSet = false;
   for (const [setKey, count] of [...setCounts].sort(([left], [right]) =>
     left.localeCompare(right)
   )) {
-    if (count >= 2) {
+    if (count < 2) continue;
+    hasActiveArtifactSet = true;
+    if (!hasReviewedArtifactSetConstants(setKey)) {
+      hasUnreviewedArtifactSet = true;
       issues.push({
-        code: "ARTIFACT_SET_CONSTANTS_UNSUPPORTED",
+        code: "ARTIFACT_SET_CONSTANTS_UNREVIEWED",
         sourceKey: setKey,
       });
+      continue;
+    }
+    for (const rule of ARTIFACT_SET_CONSTANT_RULES) {
+      if (rule.setKey !== setKey || count < rule.requiredPieces) continue;
+      for (const effect of rule.effects) {
+        addEffect(accumulator, effect.stat, effect.value);
+      }
+      appliedRuleIds.push(rule.id);
     }
   }
 
@@ -411,11 +426,11 @@ export const calculateCharacterSheetStatsFromProgression = (
         : ("not-equipped" as const),
       artifactSetConstants: hasUnknownSetIdentity
         ? ("unknown" as const)
-        : issues.some(
-            (issue) => issue.code === "ARTIFACT_SET_CONSTANTS_UNSUPPORTED"
-          )
-          ? ("unsupported" as const)
-          : ("not-applicable" as const),
+        : hasUnreviewedArtifactSet
+        ? ("unreviewed" as const)
+        : hasActiveArtifactSet
+        ? ("reviewed" as const)
+        : ("not-applicable" as const),
       gameVersion: progression.manifest.gameVersion,
       genshinDbVersion: progression.manifest.genshinDbVersion,
       constantRuleset: "genshin-artifact-builds/constant-stats@1",
