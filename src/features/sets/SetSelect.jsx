@@ -33,7 +33,7 @@ const iconFilterBy2PieceBonus = {
   less_affected_time: <IconTimeReduced className="Less_Affected_Time" />,
 };
 
-const SetSelect = ({ set, setSet, filterFn = null, labelledBy }) => {
+const SetSelect = ({ set, setSet, filterFn = null, labelledBy, hideAllOption = false }) => {
   const { t, i18n } = useTranslation();
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
@@ -90,7 +90,7 @@ const SetSelect = ({ set, setSet, filterFn = null, labelledBy }) => {
               alt=""
             />
             <span id={valueId} className="truncate">
-              {t("All")}
+              {hideAllOption ? t("Pick one thing", { thing: t("set") }) : t("All")}
             </span>
           </>
         )}
@@ -105,7 +105,7 @@ const SetSelect = ({ set, setSet, filterFn = null, labelledBy }) => {
         <div className="modal-box max-w-96 bg-neutral text-neutral-content flex max-h-[calc(100dvh_-_2rem)] w-[calc(100vw_-_2rem)] flex-col overflow-hidden p-0 shadow-xl">
           <div className="border-neutral-content/10 flex h-12 w-full shrink-0 items-center gap-2 border-b-2 pl-6 pr-2">
             <h2 id={titleId} className="text-md font-semibold">
-              {t("Pick one")} {t("set")}
+              {t("Pick one thing", { thing: t("set") })}
             </h2>
             <div className="grow" />
             <button
@@ -157,26 +157,28 @@ const SetSelect = ({ set, setSet, filterFn = null, labelledBy }) => {
           </div>
 
           <ul className="menu w-full flex-nowrap overflow-auto p-2 text-sm">
-            <li>
-              <button
-                type="button"
-                className={classNames(
-                  "w-full overflow-hidden text-ellipsis !rounded-full p-0 px-2 text-left",
-                  selectedSet === 0
-                    ? "bg-neutral-content text-neutral"
-                    : "hover:bg-neutral-content/10"
-                )}
-                aria-pressed={selectedSet === 0}
-                onClick={() => handleClick(0)}
-              >
-                <img
-                  className="aspect-square w-8"
-                  src={Icon_Inventory_Artifacts}
-                  alt=""
-                />
-                {t("All")}
-              </button>
-            </li>
+            {!hideAllOption && (
+              <li>
+                <button
+                  type="button"
+                  className={classNames(
+                    "w-full overflow-hidden text-ellipsis !rounded-full p-0 px-2 text-left",
+                    selectedSet === 0
+                      ? "bg-neutral-content text-neutral"
+                      : "hover:bg-neutral-content/10"
+                  )}
+                  aria-pressed={selectedSet === 0}
+                  onClick={() => handleClick(0)}
+                >
+                  <img
+                    className="aspect-square w-8"
+                    src={Icon_Inventory_Artifacts}
+                    alt=""
+                  />
+                  {t("All")}
+                </button>
+              </li>
+            )}
             {(setFilter
               ? [...TwoPcBonusCateToSets[setFilter]]
               : [...enumToIdx(Set)]

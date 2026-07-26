@@ -346,8 +346,8 @@
 .character-roster-card__loadout {
   display: grid;
   gap: 3px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 8px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10px;
 }
 
 .character-roster-card__loadout span {
@@ -383,11 +383,13 @@
 }
 
 .character-roster-score small {
-  font-size: 6px;
+  font-size: 9px;
   font-weight: 900;
   letter-spacing: 0.1em;
 }
 
+.character-roster-score.is-unscored,
+.character-roster-score.is-ordinary { color: #aea4b3; }
 .character-roster-score.is-good { color: #9dccdd; }
 .character-roster-score.is-excellent { color: #93daa8; }
 .character-roster-score.is-exceptional,
@@ -395,8 +397,8 @@
 
 .character-roster-card__footer > span:nth-child(2) {
   overflow: hidden;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 8px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10px;
   font-weight: 750;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -549,7 +551,7 @@
 .character-showcase-toolbar__selectors label > span {
   padding-left: 3px;
   color: var(--showcase-page-label);
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 850;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -580,7 +582,7 @@
   max-width: 160px;
   margin: 0 5px 11px 0;
   color: var(--showcase-page-meta);
-  font-size: 8px;
+  font-size: 9px;
   line-height: 1.35;
   text-align: right;
 }
@@ -631,7 +633,7 @@
   border: 1px solid rgba(154, 97, 54, .17);
   border-radius: 13px;
   color: #745b49;
-  background: rgba(255, 244, 218, .55);
+  background: rgba(255, 244, 218, .82);
   font-size: 10px;
 }
 
@@ -643,6 +645,12 @@
   border-color: color-mix(in srgb, var(--showcase-page-accent) 18%, transparent);
   color: var(--showcase-page-muted);
   background: rgba(255, 255, 255, .42);
+}
+
+.character-showcase-notice--partial {
+  border-color: rgba(154, 97, 54, .17);
+  color: #745b49;
+  background: rgba(255, 244, 218, .82);
 }
 
 .character-showcase-notice--error,
@@ -1005,4 +1013,30 @@
 .character-showcase-card.is-exporting .ccp-score-seal {
   width: 72px !important;
   height: 72px !important;
+}
+
+/* html-to-image ignores backdrop-filter and could catch entry animations
+   mid-flight; pin the frame to the canonical desktop inset for exports
+   started from mobile layouts. */
+.character-showcase-card.is-exporting,
+.character-showcase-card.is-exporting * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.character-showcase-card.is-exporting .ccp-source-mark,
+.character-showcase-card.is-exporting .ccp-weapon,
+.character-showcase-card.is-exporting .ccp-talent-block,
+.character-showcase-card.is-exporting .ccp-seal-artifacts,
+.character-showcase-card.is-exporting .ccp-stat-wing > div {
+  backdrop-filter: none !important;
+}
+
+.character-showcase-card.is-exporting {
+  border-radius: 24px !important;
+}
+
+.character-showcase-card.is-exporting::before {
+  inset: 18px !important;
+  border-radius: 17px !important;
 }

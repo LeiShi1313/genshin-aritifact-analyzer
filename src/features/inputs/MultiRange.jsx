@@ -12,7 +12,8 @@ const MultiRange = ({
   maxLabel,
   step = 1,
 }) => {
-  const percent = (value) => ((value - min) / (max - min)) * 100;
+  const percent = (value) =>
+    max > min ? ((value - min) / (max - min)) * 100 : 0;
   const minPercent = percent(minValue);
   const maxPercent = percent(maxValue);
   const upperOverlapThreshold = max - (max - min) * 0.1;

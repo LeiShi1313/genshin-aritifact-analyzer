@@ -70,9 +70,8 @@ const CharacterRosterCard = ({
   info,
   source,
   sourceId,
-  customBuilds,
-  buildConfig,
-  presetBuilds,
+  activeBuild,
+  averageScore,
 }) => {
   const { t } = useTranslation([
     "common",
@@ -88,22 +87,6 @@ const CharacterRosterCard = ({
   const theme = metadata.element?.toLowerCase() || "neutral";
   const artifacts = getEquippedArtifacts(source, info.character);
   const presentArtifacts = artifacts.filter(Boolean);
-  const buildOptions = getCharacterBuildOptions({
-    character: info.character,
-    customBuilds,
-    presetBuilds,
-    config: buildConfig,
-  });
-  const activeBuild = selectCharacterBuildOption(buildOptions);
-  const scores = presentArtifacts
-    .map((artifact) => buildArtifactShowcase(artifact, activeBuild))
-    .filter((result) => result.status === "ok")
-    .map((result) => result.score);
-  const averageScore = scores.length
-    ? Math.round(
-        scores.reduce((total, score) => total + score, 0) / scores.length
-      )
-    : undefined;
   const scoreBand =
     averageScore === undefined
       ? "unscored"
@@ -123,7 +106,6 @@ const CharacterRosterCard = ({
       type="button"
       className={`character-roster-card character-roster-card--${theme}`}
       onClick={() => navigate(`${route}${query}`)}
-      data-attention={missing > 0 || !activeBuild || (averageScore ?? 0) < 80}
     >
       <img
         className="character-roster-card__art"
@@ -260,7 +242,7 @@ export default function CharactersPage() {
             )
           : undefined;
         const attention = missing > 0 || !activeBuild || (average ?? 0) < 80;
-        return { info, name, attention, averageScore: average };
+        return { info, name, attention, averageScore: average, activeBuild };
       })
       .filter(({ name, attention }) => {
         const matchesSearch = !query || name.includes(query);
@@ -400,15 +382,14 @@ export default function CharactersPage() {
       </section>
 
       <section className="character-roster" aria-live="polite">
-        {roster.map(({ info }) => (
+        {roster.map(({ info, activeBuild, averageScore }) => (
           <CharacterRosterCard
             key={info.character}
             info={info}
             source={source}
             sourceId={artifactsId}
-            customBuilds={customBuilds}
-            buildConfig={buildConfig}
-            presetBuilds={presetBuilds}
+            activeBuild={activeBuild}
+            averageScore={averageScore}
           />
         ))}
         {roster.length === 0 && (

@@ -15,18 +15,23 @@ export const buildSlice = createSlice({
     addBuild: (state, action) => {
       const hash = hashBuild(action.payload);
       state.builds[hash] = action.payload;
-      state.config[hash] = { ...initialConfig };
+      if (state.config[hash] === undefined) {
+        state.config[hash] = { ...initialConfig };
+      }
     },
     editBuild: (state, action) => {
       const { id, build } = action.payload;
 
       const newHash = hashBuild(build);
       if (newHash === id) return;
+      const collidesWithExisting = newHash in state.builds;
       const previousConfig = { ...(state.config[id] ?? initialConfig) };
       delete state.builds[id];
       delete state.config[id];
       state.builds[newHash] = build;
-      state.config[newHash] = previousConfig;
+      if (!collidesWithExisting || state.config[newHash] === undefined) {
+        state.config[newHash] = previousConfig;
+      }
     },
     importBuilds: (state, action) => {
       const { builds, replace } = action.payload;

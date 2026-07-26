@@ -11,7 +11,6 @@
     "artifactSubstats": "Subatributos de {{slot}}",
     "characterArtifactAlt": "{{slot}} de {{character}}",
     "characterArtifacts": "Artefactos de {{character}}",
-    "elite": "Élite",
     "emptySlot": "Espacio vacío",
     "equipArtifact": "Equipa este espacio y vuelve a importar una instantánea de la cuenta.",
     "inspectArtifact": "Ver {{slot}}, puntuación {{score}}",

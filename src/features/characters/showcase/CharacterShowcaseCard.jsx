@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { Sparkle, Star } from "phosphor-react";
 import { useTranslation } from "react-i18next";
 
+import { getArtifactScoreBand } from "../../artifacts/scorePresentation";
 import { fallbackArtifact } from "./showcaseAssets";
 import "./character-showcase-card.css";
 import "./showcase-element-themes.css";
@@ -13,27 +14,26 @@ const IMPORTANCE_WEIGHT = {
   neutral: 0,
 };
 
+// Visual frame tiers keyed by the shared public score bands so the card and
+// the roster/score UI always agree on thresholds and wording.
+const TIER_BY_BAND = {
+  perfect: { key: "apex", labelKey: "Perfect" },
+  exceptional: { key: "crowned", labelKey: "Exceptional" },
+  excellent: { key: "exceptional", labelKey: "Excellent" },
+  good: { key: "excellent", labelKey: "Good" },
+  ordinary: { key: "strong", labelKey: null },
+};
+
 const scoreTier = (score, t) => {
-  if (score === 100) {
-    return { key: "apex", label: t("Perfect", { ns: "common" }) };
+  if (!Number.isFinite(score)) {
+    return { key: "strong", label: t("card.unscored", { ns: "showcase" }) };
   }
-  if (score >= 90) {
-    return { key: "crowned", label: t("card.elite", { ns: "showcase" }) };
-  }
-  if (score >= 80) {
-    return {
-      key: "exceptional",
-      label: t("Exceptional", { ns: "common" }),
-    };
-  }
-  if (score >= 70) {
-    return { key: "excellent", label: t("Good", { ns: "common" }) };
-  }
+  const tier = TIER_BY_BAND[getArtifactScoreBand(score).id];
   return {
-    key: "strong",
-    label: t(score === undefined ? "card.unscored" : "card.standard", {
-      ns: "showcase",
-    }),
+    key: tier.key,
+    label: tier.labelKey
+      ? t(tier.labelKey, { ns: "common" })
+      : t("card.standard", { ns: "showcase" }),
   };
 };
 

@@ -25,31 +25,6 @@
   transition: background-color 200ms ease;
 }
 
-.ccp-page--crowned,
-.ccp-page--constellation {
-  background: radial-gradient(
-      circle at 52% -12%,
-      rgba(178, 125, 208, 0.31),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 90% 12%,
-      rgba(222, 185, 108, 0.22),
-      transparent 27%
-    ),
-    #e3dce2;
-}
-
-.ccp-page--stats {
-  background: radial-gradient(
-      circle at 48% -12%,
-      rgba(128, 80, 184, 0.28),
-      transparent 34%
-    ),
-    radial-gradient(circle at 6% 18%, rgba(222, 186, 110, 0.2), transparent 27%),
-    #ded9e1;
-}
-
 .ccp-prototype-header {
   display: flex;
   align-items: flex-end;
@@ -157,51 +132,6 @@
     linear-gradient(0deg, rgba(13, 7, 23, 0.98) 0%, transparent 52%);
 }
 
-.ccp-seal--crowned .ccp-seal-wash,
-.ccp-seal--constellation .ccp-seal-wash {
-  background: linear-gradient(
-      90deg,
-      rgba(18, 9, 29, 0.93),
-      rgba(30, 14, 41, 0.22) 36%,
-      rgba(30, 14, 41, 0.18) 64%,
-      rgba(18, 9, 29, 0.93)
-    ),
-    linear-gradient(0deg, rgba(15, 8, 24, 0.98) 0%, transparent 52%),
-    radial-gradient(
-      circle at 50% 36%,
-      rgba(229, 186, 101, 0.1),
-      transparent 31%
-    );
-}
-
-.ccp-seal-blade {
-  position: absolute;
-  z-index: 2;
-  top: 74px;
-  bottom: 254px;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(
-    transparent,
-    #ecd4f8 20%,
-    #aa6bd3 78%,
-    transparent
-  );
-  box-shadow: 0 0 18px 3px rgba(205, 137, 239, 0.54),
-    0 0 68px 13px rgba(146, 70, 201, 0.2);
-}
-
-.ccp-seal--constellation .ccp-seal-blade {
-  background: linear-gradient(
-    transparent,
-    #f5deb0 20%,
-    #b474d5 78%,
-    transparent
-  );
-  box-shadow: 0 0 20px 4px rgba(237, 199, 117, 0.45),
-    0 0 70px 14px rgba(156, 80, 203, 0.24);
-}
-
 .ccp-seal-header {
   position: absolute;
   z-index: 4;
@@ -284,10 +214,6 @@
   margin-left: 54px;
   color: #d8adf0;
   font-weight: 400;
-}
-
-.ccp-seal--constellation .ccp-seal-identity h2 strong {
-  color: #edcd91;
 }
 
 .ccp-seal-identity > div {
@@ -426,44 +352,6 @@
   color: #d7a1ef;
 }
 
-.ccp-stat-wing > div.is-elite {
-  border: 1px solid rgba(235, 198, 117, 0.24);
-  background: linear-gradient(90deg, rgba(104, 69, 72, 0.49), transparent);
-}
-
-.ccp-stat-wing--right > div.is-elite {
-  background: linear-gradient(270deg, rgba(104, 69, 72, 0.49), transparent);
-}
-
-.ccp-stat-wing > div.is-elite span {
-  color: rgba(242, 214, 150, 0.66);
-}
-
-.ccp-stat-wing > div.is-elite strong {
-  color: #f2ce89;
-}
-
-.ccp-stat-wing > div.is-elite i {
-  position: absolute;
-  top: 7px;
-  right: 8px;
-  color: rgba(239, 202, 126, 0.55);
-  font-size: 6px;
-  font-style: normal;
-}
-
-.ccp-stat-wing--right > div.is-elite i {
-  right: auto;
-  left: 8px;
-}
-
-.ccp-seal--stats .ccp-stat-wing {
-  padding: 6px;
-  border: 1px solid rgba(225, 188, 239, 0.11);
-  background: rgba(22, 10, 35, 0.3);
-  backdrop-filter: blur(10px);
-}
-
 .ccp-seal-loadout {
   position: absolute;
   z-index: 4;
@@ -491,6 +379,15 @@
   min-height: 74px;
   gap: 10px;
   padding: 8px 12px 8px 8px;
+}
+
+.ccp-weapon--missing {
+  opacity: 0.72;
+}
+
+.ccp-weapon--missing .ccp-weapon-image {
+  border: 1px dashed var(--element-line);
+  background: transparent;
 }
 
 .ccp-weapon-image {
@@ -586,17 +483,6 @@
     ),
     #140b20;
   backdrop-filter: blur(20px);
-}
-
-.ccp-seal--crowned .ccp-seal-artifacts,
-.ccp-seal--constellation .ccp-seal-artifacts {
-  border-top-color: rgba(235, 197, 119, 0.31);
-  background: linear-gradient(
-      180deg,
-      rgba(40, 21, 47, 0.97),
-      rgba(17, 9, 24, 0.99)
-    ),
-    #160c21;
 }
 
 .ccp-artifact {
@@ -878,16 +764,6 @@
   );
 }
 
-.ccp-seal--crowned .ccp-artifact--crowned,
-.ccp-seal--crowned .ccp-artifact--apex {
-  background: radial-gradient(
-      circle at 21% 33%,
-      var(--tier-wash),
-      transparent 43%
-    ),
-    linear-gradient(180deg, rgba(111, 69, 72, 0.13), rgba(255, 255, 255, 0.014));
-}
-
 .ccp-switcher {
   position: fixed;
   z-index: 999;
@@ -982,10 +858,6 @@
     min-height: 1020px;
   }
 
-  .ccp-seal-blade {
-    bottom: 304px;
-  }
-
   .ccp-seal-loadout {
     right: 210px;
     bottom: 316px;
@@ -1043,11 +915,6 @@
 
   .ccp-seal-art {
     object-position: 50% 42%;
-  }
-
-  .ccp-seal-blade {
-    bottom: auto;
-    height: 650px;
   }
 
   .ccp-seal-identity {
@@ -1855,6 +1722,11 @@
 
 .ccp-seal--dendro .ccp-constellation {
   border-radius: 65% 35% 65% 35%;
+  color: var(--artifact-text);
+}
+
+.ccp-seal--dendro .ccp-seal-loadout .ccp-stars {
+  color: #77812f;
 }
 
 .ccp-seal--cryo .ccp-constellation {
@@ -2235,7 +2107,7 @@
 
 .ccp-substats .ccp-substat--neutral {
   padding-left: 5px;
-  color: color-mix(in srgb, var(--artifact-muted) 58%, transparent);
+  color: color-mix(in srgb, var(--artifact-muted) 85%, transparent);
   background: none;
   font-weight: 550;
 }

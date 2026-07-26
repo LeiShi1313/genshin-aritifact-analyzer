@@ -11,7 +11,6 @@
     "artifactSubstats": "{{slot}}副詞條",
     "characterArtifactAlt": "{{character}}的{{slot}}",
     "characterArtifacts": "{{character}}的聖遺物",
-    "elite": "頂級",
     "emptySlot": "空槽位",
     "equipArtifact": "請為此槽位裝備聖遺物，然後重新匯入帳號快照。",
     "inspectArtifact": "查看{{slot}}，評分{{score}}",

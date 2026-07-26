@@ -134,6 +134,7 @@ const sourceDate = (value) => {
 
 function ArtifactDetailDialog({ artifact, onClose }) {
   const closeRef = useRef(null);
+  const dialogRef = useRef(null);
   const { t, i18n } = useTranslation(["showcase", "common"]);
   const locale = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const rollFormatter = useMemo(
@@ -146,12 +147,36 @@ function ArtifactDetailDialog({ artifact, onClose }) {
   );
 
   useEffect(() => {
+    const previouslyFocused = document.activeElement;
     closeRef.current?.focus();
     const onKeyDown = (event) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusables = dialogRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusables?.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus();
+    };
   }, [onClose]);
 
   if (!artifact) return null;
@@ -165,6 +190,7 @@ function ArtifactDetailDialog({ artifact, onClose }) {
       }}
     >
       <section
+        ref={dialogRef}
         className="showcase-artifact-dialog"
         role="dialog"
         aria-modal="true"
@@ -516,10 +542,14 @@ export default function CharacterShowcasePage() {
       await document.fonts?.ready;
       card.classList.add("is-exporting");
       await new Promise((resolve) => requestAnimationFrame(resolve));
+      const cardBackground = getComputedStyle(card).backgroundColor;
       const image = await toPng(card, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#160e23",
+        backgroundColor:
+          cardBackground && cardBackground !== "rgba(0, 0, 0, 0)"
+            ? cardBackground
+            : "#160e23",
       });
       const link = document.createElement("a");
       link.download = getCharacterShowcaseExportFileName(

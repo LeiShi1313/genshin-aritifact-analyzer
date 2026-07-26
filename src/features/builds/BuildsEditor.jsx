@@ -99,14 +99,17 @@ const BuildsEditor = () => {
       ],
       { type: "text/json" }
     );
-    element.href = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
+    element.href = url;
     element.download = "builds.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
+    element.remove();
+    URL.revokeObjectURL(url);
   }, [selectedBuilds, t]);
 
   return (
-    <div className="flex w-full flex-col space-y-2 overflow-x-auto">
+    <div className="flex w-full flex-col space-y-2 overflow-x-auto pb-24">
       <RestoreBuildsModal
         open={restoreModalOpen}
         setOpen={setRestoreModalOpen}
@@ -157,7 +160,7 @@ const BuildsEditor = () => {
           renderFunc={(character) =>
             t(Character[character].toLowerCase(), { ns: "characters" })
           }
-          zeroValue={t("Pick") + t("Character")}
+          zeroValue={t("Pick one thing", { thing: t("Character") })}
         />
       </div>
       <table className="xs:w-96 mx-auto flex min-h-[50vh] w-64 flex-col md:table md:w-full">
@@ -217,9 +220,9 @@ const BuildsEditor = () => {
               </div>
             </th>
           </tr>
-          {Object.values(selectedBuilds).map((build, idx) => (
+          {Object.entries(selectedBuilds).map(([hash, build]) => (
             <BuildRow
-              key={idx}
+              key={hash}
               build={build}
               setPendingDelete={setPendingDelete}
             />
@@ -248,13 +251,9 @@ const BuildsEditor = () => {
               </div>
             </th>
           </tr>
-          {Object.values(selectedPresets)
-            .filter(
-              (c) => characters.length === 0 || characters.includes(c.character)
-            )
-            .map((build, idx) => (
-              <BuildRow key={idx} build={build} isPreset={true} />
-            ))}
+          {Object.entries(selectedPresets).map(([hash, build]) => (
+            <BuildRow key={hash} build={build} isPreset={true} />
+          ))}
         </tbody>
       </table>
       <button

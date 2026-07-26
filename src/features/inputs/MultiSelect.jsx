@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CaretDown, X } from "phosphor-react";
 import classNames from "classnames";
@@ -12,39 +12,56 @@ const MultiSelect = ({
 }) => {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
   const handleAdd = useCallback(
     (option) => {
       if (!values.includes(option)) setValues((arr) => [...arr, option]);
     },
-    [values]
+    [values, setValues]
   );
   const handleRemove = useCallback(
     (value) => {
-      setValues((arr) => [...arr].filter((v) => v !== value));
+      setValues((arr) => arr.filter((v) => v !== value));
     },
-    [values]
+    [setValues]
   );
   const handleToggle = useCallback(
     (option) => {
-      // console.log(option);
       if (values.includes(option)) handleRemove(option);
       else handleAdd(option);
     },
-    [values]
+    [values, handleAdd, handleRemove]
   );
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onPointerDown = (event) => {
+      if (rootRef.current && !rootRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   return (
     <div
+      ref={rootRef}
       className={classNames("dropdown", {
         "dropdown-open": open,
       })}
     >
       <div className="flex w-64 flex-row items-center rounded-xl normal-case">
         <div
-          className="flex h-full w-full flex-row flex-wrap items-center justify-start rounded-xl"
-          onClick={(e) => {
-            e.preventDefault();
-            values.length === 0 ? setOpen(true) : null;
-          }}
+          className="flex h-full w-full cursor-pointer flex-row flex-wrap items-center justify-start rounded-xl"
+          onClick={() => setOpen(true)}
         >
           {values.length === 0 && zeroValue && (
             <span className="text-lg font-bold">{zeroValue}</span>
@@ -57,50 +74,54 @@ const MultiSelect = ({
               <div key={value} className="flex flex-row px-1 py-1">
                 <span className="badge badge-primary text-xs">
                   {renderFunc(value)}
-                  <X
-                    className="cursor-pointer"
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center"
+                    aria-label={t("Delete")}
                     onClick={(e) => {
-                      e.preventDefault();
+                      e.stopPropagation();
                       handleRemove(value);
                     }}
-                  />
+                  >
+                    <X aria-hidden="true" className="cursor-pointer" />
+                  </button>
                 </span>
               </div>
             ))}
         </div>
-        <CaretDown
-          size={20}
-          weight="fill"
-          className="w-12 cursor-pointer text-primary"
-          onClick={() => {
-            // console.log("CaretDown");
-            setOpen((prev) => !!!prev);
-          }}
-        />
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm btn-circle text-primary"
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          aria-label={zeroValue ?? t("Pick one")}
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          <CaretDown aria-hidden="true" size={20} weight="fill" />
+        </button>
       </div>
-      <div className="dropdown-content rounded-t-box rounded-b-box left-0 top-full h-[50vh] w-56 translate-y-0 overflow-y-auto bg-base-200 text-base-content shadow-2xl">
-        <ul className="menu menu-compact w-full p-3">
+      <div className="dropdown-content rounded-t-box rounded-b-box left-0 top-full z-30 h-[50vh] w-56 translate-y-0 overflow-y-auto bg-base-200 text-base-content shadow-2xl">
+        <ul className="menu menu-sm w-full p-3">
           {[...options]
             .sort((a, b) =>
               renderFunc(a).localeCompare(renderFunc(b), i18n.language)
             )
             .map((option) => (
-              <li
-                key={option}
-                className="overflow-hidden"
-                onClick={() => handleToggle(option)}
-              >
-                <div className="form-control flex-row">
+              <li key={option} className="overflow-hidden">
+                <button
+                  type="button"
+                  className="flex w-full flex-row items-center gap-2"
+                  onClick={() => handleToggle(option)}
+                >
                   <input
                     type="checkbox"
                     readOnly
+                    tabIndex={-1}
                     checked={values.includes(option)}
-                    className="checkbox"
+                    className="checkbox pointer-events-none"
                   />
-                  <button className="w-full grow">
-                    {renderFunc ? renderFunc(option) : option}
-                  </button>
-                </div>
+                  <span className="grow text-left">{renderFunc(option)}</span>
+                </button>
               </li>
             ))}
         </ul>

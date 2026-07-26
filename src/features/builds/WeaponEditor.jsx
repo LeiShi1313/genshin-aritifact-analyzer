@@ -6,7 +6,7 @@ import { Weapon } from "../../genshin/weapon";
 import WeaponSelect from "../weapons/WeaponSelect";
 
 const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [selectedWeapon, setSelectedWeapon] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -16,9 +16,12 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
   }, [weapons]);
   useEffect(() => {
     if (filterFn) {
-      setWeapons((arr) => arr.filter(filterFn));
+      setWeapons((arr) => {
+        const filtered = arr.filter(filterFn);
+        return filtered.length === arr.length ? arr : filtered;
+      });
     }
-  }, [filterFn]);
+  }, [filterFn, setWeapons]);
 
   useEffect(() => {
     if (selectedWeapon !== 0) {
@@ -26,47 +29,64 @@ const WeaponEditor = ({ weapons, setWeapons, filterFn = null }) => {
       setSelectedWeapon(0);
       setIsAdding(false);
     }
-  }, [selectedWeapon]);
+  }, [selectedWeapon, setWeapons]);
 
-  const handleWeaponRemove = (idx) => {
-    setWeapons((arr) => arr.filter((_, i) => i !== idx));
+  const handleWeaponRemove = (weapon) => {
+    setWeapons((arr) => arr.filter((value) => value !== weapon));
   };
   return (
     <>
-      <label className="label flex flex-row justify-between">
-        <span className="label-text">{t("Weapons")}</span>
-        <label className="cursor-pointer">
-          <Plus
-            className="swap-on"
-            size={20}
-            onClick={() => setIsAdding(true)}
-          />
-        </label>
-      </label>
+      <div className="label flex flex-row justify-between">
+        <span className="text-sm">{t("Weapons")}</span>
+        <button
+          type="button"
+          className="btn btn-ghost btn-circle btn-xs"
+          aria-label={t("Add")}
+          onClick={() => setIsAdding(true)}
+        >
+          <Plus aria-hidden="true" size={20} />
+        </button>
+      </div>
       {weapons.length > 0 && (
-        <div className="flex h-12 flex-row flex-wrap items-center justify-start px-1 py-1">
-          {weapons.map((weapon, idx) => (
-            <span
-              key={weapon}
-              className={classNames(
-                "badge",
-                "text-xs",
-                idx === 0
-                  ? "badge-primary"
-                  : idx === 1
-                  ? "badge-secondary"
-                  : idx === 2
-                  ? "badge-accent"
-                  : "badge-error"
-              )}
-            >
-              {t(`${Weapon[weapon].toLowerCase()}`, { ns: "weapons" })}
-              <X
-                className="cursor-pointer"
-                onClick={() => handleWeaponRemove(idx)}
-              />
-            </span>
-          ))}
+        <div className="min-h-12 flex flex-row flex-wrap items-center justify-start gap-1 px-1 py-1">
+          {weapons
+            .filter((weapon) => Weapon[weapon])
+            .map((weapon, idx) => {
+              const weaponName = t(Weapon[weapon].toLowerCase(), {
+                ns: "weapons",
+              });
+
+              return (
+                <span
+                  key={weapon}
+                  className={classNames(
+                    "badge",
+                    "text-xs",
+                    "h-auto",
+                    "min-h-6",
+                    "max-w-full",
+                    "py-1",
+                    idx === 0
+                      ? "badge-primary"
+                      : idx === 1
+                      ? "badge-secondary"
+                      : idx === 2
+                      ? "badge-accent"
+                      : "badge-error"
+                  )}
+                >
+                  {weaponName}
+                  <button
+                    type="button"
+                    className="inline-flex shrink-0 items-center justify-center"
+                    aria-label={t("Delete") + " " + weaponName}
+                    onClick={() => handleWeaponRemove(weapon)}
+                  >
+                    <X aria-hidden="true" className="cursor-pointer" />
+                  </button>
+                </span>
+              );
+            })}
         </div>
       )}
       {isAdding && (

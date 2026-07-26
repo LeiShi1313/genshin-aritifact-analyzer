@@ -10,7 +10,6 @@ const MainAttributesEditor = ({
   setGoblet,
   circlet,
   setCirclet,
-  subAttributes,
 }) => {
   return (
     <div className="flex flex-col items-stretch justify-start gap-2">
@@ -20,7 +19,6 @@ const MainAttributesEditor = ({
             position={AttributePosition.FLOWER}
             attrs={flower}
             setFunc={null}
-            subAttributes={subAttributes}
           />
         </div>
         <div className="flex w-full flex-col items-center md:w-1/2">
@@ -28,7 +26,6 @@ const MainAttributesEditor = ({
             position={AttributePosition.PLUME}
             attrs={plume}
             setFunc={null}
-            subAttributes={subAttributes}
           />
         </div>
       </div>
@@ -39,7 +36,6 @@ const MainAttributesEditor = ({
             position={AttributePosition.SANDS}
             attrs={sands}
             setFunc={setSands}
-            subAttributes={subAttributes}
           />
         </div>
         <div className="flex w-full flex-col items-center md:w-1/3">
@@ -47,7 +43,6 @@ const MainAttributesEditor = ({
             position={AttributePosition.GOBLET}
             attrs={goblet}
             setFunc={setGoblet}
-            subAttributes={subAttributes}
           />
         </div>
         <div className="flex w-full flex-col items-center md:w-1/3">
@@ -55,7 +50,6 @@ const MainAttributesEditor = ({
             position={AttributePosition.CIRCLET}
             attrs={circlet}
             setFunc={setCirclet}
-            subAttributes={subAttributes}
           />
         </div>
       </div>

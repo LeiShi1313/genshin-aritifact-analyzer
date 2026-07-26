@@ -7,13 +7,13 @@ const CharacterSelect = ({ char, setChar }) => {
   const { t, i18n } = useTranslation();
   return (
     <select
-      className="select-ghost select-sm"
+      className="select select-ghost select-sm"
       value={char}
+      aria-label={t("Character")}
       onChange={(e) => setChar(Number(e.target.value))}
     >
       <option disabled value={0}>
-        {t("Pick one")}
-        {t("Character")}
+        {t("Pick one thing", { thing: t("Character") })}
       </option>
       {[...enumToIdx(Character)]
         .sort((a, b) =>

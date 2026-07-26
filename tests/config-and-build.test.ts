@@ -324,13 +324,15 @@ test("weapon selector uses the translated common key", () => {
   assert.doesNotMatch(source, /t\("weapon"\)/);
 });
 
-test("preset name editing keeps the localized display name after target changes", () => {
+test("name editing binds the raw name and keeps the localized fallback as placeholder", () => {
   const path = new URL(
     "../src/features/builds/NameEditor.jsx",
     import.meta.url
   );
   const source = readFileSync(path, "utf8");
 
-  assert.match(source, /value={displayName}/);
+  assert.match(source, /value={name \?\? ""}/);
+  assert.match(source, /placeholder={t\("Unnamed Build"\)}/);
+  assert.doesNotMatch(source, /value={displayName}/);
   assert.doesNotMatch(source, /value={isPreset\s*\?/);
 });

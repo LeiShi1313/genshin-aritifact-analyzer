@@ -11,7 +11,6 @@
     "artifactSubstats": "{{slot}} 보조 옵션",
     "characterArtifactAlt": "{{character}}의 {{slot}}",
     "characterArtifacts": "{{character}}의 성유물",
-    "elite": "엘리트",
     "emptySlot": "빈 슬롯",
     "equipArtifact": "이 슬롯에 성유물을 장착한 뒤 계정 스냅샷을 다시 가져오세요.",
     "inspectArtifact": "{{slot}} 확인, 점수 {{score}}",

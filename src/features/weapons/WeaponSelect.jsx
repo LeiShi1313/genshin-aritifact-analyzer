@@ -1,25 +1,26 @@
+import { useId, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import classNames from "classnames";
+
 import { Weapon } from "../../genshin/weapon";
 import { enumToIdx } from "../../utils/enum";
-import { useState } from "react";
-import classNames from "classnames";
 import IconClose from "../../assets/svgs/IconClose";
 
 const WeaponSelect = ({ weapon, setWeapon, awaken = true, filterFn = null }) => {
   const { t, i18n } = useTranslation();
+  const dialogRef = useRef(null);
+  const triggerRef = useRef(null);
+  const titleId = useId();
+
+  const closeDialog = () => dialogRef.current?.close();
 
   const handleClick = (value) => {
     setWeapon(value);
-
-    // Collapse the dropdown list
-    const elem = document.activeElement;
-    if (elem) {
-      elem?.blur();
-    }
+    closeDialog();
   };
 
   const getWeaponIconUrl = (id) => {
-    let weaponId = Weapon[id].toLowerCase();
+    const weaponId = Weapon[id].toLowerCase();
     const suffix = awaken ? "_awaken" : "";
     return new URL(
       `../../assets/weapons/${weaponId}${suffix}.png`,
@@ -27,79 +28,59 @@ const WeaponSelect = ({ weapon, setWeapon, awaken = true, filterFn = null }) => 
     ).href;
   };
 
-  const [showModal, setShowModal] = useState(false);
-
   return (
     <div className="z-[42] w-full">
       <button
+        ref={triggerRef}
+        type="button"
         className="btn btn-primary w-full flex-nowrap justify-start gap-2 overflow-hidden text-ellipsis rounded-full text-left normal-case"
-        onClick={() => setShowModal(true)}
+        aria-haspopup="dialog"
+        onClick={() => dialogRef.current?.showModal()}
       >
-        {weapon !== 0 ? (
+        {weapon !== 0 && Weapon[weapon] ? (
           <>
             <img
               className="inline-block aspect-square w-8"
               src={getWeaponIconUrl(weapon)}
+              alt=""
             />
-            {t(Weapon[weapon].toLowerCase(), { ns: "weapons" })}
+            <span className="truncate">
+              {t(Weapon[weapon].toLowerCase(), { ns: "weapons" })}
+            </span>
           </>
         ) : (
-          <>
-            {t("Pick one")} {t("Weapon")}
-          </>
+          <span className="truncate">
+            {t("Pick one thing", { thing: t("Weapon") })}
+          </span>
         )}
       </button>
-      <div
-        id="backdrop"
-        className={classNames(
-          "fixed left-0 top-0 h-screen w-full",
-          "cursor-pointer bg-neutral/50",
-          { hidden: !showModal }
-        )}
-        onClick={() => setShowModal(false)}
-      ></div>
-      <div
-        id="modal_container"
-        className={classNames(
-          "invisible fixed left-0 top-0 h-screen w-full",
-          "flex items-start justify-center",
-          { hidden: !showModal }
-        )}
+
+      <dialog
+        ref={dialogRef}
+        className="modal"
+        aria-labelledby={titleId}
+        onClose={() => triggerRef.current?.focus()}
       >
-        <div
-          id="modal_card"
-          className="card visible mt-8 h-auto max-h-[calc(100%_-_4rem)] w-96 overflow-hidden bg-neutral text-neutral-content shadow-xl"
-        >
-          {/* Dialog card header */}
-          <div className="flex h-12 w-full shrink-0 items-center gap-2 border-b-2 border-neutral-content/10 pl-6 pr-2">
-            <div className="text-md">
-              {t("Pick one")} {t("Weapon")}
-            </div>
+        <div className="modal-box max-w-96 bg-neutral text-neutral-content flex max-h-[calc(100dvh_-_2rem)] w-[calc(100vw_-_2rem)] flex-col overflow-hidden p-0 shadow-xl">
+          <div className="border-neutral-content/10 flex h-12 w-full shrink-0 items-center gap-2 border-b-2 pl-6 pr-2">
+            <h2 id={titleId} className="text-md font-semibold">
+              {t("Pick one thing", { thing: t("Weapon") })}
+            </h2>
             <div className="grow" />
             <button
+              type="button"
               className="btn btn-circle btn-sm"
-              onClick={() => setShowModal(false)}
+              aria-label={t("Close")}
+              autoFocus
+              onClick={closeDialog}
             >
-              <IconClose />
+              <span aria-hidden="true">
+                <IconClose />
+              </span>
             </button>
           </div>
 
-          {/* Dialog card body */}
-          {/* List of Weapons */}
           <ul className="menu w-full flex-nowrap overflow-auto p-2 text-sm">
-            <li>
-              <a
-                className={classNames(
-                  "overflow-hidden text-ellipsis !rounded-full p-0 px-2",
-                  weapon === 0
-                    ? "bg-neutral-content text-neutral"
-                    : "hover:bg-neutral-content/10"
-                )}
-                onClick={() => setWeapon(0)}
-              >
-                {t("All")}
-              </a>
-            </li>
             {[...enumToIdx(Weapon)]
               .sort((a, b) =>
                 t(Weapon[a].toLowerCase(), { ns: "weapons" }).localeCompare(
@@ -110,26 +91,35 @@ const WeaponSelect = ({ weapon, setWeapon, awaken = true, filterFn = null }) => 
               .filter((key) => (filterFn ? filterFn(key) : true))
               .map((key) => (
                 <li key={key}>
-                  <a
+                  <button
+                    type="button"
                     className={classNames(
-                      "overflow-hidden text-ellipsis !rounded-full p-0 px-2",
+                      "w-full overflow-hidden text-ellipsis !rounded-full p-0 px-2 text-left",
                       weapon === key
                         ? "bg-neutral-content text-neutral"
                         : "hover:bg-neutral-content/10"
                     )}
-                    onClick={() => setWeapon(key)}
+                    aria-pressed={weapon === key}
+                    onClick={() => handleClick(key)}
                   >
                     <img
                       className="aspect-square w-8"
                       src={getWeaponIconUrl(key)}
+                      alt=""
                     />
                     {t(Weapon[key].toLowerCase(), { ns: "weapons" })}
-                  </a>
+                  </button>
                 </li>
               ))}
           </ul>
         </div>
-      </div>
+
+        <form method="dialog" className="modal-backdrop">
+          <button type="submit" aria-label={t("Close")}>
+            {t("Close")}
+          </button>
+        </form>
+      </dialog>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { importBuilds } from "../../store/reducers/build";
@@ -11,6 +10,7 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const dialogRef = useRef(null);
   const [file, setFile] = useState(null);
   const [pendingBuilds, setPendingBuilds] = useState({});
   const [fileError, setFileError] = useState("");
@@ -49,6 +49,10 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
   }, [abortPendingRead]);
 
   useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (open && !dialog.open) dialog.showModal();
+    else if (!open && dialog.open) dialog.close();
     if (!open) resetImportState();
   }, [open, resetImportState]);
   useEffect(() => () => abortPendingRead(), [abortPendingRead]);
@@ -123,10 +127,11 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
     closeModal();
   };
   return (
-    <div
-      className={classNames("modal", {
-        "modal-open": open,
-      })}
+    <dialog
+      ref={dialogRef}
+      className="modal"
+      aria-label={t("Import")}
+      onClose={() => setOpen(false)}
     >
       <div className="modal-box">
         <div className="my-5 flex flex-row items-center justify-center">
@@ -138,9 +143,9 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
               aria-label={t("select or drag builds file you want to import")}
               onChange={handleFile}
             />
-            <label className="label flex flex-col items-start">
-              <span className="label-text-alt">
-                {pendingBuilds && file
+            <div className="label flex flex-col items-start">
+              <span className="text-xs">
+                {pendingBuildsLength > 0 && file
                   ? t("Found X builds in file Y", {
                       num: pendingBuildsLength,
                       fileName: file.name,
@@ -148,20 +153,20 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
                   : t("select or drag builds file you want to import")}
               </span>
               {pendingBuildsExistLength > 0 && (
-                <span className="label-text-alt">
+                <span className="text-xs">
                   {t("X in your custom builds", {
                     num: pendingBuildsExistLength,
                   })}
                 </span>
               )}
               {pendingBuildsExistPresetsLength > 0 && (
-                <span className="label-text-alt">
+                <span className="text-xs">
                   {t("X in preset builds", {
                     num: pendingBuildsExistPresetsLength,
                   })}
                 </span>
               )}
-            </label>
+            </div>
             {fileError && (
               <p className="text-error mt-2 text-sm" role="alert">
                 {fileError}
@@ -173,15 +178,19 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
           <button type="button" className="btn btn-ghost" onClick={closeModal}>
             {t("Cancel")}
           </button>
-          <button
-            type="button"
-            className="btn btn-warning tooltip tooltip-left"
+          <div
+            className="tooltip tooltip-left"
             data-tip={t("All your custom builds will be replaced")}
-            disabled={pendingBuildsLength === 0}
-            onClick={() => handleImport(true)}
           >
-            {t("Replace")}
-          </button>
+            <button
+              type="button"
+              className="btn btn-warning"
+              disabled={pendingBuildsLength === 0}
+              onClick={() => handleImport(true)}
+            >
+              {t("Replace")}
+            </button>
+          </div>
           <button
             type="button"
             className="btn btn-info"
@@ -192,7 +201,12 @@ const RestoreBuildsModal = ({ open, setOpen }) => {
           </button>
         </div>
       </div>
-    </div>
+      <form method="dialog" className="modal-backdrop">
+        <button type="submit" aria-label={t("Cancel")}>
+          {t("Cancel")}
+        </button>
+      </form>
+    </dialog>
   );
 };
 

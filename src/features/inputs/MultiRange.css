@@ -1,39 +1,3 @@
-.container {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slider {
-  position: relative;
-  width: 100%;
-}
-
-.slider__track,
-.slider__range,
-.slider__left-value,
-.slider__right-value {
-  position: absolute;
-}
-
-.slider__track,
-.slider__range {
-  border-radius: 3px;
-  height: 5px;
-}
-
-.slider__track {
-  background-color: #ced4da;
-  width: 100%;
-  z-index: 1;
-}
-
-.slider__range {
-  background-color: #9fe5e1;
-  z-index: 2;
-}
-
 /* Removing the default appearance */
 .thumb,
 .thumb::-webkit-slider-thumb {

@@ -4,11 +4,10 @@ import { Plus, X, Check, Question } from "phosphor-react";
 import { useTranslation } from "react-i18next";
 import { Set } from "../../genshin/set";
 import { get2pcSets } from "../../utils/build";
-import { enumToIdx } from "../../utils/enum";
 import SetSelect from "../sets/SetSelect";
 
 const SuitsEditor = ({ suits, setSuits }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [setCombos, setSetCombos] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -17,14 +16,13 @@ const SuitsEditor = ({ suits, setSuits }) => {
     else setIsAdding(false);
   }, [suits]);
 
-  // const handleSetAdd = (e) => {
-  //   setSuits((arr) => [...arr, Number(e.target.value)]);
-  //   setIsAdding(false);
-  // };
-  const handleSetAdd = (e) => {
-    setSetCombos((arr) => [...arr, { set: Number(e.target.value), count: 4 }]);
+  const handleSetAdd = (value) => {
+    const set = Number(value);
+    if (!set || !Set[set]) return;
+    setSetCombos((arr) => [...arr, { set, count: 4 }]);
   };
   const handleChecked = () => {
+    if (setCombos.length === 0) return;
     setIsAdding(false);
     setSuits((arr) => [...arr, { setCombos: setCombos }]);
     setSetCombos([]);
@@ -38,74 +36,90 @@ const SuitsEditor = ({ suits, setSuits }) => {
   };
   return (
     <>
-      <label className="label flex flex-row justify-between">
-        <span className="label-text">{t("Sets")}</span>
-        <label className="cursor-pointer">
-          <Plus
-            className="swap-on"
-            size={20}
-            onClick={() => setIsAdding(true)}
-          />
-        </label>
-      </label>
+      <div className="label flex flex-row justify-between">
+        <span className="text-sm">{t("Sets")}</span>
+        <button
+          type="button"
+          className="btn btn-ghost btn-circle btn-xs"
+          aria-label={t("Add")}
+          onClick={() => setIsAdding(true)}
+        >
+          <Plus aria-hidden="true" size={20} />
+        </button>
+      </div>
       {(suits.length > 0 || (isAdding && setCombos.length > 0)) && (
-        <div className="min-h-12 flex flex-row flex-wrap items-center justify-start px-1 py-1">
-          {suits.map((suit, idx) => (
-            <span
-              key={idx}
-              className={classNames(
-                "badge",
-                "text-xs",
-                "w-24",
-                idx === 0
-                  ? "badge-primary"
-                  : idx === 1
-                  ? "badge-secondary"
-                  : idx === 2
-                  ? "badge-accent"
-                  : "badge-error"
-              )}
-            >
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-              {suit.setCombos
-                .map((setCombo) =>
-                  t(`${Set[setCombo.set].toLowerCase()}`, { ns: "sets" })
-                )
-                .join(" + ")}
+        <div className="min-h-12 flex flex-row flex-wrap items-center justify-start gap-1 px-1 py-1">
+          {suits.map((suit, idx) => {
+            const comboKey =
+              suit.setCombos.map((setCombo) => setCombo.set).join("-") ||
+              `suit-${idx}`;
+            const suitName = suit.setCombos
+              .map((setCombo) => setCombo.set)
+              .filter((set) => Set[set])
+              .map((set) => t(Set[set].toLowerCase(), { ns: "sets" }))
+              .join(" + ");
+
+            return (
+              <span
+                key={comboKey}
+                className={classNames(
+                  "badge",
+                  "text-xs",
+                  "h-auto",
+                  "min-h-6",
+                  "max-w-full",
+                  "py-1",
+                  idx === 0
+                    ? "badge-primary"
+                    : idx === 1
+                    ? "badge-secondary"
+                    : idx === 2
+                    ? "badge-accent"
+                    : "badge-error"
+                )}
+              >
+                <span className="overflow-hidden text-ellipsis">
+                  {suitName}
                 </span>
-              {suit.setCombos.length > 1 && (
-                <div className="dropdown-hover dropdown dropdown-left">
-                  <label tabIndex={0}>
-                    <Question />
-                  </label>
-                  <div
-                    tabIndex={0}
-                    className="dropdown-content menu rounded-box flex w-48 flex-col space-y-1 bg-base-100 p-2 shadow"
-                  >
-                    <span className="text-sm text-primary">{t('this set includes')}</span>
-                    {get2pcSets(suit.setCombos).map((s) => (
-                      <span className="badge badge-accent">
-                        {t(`${Set[s].toLowerCase()}`, { ns: "sets" })}
+                {suit.setCombos.length > 1 && (
+                  <div className="dropdown-hover dropdown dropdown-left">
+                    <button type="button" aria-label={t("this set includes")}>
+                      <Question aria-hidden="true" />
+                    </button>
+                    <div
+                      className="dropdown-content menu rounded-box flex w-48 flex-col space-y-1 bg-base-100 p-2 shadow"
+                    >
+                      <span className="text-sm text-primary">
+                        {t("this set includes")}
                       </span>
-                    ))}
+                      {get2pcSets(suit.setCombos)
+                        .filter((s) => Set[s])
+                        .map((s) => (
+                          <span key={s} className="badge badge-accent">
+                            {t(Set[s].toLowerCase(), { ns: "sets" })}
+                          </span>
+                        ))}
+                    </div>
                   </div>
-                </div>
-              )}
-              <X
-                className="cursor-pointer"
-                onClick={() => handleSuitRemove(idx)}
-              />
-            </span>
-          ))}
+                )}
+                <button
+                  type="button"
+                  className="inline-flex shrink-0 items-center justify-center"
+                  aria-label={t("Delete") + " " + suitName}
+                  onClick={() => handleSuitRemove(idx)}
+                >
+                  <X aria-hidden="true" className="cursor-pointer" />
+                </button>
+              </span>
+            );
+          })}
           {isAdding && setCombos.length > 0 && (
             <span
-              key={-1}
               className={classNames("badge", "text-xs", "badge-info", "h-auto")}
             >
               {setCombos
-                .map((suit) =>
-                  t(`${Set[suit.set].toLowerCase()}`, { ns: "sets" })
-                )
+                .filter((combo) => Set[combo.set])
+                .map((combo) => t(Set[combo.set].toLowerCase(), { ns: "sets" }))
                 .join("+")}
               +...
             </span>
@@ -117,7 +131,8 @@ const SuitsEditor = ({ suits, setSuits }) => {
           <div className="w-4/5">
             <SetSelect
               set={0}
-              setSet={(value) => handleSetAdd({ target: { value } })}
+              setSet={handleSetAdd}
+              hideAllOption
               filterFn={(key) => {
                 // TODO: find a better way to validate
                 const validForCombos =
@@ -130,16 +145,23 @@ const SuitsEditor = ({ suits, setSuits }) => {
               }}
             />
           </div>
-          <Check
-            className="cursor-pointer"
-            onClick={() => handleChecked()}
-            weight="bold"
-          />
-          <X
-            className="cursor-pointer"
-            onClick={() => handleCancel()}
-            weight="bold"
-          />
+          <button
+            type="button"
+            className="btn btn-ghost btn-circle btn-xs"
+            aria-label={t("Confirm")}
+            disabled={setCombos.length === 0}
+            onClick={handleChecked}
+          >
+            <Check aria-hidden="true" weight="bold" />
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost btn-circle btn-xs"
+            aria-label={t("Cancel")}
+            onClick={handleCancel}
+          >
+            <X aria-hidden="true" weight="bold" />
+          </button>
         </div>
       )}
     </>

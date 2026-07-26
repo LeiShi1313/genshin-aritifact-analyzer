@@ -69,7 +69,7 @@ const MainAttributeEditor = ({ position, attrs, setFunc }) => {
         })}
         {isAdding && (
           <select
-            className="select-ghost select-md w-full max-w-full text-xs"
+            className="select select-ghost select-md w-full max-w-full text-xs"
             value={""}
             aria-label={t("Add main stat")}
             onChange={handleAttrAdd}

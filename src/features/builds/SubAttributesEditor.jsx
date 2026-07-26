@@ -40,8 +40,8 @@ const SubAttributesEditor = ({ subAttributes, setSubAttributes }) => {
   return (
     <>
       <div className="label flex flex-row justify-between">
-        <span className="label-text">{t("Sub Stats")}</span>
-        <span className="label-text-alt flex items-center gap-2">
+        <span className="text-sm">{t("Sub Stats")}</span>
+        <span className="flex items-center gap-2 text-xs">
           {t("Relative importance")}
           <button
             type="button"
@@ -67,10 +67,10 @@ const SubAttributesEditor = ({ subAttributes, setSubAttributes }) => {
           return (
             <div key={attr.type}>
               <div className="label">
-                <label className="label-text-alt" htmlFor={inputId}>
+                <label className="text-xs" htmlFor={inputId}>
                   {statName}
                 </label>
-                <span className="label-text-alt flex items-center gap-1">
+                <span className="flex items-center gap-1 text-xs">
                   {formattedValue}
                   <button
                     type="button"
@@ -101,7 +101,7 @@ const SubAttributesEditor = ({ subAttributes, setSubAttributes }) => {
         })}
         {isAdding && (
           <select
-            className="select-ghost"
+            className="select select-ghost"
             value={""}
             aria-label={t("Add substat")}
             onChange={handleAttrAdd}

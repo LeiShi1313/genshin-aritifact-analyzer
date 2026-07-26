@@ -12,7 +12,14 @@ const NameEditor = ({ name, setName, isPreset = false }) => {
     <h2 className="card-title">
       {isPreset && <span className="badge badge-primary">{t("Presets")}</span>}
       {displayName}
-      <Pencil className="cursor-pointer" onClick={() => setIsEditing(true)} />
+      <button
+        type="button"
+        className="btn btn-ghost btn-circle btn-xs"
+        aria-label={t("Edit")}
+        onClick={() => setIsEditing(true)}
+      >
+        <Pencil aria-hidden="true" />
+      </button>
     </h2>
   ) : (
     <div className="flex flex-row items-center">
@@ -20,15 +27,23 @@ const NameEditor = ({ name, setName, isPreset = false }) => {
         id="name"
         type="text"
         placeholder={t("Unnamed Build")}
-        className="input-primary input-ghost input-sm max-w-xs"
-        value={displayName}
+        aria-label={t("Name")}
+        className="input input-primary input-ghost input-sm max-w-xs"
+        value={name ?? ""}
+        autoFocus
         onChange={(e) => setName(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === "Escape") setIsEditing(false);
+        }}
       />
-      <Check
-        className="cursor-pointer"
+      <button
+        type="button"
+        className="btn btn-ghost btn-circle btn-xs"
+        aria-label={t("Confirm")}
         onClick={() => setIsEditing(false)}
-        weight="bold"
-      />
+      >
+        <Check aria-hidden="true" weight="bold" />
+      </button>
     </div>
   );
 };
