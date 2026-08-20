@@ -29,12 +29,17 @@ test("GCSIM capabilities expose the pinned engine support boundary", () => {
   assert.equal(isGCSimWeaponSupported(Weapon.DISASTER_AND_REMORSE), false);
 
   assert.equal(isGCSimSetSupported(Set.CELESTIAL_GIFT), true);
-  assert.equal(isGCSimSetSupported(Set.DISENCHANTMENT_IN_DEEP_SHADOW), false);
+  assert.equal(isGCSimSetSupported(Set.DISENCHANTMENT_IN_DEEP_SHADOW), true);
+  assert.equal(isGCSimSetSupported(Set.HEART_OF_THE_FURNACE), false);
+  assert.equal(isGCSimSetSupported(Set.SCARLET_PROOF), false);
 
-  assert.equal(getGCSimCharacterName(Character.YUMEMIZUKI_MIZUKI), "mizuki");
+  assert.equal(
+    getGCSimCharacterName(Character.YUMEMIZUKI_MIZUKI),
+    "yumemizukimizuki"
+  );
   assert.equal(
     getGCSimWeaponName(Weapon.RAINBOW_SERPENTS_RAIN_BOW),
-    "rainbowserpentbow"
+    "rainbowserpentsrainbow"
   );
 });
 
@@ -106,13 +111,13 @@ test("unsupported inferred sets are shown as omitted equipment", () => {
     { enabled: true },
     positions.map((position) => ({
       position,
-      artifact: artifact(Set.DISENCHANTMENT_IN_DEEP_SHADOW, position),
+      artifact: artifact(Set.HEART_OF_THE_FURNACE, position),
     }))
   );
 
   assert.equal(changed.sets, undefined);
   assert.deepEqual(changed.unsupportedEquipment?.sets, [
-    Set.DISENCHANTMENT_IN_DEEP_SHADOW,
+    Set.HEART_OF_THE_FURNACE,
   ]);
 });
 

@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Run generation even when genshin-db is already current"
+        description: "Run generation even when all providers are already current"
         required: false
         type: boolean
         default: false
   schedule:
-    # genshin-db recent publishes follow the Genshin patch cadence; Thursday UTC catches most Wed/Thu releases quickly.
+    # Thursday UTC catches the usual Genshin release-data publishing window.
     - cron: "23 3 * * 4"
 
 permissions:
@@ -36,54 +36,70 @@ jobs:
           node-version: "20"
           cache: npm
 
-      - name: Check latest genshin-db version
-        id: version
+      - name: Check latest game-data sources
+        id: sources
         env:
           FORCE_UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.force == true }}
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          current="$(node -p "require('./package-lock.json').packages['node_modules/genshin-db'].version")"
-          latest="$(npm view genshin-db version)"
+          genshin_db_current="$(node -p "require('./package-lock.json').packages['node_modules/genshin-db'].version")"
+          genshin_db_latest="$(npm view genshin-db version)"
+          genshin_data_current="$(node -p "require('./package-lock.json').packages['node_modules/genshin-data'].version")"
+          genshin_data_latest="$(npm view genshin-data version)"
+          enka_current="$(node -p "require('./src/data/game-data-fallback.generated.json').sources.find(source => source.id === 'enka-network').revision")"
+          enka_latest="$(gh api -X GET repos/EnkaNetwork/API-docs/commits -f path='store/gi' -f per_page=1 --jq '.[0].sha')"
 
-          echo "current=$current" >> "$GITHUB_OUTPUT"
-          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+          echo "genshin_db_current=$genshin_db_current" >> "$GITHUB_OUTPUT"
+          echo "genshin_db_latest=$genshin_db_latest" >> "$GITHUB_OUTPUT"
+          echo "genshin_data_current=$genshin_data_current" >> "$GITHUB_OUTPUT"
+          echo "genshin_data_latest=$genshin_data_latest" >> "$GITHUB_OUTPUT"
+          echo "enka_current=$enka_current" >> "$GITHUB_OUTPUT"
+          echo "enka_latest=$enka_latest" >> "$GITHUB_OUTPUT"
 
-          if [ "$FORCE_UPDATE" = "true" ] || [ "$current" != "$latest" ]; then
+          if [ "$FORCE_UPDATE" = "true" ] || \
+             [ "$genshin_db_current" != "$genshin_db_latest" ] || \
+             [ "$genshin_data_current" != "$genshin_data_latest" ] || \
+             [ "$enka_current" != "$enka_latest" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Install dependencies
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         run: npm ci
 
-      - name: Update genshin-db dependency
-        if: steps.version.outputs.should_run == 'true'
-        run: npm run update:genshin-db
+      - name: Update game-data dependencies
+        if: steps.sources.outputs.should_run == 'true'
+        run: |
+          npm install --save-dev genshin-db@latest
+          npm install --save-dev --save-exact genshin-data@latest
 
       - name: Generate data
-        if: steps.version.outputs.should_run == 'true'
-        run: npm run gen
+        if: steps.sources.outputs.should_run == 'true'
+        env:
+          ENKA_FALLBACK_REVISION: ${{ steps.sources.outputs.enka_latest }}
+        run: npm run update:game-data
 
       - name: Build
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         run: npm run build
 
       - name: Test generated game data
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         run: npm run test:artifact-scoring && npm run test:character-stats
 
       - name: Check generated character progression
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         run: npm run check:character-stats-data
 
       - name: Check PNG assets
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         run: node check-pngs.js
 
       - name: Enforce game-data ownership boundary
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -104,11 +120,11 @@ jobs:
           fi
 
       - name: Clean generated test artifacts
-        if: always() && steps.version.outputs.should_run == 'true'
+        if: always() && steps.sources.outputs.should_run == 'true'
         run: npm run clean-gen
 
       - name: Check for data changes
-        if: steps.version.outputs.should_run == 'true'
+        if: steps.sources.outputs.should_run == 'true'
         id: diff
         shell: bash
         run: |
@@ -119,31 +135,35 @@ jobs:
           fi
 
       - name: Create or update pull request
-        if: steps.version.outputs.should_run == 'true' && steps.diff.outputs.has_changes == 'true'
+        if: steps.sources.outputs.should_run == 'true' && steps.diff.outputs.has_changes == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
 
-          version="$(node -p "require('./package-lock.json').packages['node_modules/genshin-db'].version")"
+          genshin_db_version="$(node -p "require('./package-lock.json').packages['node_modules/genshin-db'].version")"
+          genshin_data_version="$(node -p "require('./package-lock.json').packages['node_modules/genshin-data'].version")"
+          enka_revision="$(node -p "require('./src/data/game-data-fallback.generated.json').sources.find(source => source.id === 'enka-network').revision")"
           game_version="$(node -e "const text = require('fs').readFileSync('src/data/version.ts', 'utf8'); console.log(text.match(/GENSHIN_GAME_VERSION = \"([^\"]+)\"/)[1]);")"
-          branch="automation/genshin-data-v${version}"
+          branch="automation/genshin-game-data"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B "$branch"
           git add -A
-          git commit -m "update genshin data to ${version}"
+          git commit -m "update Genshin game data to ${game_version}"
           git push --force-with-lease origin "$branch"
 
           body="$(mktemp)"
           cat > "$body" <<EOF
-          Updates generated Genshin data with \`genshin-db@${version}\`.
+          Updates the generated Genshin game-data catalog.
 
           Generated version metadata:
           - Game: \`${game_version}\`
-          - genshin-db: \`${version}\`
+          - genshin-db: \`${genshin_db_version}\`
+          - genshin-data: \`${genshin_data_version}\`
+          - Enka: \`${enka_revision}\`
 
           Validation:
           - \`npm run build\`
@@ -156,7 +176,7 @@ jobs:
 
           existing_pr="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
           if [ -n "$existing_pr" ]; then
-            gh pr edit "$existing_pr" --title "Update Genshin data to ${version}" --body-file "$body"
+            gh pr edit "$existing_pr" --title "Update Genshin game data to ${game_version}" --body-file "$body"
           else
-            gh pr create --base main --head "$branch" --title "Update Genshin data to ${version}" --body-file "$body"
+            gh pr create --base main --head "$branch" --title "Update Genshin game data to ${game_version}" --body-file "$body"
           fi

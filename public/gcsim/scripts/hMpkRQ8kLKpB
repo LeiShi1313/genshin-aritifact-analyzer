@@ -1,32 +1,28 @@
-# Razor Nahida Fischl Citlali. ~21s Rotation. Razor Hybrid Aggravate. ATK > EM Sands. ATK > Phys > Electro Goblet. Nahida's burst is a DPS loss.
+# Razor Nahida Fischl Citlali. ~21s Rotation. Razor Hybrid Aggravate. ATK > EM Sands. ATK = Electro > Phys Goblet. Electro Goblet does 33% Phys DPS. Nahida's burst is a DPS loss.
 
-# Team- Options listsed by DPS
+# Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-razor add set="pf" count=4;
-#razor add set="ts" count=4;
-#razor add set="echoes" count=4;
-#razor add set="gd" count=4; # Reaction damage
-razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
-razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK; PF
-#razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
-#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/Phys; PF/Echoes
+razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.586 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # ATK
 #razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/Electro; PF/TS
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EM/Electro; Not Rec
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # Electro
+#razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # Phys
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
-nahida add set="gt" count=4;
-#nahida add set="tom" count=4;
+nahida add set="tom" count=4;
+#nahida add set="gt" count=4;
 #nahida add set="deepwood" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
-fischl add set="gt" count=4;
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
 fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
 

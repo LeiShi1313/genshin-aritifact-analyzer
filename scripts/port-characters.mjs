@@ -1,22 +1,20 @@
 import fs from "node:fs";
 
-import genshindb from "genshin-db";
-
 import * as utils from "./utils.mjs";
+import { characterKey } from "./game-data/keys.mjs";
 
 const isElementTraveler = (name) => name.startsWith("Traveler ");
 const isTraveler = (name) =>
   isElementTraveler(name) || name === "Lumine" || name === "Aether";
 
-const characterKey = (name) =>
-  name
-    .replace(/[()]/g, "")
-    .replace(/[^0-9a-z]/gi, "_")
-    .toLowerCase();
-
-const portCharacters = async () => {
-  const remoteNames = genshindb.characters("names", { matchCategories: true });
-  const names = utils.syncNamesFile("scripts/characters", remoteNames);
+const portCharacters = async (catalog) => {
+  const recordsByKey = new Map(
+    catalog.characters.map((record) => [record.key, record])
+  );
+  const remoteNames = catalog.characters.map(({ name }) => name);
+  const names = utils.syncNamesFile("scripts/characters", remoteNames, (name) =>
+    name.replace(/[()]/g, "")
+  );
   const translations = { en: {} };
   const characterData = {};
   const protoLines = [
@@ -30,49 +28,40 @@ const portCharacters = async () => {
 
   let index = 1;
   for (const name of names) {
-    const english = isElementTraveler(name)
-      ? genshindb.talents(name)
-      : genshindb.characters(name);
+    const english = recordsByKey.get(characterKey(name));
     if (!english)
-      throw new Error(`Character ${name} was not found in genshin-db`);
+      throw new Error(`Character ${name} was not found in the catalog`);
 
     const key = characterKey(english.name);
     protoLines.push(`    ${key.toUpperCase()} = ${index++};`);
     translations.en[key] = english.name;
 
-    for (const [language, locale] of Object.entries(utils.lngToRegion)) {
-      const localized = isElementTraveler(name)
-        ? genshindb.talents(name, { resultLanguage: language })
-        : genshindb.characters(name, { resultLanguage: language });
-      if (!localized) {
-        throw new Error(`${name} is missing the ${language} translation`);
-      }
+    for (const locale of Object.values(utils.lngToRegion)) {
+      const localized = english.translations[locale];
+      if (!localized)
+        throw new Error(`${name} is missing the ${locale} translation`);
       translations[locale] ??= {};
-      translations[locale][key] = localized.name;
+      translations[locale][key] = localized;
     }
 
     characterData[key] = {
       zh_name: translations.zh[key],
-      element: isElementTraveler(name)
-        ? name.slice("Traveler ".length)
-        : english.elementText !== "None"
-        ? english.elementText
-        : "",
-      weapontype: isElementTraveler(name) ? "Sword" : english.weaponText,
-      rarity: isElementTraveler(name) ? 5 : english.rarity,
+      element: english.element,
+      weapontype: english.weaponType,
+      rarity: english.rarity,
     };
 
     const images = english.images ?? {};
     const imageSpecs = [
       {
         type: "icon",
-        filename: images.filename_icon,
-        directUrls: [images.mihoyo_icon, images.icon, images.image],
+        filename: images.filenameIcon,
+        directUrls: images.iconUrls ?? [],
       },
       {
         type: "gacha",
-        filename: images.filename_gachaSplash,
-        directUrls: [images.gacha, images.card],
+        filename: images.filenameGachaSplash,
+        directUrls: images.gachaUrls ?? [],
       },
     ];
 

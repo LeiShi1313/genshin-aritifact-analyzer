@@ -1,0 +1,90 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2648 cd=0.662;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1102 em=118.92 cr=0.3972 cd=0.4634;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworneye" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.1102 em=39.64 cr=0.2979 cd=0.1986;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+
+fn mav_dc_cancel(d_travel_f) { # d_travel_f should be 6-24. https://docs.gcsim.app/reference/characters/mavuika#params
+  # To prevent Error when Mavuika tries to do D*C without enough NS points, jump instead.
+  if d_travel_f < 6 {
+    d_travel_f = 6;
+  }
+
+  let dash_ns = 10; # 10 consumption on dash use
+  let base_cons = 0.9; # 0.9 points
+  let base_tick_rate = 6;
+
+  while !.mavuika.dash.ready {
+    print("waiting on mavuika dash cd");
+    wait(1);
+  }
+
+  let d_ticks = d_travel_f / base_tick_rate + 1; # +1 in case you get unlucky with tick timing
+  print("Max number of NS ticks during dash: ", d_ticks);
+  let ns_consumed = dash_ns + base_cons * d_ticks;
+  print("Expected NS consumption: ", ns_consumed);
+
+  if .mavuika.nightsoul.points > ns_consumed || .mavuika.status.mavuika-burst {
+    mavuika dash[charge_cancel=1, travel=d_travel_f], charge;
+  } else {
+    print("current NS points = ", .mavuika.nightsoul.points);
+    print("skipping mav d*c, not enough NS points ");
+    mavuika jump;
+  }
+}
+
+active mavuika;
+
+for let i=0; i<4; i=i+1 {
+  mavuika skill, attack;
+  delay(7); // Citlali E -> Mav E tick -> Q(remove Pyro) N1(Cryo on the enemy). Pyro app shouldn't happen after Citlali Q
+  nicole skill, attack;
+  sucrose swap;
+  wait(20);
+  sucrose skill, dash;
+  citlali skill, burst, attack;
+  mavuika swap;
+  if .mavuika.nightsoul.points {  // To prevent Error when Mavuika tries to Recast E when its already expired due to teammate stalling for Q energy
+    mavuika skill[recast=1];
+    mavuika charge;                                                           // C1     // C
+    mav_dc_cancel(6); mavuika charge[final=1];                                // D*C1F  // d*cF
+    delay(7);
+  }
+  mavuika burst;                                                              // Q      // Q
+  mavuika charge:3, charge[hold=6], charge[final=1];                          // C3F    // CccF
+  mav_dc_cancel(6); mavuika charge[hold=6], charge[final=1];                  // D*C1F  // d*cF
+  mav_dc_cancel(6); mavuika charge[hold=30], charge[final=1];                 // D*C1F  // d*cF
+  mav_dc_cancel(6);                                                           // D*C1   // d*c
+  mav_dc_cancel(6);                                                           // D*C1   // d*c  // No Mavuika Q buff on C
+  mavuika charge[hold=4]; // delay for 18s cd
+
+}
+
+# Mavuika E N1 > Nicole E > Sucrose ED > Citlali EQ N1 > Mavuika hE C1 D*C1F Q C3F 2[D*C1F] 2[D*C1]

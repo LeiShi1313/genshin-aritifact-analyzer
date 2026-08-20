@@ -1,0 +1,54 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+yoimiya char lvl=90/90 cons=0 talent=9,9,9;
+yoimiya add weapon="rust" refine=3 lvl=90/90;
+yoimiya add set="sr" count=4;
+yoimiya add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
+yoimiya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favoniuswarbow" refine=4 lvl=90/90;
+yelan add set="sms" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.331 cd=0.5958;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="fjords" refine=1 lvl=90/90;
+ineffa add set="gd" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+ineffa add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=5;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=237.84 cr=0.0662 cd=0.2648;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active yelan;
+
+for let i = 0; i < 6; i = i + 1 {
+  yelan attack, skill, attack, burst, attack;
+  if !.yelan.mods.favonius-cd {
+    yelan attack; # if its still not triggered try fav.
+  }
+  bennett skill, burst;
+  if ( (i+2) / 3 ) * 3 == (i+2) {   // 2nd, 5th rot
+    ineffa burst, skill;
+  } else {
+    ineffa attack, dash, skill;
+  }
+  yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  if ( i / 3 ) * 3 == i {           // 1st, 4th rot
+    yoimiya burst;
+  } else {
+    bennett attack, skill, attack;
+  }
+}
+
+# Yelan N1 E N1 Q N1 > Bennett EQ > Ineffa (Q/N1D) E > Yoimiya E 3[N5D] N1 (Q / Bennett N1 E N1)

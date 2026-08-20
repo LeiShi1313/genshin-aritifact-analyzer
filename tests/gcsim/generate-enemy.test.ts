@@ -20,7 +20,7 @@ const createFixture = (languages = languageNames) =>
     languages.map((language) => [
       language,
       {
-        enemy_names: {
+        monster_names: {
           zeta: `${language} Zeta`,
           alpha: `${language} Alpha`,
         },
@@ -94,7 +94,7 @@ test("enemy generation rejects incomplete upstream localization", async (t) => {
         dataPath: path.join(root, "src/data/gcsim"),
         protoPath: path.join(root, "proto/enemy.proto"),
       }),
-    /Chinese.*enemy_names/
+    /Chinese.*monster_names/
   );
 });
 
@@ -106,7 +106,7 @@ test("enemy generation preserves existing enum numbers and appends new keys", as
   const protoPath = path.join(root, "proto/enemy.proto");
   const fixture = createFixture();
   for (const language of languageNames) {
-    fixture[language].enemy_names.beta = `${language} Beta`;
+    fixture[language].monster_names.beta = `${language} Beta`;
   }
   await writeFile(localizationPath, JSON.stringify(fixture), "utf8");
   await mkdir(path.dirname(protoPath), { recursive: true });
@@ -141,8 +141,8 @@ test("enemy generation rejects missing or extra translated enemy keys", async (t
 
   const localizationPath = path.join(root, "names.generated.json");
   const fixture = createFixture();
-  delete fixture.German.enemy_names.alpha;
-  fixture.German.enemy_names.unexpected = "Unexpected";
+  delete fixture.German.monster_names.alpha;
+  fixture.German.monster_names.unexpected = "Unexpected";
   await writeFile(localizationPath, JSON.stringify(fixture), "utf8");
 
   await assert.rejects(
@@ -164,7 +164,7 @@ test("enemy generation rejects keys that cannot become proto enum identifiers", 
   const localizationPath = path.join(root, "names.generated.json");
   const fixture = createFixture();
   for (const language of languageNames) {
-    fixture[language].enemy_names["invalid-key"] = "Invalid";
+    fixture[language].monster_names["invalid-key"] = "Invalid";
   }
   await writeFile(localizationPath, JSON.stringify(fixture), "utf8");
 

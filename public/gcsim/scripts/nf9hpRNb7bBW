@@ -1,44 +1,38 @@
-# Razor Nahida Fischl Deyha. ~20s Rot. Razor with 16s of Field time. Nahida bursts every other rotation starting 2nd Rot. Fischl alternates skill and burst.
+# Razor Nahida Fischl Dehya. ~20s Rot. Razor with 16s of Field time. Nahida bursts every other rotation starting 2nd Rot. Fischl alternates skill and burst.
 
-# Team
+# Team - Options listed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-#razor add weapon="mailedflower" refine=5 lvl=90/90;
-#razor add weapon="archaic" refine=5 lvl=90/90;
-razor add set="ur" count=4;
-razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK
+razor add set="ur" count=4; # Can also use ATK/ATK/CD
+#razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # UR
 #razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # Atk/El
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
-#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Em/El
-#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Atk/EL/Cr
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # RW
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="gt" count=4;
-#nahida add set="deepwood" count=4;
-#nahida add set="scroll" count=4;
 #nahida add set="tom" count=4;
+#nahida add set="scroll" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-nahida add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.2979 cd=0.7282;
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*10 cd=0.0662*10;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
-fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #mainstats
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
 
 dehya char lvl=90/90 cons=0 talent=9,9,9;
 dehya add weapon="aquamarine" refine=1 lvl=90/90;
 #dehya add weapon="regalia" refine=1 lvl=90/90 +params=[pickup_delay=90]; # To Fischl
 #dehya add weapon="regalia" refine=1 lvl=90/90 +params=[pickup_delay=190]; # To Razor; 1st Dash
 dehya add set="deepwood" count=4;
-#dehya add set="scroll" count=4;
 #dehya add set="tom" count=4;
 dehya add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-dehya add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+dehya add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*6;
 
 # Options
 options iteration=1000;
@@ -47,9 +41,7 @@ energy every interval=480,720 amount=1;
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
 
-# Rotation
 # Rotation
 active razor; # SS Stacks
 
@@ -64,7 +56,7 @@ for let i=0; i<4; i=i+1 {
     nahida charge;
   }
 
-  dehya skill:1;
+  dehya skill;
   if i > 0 {
     dehya skill;
   }
@@ -88,5 +80,4 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-
 }

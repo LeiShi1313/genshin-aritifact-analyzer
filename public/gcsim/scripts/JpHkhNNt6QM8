@@ -1,45 +1,40 @@
-# Razor Emilie Kuki Bennett. ~21s Rotation. Razor Quickload w/ 67/49% Quicken/Burning uptime. Kuki & Emilie burst in alternate rotations. SS may be inconsistent. Self-Overloads not implemented.
+# Razor Emilie Kuki Bennett. ~20s Rotation. Razor Quickload w/ 69/48% Burning/Quicken uptime. Serpent Spine is edged out by Talking Stick when assuming Burning damage. Kuki & Emilie burst in alternate rotations. Self-Aura Overloads not implemented.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5]; # Inconsistent
-#razor add weapon="talkingstick" refine=1 lvl=90/90; # Passive not implemented
-#razor add weapon="mailedflower" refine=5 lvl=90/90; # AoE OL DMG
-razor add set="ur" count=4; # General
-razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.3972 cd=0.662; # EM/El
+#razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implented; Self-Damage SS Alternative
+razor add set="ur" count=4; # RW is worse
+razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EM/Electro
 #razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1653 em=59.46 cr=0.3972 cd=0.662; # ATK/El
-#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1653 em=59.46 cr=0.3972 cd=0.662; # ATK/ATK
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1653 em=59.46 cr=0.331 cd=0.7944; #Em/El/Cr; MF
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # ATK/Electro
+#razor add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # EM/EM
 
 emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
-emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
-# DPS Kuki
 kuki char lvl=90/90 cons=6 talent=9,9,9; # start_hp=1;
 kuki add weapon="xiphos" refine=1 lvl=90/90;
 #kuki add weapon="umbrella" refine=5 lvl=90/90;
 #kuki add weapon="ironsting" refine=5 lvl=90/90;
 kuki add set="deepwood" count=4;
-#kuki add set="gt" count=4;
-#kuki add set="gd" count=4;
-#kuki add set="tf" count=4;
 kuki add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # Em/Em/Em
-#kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
-#kuki add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/El/Cr
+kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*11 em=19.82*6 cr=0.0331*9 cd=0.0662*2; # Em/Em/Em
+#kuki add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # Em/El/Cr
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=155]; # 1st Razor Dash
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662; # ATK
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*10; # ATK
+#bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
+#bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*10 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*2; # Heals
 
 # Options
 options iteration=1000;
@@ -47,41 +42,35 @@ options swap_delay=12;
 energy every interval=480,720 amount=1;
 
 # Targets
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Most elite opponents are too large for you to actually take Burning damage
 #target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # deals burning AoE, enables MH, -SS stacks
 
 # Rotation
 active razor; # SS Stacks
-#razor skill, dash;
 
 for let i=0; i<4; i=i+1 {
   kuki skill; #attack;
-  if .kuki.burst.ready {
+  # Forego burst if energy deficient, DPS Neutral
+  if i > 1 && .kuki.burst.ready {
     kuki burst;
   }
 
-  # Forego burst if energy deficient
+  # Skip in first rotation, burst as available after
   if i && .emilie.burst.ready {
     emilie burst;
   } else {
-    emilie attack, skill;
+    emilie skill, attack; # Kuki C4
   }
 
-  bennett skill, burst;
+  bennett skill, dash, burst;
 
-  razor skill, dash, attack, burst; # attack:1, skill, dash;
-  # Razor main DPS window
-  while .razor.infusion.bennett-fire-weapon {
-    if .razor.normal > 3 {
-      if .razor.skill.ready {
-        razor skill, dash;
-      } else {
-        razor dash;
-      }
-    } else {
-      razor attack;
-    }
-  }
+  razor skill, dash, attack, burst;
+  razor attack:3, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+  razor attack:3, dash;
+  razor attack:3; # Last N1 is not infused
 
   bennett skill;
 

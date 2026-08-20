@@ -3,38 +3,29 @@
 # Team
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-#razor add weapon="mailedflower" refine=5 lvl=90/90;
-#razor add weapon="aquamarine" refine=1 lvl=90/90;
 razor add set="ur" count=4;
-#razor add set="gd" count=4;
-razor add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # Em/Em/Cd; SS
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
-#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Em/El/Cd
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/EL/Cr; MF
-#razor add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
-#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2317 cd=0.7282; # Em/Em/Cr; Aqua
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
 
 emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
-emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
-fischl add set="gt" count=4;
-#fischl add set="ur" count=4;
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
 
 xiangling char lvl=90/90 cons=6 talent=9,9,9;
 xiangling add weapon="kitain" refine=5 lvl=90/90;
 xiangling add set="deepwood" count=4;
 #xiangling add set="tom" count=4;
 xiangling add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-xiangling add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.5952 er=0.4408 em=118.92 cr=0.0662 cd=0.1324;
+xiangling add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*12 em=19.82*6 cr=0.0331*2 cd=0.0662*2;
 
 # Options
 options iteration=1000;

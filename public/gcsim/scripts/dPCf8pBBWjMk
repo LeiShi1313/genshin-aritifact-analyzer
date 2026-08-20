@@ -34,9 +34,11 @@ for let i=0; i<4; i=i+1 {
   let StartFrame = f();
   furina skill, dash, attack, burst;
   bennett skill, burst;
-  mona burst, attack:2, dash, attack:2, skill, attack;
+  mona burst, attack;
   durin skill, attack, burst;
-  while f() - StartFrame < 1120 {
+  mona attack:2, skill, attack:2;
+  durin swap;
+  while f() - StartFrame < 1110 {
     if .durin.normal == 2 && .stam > 50 {
       durin charge, dash;
     }

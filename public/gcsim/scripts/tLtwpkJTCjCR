@@ -8,7 +8,7 @@ mona char lvl=90/90 cons=4 talent=9,9,9;
 mona add weapon="favoniuscodex" refine=3 lvl=90/90;
 mona add set="scroll" count=4;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
-mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*10 cd=0.0662*11;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 durin char lvl=90/90 cons=0 talent=9,9,9;
 durin add weapon="wolffang" refine=1 lvl=90/90;
@@ -44,15 +44,15 @@ for let i = 0; i < 4; i = i + 1 {
 
   mona burst, attack, skill, attack:4;
 
-  chasca skill, aim:3;
+  chasca skill, aim:4;
   if is_even(i) {
     chasca burst;
   } else {
-    chasca aim, aim[bullets=3];
+    chasca aim[bullets=4];
   }
 
 }
 
-# ~19s rotations
-# Nicole   E > Durin E N1 Q > Mona Q N1 E N4 > Chasca E 3[C] Q
-# Nicole Q E > Durin E N1 Q > Mona Q N1 E N4 > Chasca E 4[C] C_3b
+# 20s rotations
+# Nicole   E > Durin E N1 Q > Mona Q N1 E N4 > Chasca E 4[C] Q
+# Nicole Q E > Durin E N1 Q > Mona Q N1 E N4 > Chasca E 4[C] C_4b

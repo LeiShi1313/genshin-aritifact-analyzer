@@ -1,29 +1,36 @@
-# Razor Furina Fischl Qiqi. ~22ish rotation. Razor Qiqi with Clam Qiqi. When Qiqi burst is not ready, she attacks until obtaining A4.
+# Razor Furina Fischl Qiqi. ~22s-ish rotation. Razor Superconduct with Clam Qiqi. When Qiqi burst is not ready, she attacks until she obtains A4.
 
 # Team- Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
-razor add weapon="tidalshadow" refine=5 lvl=90/90;
-razor add set="mh" count=4;
-razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622 ; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="risingwinds" count=4;
+#razor add set="mh" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # RW
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*3 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # MH
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
-furina add set="totm" count=4;
-furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
-furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.4464 atk=33.08 atk%=0.0992 er=0.1653 em=39.64 cr=0.3972 cd=0.2648;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*10 cd=0.0662*9; # ToM
+#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+#furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*3 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # GT
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
-fischl add weapon="songofstillness" refine=5 lvl=90/90;
-fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+fischl add weapon="stillness" refine=5 lvl=90/90;
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 qiqi char lvl=90/90 cons=0 talent=9,9,9;
 qiqi add weapon="favsword" refine=3 lvl=90/90;
 qiqi add set="ohc" count=4;
 qiqi add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311 ; #main
-qiqi add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.3306 em=39.64 cr=0.331 cd=0.1324;
+qiqi add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*8 em=19.82*2 cr=0.0331*10 cd=0.0662*2;
 
 # Options
 options iteration=1000;

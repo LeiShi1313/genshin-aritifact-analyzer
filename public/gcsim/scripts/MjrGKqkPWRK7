@@ -1,0 +1,55 @@
+# Team - Options Listed by DPS
+lyney char lvl=90/90 cons=0 talent=9,9,9;
+lyney add weapon="crescent" refine=5 lvl=90/90;
+lyney add set="mh" count=4;
+lyney add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+lyney add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+sayu char lvl=90/90 cons=6 talent=9,9,9;
+sayu add weapon="favgs" refine=5 lvl=90/90;
+sayu add set="vv" count=4;
+sayu add stats hp=4780 atk=311 er=0.518 em=187cr=0.311;
+sayu add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*4 cr=0.0331*10 cd=0.0662*4;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="favcodex" refine=5 lvl=90/90;
+nicole add set="celestialgift" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*7 atk%=0.0496*6 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
+
+# Protoype Crescent Headshot Conditional
+fn lyneyAim() {
+  if .lyney.weapon == .keys.weapon.crescent { # Attempts headshots (50%) with Crescent
+    lyney aim[hold=2, weakspot=rand()>0.5];
+  } else { # Non weakspot opponents
+    lyney aim[hold=2];
+  }
+}
+
+options swap_delay=12 iteration=500;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active nicole;
+
+for let i = 0; i < 3; i = i + 1 {
+
+  nicole burst, skill;
+  durin  burst, skill:2;
+  sayu skill[short_hold=1], burst;
+  lyney aim[weakspot=1], aim;
+  if .lyney.burst.ready {
+    lyney burst;
+    delay(11);
+    lyney skill;
+  } else {
+    lyney aim;
+  }
+  lyney aim:2, skill, aim;
+}

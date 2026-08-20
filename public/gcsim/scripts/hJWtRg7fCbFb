@@ -1,0 +1,76 @@
+# Razor Furina Mona Escoffier. ~24s Rot. Superconduct Razor in a long field time rotation. Razor stays on field until 3 skill are used, with C4 Def shred lingering over the next rotation setup. Razor deals 52/48 Electro/Phys DPS. Mona passes TTDS to Razor and does 1 N1 to extend Omen. +6K DPS with C4 Mona.
+
+# Team - Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="risingwinds" count=4;
+#razor add set="mh" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # RW
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*3 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # MH
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+mona char lvl=90/90 cons=0 talent=9,9,9;
+mona add weapon="ttds" refine=5 lvl=90/90;
+mona add set="cg" count=4;
+#mona add set="no" count=4;
+mona add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*9 cd=0.0662*12;
+
+escoffier char lvl=90/90 cons=0 talent=9,9,9;
+#escoffier add weapon="deathmatch" refine=1 lvl=90/90;
+escoffier add weapon="lamppost" refine=5 lvl=90/90;
+escoffier add set="scroll" count=4;
+#escoffier add set="gt" count=4;
+escoffier add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cd=0.622;
+escoffier add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*8 em=19.82*2 cr=0.0331*10 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1;
+
+# Rotation
+active razor; # SS Stacks
+razor skill, dash; # Not optimal
+
+for let i=0; i<4; i=i+1 {
+  furina skill, dash;
+  if !.furina.burst.ready && !.furina.mods.favonius-cd {
+    furina attack;
+  }
+  furina burst;
+
+  escoffier skill, burst;
+
+  mona skill, burst, attack;
+
+  # Opening
+  if i == 0 {
+    razor skill;
+  } else {
+    razor skill[hold=1]; # This is for team particles, Razor's energy is fine
+  }
+  razor dash, attack, burst, attack, skill, dash;
+  # Razor main DPS window
+  while .razor.mods.razor-q > 210 { # Ends with N3ED
+    if .razor.normal > 3 && .razor.skill.ready {
+      razor skill, dash;
+    } else if .razor.normal > 3 {
+      razor dash;
+    } else {
+      razor attack;
+    }
+  }
+}

@@ -43,12 +43,13 @@ for let i=0; i<4; i=i+1 {
   } else {
     fischl attack:2, burst;
   }
-  mona attack, burst, attack, skill, attack;
+  mona attack, burst, attack, dash, attack;
   arlecchino charge,
+             attack;
+  mona skill, dash, attack;
+  arlecchino attack:3, dash,
              attack:3, dash,
              attack:3, dash,
              attack:3, dash,
-             attack:3, dash,
-             attack:3, dash,
-             attack:3;
+             attack:2;
 }

@@ -1,0 +1,62 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+chasca char lvl=90/90 cons=6 talent=10,10,10;
+chasca add weapon="astralvulturescrimsonplumage" refine=5 lvl=90/90;
+chasca add set="obsidiancodex" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3641 cd=0.662;
+
+nicole char lvl=90/90 cons=6 talent=10,10,10;
+nicole add weapon="angelosheptades" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.3972 cd=0.5296;
+
+citlali char lvl=90/90 cons=6 talent=10,10,10;
+citlali add weapon="starcallerswatch" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 em=187 em=187 em=187;
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296;
+
+durin char lvl=90/90 cons=6 talent=10,10,10;
+durin add weapon="athameartis" refine=5 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+durin add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active nicole;
+
+for let i=0; i<4; i=i+1 {
+  nicole skill;
+  citlali skill, attack;
+  durin skill, burst, skill;
+  chasca skill;
+  chasca aim[bullets=2];  print("this aim is: ", 1);  # Triggers C6
+  chasca aim;             print("this aim is: ", 2);  # C6 instant shot + C6 Crit buff
+  chasca aim[bullets=4];  print("this aim is: ", 3);  # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 4);  # Normal
+  chasca aim[bullets=2];  print("this aim is: ", 5);  # Triggers C6
+  chasca aim;             print("this aim is: ", 6);  # C6 instant shot + C6 Crit buff
+  chasca aim[bullets=4];  print("this aim is: ", 7);  # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 8);  # Normal
+  chasca aim[bullets=2];  print("this aim is: ", 9);  # Triggers C6
+  chasca aim;             print("this aim is: ", 10); # C6 instant shot + C6 Crit buff
+  chasca aim[bullets=4];  print("this aim is: ", 11); # Normal
+  chasca aim[bullets=3];  print("this aim is: ", 12); # Normal
+  if is_even(i) {
+    chasca burst;
+    nicole attack;
+  } else {
+    nicole burst;
+    delay(8);
+  }
+}
+//wait(23); # for the last rot C6 instant shot to hit
+//wait(59); # for the last rot Burst to hit
+//wait(66); # 66f wait for the last 4bullet CA to hit

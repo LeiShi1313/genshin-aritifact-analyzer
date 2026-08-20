@@ -1,1 +1,1 @@
-{"gameVersion":"6.7","genshinDbVersion":"5.2.12","schemaVersion":1}
+{"gameVersion":"7.0","genshinDbVersion":"5.2.12","schemaVersion":2,"sources":[{"gameVersion":"6.7","id":"genshin-db","role":"primary","version":"5.2.12"},{"id":"enka-network","revision":"8ecab329af0ffc39b4ad058d46c66a2fdb1379f1","role":"fallback"},{"id":"genshin-data","role":"release-catalog","version":"0.62.0"}]}

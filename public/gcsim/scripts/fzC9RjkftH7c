@@ -1,0 +1,50 @@
+# Team
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="deathmatch" refine=1 lvl=90/90;
+raiden add set="totm" count=4;
+raiden add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+raiden add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+yae char lvl=90/90 cons=1 talent=9,9,9;
+yae add weapon="widsith" refine=5 lvl=90/90;
+yae add set="risingwinds" count=4;
+yae add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
+
+mona char lvl=90/90 cons=6 talent=9,9,9;
+mona add weapon="favcodex" refine=5 lvl=90/90;
+mona add set="cg" count=4;
+mona add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="sacfrags" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 er=0.518 em=186.5 em=186.5;
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*6 cr=0.0331*10 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+active raiden;
+raiden skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  yae skill:3;
+  sucrose skill, dash, attack;
+  mona burst, attack:3, skill, attack;
+  yae burst, skill:3;
+  sucrose attack, skill, dash, burst, attack;
+  raiden burst,
+         attack:4, dash,
+         attack:4, dash,
+         attack:4, skill,
+         attack:4;
+
+
+}

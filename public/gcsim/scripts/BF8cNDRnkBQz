@@ -1,0 +1,52 @@
+#overload Kequeen feat. Nicole | 18-18.5s rotation
+
+keq char lvl=90/90 cons=6 talent=9,9,9;
+keq add weapon="finaleofthedeep" refine=5 lvl=90/90;
+keq add set="fohw" count=4;
+keq add stats hp=4780 atk=311 atk%=.466 electro%=0.466 cr=0.311;
+keq add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="adaycarvedfromrisingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworneye" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*3;
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favoniuslance" refine=5 lvl=90/90;
+chev add set="no" count=4;
+chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+chev add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*5 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
+
+
+options iteration=1000 swap_delay=12;
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=21370000000;
+
+active keqing;
+
+keqing skill;
+for let i = 0; i < 6; i = i + 1 { # 6 rotations
+
+  nicole skill, burst;
+  durin skill:2;
+  chev skill[hold=1], burst;
+  durin burst;
+  keq skill, burst, skill, dash,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      attack, charge,
+      skill, skill,
+      attack, charge,
+      attack, charge;
+
+}

@@ -1,0 +1,89 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+flins char lvl=90/90 cons=0 talent=9,9,9;
+flins add weapon="deathmatch" refine=1 lvl=90/90;
+flins add set="notsu" count=4;
+flins add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+flins add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.2204 em=39.64 cr=0.2648 cd=0.662;
+
+//flins char lvl=90/90 cons=0 talent=9,9,9;
+//flins add weapon="bloodsoakedruins" refine=1 lvl=90/90;
+//flins add set="notsu" count=4;
+//flins add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+//flins add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="favbow" refine=4 lvl=90/90;
+fischl add set="sms" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="sacjade" refine=1 lvl=90/90;
+columbina add set="aubade" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+columbina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3472 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.2317 cd=0.662;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2317 cd=0.1986;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active columbina;
+for let i=0; i<6; i=i+1 {
+  columbina skill;
+  if is_even(i) {
+    columbina attack;
+  } else {
+    columbina burst;
+  }
+  if is_even(i) {
+    fischl attack, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  if .sucrose.burst.ready && is_even(i) {
+    sucrose burst, attack, skill, dash;
+  } else {
+    sucrose attack, skill, dash;
+  }
+  flins skill,
+        skill, attack, burst,
+        attack:3, dash, attack:3, dash, attack:3, dash, attack,
+        skill, burst,
+        attack:3, dash, attack:3, dash, attack:3, dash, attack;
+  // for the worst energy scenario
+  if .flins.status.manifest-flame {   // Check if Flins is still in the E state, it means Special E can be used
+    flins skill;
+    if .flins.energy >= 30 {
+      flins burst;
+    }
+  }
+  if !is_even(i) {
+    flins attack, dash; // waiting for Flins E cd for the next rot
+  }
+}
+
+# Columbina E N1 > Fischl E > Sucrose setup > Flins E E N1 Q 2{ 3[N3D] N1 E Q }
+# Columbina E Q  > Fischl Q > Sucrose setup > Flins E E N1 Q 2{ 3[N3D] N1 E Q } N1D
+
+
+
+
+// Flins E E N1 Q 3[N3D] N1 E N1 Q 3[N3D] E Q
+// flins skill,
+//       skill, attack, burst,
+//       attack:3, dash, attack:3, dash, attack:3, dash, attack,
+//       skill, attack, burst,
+//       attack:3, dash, attack:3, dash, attack:3, dash,
+//       skill, burst;
+
+# Columbina E N1 > Fischl E > Sucrose setup > Flins E E N1 Q 3[N3D] N1 E N1 Q 3[N3D] E Q
+# Columbina E Q  > Fischl Q > Sucrose setup > Flins E E N1 Q 3[N3D] N1 E N1 Q 3[N3D] E Q N1D

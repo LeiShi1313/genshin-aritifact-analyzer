@@ -5,30 +5,30 @@ freminet char lvl=90/90 cons=6 talent=9,9,9;
 freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 freminet add set="mh" count=4;
 freminet add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cd=0.622; #main
-freminet add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.496 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+freminet add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*2 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festering" refine=5 lvl=90/90;
 furina add set="tom" count=4;
 #furina add set="gt" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
-furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.4634; # ToM
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*10 cd=0.0662*6; # ToM
 #furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
-#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.2979 cd=0.4634; # GT
+#furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*10 cd=0.0662*6; # GT
 
-shenhe char lvl=90/90 cons=6 talent=9,9,9;
+shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favspear" refine=3 lvl=90/90;
 shenhe add set="no" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
-shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.551 em=39.64 cr=0.331 cd=0.331;
+shenhe add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*10 em=19.82*2 cr=0.0331*10 cd=0.0662*4;
 
-mika char lvl=90/90 cons=5 talent=9,9,9;
+mika char lvl=90/90 cons=6 talent=9,9,9;
 mika add weapon="favspear" refine=3 lvl=90/90;
 mika add set="ohc" count=4;
 #mika add set="sodp" count=4;
 #mika add set="no" count=4;
 mika add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
-mika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.2755 em=39.64 cr=0.331 cd=0.5958;
+mika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*10;
 
 # Options
 options iteration=1000;

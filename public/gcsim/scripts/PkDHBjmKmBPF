@@ -1,0 +1,68 @@
+# Razor Columbina Mona Bennett. ~22s Rot. Hex Overvape Razor using C6 Bennett infusion. EM/ATK > ATK/Electro > EM/Electro > EM/EM. Fav Bennett allows for just 1E. Lunarcharge deals ~10.5K DPS. Self-Overloads not implemented. C0 Mona is -10K DPS.
+
+# Team - Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 em=187 atk%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*10; # EM/ATK
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # EM/Electro
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*9 cr=0.0331*7 cd=0.0662*10; # ATK/Electro
+#razor add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # EM/EM
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="sacjade" refine=1 lvl=90/90;
+columbina add set="tom" count=4;
+#columbina add set="gt" count=4;
+#columbina add set="sms" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*9 cr=0.0331*7 cd=0.0662*10;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="favcodex" refine=3 lvl=90/90;
+mona add set="cg" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add set="no" count=4;
+#bennett add set="scroll" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*2 cr=0.0331*10 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active razor; # SS stacks
+#razor skill, dash;
+
+for let i=0; i<4; i=i+1 {
+  if i > 0 && .columbina.burst.ready {
+    columbina burst, skill;
+  } else {
+    columbina attack, skill;
+  }
+
+  mona skill, burst, attack;
+
+  bennett skill, dash, burst;
+
+  razor skill[hold=0], dash, attack, burst;
+  razor attack:0, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+}

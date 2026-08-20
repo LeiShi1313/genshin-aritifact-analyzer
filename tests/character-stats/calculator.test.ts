@@ -11,7 +11,10 @@ import {
   AUDITED_CHARACTER_CONSTANT_KEYS,
   AUDITED_WEAPON_CONSTANT_KEYS,
 } from "../../src/utils/characterStats/internal/rules/constantRuleCoverage";
-import { characterProgression, weaponProgression } from "../../src/utils/characterStats/internal/progression";
+import {
+  characterProgression,
+  weaponProgression,
+} from "../../src/utils/characterStats/internal/progression";
 import artifactSets from "../../src/data/sets.json";
 
 const closeTo = (actual: number, expected: number, tolerance = 1e-10) => {
@@ -532,7 +535,10 @@ test("marks missing artifact set identity as partial instead of complete", () =>
 
   assert.equal(invalidRuntimeIdentities.status, "partial");
   if (invalidRuntimeIdentities.status === "invalid") return;
-  assert.equal(invalidRuntimeIdentities.coverage.artifactSetConstants, "unknown");
+  assert.equal(
+    invalidRuntimeIdentities.coverage.artifactSetConstants,
+    "unknown"
+  );
   assert.deepEqual(
     invalidRuntimeIdentities.issues.map((issue) => issue.code),
     ["ARTIFACT_SET_IDENTITY_MISSING"]
@@ -580,9 +586,10 @@ test("keeps audited constant coverage explicit and marks future keys partial", (
         },
       },
       manifest: {
-        schemaVersion: 1,
+        schemaVersion: 2,
         genshinDbVersion: "future",
         gameVersion: "future",
+        sources: [],
       },
     }
   );
@@ -597,10 +604,10 @@ test("keeps audited constant coverage explicit and marks future keys partial", (
   );
   assert.equal(
     result.coverage.constantRuleset,
-    "genshin-artifact-builds/constant-stats@2"
+    "genshin-artifact-builds/constant-stats@3"
   );
   assert.deepEqual(result.coverage.constantRuleSources, [
-    "genshin-db@5.2.12/artifact-set-two-piece",
+    "game-data-catalog@7.0/artifact-set-two-piece",
     "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",
   ]);
 });

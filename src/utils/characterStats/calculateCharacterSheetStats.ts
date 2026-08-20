@@ -56,7 +56,9 @@ const ARTIFACT_STATS = new Set<ArtifactStatKey>([
   ...ELEMENTS.map((element) => `${element}DamageBonus` as const),
 ]);
 
-const MAIN_STATS_BY_SLOT: Readonly<Record<ArtifactSlot, ReadonlySet<ArtifactStatKey>>> = {
+const MAIN_STATS_BY_SLOT: Readonly<
+  Record<ArtifactSlot, ReadonlySet<ArtifactStatKey>>
+> = {
   flower: new Set(["hpFlat"]),
   plume: new Set(["attackFlat"]),
   sands: new Set([
@@ -463,7 +465,7 @@ export const calculateCharacterSheetStatsFromProgression = (
         : ("not-applicable" as const),
       gameVersion: progression.manifest.gameVersion,
       genshinDbVersion: progression.manifest.genshinDbVersion,
-      constantRuleset: "genshin-artifact-builds/constant-stats@2",
+      constantRuleset: "genshin-artifact-builds/constant-stats@3",
       constantRuleSources: [
         ARTIFACT_SET_CONSTANT_RULE_SOURCE,
         "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",

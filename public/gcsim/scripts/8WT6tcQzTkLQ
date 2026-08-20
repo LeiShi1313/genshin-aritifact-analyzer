@@ -1,0 +1,71 @@
+# Kinich Emilie Lauma Bennett. ~18s Rot. Kinich Triple Dendro. Despite this, Emilie still doesn't have enough particles to burst every rotation without ER investement. Kinich attempts 5[N2 shE] spinning clockwise consistently. Kinich burst goes unused.
+
+# Team - Options listed by DPS
+kinich char lvl=90/90 cons=0 talent=9,9,9;
+kinich add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+kinich add set="oc" count=4;
+kinich add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+kinich add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*10;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622;
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="ttds" refine=5 lvl=90/90;
+lauma add set="deepwood" count=4;
+lauma add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=1 lvl=90/90; # For energy reasons
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*7 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Functions
+fn kinich_combo() {
+  kinich skill;
+  while .kinich.nightsoul.state {
+    kinich attack[direction=1]:2;
+    while .kinich.nightsoul.points < 20 && .kinich.nightsoul.state {
+      wait(1);
+    }
+    if .kinich.nightsoul.state {
+      kinich skill[hold=1];
+    }
+
+  }
+}
+
+# Rotation
+active kinich; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  if i && .emilie.burst.ready && .emilie.energy == .emilie.energymax {
+    emilie burst;
+  } else {
+    emilie attack, skill;
+  }
+
+  lauma skill[hold=0];
+
+  bennett skill, dash, burst;
+
+  kinich_combo();
+  #if .kinich.burst.ready && .kinich.energy == .kinich.energymax  {
+  #  kinich burst;
+  #}
+
+  bennett skill, dash, attack:2; # You need to fill time anyway
+}

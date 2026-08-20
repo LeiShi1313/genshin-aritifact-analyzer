@@ -1,0 +1,90 @@
+# Sethos Fischl Durin Emilie. ~39 second rotation to get better oz uptime; durin and sethos both burst twice per rotation. Tf sethos uses skill off cd and using extra energy for aimed shots.
+
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="tf" count=4;
+sethos add stats hp=4780 atk=311 em=187*2 cd=0.622;
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=5 lvl=90/90;
+fischl add set="gt" count=4; # unfinished reverie and rising winds both within 1k dps of gt
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="xiphos" refine=1 lvl=90/90;
+durin add set="cg" count=4;
+durin add stats hp=4780 atk=311 em=187 em=187 em=187;
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*4 em=19.82*6 cr=0.0331*6 cd=0.0662*2;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622;
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Target
+target lvl=100 resist=0.1 radius=1 pos=-1.2,1.4 hp=100000000;
+
+active durin;
+
+for let i=0; i<3; i=i+1 {
+
+  while .durin.burst.cd > 53 { # durin must catch his particles after using burst, so wait until burst cd is short enough that we can use it right after skill
+    wait(1);
+  }
+  durin skill:2, burst;
+
+  emilie skill, attack;
+
+  if is_even(i){ # alternate using skill and burst
+    fischl attack:2, burst;
+  } else {
+    fischl skill, attack;
+  }
+
+  sethos skill, burst,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, skill,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk;
+  sethos aim[hold=2]:2, skill;
+
+  emilie burst, skill;
+
+  if is_even(i){
+    fischl skill, attack;
+  } else {
+    fischl attack:2, burst;
+  }
+
+  durin skill:2, burst;
+
+  sethos skill, burst,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, skill,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk;
+
+  if is_even(i){
+    fischl attack:2, burst;
+  } else {
+    fischl skill, attack;
+  }
+
+  sethos skill, aim[hold=2], aim[hold=1]:6, skill;
+}

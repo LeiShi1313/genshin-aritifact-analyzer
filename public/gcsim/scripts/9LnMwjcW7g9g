@@ -1,27 +1,28 @@
-# Razor Rosaria Shenhe Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging. Razor benefits from Extra Phys RES Shred, Cryo Resonance + Rosaria's A4 CR, and Shenhe's A4 plunge buff. Shenhe only bursts when ready. OHC > SoDP Xianyun, but bubbles may miss. Razor uses burst when ready just to fill rotation time. 50% Collisions.
+# Razor Rosaria Shenhe Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging and bursts when available. Razor benefits from Extra Phys RES Shred, Cryo Resonance + Rosaria's A4 CR, and Shenhe's A4 plunge buff. Shenhe only bursts when ready. OHC > SoDP Xianyun, but bubbles may miss. Razor uses burst when ready just to fill rotation time. 50% Collisions.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 #razor add weapon="fruitfulhook" refine=1 lvl=90/90;
-razor add set="lno" count=4;
-#razor add set="sr" count=4;
-#razor add set="pf" count=4;
+razor add set="lno" count=4; # LNO > PF
+#razor add set="risingwinds" count=4; # RW > MH
 razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3641 cd=0.662;
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*10; # LNO
+#razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*3 atk%=0.0496*10 er=0.0551*2 em=19.82*2 cr=0.0331*5 cd=0.0662*10; # RW
 
 rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="no" count=4;
 rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main
-rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+rosaria add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favlance" refine=3 lvl=90/90;
 shenhe add set="glad" count=2; shenhe add set="sr" count=2;
 #shenhe add set="emblem" count=4;
 shenhe add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
-shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.331 cd=0.5296;
+shenhe add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*8;
 
 xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
@@ -29,7 +30,7 @@ xianyun add set="ohc" count=4; # Bubbles may miss
 #xianyun add set="sodp" count=4;
 #xianyun add set="vv" count=4;
 xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
-xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=132.32 atk%=0.3968 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*8 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
 
 # Options
 options iteration=1000;
@@ -61,6 +62,9 @@ for let i = 0; i < 4; i = i + 1 {
   rosaria skill, burst;
 
   razor skill;
+  if .razor.burst.ready {
+    razor dash, burst;
+  }
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;
@@ -69,7 +73,4 @@ for let i = 0; i < 4; i = i + 1 {
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;
   RazorPlunge();
-  if i > 0 && .razor.burst.ready {
-    razor attack, burst;
-  }
 }

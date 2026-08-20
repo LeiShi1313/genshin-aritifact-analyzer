@@ -55,7 +55,7 @@ const critCirclet = [
 
 /**
  * One focused, general-purpose build for every normal playable character added
- * to this catalog through Genshin 6.7.
+ * to this catalog through Genshin 7.0.
  *
  * Main stats and priority order are sourced from the linked current guides and
  * calculations. Importance values translate those recommendations into the
@@ -977,6 +977,44 @@ export const recommendedPresetBuilds: readonly Build[] = Object.freeze([
     sands: [AttributeType.ATK_PERCENT],
     goblet: [AttributeType.ATK_PERCENT],
     circlet: critCirclet,
+    substats: [
+      [AttributeType.CRIT_RATE, 1],
+      [AttributeType.CRIT_DAMAGE, 1],
+      [AttributeType.ATK_PERCENT, 0.8],
+      [AttributeType.ELEMENTAL_MASTERY, 0.6],
+      [AttributeType.ENERGY_RECHARGE, 0.4],
+      [AttributeType.ATK, 0.2],
+    ],
+  }),
+
+  // https://dayonefix.com/blog/genshin-7-0-alyosha-build/
+  preset({
+    name: PRESET_BUILD_IDS.STELLAR_CONDUCT_SUPPORT_HEALER,
+    character: Character.ALYOSHA,
+    recipe: fourPiece(ArtifactSet.HEART_OF_THE_FURNACE),
+    alternativeRecipes: [fourPiece(ArtifactSet.NOBLESSE_OBLIGE)],
+    sands: [AttributeType.ENERGY_RECHARGE, AttributeType.ATK_PERCENT],
+    goblet: [AttributeType.ATK_PERCENT],
+    circlet: [AttributeType.ATK_PERCENT, AttributeType.CRIT_RATE],
+    substats: [
+      [AttributeType.ENERGY_RECHARGE, 1],
+      [AttributeType.ATK_PERCENT, 0.8],
+      [AttributeType.CRIT_RATE, 0.4],
+      [AttributeType.CRIT_DAMAGE, 0.3],
+      [AttributeType.ELEMENTAL_MASTERY, 0.2],
+      [AttributeType.ATK, 0.2],
+    ],
+  }),
+
+  // https://gamewith.net/genshin-impact/article/show/76476
+  preset({
+    name: PRESET_BUILD_IDS.STELLAR_GLIMMER_SUPPORT,
+    character: Character.ODETTE,
+    recipe: fourPiece(ArtifactSet.HEART_OF_THE_FURNACE),
+    alternativeRecipes: [fourPiece(ArtifactSet.SCARLET_PROOF)],
+    sands: [AttributeType.ATK_PERCENT],
+    goblet: [AttributeType.ATK_PERCENT],
+    circlet: [...critCirclet, AttributeType.ATK_PERCENT],
     substats: [
       [AttributeType.CRIT_RATE, 1],
       [AttributeType.CRIT_DAMAGE, 1],

@@ -1,0 +1,77 @@
+# Razor Nahida Durin Nicole. ~23s Rot. Razor Burnload w/ ~53/32% Burning/Quicken Uptime. Razor tE D N1 Q N1 tED. Nicole feeds her skill particles to Durin for energy purposes. Nahida bursts every other rotation after the 1st.
+
+# Team - Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="ur" count=4; # UR > RW > GD (better in practice)
+#razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # UR
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*2 em=19.82*4 cr=0.0331*11 cd=0.0662*10; # RW
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="tom" count=4;
+#nahida add set="scroll" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*10 cd=0.0662*10;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+#durin add set="cg" count=4;
+#durin add set="no" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # RW/WF
+#durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # Other/WF
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+#nicole add set="no" count=4;
+#nicole add set="deepwood" count=4;
+nicole add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*8 er=0.0551*7 em=19.82*2 cr=0.0331*2 cd=0.0662*3;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # -SS stacks from burning AoE; enables MH
+
+# Rotation
+active razor; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  # Burst after 1st rot
+  nahida skill;
+  #if i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+  #  nahida burst;
+  #} else if i > 0 {
+    nahida attack, charge;
+  #}
+
+  nicole burst, skill;
+
+  durin skill:2, burst;
+
+  razor skill, dash, attack, burst, attack:1, skill, dash;
+  # Razor main DPS window
+  while .razor.mods.razor-q > 240 { # Ends on N2
+    if .razor.normal > 3 {
+      if .razor.skill.ready {
+        razor skill, dash;
+      } else {
+        razor dash;
+      }
+    } else {
+      razor attack;
+    }
+  }
+  razor skill, dash;
+}

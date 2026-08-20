@@ -1,0 +1,68 @@
+# Dori Emilie Durin Nicole. ~20s Rot. TF Dori Burnload w/ ~58/43% Burning/Quicken Uptime. Thundering Fury alongside Quicken & Overload allow Dori to maintain her C6 infusion uptime. Nicole feeds her skill particles to Durin for energy purposes. Aquamarine should perform similarly to Serpent Spine in practice.
+
+# Team - Options listsed by DPS
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="aquamarine" refine=1 lvl=90/90;
+#dori add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#dori add weapon="mailedflower" refine=5 lvl=90/90;
+dori add set="tf" count=4;
+dori add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+dori add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*6 cr=0.0331*12 cd=0.0662*5; # Aqua
+#dori add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#dori add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*8 cr=0.0331*11 cd=0.0662*4; # SS
+#dori add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+#dori add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*9 cd=0.0662*12; # MF
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+#emilie add set="deepwood" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+#durin add set="no" count=4;
+#durin add set="cg" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # RW
+#durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # Other
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+#nicole add set="no" count=4;
+nicole add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*8 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # -SS stacks from burning AoE; enables MH
+
+# Rotation
+active emilie; # Other
+#active dori; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  # Burst as available after the first
+  if i > 0 && .emilie.burst.ready {
+    emilie burst;
+  } else {
+    emilie skill, attack;
+  }
+
+  nicole burst, skill;
+
+  durin skill:2, burst;
+
+  dori skill, attack:2, dash, attack:2, burst; # TF consistency
+  dori skill, attack:2, dash, attack:2;
+  dori skill, attack:2, dash, attack:2;
+}

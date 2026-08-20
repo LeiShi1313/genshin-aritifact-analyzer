@@ -1,0 +1,70 @@
+mualani char lvl=90/90 cons=0 talent=9,9,9;
+mualani add weapon="thewidsith" refine=3 lvl=90/90; #R1 is ~93% dps, R3 is ~96% dps, R1 surfsup is ~115%
+mualani add set="obsidiancodex" count=5;
+mualani add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622 ; #main
+mualani add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*7 cd=0.0662*10;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="sacfrags" refine=3 lvl=90/90;
+sucrose add set="viridescentvenerer" count=5;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*2 em=19.82*6 cr=0.0331*8 cd=0.0662*2;
+
+aetherpyro char lvl=90/90 cons=6 talent=9,9,9;
+aetherpyro add weapon="sacsword" refine=3 lvl=90/90; #R5 = +1-2k dps
+aetherpyro add set="scroll" count=5;
+aetherpyro add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+aetherpyro add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*11;
+
+mona char lvl=90/90 cons=1 talent=9,9,9; #C2 is ~102% dps, C4 is ~ 110%
+mona add weapon="favcodex" refine=3 lvl=90/90;
+mona add set="cg" count=5;
+mona add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+
+fn mualani_combo(attacks_number) {
+  while .mualani.nightsoul.state {
+    for let k=0; k<attacks_number; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+active mona;
+
+for let i=0; i<4; i=i+1 {
+
+  mona skill, burst, attack:4;
+  if !.aetherpyro.skill.ready && .aetherpyro.burst.ready {
+    aetherpyro burst; #filling E cd window
+  }
+  while .aetherpyro.skill.cd > 27 {
+    aetherpyro attack;  #filling E cd window
+  }
+  aetherpyro skill, attack;
+  wait(35); #wait for PMC sacsword proc and Mona E;
+  sucrose attack, dash, skill;
+  mualani skill;
+  if .mualani.burst.ready {
+    mualani walk[f=1]; #collecting one stack
+    mualani burst;
+    mualani_combo(2);
+  } else {
+    mualani_combo(3);
+  }
+}
+
+#Mualani burst every 2 rot; rot is different for Mualani bursting and not bursting; PMC Q (if ready) or N1 (if Q is not ready) for filling his E cd window; sacsword for PMC is mandatory;
+#Burst rot dps is ~125K, not burst ~75K; Refines on favs are optional but less er requirements; sacfrags refines do not matter;
+#Rot itself, burst: Mona E Q N4 > PMC E N1 (if E is not ready: (Q E N1) if have Q and (N1 E N1) if dont have Q) |wait ~ half a sec| > Sucrose N1 E D > Mualani E |Have to be close to target for collecting one stack instantly| Q N1 N1;
+#And not burst is the same but not Mualani Q just N1 N1 N1

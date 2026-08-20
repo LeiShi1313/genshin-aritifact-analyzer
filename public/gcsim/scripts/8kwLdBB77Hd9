@@ -1,0 +1,73 @@
+# Hutao Furina Columbina Ineffa. ~19s Rot. Hutao Lunar Overvape. Hutao 8[N2CD] + (N1Q / N2CD). Hutao still prefers HP Sands. Columbina bursts every rotation with Pamber for healing.
+
+# Team
+hutao char lvl=90/90 cons=0 talent=9,9,9;
+hutao add weapon="fjords" refine=1 lvl=90/90;
+hutao add set="notsu" count=4;
+#hutao add set="mh" count=4;
+hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622; #main
+hutao add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*11 cd=0.0662*10; # NotSU
+#hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622; #main
+#hutao add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*7 cr=0.0331*9 cd=0.0662*10; # MH
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="sms" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main  # Hydro goblet is fine too
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="pamber" refine=5 lvl=90/90;
+columbina add set="aubade" count=4;
+#columbina add set="gt" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+#ineffa add weapon="fjords" refine=1 lvl=90/90;
+ineffa add set="aubade" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active ineffa;
+
+for let i=0; i<4; i=i+1 {
+  if i > 0 && .ineffa.burst.ready {
+    ineffa skill, burst;
+  } else {
+    ineffa attack, skill;
+  }
+
+  furina skill; # No dash for stamina reasons
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd && !.furina.burst.ready) {
+    furina attack;
+  }
+  furina burst;
+
+  columbina skill, burst; # Burst every rotation for Pamber w/ Furina
+
+  hutao skill,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump,
+    attack:2, charge, jump;
+  if .hutao.burst.ready { # This is mostly time filler
+    hutao attack:1, burst;
+  } else {
+    hutao attack:2, charge, jump;
+  }
+}

@@ -1,0 +1,60 @@
+options swap_delay=12 iteration=100;
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="widsith" refine=5 lvl=90/90;
+columbina add set="notsu" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*10;
+
+kuki char lvl=90/90 cons=6 talent=9,9,9;
+kuki add weapon="xiphos" refine=1 lvl=90/90;
+kuki add set="sms" count=4;
+kuki add stats hp=4780 atk=311 em=187 em=187 em=187;
+kuki add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*6 cr=0.0331*8 cd=0.0662*2;
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="etherlight" refine=5 lvl=90/90;
+lauma add set="gd" count=2;
+lauma add set="wt" count=2;
+// lauma add set="sms" count=4;
+lauma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*6 cr=0.0331*10 cd=0.0662*4;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="widsith" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 cr=0.311 em=187 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*10 cd=0.0662*11;
+
+active nahida;
+# ----  Actions List
+target lvl=100 resist=0.1 radius=1 pos=0,1.5 hp=999999999;
+energy every interval=480,720 amount=1;
+
+nahida attack;
+for let i=0; i<5; i=i+1 {
+  if i == 0 {
+    columbina attack, skill, burst;
+  } else {
+    columbina skill, charge;
+    if .columbina.burst.ready {
+      columbina burst;
+    }
+  }
+
+
+  nahida attack, skill, attack;
+  if !is_even(i) {
+    nahida burst;
+  }
+
+  lauma attack, skill[hold=1], burst;
+  kuki skill, attack;
+  if i > 0 && .kuki.burst.ready  {
+    kuki burst;
+  }
+  columbina attack, charge, dash, charge, dash,
+            attack, charge, dash, charge, dash,
+            charge, dash, attack, charge;
+}
+columbina dash, attack; // give time for the last CA's damage to land

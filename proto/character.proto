@@ -130,4 +130,7 @@ enum Character {
     NICOLE = 124;
     PRUNE = 125;
     SANDRONE = 126;
+    TRAVELER_CRYO = 127;
+    ALYOSHA = 128;
+    ODETTE = 129;
 }

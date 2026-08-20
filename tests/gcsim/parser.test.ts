@@ -1,14 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {
-  gcsimCharacterToCharacter,
-  parseScript,
-} from "../../scripts/gcsim";
+import { gcsimCharacterToCharacter, parseScript } from "../../scripts/gcsim";
+import { Character } from "../../genshin/character";
 import { Weapon } from "../../genshin/weapon";
 
-const characterLine =
-  "furina char lvl=90/90 cons=0 talent=10,10,10;";
+const characterLine = "furina char lvl=90/90 cons=0 talent=10,10,10;";
 
 test("unknown character aliases fail with the source id", () => {
   assert.throws(
@@ -59,6 +56,13 @@ test("canonical characters missing from app data fail before encoding", () => {
   assert.throws(
     () => gcsimCharacterToCharacter("not_in_app_data", "missing-character"),
     /missing-character: GCSIM character "not_in_app_data" is not available in app data/
+  );
+});
+
+test("pipeline canonical character names map to app enums", () => {
+  assert.equal(
+    gcsimCharacterToCharacter("kaedeharakazuha", "pipeline-catalog"),
+    Character.KAEDEHARA_KAZUHA
   );
 });
 

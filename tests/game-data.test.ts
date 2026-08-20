@@ -14,9 +14,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import genshindb from "genshin-db";
 import sharp from "sharp";
 
+import { createGameDataCatalog } from "../scripts/game-data/catalog.mjs";
 import {
   downloadImage,
   nanokaImageUrl,
@@ -24,16 +24,6 @@ import {
 } from "../scripts/utils.mjs";
 
 const locales = ["de", "en", "es", "fr", "ja", "ko", "zh", "zh-Hant"];
-const databaseLanguage = {
-  de: "German",
-  en: "English",
-  es: "Spanish",
-  fr: "French",
-  ja: "Japanese",
-  ko: "Korean",
-  zh: "ChineseSimplified",
-  "zh-Hant": "ChineseTraditional",
-} as const;
 
 const characters = [
   ["durin", "杜林", "Pyro", "Sword", 5, 116],
@@ -47,6 +37,9 @@ const characters = [
   ["nicole", "尼可", "Pyro", "Catalyst", 5, 124],
   ["prune", "布伦妮", "Anemo", "Catalyst", 4, 125],
   ["sandrone", "桑多涅", "Cryo", "Claymore", 5, 126],
+  ["traveler_cryo", "旅行者 (冰元素)", "Cryo", "Sword", 5, 127],
+  ["alyosha", "阿罗夏", "Electro", "Polearm", 4, 128],
+  ["odette", "奥黛塔", "Cryo", "Sword", 5, 129],
 ] as const;
 
 const weapons = [
@@ -60,6 +53,18 @@ const weapons = [
   ["angelos_heptades", "尘光七谕", "Catalyst", 5, 233],
   ["golden_frostbound_oath", "霜结的誓金枝", "Bow", 5, 234],
   ["a_teaspoon_of_transcendence", "超越之匙", "Claymore", 5, 235],
+  ["blade_of_atonement", "救赎之斩", "Claymore", 4, 236],
+  ["clash_of_kings", "群王局戏", "Catalyst", 4, 237],
+  ["covenant_of_frost_and_snow", "霜雪誓约", "Bow", 4, 238],
+  ["echoes_of_the_heart", "寸心余响", "Catalyst", 4, 239],
+  ["emberwell", "引火之源", "Sword", 4, 240],
+  ["exaiphanes_blade", "星锋剑", "Sword", 5, 241],
+  ["forged_by_the_golden_melody", "金律铸影", "Claymore", 4, 242],
+  ["frostbreath", "寒息", "Polearm", 4, 243],
+  ["heretics_molten_blade", "熔猎异端之刃", "Sword", 4, 244],
+  ["jade_vista", "悬黎千钧", "Bow", 4, 245],
+  ["song_of_the_vigil", "戍望谣歌", "Polearm", 4, 246],
+  ["whitelake_frostfeather", "白湖冬羽", "Sword", 5, 247],
 ] as const;
 
 const artifactSets = [
@@ -67,6 +72,8 @@ const artifactSets = [
   "a_day_carved_from_rising_winds",
   "celestial_gift",
   "disenchantment_in_deep_shadow",
+  "heart_of_the_furnace",
+  "scarlet_proof",
 ] as const;
 
 const artifactPositions = ["flower", "plume", "sands", "goblet", "circlet"];
@@ -169,7 +176,7 @@ test("image downloads convert WebP responses to real PNG files", async () => {
   }
 });
 
-test("the complete 6.2-6.7 roster has usable metadata, translations, and UI assets", () => {
+test("the complete 6.2-7.0 roster has usable metadata, translations, and UI assets", () => {
   const characterData = readJson<Record<string, unknown>>(
     "src/data/characters.json"
   );
@@ -177,6 +184,16 @@ test("the complete 6.2-6.7 roster has usable metadata, translations, and UI asse
   const setData = readJson<Record<string, unknown>>("src/data/sets.json");
   const characterProto = readFileSync("proto/character.proto", "utf8");
   const weaponProto = readFileSync("proto/weapon.proto", "utf8");
+  const gameData = createGameDataCatalog();
+  const catalogCharacters = new Map(
+    gameData.characters.map((record: any) => [record.key, record])
+  );
+  const catalogWeapons = new Map(
+    gameData.weapons.map((record: any) => [record.key, record])
+  );
+  const catalogSets = new Map(
+    gameData.artifactSets.map((record: any) => [record.key, record])
+  );
   const translations = Object.fromEntries(
     locales.map((locale) => [
       locale,
@@ -217,18 +234,19 @@ test("the complete 6.2-6.7 roster has usable metadata, translations, and UI asse
       true,
       `${key} icon`
     );
-    assert.equal(
-      isImage(`src/assets/characters/${key}_gacha.png`),
-      true,
-      `${key} gacha`
-    );
+    if (key !== "traveler_cryo") {
+      assert.equal(
+        isImage(`src/assets/characters/${key}_gacha.png`),
+        true,
+        `${key} gacha`
+      );
+    }
+    const catalogRecord = catalogCharacters.get(key);
+    assert.ok(catalogRecord, `${key} catalog record`);
     for (const locale of locales) {
-      const localized = genshindb.characters(translations.en.characters[key], {
-        resultLanguage: databaseLanguage[locale],
-      });
       assert.equal(
         translations[locale].characters[key],
-        localized?.name,
+        catalogRecord.translations[locale],
         `${locale} ${key}`
       );
     }
@@ -248,13 +266,12 @@ test("the complete 6.2-6.7 roster has usable metadata, translations, and UI asse
       true,
       `${key} awakened icon`
     );
+    const catalogRecord = catalogWeapons.get(key);
+    assert.ok(catalogRecord, `${key} catalog record`);
     for (const locale of locales) {
-      const localized = genshindb.weapons(translations.en.weapons[key], {
-        resultLanguage: databaseLanguage[locale],
-      });
       assert.equal(
         translations[locale].weapons[key],
-        localized?.name,
+        catalogRecord.translations[locale],
         `${locale} ${key}`
       );
     }
@@ -262,13 +279,12 @@ test("the complete 6.2-6.7 roster has usable metadata, translations, and UI asse
 
   for (const key of artifactSets) {
     assert.ok(setData[key], `${key} metadata`);
+    const catalogRecord = catalogSets.get(key);
+    assert.ok(catalogRecord, `${key} catalog record`);
     for (const locale of locales) {
-      const localized = genshindb.artifacts(translations.en.sets[key], {
-        resultLanguage: databaseLanguage[locale],
-      });
       assert.equal(
         translations[locale].sets[key],
-        localized?.name,
+        catalogRecord.translations[locale],
         `${locale} ${key}`
       );
     }

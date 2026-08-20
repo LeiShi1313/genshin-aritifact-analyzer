@@ -1,0 +1,56 @@
+# build assumptions
+
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="deathmatch" refine=1 lvl=90/90;
+arle add set="fohw" count=4;
+arle add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
+arle add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=5 lvl=90/90;
+fischl add set="totm" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="favcodex" refine=5 lvl=90/90;
+mona add set="cg" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
+
+# enemy
+
+options swap_delay=12 iteration=100;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# rotation
+
+active arle;
+for let i=0; i<4; i=i+1 {
+
+  arle skill;
+  bennett skill, burst;
+  if is_even(i) {
+    fischl attack:2, burst;
+  } else {
+    fischl attack, skill;
+  }
+  mona burst, attack;
+  arle charge, attack:3;
+  mona skill, attack;
+  arle attack:2, walk,
+       attack:3, dash,
+       attack:3, charge,
+       attack:3;
+  mona attack:2;
+  arle attack:2;
+
+}
+# Arle E > Bennett EQ > Fischl E/Q > Mona Qn1 > Arle CN3 > Mona En1 > Arle N2W N3D N3C N3 > Mona N2 > Arle N2

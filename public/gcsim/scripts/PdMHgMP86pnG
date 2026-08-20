@@ -50,7 +50,12 @@ for let r=0; r<5; r=r+1 {
 
   lynette burst, skill;
   for let p=0; p<6; p=p+1 {
-    lynette jump, high_plunge[collision=1], dash;
+    if .lynette.status.xianyun-airborne-buff {
+      lynette jump;
+    }
+    if .airborne {
+      lynette high_plunge[collision=1], dash;
+    }
   }
   lynette skill;
   for let p=0; p<2; p=p+1 {

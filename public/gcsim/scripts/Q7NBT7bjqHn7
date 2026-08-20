@@ -1,0 +1,73 @@
+# Razor Emilie Nicole Bennett. ~22s Rotation with 1E Fav Bennett. Razor Quickload w/ ~51% Quicken/Burning Uptime. Razor tE D N1 Q N1 tED. Razor maintains Burning with Bennett C6 infusion. NO & DM Bennett are similar. Self-Overloads not implemented; Bennett/Razor should build more EM practically.
+
+# Team - Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5]; # Inconsistent
+#razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implemented; Self-Damage SS alternative
+razor add set="ur" count=4; # UR > RW > GD (better in practice)
+#razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*2 em=19.82*3 cr=0.0331*12 cd=0.0662*10; # UR
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*11 cd=0.0662*10; # RW
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+#emilie add set="deepwood" count=4; # If your rotation is incompetent
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*9 atk%=0.0496*6 er=0.0551*11 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=3 lvl=90/90 +params=[pickup_delay=220]; # Leaf to Razor
+bennett add set="no" count=4; # General
+#bennett add set="deepwood" count=4; # Emilie DPS
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # -SS stacks from burning AoE; enables MH
+
+# Rotation
+active razor; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  # Burst as available after the first
+  if i > 0 && .emilie.burst.ready {
+    emilie burst;
+  } else {
+    emilie skill, attack; # Fischl C6
+  }
+
+  nicole skill, burst;
+
+  bennett skill, dash, burst;
+
+  razor skill, dash, attack, burst, attack:1, skill, dash; # Pick up Sapwood leaf during dash if missed
+  # Razor main DPS window
+  while .razor.mods.razor-q > 240 { # Ends on N2
+  #while .razor.infusion.bennett-fire-weapon {
+    if .razor.normal > 3 {
+      if .razor.skill.ready {
+        razor skill, dash;
+      } else {
+        razor dash;
+      }
+    } else {
+      razor attack;
+    }
+  }
+  razor skill, dash;
+}

@@ -1,0 +1,72 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="fjords" refine=1 lvl=90/90;
+arle add set="fohw" count=5;
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1102 em=118.92 cr=0.3972 cd=0.4634;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworneye" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+
+fn WaitForCryo() {
+  let StartFrame = f();
+  if !.element.t0.pyro {      # If the enemy aura is not Pyro, wait for Cryo aura (so if its already Pyro you don't wait)
+    while !.element.t0.cryo && f() - StartFrame < 120 {   # wait but up to 120f(2s), so you don't wait forever
+      wait(1);
+    }
+  }
+}
+
+active arle;
+for let i = 0; i < 4; i = i + 1 {
+  arle skill;
+  nicole skill, burst;
+  sucrose swap;
+  if .sucrose.burst.ready {  // once every 3 rots
+    sucrose skill, dash, burst;
+  } else {
+    wait(24);   // wait 0.4s for the 1s swap cooldown and more VV uptime
+    sucrose skill, dash;
+  }
+  citlali skill, burst;
+  arle charge;
+  arle attack:6;
+  arle attack:6;
+  arle attack:3, dash;
+}
+
+//  this also works
+//  arle attack:3, dash;
+//  WaitForCryo();
+//  arle attack:3, dash;
+//  WaitForCryo();
+//  arle attack:3, dash;
+//  WaitForCryo();
+//  arle attack:3, dash;
+//  WaitForCryo();
+//  arle attack:3, dash;
+//  WaitForCryo();
+//  arle attack, dash;

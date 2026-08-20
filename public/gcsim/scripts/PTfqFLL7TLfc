@@ -1,0 +1,69 @@
+# Freminet Furina Ineffa Mika. ~21s Rot. Physical Freminet with Superconduct. Ineffa is placed before Furina to maximize Freminet's burst uptime.
+
+# Team - Options ordered by DPS
+freminet char lvl=90/90 cons=6 talent=9,9,9;
+#freminet add weapon="tidalshadow" refine=5 lvl=90/90; # MH
+freminet add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+freminet add set="mh" count=4;
+#freminet add set="pf" count=4; # SS
+freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+freminet add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*2 em=19.82*2 cr=0.0331*6 cd=0.0662*10; # MH + TS/PF + SS
+#freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+#freminet add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*2 em=19.82*2 cr=0.0331*6 cd=0.0662*10; # MH + SS
+#freminet add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cr=0.311; #main
+#freminet add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # PF + TS
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="festering" refine=5 lvl=90/90;
+furina add set="tom" count=4;
+#furina add set="gt" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*10 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*9 cd=0.0662*5; # ToM
+#furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cd=0.622; #main
+#furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*10 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*9 cd=0.0662*5; # GT
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="fjords" refine=1 lvl=90/90;
+ineffa add set="gd" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*2 em=19.82*3 cr=0.0331*12 cd=0.0662*10;
+
+mika char lvl=90/90 cons=6 talent=9,9,9;
+mika add weapon="favlance" refine=3 lvl=90/90;
+mika add set="no" count=4;
+#mika add set="clam" count=4;
+#mika add set="sodp" count=4;
+mika add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+mika add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*12 cr=0.0331*10 cd=0.0662*4;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000 freeze_resist=1;
+
+# Rotation
+# active freminet; # SS Stacks
+
+active furina;
+
+for let i=0; i<4; i=i+1 {
+  if i > 0  && .ineffa.burst.ready {
+    ineffa skill, burst;
+  } else {
+    ineffa skill;
+  }
+
+  furina skill, dash, burst;
+
+  mika burst, skill;
+
+  freminet skill, attack, burst,
+           attack:2, skill, skill,
+           attack:2, skill, attack:2, skill,  # First skill for 4 stack Pers, 2nd skill starts Pers Time
+           attack:2, skill, attack:2, skill,
+           attack:3, skill;                   # Freminet Q expires mid combo
+}

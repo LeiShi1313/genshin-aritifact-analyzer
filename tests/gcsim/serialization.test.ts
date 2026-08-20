@@ -16,10 +16,7 @@ test("serialization preserves labeled stats and target settings", () => {
     "serialization"
   );
   const serialized = gcsimScriptToScript(original);
-  const reparsed = parseScript(
-    serialized,
-    "serialization:round-trip"
-  );
+  const reparsed = parseScript(serialized, "serialization:round-trip");
   const decoded = GCSimScript.decode(GCSimScript.encode(original).finish());
 
   assert.match(serialized, /^furina add stats hp=100 label=flower;$/m);
@@ -70,10 +67,10 @@ test("serialization uses canonical pinned-engine names for app enums", () => {
 
   const serialized = gcsimScriptToScript(original);
 
-  assert.match(serialized, /^mizuki char /m);
-  assert.match(serialized, /weapon="rainbowserpentbow"/);
-  assert.doesNotMatch(serialized, /yumemizukimizuki/);
-  assert.doesNotMatch(serialized, /rainbowserpentsrainbow/);
+  assert.match(serialized, /^yumemizukimizuki char /m);
+  assert.match(serialized, /weapon="rainbowserpentsrainbow"/);
+  assert.doesNotMatch(serialized, /^mizuki char /m);
+  assert.doesNotMatch(serialized, /weapon="rainbowserpentbow"/);
 });
 
 test("unsupported equipment overrides never enter a GCSIM config", () => {
@@ -90,7 +87,7 @@ test("unsupported equipment overrides never enter a GCSIM config", () => {
       [Character.FURINA]: {
         enabled: true,
         weapon: { weapon: Weapon.DISASTER_AND_REMORSE },
-        sets: [{ set: Set.DISENCHANTMENT_IN_DEEP_SHADOW, count: 4 }],
+        sets: [{ set: Set.HEART_OF_THE_FURNACE, count: 4 }],
       },
     }
   );

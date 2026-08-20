@@ -1,17 +1,13 @@
 import fs from "node:fs";
 
-import genshindb from "genshin-db";
-
 import * as utils from "./utils.mjs";
+import { weaponKey } from "./game-data/keys.mjs";
 
-const weaponKey = (name) =>
-  name
-    .replace(/['"]/g, "")
-    .replace(/[^0-9a-z]/gi, "_")
-    .toLowerCase();
-
-const portWeapons = async () => {
-  const remoteNames = genshindb.weapons("names", { matchCategories: true });
+const portWeapons = async (catalog) => {
+  const recordsByKey = new Map(
+    catalog.weapons.map((record) => [record.key, record])
+  );
+  const remoteNames = catalog.weapons.map(({ name }) => name);
   const names = utils.syncNamesFile("scripts/weapon", remoteNames, (name) =>
     name.replace(/"/g, "")
   );
@@ -37,41 +33,41 @@ const portWeapons = async () => {
 
   let index = 1;
   for (const name of names) {
-    const english = genshindb.weapons(name);
-    if (!english) throw new Error(`Weapon ${name} was not found in genshin-db`);
+    const english = recordsByKey.get(weaponKey(name));
+    if (!english)
+      throw new Error(`Weapon ${name} was not found in the catalog`);
 
     const key = weaponKey(english.name);
     protoLines.push(`    ${key.toUpperCase()} = ${index++};`);
     weaponData[key] = {
-      weapontype: english.weaponText,
+      weapontype: english.weaponType,
       rarity: english.rarity,
     };
     translations.en[key] = english.name;
 
-    for (const [language, locale] of Object.entries(utils.lngToRegion)) {
-      const localized = genshindb.weapons(name, { resultLanguage: language });
-      if (!localized) {
-        throw new Error(`${name} is missing the ${language} translation`);
-      }
+    for (const locale of Object.values(utils.lngToRegion)) {
+      const localized = english.translations[locale];
+      if (!localized)
+        throw new Error(`${name} is missing the ${locale} translation`);
       translations[locale] ??= {};
-      translations[locale][key] = localized.name;
+      translations[locale][key] = localized;
     }
 
     const images = english.images ?? {};
     const imageSpecs = [
       {
         suffix: "",
-        filename: images.filename_icon,
-        directUrl: images.mihoyo_icon,
+        filename: images.filenameIcon,
+        directUrls: images.iconUrls ?? [],
       },
       {
         suffix: "_awaken",
-        filename: images.filename_awakenIcon,
-        directUrl: images.mihoyo_awakenIcon,
+        filename: images.filenameAwakenIcon,
+        directUrls: images.awakenUrls ?? [],
       },
     ];
 
-    for (const { suffix, filename, directUrl } of imageSpecs) {
+    for (const { suffix, filename, directUrls } of imageSpecs) {
       const imagePath = `src/assets/weapons/${key}${suffix}.png`;
       if (utils.isValidImage(imagePath)) continue;
       if (!filename)
@@ -82,7 +78,7 @@ const portWeapons = async () => {
         [
           utils.yattaImageUrl(filename, "weapon"),
           utils.enkaImageUrl(filename),
-          directUrl,
+          ...directUrls,
           utils.nanokaImageUrl(filename),
         ],
         imagePath,

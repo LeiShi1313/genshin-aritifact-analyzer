@@ -1,0 +1,64 @@
+mualani char lvl=90/90 cons=6 talent=1,10,10;
+mualani add weapon="surfsup" refine=1 lvl=90/90;
+mualani add set="obsidiancodex" count=4;
+mualani add stats def=21 hp=5019 hp%=0.967 atk=311 atk%=0.057999999999999996 er=0.057999999999999996 em=217 cr=0.237 cd=1.3369999999999997 hydro%=0.466;
+
+mona char lvl=90/90 cons=5 talent=1,5,9;
+mona add weapon="favoniuscodex" refine=5 lvl=90/90;
+mona add set="celestialgift" count=4;
+mona add stats def=181 hp=6155 hp%=1.109 atk=285 atk%=0.105 er=0.37499999999999994 em=298.5 cd=0.319;
+
+sucrose char lvl=90/90 cons=2 talent=1,1,1;
+sucrose add weapon="sacrificialfragments" refine=1 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats def%=0.175 def=67 hp=6184 hp%=0.13499999999999998 atk=356 atk%=0.263 er=0.233 em=709.5 cr=0.22899999999999998;
+
+mavuika char lvl=90/90 cons=0 talent=1,10,10;
+mavuika add weapon="earthshaker" refine=1 lvl=90/90;
+mavuika add set="scrolloftheheroofcindercity" count=4;
+mavuika add stats hp=5019 hp%=0.099 atk=345 atk%=0.88 er=0.057999999999999996 em=200 cr=0.5710000000000001 cd=0.599 pyro%=0.466;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+fn mualani_combo3() {
+  #doing 3[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<3; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+}
+
+# Rotation
+active mona;
+
+# Mona E
+mona skill;
+
+# Mavuika Q + E
+mavuika burst;
+mavuika skill;
+
+# Mona Q + 1 ataques normales
+mona burst;
+mona attack;
+
+# Sucrose EDQ
+sucrose skill, dash, burst;
+
+# Mualani E + Q
+mualani skill;
+mualani burst;
+
+# 3 mordiscos de 3 stacks
+mualani_combo3();

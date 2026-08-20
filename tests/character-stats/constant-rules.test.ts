@@ -174,9 +174,9 @@ test("weapon refinement values are explicit R1-R5 ratio tuples", () => {
 test("artifact set constants cover every always-active character-sheet bonus", () => {
   assert.equal(
     ARTIFACT_SET_CONSTANT_RULE_SOURCE,
-    "genshin-db@5.2.12/artifact-set-two-piece"
+    "game-data-catalog@7.0/artifact-set-two-piece"
   );
-  assert.equal(ARTIFACT_SET_CONSTANT_RULES.length, 45);
+  assert.equal(ARTIFACT_SET_CONSTANT_RULES.length, 47);
   assert.equal(
     new Set(ARTIFACT_SET_CONSTANT_RULES.map((rule) => rule.id)).size,
     ARTIFACT_SET_CONSTANT_RULES.length
@@ -215,9 +215,7 @@ test("artifact set rules exhaustively match the generated two-piece catalog", ()
         SHEET_EFFECT_BY_DESCRIPTION[
           description as keyof typeof SHEET_EFFECT_BY_DESCRIPTION
         ];
-      return effect
-        ? setKeys.map((setKey) => [setKey, [effect]] as const)
-        : [];
+      return effect ? setKeys.map((setKey) => [setKey, [effect]] as const) : [];
     })
   );
   const actualRules = Object.fromEntries(

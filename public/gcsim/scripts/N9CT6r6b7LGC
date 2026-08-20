@@ -1,0 +1,62 @@
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=237.84 cr=0.1324 cd=0.4634;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="ap" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+// 4pc Instructor
+// xilonen add set="ins" count=4;
+// xilonen add stats hp=3571 atk=232 def%=0.43725 def%=0.43725 cr=0.311;
+// xilonen add stats def=33.0624 def%=0.10416 hp=426.6192 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworneye" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.1102 em=39.64 cr=0.2979 cd=0.1986;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+let UseXilonenDash = false;  # change this value between true and false to make Xilonen use dash or not
+
+active mavuika;
+
+for let i=0; i<4; i=i+1 {
+  mavuika skill, attack;
+  delay(3); // Mavuika E off-field Pyro app should be Citlali E > Tick > Tick > Citlali Q N1
+  nicole skill, attack;
+  xilonen skill, attack:2;
+  if UseXilonenDash == true {
+    xilonen dash;   # dash to pick up the shard
+  }
+  pick_up_crystallize("pyro");
+  citlali skill, burst, attack;
+  mavuika swap;
+  mavuika skill[recast=1], charge, dash, attack, charge;  // Both CA hits are melted
+  mavuika burst;
+  delay(24); # to wait Cryo app
+  mavuika charge:3, charge[hold=6], charge[final=1], dash;
+  mavuika charge:3, charge[hold=6], charge[final=1], dash; # the last Final CA is buffed by Mavuika Q.
+
+  if UseXilonenDash == false {   # if you didn't use Xilonen's dash, you need to do extra action to make it 18s rot length
+    mavuika attack;
+    delay(13);
+  } else {
+    delay(19);
+  }
+}
+
+# Mavuika E N1 > Nicole E > Xilonen E N2 > Citlali EQ N1 > Mavuika hE C1D N1 C1 Q (wait) 2[C3FD] N1

@@ -45,6 +45,8 @@ export const PRESET_BUILD_IDS = {
   ELEMENTAL_RES_SHRED_SUPPORT: "preset:elemental-res-shred-support",
   ANEMO_DPS_SUPPORT: "preset:anemo-dps-support",
   STELLAR_CONDUCT_CHARGED_DPS: "preset:stellar-conduct-charged-dps",
+  STELLAR_CONDUCT_SUPPORT_HEALER: "preset:stellar-conduct-support-healer",
+  STELLAR_GLIMMER_SUPPORT: "preset:stellar-glimmer-support",
 } as const;
 
 export type PresetBuildId =
@@ -98,6 +100,9 @@ export const PRESET_BUILD_NAME_KEYS = {
   [PRESET_BUILD_IDS.ELEMENTAL_RES_SHRED_SUPPORT]: "Elemental RES Shred Support",
   [PRESET_BUILD_IDS.ANEMO_DPS_SUPPORT]: "Anemo DPS Support",
   [PRESET_BUILD_IDS.STELLAR_CONDUCT_CHARGED_DPS]: "Stellar-Conduct Charged DPS",
+  [PRESET_BUILD_IDS.STELLAR_CONDUCT_SUPPORT_HEALER]:
+    "Stellar-Conduct Support & Healer",
+  [PRESET_BUILD_IDS.STELLAR_GLIMMER_SUPPORT]: "Stellar Glimmer Support",
 } as const satisfies Record<PresetBuildId, string>;
 
 export const getPresetBuildNameKey = (name: string): string | undefined => {

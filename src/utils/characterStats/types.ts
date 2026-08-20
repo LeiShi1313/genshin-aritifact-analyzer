@@ -51,9 +51,16 @@ export interface WeaponProgression {
 }
 
 export interface ProgressionManifest {
-  readonly schemaVersion: 1;
+  readonly schemaVersion: 2;
   readonly genshinDbVersion: string;
   readonly gameVersion: string;
+  readonly sources: readonly {
+    readonly id: string;
+    readonly role: string;
+    readonly version?: string;
+    readonly revision?: string;
+    readonly gameVersion?: string;
+  }[];
 }
 
 export interface CharacterSheetProgressionData {

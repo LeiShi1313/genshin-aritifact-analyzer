@@ -1,0 +1,57 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+arle char lvl=90/90 cons=0 talent=9,9,9;
+arle add weapon="fjords" refine=1 lvl=90/90;
+arle add set="fohw" count=5;
+arle add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+arle add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="no" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="totm" count=5;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311;
+fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.331 cd=0.7944;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="hakushin" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.551 em=39.64 cr=0.0662 cd=0.1324;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active arle;
+for let i = 0; i < 4; i = i + 1 {
+  arle skill;
+  nicole skill, burst;
+  xingqiu skill, dash, burst, attack;
+  if .fischl.skill.ready {
+    fischl attack, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  arle attack:2, charge,
+       attack:2, charge,
+       attack:2, charge,
+       attack:2, charge,
+       attack:2, charge,
+       attack:2;
+  nicole attack:2;
+  wait(24); // Hide swap cd warning
+  arle attack:2, charge,
+       attack:2, charge,
+       attack:2, charge,
+       attack:3;
+}
+
+# Arle E > Nicole EQ > Xingqiu EDQ N1 > Fischl N1 E/Q > Arle 5[N2C] N2 > Nicole N2 > Arle 3[N2C] N3

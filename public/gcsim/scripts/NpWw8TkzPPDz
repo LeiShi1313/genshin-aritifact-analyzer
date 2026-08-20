@@ -1,5 +1,5 @@
 hutao char lvl=90/90 cons=1 talent=9,9,9 +params=[start_hp%=1];
-hutao add weapon="fjords" refine=1 lvl=90/90;
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
 hutao add set="shimenawa" count=4;
 // hutao add set="cw" count=4;
 hutao add stats hp=4780 atk=311 hp%=0.466 pyro%=0.466 cd=0.622; #main

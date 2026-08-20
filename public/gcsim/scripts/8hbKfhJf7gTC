@@ -1,49 +1,79 @@
-options swap_delay=12 iteration=1000;
+# PMC Furina Bennett Xianyun. ~22s Rot. PMC VapePlunge with VV. Xianyun tries to swirl Pyro after Bennett EQ, & PMC hEQ. Uniformly distributed variable delay up to 1/4th second before plunging. ~57% Vaped plunges. 50% Collisions. Includes elemental statue resonances.
 
-# Build assumptions
-neuvillette char lvl=90/90 cons=0 talent=9,9,9;
-neuvillette add weapon="sacrificialjade" refine=1 lvl=90/90;
-neuvillette add set="mh" count=4;
-neuvillette add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
-neuvillette add stats def%=0.124 def=39.36 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.1986 cd=0.662;
+# Team - Options listed by DPS
+luminepyro char lvl=90/90 cons=6 talent=9,9,9 +params=[base_atk_buff=1, skirk_story_buff=1];
+luminepyro add stats def%=0.20 hp%=0.20 atk%=0.20 er=0.20 em=60 cr=0.10 cd=0.20; # Statue Resonances
+luminepyro add weapon="harbinger" refine=5 lvl=90/90;
+luminepyro add set="lno" count=4;
+#luminepyro add set="oc" count=4;
+luminepyro add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+luminepyro add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; #LNO
+#luminepyro add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622; #main
+#luminepyro add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*10 cr=0.0331*4 cd=0.0662*10; # OC
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
-furina add weapon="wolffang" refine=1 lvl=90/90;
-furina add set="gt" count=4;
-furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
-furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*5 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*10 cd=0.0662*8;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*7 cd=0.0662*11;
 
 xianyun char lvl=90/90 cons=0 talent=9,9,9;
-xianyun add weapon="favcodex" refine=3 lvl=90/90;
-xianyun add set="vv" count=5;
-xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
-xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.3306 em=39.64 cr=0.331 cd=0.331;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="vv" count=4;
+#xianyun add set="ohc" count=4; # Bubbles may miss
+#xianyun add set="sodp" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*8 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
 
-luminepyro char lvl=90/90 cons=6 talent=9,9,9;
-luminepyro add weapon="favsword" refine=3 lvl=90/90;
-luminepyro add set="scroll" count=4;
-luminepyro add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
-luminepyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.331 cd=0.662;
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
 
-# Target and Energy assumptions
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
-energy every interval=480,720 amount=1; # standard Energy drops
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Front
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; # Right
 
-# Rotation assumptions
-active neuv;
+# Active
+active furina;
 
-for let i=0; i<4; i=i+1 {
-  neuvillette skill;
-  furina attack, skill, dash, attack;
-  luminepyro skill[hold=1], burst;
-  xianyun skill, low_plunge;
-  furina burst;
-  xianyun burst;
-  neuvillette charge, skill, charge, burst;
-  xianyun skill, low_plunge;
-  if !.xianyun.mods.favonius-cd {
-    xianyun attack;
+for let i = 0; i < 4; i = i + 1 {
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd && !.furina.burst.ready) {
+    furina attack;
   }
-  neuvillette charge, charge;
+  furina burst;
+
+  xianyun skill, low_plunge, burst;
+
+  bennett burst, skill;
+
+  luminepyro skill[hold=1];
+  if .luminepyro.burst.ready {
+    luminepyro burst;
+  }
+
+  if .xianyun.sets.vv >= 4 {
+    xianyun attack:2; sleep(20);
+  }
+
+  while .xianyun.status.xianyun-airborne-buff {
+    luminepyro jump;
+    if .airborne {
+      let variableDelay = rand() * 15; print(variableDelay);
+      wait(variableDelay);
+      luminepyro high_plunge[collision=rand()>0.5];
+    }
+    if .xianyun.status.xianyun-airborne-buff { # no dash for final plunge
+      luminepyro dash;
+    }
+  }
+
+  bennett skill;
 }
-wait(173); #for the last CA

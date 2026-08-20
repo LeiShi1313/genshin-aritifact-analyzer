@@ -4,7 +4,7 @@ import test from "node:test";
 import {
   addAppAliases,
   buildAliasMap,
-  extractConfigKey,
+  parseCatalogRecords,
 } from "../../scripts/generate-gcsim.mjs";
 
 test("buildAliasMap includes every canonical key from a Set", () => {
@@ -25,13 +25,36 @@ test("canonical self aliases do not overwrite explicit upstream mappings", () =>
   assert.equal(aliases.sunnymorning, "sunnymorningsleepin");
 });
 
-test("extractConfigKey falls back to the config parent directory", () => {
-  assert.equal(
-    extractConfigKey(
-      "# config without an explicit key",
-      "/repo/gcsim/internal/characters/durin/config.yml"
-    ),
-    "durin"
+test("generated GCSIM catalogs provide canonical keys and game ids", () => {
+  const source = `
+var CharacterMap = map[keys.Char]*model.AvatarData{
+  keys.Aino: {
+    Id: 10000121,
+    SubId: 12101,
+    Key: "aino",
+  },
+  keys.Amber: {
+    Id: 10000021,
+    SubId: 2101,
+    Key: "amber",
+  },
+}`;
+
+  assert.deepEqual(parseCatalogRecords(source, "Id", "characters"), [
+    { key: "aino", gameId: 10000121 },
+    { key: "amber", gameId: 10000021 },
+  ]);
+});
+
+test("generated GCSIM catalog parsing fails closed on schema drift", () => {
+  assert.throws(
+    () =>
+      parseCatalogRecords(
+        `keys.Future: {\n  Id: 10000999,\n  RenamedKey: "future",\n},`,
+        "Id",
+        "characters"
+      ),
+    /could not parse every characters record/
   );
 });
 

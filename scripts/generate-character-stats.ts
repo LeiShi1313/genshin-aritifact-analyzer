@@ -3,21 +3,38 @@ import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import genshinDb, { type StatFunction, type StatResult } from "genshin-db";
-
 import characterMetadata from "../src/data/characters.json";
 import artifactSetMetadata from "../src/data/sets.json";
 import weaponMetadata from "../src/data/weapons.json";
-import { GENSHIN_DB_VERSION, GENSHIN_GAME_VERSION } from "../src/data/version";
-import type { ProgressionStatKey } from "../src/utils/characterStats/types";
+import {
+  GENSHIN_DATA_SOURCES,
+  GENSHIN_DB_VERSION,
+  GENSHIN_GAME_VERSION,
+} from "../src/data/version";
+import type {
+  ProgressionManifest,
+  ProgressionStatKey,
+} from "../src/utils/characterStats/types";
 import {
   PROGRESSION_SHARD_COUNT,
   progressionShardIndexForKey,
 } from "../src/utils/characterStats/internal/sharding";
 import { findConstantRuleAuditGaps } from "../src/utils/characterStats/internal/rules/constantRuleCoverage";
+import { createGameDataCatalog } from "./game-data/catalog.mjs";
 
 type CharacterSnapshot = readonly [number, number, number, number];
 type WeaponSnapshot = readonly [number, number];
+interface CatalogStatResult {
+  readonly ascension: number;
+  readonly hp?: number;
+  readonly attack?: number;
+  readonly defense?: number;
+  readonly specialized?: number;
+}
+type CatalogStatFunction = (
+  level: number,
+  ascension: number
+) => CatalogStatResult;
 
 export interface CharacterProgressionEntry {
   readonly weaponType: string;
@@ -31,12 +48,6 @@ export interface WeaponProgressionEntry {
   readonly stats: Readonly<Record<string, WeaponSnapshot>>;
 }
 
-export interface ProgressionManifest {
-  readonly schemaVersion: 1;
-  readonly genshinDbVersion: string;
-  readonly gameVersion: string;
-}
-
 export interface ProgressionCatalogs {
   readonly manifest: ProgressionManifest;
   readonly characters: Readonly<Record<string, CharacterProgressionEntry>>;
@@ -47,41 +58,13 @@ const require = createRequire(import.meta.url);
 const installedGenshinDbVersion = JSON.parse(
   readFileSync(require.resolve("genshin-db/package.json"), "utf8")
 ).version as string;
-
-const progressionStatByFightProperty: Readonly<
-  Record<string, ProgressionStatKey>
-> = {
-  FIGHT_PROP_ATTACK_PERCENT: "attackPercent",
-  FIGHT_PROP_CHARGE_EFFICIENCY: "energyRecharge",
-  FIGHT_PROP_CRITICAL: "critRate",
-  FIGHT_PROP_CRITICAL_HURT: "critDamage",
-  FIGHT_PROP_DEFENSE_PERCENT: "defensePercent",
-  FIGHT_PROP_ELEC_ADD_HURT: "electroDamageBonus",
-  FIGHT_PROP_ELEMENT_MASTERY: "elementalMastery",
-  FIGHT_PROP_FIRE_ADD_HURT: "pyroDamageBonus",
-  FIGHT_PROP_GRASS_ADD_HURT: "dendroDamageBonus",
-  FIGHT_PROP_HEAL_ADD: "healingBonus",
-  FIGHT_PROP_HP_PERCENT: "hpPercent",
-  FIGHT_PROP_ICE_ADD_HURT: "cryoDamageBonus",
-  FIGHT_PROP_PHYSICAL_ADD_HURT: "physicalDamageBonus",
-  FIGHT_PROP_ROCK_ADD_HURT: "geoDamageBonus",
-  FIGHT_PROP_WATER_ADD_HURT: "hydroDamageBonus",
-  FIGHT_PROP_WIND_ADD_HURT: "anemoDamageBonus",
-};
-
-const characterNames = JSON.parse(
-  readFileSync(
-    new URL("../public/locales/en/characters.json", import.meta.url),
-    "utf8"
-  )
-) as Record<string, string>;
-
-const weaponNames = JSON.parse(
-  readFileSync(
-    new URL("../public/locales/en/weapons.json", import.meta.url),
-    "utf8"
-  )
-) as Record<string, string>;
+const gameDataCatalog = createGameDataCatalog({ includeTranslations: false });
+const charactersByKey = new Map(
+  gameDataCatalog.characters.map((record) => [record.key, record])
+);
+const weaponsByKey = new Map(
+  gameDataCatalog.weapons.map((record) => [record.key, record])
+);
 
 const normalizeSpecialized = (
   stat: ProgressionStatKey,
@@ -120,15 +103,15 @@ const STANDARD_WEAPON_PROGRESSION_RANGES = progressionRangesThrough(6, 90);
 const LOW_RARITY_WEAPON_PROGRESSION_RANGES = progressionRangesThrough(4, 70);
 
 export const collectSnapshots = <Snapshot>(
-  stats: StatFunction,
-  toSnapshot: (result: StatResult) => Snapshot,
+  stats: CatalogStatFunction,
+  toSnapshot: (result: CatalogStatResult) => Snapshot,
   ranges: readonly ExpectedProgressionRange[],
   label: string
 ): Record<string, Snapshot> => {
   const snapshots: Record<string, Snapshot> = {};
   for (const { ascension, minimumLevel, maximumLevel } of ranges) {
     for (let level = minimumLevel; level <= maximumLevel; level += 1) {
-      let result: StatResult | undefined;
+      let result: CatalogStatResult | undefined;
       try {
         result = stats(level, ascension);
       } catch (error) {
@@ -148,31 +131,16 @@ export const collectSnapshots = <Snapshot>(
   return snapshots;
 };
 
-const requireProgressionStat = (
-  fightProperty: string | undefined,
-  label: string
-): ProgressionStatKey => {
-  const stat = fightProperty
-    ? progressionStatByFightProperty[fightProperty]
-    : undefined;
-  if (!stat) throw new Error(`${label} has unsupported stat ${fightProperty}`);
-  return stat;
-};
-
-const characterEntity = (key: string, name: string) => {
-  const query = key.startsWith("traveler_") ? "Aether" : name;
-  const character = genshinDb.characters(query);
-  if (!character || Array.isArray(character)) {
-    throw new Error(`Character ${key} (${query}) is missing from genshin-db`);
-  }
+const characterEntity = (key: string) => {
+  const character = charactersByKey.get(key);
+  if (!character)
+    throw new Error(`Character ${key} is missing from the catalog`);
   return character;
 };
 
-const weaponEntity = (key: string, name: string) => {
-  const weapon = genshinDb.weapons(name);
-  if (!weapon || Array.isArray(weapon)) {
-    throw new Error(`Weapon ${key} (${name}) is missing from genshin-db`);
-  }
+const weaponEntity = (key: string) => {
+  const weapon = weaponsByKey.get(key);
+  if (!weapon) throw new Error(`Weapon ${key} is missing from the catalog`);
   return weapon;
 };
 
@@ -180,6 +148,12 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
   if (installedGenshinDbVersion !== GENSHIN_DB_VERSION) {
     throw new Error(
       `Installed genshin-db ${installedGenshinDbVersion} does not match generated version ${GENSHIN_DB_VERSION}`
+    );
+  }
+  if (gameDataCatalog.manifest.gameVersion !== GENSHIN_GAME_VERSION) {
+    throw new Error(
+      `Catalog game version ${gameDataCatalog.manifest.gameVersion} does not match ` +
+        `generated version ${GENSHIN_GAME_VERSION}`
     );
   }
 
@@ -198,15 +172,11 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
 
   const characters: Record<string, CharacterProgressionEntry> = {};
   for (const [key, metadata] of Object.entries(characterMetadata)) {
-    const name = characterNames[key];
-    if (!name) throw new Error(`Character ${key} is missing its English name`);
-    const character = characterEntity(key, name);
-    const specializedStat = requireProgressionStat(
-      character.substatType,
-      `Character ${key}`
-    );
+    const character = characterEntity(key);
+    const specializedStat = character.progression
+      .specializedStat as ProgressionStatKey;
     const stats = collectSnapshots<CharacterSnapshot>(
-      character.stats,
+      character.progression.stats,
       (result) => {
         if (
           result.hp === undefined ||
@@ -238,14 +208,11 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
 
   const weapons: Record<string, WeaponProgressionEntry> = {};
   for (const [key, metadata] of Object.entries(weaponMetadata)) {
-    const name = weaponNames[key];
-    if (!name) throw new Error(`Weapon ${key} is missing its English name`);
-    const weapon = weaponEntity(key, name);
-    const specializedStat = weapon.mainStatType
-      ? requireProgressionStat(weapon.mainStatType, `Weapon ${key}`)
-      : null;
+    const weapon = weaponEntity(key);
+    const specializedStat = weapon.progression
+      .specializedStat as ProgressionStatKey | null;
     const stats = collectSnapshots<WeaponSnapshot>(
-      weapon.stats,
+      weapon.progression.stats,
       (result) => {
         if (result.attack === undefined || result.specialized === undefined) {
           throw new Error(`Weapon ${key} returned incomplete progression`);
@@ -269,9 +236,10 @@ export const buildProgressionCatalogs = (): ProgressionCatalogs => {
 
   return {
     manifest: {
-      schemaVersion: 1,
+      schemaVersion: 2,
       genshinDbVersion: installedGenshinDbVersion,
       gameVersion: GENSHIN_GAME_VERSION,
+      sources: GENSHIN_DATA_SOURCES,
     },
     characters,
     weapons,

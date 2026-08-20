@@ -1,0 +1,43 @@
+kaeya char lvl=90/90 cons=6 talent=9,9,9;
+kaeya add weapon="moonweaversdawn" refine=2 lvl=90/90;
+kaeya add set="no" count=4;
+kaeya add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
+kaeya add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*9 cd=0.0662*12;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="favoniuscodex" refine=5 lvl=90/90;
+mona add set="totm" count=4;
+mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*2 em=19.82*8 cr=0.0331*4 cd=0.0662*2;
+
+options iteration=1000 swap_delay=12;
+energy every interval=480,720 amount=1;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=21370000000 freeze_resist=1;
+
+active mona;
+for let i = 0; i < 6; i = i + 1 {
+  mona skill, attack;
+  nicole skill;
+  durin skill, attack, burst;
+  mona burst, attack;
+  kaeya skill, burst,
+        attack, charge,
+        attack, charge;
+  mona attack:3;
+  kaeya skill,
+        attack, charge,
+        attack, charge;
+}

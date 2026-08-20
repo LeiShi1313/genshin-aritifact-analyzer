@@ -17,6 +17,7 @@ export const AUDITED_ARTIFACT_SET_CONSTANT_KEYS = [
   "gambler",
   "gilded_dreams",
   "gladiators_finale",
+  "heart_of_the_furnace",
   "heart_of_depth",
   "husk_of_opulent_dreams",
   "instructor",
@@ -33,6 +34,7 @@ export const AUDITED_ARTIFACT_SET_CONSTANT_KEYS = [
   "resolution_of_sojourner",
   "retracing_bolide",
   "scholar",
+  "scarlet_proof",
   "shimenawas_reminiscence",
   "tenacity_of_the_millelith",
   "the_exile",
@@ -68,6 +70,7 @@ export const AUDITED_ARTIFACT_SET_CONSTANT_KEYS = [
 export const AUDITED_CHARACTER_CONSTANT_KEYS = [
   "aether",
   "aino",
+  "alyosha",
   "albedo",
   "alhaitham",
   "aloy",
@@ -149,6 +152,7 @@ export const AUDITED_CHARACTER_CONSTANT_KEYS = [
   "ningguang",
   "noelle",
   "ororon",
+  "odette",
   "prune",
   "qiqi",
   "raiden_shogun",
@@ -167,6 +171,7 @@ export const AUDITED_CHARACTER_CONSTANT_KEYS = [
   "thoma",
   "tighnari",
   "traveler_anemo",
+  "traveler_cryo",
   "traveler_dendro",
   "traveler_electro",
   "traveler_geo",
@@ -222,6 +227,7 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "blackcliff_slasher",
   "blackcliff_warbow",
   "blackmarrow_lantern",
+  "blade_of_atonement",
   "bloodsoaked_ruins",
   "bloodtainted_greatsword",
   "calamity_of_eshu",
@@ -230,8 +236,10 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "chain_breaker",
   "cinnabar_spindle",
   "cloudforged",
+  "clash_of_kings",
   "compound_bow",
   "cool_steel",
+  "covenant_of_frost_and_snow",
   "cranes_echoing_call",
   "crescent_pike",
   "crimson_moons_semblance",
@@ -246,10 +254,13 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "dragonspine_spear",
   "dull_blade",
   "earth_shaker",
+  "echoes_of_the_heart",
   "elegy_for_the_end",
   "emerald_orb",
+  "emberwell",
   "end_of_the_line",
   "engulfing_lightning",
+  "exaiphanes_blade",
   "etherlight_spindlelute",
   "everlasting_moonglow",
   "eye_of_perception",
@@ -271,8 +282,10 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "flute_of_ezpitzal",
   "footprint_of_the_rainbow",
   "forest_regalia",
+  "forged_by_the_golden_melody",
   "fractured_halo",
   "freedom_sworn",
+  "frostbreath",
   "frostbearer",
   "fruit_of_fulfillment",
   "fruitful_hook",
@@ -285,9 +298,11 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "harbinger_of_dawn",
   "hunters_bow",
   "hunters_path",
+  "heretics_molten_blade",
   "ibis_piercer",
   "iron_point",
   "iron_sting",
+  "jade_vista",
   "jadefalls_splendor",
   "kagotsurube_isshin",
   "kaguras_verity",
@@ -374,6 +389,7 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "skyward_harp",
   "skyward_pride",
   "skyward_spine",
+  "song_of_the_vigil",
   "slingshot",
   "snare_hook",
   "snow_tombed_starsilver",
@@ -424,6 +440,7 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "waveriding_whirl",
   "white_iron_greatsword",
   "white_tassel",
+  "whitelake_frostfeather",
   "whiteblind",
   "windblume_ode",
   "wine_and_song",
@@ -432,10 +449,7 @@ export const AUDITED_WEAPON_CONSTANT_KEYS = [
   "xiphos_moonlight",
 ] as const;
 
-export type ConstantRuleAuditCatalog =
-  | "artifact-set"
-  | "character"
-  | "weapon";
+export type ConstantRuleAuditCatalog = "artifact-set" | "character" | "weapon";
 
 export interface ConstantRuleAuditGap {
   readonly catalog: ConstantRuleAuditCatalog;
@@ -489,9 +503,7 @@ export const findConstantRuleAuditGaps = ({
 
 const auditedCharacters = new Set<string>(AUDITED_CHARACTER_CONSTANT_KEYS);
 const auditedWeapons = new Set<string>(AUDITED_WEAPON_CONSTANT_KEYS);
-const auditedArtifactSets = new Set<string>(
-  AUDITED_ARTIFACT_SET_CONSTANT_KEYS
-);
+const auditedArtifactSets = new Set<string>(AUDITED_ARTIFACT_SET_CONSTANT_KEYS);
 
 export const hasReviewedArtifactSetConstants = (key: string): boolean =>
   auditedArtifactSets.has(key);

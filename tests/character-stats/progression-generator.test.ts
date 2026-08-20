@@ -33,9 +33,27 @@ test("progression generation covers every supported character and weapon", () =>
     Object.keys(weaponMetadata).length
   );
   assert.deepEqual(catalogs.manifest, {
-    schemaVersion: 1,
+    schemaVersion: 2,
     genshinDbVersion: "5.2.12",
-    gameVersion: "6.7",
+    gameVersion: "7.0",
+    sources: [
+      {
+        id: "genshin-db",
+        role: "primary",
+        version: "5.2.12",
+        gameVersion: "6.7",
+      },
+      {
+        id: "enka-network",
+        revision: "8ecab329af0ffc39b4ad058d46c66a2fdb1379f1",
+        role: "fallback",
+      },
+      {
+        id: "genshin-data",
+        role: "release-catalog",
+        version: "0.62.0",
+      },
+    ],
   });
 });
 
@@ -85,6 +103,13 @@ test("character snapshots preserve ascension boundaries and normalize built-in c
   assert.equal(sandrone.specializedStat, "critRate");
   assert.equal(sandrone.stats["1:0"][3], 0);
   assert.equal(sandrone.stats["90:6"][3], 0.192);
+
+  const odette = catalogs.characters.odette;
+  assert.equal(odette.specializedStat, "critDamage");
+  assert.deepEqual(
+    odette.stats["90:6"],
+    [12980.665588799999, 334.849732, 786.99967488, 0.384]
+  );
 });
 
 test("weapon snapshots include base attack, secondary stats, and rarity-specific caps", () => {
@@ -96,6 +121,10 @@ test("weapon snapshots include base attack, secondary stats, and rarity-specific
   assert.equal(dullBlade.specializedStat, null);
   assert.equal(dullBlade.stats["70:4"][0], 185.42615999999998);
   assert.equal(dullBlade.stats["80:5"], undefined);
+
+  const whitelake = catalogs.weapons.whitelake_frostfeather;
+  assert.equal(whitelake.specializedStat, "critRate");
+  assert.deepEqual(whitelake.stats["90:6"], [674.3345459999999, 0.220512]);
 });
 
 test("generated catalogs serialize deterministically", () => {

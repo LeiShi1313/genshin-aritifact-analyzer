@@ -1,0 +1,52 @@
+hutao char lvl=90/90 cons=1 talent=9,9,9 +params=[start_hp=1];
+hutao add weapon="deathmatch" refine=1 lvl=90/90;
+hutao add set="shime" count=4;
+#hutao add set="cw" count=4;    // ~1k loss
+hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311 ; #main
+hutao add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*9 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*5 cd=0.0662*12;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="favoniuscodex" refine=5 lvl=90/90;
+mona add set="cg" count=5;
+mona add stats hp=4780 atk=311 atk%=.466 hydro%=0.466 heal=0.359 ; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*12 cd=0.0662*9;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favoniussword" lvl=90/90 refine=5;    // R3 is ~1k loss
+xingqiu add set="no" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311 ; #main
+xingqiu add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*10 cd=0.0662*7;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=5;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*7 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*10;
+
+options swap_delay=12 iteration=1000;
+
+active durin;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+for let i=0; i<4; i=i+1 {
+  durin skill, attack, burst;
+  xingqiu skill, dash, burst, attack;
+  mona burst, attack, skill, attack;
+  hutao skill,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash, // 5
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:2, charge, dash,
+    attack:3, charge;       // 10
+  if .tao.burst.ready && .tao.energy == .tao.energymax  {
+    tao burst, attack:2;
+  } else {
+    xingqiu attack:2;
+  }
+}

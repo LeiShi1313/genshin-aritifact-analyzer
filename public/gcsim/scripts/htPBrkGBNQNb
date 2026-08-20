@@ -1,0 +1,72 @@
+# Sethos Ineffa Columbina Sucrose. ~17 second rotation. Sethos uses burst and 2 fully charged shots per rotation. Columbina and Ineffa alternate bursts on every other rotation. Sucrose swaps in twice per rotaion to refresh vv and em buff.
+
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="notsu" count=4;
+sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*5 cr=0.0331*10 cd=0.0662*10;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+ineffa add set="aubade" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="sacjade" refine=1 lvl=90/90;
+columbina add set="sms" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*3 cr=0.0331*7 cd=0.0662*10;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="sacfrags" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*6 cr=0.0331*8 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active ineffa;
+
+for let i=0; i<5; i=i+1 {
+  if is_even(i) {
+    ineffa skill;
+    bina burst, skill;
+  } else {
+    ineffa skill, burst;
+    bina attack, skill;
+  }
+  if .sucrose.burst.ready && .sucrose.skill.ready {
+    sucrose skill, dash, burst;
+  } else if .sucrose.skill.ready {
+    sucrose skill, dash, attack;
+  } else {
+    sucrose attack:2;
+  }
+  sethos skill, burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         skill;
+  if .sucrose.burst.ready && .sucrose.skill.ready {
+    sucrose skill, dash, burst;
+  } else if .sucrose.skill.ready {
+    sucrose skill, dash, attack;
+  } else {
+    sucrose attack:2;
+  }
+  sethos aim[hold=2]:2;
+}

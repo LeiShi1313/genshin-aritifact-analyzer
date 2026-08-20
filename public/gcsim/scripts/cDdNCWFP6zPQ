@@ -1,0 +1,61 @@
+# Sethos Fischl Durin Nahida. ~25.5 second rotation with tf favbow Sethos, using burst, 3 fully charged aimed shots, 11 level one charged aimed shots, and 5 skills.
+
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="favbow" refine=5 lvl=90/90;
+sethos add set="tf" count=4;
+sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=5 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311;
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="lionsroar" refine=3 lvl=90/90;
+durin add set="cg" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
+nahida add set="totm" count=4; # gt and scroll are very close, both within ~1k team dps of totm
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187;
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1 pos=-1.2,1.4 hp=100000000;
+
+active durin;
+
+for let i=0; i<4; i=i+1 {
+  durin skill:2, burst;
+
+  sethos skill, aim[hold=1];
+
+  nahida skill, burst;
+
+  fischl skill, attack;
+
+  sethos aim[hold=1], skill, burst,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         skill,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2;
+  sethos aim[hold=1], skill, aim[hold=1]:2;
+
+  fischl attack:2, burst;
+
+  sethos aim[hold=2]:3, aim[hold=1], skill, aim[hold=1]:5;
+}

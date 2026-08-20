@@ -1,0 +1,77 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+//mavuika add weapon="mailedflower" refine=5 lvl=90/90;
+mavuika add set="oc" count=4;
+mavuika add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=158.56 cr=0.2648 cd=0.662;
+//mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;  // Mailed Flower
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311;
+citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=237.84 cr=0.1324 cd=0.4634;
+// EM focus
+// citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187;
+// citlali add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2755 em=158.56 cr=0.331 cd=0.331;
+
+xilonen char lvl=90/90 cons=0 talent=9,9,9;
+xilonen add weapon="favsword" refine=3 lvl=90/90;
+xilonen add set="ap" count=4;
+xilonen add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311;
+xilonen add stats def%=0.31 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7282;
+// 4pc Instructor
+// xilonen add set="ins" count=4;
+// xilonen add stats hp=3571 atk=232 def%=0.43725 def%=0.43725 cr=0.311;
+// xilonen add stats def=33.0624 def%=0.10416 hp=426.6192 hp%=0.083328 atk=27.7872 atk%=0.083328 er=0.092568 em=33.2976 cr=0.27804 cd=0.333648;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9 ;
+bennett add weapon="thealleyflash" refine=1 lvl=90/90;
+bennett add set="noblesse" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311 ;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+
+let UseXilonenDash = false;  # change this value between true and false to make Xilonen use dash or not
+
+active mavuika;
+
+for let i=0; i<4; i=i+1 {
+  mavuika skill[hold=1];
+  bennett swap;                 // swap to Bennett
+  if UseXilonenDash == true {   // wait for Mavuika particles before using Q
+    delay(29);
+  } else {
+    delay(19);
+  }
+  bennett skill, burst;
+  xilonen skill, attack:2;
+  if UseXilonenDash == true {
+    xilonen dash;   # dash to pick up the shard
+  }
+  pick_up_crystallize("pyro");
+  citlali skill, burst, attack;
+  if .mavuika.nightsoul.points {  // To prevent Error when Mavuika tries to Recast E when its already expired due to teammate stalling for Q energy
+    mavuika skill[recast=1];
+    mavuika charge;
+  }
+  mavuika burst;
+  delay(16); # to wait Cryo app
+  mavuika charge:3, charge[hold=6], charge[final=1], dash;
+  mavuika charge:3, charge[hold=6], charge[final=1], dash; # the last Final CA is buffed by Mavuika Q.
+
+  mavuika charge:2;
+  if UseXilonenDash == false {   # if you didn't use Xilonen's dash, you need to do extra action to make it 18s rot length
+    mavuika dash;
+  }
+}
+
+# Mavuika hE > Bennett (wait) EQ > Xilonen E N2 > Citlali EQ N1 > Mavuika hE C1 Q (wait) 2[C3FD] C2D

@@ -34,7 +34,7 @@ for let i=0; i<4; i=i+1 {
   durin skill:2;
   xingqiu skill, dash, burst, attack;
   durin burst;
-  fischl attack, burst;
+  fischl attack:2, burst;
   hutao skill,
     attack:2, charge, dash,
     attack:2, charge, dash,

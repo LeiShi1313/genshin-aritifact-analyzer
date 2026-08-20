@@ -55,7 +55,7 @@ const artifactSetRules = (
 // are included; attack-type damage, resistance, energy restoration, and
 // conditional effects do not alter this calculator's sheet fields.
 export const ARTIFACT_SET_CONSTANT_RULE_SOURCE =
-  "genshin-db@5.2.12/artifact-set-two-piece";
+  "game-data-catalog@7.0/artifact-set-two-piece";
 
 export const ARTIFACT_SET_CONSTANT_RULES: readonly ArtifactSetConstantRule[] = [
   ...artifactSetRules("geoDamageBonus", 0.15, ["archaic_petra"]),
@@ -80,10 +80,10 @@ export const ARTIFACT_SET_CONSTANT_RULES: readonly ArtifactSetConstantRule[] = [
     "unfinished_reverie",
     "a_day_carved_from_rising_winds",
     "disenchantment_in_deep_shadow",
+    "heart_of_the_furnace",
+    "scarlet_proof",
   ]),
-  ...artifactSetRules("pyroDamageBonus", 0.15, [
-    "crimson_witch_of_flames",
-  ]),
+  ...artifactSetRules("pyroDamageBonus", 0.15, ["crimson_witch_of_flames"]),
   ...artifactSetRules("dendroDamageBonus", 0.15, ["deepwood_memories"]),
   ...artifactSetRules("defensePercent", 0.3, [
     "defenders_will",
@@ -138,16 +138,12 @@ export const WEAPON_CONSTANT_RULES: readonly WeaponConstantRule[] = [
   {
     id: "weapon.haran_geppaku_futsu.all_elemental_damage",
     weaponKey: "haran_geppaku_futsu",
-    effects: [
-      { stat: "allElementalDamageBonus", valuesByRefinement: pct12 },
-    ],
+    effects: [{ stat: "allElementalDamageBonus", valuesByRefinement: pct12 }],
   },
   {
     id: "weapon.mistsplitter_reforged.all_elemental_damage",
     weaponKey: "mistsplitter_reforged",
-    effects: [
-      { stat: "allElementalDamageBonus", valuesByRefinement: pct12 },
-    ],
+    effects: [{ stat: "allElementalDamageBonus", valuesByRefinement: pct12 }],
   },
   {
     id: "weapon.primordial_jade_cutter.hp",
@@ -242,9 +238,7 @@ export const WEAPON_CONSTANT_RULES: readonly WeaponConstantRule[] = [
   {
     id: "weapon.calamity_queller.all_elemental_damage",
     weaponKey: "calamity_queller",
-    effects: [
-      { stat: "allElementalDamageBonus", valuesByRefinement: pct12 },
-    ],
+    effects: [{ stat: "allElementalDamageBonus", valuesByRefinement: pct12 }],
   },
   {
     id: "weapon.lumidouce_elegy.attack",
@@ -289,9 +283,7 @@ export const WEAPON_CONSTANT_RULES: readonly WeaponConstantRule[] = [
   {
     id: "weapon.hunters_path.all_elemental_damage",
     weaponKey: "hunters_path",
-    effects: [
-      { stat: "allElementalDamageBonus", valuesByRefinement: pct12 },
-    ],
+    effects: [{ stat: "allElementalDamageBonus", valuesByRefinement: pct12 }],
   },
   {
     id: "weapon.golden_frostbound_oath.defense",
@@ -301,9 +293,7 @@ export const WEAPON_CONSTANT_RULES: readonly WeaponConstantRule[] = [
   {
     id: "weapon.skyward_atlas.all_elemental_damage",
     weaponKey: "skyward_atlas",
-    effects: [
-      { stat: "allElementalDamageBonus", valuesByRefinement: pct12 },
-    ],
+    effects: [{ stat: "allElementalDamageBonus", valuesByRefinement: pct12 }],
   },
   {
     id: "weapon.memory_of_dust.shield_strength",

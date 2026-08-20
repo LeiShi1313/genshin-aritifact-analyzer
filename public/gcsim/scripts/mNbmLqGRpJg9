@@ -1,0 +1,83 @@
+# Sethos Yelan Ineffa Sucrose. ~18 Rot. Sethos Lunarcharge. 8N2W Sethos looses 2 Shadow Piercing shots after his field time. NotSU > WT. Lunarcharge is ~12% of Sethos Damage. Sucrose should refresh VV before Sethos's burst and before his shadowpiercing shots.
+
+# Team - Options listed by DPS
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="notsu" count=4;
+#sethos add set="wt" count=4;
+sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EDC
+#sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+#sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EEC
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="sms" count=4;
+#yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*10 cd=0.0662*9;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+ineffa add set="gd" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="evenstar" refine=1 lvl=90/90;
+#sucrose add weapon="sacfrags" refine=3 lvl=90/90;
+#sucrose add weapon="hakushin" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*11 em=19.82*6 cr=0.0331*8 cd=0.0662*3;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active ineffa;
+
+for let i=0; i<4; i=i+1 {
+  if i > 0  && .ineffa.burst.ready && .ineffa.energy == .ineffa.energymax {
+    ineffa skill, burst;
+  } else {
+    ineffa skill;
+  }
+
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+
+  if i > 0 && .sucrose.burst.ready {
+    sucrose burst, attack;
+  } else {
+    sucrose skill, dash, attack;
+  }
+
+  sethos skill, attack; # aim[hold=2]; # High ping only
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:1;
+  sethos skill, attack;
+
+  sucrose skill, dash, attack;
+
+  sethos aim[hold=2]:1, attack;
+  sethos aim[hold=2]:1, attack;
+}

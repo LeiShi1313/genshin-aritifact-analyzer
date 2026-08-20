@@ -1,13 +1,13 @@
 {
-  "gcsimCommit": "6d373678e949d30e91d390f418d930de09eeb547",
+  "gcsimCommit": "3647a07a7cc3004bc1e79d9bb5f7444de20dceaa",
   "goToolchain": "go1.25.0",
-  "scriptCount": 5562,
-  "scriptSnapshotSha256": "fcbbdff57c24c25b00c7b45d9eafc38d08229a138746c749424e071c1e6bef60",
+  "scriptCount": 5788,
+  "scriptSnapshotSha256": "7f04f0e59317787835bcd66a8e3d40115edef6f700a529b8acc96107b44b7ccb",
   "catalogFileCount": 8,
-  "catalogSnapshotSha256": "a5a065bc40411e6b004dfbff35cd4b89dee413014fdd166d959863b7121e859c",
+  "catalogSnapshotSha256": "77d04368ee3d9110c996324f5a1d68f278e6022f84a7dab3732b16e22e9564bc",
   "derivedFileCount": 11,
-  "derivedSnapshotSha256": "834145c11a9fe8f3f6b3885b09e36b155bb7bbd11bc7e9c433455fb5a8ae3963",
-  "binarySha256": "c1876596d199ee67d3ee78ae95bc201202f6c27529e874361f6a548ff085f077",
-  "wasmSha256": "64592f93ca9241a22a53ba6473c15d8741a67ad88e5d4103a031977a2370f244",
+  "derivedSnapshotSha256": "36eba10ca12fdf3c4682d74d72ab3573a815cff06e2d4335942afe6fa9b140bd",
+  "binarySha256": "b1e052a150d77cd0f66b6769029f64f1d67b5a0890fe51fa379947e43761d897",
+  "wasmSha256": "16ea108dbc12cb67c3a84da71f9dd0344c560ef46fbdb6eb9becb89fd9cf12a4",
   "wasmExecSha256": "0c949f4996f9a89698e4b5c586de32249c3b69b7baadb64d220073cc04acba14"
 }

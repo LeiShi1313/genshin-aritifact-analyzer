@@ -1,0 +1,71 @@
+# Razor Nahida Durin Bennett. ~22s Rot. Razor Quickburn with Bennett C6. Razor hE D N1 Q N1 tED. UR >> RW on Razor. EM Mainstat Bennett recommended in practice for Self-Aura Overloads.
+
+# Team - Options listed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implemented; Self-Damage SS alternative
+razor add set="ur" count=4; # UR > GD > RW
+#razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # ADCd; UR
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EDCd; RW
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="tom" count=4;
+#nahida add set="scroll" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*10 cd=0.0662*10;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="lionsroar" refine=3 lvl=90/90;
+durin add set="cg" count=4;
+durin add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*7;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=220]; # Leaf to Razor
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*11 cd=0.0662*5;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+
+# Rotation
+active razor; # SS Stacks
+#razor skill, dash;
+
+for let i=0; i<4; i=i+1 {
+  # Skip Q on  first rot, then use as available
+  nahida skill;
+  if i > 0 && .nahida.burst.ready && .nahida.energy == .nahida.energymax {
+    nahida burst;
+  } else {
+    nahida attack, charge;
+  }
+
+  durin skill:2, burst; # RNG particles can rarely leave him idling
+
+  bennett skill, dash, burst;
+
+  if i == 0 {
+    razor skill;
+  } else {
+    razor skill[hold=1];
+  }
+  razor dash, attack, burst;
+  razor attack:1, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+}

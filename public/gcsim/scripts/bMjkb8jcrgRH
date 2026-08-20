@@ -1,22 +1,14 @@
-# Razor Chevreuse Fischl Bennett. ~17 or 20s Rot. Ignoring Razor's burst cooldown is ideal for DPS given fewer rotations. Pyro Infused Razor deals slightly more Pyro DMG; Echoes + Pyro > TS + ATK Goblet. Fischl snapshots Bennett's buff. Chevreuse is not buffed by Bennett.  Self overloads not implemented.
+# Razor Chevreuse Fischl Bennett. ~20s Rot. Pyro Infused Razor deals slightly more Pyro DMG; Fischl snapshots Bennett's buff. Chevreuse is not buffed by Bennett. Self Overloads not implemented, Bennett should use EM mainstats in practice.
 
-# Team- Options listsed by DPS
+# Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-#razor add weapon="tidalshadow" refine=5 lvl=90/90; # VERY Behind
-razor add set="echoes" count=4; # Ping Dependent
-#razor add set="ts" count=4;
-#razor add set="glad" count=4;
-#razor add set="cw" count=4;
-#razor add set="gd" count=4; # AoE Reaction DMG; Self-overloads not implemented
+#razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implemented
+razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # ADC
 #razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + ATK; TS
-#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + Elec
-razor add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
-razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # CD + Pyro; Echoes
-#razor add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # CR + Pyro; TS/WGS
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # AAC
 
 chev char lvl=90/90 cons=6 talent=9,9,9;
 chev add weapon="favlance" refine=3 lvl=90/90;
@@ -25,30 +17,26 @@ chev add weapon="favlance" refine=3 lvl=90/90;
 chev add set="scroll" count=4;
 #chev add set="sodp" count=4;
 #chev add set="tom" count=4; # Snapshot Oz
-chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311 ; #main
-chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3968 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.5296; # Hp/Hp/Cr
-#chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
-#chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.248 er=0.1102 em=39.64 cr=0.3972 cd=0.3972; # Hp/Hp/Hp
-#chev add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311 ; #main
-#chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # ADC
+chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+chev add stats def%=0.062*2 def=19.68*2 hp=253.94*8 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*2;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="vhunt" refine=1 lvl=90/90;
 #fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
 #fischl add weapon="songofstillness" refine=5 lvl=90/90;
-#fischl add weapon="stringless" refine=3 lvl=90/90;
-fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
-fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # w/ VH
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # VH
 #fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
-#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # w/ others
+#fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # Other
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 #bennett add weapon="sapwood" refine=5 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
 
 # Options
 options iteration=1000;
@@ -64,8 +52,8 @@ active razor; # SS stacks
 razor skill, dash; # Sigils, Chev A4, C4
 
 for let i=0; i<4; i=i+1 {
-  # Burst as available, Pass Fav proc to Bennett
-  if .chev.burst.ready {
+  # Burst in 1st rot, Pass Fav proc to Bennett
+  if i == 0 {
     chev burst, skill[hold=1]:2;
   } else {
     chev attack, skill[hold=1];
@@ -74,7 +62,7 @@ for let i=0; i<4; i=i+1 {
   if .bennett.burst.ready {
     bennett burst; # Energy drains late
   } else {
-    bennett skill, burst;
+    bennett skill, dash, burst;
   }
 
   amy attack;
@@ -84,23 +72,9 @@ for let i=0; i<4; i=i+1 {
     amy skill;
   }
 
-  # Razor out of burst actions; account for CD
-  while !.razor.mods.razor-q {
-    if .razor.burst.ready && .razor.skill.ready {
-      razor skill, dash, burst;
-    } else if .razor.burst.ready {
-      razor burst;
-    } else if .razor.skill.ready {
-      razor skill, dash;
-    } else if .razor.normal > 3 {
-      razor dash;
-    } else {
-      razor attack;
-    }
-  }
+  razor skill, dash, attack, burst, attack, skill, dash; # Ends on N3ED with N1ED
   # Razor Main DPS window
-  while .razor.infusion.bennett-fire-weapon {
-  #while .razor.mods.razor-q > 200 { # Fixed Rot; stable DPS
+  while .razor.mods.razor-q > 200 { # Ends on N3ED with N1ED
     if .razor.normal > 3 && .razor.skill.ready {
       razor skill, dash;
     } else if .razor.normal > 3 {
@@ -109,9 +83,4 @@ for let i=0; i<4; i=i+1 {
       razor attack;
     }
   }
-
-  # Notation
-  # Razor ED (1st Rot) >
-  # Chevreuse QhEhE/N1hE > Bennett Q/EQ > Fischl N2Q/N1E >
-  # Razor EDQ N3ED N3D N3D N3ED N3D N2
 }

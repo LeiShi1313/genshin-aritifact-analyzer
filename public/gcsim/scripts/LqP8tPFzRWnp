@@ -59,9 +59,6 @@ for let i=0; i<4; i=i+1 {
         kazuha skill, high_plunge[collision=rand()>0.2];
       case .kazuha.burst.ready:
         kazuha burst;
-      # VV refresh with TF
-      case .kazuha.sets.tf == 4 && .status.vvelectro:
-        xianyun attack;
       # Kazuha C6
       case .kazuha.infusion.kazuha-c6-infusion && .previous-action == .action.low_plunge:
         kazuha attack;

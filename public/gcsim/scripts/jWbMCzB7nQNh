@@ -1,63 +1,48 @@
-# Razor Emilie Fischl Bennett. ~20s Rotation with 2E Sapwood Bennett. Razor Quickload w/ ~70% Quicken Uptime. Razor maintains burning with Bennett C6 infusion. SS may be inconsistent, but exceed TS without refines. Emilie Q every other rot after the first. Deepwood and & NO Bennett are similar. Self-Overloads not implemented; Real gameplay may prefer more EM to Razor/Bennett.
+# Razor Emilie Fischl Bennett. ~20s Rotation with 2E Sapwood Bennett. Razor Quickload w/ ~72% Quicken Uptime. Razor maintains Burning with Bennett C6 infusion. Serpent Spine still exceeds Talking Stick R1 if disabled by Burning. NO & DM Bennett are similar. If the rotation is performed incompetently, burning uptime is lowered enough that Emilie should hold Deepwood. Self-Overloads not implemented; Bennett/Razor should build more EM practically.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5]; # Inconsistent
 #razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implemented; Self-Damage SS alternative
-#razor add weapon="mailedflower" refine=5 lvl=90/90; # OL DMG; AoE
-razor add set="ur" count=4; # General
-#razor add set="deepwood" count=4; # Emilie DPS
-#razor add set="gd" count=4; # OL Damage; AoE
-#razor add set="mh" count=4; # Enabled by burning AoE
-razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # EM/EL # SS/TS
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=138.74 cr=0.2979 cd=0.662; # MH
-#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/EL
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
-#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # ATK/ATK
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=39.64 cr=0.2979 cd=0.662; # MH
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; #Em/El/Cr; MF
+razor add set="ur" count=4; # UR > RW > GD (better in practice)
+#razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # Other
+#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*11 cd=0.0662*10; # RW
 
 emilie char lvl=90/90 cons=0 talent=9,9,9;
 emilie add weapon="deathmatch" refine=1 lvl=90/90;
 emilie add set="ur" count=4;
-#emilie add set="deepwood" count=4;
+#emilie add set="deepwood" count=4; # If your rotation is incompetent
 emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
-emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
-#fischl add weapon="vhunt" refine=1 lvl=90/90;
-fischl add set="gt" count=4;
-#fischl add set="deepwood" count=4; # Emilie DPS
-fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311 ; #main
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; #Stringless
-#fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622 ; #main
-#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Vhunt
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
-bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140]; # Leaf to Fischl
-#bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=220]; # Leaf to Razor
-bennett add set="deepwood" count=4; # Emilie DPS
-#bennett add set="no" count=4; # General
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=220]; # Leaf to Razor
+#bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=140]; # Leaf to Fischl
+bennett add set="no" count=4; # General
+#bennett add set="deepwood" count=4; # Emilie DPS
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662; # ATK
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # Talent
 #bennett add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
 #bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.331 cd=0.2648; # EM
-#bennett add stats hp=4780 atk=311 er=0.518 hp%=0.466 heal=0.359; #main
-#bennett add stats def=39.36 def%=0.124 hp=507.88 hp%=0.496 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.1324; # Heals
 
 # Options
 options iteration=1000;
 options swap_delay=12;
-energy every interval=480,720 amount=1;
+energy every interval=480,720 amount=1; # Standard
 
 # Targets
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # enables MH through burning AoE, -SS stacks
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # -SS stacks from burning AoE; enables MH
 
 # Rotation
 active razor; # SS Stacks
@@ -65,6 +50,7 @@ active razor; # SS Stacks
 fischl skill, attack;
 
 for let i=0; i<4; i=i+1 {
+  # Burst as available after the first
   if i > 0 && .emilie.burst.ready {
     emilie burst;
   } else {

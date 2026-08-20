@@ -1,0 +1,75 @@
+# Razor Chevreuse Nicole Bennett. ~22s Rot. Pyro Infused Razor deals slightly more Pyro DMG; Chevreuse only burst in 1st rot. Self Overloads not implemented, Bennett should use EM mainstats in practice.
+
+# Team - Options listsed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implemented
+razor add set="risingwinds" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # ADC
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # AAC
+
+chev char lvl=90/90 cons=6 talent=9,9,9;
+chev add weapon="favlance" refine=3 lvl=90/90;
+#chev add weapon="dialogues" refine=5 lvl=90/90;
+#chev add weapon="rightfulreward" refine=5 lvl=90/90;
+chev add set="scroll" count=4;
+#chev add set="sodp" count=4;
+#chev add set="tom" count=4; # Snapshot Oz
+chev add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+chev add stats def%=0.062*2 def=19.68*2 hp=253.94*8 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*2;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*12 em=19.82*2 cr=0.0331*8 cd=0.0662*2;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="alleyflash" refine=1 lvl=90/90;
+bennett add set="no" count=4;
+bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=0,6.6 hp=100000000;
+
+# Rotation
+active razor; # SS stacks
+razor skill, dash; # Sigils, Chev A4, C4
+
+for let i=0; i<4; i=i+1 {
+  # Burst in 1st rot, Pass Fav proc to Nicole
+  if i == 0 {
+    chev burst, skill[hold=1]:1;
+  } else {
+    chev attack, skill[hold=1];
+  }
+
+  nicole burst, skill;
+
+  if .bennett.burst.ready {
+    bennett burst; # Energy drains late
+  } else {
+    bennett skill, dash, burst;
+  }
+
+  razor skill, dash, attack, burst, attack, skill, dash; # Ends on N3ED with N1ED
+  # Razor Main DPS window
+  while .razor.mods.razor-q > 200 { # Ends on N3ED with N1ED
+    if .razor.normal > 3 && .razor.skill.ready {
+      razor skill, dash;
+    } else if .razor.normal > 3 {
+      razor dash;
+    } else {
+      razor attack;
+    }
+  }
+}

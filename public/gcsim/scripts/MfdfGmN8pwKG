@@ -47,10 +47,11 @@ fn kinich_combo() {
     if .kinich.nightsoul.state {
       kinich skill[hold=1];
     }
+    if .kinich.burst.ready {
+      kinich burst;
+    }
   }
-  // if .kinich.burst.ready {
-  //   kinich burst;
-  // }
+
 }
 
 active kinich; # SS Stacks
@@ -63,4 +64,4 @@ for let i=0; i<4; i=i+1 {
 }
 
 # 18s rotations
-# Nicole EQ > Durin 2[E]Q > Bennett EQ > Kinich E 5[N2 shE]
+# Nicole EQ > Durin 2[E]Q > Bennett EQ > Kinich E 5[N2 shE(Q)]

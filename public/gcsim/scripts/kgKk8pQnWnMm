@@ -1,18 +1,21 @@
-# Razor Chevreuse Fischl Bennett. ~16 Rot; Razor only bursts every other rotation. Pyro Infused Razor still deals reasonable damage. DPS Chevreuse uses Q3E in Bennett Q if possible. Self overloads not implemented.
+# Razor Chevreuse Fischl Bennett. ~16 Rot; Razor only bursts every other rotation. Pyro Infused Razor still deals reasonable damage. DPS Chevreuse uses Q3E in Bennett Q if possible. Self Overloads not implemented.
 
 # Team- Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
-razor add set="echoes" count=4; # Ping
-#razor add set="glad" count=4;
-#razor add set="cw" count=4;
+#razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implemented
+razor add set="risingwinds" count=4;
 razor add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
-razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # ADC
+#razor add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # ADC
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # AAC
 
 chev char lvl=90/90 cons=6 talent=9,9,9;
 chev add weapon="favlance" refine=3 lvl=90/90;
-#chev add set="scroll" count=4;
-chev add set="gt" count=4;
+chev add set="scroll" count=4;
+#chev add set="gt" count=4;
 #chev add set="emblem" count=4;
 chev add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
 chev add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
@@ -21,18 +24,19 @@ fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="vhunt" refine=1 lvl=90/90;
 #fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
 #fischl add weapon="stillness" refine=5 lvl=90/90;
-fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622 ; #main
-fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662; # VH
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # VH
 #fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
-#fischl add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # Others
+#fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # Other
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="alleyflash" refine=1 lvl=90/90;
 #bennett add weapon="sapwood" refine=5 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
-bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.1986 cd=0.662;
+bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*6 cd=0.0662*10;
 
 # Options
 options iteration=1000;
@@ -51,7 +55,7 @@ for let i=0; i<4; i=i+1 {
   if .bennett.burst.ready {
     bennett burst;
   } else {
-    bennett skill, burst;
+    bennett skill, dash, burst;
   }
 
   if !.amy.skill.ready {
@@ -68,16 +72,14 @@ for let i=0; i<4; i=i+1 {
   }
 
   # Razor only enters Q every other rotation, otherwise E
-  while !.razor.mods.razor-q && is_even(i) {
-    if .razor.burst.ready && .razor.skill.ready {
-      razor skill, dash, burst;
-    } else if .razor.burst.ready && is_even(i) {
-      razor burst;
+  if !.razor.mods.razor-q {
+    if .razor.burst.ready && !is_even(i) {
+      razor  burst;
     } else {
-      razor skill;
+      razor skill, dash;
     }
   }
-  # Razor main DPS combo
+  # Razor DPS combo
   while .razor.infusion.bennett-fire-weapon || .status.bennettburst {
     if .razor.normal > 3 && .razor.skill.ready {
       razor skill, dash;

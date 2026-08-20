@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GCSIM_LOCALIZATION_PATH = path.join(
   __dirname,
-  "../gcsim/ui/packages/localization/src/locales/names.generated.json"
+  "../gcsim/ui/packages/localization/src/locales/names.dm.json"
 );
 const PUBLIC_LOCALES_PATH = path.join(__dirname, "../public/locales");
 const DATA_PATH = path.join(__dirname, "../src/data/gcsim");
@@ -29,13 +29,13 @@ const sortedRecord = (record) =>
   );
 
 const readEnemyNames = (gcsimData, language) => {
-  const enemyNames = gcsimData?.[language]?.enemy_names;
+  const enemyNames = gcsimData?.[language]?.monster_names;
   if (
     !enemyNames ||
     typeof enemyNames !== "object" ||
     Array.isArray(enemyNames)
   ) {
-    throw new Error(`GCSIM localization is missing ${language} enemy_names`);
+    throw new Error(`GCSIM localization is missing ${language} monster_names`);
   }
   return sortedRecord(enemyNames);
 };
@@ -48,7 +48,7 @@ const assertMatchingEnemyKeys = (expectedKeys, enemyNames, language) => {
   const extra = actualKeys.filter((key) => !expected.has(key));
   if (missing.length > 0 || extra.length > 0) {
     throw new Error(
-      `${language} enemy_names keys differ from English ` +
+      `${language} monster_names keys differ from English ` +
         `(missing: ${missing.join(", ") || "none"}; ` +
         `extra: ${extra.join(", ") || "none"})`
     );

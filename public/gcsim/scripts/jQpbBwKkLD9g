@@ -1,48 +1,45 @@
-# Razor Furina Nahida Bennett. ~25s. Razor Hyperburgeon with C6 Bennett infusion. Nahida runs P-Amber to counteract Furina's HP drain, fanfare decreases in later rotations. 2E Bennett builds EM.  Self overloads not implemented.
+# Razor Furina Nahida Bennett. ~23s. Razor Hyperburgeon with C6 Bennett infusion. Nahida runs P-Amber to counteract Furina's HP drain, fanfare decreases in later rotations. 2E Bennett builds Full EM.  Self-Aura Overloads not implemented.
+# Note - Hydro uptime is too terrible for Flame Forged Insight.
 
-# Team
+# Team - Options listed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
-razor add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
-#razor add weapon="talkingstick" refine=1 lvl=90/90; # Passive not implemented
-#razor add weapon="mailedflower" refine=5 lvl=90/90;
-#razor add weapon="aquamarine" refine=1 lvl=90/90;
-razor add set="ur" count=4; # Talent damage
+razor add weapon="talkingstick" refine=1 lvl=90/90; razor add stats atk%=0.16 electro%=0.12 pyro%=0.12; # Passive not implented; Self-Damage SS Alternative
+#razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5]; # Burgeon/Burning damage impacts passive
+razor add set="ur" count=4; # No, RW isn't better; Yes, the team has high Burning uptime
 #razor add set="gd" count=4; # Reaction damage
-razor add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Em/Em/Cd (SS)
-#razor add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
-#razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/Em/Cr (MF/Aqua)
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662; # Em/El/Cd (SS)
-#razor add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # Em/El/Cr (MF/Aqua)
-#razor add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
-#razor add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=118.92 cr=0.3972 cd=0.5296; # Em/Em/Em
+razor add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # Em/El/Cd
+#razor add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # Em/Em/Cd
+#razor add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*12; # Em/Em/Em
 
 furina char lvl=90/90 cons=0 talent=9,9,9 ;
-furina add weapon="festering" refine=5 lvl=90/90;
-#furina add weapon="pipe" refine=5 lvl=90/90;
+furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="gt" count=4;
-furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
-furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296; # FD
-#furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
-#furina add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.3972 cd=0.5296; # Pipe
+#furina add set="tom" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # GT
+#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+#furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # ToM
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="pamber" refine=5 lvl=90/90;
 #nahida add weapon="evenstar" refine=1 lvl=90/90;
 nahida add set="deepwood" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # PAmber
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*6 cr=0.0331*9 cd=0.0662*8; # PAmber
 #nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-#nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=39.64 cr=0.2317 cd=0.4634; # Evenstar
+#nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*6 cr=0.0331*9 cd=0.0662*8; # Evenstar
 
 bennett char lvl=90/90 cons=6 talent=9,9,9;
-bennett add weapon="favsword" refine=3 lvl=90/90;
+bennett add weapon="sapwood" refine=5 lvl=90/90 +params=[pickup_delay=160]; # Pick up during Razor 1st dash
 bennett add set="ins" count=4;
-bennett add set="no" count=1; # (Circlet)
-bennett add stats hp=3571 atk=232 em=140.25 em=140.25 cr=0.311; #main
-bennett add stats def=31.488 def%=0.0992 hp=406.304 hp%=0.07936 atk=26.464 atk%=0.07936 er=0.26448 em=126.848 cr=0.31776 cd=0.10592; # Optimistic substats
+#bennett add set="no" count=4;
+bennett add stats hp=3571 atk=232 em=140 em=140 em=187; #main
+bennett add stats def%=0.05208*2 def=16.5312*2 hp=213.31*2 hp%=0.041664*2 atk=13.8936*2 atk%=0.041664*2 er=0.046284*12 em=16.6488*4 cr=0.027804*2 cd=0.055608*2; # 4*
+#bennett add stats hp=3571 atk=232 em=187 em=187 em=187; #main
+#bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*10 em=19.82*6 cr=0.0331*2 cd=0.0662*2; # 5*
 
 # Options
 options iteration=1000;
@@ -57,42 +54,23 @@ active razor;
 razor skill, dash; # Max Sigils for first rotation
 
 for let i=0; i<4; i=i+1 {
-  furina skill, dash, burst;
-
-  nahida skill, burst, charge;
-
-  bennett skill, burst;
-
-  # Razor out of burst actions; account for CD
-  while !.razor.mods.razor-q {
-    if .razor.burst.ready && .razor.skill.ready {
-      razor skill, dash, attack, burst;
-    } else if .razor.burst.ready {
-      razor burst;
-    } else if .razor.skill.ready {
-      razor skill, dash;
-    } else if .razor.normal > 3 {
-      razor dash;
-    } else {
-      razor attack;
-    }
+  furina skill, dash;
+  if .furina.weapon == .keys.weapon.favsword && (!.furina.mods.favonius-cd && !.furina.burst.ready) {
+    furina attack;
   }
-  # Razor Main DPS window
-  while .razor.infusion.bennett-fire-weapon {
-    if .razor.normal > 3 && .razor.skill.ready {
-       razor skill, dash;
-    } else if .razor.normal > 3 {
-      razor dash;
-    } else {
-      razor attack;
-    }
-  }
-  # Complete final string
-  if .razor.normal < 3 {
-    razor attack;
-  }
+  furina burst;
 
-  bennett skill, attack;
+  nahida skill, burst, charge; # CA clears Hydro, allows burning
 
-  razor skill, dash;
+  bennett skill, dash, burst;
+
+  razor skill[hold=1], dash, attack, burst; # hE needed for Energy.
+  razor attack:1, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+  razor attack:3, dash;
+  razor attack:3;
+
+  bennett skill;
 }

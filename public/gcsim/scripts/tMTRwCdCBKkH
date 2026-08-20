@@ -1,0 +1,96 @@
+# Sethos Columbina Fischl Sucrose. ~18 Rot. Sethos Hex Lunarcharge. Sethos looses 2 Shadow Peircing shots after his field time. Sucrose refreshes VV before Sethos's burst and before his 2 shadow peircing shots.
+
+# Team - Options listed by DPS
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="notsu" count=4;
+#sethos add set="wt" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EEC
+#sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EDC
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="sacjade" refine=1 lvl=90/90;
+#columbina add weapon="pamber" refine=5 lvl=90/90;
+columbina add set="sms" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*6 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*7 cd=0.0662*10; # Jade
+#columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622; #main
+#columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*2 cr=0.0331*12 cd=0.0662*8; # Pamber
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add set="cg" count=4;
+#fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="hakushin" refine=5 lvl=90/90;
+#sucrose add weapon="evenstar" refine=1 lvl=90/90;
+#sucrose add weapon="sacfrags" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*8 em=19.82*6 cr=0.0331*2 cd=0.0662*2; # Hakushin
+#sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*6 cr=0.0331*8 cd=0.0662*2; # Evenstar
+#sucrose add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*6 cr=0.0331*8 cd=0.0662*4; # Frags
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active amy;
+
+for let i=0; i<4; i=i+1 {
+  if .amy.skill.ready {
+    amy attack, skill;
+  } else {
+    amy attack:2, burst;
+  }
+
+  if .columbina.burst.ready {
+    columbina skill, burst;
+  } else {
+    columbina skill, attack;
+  }
+
+  if !is_even(i) && .sucrose.burst.ready {
+    if .sucrose.weapon == .keys.weapon.sacfrags && .sucrose.skill.ready {
+      sucrose burst, attack:1, skill, dash;
+    } else {
+      sucrose attack:1, burst;
+    }
+  } else {
+    sucrose skill, dash, attack;
+  }
+
+  sethos skill; # aim[hold=2]; # High ping only
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:1;
+  sethos skill, attack:1;
+
+  sucrose attack;
+  if .sucrose.skill.ready {
+    sucrose skill, dash;
+  } else {
+    sucrose attack;
+  }
+
+  sethos aim[hold=2]:2;
+}

@@ -1,0 +1,67 @@
+# Chongyun Durin Nicole Xianyun. ~19s Rot. Chongyun double Pyro Melt Plunge. Nicole feeds her skill particles to Durin. 50% Collisions.
+
+# Team - Options listsed by DPS
+chongyun char lvl=90/90 cons=0 talent=9,9,9;
+chongyun add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#chongyun add weapon="fruitfulhook" refine=1 lvl=90/90;
+chongyun add set="lno" count=4;
+chongyun add stats hp=4780 atk=311 em=187 cryo%=0.466 cd=0.622; #main
+chongyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="favcodex" refine=3 lvl=90/90;
+nicole add set="cg" count=4;
+#nicole add set="deepwood" count=4;
+#nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*6 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+#durin add set="risingwinds" count=4;
+durin add set="no" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="favcodex" refine=3 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*6 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # -SS stacks from burning AoE; enables MH
+
+# Rotation
+active chongyun; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  nicole burst, skill;
+
+  durin skill:2, burst;
+
+  if .chongyun.burst.ready {
+    chongyun burst;
+  }
+  chongyun skill;
+
+  xianyun skill, low_plunge, attack, burst;
+
+  # Plunge until expiry
+  while .chongyun.status.xianyun-airborne-buff {
+    chongyun jump;
+    if .airborne {
+      chongyun high_plunge[collision=rand()>0.5];
+    }
+    if .chongyun.status.xianyun-airborne-buff { # no dash for final plunge
+      chongyun dash;
+    }
+  }
+
+}

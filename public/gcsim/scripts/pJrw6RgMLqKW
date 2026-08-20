@@ -38,8 +38,10 @@ for let i=0; i<4; i=i+1 {
   xilonen burst;
   furina skill, dash, burst;
   xilonen skill, attack:2;
-  mona burst, attack:2, dash, attack:2, skill, attack;
+  mona burst, attack;
   durin skill, attack, burst;
+  mona attack:2, skill, attack:2;
+  durin swap;
   while f() - StartFrame < 900 {
     if .durin.normal == 2 && .stam > 50 {
       durin charge, dash;

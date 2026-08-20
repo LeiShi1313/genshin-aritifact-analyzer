@@ -1,0 +1,39 @@
+arlecchino char lvl=90/90 cons=0 talent=9,9,9;
+arlecchino add weapon="crimsonmoonssemblance" refine=1 lvl=90/90;
+arlecchino add set="fragmentofharmonicwhimsy" count=5;
+arlecchino add stats def%=0.057999999999999996 def=119 hp=4780 hp%=0.053 atk=329 atk%=0.519 er=0.045 em=100 cr=0.638 cd=1.0959999999999999 pyro%=0.466;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="aquilafavonia" refine=1 lvl=90/90;
+bennett add set="noblesseoblige" count=5;
+bennett add stats def%=0.204 def=16 hp=5318 hp%=1.322 atk=344 atk%=0.186 er=1.095 em=94 cr=0.08499999999999999 cd=0.10800000000000001;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="favoniuswarbow" refine=5 lvl=90/90;
+fischl add set="tenacityofthemillelith" count=5;
+fischl add stats def%=0.10899999999999999 def=23 hp=4670 atk=344 atk%=0.45799999999999997 electro%=0.466 er=0.36799999999999998 em=42 cr=0.572000000000003 cd=0.614;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="thrillingtalesofdragonslayers" refine=5 lvl=40/40;
+mona add set="celestialgift" count=5;
+mona add stats def%=0.307 def=139 hp=5467 atk=356 atk%=0.152 er=1.435 cr=0.626 cd=0.21000000000000002 hydro%=0.466;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 radius=3 pos=0,3.4 hp=9999999999999999;
+energy every interval=480,720 amount=1;
+
+active arlecchino;
+
+for let i=0; i<7; i=i+1 {
+  arlecchino skill; delay(11);
+  bennett skill, burst;
+  if .fischl.skill.ready {
+    fischl attack:1, skill;
+  } else {
+    fischl attack:2, burst;
+  }
+  mona burst, attack:1;
+  arlecchino charge, attack:3;
+  mona attack:1, skill, attack:1;
+  arlecchino attack:3, dash, attack:3, dash, attack:3, dash, attack:3, dash, attack: 2;
+}

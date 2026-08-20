@@ -1,19 +1,15 @@
 import fs from "node:fs";
 
-import genshindb from "genshin-db";
-
 import * as utils from "./utils.mjs";
+import { artifactSetKey } from "./game-data/keys.mjs";
 
 const positions = ["flower", "plume", "sands", "goblet", "circlet"];
 
-const setKey = (name) =>
-  name
-    .replace(/'/g, "")
-    .replace(/[^0-9a-z]/gi, "_")
-    .toLowerCase();
-
-const portSets = async () => {
-  const remoteNames = genshindb.artifacts("names", { matchCategories: true });
+const portSets = async (catalog) => {
+  const recordsByKey = new Map(
+    catalog.artifactSets.map((record) => [record.key, record])
+  );
+  const remoteNames = catalog.artifactSets.map(({ name }) => name);
   const names = utils.syncNamesFile("scripts/sets", remoteNames);
   const translations = { en: {} };
   const setsData = {};
@@ -29,49 +25,46 @@ const portSets = async () => {
 
   let index = 1;
   for (const name of names) {
-    const english = genshindb.artifacts(name);
+    const english = recordsByKey.get(artifactSetKey(name));
     if (!english)
-      throw new Error(`Artifact set ${name} was not found in genshin-db`);
+      throw new Error(`Artifact set ${name} was not found in the catalog`);
 
-    const key = setKey(english.name);
+    const key = artifactSetKey(english.name);
     protoLines.push(`    ${key.toUpperCase()} = ${index++};`);
     translations.en[key] = english.name;
     setsData[key] = {
-      "2pc": english.effect2Pc,
-      "4pc": english.effect4Pc,
+      "2pc": english.effects.twoPiece,
+      "4pc": english.effects.fourPiece,
     };
-    if (english.effect2Pc) {
-      setEffects[english.effect2Pc] ??= [];
-      setEffects[english.effect2Pc].push(key);
+    if (english.effects.twoPiece) {
+      setEffects[english.effects.twoPiece] ??= [];
+      setEffects[english.effects.twoPiece].push(key);
     }
 
-    for (const [language, locale] of Object.entries(utils.lngToRegion)) {
-      const localized = genshindb.artifacts(name, { resultLanguage: language });
-      if (!localized) {
-        throw new Error(`${name} is missing the ${language} translation`);
-      }
+    for (const locale of Object.values(utils.lngToRegion)) {
+      const localized = english.translations[locale];
+      if (!localized)
+        throw new Error(`${name} is missing the ${locale} translation`);
       translations[locale] ??= {};
-      translations[locale][key] = localized.name;
+      translations[locale][key] = localized;
     }
 
     const images = english.images ?? {};
-    const availablePositions = positions.filter(
-      (position) => images[`filename_${position}`]
-    );
+    const availablePositions = positions.filter((position) => images[position]);
     if (![1, positions.length].includes(availablePositions.length)) {
       throw new Error(
         `${name} has an incomplete artifact image manifest (${availablePositions.length}/${positions.length})`
       );
     }
     for (const position of availablePositions) {
-      const filename = images[`filename_${position}`];
+      const filename = images[position];
       const imagePath = `src/assets/artifacts/${key}_${position}.png`;
       if (utils.isValidImage(imagePath)) continue;
       await utils.downloadFirstAvailable(
         [
           utils.yattaImageUrl(filename, "artifact"),
           utils.enkaImageUrl(filename),
-          images[`mihoyo_${position}`],
+          ...(english.imageUrls?.[position] ?? []),
         ],
         imagePath,
         `${name} ${position}`

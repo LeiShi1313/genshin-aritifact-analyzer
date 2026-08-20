@@ -1,35 +1,36 @@
-# Razor Rosaria Fischl Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging. OHC > SoDP Xianyun, but bubbles may miss. Razor uses burst when ready just to fill rotation time. 50% Collisions.
+# Razor Rosaria Fischl Xianyun. ~18s Rot. Razor Phys Plunge. Razor uses skill off CD while plunging and bursts when availble for IR and C6 Crit. OHC > SoDP Xianyun, but bubbles may miss. Razor uses burst when ready just to fill rotation time. 50% Collisions.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
 razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
 #razor add weapon="fruitfulhook" refine=1 lvl=90/90;
-razor add set="lno" count=4;
-#razor add set="sr" count=4;
-#razor add set="pf" count=4;
+razor add set="lno" count=4; # LNO > PF
+#razor add set="risingwinds" count=4; # RW > MH
 razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
-razor add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # LNO
+#razor add stats hp=4780 atk=311 atk%=0.466 phys%=0.583 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # RW
 
 rosaria char lvl=90/90 cons=6 talent=9,9,9;
 rosaria add weapon="favlance" refine=3 lvl=90/90;
 rosaria add set="no" count=4;
-rosaria add stats hp=4780 atk=311 atk%=0.466 cryo%=0.466 cr=0.311; #main
-rosaria add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=79.28 cr=0.331 cd=0.1324;
+rosaria add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; #main # Yes, this was slightly better than a CD Circlet
+rosaria add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*11 cr=0.0331*10 cd=0.0662*2;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
-fischl add weapon="songofstillness" refine=5 lvl=90/90;
-#fischl add weapon="alleyhunter" refine=1 lvl=90/90 +params=[stacks=10];
+fischl add weapon="stillness" refine=5 lvl=90/90;
 fischl add set="tom" count=4;
+#fischl add set="cg" count=4;
 #fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 xianyun char lvl=90/90 cons=0 talent=9,9,9;
 xianyun add weapon="oathsworn" refine=5 lvl=90/90;
 xianyun add set="ohc" count=4; # Bubbles may miss
 #xianyun add set="sodp" count=4;
 xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
-xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.3968 er=0.4408 em=39.64 cr=0.0662 cd=0.1324;
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*8 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
 
 # Options
 options iteration=1000;
@@ -59,9 +60,16 @@ for let x = 0; x < 4; x = x + 1 {
     amy attack:2, burst;
   }
 
-  rosaria skill, burst;
+  rosaria skill;
+  if !.rosaria.mods.favonius-cd {
+    rosaria attack;
+  }
+  rosaria burst;
 
   razor skill;
+  if .razor.burst.ready {
+    razor dash, burst, skill;
+  }
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;
@@ -69,10 +77,5 @@ for let x = 0; x < 4; x = x + 1 {
   RazorPlunge(); razor skill;
   RazorPlunge(); razor dash;
   RazorPlunge(); razor dash;
-  RazorPlunge();
-  if x > 0 && .razor.burst.ready {
-    razor attack, burst;
-  } else {
-    razor attack:2;
-  }
+  RazorPlunge(); razor attack;
 }

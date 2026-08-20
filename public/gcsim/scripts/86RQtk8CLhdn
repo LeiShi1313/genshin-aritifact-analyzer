@@ -1,0 +1,85 @@
+# Sethos Nahida Yelan Ineffa. ~18 Rot. Sethos Quickbloom. 8N2W Sethos looses 2 Shadow Peircing shots after his field time with normal attacks in between. Lunarcharge uptime is essentially nonexistent; Ineffa wants an EM sands.
+
+# Team - Options listed by DPS
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+#sethos add set="notsu" count=4;
+sethos add set="wt" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # WT
+#sethos add stats hp=4780 atk=311 em=187 electro%=0.466 cd=0.622; #main
+#sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*10 cd=0.0662*10; # NOTSU
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*5 cr=0.0331*5 cd=0.0662*6;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="sms" count=4;
+#yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*10 cd=0.0662*9;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="fjords" refine=1 lvl=90/90;
+ineffa add set="gd" count=4;
+ineffa add stats hp=4780 atk=311 em=187 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; #EAC
+#ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # EED
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=2; # Standard
+
+# Targets
+# Targets
+#target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000;
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill;
+  if i > 0 && .nahida.burst.ready {
+    nahida attack, burst;
+  } else if i > 0 {
+    nahida attack, charge;
+  }
+
+  if i > 0  && .ineffa.burst.ready && .ineffa.energy == .ineffa.energymax {
+    ineffa attack, burst, skill;
+  } else {
+    ineffa skill;
+  }
+
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+
+  sethos skill, attack; # aim[hold=2]; # High ping only
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:1;
+  sethos skill, attack;
+  sethos aim[hold=2]:1;
+  sethos attack;
+  sethos aim[hold=2]:1;
+  sethos attack;
+}

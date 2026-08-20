@@ -2,36 +2,57 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import genshindb from "genshin-db";
+import { createGameDataCatalog } from "./game-data/catalog.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GCSIM_PATH = path.join(__dirname, "../gcsim");
 const compareASCII = (left, right) =>
   left < right ? -1 : left > right ? 1 : 0;
 
-const iterFind = async (dir, pattern, fn) => {
-  const stat = await fs.promises.stat(dir);
-  if (stat.isDirectory()) {
-    const files = (await fs.promises.readdir(dir)).sort();
-    for (const file of files) {
-      await iterFind(path.join(dir, file), pattern, fn);
+const CATALOG_RECORD_HEADER = /^\s*keys\.\w+:\s*\{/gm;
+
+const parseCatalogRecords = (source, idField, label) => {
+  if (!/^\w+$/.test(idField)) {
+    throw new Error(`invalid GCSIM catalog id field ${idField}`);
+  }
+
+  const headers = [...source.matchAll(CATALOG_RECORD_HEADER)];
+  if (headers.length === 0) {
+    throw new Error(`GCSIM ${label} catalog contains no records`);
+  }
+
+  const records = [];
+  const failures = [];
+  const keys = new Set();
+  for (const [index, header] of headers.entries()) {
+    const start = header.index;
+    const end = headers[index + 1]?.index ?? source.length;
+    const block = source.slice(start, end);
+    const idMatch = block.match(new RegExp(`^\\s*${idField}:\\s*(\\d+),`, "m"));
+    const keyMatch = block.match(/^\s*Key:\s*"([^"]+)",/m);
+    if (!idMatch || !keyMatch) {
+      failures.push(header[0].match(/keys\.(\w+)/)?.[1] ?? `record ${index}`);
+      continue;
     }
-  } else if (stat.isFile() && path.basename(dir) === pattern) {
-    await fn(dir);
-  }
-};
 
-const extractConfigKey = (content, file) => {
-  const match = content.match(/^key:\s*"?(\w+)"?/m);
-  return (match?.[1] ?? path.basename(path.dirname(file))).toLowerCase();
-};
-
-const extractConfigGameId = (content, field, file) => {
-  const match = content.match(new RegExp(`^${field}:\\s*(\\d+)`, "m"));
-  if (!match) {
-    throw new Error(`${file} is missing ${field}`);
+    const gameId = Number(idMatch[1]);
+    const key = keyMatch[1].toLowerCase();
+    if (!Number.isSafeInteger(gameId) || gameId <= 0 || keys.has(key)) {
+      failures.push(key);
+      continue;
+    }
+    keys.add(key);
+    records.push({ key, gameId });
   }
-  return Number(match[1]);
+
+  if (failures.length > 0 || records.length !== headers.length) {
+    throw new Error(
+      `could not parse every ${label} record from the generated GCSIM catalog: ` +
+        failures.join(", ")
+    );
+  }
+
+  return records.sort((left, right) => compareASCII(left.key, right.key));
 };
 
 const buildAliasMap = (canonicalKeys, shortcutSource, overrides = {}) => {
@@ -108,39 +129,12 @@ const addAppAliases = (records, aliases, appKeysById, resolveAppKey) => {
   );
 };
 
-const collectConfigRecords = async (directory, idField) => {
-  const records = [];
-  await iterFind(directory, "config.yml", async (file) => {
-    const content = await fs.promises.readFile(file, "utf8");
-    records.push({
-      key: extractConfigKey(content, file),
-      gameId: extractConfigGameId(content, idField, file),
-    });
-  });
-  return records.sort((left, right) => compareASCII(left.key, right.key));
-};
-
-const buildAppKeysById = (query, localeFile) => {
-  const names = JSON.parse(fs.readFileSync(localeFile, "utf8"));
-  const keysByName = new Map(
-    Object.entries(names).map(([key, name]) => [name, key])
-  );
-  const entries = query("names", {
-    matchCategories: true,
-    verboseCategories: true,
-  });
-
-  return new Map(
-    entries.flatMap((entry) => {
-      const key = keysByName.get(entry.name);
-      return key ? [[Number(entry.id), key]] : [];
-    })
-  );
-};
+const buildAppKeysById = (records) =>
+  new Map(records.map(({ gameId, key }) => [gameId, key]));
 
 const generateCatalog = async ({
   label,
-  sourceDirectory,
+  catalogFile,
   shortcutsFile,
   keysFile,
   aliasesFile,
@@ -150,7 +144,8 @@ const generateCatalog = async ({
   overrides,
 }) => {
   console.log(`Generating gcsim ${label}...`);
-  const records = await collectConfigRecords(sourceDirectory, idField);
+  const catalogSource = await fs.promises.readFile(catalogFile, "utf8");
+  const records = parseCatalogRecords(catalogSource, idField, label);
   const keys = records.map(({ key }) => key);
   const shortcutSource = await fs.promises.readFile(shortcutsFile, "utf8");
   const aliases = buildAliasMap(keys, shortcutSource, overrides);
@@ -173,27 +168,18 @@ const generateCatalog = async ({
 
 const generate_gcsim = async () => {
   const outputDirectory = path.join(__dirname, "../src/data/gcsim");
-  const localesDirectory = path.join(__dirname, "../public/locales/en");
-  const characterKeysById = buildAppKeysById(
-    genshindb.characters,
-    path.join(localesDirectory, "characters.json")
-  );
-  const artifactKeysById = buildAppKeysById(
-    genshindb.artifacts,
-    path.join(localesDirectory, "sets.json")
-  );
-  const weaponKeysById = buildAppKeysById(
-    genshindb.weapons,
-    path.join(localesDirectory, "weapons.json")
-  );
+  const gameData = createGameDataCatalog({ includeTranslations: false });
+  const characterKeysById = buildAppKeysById(gameData.characters);
+  const artifactKeysById = buildAppKeysById(gameData.artifactSets);
+  const weaponKeysById = buildAppKeysById(gameData.weapons);
 
   const characters = await generateCatalog({
     label: "characters",
-    sourceDirectory: path.join(GCSIM_PATH, "internal/characters"),
-    shortcutsFile: path.join(GCSIM_PATH, "pkg/shortcut/characters.go"),
+    catalogFile: path.join(GCSIM_PATH, "pkg/catalog/character.dm.go"),
+    shortcutsFile: path.join(GCSIM_PATH, "pkg/shortcut/character.dm.go"),
     keysFile: path.join(outputDirectory, "characters.json"),
     aliasesFile: path.join(outputDirectory, "characters-aliases.json"),
-    idField: "genshin_id",
+    idField: "Id",
     appKeysById: characterKeysById,
     resolveAppKey: ({ key }) => {
       const traveler = key.match(/^(?:aether|lumine)(\w+)$/);
@@ -203,20 +189,20 @@ const generate_gcsim = async () => {
   });
   const artifacts = await generateCatalog({
     label: "artifacts",
-    sourceDirectory: path.join(GCSIM_PATH, "internal/artifacts"),
-    shortcutsFile: path.join(GCSIM_PATH, "pkg/shortcut/artifacts.go"),
+    catalogFile: path.join(GCSIM_PATH, "pkg/catalog/artifact.dm.go"),
+    shortcutsFile: path.join(GCSIM_PATH, "pkg/shortcut/artifact.dm.go"),
     keysFile: path.join(outputDirectory, "artifacts.json"),
     aliasesFile: path.join(outputDirectory, "artifacts-aliases.json"),
-    idField: "set_id",
+    idField: "SetId",
     appKeysById: artifactKeysById,
   });
   const weapons = await generateCatalog({
     label: "weapons",
-    sourceDirectory: path.join(GCSIM_PATH, "internal/weapons"),
-    shortcutsFile: path.join(GCSIM_PATH, "pkg/shortcut/weapons.go"),
+    catalogFile: path.join(GCSIM_PATH, "pkg/catalog/weapon.dm.go"),
+    shortcutsFile: path.join(GCSIM_PATH, "pkg/shortcut/weapon.dm.go"),
     keysFile: path.join(outputDirectory, "weapons.json"),
     aliasesFile: path.join(outputDirectory, "weapons-aliases.json"),
-    idField: "genshin_id",
+    idField: "Id",
     appKeysById: weaponKeysById,
   });
   await fs.promises.writeFile(
@@ -240,4 +226,4 @@ if (isMain) {
   });
 }
 
-export { addAppAliases, buildAliasMap, extractConfigKey, generate_gcsim };
+export { addAppAliases, buildAliasMap, generate_gcsim, parseCatalogRecords };
