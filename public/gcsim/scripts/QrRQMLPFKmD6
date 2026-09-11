@@ -32,7 +32,7 @@ active bennett;
 for let i=0; i<4; i=i+1 {
   bennett burst, skill;
   xiangling burst, skill, dash;
-  mualani skill, attack;
+  mualani skill, attack, skill;
   chasca skill;
   chasca aim:4;
   if .chasca.burst.ready && .chasca.energy == .chasca.energymax {

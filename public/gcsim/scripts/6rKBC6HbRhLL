@@ -36,9 +36,9 @@ for let i=0; i<4; i=i+1 {
   ganyu skill;
   furina skill, dash, attack, burst;
   escoffier skill, attack, burst;
-  mualani skill, attack;
+  mualani skill, attack, skill;
   ganyu attack:2, aim, skill, burst, aim:4;
 }
 wait(27); # for the last CA hit
 
-# Ganyu E > Furina ED N1 Q > Escoffier E N1 Q > Mualani E N1 > Ganyu C EQ 4[C]
+# Ganyu E > Furina ED N1 Q > Escoffier E N1 Q > Mualani E N1 E > Ganyu C EQ 4[C]

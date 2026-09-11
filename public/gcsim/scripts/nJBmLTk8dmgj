@@ -1,0 +1,65 @@
+# Alhaitham Fischl Nahida Nicole. ~25s rot. Alhaitham Hex Spread w/ split uptime. Fischl immediately clears Nicole's Pyro. Nicole uses burst. Fischl deploys Oz during AlHaitham's burst window.
+
+# Team - Options listed by DPS
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbinger" refine=5 lvl=90/90;
+#alhaitham add weapon="wolffang" refine=1 lvl=90/90;
+alhaitham add set="gd" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12; # HoD
+#alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10; # WF
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="vhunt" refine=1 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*8 cr=0.0331*9 cd=0.0662*9;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*4 em=19.82*2 cr=0.0331*8 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000;
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  nahida skill, burst;
+
+  nicole skill, burst;
+
+  amy attack:2, skill;
+
+  alhaitham skill[hold=1], low_plunge[short=1],
+            attack:2, charge, dash,
+            attack:3, charge, dash;
+
+  nahida skill, attack, charge;
+
+  alhaitham burst;
+
+  amy attack:2, burst;
+
+  alhaitham attack:3, dash,
+            attack:3, charge, dash,
+            attack:3, dash,
+            attack:3, dash,
+            attack:3;
+}

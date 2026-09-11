@@ -23,10 +23,15 @@ import { parseScript } from "../../scripts/gcsim";
 test("GCSIM capabilities expose the pinned engine support boundary", () => {
   assert.equal(isGCSimCharacterSupported(Character.DURIN), true);
   assert.equal(isGCSimCharacterSupported(Character.NICOLE), true);
+  assert.equal(isGCSimCharacterSupported(Character.IFA), true);
+  assert.equal(isGCSimCharacterSupported(Character.JAHODA), true);
+  assert.equal(isGCSimCharacterSupported(Character.PRUNE), true);
   assert.equal(isGCSimCharacterSupported(Character.SANDRONE), false);
 
   assert.equal(isGCSimWeaponSupported(Weapon.ATHAME_ARTIS), true);
-  assert.equal(isGCSimWeaponSupported(Weapon.DISASTER_AND_REMORSE), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.DISASTER_AND_REMORSE), true);
+  assert.equal(isGCSimWeaponSupported(Weapon.LIGHTBEARING_MOONSHARD), true);
+  assert.equal(isGCSimWeaponSupported(Weapon.WHITELAKE_FROSTFEATHER), false);
 
   assert.equal(isGCSimSetSupported(Set.CELESTIAL_GIFT), true);
   assert.equal(isGCSimSetSupported(Set.DISENCHANTMENT_IN_DEEP_SHADOW), true);

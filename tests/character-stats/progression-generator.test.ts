@@ -34,14 +34,14 @@ test("progression generation covers every supported character and weapon", () =>
   );
   assert.deepEqual(catalogs.manifest, {
     schemaVersion: 2,
-    genshinDbVersion: "5.2.12",
+    genshinDbVersion: "5.2.13",
     gameVersion: "7.0",
     sources: [
       {
         id: "genshin-db",
         role: "primary",
-        version: "5.2.12",
-        gameVersion: "6.7",
+        version: "5.2.13",
+        gameVersion: "7.0",
       },
       {
         id: "enka-network",

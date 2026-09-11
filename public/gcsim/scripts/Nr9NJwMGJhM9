@@ -80,6 +80,7 @@ for let i=0; i<2; i=i+1 {
   mona burst;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
 }
 
 # Mona E >

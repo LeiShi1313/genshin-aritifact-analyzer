@@ -2,13 +2,13 @@
 // Do not edit manually
 
 export const GENSHIN_GAME_VERSION = "7.0";
-export const GENSHIN_DB_VERSION = "5.2.12";
+export const GENSHIN_DB_VERSION = "5.2.13";
 export const GENSHIN_DATA_SOURCES = [
   {
     "id": "genshin-db",
     "role": "primary",
-    "version": "5.2.12",
-    "gameVersion": "6.7"
+    "version": "5.2.13",
+    "gameVersion": "7.0"
   },
   {
     "id": "enka-network",

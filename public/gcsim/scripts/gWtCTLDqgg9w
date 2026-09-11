@@ -43,16 +43,16 @@ for let i=0; i<4; i=i+1 {
   if !.escoffier.mods.favonius-cd && .escoffier.weapon == .keys.weapon.favlance {
     escoffier attack;
   }
-  mualani skill, attack;
+  mualani skill, attack, skill;
   ayaka skill, dash, attack, burst,
         attack, charge, dash,
         attack:2, charge,
         attack:2, charge;
-  mualani skill, attack;
+  mualani skill, attack, skill;
   ayaka attack,
         skill, dash,
         attack, charge,
         attack, charge;
 }
 
-# Furina ED Q > Escoffier EQ > Mualani E N1 > Ayaka ED N1 Q N1CD 2[N2C] > Mualani E N1 > Ayaka N1 ED 2[N1C]
+# Furina ED Q > Escoffier EQ > Mualani E N1 E > Ayaka ED N1 Q N1CD 2[N2C] > Mualani E N1 E > Ayaka N1 ED 2[N1C]

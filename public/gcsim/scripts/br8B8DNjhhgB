@@ -1,0 +1,55 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="prototypeamber" refine=5 lvl=90/90;
+columbina add set="notsu" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cd=0.622;
+columbina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.3984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.2648 cd=0.662;
+
+aino char lvl=90/90 cons=6 talent=9,9,9;
+aino add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+aino add set="sms" count=4;
+aino add stats hp=4780 atk=311 em=187 em=187 cr=0.311;
+aino add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="ballad" refine=1 lvl=90/90;
+ineffa add set="aubade" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;
+sucrose add weapon="sacrificialfragments" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.6612 em=118.92 cr=0.2317 cd=0.1986;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active columbina;
+for let i=0; i<6; i=i+1 {
+  columbina skill,burst;
+  if .ineffa.burst.ready {
+    ineffa skill,burst;
+  } else {
+    ineffa attack,skill;
+  }
+  sucrose attack;
+  if .sucrose.skill.ready {
+    sucrose skill;
+  }
+  aino burst,skill;
+  columbina charge,attack:2,dash;
+  columbina attack:3,dash;
+  sucrose attack;
+  if .sucrose.skill.ready {
+    sucrose skill;
+  }
+  while !.columbina.skill.ready {
+    columbina attack;
+  }
+}

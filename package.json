@@ -71,7 +71,7 @@
     "cssnano": "^5.1.13",
     "csv-parse": "^5.3.3",
     "genshin-data": "0.62.0",
-    "genshin-db": "^5.2.12",
+    "genshin-db": "^5.2.13",
     "i18next-resources-to-backend": "^1.1.1",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",

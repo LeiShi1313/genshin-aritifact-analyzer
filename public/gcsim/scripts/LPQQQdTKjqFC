@@ -60,6 +60,7 @@ for let i=0; i<4; i=i+1 {
   if is_even(i) {
     mualani burst;
   } else {
+    mualani skill;
     chiori burst;  # Xilonen Q can be used instead for ~5k lower DPS
   }
 }

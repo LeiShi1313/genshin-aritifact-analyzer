@@ -1,0 +1,54 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+chasca char lvl=90/90 cons=0 talent=9,9,9;
+chasca add weapon="chainbreaker" refine=5 lvl=90/90;
+chasca add set="obsidiancodex" count=4;
+chasca add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.2976 er=0.1102 em=39.64 cr=0.331 cd=0.662;
+//chasca add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3968 er=0.1102 em=79.28 cr=0.1986 cd=0.662;  // C4 Mona
+
+mona char lvl=90/90 cons=2 talent=9,9,9;
+mona add weapon="pamber" refine=5 lvl=90/90;
+mona add set="cg" count=5;
+mona add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
+mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.2317 cd=0.7282;
+//mona add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=39.64 cr=0.1986 cd=0.7944;  // C4 Mona
+
+mavuika char lvl=90/90 cons=0 talent=9,9,9;
+mavuika add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+mavuika add set="scroll" count=4;
+mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+//mavuika add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;  // C4 Mona
+//mavuika add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;  // C4 Mona
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworneye" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=165.4 atk%=0.2976 er=0.1102 em=39.64 cr=0.2979 cd=0.1986;
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active mavuika; // SS stacks
+for let i=0; i<4; i=i+1 {
+  if is_even(i) {
+    nicole burst, skill;
+  } else {
+    nicole attack, skill;
+  }
+  mona burst, attack;
+  mavuika skill, burst, charge;
+  mona attack, skill, attack;
+  chasca skill, aim:4;
+  if .chasca.burst.ready && .chasca.energy == .chasca.energymax {
+    chasca burst;
+  } else {
+    chasca aim[bullets=4];
+  }
+}
+wait(82); # 82f wait for the last 4bullet CA to hit
