@@ -44,15 +44,15 @@ for let i=0; i<4; i=i+1 {
           charge, dash, attack;         # Mavuika Q expires before the N1
 
   mavuika charge:2, charge[final=1], dash;
-  if .mavuika.cons == 0 {
-    mavuika attack;   # Phys N1
+  if .mavuika.cons == 0 { // TTDS cd
+    mavuika attack, jump; #Phys N1
   } else {
     mavuika charge, dash, attack;
   }
 }
 
 # C0
-# Mavuika E > Bennett E > Diona hE Q > Bennett Q > Citlali EQ N2 > Mavuika Q 6[CD N1] C2FD N1
+# Mavuika E > Bennett E > Diona hE Q > Bennett Q > Citlali EQ N2 > Mavuika Q 6[CD N1] C2FD N1J
 
 # C1
 # Mavuika E > Bennett E > Diona hE Q > Bennett Q > Citlali EQ N2 > Mavuika Q 6[CD N1] C2FD CD N1

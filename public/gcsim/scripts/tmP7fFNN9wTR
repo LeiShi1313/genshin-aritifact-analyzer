@@ -1,0 +1,76 @@
+# Kazuha Xianyun Citlali Bennett. C6 Kazuha, c0 Xianyun and Citlali. 2/3 skill plunges melted, 5/5 regular plunges melted. ~19.5s rotation.
+
+# Options listed by dps
+kazuha char lvl=90/90 cons=6 talent=9,9,9;
+#kazuha add weapon="pjc" refine=1 lvl=90/90; # only ~3k dps more than harbinger
+kazuha add weapon="harbinger" refine=5 lvl=90/90;
+kazuha add set="lno" count=4;
+#kazuha add stats hp=4780 atk=311 em=187 em=187 cd=0.622; # pjc
+#kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
+kazuha add stats hp=4780 atk=311 em=187 em=187 cr=0.311; # harbinger
+kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*2 cr=0.0331*9 cd=0.0662*12;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+#xianyun add weapon="flowingpurity" refine=5 lvl=90/90; # within ~200 dps of oathsworn
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; # oathsworn
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*6 em=19.82*2 cr=0.0331*6 cd=0.0662*2;
+#xianyun add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; # flowingpurity
+#xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+citlali char lvl=90/90 cons=0 talent=9,9,9;
+citlali add weapon="ttds" refine=5 lvl=90/90;
+#citlali add weapon="evenstar" refine=1 lvl=90/90; # within ~1k dps of ttds
+citlali add set="scroll" count=4;
+citlali add stats hp=4780 atk=311 er=0.518 cryo%=0.466 cr=0.311; # ttds
+citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+#citlali add stats hp=4780 atk=311 er=0.518 em=187 em=187; # evenstar
+#citlali add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*8 cr=0.0331*11 cd=0.0662*5;
+
+bennett char lvl=90/90 cons=6 talent=9,9,9;
+bennett add weapon="favsword" refine=5 lvl=90/90;
+bennett add set="ins" count=4;
+#bennett add set="no" count=4; # within ~1k dps of instructor
+bennett add stats hp=3571 atk=232 er=0.518 pyro%=0.348 cr=0.232; # instructor
+bennett add stats def%=0.062*2*0.84 def=19.68*2*0.84 hp=253.94*2*0.84 hp%=0.0496*2*0.84 atk=16.54*2*0.84 atk%=0.0496*2*0.84 er=0.0551*2*0.84 em=19.82*2*0.84 cr=0.0331*10*0.84 cd=0.0662*2*0.84;
+#bennett add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; # noblesse
+#bennett add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=.1 hp=10000000 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+fn KazuPlunge(){
+  kazuha jump;
+  if .airborne {
+    kazuha high_plunge[collision=rand()>0.5];
+  }
+}
+
+active bennett;
+
+for let i=0; i<4; i=i+1 {
+
+  bennett skill;
+  while !.bennett.mods.favonius-cd {
+    bennett attack;
+  }
+
+  xianyun skill, low_plunge, burst;
+
+  citlali skill, burst;
+
+  kazuha skill, high_plunge[collision=1], burst;
+
+  bennett skill, burst;
+
+  kazuha skill, high_plunge[collision=1];
+  KazuPlunge(); kazuha dash;
+  KazuPlunge(); kazuha dash;
+  KazuPlunge(); kazuha dash;
+  KazuPlunge();
+  kazuha skill, high_plunge[collision=1];
+  KazuPlunge();
+
+}

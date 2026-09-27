@@ -1,0 +1,79 @@
+# Gaming Chevreuse Fischl Durin. ~19s Rot. KQMS. Gaming Hex Overload. Gaming does 7 skill plunges, waiting on the ground before Catching Man Chai. Sac CG Fischl uses skill and burst every rotation. Healer Chevreuse. Chevreuse Scroll/SoDP + bursts every other > NO + Burst every rotation.
+
+# Team - Options listed by DPS
+gaming char lvl=90/90 cons=6 talent=9,9,9;
+gaming add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+gaming add set="lno" count=4;
+#gaming add set="vh" count=4;
+#gaming add set="cw" count=4;
+#gaming add set="mh" count=4;
+gaming add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+gaming add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # Other
+#gaming add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+#gaming add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*10 er=0.0551*2 em=19.82*2 cr=0.0331*6 cd=0.0662*10; # MH
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="scroll" count=4;
+#chevreuse add set="sodp" count=4;
+#chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+chevreuse add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*5 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*9 cr=0.0331*12 cd=0.0662*2; # Other
+#chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 hp%=0.466; #main
+#chevreuse add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*2 cr=0.0331*12 cd=0.0662*2; # NO
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="sacbow" refine=5 lvl=90/90;
+fischl add set="cg" count=4;
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12; # Standard
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # ST
+
+# Rotation
+active gaming; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  fischl attack, skill;
+
+  if .chev.sets.emblem >= 4 || .chev.sets.gt >= 4 {
+    chev burst, skill[hold=1]:3; # DPS
+  } else if .chev.sets.no >=4 {
+    chev burst, skill[hold=1]:1;
+  } else {
+    if .chev.burst.ready && .chev.energy == .chev.energymax {
+      chev burst, skill[hold=1]:1;
+    } else {
+      chev skill[hold=1], attack;
+    }
+  }
+
+  fischl attack:2, burst;
+
+  durin skill, burst, skill;
+
+  gaming burst, attack:2,
+         skill, low_plunge;
+         wait(40);
+  gaming skill, low_plunge;
+         wait(40);
+  gaming skill, low_plunge;
+         wait(40);
+  gaming skill, low_plunge;
+         wait(40);
+  gaming skill, low_plunge;
+  gaming skill, low_plunge;
+  gaming skill, low_plunge;
+}

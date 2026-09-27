@@ -133,4 +133,6 @@ enum Character {
     TRAVELER_CRYO = 127;
     ALYOSHA = 128;
     ODETTE = 129;
+    VESNA = 130;
+    VODYANITSA = 131;
 }

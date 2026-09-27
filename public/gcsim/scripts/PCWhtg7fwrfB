@@ -52,6 +52,7 @@ for let i=0; i<4; i=i+1 {
   mavuika burst, charge, skill;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
   if is_even(i) {
     mualani burst;
   } else {

@@ -56,6 +56,7 @@ for let i=0; i<4; i=i+1 {
 
           attack:5, dash,
           attack:4;
+    skirk attack; # Phys
   } else {
     skirk skill,
           attack:2, burst,
@@ -68,6 +69,7 @@ for let i=0; i<4; i=i+1 {
 
           attack:5, dash,
           attack:4;
+    skirk attack; # Phys
   }
 }
 

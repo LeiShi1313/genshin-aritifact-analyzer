@@ -34,13 +34,15 @@ for let i=0; i<4; i=i+1 {
   bennett skill[hold_c4=1]; # remove any non-pyro element and leave pyro for Citlali 4pc Scroll proc
   citlali skill, burst, attack;
   bennett burst;            # bennett uses only burst here, Citlali will quickly re-apply Cryo, Mualani can trigger reaction ASAP w/o waiting too much
+  let StartFrame = f();     # to prevent infinite while loop
   mualani skill;
   if !.element.t0.pyro {
-    while !.element.t0.cryo {
+    while !.element.t0.cryo && f() - StartFrame < 180 {
       mualani walk[f=1];
     }
   }
   mualani attack;
+  mualani walk[f=1];
   chasca skill;
   chasca aim:4;
   if .chasca.burst.ready && .chasca.energy == .chasca.energymax {

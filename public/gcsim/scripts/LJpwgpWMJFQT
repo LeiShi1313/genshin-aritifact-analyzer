@@ -1,0 +1,83 @@
+# AlHaitham Yae Lauma Xianyun. ~18s Rot. KQMS KurtC. AlHaitham Spread plunge. Does short hold skill into 7x N1JhP & Q if available. 70% collisions after E plunge. Xianyun's energy is tight.
+
+# Team - Options listed by DPS
+haitham char lvl=90/90 cons=0 talent=9,9,9;
+haitham add weapon="harbinger" refine=5 lvl=90/90;
+haitham add set="lno" count=4;
+#haitham add set="gd" count=4;
+haitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311;
+haitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+yae char lvl=90/90 cons=0 talent=9,9,9;
+yae add weapon="evenstar" refine=1 lvl=90/90;
+#yae add weapon="widsith" refine=3 lvl=90/90;
+yae add set="tom" count=4;
+#yae add set="deepwood" count=4;
+yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+yae add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12; # Widsith
+#yae add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#yae add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*12; # Evenstar
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="widsith" refine=3 lvl=90/90;
+#lauma add weapon="evenstar" refine=1 lvl=90/90;
+lauma add set="deepwood" count=4;
+#lauma add set="gt" count=4;
+lauma add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12; # Widsith
+#lauma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*12; # Evenstar
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="oathsworn" refine=5 lvl=90/90;
+xianyun add set="sms" count=4; # Needed for Energy
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*8 er=0.0551*10 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
+
+# Collision Rates
+let farColl = 0.5; #50%
+let closeColl = 0.3; #70%
+
+# Al Haitham Plunge Combo
+fn alhaitham_plunge(collision) {
+  haitham jump;
+  if .airborne {
+    haitham high_plunge[collision=rand()>collision];
+  }
+}
+
+# Rotation
+active yae;
+
+for let i = 0; i < 4; i = i + 1 {
+  yae skill:3;
+
+  lauma attack, skill;
+
+  xianyun skill, low_plunge, burst;
+
+  haitham skill[hold=1], low_plunge[short=1];
+  haitham attack:1; alhaitham_plunge(closeColl);
+  haitham attack:1; alhaitham_plunge(closeColl);
+  haitham attack:1; alhaitham_plunge(closeColl);
+  haitham attack:1; alhaitham_plunge(closeColl);
+  haitham attack:1; alhaitham_plunge(closeColl);
+  haitham attack:1; alhaitham_plunge(closeColl);
+  haitham attack:1; alhaitham_plunge(closeColl);
+  if .haitham.burst.ready {
+    haitham burst;
+  } else if .yae.burst.ready {
+    yae burst;
+  } else {
+    haitham attack, charge;
+  }
+}

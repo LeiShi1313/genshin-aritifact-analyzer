@@ -1,0 +1,65 @@
+# Sethos Chevreuse Durin Xiangling. ~20s Rot. KQMS KurtC. Sethos Overload, enabled by TF. Sethos opens with an aimed shot for Chevreuse RES Shred. Sethos EQ 8[N2W] L2CA E 4[L1CA]. Xiangling catches Durin's particles. Xiangling shreds Pyro for Durin.
+
+# Team - Options listed by DPS
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="tf" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*8 cr=0.0331*12 cd=0.0662*6;
+
+chevreuse char lvl=90/90 cons=6 talent=9,9,9;
+chevreuse add weapon="favlance" refine=3 lvl=90/90;
+chevreuse add set="sodp" count=4;
+#chevreuse add set="no" count=4;
+chevreuse add stats hp=4780 atk=311 hp%=0.466 hp%=0.466 cr=0.311; #main
+chevreuse add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*6 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*9; # Heal
+#chevreuse add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+#chevreuse add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # DPS
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+xiangling char lvl=90/90 cons=6 talent=9,9,9;
+xiangling add weapon="catch" refine=5 lvl=90/90;
+xiangling add set="no" count=4;
+xiangling add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+xiangling add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=10;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active sethos;
+sethos aim[hold=1];
+
+for let i = 0; i < 4; i = i + 1 {
+  chevreuse burst, attack, skill[hold=1]:3;
+
+  if i == 0 {
+    durin skill, burst, skill;
+  } else {
+    durin attack, skill, burst, skill;
+  }
+
+  xiangling burst, skill, dash;
+
+  sethos skill, burst,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, skill,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk;
+  sethos aim[hold=2]:1, skill;
+  sethos aim[hold=1]:4;
+}

@@ -37,7 +37,8 @@ fn mualani_combo2() {
   mualani skill,
           walk[f=13], burst,
           walk[f=69], attack,
-          walk[f=90], attack;
+          walk[f=90], attack,
+          walk[f=1];
 }
 
 active mavuika; # SS Stacks

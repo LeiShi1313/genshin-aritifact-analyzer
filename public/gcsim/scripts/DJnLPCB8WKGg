@@ -2,13 +2,13 @@
 alhaitham char lvl=90/90 cons=0 talent=9,9,9;
 alhaitham add weapon="harbingerofdawn" refine=5 lvl=90/90;
 alhaitham add set="gilded" count=4;
-alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311 ;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
 alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="wanderingevenstar" refine=1 lvl=90/90;
-nahida add set="deepwood" count=5;
-nahida add stats hp=4780 atk=311 em=187 em=187 em=187 ; #main
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
 nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*3 cr=0.0331*11 cd=0.0662*12;
 
 mualani char lvl=90/90 cons=0 talent=9,9,9;
@@ -20,7 +20,7 @@ mualani add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
 fischl add set="gt" count=4;
-fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311 ; #main
+fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
 fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*8 cd=0.0662*11;
 
 # Options:
@@ -39,7 +39,7 @@ active nahida;
 
 for let i=0; i<4; i=i+1 {
   nahida skill, burst;
-  mualani attack, skill, attack;
+  mualani attack, skill, attack, walk[f=1];
   #if .mualani.burst.ready{
   #  mualani burst;
   #}
@@ -51,7 +51,7 @@ for let i=0; i<4; i=i+1 {
             attack:3, charge, jump,
             attack:2;
 
-  mualani attack, skill, attack;
+  mualani attack, skill, attack, walk[f=1];
   fischl attack:2, skill;
   alhaitham skill[hold=1], low_plunge[short=1],
             attack:3, charge, dash,

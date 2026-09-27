@@ -53,9 +53,11 @@ for let i=0; i<6; i=i+1 {
     mualani burst;
     mualani attack;
   } else if .xilonen.burst.ready {
+    mualani walk[f=1];
     xilonen burst;
     mona attack, dash;
   } else {
+    mualani walk[f=1];
     mona dash, attack:2, charge;
   }
 }

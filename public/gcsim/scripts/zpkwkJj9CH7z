@@ -51,8 +51,8 @@ for let i=0; i<4;i=i+1 {
        attack:3, charge, jump,
        attack:3;
   if is_even(i) {
-    wrio burst;
+    wrio burst, attack, jump;
   } else {
-    wrio attack, charge;
+    wrio charge, jump, attack:3, jump;
   }
 }

@@ -302,3 +302,40 @@ test("game-data updates refresh the fallback snapshot before generation", () => 
   assert.match(workflow, /npm view genshin-data version/);
   assert.match(workflow, /ENKA_FALLBACK_REVISION/);
 });
+
+for (const [primaryVersion, releaseVersion, expected] of [
+  ["7.1", "7.0", "7.1"],
+  ["6.7", "7.0", "7.0"],
+  ["7.9", "7.10", "7.10"],
+]) {
+  test(`snapshot version follows the newest provider: ${primaryVersion}/${releaseVersion}`, () => {
+    const snapshot = buildEnkaFallbackSnapshot({
+      enkaData: {
+        avatars: {},
+        weapons: {},
+        relics: { Sets: {}, Items: {} },
+        locs: {},
+        curves: {},
+      },
+      releaseCatalog: {
+        gameVersion: releaseVersion,
+        characters: [],
+        weapons: [],
+        artifactSets: [],
+      },
+      primaryProvider: {
+        source: { gameVersion: primaryVersion },
+        characters: [],
+        weapons: [],
+        artifactSets: [],
+      },
+      genshinDataVersion: "fixture",
+      enkaRevision: "a".repeat(40),
+    });
+    assert.equal(snapshot.gameVersion, expected);
+    assert.equal(
+      snapshot.sources.find(({ id }) => id === "genshin-data").gameVersion,
+      releaseVersion
+    );
+  });
+}

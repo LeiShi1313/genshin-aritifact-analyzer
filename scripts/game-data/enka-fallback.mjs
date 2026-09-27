@@ -744,9 +744,20 @@ export const buildEnkaFallbackSnapshot = ({
     };
   });
 
+  // Either provider can lag a release. The snapshot describes the combined
+  // catalog; preserve the release provider's own version in its provenance.
+  const primaryVersion = primaryProvider.source?.gameVersion;
+  const gameVersion =
+    primaryVersion &&
+    primaryVersion.localeCompare(releaseCatalog.gameVersion, "en", {
+      numeric: true,
+    }) > 0
+      ? primaryVersion
+      : releaseCatalog.gameVersion;
+
   return {
     schemaVersion: 1,
-    gameVersion: releaseCatalog.gameVersion,
+    gameVersion,
     sources: [
       {
         id: "enka-network",
@@ -757,6 +768,7 @@ export const buildEnkaFallbackSnapshot = ({
         id: "genshin-data",
         role: "release-catalog",
         version: genshinDataVersion,
+        gameVersion: releaseCatalog.gameVersion,
       },
     ],
     characters: normalizedCharacters,

@@ -40,7 +40,7 @@ active chongyun;
 
 for let i=0; i<4; i=i+1 {
   chongyun skill, attack;
-  yelan skill, burst, attack;
+  yelan skill, attack, burst, attack;
   chongyun burst;
   charlotte skill, attack, burst, attack;   #catch her particlese on-field
   if i == 0 && First_Rot_Nuke == true {
@@ -73,5 +73,5 @@ for let i=0; i<4; i=i+1 {
 }
 
 # First rot only
-# Chongyun E N1 > Yelan EQ N1 > Chongyun Q > Charlotte E N1 Q N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
-# Chongyun E N1 > Yelan EQ N1 > Chongyun Q > Charlotte E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2
+# Chongyun E N1 > Yelan E N1 Q N1 > Chongyun Q > Charlotte E N1 Q N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
+# Chongyun E N1 > Yelan E N1 Q N1 > Chongyun Q > Charlotte E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2

@@ -34,18 +34,20 @@ fn mualani_combo() {
       }
       mualani attack;
     }
-  break;
+    break;
   }
+  mualani walk[f=1];
 }
 
 for let i=0; i<5; i=i+1 {
-  wait(100);
+  if i {
+    wait(100);
+  }
   candace skill, burst, attack:2;
   sucrose skill;
   mavuika skill[hold=1], burst, attack;
   mualani_combo();
   if .mualani.burst.ready && .mualani.energy == .mualani.energymax {
     mualani burst;
-    wait(70);
   }
 }

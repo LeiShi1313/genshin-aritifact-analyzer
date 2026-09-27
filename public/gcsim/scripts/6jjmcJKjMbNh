@@ -84,8 +84,7 @@ for let i=0; i<4; i=i+1 {
     fischl attack, skill;
   }
 
-  while .status.yae_oldest_totem_expiry > 120 {
-  #while .fischl.oz {
+  while .fischl.oz {
     lanyanDrivingCombo();
   }
 }

@@ -1,0 +1,56 @@
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="deathmatch" refine=1 lvl=90/90;
+raiden add set="emblem" count=4;
+raiden add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
+raiden add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=5 lvl=90/90;
+fischl add set="gift" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+prune char lvl=90/90 cons=6 talent=9,9,9;
+prune add weapon="hakushin" refine=5 lvl=90/90;
+prune add set="vv" count=4;
+prune add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+prune add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+nahida add set="tom" count=4;
+#nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*10 cd=0.0662*10;
+
+options iteration=1000 swap_delay=12;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+let i=1;
+active raiden;
+raiden skill;
+
+for let r=0; r<4; r=r+1 {
+  if .fischl.skill.ready {
+    fischl skill, attack;
+    i=0;
+  } else {
+    i=1;
+  }
+  prune skill:2;
+  nahida burst, skill;
+  if i == 0 {
+    fischl attack:2, burst;
+  }
+  if i == 1 {
+    fischl burst, attack, skill[recast=1];
+  }
+  prune burst;
+  raiden burst,
+         attack:4, skill,
+         attack:4, dash,
+         attack:4, dash,
+         attack:4;
+}

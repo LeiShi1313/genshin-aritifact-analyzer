@@ -45,7 +45,7 @@ active furina;
 for let i=0; i<4; i=i+1 {
   furina attack, skill, dash, attack, burst;
   citlali skill, attack;
-  charlotte skill, burst, attack;       # Catch her particles on-field
+  charlotte skill, attack, burst, attack;       # Catch her particles on-field
   if i == 0 && First_Rot_Nuke == true {
     skirk burst;
     skirk skill,
@@ -59,7 +59,7 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack;
+          attack:2;
   } else {
     skirk skill,
           attack:2, burst,
@@ -71,10 +71,10 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack:2;
+          attack:3, dash;
   }
 }
 
 # First rot only
-# Furina N1 ED N1 Q > Citlali E N1 > Charlotte EQ N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
-# Furina N1 ED N1 Q > Citlali E N1 > Charlotte EQ N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2
+# Furina N1 ED N1 Q > Citlali E N1 > Charlotte E N1 Q N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N2
+# Furina N1 ED N1 Q > Citlali E N1 > Charlotte E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N3

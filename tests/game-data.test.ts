@@ -40,6 +40,8 @@ const characters = [
   ["traveler_cryo", "旅行者 (冰元素)", "Cryo", "Sword", 5, 127],
   ["alyosha", "阿罗夏", "Electro", "Polearm", 4, 128],
   ["odette", "奥黛塔", "Cryo", "Sword", 5, 129],
+  ["vesna", "薇斯纳", "Anemo", "Sword", 5, 130],
+  ["vodyanitsa", "沃雅妮莎", "Hydro", "Catalyst", 5, 131],
 ] as const;
 
 const weapons = [
@@ -65,6 +67,12 @@ const weapons = [
   ["jade_vista", "悬黎千钧", "Bow", 4, 245],
   ["song_of_the_vigil", "戍望谣歌", "Polearm", 4, 246],
   ["whitelake_frostfeather", "白湖冬羽", "Sword", 5, 247],
+  ["beyond_the_chrysalis", "蝶变", "Sword", 5, 248],
+  ["breezeborne_refrain", "柔风游弦", "Bow", 4, 249],
+  ["hymn_of_the_maelstrom", "漩流颂歌", "Catalyst", 5, 250],
+  ["new_bough", "新枝", "Sword", 4, 251],
+  ["silver_light", "银釭", "Sword", 4, 252],
+  ["winters_heavy_heart", "凝雪沉心", "Catalyst", 4, 253],
 ] as const;
 
 const artifactSets = [
@@ -176,7 +184,7 @@ test("image downloads convert WebP responses to real PNG files", async () => {
   }
 });
 
-test("the complete 6.2-7.0 roster has usable metadata, translations, and UI assets", () => {
+test("the complete 6.2-7.1 roster has usable metadata, translations, and UI assets", () => {
   const characterData = readJson<Record<string, unknown>>(
     "src/data/characters.json"
   );

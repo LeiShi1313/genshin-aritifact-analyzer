@@ -58,7 +58,7 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack;
+          attack:2;
   } else {
     skirk skill,
           attack:2, burst,
@@ -70,10 +70,10 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack:2;
+          attack:3;
   }
 }
 
 # First rot only
-# Furina ED Q > Shenhe N1 hEQ > Charlotte EQ N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
-# Furina ED Q > Shenhe N1 hEQ > Charlotte EQ N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2
+# Furina ED Q > Shenhe N1 hEQ > Charlotte EQ N1 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N2
+# Furina ED Q > Shenhe N1 hEQ > Charlotte EQ N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N3

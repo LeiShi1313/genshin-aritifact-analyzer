@@ -32,9 +32,9 @@ energy every interval=480,720 amount=1; # standard Energy drops
 # Rotation assumptions
 active nicole;
 for let i=0; i<6; i=i+1 {
-  nicole skill, attack, burst;
+  nicole skill, attack:2, burst;
   for let j=0; j<3; j=j+1 {
-    if!.nicole.mods.favonius-cd {
+    if !.nicole.mods.favonius-cd {
       nicole attack;
     }
   }

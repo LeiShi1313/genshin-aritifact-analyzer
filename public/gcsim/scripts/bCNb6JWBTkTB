@@ -57,6 +57,7 @@ for let i=0; i<3; i=i+1 {
   kazuha burst;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
 }
 
 # Xilonen Q > Furina EDQ > Xilonen E N2 > Kazuha tEP > Mualani E 3[3-stacked bite] E(cancel) Q >

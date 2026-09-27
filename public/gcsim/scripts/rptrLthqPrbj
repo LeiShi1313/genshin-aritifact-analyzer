@@ -1,0 +1,68 @@
+varka char lvl=90/90 cons=0 talent=9,9,9;
+varka add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+varka add set="risingwinds" count=4;
+varka add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+varka add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*10;
+
+prune char lvl=90/90 cons=6 talent=9,9,9;
+prune add weapon="pamber" refine=5 lvl=90/90;
+prune add set="vv" count=4;
+prune add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+prune add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*8 em=19.82*2 cr=0.0331*10 cd=0.0662*4;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="ttds" refine=5 lvl=90/90;
+//mona add weapon="pamber" refine=5 lvl=90/90;
+mona add set="cg" count=4;
+mona add stats hp=4780 atk=311 er=0.518 atk%=0.466 cr=0.311;
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="wolffang" refine=1 lvl=90/90;
+furina add set="totm" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622 ; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*6 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*8 cd=0.0662*10;
+
+target lvl=100 resist=0.1 hp=1000000000 radius=2 pos=0,2.4;
+options swap_delay=12 iteration=1000;
+energy every interval=480,720 amount=1;
+
+let ttds_extend = 0;
+
+active varka;
+for let x=0; x<6; x=x+1 {
+  furina skill, dash;
+  if .furina.burst.ready && .furina.energy == .furina.energymax  {
+    furina burst;
+    ttds_extend = 1;
+  } else {
+    furina attack;
+    ttds_extend = 0;
+  }
+  prune burst, skill;
+  mona skill, burst, attack;
+  if ttds_extend == 1 { # Longer combo to proc TTDS on the next rotation despite shortened setup without Furina burst
+    # 3[N1CW] N2sE 3[N1CW] N1sE N2
+    varka skill,
+          attack, charge, walk,
+          attack, charge, walk,
+          attack, charge, walk,
+          attack:2, skill,
+          attack, charge, walk,
+          attack, charge, walk,
+          attack, charge, walk,
+          attack, skill,
+          attack:2;
+  } else {
+    # N1CW N4sE 3[N1CW] N1sE N2
+    # Use this combo alone with PAmber Mona, truncating the last NA. 600 DPS worse.
+    varka skill,
+          attack, charge, walk,
+          attack:4, skill,
+          attack, charge, walk,
+          attack, charge, walk,
+          attack, charge, walk,
+          attack, skill,
+          attack:2;
+  }
+}

@@ -49,6 +49,7 @@ for let x = 0; x < 4; x = x + 1  {
   }
   if .wanderer.burst.ready {
     wanderer burst;
+    wanderer attack:3;
   } else {
     wanderer skill;
     wanderer attack:4; # spending time for Faruzan and TTDS cd

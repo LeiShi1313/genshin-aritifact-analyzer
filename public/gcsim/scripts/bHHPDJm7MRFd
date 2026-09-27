@@ -54,4 +54,5 @@ for let i=0; i<3; i=i+1 {
   citlali skill, burst;
   esco skill, attack;
   mualani_combo();
+  mualani walk[f=1];
 }

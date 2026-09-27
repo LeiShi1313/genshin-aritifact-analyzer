@@ -38,6 +38,7 @@ fn mualani_combo() {
     }
     break;
   }
+  mualani walk[f=1];
 }
 
 active mavuika; # SS Stacks

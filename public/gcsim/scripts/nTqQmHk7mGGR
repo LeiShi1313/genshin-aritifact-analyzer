@@ -31,14 +31,13 @@ energy every interval=480,720 amount=1;
 
 lauma attack;
 for let i=0; i<5; i=i+1 {
-  if i == 0 {
-    columbina attack, skill;
-  } else {
-    columbina skill, charge;
-  }
-
   if .columbina.burst.ready {
     columbina burst;
+  }
+  if i == 0 {
+    columbina skill, attack;
+  } else {
+    columbina skill;
   }
 
   if .fischl.skill.ready{
@@ -51,8 +50,8 @@ for let i=0; i<5; i=i+1 {
 
   lauma attack, skill[hold=1], burst;
   columbina attack, charge, dash, charge, dash, charge;
-  mona attack:4;
-  columbina attack, charge, dash, charge;
+  mona attack:2, charge;
+  columbina attack, charge, dash, charge, dash, charge;
 
 }
 columbina attack; // give time for the last CA's damage to land

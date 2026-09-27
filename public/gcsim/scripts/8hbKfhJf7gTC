@@ -1,8 +1,7 @@
-# PMC Furina Bennett Xianyun. ~22s Rot. PMC VapePlunge with VV. Xianyun tries to swirl Pyro after Bennett EQ, & PMC hEQ. Uniformly distributed variable delay up to 1/4th second before plunging. ~57% Vaped plunges. 50% Collisions. Includes elemental statue resonances.
+# PMC Furina Bennett Xianyun. ~22s Rot. PMC VapePlunge with VV. Xianyun tries to swirl Pyro after Bennett EQ, & PMC hEQ. Uniformly distributed variable delay up to 1/4th second before plunging. ~57% Vaped plunges. 50% Collisions.
 
 # Team - Options listed by DPS
-luminepyro char lvl=90/90 cons=6 talent=9,9,9 +params=[base_atk_buff=1, skirk_story_buff=1];
-luminepyro add stats def%=0.20 hp%=0.20 atk%=0.20 er=0.20 em=60 cr=0.10 cd=0.20; # Statue Resonances
+luminepyro char lvl=90/90 cons=6 talent=9,9,9 +params=[base_atk_buff=1, skirk_story_buff=1, true_moon_story_buff=1];
 luminepyro add weapon="harbinger" refine=5 lvl=90/90;
 luminepyro add set="lno" count=4;
 #luminepyro add set="oc" count=4;

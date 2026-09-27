@@ -301,6 +301,8 @@ const EXPECTED_GENERATED_NAMES = new Map<Character, readonly string[]>([
   [Character.SANDRONE, ["Stellar-Conduct Charged DPS"]],
   [Character.ALYOSHA, ["Stellar-Conduct Support & Healer"]],
   [Character.ODETTE, ["Stellar Glimmer Support"]],
+  [Character.VESNA, ["General On-Field DPS"]],
+  [Character.VODYANITSA, ["Off-Field Hydro Support"]],
 ]);
 
 const decodedPresets = rawPresets.map((raw) =>
@@ -308,7 +310,7 @@ const decodedPresets = rawPresets.map((raw) =>
 );
 
 test("generated presets use descriptive names and distinct supported playstyles", () => {
-  assert.equal(recommendedPresetBuilds.length, 54);
+  assert.equal(recommendedPresetBuilds.length, 56);
 
   for (const [character, expectedNames] of EXPECTED_GENERATED_NAMES) {
     const characterBuilds = recommendedPresetBuilds.filter(
