@@ -48,8 +48,8 @@ for let x=0; x<4; x=x+1 {
        attack:3, charge, jump,
        attack:4;
   if .wrio.burst.ready && .wrio.energy == .wrio.energymax {
-    wrio burst;
+    wrio burst, attack;
   } else {
-    wrio charge, jump, attack:2;
+    wrio charge, jump, attack:3, jump;
   }
 }

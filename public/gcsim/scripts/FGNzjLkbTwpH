@@ -1,4 +1,4 @@
-# Gaming Citlali Bennett Xianyun. ~20s Rot. Gaming Melt Plunge with 7 plunges, 6 melted. Gaming juggles Man Chai, using burst into skill + plunge and waiting on the ground before catching Man Chai mid descent. The final plunge is not melted, but is delayed for Gaming's particle ICD. Missing Bennett buff on the 6th plunge is -4K DPS.
+# Gaming Citlali Bennett Chevreuse. ~20s Rot. Gaming Melt Plunge with 7 plunges, 6 melted. Gaming juggles Man Chai, using burst into skill + plunge and waiting on the ground before catching Man Chai mid descent. The final plunge is not melted, but is delayed for Gaming's particle ICD. Missing Bennett buff on the 6th plunge is -4K DPS.
 
 # Team - Options listed by DPS
 gaming char lvl=90/90 cons=6 talent=9,9,9;
@@ -56,5 +56,5 @@ for let i=0; i<4; i=i+1 {
   }
   sleep(30); # needed for particle ICD.
   gaming skill, high_plunge; print(plungeCount + 1); # Unmelted
-  #gaming dash; # avoid dash cancel for TTDS purposes
+  gaming dash; # avoid dash cancel for TTDS purposes
 }

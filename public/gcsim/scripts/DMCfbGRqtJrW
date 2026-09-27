@@ -54,7 +54,7 @@ for let i=0; i<3; i=i+1 {
   candace skill, burst;
   mavuika burst, charge, skill, dash; pick_up_crystallize("hydro");
   mualani_combo();
-  mualani skill;
+  mualani walk[f=1];
 }
 
 # ~18s rot

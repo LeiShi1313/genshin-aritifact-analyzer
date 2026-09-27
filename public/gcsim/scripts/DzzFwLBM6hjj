@@ -41,6 +41,7 @@ fn mualani_combo1() {
     }
     break;
   }
+  mualani walk[f=1];
 }
 
 fn mualani_combo3() {
@@ -54,9 +55,10 @@ fn mualani_combo3() {
     }
     break;
   }
+  mualani walk[f=1];
 }
 mualani attack;
-for let i=0; i<6; i=i+1 {
+for let i=0; i<7; i=i+1 {
   if i == 0 {
     mavuika burst, charge:2, dash, charge:2, dash, skill;
   } else {

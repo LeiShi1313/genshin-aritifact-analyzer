@@ -1,0 +1,58 @@
+# Raiden Mona Durin Nicole. ~18s Rot. KQMS KurtC. Raiden EC with Durin Overvape from off-field. Raiden Q 2N4D N4E N3. Light Durin is ~1K ahead of Dark Durin.
+
+# Team - Options listed by DPS
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="deathmatch" refine=1 lvl=90/90;
+raiden add set="emblem" count=4;
+raiden add stats hp=4780 atk=311 er=0.518 electro%=0.466 cd=0.622; #main
+raiden add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*9 cd=0.0662*9;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="widsith" refine=3 lvl=90/90;
+#mona add weapon="ttds" refine=5 lvl=90/90;
+mona add set="no" count=4;
+mona add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*2 cr=0.0331*8 cd=0.0662*6; # Widsith
+#mona add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+#mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*2 cr=0.0331*4 cd=0.0662*10; # TTDS
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*9 cd=0.0662*3;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active raiden;
+raiden skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  nicole skill, burst;
+
+  mona burst, attack;
+
+  durin skill, burst, skill;
+  #durin skill, burst, attack;
+
+  mona attack, skill, attack;
+
+  raiden burst,
+         attack:4, dash,
+         attack:4, dash,
+         attack:4, skill,
+         attack:3;
+}

@@ -75,7 +75,7 @@ for let i=0; i<4; i=i+1 {
     fischl attack:2, burst;
   }
 
-  while .status.yae_oldest_totem_expiry {
+  while .fischl.oz {
     declensionCombo();
   }
 

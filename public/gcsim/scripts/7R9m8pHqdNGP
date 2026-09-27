@@ -11,13 +11,13 @@ columbina char lvl=90/90 cons=0 talent=9,9,9;
 columbina add weapon="sacjade" refine=1 lvl=90/90;
 columbina add set="sms" count=4;
 columbina add stats hp=4780 atk=311 hp%=0.466 em=187 cd=0.622;
-columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*3 cr=0.0331*7 cd=0.0662*10;
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*8 atk=16.54*2 atk%=0.0496*2 er=0.0551*3 em=19.82*2 cr=0.0331*7 cd=0.0662*10;
 
 lauma char lvl=90/90 cons=0 talent=9,9,9;
 lauma add weapon="etherlightspindlelute" refine=5 lvl=90/90;
 lauma add set="deepwoodmemories" count=4;
 lauma add stats hp=4780 atk=311 em=187 em=187 em=187;
-lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*5 em=19.82*6 cr=0.0331*12 cd=0.0662*5;
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*6 cr=0.0331*12 cd=0.0662*4;
 
 ineffa char lvl=90/90 cons=0 talent=9,9,9;
 ineffa add weapon="kitain" refine=5 lvl=90/90;
@@ -35,11 +35,11 @@ lauma attack;
 for let i=0; i<4; i=i+1 {
   neuv skill, attack;
   columbina skill, attack;
-  ineffa attack, skill;
-  lauma attack, burst, attack, skill[hold=1];
-  columbina attack, burst;
+  ineffa attack, skill; wait(12);
+  lauma skill[hold=1], burst;
+  columbina burst;
   neuv attack, charge, skill, charge, burst;
-  lauma attack, skill[hold=1], attack;
+  lauma skill[hold=1];
   ineffa burst;
   neuv attack, charge:2;
 }

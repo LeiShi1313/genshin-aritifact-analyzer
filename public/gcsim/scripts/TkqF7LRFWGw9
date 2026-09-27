@@ -1,0 +1,76 @@
+# Clorinde Nahida Emilie Durin. ~24s Rot. (TF) Clorinde Quickburn. Clorinde owns nearly all of the Overloads, so Durin doesn't build EM. Nahida omits burst while Emilie bursts every rotation after the 1st.
+
+# Team - Options listed by DPS
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="finale" refine=5 lvl=90/90;
+clorinde add set="tf" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+clorinde add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="evenstar" refine=1 lvl=90/90;
+#nahida add weapon="ttds" refine=1 lvl=90/90;
+nahida add set="deepwood" count=4;
+#nahida add set="tom" count=4;
+#nahida add set="scroll" count=4;
+#nahida add set="gt" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=59.46 cr=0.3641 cd=0.7944; # Evenstar
+#nahida add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+#nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12; # TTDS
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="lionsroar" refine=3 lvl=90/90;
+durin add set="no" count=4;
+durin add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*3 em=19.82*2 cr=0.0331*8 cd=0.0662*5;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Front
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; # Right
+
+# Clorinde Combo
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  # Always burst after 1st rot;
+  if i > 0 && .emilie.burst.ready {
+    emilie burst;
+  } else {
+    emilie skill, attack;
+  }
+
+  durin skill:2, burst;
+
+  # Burst is a DPS loss
+  nahida skill, attack, charge;
+
+  clorinde_combo();
+  if .clorinde.burst.ready {
+    clorinde burst;
+  }
+  clorinde_combo();
+}

@@ -33,7 +33,7 @@ energy every interval=480,720 amount=1; # standard Energy drops
 # Rotation assumptions
 
 active mona;  # TTDS to Skirk
-skirk swap; wait(45);
+skirk swap; wait(120);  # wait 2s here for TTDS cd in the next rot, decrease this if you are slow at playing the 1st rot
 escoffier skill, attack;
 furina skill, dash, attack;
 mona skill;

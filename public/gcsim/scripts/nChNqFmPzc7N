@@ -35,7 +35,7 @@ fn mualani_combo() {
       }
       mualani attack;
     }
-    mualani skill; # cancel nightsoul state with skill
+    mualani walk[f=1], skill; # cancel nightsoul state with skill
   }
 }
 

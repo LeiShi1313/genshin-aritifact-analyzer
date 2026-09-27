@@ -604,10 +604,54 @@ test("keeps audited constant coverage explicit and marks future keys partial", (
   );
   assert.equal(
     result.coverage.constantRuleset,
-    "genshin-artifact-builds/constant-stats@3"
+    "genshin-artifact-builds/constant-stats@4"
   );
   assert.deepEqual(result.coverage.constantRuleSources, [
     "game-data-catalog@7.0/artifact-set-two-piece",
+    "genshin-db@5.2.14/7.1-weapon-static",
     "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",
   ]);
+});
+
+test("7.1 sheets apply refinement constants without activating combat stacks", () => {
+  for (const refinement of [1, 5]) {
+    const loadout: CharacterSheetLoadout = {
+      character: {
+        key: "vodyanitsa",
+        level: 90,
+        ascension: 6,
+      },
+      weapon: {
+        key: "hymn_of_the_maelstrom",
+        level: 90,
+        ascension: 6,
+        refinement,
+      },
+      artifacts: [],
+    };
+    const c0 = calculateCharacterSheetStats(loadout);
+    assert.equal(c0.status, "complete");
+    if (c0.status === "invalid") return;
+    closeTo(c0.base.hp, 14817.5521108);
+    closeTo(c0.stats.healingBonus, refinement === 1 ? 0.04 : 0.08);
+    assert.deepEqual(c0.appliedRuleIds, [
+      "weapon.hymn_of_the_maelstrom.healing_bonus",
+    ]);
+  }
+  const vesna = calculateCharacterSheetStats({
+    character: { key: "vesna", level: 90, ascension: 6 },
+    weapon: {
+      key: "beyond_the_chrysalis",
+      level: 90,
+      ascension: 6,
+      refinement: 1,
+    },
+    artifacts: [],
+  });
+  assert.equal(vesna.status, "complete");
+  if (vesna.status === "invalid") return;
+  closeTo(vesna.stats.critRate, 0.242);
+  closeTo(vesna.stats.attack, vesna.base.attack);
+  closeTo(vesna.base.hp, 13262.3220984);
+  assert.deepEqual(vesna.appliedRuleIds, []);
 });

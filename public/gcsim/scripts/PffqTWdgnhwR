@@ -1,4 +1,4 @@
-# Razor Emilie Durin Nicole. ~22s Rot. Razor Burnload w/ ~62/30% Burning/Quicken Uptime. Razor tE D N1 Q N1 tED. Nicole feeds her skill particles to Durin for energy purposes.
+# Razor Emilie Durin Nicole. ~23s Rot. Razor Burnload w/ ~62/30% Burning/Quicken Uptime. Razor tE D N1 Q N1 tED. Thundering Fury is about 7K behind with an Adjusted combo.
 
 # Team - Options listsed by DPS
 razor char lvl=90/90 cons=6 talent=9,9,9;
@@ -20,15 +20,19 @@ emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 a
 
 durin char lvl=90/90 cons=0 talent=9,9,9;
 durin add weapon="wolffang" refine=1 lvl=90/90;
-durin add set="risingwinds" count=4;
-durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
-durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+durin add set="ur" count=4;
+#durin add set="no" count=4;
+#durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*7 cd=0.0662*12; # NO
+#durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+#durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # RW
 
 nicole char lvl=90/90 cons=0 talent=9,9,9;
 nicole add weapon="oathsworn" refine=5 lvl=90/90;
 nicole add set="cg" count=4;
-nicole add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
-nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*8 er=0.0551*6 em=19.82*2 cr=0.0331*2 cd=0.0662*4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*8 em=19.82*2 cr=0.0331*2 cd=0.0662*4;
 
 # Options
 options iteration=1000;
@@ -50,7 +54,7 @@ for let i=0; i<4; i=i+1 {
     emilie skill, attack;
   }
 
-  nicole burst, skill;
+  nicole skill, burst;
 
   durin skill:2, burst;
 
@@ -79,5 +83,4 @@ for let i=0; i<4; i=i+1 {
     }
     razor skill, dash;
   }
-
 }

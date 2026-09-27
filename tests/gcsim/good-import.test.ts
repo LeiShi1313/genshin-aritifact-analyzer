@@ -134,3 +134,51 @@ test("GOOD imports resolve Genshin 7.0 characters, weapons, and artifact sets", 
   assert.equal(parsed.artifacts[0]?.set, Set.SCARLET_PROOF);
   assert.equal(parsed.artifacts[0]?.character, Character.ODETTE);
 });
+
+test("GOOD imports preserve both 7.1 characters and all six weapons", () => {
+  const weaponKeys = [
+    "BeyondTheChrysalis",
+    "BreezeborneRefrain",
+    "HymnOfTheMaelstrom",
+    "NewBough",
+    "SilverLight",
+    "WintersHeavyHeart",
+  ];
+  const parsed = parseGOODFormat({
+    format: "GOOD",
+    version: 1,
+    source: "genshin-7.1-regression",
+    characters: ["Vesna", "Vodyanitsa"].map((key) => ({
+      key,
+      level: 90,
+      ascension: 6,
+      constellation: 6,
+      talent: { auto: 10, skill: 10, burst: 10 },
+    })),
+    weapons: weaponKeys.map((key, i) => ({
+      key,
+      level: 90,
+      ascension: 6,
+      refinement: 5,
+      location: i === 0 ? "Vesna" : i === 2 ? "Vodyanitsa" : "",
+    })),
+    artifacts: [],
+  });
+  assert.deepEqual(
+    parsed.characters.map(({ character }) => character),
+    [Character.VESNA, Character.VODYANITSA]
+  );
+  assert.deepEqual(
+    parsed.weapons.map(({ weapon }) => weapon),
+    [
+      Weapon.BEYOND_THE_CHRYSALIS,
+      Weapon.BREEZEBORNE_REFRAIN,
+      Weapon.HYMN_OF_THE_MAELSTROM,
+      Weapon.NEW_BOUGH,
+      Weapon.SILVER_LIGHT,
+      Weapon.WINTERS_HEAVY_HEART,
+    ]
+  );
+  assert.equal(parsed.weapons[0].location, Character.VESNA);
+  assert.equal(parsed.weapons[2].location, Character.VODYANITSA);
+});

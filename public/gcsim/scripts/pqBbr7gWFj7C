@@ -41,7 +41,7 @@ for let i=0; i<4; i=i+1 {
 
   mona skill, burst;
 
-  mualani skill, attack;
+  mualani skill, attack, walk[f=1];
 
   if i == 0 && First_Rot_Nuke == true {
     skirk burst;

@@ -45,7 +45,7 @@ for let i=0; i<4; i=i+1 {
     charlotte skill, attack:2, dash, attack:2;
   } else {
     escoffier skill, attack:2, dash, attack:2;
-    charlotte skill, attack, burst, attack;
+    charlotte dash, skill, attack, burst, attack;
   }
   if i == 0 && First_Rot_Nuke == true {
     skirk burst;
@@ -60,7 +60,7 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack;
+          attack:2;
   } else {
     skirk skill,
           attack:2, burst,
@@ -72,10 +72,10 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack:2;
+          attack:3;
   }
 }
 
 # First rot only
-# Xingqiu ED N1 Q N1 > Escoffier E N1 Q N1 > Charlotte E N2D N2  > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
-# Xingqiu ED N1 Q N1 > Escoffier E N2D N2  > Charlotte E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2
+# Xingqiu ED N1 Q N1 > Escoffier E N1 Q N1 > Charlotte E N2D N2  > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N2
+# Xingqiu ED N1 Q N1 > Escoffier E N2D N2  > Charlotte E N1 Q N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N3

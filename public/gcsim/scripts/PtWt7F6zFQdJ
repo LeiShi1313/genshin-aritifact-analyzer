@@ -2,25 +2,25 @@ hutao char lvl=90/90 cons=0 talent=9,9,9 +params=[start_hp%=1];
 hutao add weapon= "deathmatch" refine=1 lvl=90/90;
 hutao add set="shimenawasreminiscence" count=4;
 hutao add stats hp=4780 atk=311 em=187 pyro%=0.466 cd=0.622;
-hutao add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.3972 cd=0.662;
+hutao add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*12 cd=0.0662*10;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=4 lvl=90/90;
 yelan add set="emblem" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
-yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 xingqiu char lvl=90/90 cons=6 talent=9,9,9;
 xingqiu add weapon="wolffang" refine=1 lvl=90/90;
 xingqiu add set="noblesseoblige" count=4;
 xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
-xingqiu add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=39.64 cr=0.3972 cd=0.662;
+xingqiu add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
 
 luminepyro char lvl=90/90 cons=6 talent=9,9,9 +params=[base_atk_buff=1, skirk_story_buff=1];
 luminepyro add weapon="favsword" refine=3 lvl=90/90;
 luminepyro add set="scroll" count=4;
 luminepyro add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311;
-luminepyro add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1488 er=0.1653 em=39.64 cr=0.331 cd=0.7944;
+luminepyro add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 options swap_delay=12 iteration=1000;
 energy every interval=480,720 amount=1;

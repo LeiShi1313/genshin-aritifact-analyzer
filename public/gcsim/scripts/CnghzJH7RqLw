@@ -38,7 +38,7 @@ for let i=0; i<4; i=i+1 {
     mualani burst;
   }
   chev burst, skill[hold=1], attack;
-  mualani skill, attack;
+  mualani skill, attack, skill;
   chasca skill;
   chasca aim:4;
   chasca aim[bullets=4];
@@ -47,5 +47,5 @@ for let i=0; i<4; i=i+1 {
   }
 }
 
-# Furina ED Q > Chev Q hE N1 > Mualani E N1 > Chasca E 4[C] C_4b >
-# Chasca    Q > Chev Q hE N1 > Mualani E N1 > Chasca E 4[C] C_4b >
+# Furina ED Q > Chev Q hE N1 > Mualani E N1 E > Chasca E 4[C] C_4b >
+# Chasca    Q > Chev Q hE N1 > Mualani E N1 E > Chasca E 4[C] C_4b >

@@ -64,8 +64,8 @@ for let i=0; i<4; i=i+1 {
   if .wanderer.burst.ready && .wanderer.energy == .wanderer.energymax {
     wanderer attack, burst;
   } else {
-    #wanderer skill;
-    wanderer low_plunge;
+    wanderer skill;
+    #wanderer low_plunge;
   }
 
 }

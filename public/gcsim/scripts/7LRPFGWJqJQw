@@ -33,7 +33,7 @@ for let i=0; i<4; i=i+1 {
   mavuika attack, skill;
   chev burst, skill[hold=1], attack, dash;
   citlali skill, burst, attack;
-  mavuika burst, jump, charge, dash;
+  mavuika burst, jump, charge, dash, charge;
   chasca skill;
   chasca aim:4;
   if .chasca.burst.ready && .chasca.energy == .chasca.energymax {

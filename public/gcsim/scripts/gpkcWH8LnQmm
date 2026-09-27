@@ -20,7 +20,7 @@ bennett char lvl=90/90 cons=6 talent=9,9,9;
 bennett add weapon="thealleyflash" refine=1 lvl=90/90;
 bennett add set="no" count=4;
 bennett add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;
-bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3857 em=39.64 cr=0.2648 cd=0.7282;
+bennett add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.551 em=39.64 cr=0.331 cd=0.3972;
 
 mavuika char lvl=90/90 cons=0 talent=9,9,9;
 mavuika add weapon="serpentspine" refine=1 lvl=90/90;
@@ -40,12 +40,10 @@ for let i=0; i<4; i=i+1 {
   wrio skill,
        attack:5, charge, dash,
        attack:5, charge, dash,
-       attack:5, charge, dash,
-       attack:3;
+       attack:5, charge, dash;
   if is_even(i) {
     wrio burst;
   } else {
-    wrio charge, dash;
-    wrio attack:3; # for 20s TTDS cd
+    wrio attack:3, charge, dash;
   }
 }

@@ -38,7 +38,8 @@ for let i=0; i<4; i=i+1 {
   mualani skill,
           walk[f=91], attack,
           walk[f=91], attack,
-          walk[f=91], attack;
+          walk[f=91], attack,
+          walk[f=1];
 
   if i == 3 {
     yelan skill; #can do this every rotation with C1 Yelan, or on final rotation of fight.

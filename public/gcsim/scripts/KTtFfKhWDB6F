@@ -60,8 +60,10 @@ for let i=0; i<4; i=i+1 {
     ineffa attack:2;
   }
   xianyun skill, low_plunge, burst, attack;
-  varesa_combo(7);
+  varesa_combo(6);
+  xianyun attack, charge;
+  varesa_combo(1);
 }
 
 # 20s rotations
-# Furina ED N1 Q > Ineffa E (Q) > Xianyun EPQ N1 > Varesa 7 Plunge Combos
+# Furina ED N1 Q > Ineffa E (Q) > Xianyun EPQ N1 > Varesa 6 Plunge Combos > Xianyun N1C > Varesa 1 Plunge Combo

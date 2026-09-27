@@ -1,4 +1,4 @@
-# Arlecchino Citlali Escoffier Bennett. ~16s Rot. Arlecchino double Cryo Melt with 5N3D N2. Arlecchino cancels her CA with dash to avoid immediately overrunning Cryo Aura, but otherwise doesn't delay for Cryo Aura. Escoffier & Arlecchino do not use burst.
+# Arlecchino Citlali Escoffier Bennett. ~16s Rot. Arlecchino double Cryo Melt with ungabunga easy C N15, not a cancel in sight. Escoffier & Arlecchino do not use burst.
 
 # Team - Options listed by DPS
 arle char lvl=90/90 cons=0 talent=9,9,9;
@@ -42,17 +42,14 @@ active arle;
 for let i=0; i<4; i=i+1 {
   arle skill;
 
-  bennett skill, burst;
+  bennett skill, dash, burst;
 
   esco skill, attack;
 
   citlali skill, burst;
 
-  arle attack:1, charge[early_cancel=1], dash:1,
-       attack:3, dash,
-       attack:3, dash,
-       attack:3, dash,
-       attack:3, dash,
-       attack:3, dash,
-       attack:2;
+  arle charge,
+       attack:6,
+       attack:6,
+       attack:3;
 }

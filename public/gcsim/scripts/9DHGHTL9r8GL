@@ -79,12 +79,12 @@ for let i=0; i<4; i=i+1 {
   mav_dc_cancel(6); mavuika charge, charge[final=1];          // D*C2F  // d*cCf  // No Mavuika Q buff
   mav_dc_cancel(6); mavuika charge[final=1];                  // D*C1F  // d*CF   // No Mavuika Q buff
   mavuika dash;
-  mavuika attack; // Normal N1 for TTDS cd
+  mavuika attack:2; // Normal N2 for TTDS cd
 }
 
 # D* means charge cancel dash
 
-# Escoffier N2 E > Mavuika E N1 > Bennett EQ > Citlali EQ > Mavuika Q C1 2[D*C2F] D*C1 2[D*C2F] D*C1F D N1 > repeat
+# Escoffier N2 E > Mavuika E N1 > Bennett EQ > Citlali EQ > Mavuika Q C1 2[D*C2F] D*C1 2[D*C2F] D*C1F D N2 > repeat
 
 # Mavuika upper case for Melt
-# Escoffier N2 E > Mavuika E N1 > Bennett EQ > Citlali EQ > Mavuika Q C 2[d*cCf] d*C d*cCF d*cCf dCF d n1 > repeat
+# Escoffier N2 E > Mavuika E N1 > Bennett EQ > Citlali EQ > Mavuika Q C 2[d*cCf] d*C d*cCF d*cCf dCF d n2 > repeat

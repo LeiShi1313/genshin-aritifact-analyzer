@@ -67,6 +67,7 @@ for let i=0; i<2; i=i+1 {
   sucrose skill, dash, burst, attack;   # If you think Sucrose can't get Pyro absorption on her Q, try [Candace E > Sucrose > XL E]
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
 }
 
 # Candace EQ N1 > Xiangling Q ED N1 > Sucrose ED   > Mualani E 3[3-stacked bite] Q >

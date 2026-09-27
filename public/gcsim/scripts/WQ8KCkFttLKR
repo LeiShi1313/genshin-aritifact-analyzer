@@ -41,6 +41,7 @@ fn mualani_combo3() {
     }
     break;
   }
+  mualani walk[f=1];
 }
 
 active nilou;

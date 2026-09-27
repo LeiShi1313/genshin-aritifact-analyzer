@@ -1,0 +1,66 @@
+# Diluc Durin Nicole Xianyun. ~18s Rot. Diluc "Mono" Pyro plunge with VV Xianyun. Diluc EQE at the start of his field time and uses his skills between plunges. 6 plunges covered by VV. 50% Collisions.
+
+# Team
+diluc char lvl=90/90 cons=0 talent=9,9,9;
+diluc add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+#diluc add weapon="fruitfulhook" refine=1 lvl=90/90;
+diluc add set="lno" count=4;
+#diluc add set="cw" count=4;
+diluc add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+diluc add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="oathsworn" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466; #main
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*8 em=19.82*2 cr=0.0331*2 cd=0.0662*4;
+
+xianyun char lvl=90/90 cons=0 talent=9,9,9;
+xianyun add weapon="favcodex" refine=3 lvl=90/90;
+xianyun add set="vv" count=4;
+xianyun add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466; #main
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*10 em=19.82*2 cr=0.0331*12 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Diluc Plunge Combo
+fn DulicPlunge() {
+  diluc jump;
+  if .airborne {
+    diluc high_plunge[collision=rand()>0.5];
+  }
+}
+
+# Rotation
+active diluc; # SS stacks
+#diluc skill;
+
+for let i = 0; i < 4; i = i + 1 {
+  nicole burst, skill;
+
+  durin skill, burst, skill;
+
+  xianyun skill, low_plunge, burst;
+
+  diluc skill, burst, skill;
+  DulicPlunge(); diluc skill;
+  DulicPlunge(); diluc dash;
+  DulicPlunge(); diluc dash;
+  DulicPlunge(); diluc dash;
+  DulicPlunge(); diluc dash;
+  DulicPlunge(); diluc dash;
+  DulicPlunge(); diluc skill;
+  DulicPlunge(); diluc skill;
+}

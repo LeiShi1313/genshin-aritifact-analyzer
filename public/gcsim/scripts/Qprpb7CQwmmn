@@ -43,5 +43,5 @@ for let i = 0; i < 4; i = i + 1 {
   xiangling attack:5, burst, skill, dash;
   lisa attack, burst;
   raiden burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
-  lisa attack:2; # spending some time for 20s rot length
+  lisa attack:2, dash, attack; # spending some time for 20s rot length
 }

@@ -86,8 +86,8 @@ test("unsupported equipment overrides never enter a GCSIM config", () => {
     {
       [Character.FURINA]: {
         enabled: true,
-        weapon: { weapon: Weapon.DISASTER_AND_REMORSE },
-        sets: [{ set: Set.HEART_OF_THE_FURNACE, count: 4 }],
+        weapon: { weapon: Weapon.BEYOND_THE_CHRYSALIS },
+        sets: [{ set: Set.ADVENTURER, count: 4 }],
       },
     }
   );

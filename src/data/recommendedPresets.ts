@@ -1024,4 +1024,35 @@ export const recommendedPresetBuilds: readonly Build[] = Object.freeze([
       [AttributeType.ATK, 0.2],
     ],
   }),
+  // https://mobalytics.gg/genshin-impact/characters/vesna-build-guide
+  preset({
+    name: PRESET_BUILD_IDS.GENERAL_ON_FIELD_DPS,
+    character: Character.VESNA,
+    recipe: fourPiece(ArtifactSet.SCARLET_PROOF),
+    sands: [AttributeType.ATK_PERCENT],
+    goblet: [AttributeType.ATK_PERCENT],
+    circlet: critCirclet,
+    substats: [
+      [AttributeType.CRIT_RATE, 1],
+      [AttributeType.CRIT_DAMAGE, 1],
+      [AttributeType.ATK_PERCENT, 0.8],
+      [AttributeType.ELEMENTAL_MASTERY, 0.6],
+      [AttributeType.ENERGY_RECHARGE, 0.3],
+      [AttributeType.ATK, 0.2],
+    ],
+  }),
+  // https://genshinflex.com/en/characters/vodyanitsa/
+  preset({
+    name: PRESET_BUILD_IDS.OFF_FIELD_HYDRO_SUPPORT,
+    character: Character.VODYANITSA,
+    recipe: fourPiece(ArtifactSet.TENACITY_OF_THE_MILLELITH),
+    sands: [AttributeType.HP_PERCENT],
+    goblet: [AttributeType.HP_PERCENT],
+    circlet: [AttributeType.HP_PERCENT],
+    substats: [
+      [AttributeType.HP_PERCENT, 1],
+      [AttributeType.HP, 0.6],
+      [AttributeType.ENERGY_RECHARGE, 0.4],
+    ],
+  }),
 ]);

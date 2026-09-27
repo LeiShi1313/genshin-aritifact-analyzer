@@ -74,9 +74,9 @@ for let i=0; i<4; i=i+1 {
         attack:2, charge, dash,
 
         attack:5, dash,
-        attack:2;
+        attack:3;
 }
 
 # Escoffier E N2 > Furina N1 ED > Mona E > Skirk tE N5D N2Q   N5D  N2CD N5D N2 >
-# Furina N1 Q > Escoffier EQ > Mona E Q >  Skirk tE     N2Q 3[N5D] N2CD N5D N2 >
-# Furina ED Q > Escoffier EQ > Mona E Q >  Skirk tE     N2Q 3[N5D] N2CD N5D N2 > (repeat)
+# Furina N1 Q > Escoffier EQ > Mona E Q >  Skirk tE     N2Q 3[N5D] N2CD N5D N3 >
+# Furina ED Q > Escoffier EQ > Mona E Q >  Skirk tE     N2Q 3[N5D] N2CD N5D N3 > (repeat)

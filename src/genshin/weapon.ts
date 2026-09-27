@@ -314,6 +314,12 @@ export enum Weapon {
   JADE_VISTA = 245,
   SONG_OF_THE_VIGIL = 246,
   WHITELAKE_FROSTFEATHER = 247,
+  BEYOND_THE_CHRYSALIS = 248,
+  BREEZEBORNE_REFRAIN = 249,
+  HYMN_OF_THE_MAELSTROM = 250,
+  NEW_BOUGH = 251,
+  SILVER_LIGHT = 252,
+  WINTERS_HEAVY_HEART = 253,
   UNRECOGNIZED = -1,
 }
 
@@ -1063,6 +1069,24 @@ export function weaponFromJSON(object: any): Weapon {
     case 247:
     case "WHITELAKE_FROSTFEATHER":
       return Weapon.WHITELAKE_FROSTFEATHER;
+    case 248:
+    case "BEYOND_THE_CHRYSALIS":
+      return Weapon.BEYOND_THE_CHRYSALIS;
+    case 249:
+    case "BREEZEBORNE_REFRAIN":
+      return Weapon.BREEZEBORNE_REFRAIN;
+    case 250:
+    case "HYMN_OF_THE_MAELSTROM":
+      return Weapon.HYMN_OF_THE_MAELSTROM;
+    case 251:
+    case "NEW_BOUGH":
+      return Weapon.NEW_BOUGH;
+    case 252:
+    case "SILVER_LIGHT":
+      return Weapon.SILVER_LIGHT;
+    case 253:
+    case "WINTERS_HEAVY_HEART":
+      return Weapon.WINTERS_HEAVY_HEART;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1568,6 +1592,18 @@ export function weaponToJSON(object: Weapon): string {
       return "SONG_OF_THE_VIGIL";
     case Weapon.WHITELAKE_FROSTFEATHER:
       return "WHITELAKE_FROSTFEATHER";
+    case Weapon.BEYOND_THE_CHRYSALIS:
+      return "BEYOND_THE_CHRYSALIS";
+    case Weapon.BREEZEBORNE_REFRAIN:
+      return "BREEZEBORNE_REFRAIN";
+    case Weapon.HYMN_OF_THE_MAELSTROM:
+      return "HYMN_OF_THE_MAELSTROM";
+    case Weapon.NEW_BOUGH:
+      return "NEW_BOUGH";
+    case Weapon.SILVER_LIGHT:
+      return "SILVER_LIGHT";
+    case Weapon.WINTERS_HEAVY_HEART:
+      return "WINTERS_HEAVY_HEART";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

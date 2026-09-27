@@ -1,4 +1,4 @@
-# Kinich Emilie Lauma Bennett. ~18s Rot. Kinich Triple Dendro. Despite this, Emilie still doesn't have enough particles to burst every rotation without ER investement. Kinich attempts 5[N2 shE] spinning clockwise consistently. Kinich burst goes unused.
+# Kinich Emilie Lauma Bennett. ~18s Rot. Kinich Triple Dendro. Despite this, Emilie still doesn't have enough particles to burst every rotation without ER investement. Kinich attempts 5[N2 shE] spinning clockwise consistently.
 
 # Team - Options listed by DPS
 kinich char lvl=90/90 cons=0 talent=9,9,9;
@@ -52,20 +52,20 @@ fn kinich_combo() {
 active kinich; # SS Stacks
 
 for let i=0; i<4; i=i+1 {
-  if i && .emilie.burst.ready && .emilie.energy == .emilie.energymax {
-    emilie burst;
+  if i > 0 && .emilie.burst.ready {
+    emilie burst, skill;
   } else {
     emilie attack, skill;
   }
 
-  lauma skill[hold=0];
-
   bennett skill, dash, burst;
 
+  lauma skill[hold=0];
+
   kinich_combo();
-  #if .kinich.burst.ready && .kinich.energy == .kinich.energymax  {
-  #  kinich burst;
-  #}
+  if .kinich.burst.ready {
+    kinich burst;
+  }
 
   bennett skill, dash, attack:2; # You need to fill time anyway
 }

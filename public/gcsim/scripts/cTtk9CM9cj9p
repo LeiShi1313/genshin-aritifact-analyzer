@@ -50,7 +50,8 @@ for let i=0; i<4; i=i+1 {
   escoffier attack:2, dash;
   ayaka skill, dash,
         attack:2, charge,
-        attack:2, charge;
+        attack, charge,
+        attack, charge;
 }
 
-# Furina ED Q > Escoffier Q E > Ayaka ED N1C > Mona E Q > Ayaka N1 Q D N2 > Escoffier N2D > Ayaka ED 2[N2C]
+# Furina ED Q > Escoffier Q E > Ayaka ED N1C > Mona E Q > Ayaka N1 Q D N2 > Escoffier N2D > Ayaka ED N2C 2[N1C]
