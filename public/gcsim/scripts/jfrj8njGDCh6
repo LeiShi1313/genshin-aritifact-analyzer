@@ -39,7 +39,7 @@ let First_Rot_Nuke = false;  # Change this value between true and false.
 active yelan;
 
 for let i=0; i<4; i=i+1 {
-  yelan skill, attack, burst, attack;
+  yelan attack, skill, attack, burst, attack;
   layla burst, attack, skill;
   mona skill, burst;
   if i == 0 && First_Rot_Nuke == true {
@@ -72,5 +72,5 @@ for let i=0; i<4; i=i+1 {
 }
 
 # First rot only
-# Yelan E N1 Q N1 > Layla Q N1 E > Mona E Q > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
-# Yelan E N1 Q N1 > Layla Q N1 E > Mona E Q > Skirk   tE N2Q      3[N5D] N2CD N5D N2
+# Yelan N1 E N1 Q N1 > Layla Q N1 E > Mona E Q > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
+# Yelan N1 E N1 Q N1 > Layla Q N1 E > Mona E Q > Skirk   tE N2Q      3[N5D] N2CD N5D N2

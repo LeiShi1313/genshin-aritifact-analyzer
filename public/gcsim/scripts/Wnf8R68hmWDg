@@ -51,13 +51,11 @@ skirk skill,
       attack:2, charge, dash,
 
       attack:5, dash,
-
-      attack:2, charge;
+      attack:5;
 
 furina swap;
 print("Skirk E cd (60 FPS) is ", .skirk.skill.cd);
 print("Skirk Q cd (60 FPS) is ", .skirk.burst.cd);
-furina attack:2;
 
 for let i=0; i<4; i=i+1 {
   furina swap;  # while statement check when furina on-field
@@ -92,7 +90,8 @@ for let i=0; i<4; i=i+1 {
 
         attack:5, dash,
         attack:2;
+  furina attack;
 }
 
-# Escoffier E N1 > Furina N1 ED N1 > Citlali E N1 > Skirk tE N2Q 2[N5D] N2CD N5D N2C > Furina N2 >
-# Furina Q > Escoffier EQ N1 > Furina ED > Citlali "wait for Furina triple attacks" E > Skirk tE N2Q 3[N5D] N2CD N5D N2
+# Escoffier E N1 > Furina N1 ED N1 > Citlali E N1 > Skirk tE N2Q 2[N5D] N2CD N5D N5 >
+# Furina Q > Escoffier EQ N1 > Furina ED > Citlali "wait for Furina triple attacks" E > Skirk tE N2Q 3[N5D] N2CD N5D N2 > Furina N1

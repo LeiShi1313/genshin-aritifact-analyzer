@@ -56,9 +56,10 @@ for let i=0; i<4; i=i+1 {
   if is_even(i) {
     mualani burst;
   } else {
+    mualani walk[f=1];
     sucrose skill;
   }
 }
 
 # Mona E > Mavuika Q E > Mona Q > Sucrose E > Mualani E 3[3-stacked bite] Q >
-# Mona E > Mavuika Q E > Mona Q > Sucrose E > Mualani E 3[3-stacked bite] > Sucrose E
+# Mona E > Mavuika Q E > Mona Q > Sucrose E > Mualani E 3[3-stacked bite] E > Sucrose E

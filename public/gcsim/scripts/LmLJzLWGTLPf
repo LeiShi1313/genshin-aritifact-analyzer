@@ -32,8 +32,7 @@ for let x=0; x<4; x=x+1 {
     bennett skill, dash;
     yoimiya burst;               # catch bennett particles and for double swirl setup
   } else {
-    bennett skill, attack:4;     # E N4 to make consistent 20s rot for TTDS cd.
-   #bennett skill, dash;         # With 'E dash', No TTDS for that non-yoi Q rot. But slightly more DPS due to shorter rot length
+    bennett skill, dash;         # With 'E dash', No TTDS for that non-yoi Q rot. But slightly more DPS due to shorter rot length
   }
   yelan attack, skill, attack, burst, attack;
   bennett skill, burst;          # if yoi Q rot, it removes some hydro aura so that pyro aura remains for sucrose to swirl.

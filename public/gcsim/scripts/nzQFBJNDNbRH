@@ -49,7 +49,7 @@ for let i=0; i<4;i=i+1 {
   if is_even(i) {
     wrio burst;
   } else {
-    wrio charge;
+    wrio charge, jump, attack:2;
   }
   mualani skill, attack, skill;
 }

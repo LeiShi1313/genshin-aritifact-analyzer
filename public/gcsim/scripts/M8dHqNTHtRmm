@@ -41,7 +41,7 @@ active furina;
 for let i=0; i<4; i=i+1 {
   furina skill, dash, attack, burst;
   if is_even(i) {
-    escoffier skill, burst;
+    escoffier skill, attack, burst;
     charlotte skill, attack:3;
   } else {
     escoffier skill, attack:3;
@@ -60,7 +60,7 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack;
+          attack:2;
   } else {
     skirk skill,
           attack:2, burst,
@@ -72,10 +72,10 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack:2;
+          attack:3;
   }
 }
 
 # First rot only
-# Furina ED Q > Escoffier EQ   > Charlotte E  N3 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N1
-# Furina ED Q > Escoffier E N3 > Charlotte EQ N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N2
+# Furina ED Q > Escoffier E N1 Q > Charlotte E  N3 > Skirk Q tE N5D N2CD 2[N5D] N2CD N5D N2
+# Furina ED Q > Escoffier E N3   > Charlotte EQ N1 > Skirk   tE N2Q      3[N5D] N2CD N5D N3

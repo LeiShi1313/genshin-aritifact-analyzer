@@ -86,13 +86,13 @@ for let i=0; i<4; i=i+1 {
     mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
     mav_dc_cancel(6); mavuika charge[hold=30], charge[final=1];                 // D*C1F  // d*cF  // No Mavuika Q buff on F
     print("after Q buff end");
-    mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
-    mav_dc_cancel(6);                                                           // D*C1   // d*c
+    mav_dc_cancel(6); mavuika charge[hold=40], charge[final=1];                 // D*C1F  // d*cF
   } else {
     citlali skill, burst, attack:2, dash;
     mavuika swap;
     if .mavuika.nightsoul.points {  // To prevent Error when Mavuika tries to Recast E when its already expired due to teammate stalling for Q energy
       mavuika skill[recast=1];
+      delay(11);
       mavuika charge;                                                           // C1     // C
     }
     mavuika burst;                                                              // Q      // Q
@@ -100,12 +100,13 @@ for let i=0; i<4; i=i+1 {
     mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
     mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
     mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
-    mav_dc_cancel(6); mavuika charge[hold=30], charge[final=1];                 // D*C1F  // d*cF  // No Mavuika Q buff on F
+    mav_dc_cancel(6); mavuika charge[hold=40], charge[final=1];                 // D*C1F  // d*cF  // No Mavuika Q buff on F
     print("after Q buff end");
-    mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
-    mav_dc_cancel(6); mavuika charge[final=1];                                  // D*C1F  // d*cF
+    mav_dc_cancel(6); mavuika charge[hold=40], charge[final=1];                 // D*C1F  // d*cF
+    mav_dc_cancel(6);                                                           // D*C1   // d*c
+    mavuika jump; // No points left.
   }
 }
 
-# Mavuika hE > Nicole E > Xilonen E N2 > Citlali N1 E   > Mavuika hE C1 Q C1F 5[D*C1F] D*C1  >
-# Mavuika hE > Nicole E > Xilonen E N2 > Citlali EQ N2D > Mavuika hE C1 Q C1F 6[D*C1F]       >
+# Mavuika hE > Nicole E > Xilonen E N2 > Citlali N1 E   > Mavuika hE C1 Q C1F 5[D*C1F]       >
+# Mavuika hE > Nicole E > Xilonen E N2 > Citlali EQ N2D > Mavuika hE C1 Q C1F 5[D*C1F] D*C1J >

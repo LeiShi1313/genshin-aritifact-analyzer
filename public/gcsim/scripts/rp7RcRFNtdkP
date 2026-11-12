@@ -1,0 +1,65 @@
+# Clorinde Aino Ineffa Durin. ~18 Rot. KQMS KurtC. Clorinde Lunarcharge. 3EM Durin for Clorinde Energy Requirements- Clorinde bursts every rotation.
+
+# Team
+clorinde char lvl=90/90 cons=0 talent=9,9,9;
+clorinde add weapon="finale" refine=5 lvl=90/90;
+clorinde add set="fohw" count=4;
+clorinde add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cd=0.622; #main
+clorinde add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*3 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+aino char lvl=90/90 cons=6 talent=9,9,9;
+aino add weapon="favgs" refine=3 lvl=90/90;
+aino add set="sms" count=4;
+aino add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+aino add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="fjords" refine=1 lvl=90/90;
+ineffa add set="aubade" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="xiphos" refine=1 lvl=90/90;
+durin add set="no" count=4;
+durin add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*5 em=19.82*5 cr=0.0331*6 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Functions
+fn clorinde_combo() {
+  clorinde skill;
+  while .clorinde.status.clorinde-night-watch {
+    if .clorinde.bolratio >= 1 {
+      clorinde skill;
+    } else {
+      clorinde attack;
+    }
+  }
+}
+
+# Rotation
+active ineffa;
+
+for let i=0; i<4; i=i+1 {
+  if i > 0  && .ineffa.burst.ready {
+    ineffa skill, burst;
+  } else {
+    ineffa skill, attack;
+  }
+
+  aino skill, burst;
+
+  durin skill, skill, burst;
+
+  clorinde_combo();
+  clorinde burst;
+  clorinde attack; # Filler
+}

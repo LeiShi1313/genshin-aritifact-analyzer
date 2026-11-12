@@ -42,7 +42,7 @@ fn mualani_combo() {
   }
 }
 
-barbara skill;
+barbara skill, attack:2;
 for let i=0; i<2; i=i+1 {
   sucrose skill, dash; wait(45); # removing swap cd warning
   xiangling burst, skill, dash;
@@ -62,6 +62,7 @@ for let i=0; i<2; i=i+1 {
   sucrose skill, dash, burst;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
   barbara skill, attack;
   if !.barbara.mods.favonius-cd {
     barbara attack;

@@ -49,7 +49,8 @@ for let i=0; i<4;i=i+1 {
        attack:4;
   if is_even(i) {
     wrio burst;
+    wrio attack:2; // TTDS cd
   } else {
-    wrio charge, jump;
+    wrio charge, jump, attack;
   }
 }

@@ -39,14 +39,17 @@ escoffier skill, attack:3;  # Catch her own particles
 furina attack, skill, dash;
 mualani skill, attack, skill;
 skirk skill,
-      attack:5, burst,
+      attack:5, dash,
+
+      attack:2, burst,
 
       attack:5, dash,
       attack:5, dash,
 
       attack:2, charge, dash,
 
-      attack:5, dash;
+      attack:5, dash,
+      attack:2;
 
 mualani swap;
 print("Skirk E cd (60 FPS) is ", .skirk.skill.cd);
@@ -55,7 +58,7 @@ mualani skill, attack, skill;
 
 for let i=0; i<4; i=i+1 {
   if i {
-    furina skill, dash;
+    furina skill, dash, attack;
   } else {
     furina attack:2, dash;  # for TTDS cd
   }
@@ -76,6 +79,6 @@ for let i=0; i<4; i=i+1 {
   mualani skill, attack, skill; # Exit NS state by using E, this makes E cd start earlier
 }
 
-# Escoffier E N3 > Furina N1 ED > Mualani E N1 E > Skirk tE N5Q 2[N5D] N2CD N5D > Mualani E N1 E >
-# Furina N2D Q > Escoffier E N1 Q > Mualani E N1 E > Skirk tE N2Q 3[N5D] N2CD N5D N2 > Mualani E N1 E >
-# Furina  ED Q > Escoffier E N1 Q > Mualani E N1 E > Skirk tE N2Q 3[N5D] N2CD N5D N2 > Mualani E N1 E > (repeat)
+# Escoffier E N3 > Furina N1 ED > Mualani E N1 E >   Skirk tE N5D N2Q 2[N5D] N2CD N5D N2 > Mualani E N1 E >
+# Furina N2D Q > Escoffier E N1 Q > Mualani E N1 E > Skirk tE     N2Q 3[N5D] N2CD N5D N2 > Mualani E N1 E >
+# Furina  ED Q > Escoffier E N1 Q > Mualani E N1 E > Skirk tE     N2Q 3[N5D] N2CD N5D N2 > Mualani E N1 E > (repeat)

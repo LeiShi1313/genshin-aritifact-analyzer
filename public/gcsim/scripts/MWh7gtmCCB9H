@@ -1,0 +1,65 @@
+# Alhaitham Durin Fischl Dori. ~20s Rot. KQMS KurtC. Long field time Alhaitham Quicken. GD > UR, 53/43% Burning/Quicken uptime. VS small enough opponents, Burning can significantly impact the effectiveness of HoD, Wolf Fang is -2K DPS. Fischl deploys Oz during Alhaitham's burst window, alternating skill and burst.
+
+# Team - Options listed by DPS
+alhaitham char lvl=90/90 cons=0 talent=9,9,9;
+alhaitham add weapon="harbinger" refine=5 lvl=90/90;
+#alhaitham add weapon="wolffang" refine=1 lvl=90/90; # Burning Damage.
+alhaitham add set="gd" count=4;
+#alhaitham add set="ur" count=4;
+alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # GD
+#alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
+#alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*3 cr=0.0331*12 cd=0.0662*9; # WF
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="lionsroar" refine=3 lvl=90/90;
+durin add set="cg" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*5 em=19.82*2 cr=0.0331*10 cd=0.0662*7;
+
+fischl char lvl=90/90 cons=6 talent=9,9,9;
+fischl add weapon="stringless" refine=3 lvl=90/90;
+fischl add set="gt" count=4;
+fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+dori char lvl=90/90 cons=6 talent=9,9,9;
+dori add weapon="favgs" refine=3 lvl=90/90;
+dori add set="deepwood" count=4;
+dori add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
+dori add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*10 cr=0.0331*10 cd=0.0662*6;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+#target lvl=100 resist=0.1 radius=1 pos=0,1.3 hp=100000000; # Burning Proximity Damage
+
+# Rotation
+active fischl;
+fischl skill;
+
+for let i=0; i<4; i=i+1 {
+  durin skill:2, burst;
+
+  dori skill, burst;
+
+  haitham burst;
+
+  if .amy.burst.ready {
+    amy attack:2, burst;
+  } else {
+    amy attack, skill;
+  }
+
+  # Optimized-ish combo for 20s rot
+  alhaitham attack:3, dash,
+            attack:3, charge, dash,
+            attack:3, charge, dash,
+            attack:1, skill[hold=1], low_plunge[short=1];
+  alhaitham attack:4, charge, dash,
+            attack:3;
+}

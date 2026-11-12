@@ -44,5 +44,5 @@ for let i = 0; i < 4; i = i + 1 {
        attack:3, dash,
        attack;
   bennett attack, skill, attack;
-  xiangling attack:3, dash;
+  xiangling attack:4, dash;
 }

@@ -1,0 +1,62 @@
+# Lauma Xingqiu Yelan Radien. 21s Rot. Lauma on-field Hyperbloom. Simple, unpretensious, Hyperbloom - not hyperoptimized. Lauma doesn't burst or hold skill in the first rotation.
+
+# Team
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="etherlight" refine=5 lvl=90/90;
+lauma add set="deepwood" count=4;
+lauma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="isshin" refine=5 lvl=90/90;
+xingqiu add set="sms" count=4;
+xingqiu add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cr=0.311; #main
+xingqiu add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="emblem" count=4;
+yelan add stats hp=4780 hp%=0.466 atk=311 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+raiden char lvl=90/90 cons=0 talent=9,9,9;
+raiden add weapon="dbane" refine=3 lvl=90/90;
+raiden add set="fopl" count=4;
+raiden add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+raiden add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*6 em=19.82*6 cr=0.0331*2 cd=0.0662*4;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active lauma;
+lauma skill;
+
+raiden skill, attack;
+
+for let i = 0; i < 4; i = i + 1 {
+  if i > 0 {
+    lauma skill[hold=1], burst;
+  }
+
+  xingqiu skill, dash, burst, attack;
+
+  yelan skill, attack, burst, attack;
+
+  while .yelan.skill.cd { # C0
+    lauma attack;
+  }
+
+  yelan skill, attack;
+
+  lauma attack:3; # Lauma would rather catch these particles  if you use a different weapon
+
+  raiden skill, attack;
+
+  lauma attack:3;
+}

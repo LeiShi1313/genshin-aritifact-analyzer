@@ -2,7 +2,7 @@
 
 # Team
 childe char lvl=90/90 cons=0 talent=9,9,9;
-childe add weapon="vhunt" refine=1 lvl=90/90;
+childe add weapon="jadevista" refine=1 lvl=90/90;
 childe add set="nymph" count=4;
 childe add stats hp=4780 atk=311 atk%=0.466 hydro%=0.466 cd=0.622;
 childe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;

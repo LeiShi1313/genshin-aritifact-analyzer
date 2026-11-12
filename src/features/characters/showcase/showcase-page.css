@@ -1000,6 +1000,10 @@
   min-height: 94px !important;
 }
 
+.character-showcase-card.is-exporting .ccp-substats {
+  grid-template-columns: 1fr !important;
+}
+
 .character-showcase-card.is-exporting .ccp-artifact-image {
   width: 96px !important;
   height: 90px !important;

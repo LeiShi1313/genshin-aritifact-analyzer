@@ -53,6 +53,7 @@ for let i=0; i<2; i=i+1 {
   dehya skill:2;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
   if .mualani.nightsoul.state {
     mualani skill; # exit the nightsoul state
   }

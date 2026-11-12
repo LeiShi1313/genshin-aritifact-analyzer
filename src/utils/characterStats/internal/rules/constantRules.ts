@@ -135,6 +135,30 @@ const crit4 = [0.04, 0.05, 0.06, 0.07, 0.08] as const;
 const crit8 = [0.08, 0.1, 0.12, 0.14, 0.16] as const;
 
 export const WEAPON_CONSTANT_RULES: readonly WeaponConstantRule[] = [
+  // 7.2: skill/reaction-triggered EM and Stellar-Conduct CRIT DMG are conditional.
+  {
+    id: "weapon.starsealed_edict.crit_damage",
+    weaponKey: "starsealed_edict",
+    effects: [
+      { stat: "critDamage", valuesByRefinement: [0.24, 0.3, 0.36, 0.42, 0.48] },
+    ],
+  },
+  // 7.1 weapon descriptions (genshin-db 5.2.14). Triggered portions are excluded.
+  {
+    id: "weapon.hymn_of_the_maelstrom.healing_bonus",
+    weaponKey: "hymn_of_the_maelstrom",
+    effects: [
+      {
+        stat: "healingBonus",
+        valuesByRefinement: [0.04, 0.05, 0.06, 0.07, 0.08],
+      },
+    ],
+  },
+  {
+    id: "weapon.breezeborne_refrain.energy_recharge",
+    weaponKey: "breezeborne_refrain",
+    effects: [{ stat: "energyRecharge", valuesByRefinement: pct20 }],
+  },
   {
     id: "weapon.haran_geppaku_futsu.all_elemental_damage",
     weaponKey: "haran_geppaku_futsu",

@@ -26,33 +26,62 @@ options swap_delay=12 iteration=1000;
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
 
+fn mualani_combo2() {
+  #doing 2[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<2; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+  mualani walk[f=1];
+}
+
+fn mualani_combo3() {
+  #doing 3[3-stacked bite]
+  while .mualani.nightsoul.state {
+    for let k=0; k<3; k=k+1 {
+      while .mualani.momentum < 3 {
+        mualani walk[f=1];
+      }
+      mualani attack;
+    }
+    break;
+  }
+  mualani walk[f=1];
+}
+
 active mualani;
 
 for let i=0; i<3; i=i+1 {
+  if i {
+    mualani charge;
+  }
   mualani attack;
   xilonen skill, attack:2;
   sucrose skill, dash, burst;
   luminepyro burst, dash; pick_up_crystallize("hydro");
   mualani skill;
   if .mualani.burst.ready {
-    mualani walk[f=1], burst,
-            walk[f=46], attack;
+    mualani walk[f=1], burst;
+    mualani_combo2();
   } else {
-    mualani walk[f=91], attack;
+    mualani_combo3();
   }
-  mualani walk[f=91], attack,
-          skill;
+  mualani skill;
 
-  mualani attack, charge;
+  mualani charge;
   xilonen burst, skill, attack:2;
   sucrose skill, dash, attack;
   luminepyro dash, skill; pick_up_crystallize("hydro");
-  mualani skill, walk[f=90], attack,
-                 walk[f=90], attack,
-                 walk[f=90], attack,
-          skill, charge;
+  mualani skill;
+  mualani_combo3();
+  mualani skill;
 }
 
-# ~15s rotations
-# Mualani N1  > Xilonen   E N2 > Sucrose EDQ   > Pyro Traveler QD    > Mualani E (Q) 3[3-stacked bite] >
-# Mualani N1C > Xilonen Q E N2 > Sucrose ED N1 > Pyro Traveler D tE  > Mualani E     3[3-stacked bite] C
+# ~14s rotations
+# Mualani C N1 > Xilonen   E N2 > Sucrose EDQ   > Pyro Traveler QD    > Mualani E Q 2[3-stacked bite] OR E 3[3-stacked bite] >
+# Mualani C    > Xilonen Q E N2 > Sucrose ED N1 > Pyro Traveler D tE  > Mualani E   3[3-stacked bite]                        >

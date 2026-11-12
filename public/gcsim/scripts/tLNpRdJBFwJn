@@ -33,7 +33,7 @@ active furina;
 for let i = 0; i < 4; i = i + 1 {
   furina skill, dash, burst;
   escoffier skill, burst;
-  mualani skill, attack;
+  mualani skill, attack, skill;
   ayato skill, attack:15, burst;
   mualani skill;
   while .mualani.momentum < 1 {
@@ -42,9 +42,11 @@ for let i = 0; i < 4; i = i + 1 {
   mualani attack;
   if .mualani.burst.ready {
     mualani burst;
+  } else {
+    mualani walk;
   }
   ayato skill, attack:14;
 }
 
 # ~25s rotation
-# Furina ED Q > Escoffier EQ > Mualani E N1 > Ayato E N15 Q > Mualani E (gain 1 stack) N1 (Q) > Ayato E N14
+# Furina ED Q > Escoffier EQ > Mualani E N1 E > Ayato E N15 Q > Mualani E (gain 1 stack) N1 (Q) > Ayato E N14

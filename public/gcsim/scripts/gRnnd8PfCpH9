@@ -1,0 +1,72 @@
+# Kazuha Mona Durin Ineffa. Tf kazuha in 2t. Accommodates for kazuha cons; c6 kazuha is ~4k dps/target more. VV kazuha is ~9k dps/target more, but less fun.
+
+kazuha char lvl=90/90 cons=0 talent=9,9,9;
+kazuha add weapon="xiphos" refine=1 lvl=90/90;
+kazuha add set="tf" count=4;
+#kazuha add set="vv" count=4; # +dmg, -fun
+kazuha add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+kazuha add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+mona char lvl=90/90 cons=4 talent=9,9,9;
+mona add weapon="favcodex" refine=5 lvl=90/90;
+mona add set="cg" count=4;
+mona add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311; #main
+mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="lionsroar" refine=5 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*12;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+ineffa add set="sms" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*3 cr=0.0331*7 cd=0.0662*10;
+
+# Options
+options swap_delay=12 iteration=1000 duration=120;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=1 pos=-1.2,2.4;
+target lvl=100 resist=0.1 radius=1 pos=1.2,2.4;
+
+active mona;
+
+let mona_normal = 0; # number of normal attacks mona did since burst
+
+for {
+  switch {
+    case .mona.burst.ready:
+      mona burst, attack;
+      let mona_normal = 1;
+    case .mona.skill.ready:
+      mona skill, attack;
+      let mona_normal = mona_normal + 1;
+    case .ineffa.skill.ready:
+      ineffa skill;
+      if .ineffa.burst.ready {
+        ineffa burst;
+      } else {
+        ineffa attack;
+      }
+    case .durin.skill.ready:
+      durin skill:2;
+    case .durin.burst.ready:
+      durin burst;
+    case .kazuha.skill.ready:
+      kazuha skill, high_plunge;
+    case .kazuha.burst.ready:
+      kazuha burst;
+    case .mona.normal < 4:
+      mona attack;
+    case .kazuha.cons == 6 && .kazuha.normal >= 2 && .kazuha.charge.ready:
+      kazuha charge;
+    case .kazuha.cons == 6:
+      kazuha attack;
+    default:
+      mona attack;
+  }
+}

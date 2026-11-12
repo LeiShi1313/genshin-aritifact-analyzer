@@ -58,6 +58,7 @@ for let i=0; i<2; i=i+1 {
   mavuika skill;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
   sucrose swap; wait(23);  # immediate Sucrose E happens before Mavuika E pyro app, so need to wait
   sucrose skill, dash;     # EM buff to Mualani
   mualani burst;
@@ -76,5 +77,5 @@ for let i=0; i<2; i=i+1 {
   mualani skill;
 }
 
-# Mualani N1 > Xilonen E N2 > Sucrose E > Mavuika Q C E > Mualani E 3[3-stacked bite] > Sucrose E > Mualani Q >
-# Mualani N1 > Xilonen E N2 > Sucrose E > Mavuika hE CD > Mualani E 3[3-stacked bite]
+# Mualani N1 > Xilonen E N2 > Sucrose E > Mavuika Q C E > Mualani E 3[3-stacked bite]   > Sucrose E > Mualani Q >
+# Mualani N1 > Xilonen E N2 > Sucrose E > Mavuika hE CD > Mualani E 3[3-stacked bite] E

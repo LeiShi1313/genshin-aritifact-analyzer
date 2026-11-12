@@ -1,0 +1,96 @@
+flins char lvl=90/90 cons=6 talent=10,10,10;
+flins add weapon="bloodsoakedruins" refine=5 lvl=90/90;
+
+# Flins:
+# Set: 4pc Night of the Sky's Unveiling
+# Main stats: ATK sands / ATK goblet / CRIT DMG circlet
+# KQMS-valid personal substats:
+# HP 2 / ATK 2 / DEF 2 / HP% 2 / ATK% 4 / DEF% 2 / EM 2 / ER 2 / CR 12 / CD 10 = 40
+flins add set="nightoftheskysunveiling" count=4;
+flins add stats hp=4780 atk=311 atk%=0.932 cd=0.622;
+flins add stats hp=507.88 atk=33.08 def=39.36 hp%=0.0992 atk%=0.1984 def%=0.124 em=39.64 er=0.1102 cr=0.3972 cd=0.662;
+
+
+ineffa char lvl=90/90 cons=6 talent=10,10,10;
+ineffa add weapon="fracturedhalo" refine=5 lvl=90/90;
+
+# Ineffa:
+# Set: 4pc Tenacity of the Millelith
+# Main stats: ATK sands / ATK goblet / CRIT Rate circlet
+# KQMS-valid personal substats:
+# HP 2 / ATK 2 / DEF 2 / HP% 2 / ATK% 6 / DEF% 2 / EM 2 / ER 2 / CR 8 / CD 12 = 40
+ineffa add set="totm" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.932 cr=0.311;
+ineffa add stats hp=507.88 atk=33.08 def=39.36 hp%=0.0992 atk%=0.2976 def%=0.124 em=39.64 er=0.1102 cr=0.2648 cd=0.7944;
+
+
+yelan char lvl=90/90 cons=6 talent=10,10,10;
+yelan add weapon="elegy" refine=5 lvl=90/90;
+
+# Yelan:
+# Set: 4pc Silken Moon's Serenade
+# Main stats: ER sands / Hydro DMG goblet / CRIT Rate circlet
+# KQMS-valid personal substats:
+# HP 2 / ATK 2 / DEF 2 / HP% 10 / ATK% 2 / DEF% 2 / EM 2 / ER 4 / CR 6 / CD 8 = 40
+yelan add set="silkenmoonsserenade" count=4;
+yelan add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311;
+yelan add stats hp=507.88 atk=33.08 def=39.36 hp%=0.496 atk%=0.0992 def%=0.124 em=39.64 er=0.2204 cr=0.1986 cd=0.5296;
+
+
+sucrose char lvl=90/90 cons=6 talent=10,10,10;
+
+# Sucrose:
+# Weapon: R5 Thrilling Tales of Dragon Slayers
+# Set: 4pc Viridescent Venerer
+# Main stats: EM sands / EM goblet / EM circlet
+# KQMS-valid personal substats:
+# HP 2 / ATK 2 / DEF 2 / HP% 2 / ATK% 4 / DEF% 2 / EM 6 / ER 12 / CR 4 / CD 4 = 40
+sucrose add weapon="evenstar" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats hp=4780 atk=311 em=561;
+sucrose add stats hp=507.88 atk=33.08 def=39.36 hp%=0.0992 atk%=0.1984 def%=0.124 em=118.92 er=0.6612 cr=0.1324 cd=0.2648;
+
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 radius=2 pos=0,2.4;
+energy every interval=480,720 amount=1;
+
+active ineffa;
+
+for let i=0; i<6; i=i+1 {
+
+  ineffa skill;
+  if .ineffa.burst.ready {
+    ineffa burst;
+  }
+
+
+  yelan skill;
+  yelan burst;
+  yelan attack;
+  yelan skill;
+
+  if !is_even(i) && .sucrose.burst.ready {
+    sucrose attack, burst;
+  } else if .sucrose.skill.ready {
+    sucrose swap; wait(8); # Hide swap cd warning
+    sucrose attack, skill, dash;
+  } else {
+    sucrose attack, charge;
+  }
+
+  flins skill, attack,
+        skill, attack, burst,
+        attack:3, dash, attack:3,
+        skill, attack, burst,
+        attack:3, dash, attack:3,
+        skill, burst, attack;
+  # Go back to Sucrose to Refresh 4pc VV
+  if .sucrose.skill.ready {
+    sucrose attack, skill, dash;
+  } else {
+    sucrose attack, charge;
+  }
+
+}

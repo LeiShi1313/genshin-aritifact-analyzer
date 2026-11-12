@@ -66,10 +66,11 @@ for let i=0; i<4; i=i+1 {
 
           attack:2, charge, dash,
 
-          attack:5, dash;
+          attack:5, dash,
+          attack:3;
   }
 }
 
 # First rot only
 # Chongyun E N1 > Candace E N2 Q > Chongyun Q > Charlotte E Q N1 > Skirk Q tE N2CD 2[N5D] N2CD 2[N5D]
-# Chongyun E N1 > Candace E N2 Q > Chongyun Q > Charlotte E Q N1 > Skirk   tE N2Q  3[N5D] N2CD N5D
+# Chongyun E N1 > Candace E N2 Q > Chongyun Q > Charlotte E Q N1 > Skirk   tE N2Q  3[N5D] N2CD N5D N3

@@ -37,5 +37,5 @@ for let i = 0; i < 4; i = i + 1 {
   lisa burst;
   raiden burst, attack:4, skill, attack:4, dash, attack:4, dash, attack:4;
   bennett skill, attack;
-  lisa attack:6, jump; # spending some time for 20s rot length
+  lisa attack:7, jump; # spending some time for 20s rot length
 }

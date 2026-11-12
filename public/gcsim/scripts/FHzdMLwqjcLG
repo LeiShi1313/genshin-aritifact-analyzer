@@ -39,8 +39,9 @@ yelan burst, attack, skill, attack;
 mualani skill,
           walk[f=91], attack,
           walk[f=91], attack,
-          walk[f=01], burst,
-          walk[f=40], attack;
+          walk[f=1], burst,
+          walk[f=40], attack,
+          walk[f=1];
 
 yelan skill, attack:2;
 
@@ -60,8 +61,9 @@ for let i = 0; i < 3; i = i + 1 {
   mualani skill,
           walk[f=91], attack,
           walk[f=91], attack,
-          walk[f=01], burst,
-          walk[f=40], attack;
+          walk[f=1], burst,
+          walk[f=40], attack,
+          walk[f=1];
 
   yelan skill, attack:2;
 

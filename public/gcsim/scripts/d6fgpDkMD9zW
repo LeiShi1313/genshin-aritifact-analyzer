@@ -45,6 +45,7 @@ for let i=0; i<6; i=i+1 {
   zhongli skill[hold_nostele=1], dash;
   mualani_combo();
   if .mualani.burst.ready {
+    mualani walk[f=1];
     mualani burst, attack;
   } else {
     mualani skill, attack, charge, attack:2;

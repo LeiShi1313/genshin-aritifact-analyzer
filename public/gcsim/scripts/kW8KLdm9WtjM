@@ -1,0 +1,58 @@
+# Neuvillette Lauma Emilie Durin. ~26s Rot. Neuvillette BurnVape with 4 CAs. Emilie bursts exclusively after using to skill at the start to enable 2 Lauma hE every rot. 2 Light Durin E. No burst Lauma.
+
+# Team
+neuv char lvl=90/90 cons=0 talent=9,9,9;
+neuv add weapon="sacjade" refine=1 lvl=90/90;
+neuv add set="mh" count=5;
+neuv add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622; #main
+neuv add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*6 cd=0.0662*9;
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="evenstar" refine=1 lvl=90/90;
+lauma add set="deepwood" count=4;
+lauma add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*6 cr=0.0331*12 cd=0.0662*8;
+
+emilie char lvl=90/90 cons=0 talent=9,9,9;
+emilie add weapon="deathmatch" refine=1 lvl=90/90;
+emilie add set="ur" count=4;
+emilie add stats hp=4780 atk=311 atk%=0.466 dendro%=0.466 cd=0.622; #main
+emilie add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*9;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="xiphos" refine=1 lvl=90/90;
+durin add set="fopl" count=4;
+durin add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*2 em=19.82*6 cr=0.0331*8 cd=0.0662*2;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=1.5 pos=0,1.9 hp=999999999;
+#target lvl=100 resist=0.1 radius=1.5 pos=0,5 hp=999999999;
+
+# Rotation
+active emilie;
+emilie skill;
+
+for let i=0; i<4; i=i+1 {
+  neuv skill;
+
+  emilie burst;
+
+  durin skill:2, burst;
+
+  lauma skill[hold=.dew>0];
+
+  neuv charge, burst, skill, charge;
+
+  durin skill:2;
+
+  lauma attack, skill[hold=1];
+
+  neuv charge, charge;
+}
+wait(173);

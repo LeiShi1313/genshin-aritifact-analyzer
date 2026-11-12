@@ -59,6 +59,7 @@ for let i=0; i<4; i=i+1 {
           attack, charge, dash,
 
           attack:5;
+    skirk attack:3; # Phys filler for TTDS 20s cd
   } else {
     skirk skill,
           attack:2, burst,
@@ -71,10 +72,10 @@ for let i=0; i<4; i=i+1 {
 
           attack:5, dash,
           attack:2;
-    skirk attack:2; # Phys filler for TTDS 20s cd
+    skirk attack:3; # Phys filler for TTDS 20s cd
   }
 }
 
 # Skirk Q is First rot only
-# Candace E N2 Q > Dahlia E N2 Q > Charlotte N1 E N1 Q N1 > Skirk Q tE N5D N1CD 2[N5D] N1CD N5
-# Candace E N2 Q > Dahlia E N2 Q > Charlotte N2 E N2D N1D > Skirk   tE N2Q      3[N5D] N2CD N5D N4
+# Candace E N2 Q > Dahlia E N2 Q > Charlotte N1 E N1 Q N1 > Skirk Q tE N5D N1CD 2[N5D] N1CD N5   N3
+# Candace E N2 Q > Dahlia E N2 Q > Charlotte N2 E N2D N1D > Skirk   tE N2Q      3[N5D] N2CD N5D  N5

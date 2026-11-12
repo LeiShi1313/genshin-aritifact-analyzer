@@ -36,8 +36,9 @@ fn mualani_combo() {
       }
       mualani attack;
     }
-  break;
+    break;
   }
+  mualani walk[f=1];
 }
 
 active mavuika;
@@ -53,5 +54,4 @@ for let i=0; i<3; i=i+1 {
   xilonen skill, attack:2;
   mavuika skill[hold=1], attack:2, dash; pick_up_crystallize("hydro");
   mualani_combo();
-  mualani skill;
 }

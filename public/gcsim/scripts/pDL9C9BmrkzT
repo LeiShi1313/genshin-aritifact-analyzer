@@ -1,0 +1,83 @@
+# Noelle Furina Columbina Chiori. 22s Rot. Noelle Double Hydro Lunar Crystallize. Chiori swap into Noelle. Columbina bursts every other rotation. Half-spinning is pretty similar, for more healing.
+
+# Team - Options ordered by DPS
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+noelle add weapon="flameforgedinsight" refine=5 lvl=90/90;
+noelle add set="mh" count=4;
+#noelle add set="ap" count=4;
+#noelle add set="husk" count=4;
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; #main
+noelle add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # MH
+#noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cr=0.311; #main
+#noelle add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # Other
+
+furina char lvl=90/90 cons=0 talent=9,9,9;
+furina add weapon="favsword" refine=3 lvl=90/90;
+furina add set="sms" count=4;
+furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+columbina char lvl=90/90 cons=0 talent=9,9,9;
+columbina add weapon="sacjade" refine=1 lvl=90/90;
+columbina add set="aubade" count=4;
+columbina add stats hp=4780 atk=311 em=187 hp%=0.466 cd=0.622; #main
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*7 cr=0.0331*7 cd=0.0662*10;
+
+chiori char lvl=90/90 cons=0 talent=9,9,9;
+chiori add weapon="cinnabar" refine=5 lvl=90/90;
+chiori add set="gt" count=4;
+chiori add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; #main
+chiori add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+# Functions
+# Pickup Crystallize
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+    pick_up_crystallize("any");
+  }
+
+  return _execute_action(char_id, action_id, p);
+}
+
+# Noelle CA?
+let noelle_half_spin = true;
+
+# Rotation
+active columbina;
+#active noelle; # SS Stacks
+
+for let i=0; i<4; i=i+1 {
+  if i > 0 && (.columbina.weapon == .keys.weapon.pamber || (.columbina.burst.ready && .columbina.energy == .columbina.energymax)) {
+    columbina skill, burst;
+  } else {
+    columbina skill, attack;
+  }
+
+  furina skill, dash, attack:1, burst;
+
+  chiori skill:2;
+
+  if noelle_half_spin == false {
+    noelle skill, burst,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, dash,
+    attack:3, dash,
+    attack:4;
+  } else { # Faster Healing
+    noelle skill, burst,
+    charge[no_limit=1]:8, charge[final=1], dash,
+    attack:3, dash,
+    attack:3, dash,
+    attack:2;
+  }
+}

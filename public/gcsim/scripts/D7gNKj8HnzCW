@@ -9,13 +9,13 @@ wrio add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 e
 shenhe char lvl=90/90 cons=0 talent=9,9,9;
 shenhe add weapon="favlance" refine=3 lvl=90/90;
 shenhe add set="no" count=4;
-shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466 ; #main
+shenhe add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
 shenhe add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.551 em=39.64 cr=0.3972 cd=0.1324;
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="favsword" refine=3 lvl=90/90;
 furina add set="gt" count=4;
-furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311; #main
+furina add stats hp=4780 atk=311 er=0.518 hp%=0.466 cr=0.311;
 furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
 
 charlotte char lvl=90/90 cons=6 talent=9,9,9;
@@ -41,8 +41,8 @@ for let x=0; x<4; x=x+1 {
        attack:3, charge, jump,
        attack:3;
   if .wrio.burst.ready {
-    wrio burst;
+    wrio burst, attack;
   } else {
-    wrio charge, jump, attack;
+    wrio charge, jump, attack:3;
   }
 }

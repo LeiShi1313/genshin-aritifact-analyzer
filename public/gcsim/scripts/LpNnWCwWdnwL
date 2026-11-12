@@ -53,13 +53,10 @@ for let i=0; i<4; i=i+1 {
   mavuika charge:3, charge[hold=6], charge[final=1], dash;
   mavuika charge:3, charge[hold=6], charge[final=1], dash; # the last Final CA is buffed by Mavuika Q.
 
-  mavuika charge:2;
-
   if UseXilonenDash == false {   # if you didn't use Xilonen's dash, you need to do extra action to make it 18s rot length
-    mavuika charge[final=1];
-    delay(23);
+    mavuika charge;
   } else {
-    mavuika charge[final=1];
+    // skip
   }
 }
 

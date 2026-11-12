@@ -24,11 +24,8 @@ mavuika add stats def=39.36 def%=0.124 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.198
 
 options swap_delay=12 iteration=1000;
 
-active mualani;
-
 target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
 energy every interval=480,720 amount=1;
-
 
 fn mualani_combo() {
   mualani skill;
@@ -39,7 +36,7 @@ fn mualani_combo() {
       }
       mualani attack;
     }
-  break;
+    break;
   }
 }
 
@@ -56,6 +53,8 @@ fn sucrose_combo() {
   }
 }
 
+active mualani;
+
 for let i=0; i<2; i=i+1 {
 
   if i {
@@ -68,6 +67,7 @@ for let i=0; i<2; i=i+1 {
   mavuika burst, skill, dash;
   pick_up_crystallize("hydro");
   mualani_combo();
+  mualani walk[f=1];
   sucrose attack, skill, dash;
   mualani burst[travel=0];
 
@@ -89,5 +89,6 @@ for let i=0; i<2; i=i+1 {
   mavuika burst, skill, dash;
   pick_up_crystallize("hydro");
   mualani_combo();
+  mualani walk[f=1];
   sucrose attack, skill, dash;
   mualani burst[travel=0];

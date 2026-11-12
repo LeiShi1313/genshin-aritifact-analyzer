@@ -1,0 +1,84 @@
+options swap_delay=12 iteration=1000;
+
+# Build assumptions
+varka char lvl=90/90 cons=0 talent=9,9,9;
+varka add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+//varka add weapon="gestofthemightywolf" refine=1 lvl=90/90;
+varka add set="risingwinds" count=4;
+varka add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+varka add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+prune char lvl=90/90 cons=6 talent=9,9,9;
+prune add weapon="oathsworneye" refine=5 lvl=90/90;
+prune add set="vv" count=4;
+prune add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+prune add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*2 cr=0.0331*10 cd=0.0662*4;
+// C5 Prune
+//prune add stats hp=4780 atk=311 er=0.518 atk%=0.466 atk%=0.466;
+//prune add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*8 er=0.0551*8 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+nicole char lvl=90/90 cons=0 talent=9,9,9;
+nicole add weapon="ttds" refine=5 lvl=90/90;
+nicole add set="cg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*6 er=0.0551*12 em=19.82*2 cr=0.0331*2 cd=0.0662*2;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622;
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*7 em=19.82*2 cr=0.0331*12 cd=0.0662*7;
+//durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*2 cr=0.0331*12 cd=0.0662*6; // Non-TTDS Nicole
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+# Rotation assumptions
+active varka; // Serpent Spine stacks
+
+let walk_cancel=true; // true for walk and false for no walk
+fn walk_or_not() {
+  if walk_cancel {
+    varka walk;
+  }
+}
+
+for let i=0; i<6; i=i+1 {
+  durin skill:2, burst;
+  prune skill, burst;
+  nicole skill, burst;
+  varka skill;
+  varka attack;
+  if .varka.cons == 0 {
+    varka charge;  walk_or_not();
+  } else {
+    varka skill;
+  }
+  varka attack:4, skill;
+  varka attack:4, skill;
+  varka attack;
+  varka charge;  walk_or_not();
+  if .nicole.weapon == .keys.weapon.ttds { // if nicole is holding TTDS
+    varka attack:2;
+    varka charge;
+    if .varka.cons != 0 {
+      delay(3); // sE is faster than C
+    }
+    if .varka.weapon == .keys.weapon.gestofthemightywolf {
+      if walk_cancel==true {
+        delay(5);
+      }
+    }
+  } else {
+    varka attack;
+  }
+}
+
+// TTDS Nicole
+// C0 N1CW 2[N4sE] N1CW N2C
+// C1 N1sE 2[N4sE] N1CW N2C
+
+// Non-TTDS Nicole
+// C0 N1CW 2[N4sE] N1CW N1
+// C1 N1sE 2[N4sE] N1CW N1

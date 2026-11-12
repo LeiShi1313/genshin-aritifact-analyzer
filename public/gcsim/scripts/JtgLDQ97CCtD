@@ -45,13 +45,13 @@ for let i=0; i<4; i=i+1 {
   if i > 0  && .ineffa.burst.ready {
     ineffa skill, burst;
   } else {
-    ineffa skill;
+    ineffa skill, attack;
   }
 
   if i > 0 && .columbina.burst.ready {
     columbina skill, burst;
   } else {
-    columbina attack:1, skill, attack:1; # Better for filling time
+    columbina skill, attack:1; # Better for filling time
   }
 
   if i > 0 && .sucrose.burst.ready {

@@ -45,6 +45,7 @@ for let i = 0; i < 4; i = i + 1 {
        attack:3, dash,
        attack:3, dash,
        attack:3, dash,
-       attack:3, dash;
+       attack:3, dash,
+       attack:2;
   arle skill, burst;
 }

@@ -1,0 +1,68 @@
+# Razor Aino Ineffa Durin. ~20 Rot. KQMS KurtC. Razor Hex Lunarcharge. ADCFRW > NotSU Razor. Xiphos EM Durin trails in performance.
+
+# Team - Options listed by DPS
+razor char lvl=90/90 cons=6 talent=9,9,9;
+razor add weapon="serpent" refine=1 lvl=90/90 +params=[stacks=5];
+razor add set="risingwinds" count=4;
+#razor add set="notsu" count=4;
+razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10; # ADCFRW
+#razor add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+#razor add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*3 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # RW
+
+aino char lvl=90/90 cons=6 talent=9,9,9;
+aino add weapon="favgs" refine=3 lvl=90/90;
+aino add set="sms" count=4;
+#aino add set="no" count=4;
+aino add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+aino add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12; # SMS
+#aino add stats hp=4780 atk=311 em=187 em=187 cr=0.311; #main
+#aino add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12; # NO
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+ineffa add set="aubade" count=4;
+#ineffa add set="tom" count=4;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+durin char lvl=90/90 cons=0 talent=9,9,9;
+durin add weapon="lionsroar" refine=3 lvl=90/90;
+#durin add weapon="xiphos" refine=1 lvl=90/90;
+durin add set="cg" count=4;
+durin add stats hp=4780 atk=311 em=187 pyro%=0.466 cr=0.311; #main
+durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*8 em=19.82*9 cr=0.0331*2 cd=0.0662*2; # LR
+#durin add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+#durin add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*12 er=0.0551*2 em=19.82*6 cr=0.0331*8 cd=0.0662*2; # Xiphos
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active razor; # SS Stacks
+#razor skill, dash; # Not optimal
+
+for let i=0; i<4; i=i+1 {
+  if i > 0  && .ineffa.burst.ready {
+    ineffa skill, burst;
+  } else {
+    ineffa skill, attack;
+  }
+
+  aino skill, burst;
+
+  durin skill, skill, burst;
+
+  razor skill[hold=0], dash, attack, burst;
+  razor attack:1, skill, dash;
+  razor attack:3, dash;
+  razor attack:3, dash;
+  razor attack:3, skill, dash;
+  razor attack:3, dash;
+  razor attack:3;
+}

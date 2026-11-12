@@ -23,15 +23,25 @@ import { parseScript } from "../../scripts/gcsim";
 test("GCSIM capabilities expose the pinned engine support boundary", () => {
   assert.equal(isGCSimCharacterSupported(Character.DURIN), true);
   assert.equal(isGCSimCharacterSupported(Character.NICOLE), true);
-  assert.equal(isGCSimCharacterSupported(Character.SANDRONE), false);
+  assert.equal(isGCSimCharacterSupported(Character.SANDRONE), true);
+  assert.equal(isGCSimCharacterSupported(Character.VESNA), false);
+  assert.equal(isGCSimCharacterSupported(Character.VODYANITSA), false);
+  assert.equal(isGCSimCharacterSupported(Character.MITYA), false);
+  assert.equal(isGCSimCharacterSupported(Character.VALERIY), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.STARSEALED_EDICT), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.BEYOND_THE_CHRYSALIS), true);
+  assert.equal(isGCSimWeaponSupported(Weapon.HYMN_OF_THE_MAELSTROM), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.FROSTBREATH), true);
+  assert.equal(isGCSimWeaponSupported(Weapon.SONG_OF_THE_VIGIL), true);
+  assert.equal(isGCSimWeaponSupported(Weapon.CLASH_OF_KINGS), true);
 
   assert.equal(isGCSimWeaponSupported(Weapon.ATHAME_ARTIS), true);
-  assert.equal(isGCSimWeaponSupported(Weapon.DISASTER_AND_REMORSE), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.DISASTER_AND_REMORSE), true);
 
   assert.equal(isGCSimSetSupported(Set.CELESTIAL_GIFT), true);
   assert.equal(isGCSimSetSupported(Set.DISENCHANTMENT_IN_DEEP_SHADOW), true);
-  assert.equal(isGCSimSetSupported(Set.HEART_OF_THE_FURNACE), false);
-  assert.equal(isGCSimSetSupported(Set.SCARLET_PROOF), false);
+  assert.equal(isGCSimSetSupported(Set.HEART_OF_THE_FURNACE), true);
+  assert.equal(isGCSimSetSupported(Set.SCARLET_PROOF), true);
 
   assert.equal(
     getGCSimCharacterName(Character.YUMEMIZUKI_MIZUKI),
@@ -111,14 +121,12 @@ test("unsupported inferred sets are shown as omitted equipment", () => {
     { enabled: true },
     positions.map((position) => ({
       position,
-      artifact: artifact(Set.HEART_OF_THE_FURNACE, position),
+      artifact: artifact(Set.ADVENTURER, position),
     }))
   );
 
   assert.equal(changed.sets, undefined);
-  assert.deepEqual(changed.unsupportedEquipment?.sets, [
-    Set.HEART_OF_THE_FURNACE,
-  ]);
+  assert.deepEqual(changed.unsupportedEquipment?.sets, [Set.ADVENTURER]);
 });
 
 test("a naked uploaded GOOD character clears preset artifact stats and sets", () => {
@@ -159,7 +167,7 @@ test("character filters are the unique supported characters present in scripts",
     {
       characterInfos: [
         { character: Character.DURIN },
-        { character: Character.SANDRONE },
+        { character: Character.MITYA },
       ],
     },
   ];

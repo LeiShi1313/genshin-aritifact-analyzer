@@ -1,0 +1,77 @@
+# Sethos Lauma Yelan Nahida. ~18 Rot. KQMS KurtC. Sethos Quickbloom(kinda). Sethos EN1Q 8N2W N1E into a Shadow Peircing shot. Lauma does not burst and deals one CA at the end of the rotation. Nahida bursts every rotation.
+
+# Team - Options listed by DPS
+sethos char lvl=90/90 cons=6 talent=9,9,9;
+sethos add weapon="slingshot" refine=5 lvl=90/90;
+sethos add set="gd" count=4;
+#sethos add set="notsu" count=4;
+sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*12 cd=0.0662*10; # GD
+#sethos add stats hp=4780 atk=311 em=187 em=187 cd=0.622; #main
+#sethos add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*4 cr=0.0331*10 cd=0.0662*10; # NOTSU
+
+lauma char lvl=90/90 cons=0 talent=9,9,9;
+lauma add weapon="widsith" refine=3 lvl=90/90;
+lauma add set="gt" count=4;
+#lauma add set="aubade" count=4;
+lauma add stats hp=4780 atk=311 em=187 dendro%=0.466 cr=0.311; #main
+lauma add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+yelan char lvl=90/90 cons=0 talent=9,9,9;
+yelan add weapon="favbow" refine=4 lvl=90/90;
+yelan add set="sms" count=4;
+#yelan add set="emblem" count=4;
+yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311; #main
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*2 cr=0.0331*10 cd=0.0662*4;
+
+nahida char lvl=90/90 cons=0 talent=9,9,9;
+nahida add weapon="etherlight" refine=5 lvl=90/90;
+nahida add set="deepwood" count=4;
+nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*9 em=19.82*2 cr=0.0331*8 cd=0.0662*9;
+
+# Options
+options iteration=1000;
+options swap_delay=12;
+energy every interval=480,720 amount=1; # Standard ST
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Front
+#target lvl=100 resist=0.1 radius=2 pos=0,6.4 hp=100000000; # Rear
+
+# Rotation
+active nahida;
+
+for let i=0; i<4; i=i+1 {
+  if i == 0 {
+    nahida skill, burst;
+  } else {
+    nahida attack, skill, burst;
+  }
+
+  yelan skill;
+  if !.yelan.burst.ready && .yelan.breakthrough {
+    yelan aim;
+  } else if !.yelan.burst.ready {
+    yelan attack;
+  }
+  yelan burst, attack;
+
+  lauma skill[hold=.dew>2], attack;
+
+  sethos skill, attack; # aim[hold=2]; # High ping only
+  sethos burst;
+  sethos attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:2, walk,
+         attack:1;
+  sethos skill, attack;
+  sethos aim[hold=2]:1;
+
+  lauma attack, charge;
+}

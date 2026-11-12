@@ -1,4 +1,4 @@
-# Xianyun Nahida Yae Fischl. ~25s Rot. Xianyun Aggravate plunge in ST. Nahida only touches the field once. Yae bursts every other rotation; slight DPS gainl. 50% Collisons.
+# Xianyun Nahida Yae Fischl. ~25s Rot. KQMS KurtC. Xianyun Aggravate plunge in ST. Nahida only touches the field once. Yae bursts every other rotation; slight DPS gain. 50% Collisons.
 
 # Team - Options listed by DPS
 xianyun char lvl=90/90 cons=0 talent=9,9,9;
@@ -6,9 +6,9 @@ xianyun add weapon="hakushin" refine=5 lvl=90/90;
 #xianyun add weapon="evenstar" refine=1 lvl=90/90;
 xianyun add set="vv" count=4;
 xianyun add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311; #main
-xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944; # ST
+xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 #xianyun add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-#xianyun add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.3472 er=0.1102 em=118.92 cr=0.331 cd=0.331; # 2T
+#xianyun add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*8 em=19.82*6 cr=0.0331*9 cd=0.0662*5; # 2T
 
 nahida char lvl=90/90 cons=0 talent=9,9,9;
 nahida add weapon="evenstar" refine=1 lvl=90/90;
@@ -17,31 +17,38 @@ nahida add set="tom" count=4;
 #nahida add set="scroll" count=4;
 #nahida add set="deepwood" count=4;
 nahida add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-nahida add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.2204 em=118.92 cr=0.2979 cd=0.5958;
+nahida add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*6 cr=0.0331*7 cd=0.0662*9;
 
 yae char lvl=90/90 cons=0 talent=9,9,9;
 yae add weapon="widsith" refine=3 lvl=90/90;
 yae add set="gt" count=4;
 #yae add set="gd" count=4;
 yae add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
-yae add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944;
+yae add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 fischl char lvl=90/90 cons=6 talent=9,9,9;
 fischl add weapon="stringless" refine=3 lvl=90/90;
 fischl add set="gt" count=4;
 fischl add stats hp=4780 atk=311 atk%=0.466 electro%=0.466 cr=0.311; #main
-fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # EM Sands
-#fischl add stats hp=4780 atk=311 em=187 electro%=0.466 cr=0.311; #main
-#fischl add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=79.28 cr=0.331 cd=0.7944; # ATK Sands
+fischl add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
 
 # Options
 options iteration=1000;
 options swap_delay=12;
-energy every interval=480,720 amount=1;
+energy every interval=480,720 amount=1; # Standard
 
 # Targets
-target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
-#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000; # Front
+#target lvl=100 resist=0.1 radius=2 pos=3.4,0 hp=100000000; # Side
+
+# Functions
+# Xianyun Plunge Combo
+fn XianyunPlunge() {
+  xianyun jump;
+  if .airborne {
+    xianyun high_plunge[collision=rand()>0.5];
+  }
+}
 
 # Rotation
 active yae;
@@ -49,6 +56,7 @@ active yae;
 for let i = 0; i < 4; i = i + 1 {
   yae skill:3;
 
+  # Burst every other rotation after the first
   nahida skill;
   if i > 0 && .nahida.burst.ready {
     nahida burst, charge;
@@ -60,33 +68,21 @@ for let i = 0; i < 4; i = i + 1 {
 
   xianyun skill, low_plunge, attack, burst; # Attack for Fischl C6
 
-  while .yae.skill.charge < 3 {
-    if .xianyun.status.xianyun-airborne-buff {
-      xianyun jump;
-      if .airborne {
-        xianyun high_plunge[collision=rand()>0.5], dash;
-      }
-    } else if .xianyun.normal > 3 && .stam > 18 {
-      xianyun dash;
-    } else {
-      xianyun attack;
-    }
-  }
-
-  yae skill:3;
+    # 3 High plunges into totem refresh
+  XianyunPlunge(); xianyun attack;
+  XianyunPlunge(); xianyun dash;
+  XianyunPlunge(); xianyun dash;
+  XianyunPlunge(); xianyun dash;
+  XianyunPlunge(); xianyun dash;
+  XianyunPlunge(); xianyun dash;
+  XianyunPlunge();
 
   fischl attack:2, burst;
 
-  # Matches Yae Totems expiring
-  while .status.yae_oldest_totem_expiry > 390 {
-    if .xianyun.skill.ready {
-      xianyun skill, low_plunge;
-    } else if .xianyun.status.xianyun-airborne-buff {
-      xianyun jump;
-      if .airborne {
-        xianyun high_plunge[collision=rand()>0.5], attack;
-      }
-    } else if .xianyun.normal > 2 && .stam > 18 {
+  XianyunPlunge();
+  # FIll time for Yae Totems expiring
+  while .status.yae_oldest_totem_expiry > 60 {
+    if .xianyun.normal > 2 && .stam > 18 {
       xianyun dash;
     } else {
       xianyun attack;
@@ -96,5 +92,4 @@ for let i = 0; i < 4; i = i + 1 {
   if .yae.burst.ready && .yae.energy == .yae.energymax {
     yae burst;
   }
-
 }

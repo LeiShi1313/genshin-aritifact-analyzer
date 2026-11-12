@@ -57,6 +57,7 @@ for let i=0; i<2; i=i+1 {
   mualani burst;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
   if .mualani.nightsoul.state {
     mualani skill; # exit the nightsoul state
   }
@@ -80,6 +81,7 @@ for let i=0; i<2; i=i+1 {
   mona burst;
   mualani skill;
   mualani_combo();
+  mualani walk[f=1];
 }
 
 # Mona E >

@@ -12,9 +12,25 @@ OUTPUT_DIR="$PROJECT_DIR/public/gcsim"
 OUTPUT_FILE="$OUTPUT_DIR/main.wasm"
 TEMP_FILE="$OUTPUT_DIR/main.wasm.tmp"
 WASM_EXEC_FILE="$OUTPUT_DIR/wasm_exec.js"
+SHARE_KEY_FILE="$GCSIM_DIR/pkg/sharekey/key_embedded.go"
+SHARE_KEY_BACKUP=""
+SHARE_KEY_GENERATED=false
 
 mkdir -p "$OUTPUT_DIR"
-trap 'rm -f "$TEMP_FILE" "$TEMP_FILE.gz"' EXIT
+cleanup() {
+  rm -f "$TEMP_FILE" "$TEMP_FILE.gz"
+  if [ -n "$SHARE_KEY_BACKUP" ]; then
+    if [ "$SHARE_KEY_GENERATED" = true ]; then
+      if [ -f "$SHARE_KEY_BACKUP/key_embedded.go" ]; then
+        cp -p "$SHARE_KEY_BACKUP/key_embedded.go" "$SHARE_KEY_FILE"
+      else
+        rm -f "$SHARE_KEY_FILE"
+      fi
+    fi
+    rm -r "$SHARE_KEY_BACKUP"
+  fi
+}
+trap cleanup EXIT
 
 GO_VERSION="$(awk '$1 == "go" { print $2; exit }' "$GCSIM_DIR/go.mod")"
 if [ -z "$GO_VERSION" ]; then
@@ -43,13 +59,22 @@ echo "Building optimized WASM..."
 
 # Strip symbols and the build id so identical source produces identical bytes.
 LDFLAGS="-w -s -buildid="
+BUILD_TAGS=()
 if [ -n "${GCSIM_SHARE_KEY:-}" ]; then
-  LDFLAGS="$LDFLAGS -X 'main.shareKey=${GCSIM_SHARE_KEY}'"
+  SHARE_KEY_BACKUP="$(mktemp -d)"
+  if [ -e "$SHARE_KEY_FILE" ]; then
+    cp -p "$SHARE_KEY_FILE" "$SHARE_KEY_BACKUP/key_embedded.go"
+  fi
+  SHARE_KEY_GENERATED=true
+  # Upstream validates the id:class:hex key and generates the tagged source.
+  go run ../sharekeygen
+  BUILD_TAGS=(-tags sharekey)
 fi
 
 GOOS=js GOARCH=wasm go build \
   -trimpath \
   -buildvcs=false \
+  "${BUILD_TAGS[@]}" \
   -o "$TEMP_FILE" \
   -ldflags="$LDFLAGS"
 
@@ -61,6 +86,7 @@ echo "Raw WASM built: $RAW_SIZE"
 echo "Compressing with gzip..."
 gzip -n -9 -f "$TEMP_FILE"
 mv "$TEMP_FILE.gz" "$OUTPUT_FILE"
+chmod 644 "$OUTPUT_FILE"
 
 FINAL_SIZE=$(ls -lh "$OUTPUT_FILE" | awk '{print $5}')
 echo "Final compressed WASM: $OUTPUT_FILE ($FINAL_SIZE)"

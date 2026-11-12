@@ -56,12 +56,14 @@ function add(req: { result: Uint8Array }) {
 }
 
 function doFlush() {
-  // TODO: have a specific result response type to enforce (protos?)
-  const resp = JSON.parse(flush());
-  if (resp.error) {
-    return { type: AggResponse.Failed, reason: resp.error };
+  const resp = flush();
+  if (typeof resp === "string") {
+    return { type: AggResponse.Failed, reason: JSON.parse(resp).error };
   }
-  return { type: AggResponse.Result, result: resp };
+  return {
+    type: AggResponse.Result,
+    result: { stats: JSON.parse(resp.result).statistics, hash: resp.hash },
+  };
 }
 
 // @ts-ignore

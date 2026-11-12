@@ -40,6 +40,7 @@ fn mualani_combo2() {
     }
     break;
   }
+  mualani walk[f=1];
 }
 
 fn mualani_combo3() {
@@ -53,6 +54,7 @@ fn mualani_combo3() {
     }
     break;
   }
+  mualani walk[f=1];
 }
 
 for let i=0; i<6; i=i+1 {

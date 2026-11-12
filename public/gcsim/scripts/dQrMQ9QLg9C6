@@ -7,11 +7,11 @@ alhaitham add weapon="wolffang" refine=1 lvl=90/90;
 #alhaitham add weapon="umbrella" refine=5 lvl=90/90;
 alhaitham add set="mh" count=4;
 alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
-alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662; # WF
+alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*3 em=19.82*2 cr=0.0331*7 cd=0.0662*10; # WF
 #alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
-#alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.4464 er=0.1102 em=39.64 cr=0.2317 cd=0.662; # HoD
+#alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*9 er=0.0551*3 em=19.82*2 cr=0.0331*7 cd=0.0662*9; # HoD
 #alhaitham add stats hp=4780 atk=311 em=187 dendro%=0.466 cd=0.622; #main
-#alhaitham add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;# Umbrella
+#alhaitham add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*3 em=19.82*2 cr=0.0331*12 cd=0.0662*9; # Umbrella
 
 furina char lvl=90/90 cons=0 talent=9,9,9;
 furina add weapon="festering" refine=5 lvl=90/90;
@@ -19,24 +19,22 @@ furina add weapon="festering" refine=5 lvl=90/90;
 furina add set="gt" count=4;
 #furina add set="deepwood" count=4;
 furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
-furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.2976 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.3972 cd=0.5296; # FD
-#furina add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cd=0.622;
-#furina add stats def%=0.124 def=39.36 hp=507.88 hp%=0.248 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.2979 cd=0.5296; # WF
+furina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*6 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*8;
 
 yelan char lvl=90/90 cons=0 talent=9,9,9;
 yelan add weapon="favbow" refine=4 lvl=90/90;
 yelan add set="deepwood" count=4;
 #yelan add set="eosf" count=4;
 yelan add stats hp=4780 atk=311 hp%=0.466 hydro%=0.466 cr=0.311;
-yelan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.1984 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+yelan add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*4 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
 
 dori char lvl=90/90 cons=6 talent=9,9,9;
-dori add weapon="favgs" refine=3 lvl=90/90;
+dori add weapon="flameforgedinsight" refine=5 lvl=90/90;
 dori add set="fopl" count=4;
 #dori add set="scroll" count=4;
 #dori add set="deepwood" count=4;
 dori add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-dori add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.4408 em=118.92 cr=0.3972 cd=0.1324;
+dori add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*12 em=19.82*6 cr=0.0331*2 cd=0.0662*2;
 
 # Options
 options iteration=1000;
@@ -60,7 +58,7 @@ for let r=0; r<4; r=r+1 {
   }
   yelan burst, attack;
 
-  dori skill, attack, burst, attack;
+  dori skill, attack, burst;
 
   haitham skill,
           attack:3, dash,

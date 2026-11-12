@@ -59,7 +59,8 @@ for let i=0; i<4; i=i+1 {
     mualani burst;
     mualani attack;
   } else {
-    mualani attack:3; # waiting for Xiangling 20s cd
+    mualani skill;
+    mualani attack:3, dash; # waiting for Xiangling 20s cd
   }
 }
 

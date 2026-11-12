@@ -42,6 +42,7 @@ fn mualani_combo1() {
     }
     break;
   }
+  mualani walk;
 }
 
 fn mualani_combo3() {
@@ -55,6 +56,7 @@ fn mualani_combo3() {
     }
     break;
   }
+  mualani walk;
 }
 
 

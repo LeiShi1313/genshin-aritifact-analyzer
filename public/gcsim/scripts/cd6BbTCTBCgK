@@ -34,7 +34,9 @@ for let i=0; i<4; i=i+1 {
   bennett skill, attack, burst;
   citlali skill, burst, attack;
   if !.mavuika.burst.ready {
-    mavuika charge, attack; # Normal Mavuika CA that Melts with Bennett's Infusion
+    mavuika swap;
+    wait(9); # Waiting for Bennett's Pyro Infusion
+    mavuika attack:2; # Normal Mavuika NAs, first one Melts with Bennett's Infusion
   }
   mavuika burst, charge, dash, attack,
              charge, dash, attack,
@@ -44,4 +46,4 @@ for let i=0; i<4; i=i+1 {
 }
 
 # ~17s rotations
-# Mavuika tE > Escoffier N1 E N1 > Bennett E N1 Q > Citlali EQ N1 > Mavuika (C N1) Q 5[CD N1] CD
+# Mavuika tE > Escoffier N1 E N1 > Bennett E N1 Q > Citlali EQ N1 > Mavuika (N2) Q 5[CD N1] CD

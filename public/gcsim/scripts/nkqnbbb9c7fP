@@ -50,19 +50,7 @@ for let i=0; i<4; i=i+1 {
   if i == 0 && First_Rot_Nuke == true {
     skirk burst;
     skirk skill,
-          attack, charge, dash,
-
-          attack:5, dash,
-          attack:5, dash,
-          attack:5, dash,
-
-          attack, charge, dash,
-
-          attack:5, dash,
-          attack:5, dash;
-  } else {
-    skirk skill,
-          attack, burst,
+          attack:2, charge, dash,
 
           attack:5, dash,
           attack:5, dash,
@@ -71,7 +59,20 @@ for let i=0; i<4; i=i+1 {
           attack:2, charge, dash,
 
           attack:5, dash,
-          attack:5, dash;
+          attack:4;
+  } else {
+    skirk skill,
+          attack:2, burst,
+
+          attack:5, dash,
+          attack:5, dash,
+          attack:5, dash,
+
+          attack:2, charge, dash,
+
+          attack:5, dash,
+          attack:5, dash,
+          attack;
   }
 }
 

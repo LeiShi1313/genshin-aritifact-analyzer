@@ -39,7 +39,7 @@ let First_Rot_Nuke = true;  # Change this value between true and false.
 active furina;
 
 for let i=0; i<4; i=i+1 {
-  furina skill, dash, burst;
+  furina attack:2, skill, dash, burst;
   escoffier skill, burst;
   mualani skill, attack, skill;
   if i == 0 && First_Rot_Nuke == true {
@@ -73,7 +73,6 @@ for let i=0; i<4; i=i+1 {
     }
   }
   mualani skill, attack, skill; # Exit NS state by using E, this makes E cd start earlier
-  furina attack;
 }
 
 # First rot only

@@ -42,5 +42,5 @@ for let i = 0; i < 4; i = i + 1 {
        attack,
        skill;
   kazuha skill, high_plunge;
-  arle attack:5, dash; # waiting for kokomi E and TTDS 20s cd
+  arle attack:5, dash, attack:3; # waiting for kokomi E and TTDS 20s cd
 }

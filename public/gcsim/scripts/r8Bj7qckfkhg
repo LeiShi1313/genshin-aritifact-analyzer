@@ -60,6 +60,6 @@ for let i=0; i<4;i=i+1 {
   if is_even(i) {
     wrio burst;
   } else {
-    wrio charge, jump, attack;
+    wrio charge;
   }
 }

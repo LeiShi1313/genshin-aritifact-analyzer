@@ -51,5 +51,7 @@ for let i=0; i<4; i=i+1 {
   navia skill[hold=1], attack:3;
   if i == 0 || i == 3 {
     navia skill[hold=1];
+  } else {
+    navia dash, attack;
   }
 }

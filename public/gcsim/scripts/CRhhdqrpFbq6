@@ -63,6 +63,7 @@ for let i=0; i<4; i=i+1 {
   if is_even(i) {
     mualani burst;
   } else {
+    mualani walk[f=1];
     xilonen burst, jump:2;
   }
 }

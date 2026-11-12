@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
+  createGenshinDbProvider,
   mergeCatalogProviders,
   validateFallbackSnapshot,
 } from "../scripts/game-data/catalog.mjs";
@@ -18,6 +19,30 @@ const source = (id: string) => ({
   id,
   role: id === "genshin-db" ? "primary" : "fallback",
   version: "fixture",
+});
+
+test("primary character assets use default-outfit metadata when image records are missing", () => {
+  const provider = createGenshinDbProvider({ includeTranslations: false });
+  for (const [key, suffix] of [
+    ["mitya", "Mitya"],
+    ["valeriy", "Valeriy"],
+  ]) {
+    const character = provider.characters.find((record) => record.key === key);
+    assert.equal(character?.images.filenameIcon, `UI_AvatarIcon_${suffix}`);
+    assert.equal(
+      character?.images.filenameGachaSplash,
+      `UI_Gacha_AvatarImg_${suffix}`
+    );
+  }
+  const ayaka = provider.characters.find(
+    (record) => record.key === "kamisato_ayaka"
+  );
+  assert.equal(ayaka?.images.filenameIcon, "UI_AvatarIcon_Ayaka");
+  assert.equal(ayaka?.images.filenameGachaSplash, "UI_Gacha_AvatarImg_Ayaka");
+  for (const key of ["aether", "lumine"]) {
+    const traveler = provider.characters.find((record) => record.key === key);
+    assert.equal(traveler?.images.filenameGachaSplash, undefined);
+  }
 });
 
 test("catalog composition fills gaps without replacing genshin-db records", () => {
@@ -302,3 +327,40 @@ test("game-data updates refresh the fallback snapshot before generation", () => 
   assert.match(workflow, /npm view genshin-data version/);
   assert.match(workflow, /ENKA_FALLBACK_REVISION/);
 });
+
+for (const [primaryVersion, releaseVersion, expected] of [
+  ["7.1", "7.0", "7.1"],
+  ["6.7", "7.0", "7.0"],
+  ["7.9", "7.10", "7.10"],
+]) {
+  test(`snapshot version follows the newest provider: ${primaryVersion}/${releaseVersion}`, () => {
+    const snapshot = buildEnkaFallbackSnapshot({
+      enkaData: {
+        avatars: {},
+        weapons: {},
+        relics: { Sets: {}, Items: {} },
+        locs: {},
+        curves: {},
+      },
+      releaseCatalog: {
+        gameVersion: releaseVersion,
+        characters: [],
+        weapons: [],
+        artifactSets: [],
+      },
+      primaryProvider: {
+        source: { gameVersion: primaryVersion },
+        characters: [],
+        weapons: [],
+        artifactSets: [],
+      },
+      genshinDataVersion: "fixture",
+      enkaRevision: "a".repeat(40),
+    });
+    assert.equal(snapshot.gameVersion, expected);
+    assert.equal(
+      snapshot.sources.find(({ id }) => id === "genshin-data").gameVersion,
+      releaseVersion
+    );
+  });
+}

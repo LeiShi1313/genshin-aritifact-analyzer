@@ -117,7 +117,9 @@ test("capabilities only expose app data that the pinned GCSIM can serialize", ()
 
   assert.ok("durin" in capabilities.characters);
   assert.ok("nicole" in capabilities.characters);
-  assert.ok(!("sandrone" in capabilities.characters));
+  assert.equal(capabilities.characters.sandrone, "sandrone");
+  assert.ok(!("mitya" in capabilities.characters));
+  assert.ok(!("valeriy" in capabilities.characters));
 
   for (const [appKey, serializerName] of Object.entries(
     capabilities.characters

@@ -48,7 +48,7 @@ skirk skill[hold=1];  wait(18); # Hiding swap cd warning
 
 furina swap;
 for let i=0; i<4; i=i+1 {
-  furina skill, dash, burst;
+  furina attack, skill, dash, burst;
   escoffier skill, burst;
   mona skill, burst;
 
@@ -74,8 +74,8 @@ for let i=0; i<4; i=i+1 {
 }
 
 # Skirk hE > Furina N1 ED > Escoffier E N2 > Mona E 2[N3D] N1 > Skirk hE > Mona N3 Q > Skirk Q > Escoffier N3 > Mona N3D N3 > Skirk hE >
-# Furina ED Q > Escoffier EQ > Mona E Q > Skirk Q tE N2CD 3[N5D] N2CD N5D N2 >
-# Furina ED Q > Escoffier EQ > Mona E Q > Skirk   tE N2Q  3[N5D] N2CD N5D N2 > (repeat)
+# Furina N1 ED Q > Escoffier EQ > Mona E Q > Skirk Q tE N2CD 3[N5D] N2CD N5D N2 >
+# Furina N1 ED Q > Escoffier EQ > Mona E Q > Skirk   tE N2Q  3[N5D] N2CD N5D N2 > (repeat)
 
 # Sim made by caxia5(discord)
 # Initial idea from jamie's youtube video https://youtu.be/lHMx1MDrZz0?si=hS4kV__3KWcQXHxW

@@ -38,4 +38,9 @@ for let x=0; x<4; x=x+1 {
   }
   charlotte skill[hold=1], burst, attack:2; # catches her own particles
   yoimiya skill, attack:5, dash, attack:5, dash, attack:5, dash, attack;
+  if is_even(x) {
+    yoimiya burst;
+  } else {
+    yoimiya attack:2;
+  }
 }

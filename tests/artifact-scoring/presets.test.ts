@@ -252,6 +252,18 @@ const TARGET_PRESETS = [
     alternativeRecipes: [[{ set: ArtifactSet.SCARLET_PROOF, count: 4 }]],
     plan: BUILD_SET_PLAN.STRICT_FOUR_PIECE,
   },
+  {
+    character: Character.VALERIY,
+    recipe: [
+      { set: ArtifactSet.GLADIATORS_FINALE, count: 2 },
+      { set: ArtifactSet.FRAGMENT_OF_HARMONIC_WHIMSY, count: 2 },
+    ],
+    alternativeRecipes: [
+      [{ set: ArtifactSet.HEART_OF_THE_FURNACE, count: 4 }],
+      [{ set: ArtifactSet.NOBLESSE_OBLIGE, count: 4 }],
+    ],
+    plan: BUILD_SET_PLAN.NEUTRAL,
+  },
 ] as const;
 
 const EXPECTED_GENERATED_NAMES = new Map<Character, readonly string[]>([
@@ -301,6 +313,10 @@ const EXPECTED_GENERATED_NAMES = new Map<Character, readonly string[]>([
   [Character.SANDRONE, ["Stellar-Conduct Charged DPS"]],
   [Character.ALYOSHA, ["Stellar-Conduct Support & Healer"]],
   [Character.ODETTE, ["Stellar Glimmer Support"]],
+  [Character.VESNA, ["General On-Field DPS"]],
+  [Character.VODYANITSA, ["Off-Field Hydro Support"]],
+  [Character.MITYA, ["Stellar-Conduct Charged DPS"]],
+  [Character.VALERIY, ["Shield & ATK Support"]],
 ]);
 
 const decodedPresets = rawPresets.map((raw) =>
@@ -308,7 +324,7 @@ const decodedPresets = rawPresets.map((raw) =>
 );
 
 test("generated presets use descriptive names and distinct supported playstyles", () => {
-  assert.equal(recommendedPresetBuilds.length, 54);
+  assert.equal(recommendedPresetBuilds.length, 58);
 
   for (const [character, expectedNames] of EXPECTED_GENERATED_NAMES) {
     const characterBuilds = recommendedPresetBuilds.filter(
