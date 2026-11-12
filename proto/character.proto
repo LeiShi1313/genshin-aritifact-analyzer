@@ -135,4 +135,6 @@ enum Character {
     ODETTE = 129;
     VESNA = 130;
     VODYANITSA = 131;
+    MITYA = 132;
+    VALERIY = 133;
 }

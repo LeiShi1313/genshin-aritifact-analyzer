@@ -1,0 +1,71 @@
+# Flins C0 Team: Ineffa, Columbina, Sucrose
+# Rotation: Ineffa E/Q > Columbina E/Q > Sucrose E N2 > Flins 2E N4D N3 sQ N4 E sQ 2(N4D) > Sucrose N2C
+# Single target, 6 rotations, energy drops simulated (every 480-720 frames, amount=1)
+# Target pos adjusted to avoid player overlap.
+
+flins char lvl=90/90 cons=0 talent=1,10,10;
+flins add weapon="primordialjadewingedspear" refine=2 lvl=90/90;
+flins add set="nightoftheskysunveiling" count=4;
+flins add stats hp=5049 atk=357 atk%=1.341 er=0.11 em=94 cr=0.428 cd=1.305;
+
+ineffa char lvl=90/90 cons=0 talent=1,10,9;
+ineffa add weapon="staffofthescarletsands" refine=1 lvl=90/90;
+ineffa add set="aubadeofmorningstarandmoon" count=4;
+ineffa add stats hp=5497 hp%=0.041 atk=449 atk%=1.078 er=0.123 em=42 cr=0.287 cd=1.546;
+
+columbina char lvl=90/90 cons=0 talent=1,10,10;
+columbina add weapon="nocturnescurtaincall" refine=1 lvl=90/90;
+columbina add set="silkenmoonsserenade" count=4;
+columbina add stats def=54 hp=5348 hp%=1.084 atk=342 atk%=0.047 er=0.155 em=38 cr=0.618 cd=1.189;
+
+sucrose char lvl=80/80 cons=6 talent=6,8,8;
+sucrose add weapon="sacrificialfragments" refine=5 lvl=90/90;
+sucrose add set="viridescentvenerer" count=4;
+sucrose add stats def%=0.248 def=60 hp=6243 hp%=0.198 atk=344 atk%=0.041 er=0.667 em=680.5 cr=0.097;
+
+options swap_delay=12 iteration=1000;
+
+target lvl=100 resist=0.1 radius=2 pos=0,3.0 hp=999999999;
+energy every interval=480,720 amount=1;
+
+active ineffa;
+
+for let i=0; i<6; i=i+1 {
+  if is_even(i) {
+    if .ineffa.burst.ready {
+      ineffa burst;
+    } else {
+      ineffa skill, attack;
+    }
+  } else {
+    ineffa skill, attack;
+  }
+
+  if !is_even(i) {
+    columbina skill;
+    if .columbina.burst.ready {
+      columbina burst;
+    } else {
+      columbina attack;
+    }
+  } else {
+    columbina skill, attack;
+  }
+
+  sucrose skill, attack:2;
+  if .sucrose.burst.ready {
+    sucrose burst;
+  }
+
+  flins skill, skill;
+  flins attack:4, dash;
+  flins attack:3;
+  flins burst;
+  flins attack:4;
+  flins skill;
+  flins burst;
+  flins attack:4, dash, attack:4;
+
+  sucrose attack:2, charge;
+  wait(8);
+}

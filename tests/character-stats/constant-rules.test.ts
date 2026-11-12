@@ -74,17 +74,17 @@ const artifactSetRule = (setKey: string) => {
   return rule;
 };
 
-test("the audited ruleset contains four character cases and forty-two weapon cases", () => {
+test("the audited ruleset contains four character cases and forty-three weapon cases", () => {
   assert.equal(CHARACTER_CONSTANT_RULES.length, 4);
   assert.equal(
     CHARACTER_CONSTANT_RULES.flatMap((rule) => rule.effects).length,
     5
   );
-  assert.equal(WEAPON_CONSTANT_RULES.length, 42);
-  assert.equal(new Set(WEAPON_CONSTANT_RULES.map((rule) => rule.id)).size, 42);
+  assert.equal(WEAPON_CONSTANT_RULES.length, 43);
+  assert.equal(new Set(WEAPON_CONSTANT_RULES.map((rule) => rule.id)).size, 43);
   assert.equal(
     new Set(WEAPON_CONSTANT_RULES.map((rule) => rule.weaponKey)).size,
-    42
+    43
   );
 });
 
@@ -125,7 +125,7 @@ test("weapon constants cover every audited modifier family", () => {
   assert.deepEqual(Object.fromEntries([...counts.entries()].sort()), {
     allElementalDamageBonus: 5,
     attackPercent: 11,
-    critDamage: 2,
+    critDamage: 3,
     critRate: 4,
     defensePercent: 4,
     elementalMastery: 2,
@@ -262,6 +262,18 @@ test("7.1 weapon constants include only unconditional bonuses at every refinemen
     );
   }
   for (const key of ["vesna", "vodyanitsa"]) {
+    assert.equal(
+      CHARACTER_CONSTANT_RULES.some((rule) => rule.characterKey === key),
+      false
+    );
+  }
+});
+
+test("7.2 constants exclude beacon, shield, and reaction buffs", () => {
+  assert.deepEqual(weaponRule("starsealed_edict").effects, [
+    { stat: "critDamage", valuesByRefinement: [0.24, 0.3, 0.36, 0.42, 0.48] },
+  ]);
+  for (const key of ["mitya", "valeriy"]) {
     assert.equal(
       CHARACTER_CONSTANT_RULES.some((rule) => rule.characterKey === key),
       false

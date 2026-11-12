@@ -320,6 +320,7 @@ export enum Weapon {
   NEW_BOUGH = 251,
   SILVER_LIGHT = 252,
   WINTERS_HEAVY_HEART = 253,
+  STARSEALED_EDICT = 254,
   UNRECOGNIZED = -1,
 }
 
@@ -1087,6 +1088,9 @@ export function weaponFromJSON(object: any): Weapon {
     case 253:
     case "WINTERS_HEAVY_HEART":
       return Weapon.WINTERS_HEAVY_HEART;
+    case 254:
+    case "STARSEALED_EDICT":
+      return Weapon.STARSEALED_EDICT;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1604,6 +1608,8 @@ export function weaponToJSON(object: Weapon): string {
       return "SILVER_LIGHT";
     case Weapon.WINTERS_HEAVY_HEART:
       return "WINTERS_HEAVY_HEART";
+    case Weapon.STARSEALED_EDICT:
+      return "STARSEALED_EDICT";
     case Weapon.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

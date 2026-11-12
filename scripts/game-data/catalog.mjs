@@ -412,6 +412,16 @@ const requireProgressionStat = (fightProperty, label) => {
 };
 
 const createPrimaryCharacters = (includeTranslations) => {
+  // Default outfits retain the canonical asset suffix when character images lag.
+  const defaultOutfitSuffixes = new Map(
+    genshinDb
+      .outfits("names", { matchCategories: true, verboseCategories: true })
+      .filter(({ isDefault }) => isDefault)
+      .map(({ characterId, images }) => [
+        characterId,
+        images?.filename_iconCircle?.match(/^UI_AvatarIcon_(\w+)_Circle$/)?.[1],
+      ])
+  );
   const characterNames = genshinDb.characters("names", {
     matchCategories: true,
   });
@@ -433,6 +443,10 @@ const createPrimaryCharacters = (includeTranslations) => {
       ? ""
       : entity.elementText;
     const images = entity.images ?? {};
+    // Partial records can intentionally omit art, as the base Travelers do.
+    const outfitSuffix = entity.images
+      ? undefined
+      : defaultOutfitSuffixes.get(entity.id);
     return {
       key: characterKey(entity.name),
       gameId: Number(entity.id),
@@ -448,8 +462,14 @@ const createPrimaryCharacters = (includeTranslations) => {
       images: {
         filenameIcon:
           images.filename_icon ??
-          (traveler ? "UI_AvatarIcon_PlayerBoy" : undefined),
-        filenameGachaSplash: images.filename_gachaSplash,
+          (traveler
+            ? "UI_AvatarIcon_PlayerBoy"
+            : outfitSuffix
+            ? `UI_AvatarIcon_${outfitSuffix}`
+            : undefined),
+        filenameGachaSplash:
+          images.filename_gachaSplash ??
+          (outfitSuffix ? `UI_Gacha_AvatarImg_${outfitSuffix}` : undefined),
         iconUrls: [images.mihoyo_icon, images.icon, images.image].filter(
           Boolean
         ),

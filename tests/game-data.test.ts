@@ -42,6 +42,8 @@ const characters = [
   ["odette", "奥黛塔", "Cryo", "Sword", 5, 129],
   ["vesna", "薇斯纳", "Anemo", "Sword", 5, 130],
   ["vodyanitsa", "沃雅妮莎", "Hydro", "Catalyst", 5, 131],
+  ["mitya", "米提亚", "Electro", "Catalyst", 5, 132],
+  ["valeriy", "瓦列里", "Electro", "Sword", 4, 133],
 ] as const;
 
 const weapons = [
@@ -73,6 +75,7 @@ const weapons = [
   ["new_bough", "新枝", "Sword", 4, 251],
   ["silver_light", "银釭", "Sword", 4, 252],
   ["winters_heavy_heart", "凝雪沉心", "Catalyst", 4, 253],
+  ["starsealed_edict", "秘星典谕", "Catalyst", 5, 254],
 ] as const;
 
 const artifactSets = [
@@ -184,7 +187,7 @@ test("image downloads convert WebP responses to real PNG files", async () => {
   }
 });
 
-test("the complete 6.2-7.1 roster has usable metadata, translations, and UI assets", () => {
+test("the complete 6.2-7.2 roster has usable metadata, translations, and UI assets", () => {
   const characterData = readJson<Record<string, unknown>>(
     "src/data/characters.json"
   );

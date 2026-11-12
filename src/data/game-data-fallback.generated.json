@@ -1,1 +1,1 @@
-{"artifactSets":[],"characters":[],"gameVersion":"7.1","schemaVersion":1,"sources":[{"id":"enka-network","revision":"ac2c249e86d29ebd85f6753fbc5a2ebe15fac608","role":"fallback"},{"gameVersion":"7.0","id":"genshin-data","role":"release-catalog","version":"0.62.0"}],"weapons":[]}
+{"artifactSets":[],"characters":[],"gameVersion":"7.2","schemaVersion":1,"sources":[{"id":"enka-network","revision":"a688237beea2c3ebb7ffbe1462016709d32dee96","role":"fallback"},{"gameVersion":"7.2","id":"genshin-data","role":"release-catalog","version":"0.65.1"}],"weapons":[]}

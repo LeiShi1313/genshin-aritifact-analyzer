@@ -34,25 +34,25 @@ test("progression generation covers every supported character and weapon", () =>
   );
   assert.deepEqual(catalogs.manifest, {
     schemaVersion: 2,
-    genshinDbVersion: "5.2.14",
-    gameVersion: "7.1",
+    genshinDbVersion: "5.2.15",
+    gameVersion: "7.2",
     sources: [
       {
         id: "genshin-db",
         role: "primary",
-        version: "5.2.14",
-        gameVersion: "7.1",
+        version: "5.2.15",
+        gameVersion: "7.2",
       },
       {
         id: "enka-network",
-        revision: "ac2c249e86d29ebd85f6753fbc5a2ebe15fac608",
+        revision: "a688237beea2c3ebb7ffbe1462016709d32dee96",
         role: "fallback",
       },
       {
         id: "genshin-data",
         role: "release-catalog",
-        version: "0.62.0",
-        gameVersion: "7.0",
+        version: "0.65.1",
+        gameVersion: "7.2",
       },
     ],
   });

@@ -40,6 +40,43 @@ const travelerFixture = (characterKeys: string[]) => ({
   ],
 });
 
+test("GOOD imports preserve 7.2 character identities and equipped gear", () => {
+  const parsed = parseGOODFormat({
+    ...travelerFixture(["Mitya", "Valeriy"]),
+    source: "genshin-7.2-regression",
+    version: 3,
+    weapons: [
+      {
+        key: "StarsealedEdict",
+        level: 90,
+        ascension: 6,
+        refinement: 1,
+        location: "Mitya",
+      },
+    ],
+    artifacts: [
+      {
+        setKey: "HeartOfTheFurnace",
+        slotKey: "flower",
+        rarity: 5,
+        level: 20,
+        mainStatKey: "hp",
+        substats: [],
+        location: "Valeriy",
+        lock: true,
+      },
+    ],
+  });
+  assert.deepEqual(
+    parsed.characters.map(({ character }) => character),
+    [Character.MITYA, Character.VALERIY]
+  );
+  assert.equal(parsed.weapons[0]?.weapon, Weapon.STARSEALED_EDICT);
+  assert.equal(parsed.weapons[0]?.location, Character.MITYA);
+  assert.equal(parsed.artifacts[0]?.character, Character.VALERIY);
+  assert.equal(parsed.artifacts[0]?.set, Set.HEART_OF_THE_FURNACE);
+});
+
 test("generic GOOD Traveler equipment resolves to the imported element", () => {
   const parsed = parseGOODFormat(travelerFixture(["TravelerAnemo"]));
 

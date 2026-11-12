@@ -465,10 +465,10 @@ export const calculateCharacterSheetStatsFromProgression = (
         : ("not-applicable" as const),
       gameVersion: progression.manifest.gameVersion,
       genshinDbVersion: progression.manifest.genshinDbVersion,
-      constantRuleset: "genshin-artifact-builds/constant-stats@4",
+      constantRuleset: "genshin-artifact-builds/constant-stats@5",
       constantRuleSources: [
         ARTIFACT_SET_CONSTANT_RULE_SOURCE,
-        "genshin-db@5.2.14/7.1-weapon-static",
+        "genshin-db@5.2.15/7.2-weapon-static",
         "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",
       ],
     },

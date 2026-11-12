@@ -1,0 +1,67 @@
+options swap_delay=12 iteration=1000;
+
+varka char lvl=90/90 cons=0 talent=9,9,9;
+varka add weapon="gestofthemightywolf" refine=1 lvl=90/90;
+varka add set="adaycarvedfromrisingwinds" count=4;
+varka add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+varka add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*2 cr=0.0331*8 cd=0.0662*10;
+
+
+prune char lvl=90/90 cons=6 talent=9,9,9;
+prune add weapon="favoniuscodex" refine=5 lvl=90/90;
+prune add set="viridescentvenerer" count=4;
+prune add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+prune add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*6 er=0.0551*7 em=19.82*2 cr=0.0331*12 cd=0.0662*3;
+
+
+odette char lvl=90/90 cons=0 talent=9,9,9;
+odette add weapon="emberwell" refine=5 lvl=90/90;
+odette add set="heartofthefurnace" count=4;
+odette add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+odette add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+
+luminecryo char lvl=90/90 cons=6 talent=9,9,9;
+luminecryo add weapon="exaiphanesblade" refine=5 lvl=90/90;
+luminecryo add set="adaycarvedfromrisingwinds" count=4;
+luminecryo add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+luminecryo add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*5 cr=0.0331*11 cd=0.0662*10;
+
+
+
+# Target and Energy assumptions
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999; # standard ST target
+energy every interval=480,720 amount=1; # standard Energy drops
+
+let walk_cancel=true; // true for walk and false for no walk
+
+# Rotation assumptions
+active varka;
+
+fn walk_or_not() {
+  if walk_cancel {
+    varka walk;
+  }
+}
+
+for let i=0; i<6; i=i+1 {
+  odette skill:2;
+  prune skill, burst;
+  luminecryo skill;
+  luminecryo burst;
+  if i {
+    luminecryo attack, charge;
+  }
+  varka skill;
+  varka attack:2;
+  if .varka.cons == 0 {
+    varka charge;  walk_or_not();
+  } else {
+    varka skill;
+  }
+  varka attack:2, charge;  walk_or_not();
+  varka attack:2, skill;
+  varka attack:2, charge;  walk_or_not();
+  varka attack:2, skill;
+  varka attack, charge;
+}

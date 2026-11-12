@@ -23,10 +23,13 @@ import { parseScript } from "../../scripts/gcsim";
 test("GCSIM capabilities expose the pinned engine support boundary", () => {
   assert.equal(isGCSimCharacterSupported(Character.DURIN), true);
   assert.equal(isGCSimCharacterSupported(Character.NICOLE), true);
-  assert.equal(isGCSimCharacterSupported(Character.SANDRONE), false);
+  assert.equal(isGCSimCharacterSupported(Character.SANDRONE), true);
   assert.equal(isGCSimCharacterSupported(Character.VESNA), false);
   assert.equal(isGCSimCharacterSupported(Character.VODYANITSA), false);
-  assert.equal(isGCSimWeaponSupported(Weapon.BEYOND_THE_CHRYSALIS), false);
+  assert.equal(isGCSimCharacterSupported(Character.MITYA), false);
+  assert.equal(isGCSimCharacterSupported(Character.VALERIY), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.STARSEALED_EDICT), false);
+  assert.equal(isGCSimWeaponSupported(Weapon.BEYOND_THE_CHRYSALIS), true);
   assert.equal(isGCSimWeaponSupported(Weapon.HYMN_OF_THE_MAELSTROM), false);
   assert.equal(isGCSimWeaponSupported(Weapon.FROSTBREATH), true);
   assert.equal(isGCSimWeaponSupported(Weapon.SONG_OF_THE_VIGIL), true);
@@ -164,7 +167,7 @@ test("character filters are the unique supported characters present in scripts",
     {
       characterInfos: [
         { character: Character.DURIN },
-        { character: Character.SANDRONE },
+        { character: Character.MITYA },
       ],
     },
   ];

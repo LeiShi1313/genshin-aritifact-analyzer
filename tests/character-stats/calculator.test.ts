@@ -604,11 +604,11 @@ test("keeps audited constant coverage explicit and marks future keys partial", (
   );
   assert.equal(
     result.coverage.constantRuleset,
-    "genshin-artifact-builds/constant-stats@4"
+    "genshin-artifact-builds/constant-stats@5"
   );
   assert.deepEqual(result.coverage.constantRuleSources, [
     "game-data-catalog@7.0/artifact-set-two-piece",
-    "genshin-db@5.2.14/7.1-weapon-static",
+    "genshin-db@5.2.15/7.2-weapon-static",
     "miao-plugin@03298720363416755a754324ab14cb08037ca345/character-weapon-static",
   ]);
 });
@@ -654,4 +654,38 @@ test("7.1 sheets apply refinement constants without activating combat stacks", (
   closeTo(vesna.stats.attack, vesna.base.attack);
   closeTo(vesna.base.hp, 13262.3220984);
   assert.deepEqual(vesna.appliedRuleIds, []);
+});
+
+test("7.2 sheets include Starsealed Edict's constant bonus and exclude combat buffs", () => {
+  for (const [index, bonus] of [0.24, 0.3, 0.36, 0.42, 0.48].entries()) {
+    const result = calculateCharacterSheetStats({
+      character: { key: "mitya", level: 90, ascension: 6 },
+      weapon: {
+        key: "starsealed_edict",
+        level: 90,
+        ascension: 6,
+        refinement: index + 1,
+      },
+      artifacts: [],
+    });
+    assert.equal(result.status, "complete");
+    if (result.status === "invalid") continue;
+    closeTo(result.stats.critDamage, 0.884 + 0.882048 + bonus, 1e-5);
+    closeTo(result.stats.critRate, 0.05);
+    assert.equal(result.stats.elementalMastery, 0);
+    assert.deepEqual(result.appliedRuleIds, [
+      "weapon.starsealed_edict.crit_damage",
+    ]);
+  }
+  const support = calculateCharacterSheetStats({
+    character: { key: "valeriy", level: 90, ascension: 6 },
+    weapon: { key: "favonius_sword", level: 90, ascension: 6, refinement: 5 },
+    artifacts: [],
+  });
+  assert.equal(support.status, "complete");
+  if (support.status === "invalid") return;
+  closeTo(support.stats.attack, support.base.attack * 1.24);
+  closeTo(support.stats.critRate, 0.05);
+  assert.equal(support.stats.elementalMastery, 0);
+  assert.deepEqual(support.appliedRuleIds, []);
 });

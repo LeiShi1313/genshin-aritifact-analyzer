@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
+  createGenshinDbProvider,
   mergeCatalogProviders,
   validateFallbackSnapshot,
 } from "../scripts/game-data/catalog.mjs";
@@ -18,6 +19,30 @@ const source = (id: string) => ({
   id,
   role: id === "genshin-db" ? "primary" : "fallback",
   version: "fixture",
+});
+
+test("primary character assets use default-outfit metadata when image records are missing", () => {
+  const provider = createGenshinDbProvider({ includeTranslations: false });
+  for (const [key, suffix] of [
+    ["mitya", "Mitya"],
+    ["valeriy", "Valeriy"],
+  ]) {
+    const character = provider.characters.find((record) => record.key === key);
+    assert.equal(character?.images.filenameIcon, `UI_AvatarIcon_${suffix}`);
+    assert.equal(
+      character?.images.filenameGachaSplash,
+      `UI_Gacha_AvatarImg_${suffix}`
+    );
+  }
+  const ayaka = provider.characters.find(
+    (record) => record.key === "kamisato_ayaka"
+  );
+  assert.equal(ayaka?.images.filenameIcon, "UI_AvatarIcon_Ayaka");
+  assert.equal(ayaka?.images.filenameGachaSplash, "UI_Gacha_AvatarImg_Ayaka");
+  for (const key of ["aether", "lumine"]) {
+    const traveler = provider.characters.find((record) => record.key === key);
+    assert.equal(traveler?.images.filenameGachaSplash, undefined);
+  }
 });
 
 test("catalog composition fills gaps without replacing genshin-db records", () => {

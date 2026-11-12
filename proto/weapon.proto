@@ -266,4 +266,5 @@ enum Weapon {
     NEW_BOUGH = 251;
     SILVER_LIGHT = 252;
     WINTERS_HEAVY_HEART = 253;
+    STARSEALED_EDICT = 254;
 }

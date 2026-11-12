@@ -7,7 +7,7 @@ import axios from "axios";
 
 import { syncGCSimScripts } from "./gcsim-snapshot.mjs";
 
-const API_URL = "https://simpact.app/api/db";
+const API_URL = "https://db.kqm.gg/api/db";
 const PAGE_SIZE = 100;
 const MINIMUM_SCRIPT_COUNT = 5_000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -49,7 +49,8 @@ const scrapeAll = async ({ outputDir = OUTPUT_DIR } = {}) => {
 
 const isMain =
   process.argv[1] &&
-  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+  path.resolve(process.argv[1]) ===
+    path.resolve(fileURLToPath(import.meta.url));
 
 if (isMain) {
   scrapeAll().catch((error) => {

@@ -141,6 +141,8 @@ export enum Character {
   ODETTE = 129,
   VESNA = 130,
   VODYANITSA = 131,
+  MITYA = 132,
+  VALERIY = 133,
   UNRECOGNIZED = -1,
 }
 
@@ -542,6 +544,12 @@ export function characterFromJSON(object: any): Character {
     case 131:
     case "VODYANITSA":
       return Character.VODYANITSA;
+    case 132:
+    case "MITYA":
+      return Character.MITYA;
+    case 133:
+    case "VALERIY":
+      return Character.VALERIY;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -815,6 +823,10 @@ export function characterToJSON(object: Character): string {
       return "VESNA";
     case Character.VODYANITSA:
       return "VODYANITSA";
+    case Character.MITYA:
+      return "MITYA";
+    case Character.VALERIY:
+      return "VALERIY";
     case Character.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

@@ -55,7 +55,7 @@ const critCirclet = [
 
 /**
  * One focused, general-purpose build for every normal playable character added
- * to this catalog through Genshin 7.0.
+ * to this catalog through Genshin 7.2.
  *
  * Main stats and priority order are sourced from the linked current guides and
  * calculations. Importance values translate those recommendations into the
@@ -1053,6 +1053,50 @@ export const recommendedPresetBuilds: readonly Build[] = Object.freeze([
       [AttributeType.HP_PERCENT, 1],
       [AttributeType.HP, 0.6],
       [AttributeType.ENERGY_RECHARGE, 0.4],
+    ],
+  }),
+  // https://mobalytics.gg/genshin-impact/characters/mitya-build-guide
+  preset({
+    name: PRESET_BUILD_IDS.STELLAR_CONDUCT_CHARGED_DPS,
+    character: Character.MITYA,
+    recipe: [
+      { set: ArtifactSet.GILDED_DREAMS, count: 2 },
+      { set: ArtifactSet.NIGHT_OF_THE_SKYS_UNVEILING, count: 2 },
+    ],
+    alternativeRecipes: [
+      fourPiece(ArtifactSet.GILDED_DREAMS),
+      fourPiece(ArtifactSet.DISENCHANTMENT_IN_DEEP_SHADOW),
+    ],
+    sands: [AttributeType.ELEMENTAL_MASTERY],
+    goblet: [AttributeType.ELEMENTAL_MASTERY],
+    circlet: critCirclet,
+    substats: [
+      [AttributeType.CRIT_RATE, 1],
+      [AttributeType.CRIT_DAMAGE, 1],
+      [AttributeType.ELEMENTAL_MASTERY, 0.8],
+      [AttributeType.ENERGY_RECHARGE, 0.4],
+    ],
+  }),
+  // https://mobalytics.gg/genshin-impact/characters/valeriy-build-guide
+  preset({
+    name: PRESET_BUILD_IDS.SHIELD_ATK_SUPPORT,
+    character: Character.VALERIY,
+    recipe: [
+      { set: ArtifactSet.GLADIATORS_FINALE, count: 2 },
+      { set: ArtifactSet.FRAGMENT_OF_HARMONIC_WHIMSY, count: 2 },
+    ],
+    alternativeRecipes: [
+      fourPiece(ArtifactSet.HEART_OF_THE_FURNACE),
+      fourPiece(ArtifactSet.NOBLESSE_OBLIGE),
+    ],
+    sands: [AttributeType.ENERGY_RECHARGE, AttributeType.ATK_PERCENT],
+    goblet: [AttributeType.ATK_PERCENT],
+    circlet: [AttributeType.ATK_PERCENT],
+    substats: [
+      [AttributeType.ENERGY_RECHARGE, 1],
+      [AttributeType.ATK_PERCENT, 0.8],
+      [AttributeType.CRIT_RATE, 0.6],
+      [AttributeType.ATK, 0.2],
     ],
   }),
 ]);
